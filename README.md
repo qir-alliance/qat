@@ -1,10 +1,11 @@
 # QIR Adaptor Tool
 
-![Linux CI](https://github.com/qir-alliance/qat/actions/workflows/ci-linux-on-main-pr.yml/badge.svg)
-![Mac CI](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml/badge.svg)
+[![Linux CI](https://github.com/qir-alliance/qat/actions/workflows/ci-linux-on-main-pr.yml/badge.svg)](https://github.com/qir-alliance/qat/actions/workflows/ci-linux-on-main-pr.yml)
+[![Mac CI](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml/badge.svg)](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml)
 [![Documentation](https://github.com/qir-alliance/qat/actions/workflows/cd-docs.yml/badge.svg)](https://qir-alliance.github.io/qat/)
 
-[![](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![](https://badgen.net/github/license/qir-alliance/qat)](https://opensource.org/licenses/MIT)
+[![](https://badgen.net/github/release/qir-alliance/qat)](TODO)
 
 [![](https://img.shields.io/github/contributors/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/graphs/contributors)
 [![](https://img.shields.io/github/issues-pr/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls)
@@ -31,7 +32,7 @@ To build the library, first configure CMake from the build directory
 cmake ..
 ```
 
-and then make your target
+and then make your target:
 
 ```sh
 make qat
@@ -44,13 +45,13 @@ For full instructions on dependencies and how to build, follow [these instructio
 Once the project is built (see next sections), you can transform a QIR according to a profile as follows:
 
 ```sh
-./Source/Apps/qat --generate --profile base -S path/to/example.ll
+./qir/qat/Apps/qat --generate --profile base -S path/to/example.ll
 ```
 
 Likewise, you can validate that a QIR follows a specification by running (Note, not implemented yet):
 
 ```sh
-./Source/Apps/qat --validate --profile base -S path/to/example.ll
+./qir/qat/Apps/qat --validate --profile base -S path/to/example.ll
 ```
 
 ## Next steps
