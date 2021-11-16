@@ -24,9 +24,10 @@ jobs:
           brew unlink python@3.9
           brew link python@3.9
           echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
-          echo "testin compiler"
-          ls /usr/local/opt/llvm@11/bin
-          clang++-11 --version
+          #echo "testin compiler"
+          #ln -s /usr/local/opt/llvm@11/bin/clang /usr/bin/clang-11 
+          #ln -s /usr/local/opt/llvm@11/bin/clang++ /usr/bin/clang++-11 
+          #clang++-11 --version
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt 
           chmod +x manage
@@ -39,8 +40,8 @@ jobs:
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang
+          CXX: clang++
 
 
       - name: "Running unit tests"
@@ -50,8 +51,8 @@ jobs:
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang
+          CXX: clang++
 
 
 
@@ -61,6 +62,6 @@ jobs:
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang
+          CXX: clang++
 
