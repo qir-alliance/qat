@@ -17,6 +17,7 @@ jobs:
 
       - name: "Installing dependencies"
         run: |
+          rm '/usr/local/bin/2to3'        
           brew install llvm@11
           brew install cmake
           brew install python@3.9
@@ -25,6 +26,8 @@ jobs:
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt      
           chmod +x manage
+          python --version
+          python3 --version
 
       - name: "Checking format"
         run: |
