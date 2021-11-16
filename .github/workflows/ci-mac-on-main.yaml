@@ -1,0 +1,66 @@
+name: PR into main
+
+on:
+  pull_request:
+    branches:
+    - main
+
+
+
+jobs:
+  build:
+    runs-on: macos-11
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: "Installing dependencies"
+        run: |
+          brew install llvm@11
+          brew install cmake
+          brew install python@3.9
+          brew unlink python@3.9
+          brew link python@3.9
+          git submodule update --init --recursive
+          pip install -r requirements.txt  
+          chmod +x manage
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
+
+      - name: "Checking format"
+        run: |
+          ./manage stylecheck        
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
+
+      - name: "Running unit tests"
+        run: |
+          ./manage test
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
+
+      - name: "Performing static analysis"
+        run: |
+          ./manage lint
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
