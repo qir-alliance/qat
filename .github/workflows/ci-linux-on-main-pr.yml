@@ -37,9 +37,31 @@ jobs:
           CXX: clang++-11
 
 
-      - name: "Running CI"
+      - name: "Checking format"
         run: |
-          ./manage runci              
+          ./manage stylecheck        
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
+
+      - name: "Running unit tests"
+        run: |
+          ./manage test
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
+
+      - name: "Performing static analysis"
+        run: |
+          ./manage lint
         env:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
