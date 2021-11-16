@@ -28,6 +28,7 @@ jobs:
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 0
           git submodule update --init --recursive
           pip install -r requirements.txt  
+          chmod +x manage
         env:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
@@ -38,8 +39,6 @@ jobs:
 
       - name: "Running CI"
         run: |
-          pip install -r requirements.txt  
-          chmod +x manage
           ./manage runci              
         env:
           DEBIAN_FRONTEND: noninteractive
