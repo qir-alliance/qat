@@ -1,8 +1,9 @@
-name: Documentation Deployment
+name: Documentation
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - master
 
 jobs:
   build-and-deploy-docs:

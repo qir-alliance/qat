@@ -1,4 +1,4 @@
-name: Linux CI - PR into main
+name: Linux CI
 
 on:
   pull_request:
