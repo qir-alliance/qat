@@ -23,18 +23,21 @@ jobs:
           brew install python@3.9
           brew unlink python@3.9
           brew link python@3.9
+          echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
+          exec -l $SHELL
+
+          echo "testin compiler"
+          clang++-11 --version
+
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt      
           chmod +x manage
-          echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
-          exec -l $SHELL
-          clang++-11 --version
-          
+
       - name: "Checking format"
         run: |
           ./manage stylecheck        
         env:
-          LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
           CC: clang-11
           CXX: clang++-11
@@ -42,9 +45,10 @@ jobs:
 
       - name: "Running unit tests"
         run: |
+          echo "Path is ${PATH}"
           ./manage test
         env:
-          LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
           CC: clang-11
           CXX: clang++-11
@@ -55,7 +59,7 @@ jobs:
         run: |
           ./manage lint
         env:
-          LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
           CC: clang-11
           CXX: clang++-11
