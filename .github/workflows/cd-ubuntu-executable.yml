@@ -1,0 +1,76 @@
+on:
+  push:
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+name: Upload Release Asset
+
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: "Installing dependencies"
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y 
+          sudo apt-get remove -y llvm-12
+          sudo apt-get install -y curl pkg-config findutils  wget
+          sudo apt install -y clang-11 cmake clang-format-11 clang-tidy-11 
+          sudo apt-get install -y llvm-11 lldb-11 llvm-11-dev libllvm11 llvm-11-runtime
+          sudo apt install -y python3 python3-pip 
+          sudo apt-get remove -y llvm-10
+          sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 0
+          git submodule update --init --recursive
+          pip install -r requirements.txt  
+          chmod +x manage
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
+      - name: "Running unit tests"
+        run: |
+          ./manage test
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
+      - name: "Build project"
+        run: |
+          mkdir -p Release
+          cd Release
+          cmake .. 
+          make qat
+
+          zip --junk-paths qir/qat/qat
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+          
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./my-artifact.zip
+          asset_name: my-artifact.zip
+          asset_content_type: application/zip
