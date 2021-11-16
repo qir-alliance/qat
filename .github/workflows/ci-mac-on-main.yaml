@@ -28,6 +28,8 @@ jobs:
           chmod +x manage
           python --version
           python3 --version
+          echo "/usr/local/opt/llvm@11/bin:${PATH}:${GITHUB_PATH}" >> $GITHUB_PATH
+
 
       - name: "Checking format"
         run: |
@@ -35,7 +37,6 @@ jobs:
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
-          PATH: "/usr/local/opt/llvm@11/bin:$PATH"          
           CC: clang-11
           CXX: clang++-11
 
@@ -46,7 +47,6 @@ jobs:
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
-          PATH: "/usr/local/opt/llvm@11/bin:$PATH"          
           CC: clang-11
           CXX: clang++-11
 
@@ -58,7 +58,6 @@ jobs:
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
-          PATH: "/usr/local/opt/llvm@11/bin:$PATH"          
           CC: clang-11
           CXX: clang++-11
 
