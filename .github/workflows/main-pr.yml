@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
     - main
-  push:
-    branches:
-      - master
 
 
 
@@ -18,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: "CI"
+      - name: "Installing dependencies"
         run: |
           sudo apt-get update -y
           sudo apt-get install -y 
@@ -30,7 +27,17 @@ jobs:
           sudo apt-get remove -y llvm-10
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 0
           git submodule update --init --recursive
-          cd src/Passes/
+          pip install -r requirements.txt  
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
+
+      - name: "Running CI"
+        run: |
           pip install -r requirements.txt  
           chmod +x manage
           ./manage runci              
