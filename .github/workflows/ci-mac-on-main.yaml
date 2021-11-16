@@ -1,0 +1,56 @@
+name: Mac OS CI - PR into main
+
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: macos-11
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: "Installing dependencies"
+        run: |
+          rm '/usr/local/bin/2to3'        
+          brew install llvm@11
+          brew install cmake
+          brew install python@3.9
+          brew unlink python@3.9
+          brew link python@3.9
+          echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
+          git submodule update --init --recursive
+          pip3 install --user -r requirements.txt 
+          chmod +x manage
+
+          exec -l $SHELL
+
+      - name: "Checking format"
+        run: |
+          ./manage stylecheck        
+        env:
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          CC: clang
+          CXX: clang++
+
+      - name: "Running unit tests"
+        run: |
+          ./manage test
+        env:
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          CC: clang
+          CXX: clang++
+
+      - name: "Performing static analysis"
+        run: |
+          ./manage lint
+        env:
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          CC: clang
+          CXX: clang++
