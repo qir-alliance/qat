@@ -1,12 +1,11 @@
-name: Documentation
+name: Documentation Deployment
 
 on:
-  pull_request:
-    branches:
-    - main
+  release:
+    types: [published]
 
 jobs:
-  build-and-deploy:
+  build-and-deploy-docs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
