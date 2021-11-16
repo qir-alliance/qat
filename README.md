@@ -1,10 +1,11 @@
 # QIR Adaptor Tool
 
-![Linux CI](https://github.com/qir-alliance/qat/actions/workflows/ci-linux-on-main-pr.yml/badge.svg)
-![Mac CI](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml/badge.svg)
+[![Linux CI](https://github.com/qir-alliance/qat/actions/workflows/ci-linux-on-main-pr.yml/badge.svg)](https://github.com/qir-alliance/qat/actions/workflows/ci-linux-on-main-pr.yml)
+[![Mac CI](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml/badge.svg)](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml)
 [![Documentation](https://github.com/qir-alliance/qat/actions/workflows/cd-docs.yml/badge.svg)](https://qir-alliance.github.io/qat/)
 
-[![](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![](https://badgen.net/github/license/qir-alliance/qat)](https://opensource.org/licenses/MIT)
+[![](https://badgen.net/github/release/qir-alliance/qat)](TODO)
 
 [![](https://img.shields.io/github/contributors/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/graphs/contributors)
 [![](https://img.shields.io/github/issues-pr/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls)
