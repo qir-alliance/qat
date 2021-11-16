@@ -27,7 +27,8 @@ jobs:
           doxygen doxygen.cfg
           ./bin/doxybook2 --input Doxygen/xml --config docs/.doxybook/config.json --output docs/src/
           rm -rf docs/src/Namespaces/namespace_0d*         
-
+          ls 
+          
       - name: Building docs
         run: |
           ls build/

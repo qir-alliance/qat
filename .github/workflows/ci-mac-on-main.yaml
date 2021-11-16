@@ -28,7 +28,8 @@ jobs:
           chmod +x manage
           echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
           exec -l $SHELL
-
+          clang++-11 --version
+          
       - name: "Checking format"
         run: |
           ./manage stylecheck        
