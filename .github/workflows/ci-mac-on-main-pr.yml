@@ -1,4 +1,4 @@
-name: Mac OS CI - PR into main
+name: Mac OS X CI
 
 on:
   pull_request:

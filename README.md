@@ -1,4 +1,20 @@
-# QIR Passes
+# QIR Adaptor Tool
+
+![Linux CI](https://github.com/qir-alliance/qat/actions/workflows/ci-linux-on-main-pr.yml/badge.svg)
+![Mac CI](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml/badge.svg)
+![Documentation](https://github.com/qir-alliance/qat/actions/workflows/cd-docs.yml/badge.svg)
+
+[![](https://img.shields.io/github/contributors/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/graphs/contributors)
+[![](https://img.shields.io/github/issues-pr/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls)
+[![](https://img.shields.io/github/issues-pr-closed/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls?q=is%3Apr+is%3Aclosed)
+
+[![](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+## Table of Contents
+
+- [Building](#building)
+- [Getting started](#getting-started)
+- [Next steps](#next-steps)
 
 This document contains a brief introduction on how to use the QIR passes. A more comprehensive [walk-through is found here](./docs/src/index.md).
 
@@ -39,12 +55,6 @@ Likewise, you can validate that a QIR follows a specification by running (Note, 
 ./Source/Apps/qat --validate --profile base -S path/to/example.ll
 ```
 
-## Documentation
+## Next steps
 
-Most of the documentation is available [directly on Github](./docs/src/index.md). If you need API documentation, you can build and run it by typing
-
-```sh
-make serve-docs
-```
-
-in the root folder of the passes directory.
+You can access the [documentation here](https://qir-alliance.github.io/qat/).
