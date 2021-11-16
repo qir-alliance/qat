@@ -26,10 +26,8 @@ jobs:
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt      
           chmod +x manage
-          python --version
-          python3 --version
-          echo "/usr/local/opt/llvm@11/bin:${PATH}:${GITHUB_PATH}" >> $GITHUB_PATH
-
+          echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
+          exec -l $SHELL
 
       - name: "Checking format"
         run: |

@@ -19,14 +19,13 @@ jobs:
             findutils \
             wget \
             unzip doxygen        
-          wget https://github.com/matusnovak/doxybook2/releases/download/v1.3.6/doxybook2-linux-amd64-v1.3.6.zip && \
+          wget https://github.com/matusnovak/doxybook2/releases/download/v1.3.6/doxybook2-linux-amd64-v1.3.6.zip
           unzip doxybook2-linux-amd64-v1.3.6.zip
-          ls
 
       - name: Doxygen generation
         run: |
           doxygen doxygen.cfg
-          ./doxybook2 --input Doxygen/xml --config docs/.doxybook/config.json --output docs/src/
+          ./bin/doxybook2 --input Doxygen/xml --config docs/.doxybook/config.json --output docs/src/
           rm -rf docs/src/Namespaces/namespace_0d*         
 
       - name: Building docs
