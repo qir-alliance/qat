@@ -27,17 +27,17 @@ jobs:
           doxygen doxygen.cfg
           ./bin/doxybook2 --input Doxygen/xml --config docs/.doxybook/config.json --output docs/src/
           rm -rf docs/src/Namespaces/namespace_0d*         
-          ls 
-          
+
       - name: Building docs
         run: |
-          ls build/
           cd docs/
           npm install
           npm run build
+          cd ../
+          mv docs/build ./
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: build # The folder the action should deploy.
+          branch: gh-pages
+          folder: build
