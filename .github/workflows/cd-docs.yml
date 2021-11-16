@@ -1,0 +1,42 @@
+name: Documentation
+
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - name: "Installing dependencies"
+        run: |
+          apt-get install -y curl \
+            pkg-config \
+            findutils \
+            wget \
+            unzip doxygen        
+          wget https://github.com/matusnovak/doxybook2/releases/download/v1.3.6/doxybook2-linux-amd64-v1.3.6.zip && \
+          unzip doxybook2-linux-amd64-v1.3.6.zip
+
+      - name: Doxygen generation
+        run: |
+          doxygen doxygen.cfg
+          doxybook2 --input Doxygen/xml --config docs/.doxybook/config.json --output docs/src/
+          rm -rf docs/src/Namespaces/namespace_0d*         
+
+      - name: Building docs
+        run: |
+          ls build/
+          cd docs/
+          npm install
+          npm run build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build # The folder the action should deploy.

@@ -26,9 +26,9 @@ jobs:
           pip3 install --user -r requirements.txt      
           chmod +x manage
         env:
-          DEBIAN_FRONTEND: noninteractive
-          PYTHONUNBUFFERED: 1
-          PYTHON_BIN_PATH: /usr/bin/python3
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          PATH: "/usr/local/opt/llvm@11/bin:$PATH"          
           CC: clang-11
           CXX: clang++-11
 
@@ -37,9 +37,9 @@ jobs:
         run: |
           ./manage stylecheck        
         env:
-          DEBIAN_FRONTEND: noninteractive
-          PYTHONUNBUFFERED: 1
-          PYTHON_BIN_PATH: /usr/bin/python3
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          PATH: "/usr/local/opt/llvm@11/bin:$PATH"          
           CC: clang-11
           CXX: clang++-11
 
@@ -48,19 +48,21 @@ jobs:
         run: |
           ./manage test
         env:
-          DEBIAN_FRONTEND: noninteractive
-          PYTHONUNBUFFERED: 1
-          PYTHON_BIN_PATH: /usr/bin/python3
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          PATH: "/usr/local/opt/llvm@11/bin:$PATH"          
           CC: clang-11
           CXX: clang++-11
+
 
 
       - name: "Performing static analysis"
         run: |
           ./manage lint
         env:
-          DEBIAN_FRONTEND: noninteractive
-          PYTHONUNBUFFERED: 1
-          PYTHON_BIN_PATH: /usr/bin/python3
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          PATH: "/usr/local/opt/llvm@11/bin:$PATH"          
           CC: clang-11
           CXX: clang++-11
+
