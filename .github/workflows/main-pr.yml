@@ -15,7 +15,6 @@ jobs:
 
       - name: "CI"
         run: |
-          export DEBIAN_FRONTEND=noninteractive
           sudo apt-get update -y
           sudo apt-get install -y 
           sudo apt-get remove -y llvm-12
@@ -29,8 +28,10 @@ jobs:
           cd src/Passes/
           pip install -r requirements.txt  
           chmod +x manage
-          export PYTHONUNBUFFERED=1
-          export PYTHON_BIN_PATH=/usr/bin/python3
-          export CC=clang-11
-          export CXX=clang++-11
           ./manage runci              
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
