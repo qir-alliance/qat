@@ -25,6 +25,7 @@ jobs:
           brew link python@3.9
           echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
           echo "testin compiler"
+          ls /usr/local/opt/llvm@11/bin
           clang++-11 --version
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt 
