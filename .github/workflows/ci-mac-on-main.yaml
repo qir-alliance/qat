@@ -25,13 +25,6 @@ jobs:
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt      
           chmod +x manage
-        env:
-          LDFLAGS: "-L/usr/local/opt/llvm@11/lib"
-          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
-          PATH: "/usr/local/opt/llvm@11/bin:$PATH"          
-          CC: clang-11
-          CXX: clang++-11
-
 
       - name: "Checking format"
         run: |
