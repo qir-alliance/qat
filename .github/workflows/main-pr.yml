@@ -1,9 +1,9 @@
-name: Deployment
+name: PR into main
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
