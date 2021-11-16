@@ -2,21 +2,19 @@
 
 ![Linux CI](https://github.com/qir-alliance/qat/actions/workflows/ci-linux-on-main-pr.yml/badge.svg)
 ![Mac CI](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml/badge.svg)
-![Documentation](https://github.com/qir-alliance/qat/actions/workflows/cd-docs.yml/badge.svg)
+[![Documentation](https://github.com/qir-alliance/qat/actions/workflows/cd-docs.yml/badge.svg)](https://qir-alliance.github.io/qat/)
+
+[![](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 [![](https://img.shields.io/github/contributors/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/graphs/contributors)
 [![](https://img.shields.io/github/issues-pr/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls)
 [![](https://img.shields.io/github/issues-pr-closed/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls?q=is%3Apr+is%3Aclosed)
-
-[![](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Table of Contents
 
 - [Building](#building)
 - [Getting started](#getting-started)
 - [Next steps](#next-steps)
-
-This document contains a brief introduction on how to use the QIR passes. A more comprehensive [walk-through is found here](./docs/src/index.md).
 
 ## Building
 
