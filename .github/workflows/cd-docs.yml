@@ -34,7 +34,7 @@ jobs:
           npm install
           npm run build
           cd ../
-          mv docs/build ./
+          mv /docs/src/.vuepress/dist ./build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5

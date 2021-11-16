@@ -24,12 +24,13 @@ jobs:
           brew unlink python@3.9
           brew link python@3.9
           echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
-          exec -l $SHELL
           echo "testin compiler"
           clang++-11 --version
           git submodule update --init --recursive
-          pip3 install --user -r requirements.txt      
+          pip3 install --user -r requirements.txt 
           chmod +x manage
+
+          exec -l $SHELL
 
       - name: "Checking format"
         run: |
