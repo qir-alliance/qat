@@ -228,7 +228,8 @@ int main(int argc, char** argv)
                         pass_builder.buildModuleOptimizationPipeline(opt, ptr->isDebugMode());
                     mpm.addPass(std::move(pipeline3));
 
-                    llvm::ModuleInlinerWrapperPass pipeline4 = ModuleInlinerWrapperPass(getInlineParams(INT_MAX));
+                    auto                           inline_param = getInlineParams(cfg.inlineParameter());
+                    llvm::ModuleInlinerWrapperPass pipeline4    = ModuleInlinerWrapperPass(inline_param);
                     mpm.addPass(std::move(pipeline4));
                 }
             });

@@ -19,6 +19,8 @@ namespace quantum
             default_pipeline_is_disabled_, "disable-default-pipeline", "Disables the the default pipeline.");
 
         config.addParameter(pass_pipeline_, "passes", "LLVM passes pipeline to use upon applying this component.");
+
+        config.addParameter(inline_parameter_, "inlining-parameter", "Number of code lines acceptable when inlining.");
     }
 
     LlvmPassesConfiguration LlvmPassesConfiguration::createDisabled()
@@ -53,6 +55,11 @@ namespace quantum
     bool LlvmPassesConfiguration::operator==(LlvmPassesConfiguration const& ref) const
     {
         return always_inline_ == ref.always_inline_;
+    }
+
+    int32_t LlvmPassesConfiguration::inlineParameter() const
+    {
+        return inline_parameter_;
     }
 
 } // namespace quantum

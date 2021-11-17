@@ -4,6 +4,8 @@
 
 #include "Commandline/ConfigurationManager.hpp"
 
+#include <limits>
+
 namespace microsoft
 {
 namespace quantum
@@ -46,6 +48,9 @@ namespace quantum
 
         std::string passPipeline() const;
 
+        /// Parameter that defines the maximum number of lines of code allowed for inlining.
+        int32_t inlineParameter() const;
+
       private:
         // Variables that enables or disables the adding of specific passes
         //
@@ -53,6 +58,7 @@ namespace quantum
         bool        always_inline_{false};                ///< Whether or not LLVM component should inline.
         bool        default_pipeline_is_disabled_{false}; ///< Whether or not the default pipeline is disabled
         std::string pass_pipeline_{""};                   ///< Opt compatible LLVM passes pipeline
+        int32_t     inline_parameter_{std::numeric_limits<int32_t>::max()};
     };
 
 } // namespace quantum
