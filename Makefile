@@ -1,6 +1,7 @@
 nothing:
 	@echo "Preventing the user from accidentality running the first command."
 
+
 documentation:
 	docker build -f Docker/Docs.dockerfile -t qir-passes-docs:latest .	
 
