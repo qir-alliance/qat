@@ -1,3 +1,7 @@
+#on:
+#  push:
+#    tags:
+#    - 'v*'
 on:
   release:
     types:
@@ -52,11 +56,11 @@ jobs:
           cd ..
           mv Release/qir/qat/Apps/qat ./
           chmod +x qat
-          tar cf qat-ubuntu-20.zip qat
+          tar cf qat-ubuntu-20.zip qat          
         env:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
-          PYTHON_BIN_PATH: /usr/bin/python3
+          PYTHON_BIN_PATH: /usr/bin/python3          
           CC: clang-11
           CXX: clang++-11
 
