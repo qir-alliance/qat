@@ -30,7 +30,7 @@ namespace quantum
         bool verify_each_pass = false;
         standard_instrumentations_->registerCallbacks(*pass_instrumentation_callbacks_);
 
-        // TODO(tfr): Parameterize
+        // TODO(issue-13): Parameterize
         // pipeline_tuning_options_.LoopUnrolling = !DisableLoopUnrolling;
         // pipeline_tuning_options_.Coroutines = Coroutines;
 

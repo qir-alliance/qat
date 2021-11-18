@@ -22,7 +22,7 @@ namespace quantum
         result_allocation_manager->setReuseRegisters(cfg.shouldReuseResults());
 
         // Creating profile
-        // TODO(tfr): Set target machine
+        // TODO(issue-12): Set target machine
         Profile ret{name, debug, nullptr, qubit_allocation_manager, result_allocation_manager};
 
         auto module_pass_manager = createGenerationModulePassManager(ret, optimisation_level, debug);

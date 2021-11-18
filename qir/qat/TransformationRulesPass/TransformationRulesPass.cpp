@@ -338,7 +338,7 @@ namespace quantum
                 {
                     for (uint32_t i = 0; i < br_instr->getNumOperands(); ++i)
                     {
-                        // TODO(tfr): This may not work on multi path branches (conditional)
+                        // TODO(issue-19): This may not work on multi path branches (conditional)
                         // as we may accidentally add the final path (contains qubit release)
                         // and we cannot make assumptions since optimisation may have rearranged
                         // everything. In this case, we should revert to the order they appear in the
@@ -382,7 +382,7 @@ namespace quantum
                     // Checking that configuration is correct
                     if (!config_.assumeNoExceptions())
                     {
-                        // TODO(tfr): Unify error reporting
+                        // TODO(issue-20): Unify error reporting
                         throw std::runtime_error("Exceptions paths cannot be handled at compile time. Either disable "
                                                  "transform-execution-path-only or add assumption assume-no-except");
                     }
@@ -661,7 +661,7 @@ namespace quantum
                         auto val1 = captures["b1"];
                         auto val2 = captures["b2"];
 
-                        auto block1 = phi->getIncomingBlock(0); // TODO(tfr): Make sure that block1 matches val1
+                        auto block1 = phi->getIncomingBlock(0); // TODO(issue-21): Make sure that block1 matches val1
                         auto block2 = phi->getIncomingBlock(1);
 
                         if (!isActive(block1))

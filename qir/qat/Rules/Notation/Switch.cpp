@@ -27,7 +27,7 @@ namespace quantum
         {
             auto switch_pattern = std::make_shared<SwitchPattern>();
 
-            // TODO(tfr): finish switch pattern
+            // TODO(issue-17): finish switch pattern
             //  switch_pattern->addChild(cond);
             // switch_pattern->addChild(arg1);
             //  switch_pattern->addChild(arg2);

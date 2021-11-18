@@ -7,7 +7,7 @@ User guide:
 - [Quick start](UserGuide/QuickStart.md)
 - [Building the library](UserGuide/BuildingLibrary.md)
 - [Introduction to profiles](UserGuide/IntroductionToProfiles.md)
-- Applying a profile (TODO(tfr): Yet to be written)
+- Applying a profile (TODO(issue-8): Yet to be written)
 
 Developer guide:
 
