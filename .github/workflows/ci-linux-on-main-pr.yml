@@ -30,7 +30,7 @@ jobs:
           sudo apt install -y python3 python3-pip 
           sudo apt-get remove -y llvm-10
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 0
-          dotnet add package Microsoft.Quantum.Sdk --version 0.20.2110171573          
+          dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573          
           git submodule update --init --recursive
           pip install -r requirements.txt  
           chmod +x manage

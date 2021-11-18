@@ -30,7 +30,7 @@ jobs:
           echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt 
-          dotnet add package Microsoft.Quantum.Sdk --version 0.20.2110171573
+          dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573          
           chmod +x manage
 
           exec -l $SHELL
