@@ -83,7 +83,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)
   call void @__quantum__rt__qubit_release_array(%Array* %array1)
   )script");
 
-    // TODO(tfr): Possibly the "correct" way to deal with this is to
+    // TODO(issue-18): Possibly the "correct" way to deal with this is to
     // do a more granular approach, translating __quantum__rt__array_get_element_ptr_1d
     // int to a constant i8*. For discussion with team. A good example is
     //

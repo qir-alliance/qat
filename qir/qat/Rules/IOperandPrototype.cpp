@@ -39,7 +39,7 @@ namespace quantum
             return true;
         }
 
-        // TODO(QAT-private-issue-33): value may be other type than llvm::User. Check other relevant types
+        // TODO(issue-16): value may be other type than llvm::User. Check other relevant types
         // and deal with it.
 
         return true;

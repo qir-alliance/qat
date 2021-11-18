@@ -126,7 +126,7 @@ namespace quantum
 
     void RuleFactory::useStaticQubitArrayAllocation()
     {
-        // TODO(QAT-private-issue-32): Use weak pointers to capture allocation managers
+        // TODO(issue-14): Use weak pointers to capture allocation managers
         auto qubit_alloc_manager = qubit_alloc_manager_;
 
         /// Allocation
@@ -367,7 +367,7 @@ namespace quantum
                  if (name.empty())
                  {
 
-                     // TODO(tfr): report error
+                     // TODO(issue-15): report error
                      llvm::outs() << "FAILED due to unnamed non standard allocation:\n";
                      llvm::outs() << *val << "\n\n";
 
@@ -376,7 +376,7 @@ namespace quantum
                      return deleter(builder, val, cap, rep);
                  }
 
-                 // TODO(tfr): report error
+                 // TODO(issue-15): report error
                  llvm::outs() << "FAILED due to non standard allocation:\n";
                  llvm::outs() << *cap["name"] << "\n";
                  llvm::outs() << *val << "\n\n";

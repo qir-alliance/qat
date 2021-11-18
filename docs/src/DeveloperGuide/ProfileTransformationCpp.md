@@ -1,9 +1,5 @@
 # Creating a profile transformation in C++
 
-## Profile transformation
-
-TODO(tfr): Yet to be written
-
 ## Profile transformation as pass
 
 As an example of how one can implement a new profile pass, we here show the implementation details of our example pass which allows mapping the teleportation code to the base profile:

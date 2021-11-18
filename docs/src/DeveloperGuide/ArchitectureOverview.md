@@ -52,4 +52,4 @@ To distinguish between LLVM passes and QAT extensions, we will refer to QAT exte
 
 ## Architecture description
 
-TODO(tfr): Yet to be written
+TODO(issue-9): Yet to be written

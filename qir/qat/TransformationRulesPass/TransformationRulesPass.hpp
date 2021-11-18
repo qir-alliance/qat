@@ -225,7 +225,8 @@ namespace quantum
         //
 
         /// Pointer to the current profile. This pointer is used to annotate top level functions with
-        /// regards to how many qubits they require. TODO(tfr): Consider moving into its own component.
+        /// regards to how many qubits they require. TODO(issue-22): Consider moving into its own
+        /// component.
         Profile* profile_{nullptr};
     };
 

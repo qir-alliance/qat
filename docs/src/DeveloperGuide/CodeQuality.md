@@ -40,7 +40,7 @@ You can run all processes by running:
 ```
 
 As `clang-tidy` and `clang-format` acts slightly different from version to version and on different platforms, it is recommended
-that you use a docker image to perform these steps. TODO(TFR): The docker image is not added yet and this will be documented in the future.
+that you use a docker image to perform these steps. TODO(issue-10): The docker image is not added yet and this will be documented in the future.
 
 ## Running tests
 
@@ -71,7 +71,7 @@ ctest
 
 ## Writing C++ tests
 
-TODO(tfr): Write this section
+TODO(issue-11): Write this section
 
 ## Modifying code quality requirements
 
