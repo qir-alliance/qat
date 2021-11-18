@@ -30,6 +30,7 @@ jobs:
           echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt 
+          dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573     
           chmod +x manage
 
           exec -l $SHELL
@@ -51,6 +52,16 @@ jobs:
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
           CC: clang
           CXX: clang++
+
+      - name: "Running examples"
+        run: |
+          make test-examples
+        env:
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          CC: clang
+          CXX: clang++
+
 
       - name: "Performing static analysis"
         run: |
