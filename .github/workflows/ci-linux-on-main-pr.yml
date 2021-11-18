@@ -60,6 +60,16 @@ jobs:
           CC: clang-11
           CXX: clang++-11
 
+      - name: "Running examples"
+        run: |
+          make test-examples
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
       - name: "Performing static analysis"
         run: |
           ./manage lint

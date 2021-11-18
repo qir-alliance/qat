@@ -52,6 +52,16 @@ jobs:
           CC: clang
           CXX: clang++
 
+      - name: "Running examples"
+        run: |
+          make test-examples
+        env:
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          CC: clang
+          CXX: clang++
+
+
       - name: "Performing static analysis"
         run: |
           ./manage lint
