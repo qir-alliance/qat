@@ -41,9 +41,8 @@ jobs:
           cd ../
           mv docs/site ./
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.6
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages
-          folder: site
-          ssh-key: ${{ secrets.DOCS_DEPLOY_KEY }}
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./site
