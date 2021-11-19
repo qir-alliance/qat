@@ -20,7 +20,8 @@ jobs:
             pkg-config \
             findutils \
             wget \
-            unzip doxygen  texlive-font-utils     
+            unzip doxygen  texlive-font-utils
+     
           pip install mkdocs
           pip install mkdocs-gitbook
           wget https://github.com/matusnovak/doxybook2/releases/download/v1.3.6/doxybook2-linux-amd64-v1.3.6.zip
@@ -37,10 +38,12 @@ jobs:
           cd docs/
           mkdocs build
           cd ../
-          mv docs/site ./build                    
+          mv docs/site ./build
+          ls
+          ls build/
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          branch: gh-pages
+          folder: build
