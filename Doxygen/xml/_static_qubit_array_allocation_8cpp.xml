@@ -1,0 +1,799 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="_static_qubit_array_allocation_8cpp" kind="file" language="C++">
+    <compoundname>StaticQubitArrayAllocation.cpp</compoundname>
+    <includes refid="_default_profile_generator_8hpp" local="yes">Generators/DefaultProfileGenerator.hpp</includes>
+    <includes refid="_factory_8hpp" local="yes">Rules/Factory.hpp</includes>
+    <includes refid="_ir_manipulation_test_helper_8hpp" local="yes">TestTools/IrManipulationTestHelper.hpp</includes>
+    <includes local="yes">gtest/gtest.h</includes>
+    <includes refid="_llvm_8hpp" local="yes">Llvm/Llvm.hpp</includes>
+    <includes local="no">functional</includes>
+    <incdepgraph>
+      <node id="68">
+        <label>Rules/Patterns/Instruction.hpp</label>
+        <link refid="_instruction_8hpp_source"/>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>llvm/IR/Module.h</label>
+      </node>
+      <node id="64">
+        <label>Rules/IOperandPrototype.hpp</label>
+        <link refid="_i_operand_prototype_8hpp_source"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="73">
+        <label>functional</label>
+      </node>
+      <node id="45">
+        <label>iomanip</label>
+      </node>
+      <node id="24">
+        <label>llvm/IR/IRBuilder.h</label>
+      </node>
+      <node id="51">
+        <label>limits</label>
+      </node>
+      <node id="66">
+        <label>Rules/Patterns/AnyPattern.hpp</label>
+        <link refid="_any_pattern_8hpp_source"/>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>llvm/IR/Function.h</label>
+      </node>
+      <node id="50">
+        <label>Generators/LlvmPassesConfiguration.hpp</label>
+        <link refid="_llvm_passes_configuration_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>llvm/InitializePasses.h</label>
+      </node>
+      <node id="25">
+        <label>llvm/IR/LLVMContext.h</label>
+      </node>
+      <node id="16">
+        <label>llvm/Support/raw_ostream.h</label>
+      </node>
+      <node id="59">
+        <label>cstdint</label>
+      </node>
+      <node id="13">
+        <label>llvm/Analysis/InlineCost.h</label>
+      </node>
+      <node id="39">
+        <label>llvm/LinkAllIR.h</label>
+      </node>
+      <node id="71">
+        <label>TestTools/IrManipulationTestHelper.hpp</label>
+        <link refid="_ir_manipulation_test_helper_8hpp_source"/>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>llvm/Passes/StandardInstrumentations.h</label>
+      </node>
+      <node id="12">
+        <label>Llvm/Llvm.hpp</label>
+        <link refid="_llvm_8hpp_source"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>llvm/Support/TargetSelect.h</label>
+      </node>
+      <node id="28">
+        <label>llvm/IR/Verifier.h</label>
+      </node>
+      <node id="54">
+        <label>AllocationManager/AllocationManager.hpp</label>
+        <link refid="_allocation_manager_8hpp_source"/>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>string</label>
+      </node>
+      <node id="34">
+        <label>llvm/Transforms/Scalar/DCE.h</label>
+      </node>
+      <node id="10">
+        <label>unordered_set</label>
+      </node>
+      <node id="69">
+        <label>TransformationRulesPass/TransformationRulesPassConfiguration.hpp</label>
+        <link refid="_transformation_rules_pass_configuration_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>ValidationPass/ValidationPassConfiguration.hpp</label>
+        <link refid="_validation_pass_configuration_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>AllocationManager/IAllocationManager.hpp</label>
+        <link refid="_i_allocation_manager_8hpp_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>Commandline/ConfigurationManager.hpp</label>
+        <link refid="_configuration_manager_8hpp_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>llvm/Transforms/Scalar/LoopUnrollPass.h</label>
+      </node>
+      <node id="33">
+        <label>llvm/Transforms/Scalar/ADCE.h</label>
+      </node>
+      <node id="62">
+        <label>Rules/FactoryConfig.hpp</label>
+        <link refid="_factory_config_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>Generators/ProfileGenerator.hpp</label>
+        <link refid="_profile_generator_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>llvm/MC/SubtargetFeature.h</label>
+      </node>
+      <node id="58">
+        <label>Logging/ILogger.hpp</label>
+        <link refid="_i_logger_8hpp_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>Validator/Validator.hpp</label>
+        <link refid="_validator_8hpp_source"/>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>Rules/Tests/Unit/StaticQubitArrayAllocation.cpp</label>
+        <link refid="_static_qubit_array_allocation_8cpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>llvm/Passes/PassPlugin.h</label>
+      </node>
+      <node id="4">
+        <label>Commandline/ConfigBind.hpp</label>
+        <link refid="_config_bind_8hpp_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vector</label>
+      </node>
+      <node id="60">
+        <label>Logging/LogCollection.hpp</label>
+        <link refid="_log_collection_8hpp_source"/>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="72">
+        <label>gtest/gtest.h</label>
+      </node>
+      <node id="6">
+        <label>Commandline/ParameterParser.hpp</label>
+        <link refid="_parameter_parser_8hpp_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>sstream</label>
+      </node>
+      <node id="32">
+        <label>llvm/LinkAllPasses.h</label>
+      </node>
+      <node id="20">
+        <label>llvm/IR/BasicBlock.h</label>
+      </node>
+      <node id="65">
+        <label>Rules/ReplacementRule.hpp</label>
+        <link refid="_replacement_rule_8hpp_source"/>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>iostream</label>
+      </node>
+      <node id="44">
+        <label>llvm/Target/TargetMachine.h</label>
+      </node>
+      <node id="17">
+        <label>llvm/Transforms/IPO/Inliner.h</label>
+      </node>
+      <node id="9">
+        <label>unordered_map</label>
+      </node>
+      <node id="29">
+        <label>llvm/IRReader/IRReader.h</label>
+      </node>
+      <node id="2">
+        <label>Generators/DefaultProfileGenerator.hpp</label>
+        <link refid="_default_profile_generator_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>llvm/Transforms/Utils/Cloning.h</label>
+      </node>
+      <node id="14">
+        <label>llvm/Passes/PassBuilder.h</label>
+      </node>
+      <node id="67">
+        <label>Rules/Patterns/CallPattern.hpp</label>
+        <link refid="_call_pattern_8hpp_source"/>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>llvm/IR/Constants.h</label>
+      </node>
+      <node id="27">
+        <label>llvm/IR/Type.h</label>
+      </node>
+      <node id="42">
+        <label>llvm/Support/InitLLVM.h</label>
+      </node>
+      <node id="7">
+        <label>QatTypes/QatTypes.hpp</label>
+        <link refid="_qat_types_8hpp_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>Commandline/IConfigBind.hpp</label>
+        <link refid="_i_config_bind_8hpp_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>llvm/Bitcode/BitcodeWriter.h</label>
+      </node>
+      <node id="36">
+        <label>llvm/Linker/Linker.h</label>
+      </node>
+      <node id="48">
+        <label>type_traits</label>
+      </node>
+      <node id="63">
+        <label>Rules/RuleSet.hpp</label>
+        <link refid="_rule_set_8hpp_source"/>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>Profile/Profile.hpp</label>
+        <link refid="_profile_8hpp_source"/>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>llvm/Transforms/Utils/BasicBlockUtils.h</label>
+      </node>
+      <node id="35">
+        <label>llvm/Analysis/ConstantFolding.h</label>
+      </node>
+      <node id="22">
+        <label>llvm/IR/DerivedTypes.h</label>
+      </node>
+      <node id="30">
+        <label>llvm/Support/SourceMgr.h</label>
+      </node>
+      <node id="70">
+        <label>Rules/Factory.hpp</label>
+        <link refid="_factory_8hpp_source"/>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>memory</label>
+      </node>
+      <node id="49">
+        <label>typeindex</label>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="_static_qubit_array_allocation_8cpp_1a7b00064b70635a112627b99978722682" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>TEST</definition>
+        <argsstring>(RuleSetTestSuite, StaticQubitArrayAllocationOffsets)</argsstring>
+        <name>TEST</name>
+        <param>
+          <type>RuleSetTestSuite</type>
+        </param>
+        <param>
+          <type>StaticQubitArrayAllocationOffsets</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Tests/Unit/StaticQubitArrayAllocation.cpp" line="49" column="1" bodyfile="Rules/Tests/Unit/StaticQubitArrayAllocation.cpp" bodystart="49" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="_static_qubit_array_allocation_8cpp_1a257377073d38561b4cf7ebdd9d134bb4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>TEST</definition>
+        <argsstring>(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)</argsstring>
+        <name>TEST</name>
+        <param>
+          <type>RuleSetTestSuite</type>
+        </param>
+        <param>
+          <type>StaticQubitArrayAllocationGetPtr</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Tests/Unit/StaticQubitArrayAllocation.cpp" line="75" column="1" bodyfile="Rules/Tests/Unit/StaticQubitArrayAllocation.cpp" bodystart="75" bodyend="126"/>
+      </memberdef>
+      <memberdef kind="function" id="_static_qubit_array_allocation_8cpp_1a6ef73a551b69d80158fdb2116505dc71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>TEST</definition>
+        <argsstring>(RuleSetTestSuite, StaticQubitArrayAllocationAdvanced)</argsstring>
+        <name>TEST</name>
+        <param>
+          <type>RuleSetTestSuite</type>
+        </param>
+        <param>
+          <type>StaticQubitArrayAllocationAdvanced</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Tests/Unit/StaticQubitArrayAllocation.cpp" line="128" column="1" bodyfile="Rules/Tests/Unit/StaticQubitArrayAllocation.cpp" bodystart="128" bodyend="169"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>Copyright<sp/>(c)<sp/>Microsoft<sp/>Corporation.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Licensed<sp/>under<sp/>the<sp/>MIT<sp/>License.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Generators/DefaultProfileGenerator.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Rules/Factory.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;TestTools/IrManipulationTestHelper.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;gtest/gtest.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Llvm/Llvm.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;functional&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal">microsoft::quantum;</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keyword">namespace</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>IrManipulationTestHelperPtr<sp/>=<sp/>std::shared_ptr&lt;IrManipulationTestHelper&gt;;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal">IrManipulationTestHelperPtr<sp/>newIrManip(std::string<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">&amp;<sp/>script)</highlight></codeline>
+<codeline lineno="19"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>IrManipulationTestHelperPtr<sp/>ir_manip<sp/>=<sp/>std::make_shared&lt;IrManipulationTestHelper&gt;();</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>ir_manip-&gt;declareOpaque(</highlight><highlight class="stringliteral">&quot;Array&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>ir_manip-&gt;declareOpaque(</highlight><highlight class="stringliteral">&quot;Qubit&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>ir_manip-&gt;declareOpaque(</highlight><highlight class="stringliteral">&quot;Result&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>ir_manip-&gt;declareFunction(</highlight><highlight class="stringliteral">&quot;%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64)&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>ir_manip-&gt;declareFunction(</highlight><highlight class="stringliteral">&quot;i8*<sp/>@__quantum__rt__array_get_element_ptr_1d(%Array*,<sp/>i64)&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>ir_manip-&gt;declareFunction(</highlight><highlight class="stringliteral">&quot;void<sp/>@__quantum__qis__h__body(%Qubit*)&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>ir_manip-&gt;declareFunction(</highlight><highlight class="stringliteral">&quot;void<sp/>@__quantum__rt__qubit_release_array(%Array*)&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!ir_manip-&gt;fromBodyString(script))</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::outs()<sp/>&lt;&lt;<sp/>ir_manip-&gt;getErrorMessage()<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;\n&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>exit(-1);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ir_manip;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>namespace</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/><sp/>%0<sp/>=<sp/>call<sp/>i8*<sp/>@__quantum__rt__array_get_element_ptr_1d(%Array*<sp/>%leftPreshared,<sp/>i64<sp/>0)</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/><sp/>%1<sp/>=<sp/>bitcast<sp/>i8*<sp/>%0<sp/>to<sp/>i64*</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/><sp/>store<sp/>i64<sp/>1,<sp/>i64*<sp/>%1,<sp/>align<sp/>4</highlight></codeline>
+<codeline lineno="46"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Single<sp/>allocation<sp/>with<sp/>action<sp/>and<sp/>then<sp/>release</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal">TEST(RuleSetTestSuite,<sp/>StaticQubitArrayAllocationOffsets)</highlight></codeline>
+<codeline lineno="50"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>ir_manip<sp/>=<sp/>newIrManip(R</highlight><highlight class="stringliteral">&quot;script(</highlight></codeline>
+<codeline lineno="52"><highlight class="stringliteral"><sp/><sp/>%array1<sp/>=<sp/>call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>2)<sp/>;<sp/>offset<sp/>0</highlight></codeline>
+<codeline lineno="53"><highlight class="stringliteral"><sp/><sp/>%array2<sp/>=<sp/>call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>3)<sp/>;<sp/>offset<sp/>2</highlight></codeline>
+<codeline lineno="54"><highlight class="stringliteral"><sp/><sp/>%array3<sp/>=<sp/>call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>5)<sp/>;<sp/>offset<sp/>5</highlight></codeline>
+<codeline lineno="55"><highlight class="stringliteral"><sp/><sp/>%array4<sp/>=<sp/>call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>9)<sp/>;<sp/>offset<sp/>10</highlight></codeline>
+<codeline lineno="56"><highlight class="stringliteral"><sp/><sp/>%array5<sp/>=<sp/>call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>14)<sp/>;<sp/>offset<sp/>19</highlight></codeline>
+<codeline lineno="57"><highlight class="stringliteral"><sp/><sp/>)script&quot;);</highlight></codeline>
+<codeline lineno="58"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="59"><highlight class="stringliteral"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>configure_profile<sp/>=<sp/>[](<ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref>&amp;<sp/>rule_set)<sp/>{</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>factory<sp/>=<sp/><ref refid="classmicrosoft_1_1quantum_1_1_rule_factory" kindref="compound">RuleFactory</ref>(rule_set,<sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" kindref="member">BasicAllocationManager::createNew</ref>(),<sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" kindref="member">BasicAllocationManager::createNew</ref>());</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>factory.useStaticQubitArrayAllocation();</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>profile<sp/>=<sp/>std::make_shared&lt;DefaultProfileGenerator&gt;(</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::move(configure_profile),<sp/><ref refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1ad2493200a8bdb35e45c8ebcab15a3f4b" kindref="member">TransformationRulesPassConfiguration::createDisabled</ref>(),</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a175c3567995b098ef9d3330aca82bd1d" kindref="member">LlvmPassesConfiguration::createDisabled</ref>());</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>ir_manip-&gt;applyProfile(profile);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/>EXPECT_TRUE(ir_manip-&gt;hasInstructionSequence(</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight><highlight class="stringliteral">&quot;%array1<sp/>=<sp/>inttoptr<sp/>i64<sp/>0<sp/>to<sp/>%Array*&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;%array2<sp/>=<sp/>inttoptr<sp/>i64<sp/>2<sp/>to<sp/>%Array*&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;%array3<sp/>=<sp/>inttoptr<sp/>i64<sp/>5<sp/>to<sp/>%Array*&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;%array4<sp/>=<sp/>inttoptr<sp/>i64<sp/>10<sp/>to<sp/>%Array*&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;%array5<sp/>=<sp/>inttoptr<sp/>i64<sp/>19<sp/>to<sp/>%Array*&quot;</highlight><highlight class="normal">}));</highlight></codeline>
+<codeline lineno="73"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal">TEST(RuleSetTestSuite,<sp/>StaticQubitArrayAllocationGetPtr)</highlight></codeline>
+<codeline lineno="76"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>ir_manip<sp/>=<sp/>newIrManip(R</highlight><highlight class="stringliteral">&quot;script(</highlight></codeline>
+<codeline lineno="78"><highlight class="stringliteral"><sp/><sp/>%array1<sp/>=<sp/>call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>10)<sp/></highlight></codeline>
+<codeline lineno="79"><highlight class="stringliteral"><sp/><sp/>%0<sp/>=<sp/>call<sp/>i8*<sp/>@__quantum__rt__array_get_element_ptr_1d(%Array*<sp/>%array1,<sp/>i64<sp/>7)</highlight></codeline>
+<codeline lineno="80"><highlight class="stringliteral"><sp/><sp/>%1<sp/>=<sp/>bitcast<sp/>i8*<sp/>%0<sp/>to<sp/>%Qubit**</highlight></codeline>
+<codeline lineno="81"><highlight class="stringliteral"><sp/><sp/>%qubit<sp/>=<sp/>load<sp/>%Qubit*,<sp/>%Qubit**<sp/>%1,<sp/>align<sp/>8</highlight></codeline>
+<codeline lineno="82"><highlight class="stringliteral"><sp/><sp/>call<sp/>void<sp/>@__quantum__qis__h__body(%Qubit*<sp/>%qubit)</highlight></codeline>
+<codeline lineno="83"><highlight class="stringliteral"><sp/><sp/>call<sp/>void<sp/>@__quantum__rt__qubit_release_array(%Array*<sp/>%array1)</highlight></codeline>
+<codeline lineno="84"><highlight class="stringliteral"><sp/><sp/>)script&quot;);</highlight></codeline>
+<codeline lineno="85"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="86"><highlight class="stringliteral"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>TODO(issue-18):<sp/>Possibly<sp/>the<sp/>&quot;correct&quot;<sp/>way<sp/>to<sp/>deal<sp/>with<sp/>this<sp/>is<sp/>to</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>do<sp/>a<sp/>more<sp/>granular<sp/>approach,<sp/>translating<sp/>__quantum__rt__array_get_element_ptr_1d</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>int<sp/>to<sp/>a<sp/>constant<sp/>i8*.<sp/>For<sp/>discussion<sp/>with<sp/>team.<sp/>A<sp/>good<sp/>example<sp/>is</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>%array1<sp/>=<sp/>call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>10)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>%0<sp/>=<sp/>call<sp/>i8*<sp/>@__quantum__rt__array_get_element_ptr_1d(%Array*<sp/>%array1,<sp/>i64<sp/>7)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>%1<sp/>=<sp/>bitcast<sp/>i8*<sp/>%0<sp/>to<sp/>%Qubit**</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>%qubit<sp/>=<sp/>load<sp/>%Qubit*,<sp/>%Qubit**<sp/>%1,<sp/>align<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>;;;<sp/>call<sp/>@__quantum__qis__h__body(%Qubit*<sp/>%qubit)<sp/><sp/>&lt;<sp/>Note<sp/>this<sp/>instruction<sp/>is<sp/>missing</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>LLVM<sp/>will<sp/>optimise<sp/>the<sp/>two<sp/>last<sp/>instructions<sp/>away<sp/>even<sp/>at<sp/>O0<sp/>as<sp/>they<sp/>are<sp/>not<sp/>used.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Consequently<sp/>the<sp/>pattern<sp/>fails.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>configure_profile<sp/>=<sp/>[](<ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref>&amp;<sp/>rule_set)<sp/>{</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>factory<sp/>=<sp/><ref refid="classmicrosoft_1_1quantum_1_1_rule_factory" kindref="compound">RuleFactory</ref>(rule_set,<sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" kindref="member">BasicAllocationManager::createNew</ref>(),<sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" kindref="member">BasicAllocationManager::createNew</ref>());</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>factory.useStaticQubitArrayAllocation();</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>profile<sp/>=<sp/>std::make_shared&lt;DefaultProfileGenerator&gt;(</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::move(configure_profile),<sp/><ref refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1ad2493200a8bdb35e45c8ebcab15a3f4b" kindref="member">TransformationRulesPassConfiguration::createDisabled</ref>(),</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a175c3567995b098ef9d3330aca82bd1d" kindref="member">LlvmPassesConfiguration::createDisabled</ref>());</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>ir_manip-&gt;applyProfile(profile);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>EXPECT_TRUE(ir_manip-&gt;hasInstructionSequence(</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight><highlight class="stringliteral">&quot;%array1<sp/>=<sp/>inttoptr<sp/>i64<sp/>0<sp/>to<sp/>%Array*&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;%qubit<sp/>=<sp/>inttoptr<sp/>i64<sp/>7<sp/>to<sp/>%Qubit*&quot;</highlight><highlight class="normal">}));</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>EXPECT_FALSE(</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ir_manip-&gt;hasInstructionSequence({</highlight><highlight class="stringliteral">&quot;call<sp/>void<sp/>@__quantum__rt__qubit_release_array(%Array*<sp/>%array1)&quot;</highlight><highlight class="normal">})<sp/>||</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ir_manip-&gt;hasInstructionSequence({</highlight><highlight class="stringliteral">&quot;tail<sp/>call<sp/>void<sp/>@__quantum__rt__qubit_release_array(%Array*<sp/>%array1)&quot;</highlight><highlight class="normal">}));</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>EXPECT_FALSE(</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ir_manip-&gt;hasInstructionSequence({</highlight><highlight class="stringliteral">&quot;call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>10)&quot;</highlight><highlight class="normal">})<sp/>||</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ir_manip-&gt;hasInstructionSequence({</highlight><highlight class="stringliteral">&quot;tail<sp/>call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>10)&quot;</highlight><highlight class="normal">}));</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>EXPECT_FALSE(</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ir_manip-&gt;hasInstructionSequence(</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight><highlight class="stringliteral">&quot;call<sp/>i8*<sp/>@__quantum__rt__array_get_element_ptr_1d(%Array*<sp/>%array1,<sp/>i64<sp/>7)&quot;</highlight><highlight class="normal">})<sp/>||</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ir_manip-&gt;hasInstructionSequence(</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight><highlight class="stringliteral">&quot;tail<sp/>call<sp/>i8*<sp/>@__quantum__rt__array_get_element_ptr_1d(%Array*<sp/>%array1,<sp/>i64<sp/>7)&quot;</highlight><highlight class="normal">}));</highlight></codeline>
+<codeline lineno="126"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal">TEST(RuleSetTestSuite,<sp/>StaticQubitArrayAllocationAdvanced)</highlight></codeline>
+<codeline lineno="129"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>ir_manip<sp/>=<sp/>newIrManip(R</highlight><highlight class="stringliteral">&quot;script(</highlight></codeline>
+<codeline lineno="131"><highlight class="stringliteral"><sp/><sp/>%array1<sp/>=<sp/>call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>10)<sp/></highlight></codeline>
+<codeline lineno="132"><highlight class="stringliteral"><sp/><sp/>%array2<sp/>=<sp/>call<sp/>%Array*<sp/>@__quantum__rt__qubit_allocate_array(i64<sp/>7)<sp/></highlight></codeline>
+<codeline lineno="133"><highlight class="stringliteral"><sp/><sp/>%0<sp/>=<sp/>call<sp/>i8*<sp/>@__quantum__rt__array_get_element_ptr_1d(%Array*<sp/>%array1,<sp/>i64<sp/>7)</highlight></codeline>
+<codeline lineno="134"><highlight class="stringliteral"><sp/><sp/>%1<sp/>=<sp/>call<sp/>i8*<sp/>@__quantum__rt__array_get_element_ptr_1d(%Array*<sp/>%array2,<sp/>i64<sp/>3)</highlight></codeline>
+<codeline lineno="135"><highlight class="stringliteral"><sp/><sp/>%2<sp/>=<sp/>bitcast<sp/>i8*<sp/>%0<sp/>to<sp/>%Qubit**</highlight></codeline>
+<codeline lineno="136"><highlight class="stringliteral"><sp/><sp/>%3<sp/>=<sp/>bitcast<sp/>i8*<sp/>%1<sp/>to<sp/>%Qubit**<sp/><sp/></highlight></codeline>
+<codeline lineno="137"><highlight class="stringliteral"><sp/><sp/>%qubit1<sp/>=<sp/>load<sp/>%Qubit*,<sp/>%Qubit**<sp/>%2,<sp/>align<sp/>8</highlight></codeline>
+<codeline lineno="138"><highlight class="stringliteral"><sp/><sp/>%qubit2<sp/>=<sp/>load<sp/>%Qubit*,<sp/>%Qubit**<sp/>%3,<sp/>align<sp/>8</highlight></codeline>
+<codeline lineno="139"><highlight class="stringliteral"><sp/><sp/>call<sp/>void<sp/>@__quantum__qis__h__body(%Qubit*<sp/>%qubit1)</highlight></codeline>
+<codeline lineno="140"><highlight class="stringliteral"><sp/><sp/>call<sp/>void<sp/>@__quantum__qis__h__body(%Qubit*<sp/>%qubit2)</highlight></codeline>
+<codeline lineno="141"><highlight class="stringliteral"><sp/><sp/>call<sp/>void<sp/>@__quantum__rt__qubit_release_array(%Array*<sp/>%array1)</highlight></codeline>
+<codeline lineno="142"><highlight class="stringliteral"><sp/><sp/>call<sp/>void<sp/>@__quantum__rt__qubit_release_array(%Array*<sp/>%array2)</highlight></codeline>
+<codeline lineno="143"><highlight class="stringliteral"><sp/><sp/>)script&quot;);</highlight></codeline>
+<codeline lineno="144"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="145"><highlight class="stringliteral"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>configure_profile<sp/>=<sp/>[](<ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref>&amp;<sp/>rule_set)<sp/>{</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>factory<sp/>=<sp/><ref refid="classmicrosoft_1_1quantum_1_1_rule_factory" kindref="compound">RuleFactory</ref>(rule_set,<sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" kindref="member">BasicAllocationManager::createNew</ref>(),<sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" kindref="member">BasicAllocationManager::createNew</ref>());</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>factory.useStaticQubitArrayAllocation();</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>profile<sp/>=<sp/>std::make_shared&lt;DefaultProfileGenerator&gt;(</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::move(configure_profile),<sp/><ref refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1ad2493200a8bdb35e45c8ebcab15a3f4b" kindref="member">TransformationRulesPassConfiguration::createDisabled</ref>(),</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a175c3567995b098ef9d3330aca82bd1d" kindref="member">LlvmPassesConfiguration::createDisabled</ref>());</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/>ir_manip-&gt;applyProfile(profile);</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/>EXPECT_TRUE(ir_manip-&gt;hasInstructionSequence(</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight><highlight class="stringliteral">&quot;%array1<sp/>=<sp/>inttoptr<sp/>i64<sp/>0<sp/>to<sp/>%Array*&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;%qubit1<sp/>=<sp/>inttoptr<sp/>i64<sp/>7<sp/>to<sp/>%Qubit*&quot;</highlight><highlight class="normal">}));</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/>EXPECT_TRUE(ir_manip-&gt;hasInstructionSequence(</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight><highlight class="stringliteral">&quot;%array2<sp/>=<sp/>inttoptr<sp/>i64<sp/>10<sp/>to<sp/>%Array*&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;%qubit2<sp/>=<sp/>inttoptr<sp/>i64<sp/>13<sp/>to<sp/>%Qubit*&quot;</highlight><highlight class="normal">}));</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/>EXPECT_FALSE(</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ir_manip-&gt;hasInstructionSequence({</highlight><highlight class="stringliteral">&quot;call<sp/>void<sp/>@__quantum__rt__qubit_release_array(%Array*<sp/>%array1)&quot;</highlight><highlight class="normal">})<sp/>||</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ir_manip-&gt;hasInstructionSequence({</highlight><highlight class="stringliteral">&quot;tail<sp/>call<sp/>void<sp/>@__quantum__rt__qubit_release_array(%Array*<sp/>%array1)&quot;</highlight><highlight class="normal">}));</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/>EXPECT_FALSE(</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ir_manip-&gt;hasInstructionSequence({</highlight><highlight class="stringliteral">&quot;call<sp/>void<sp/>@__quantum__rt__qubit_release_array(%Array*<sp/>%array2)&quot;</highlight><highlight class="normal">})<sp/>||</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ir_manip-&gt;hasInstructionSequence({</highlight><highlight class="stringliteral">&quot;tail<sp/>call<sp/>void<sp/>@__quantum__rt__qubit_release_array(%Array*<sp/>%array2)&quot;</highlight><highlight class="normal">}));</highlight></codeline>
+<codeline lineno="169"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="Rules/Tests/Unit/StaticQubitArrayAllocation.cpp"/>
+  </compounddef>
+</doxygen>

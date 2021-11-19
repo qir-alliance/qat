@@ -1,0 +1,79 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_basic_allocation_manager}{}\doxysection{microsoft\+::quantum\+::Basic\+Allocation\+Manager Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_basic_allocation_manager}\index{microsoft::quantum::BasicAllocationManager@{microsoft::quantum::BasicAllocationManager}}
+
+
+{\ttfamily \#include $<$Allocation\+Manager/\+Allocation\+Manager.\+hpp$>$}
+
+Inheritance diagram for microsoft\+::quantum\+::Basic\+Allocation\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicrosoft_1_1quantum_1_1_basic_allocation_manager}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block}{Allocated\+Memory\+Block}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a5745fc89f2ee86a2c4eb06f3ab18cd81}\label{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a5745fc89f2ee86a2c4eb06f3ab18cd81}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a5745fc89f2ee86a2c4eb06f3ab18cd81}{Mappings}} = std\+::vector$<$ \mbox{\hyperlink{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block}{Allocated\+Memory\+Block}} $>$
+\begin{DoxyCompactList}\small\item\em Vector of memory segments. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_ab2a8de7c7e97d8d6215ce9a9ab33efb8}\label{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_ab2a8de7c7e97d8d6215ce9a9ab33efb8}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_ab2a8de7c7e97d8d6215ce9a9ab33efb8}{Basic\+Allocation\+Manager\+Ptr}} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager}{Basic\+Allocation\+Manager}} $>$
+\begin{DoxyCompactList}\small\item\em Allocator pointer type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}{Address}} \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_aa6eff65c005184b4f42402c4d10abf0e}{allocate}} (String const \&name=\char`\"{}\char`\"{}, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a8b959912df70a013f90086320202f833}{Index}} const \&count=1) override
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a11c187cae2ab95bb7455b8cbba5ec31a}\label{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a11c187cae2ab95bb7455b8cbba5ec31a}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a11c187cae2ab95bb7455b8cbba5ec31a}{release}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}{Address}} const \&address) override
+\begin{DoxyCompactList}\small\item\em Releases the segment by address. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a264bece62aef1a34fd44f9a31a4cc1f7}\label{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a264bece62aef1a34fd44f9a31a4cc1f7}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a264bece62aef1a34fd44f9a31a4cc1f7}{reset}} () override
+\begin{DoxyCompactList}\small\item\em Resets the allocation manager and all its statistics. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a9da0b491a9905108ac5272b8ce77c4da}{set\+Reuse\+Registers}} (bool val)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_ab2a8de7c7e97d8d6215ce9a9ab33efb8}{Basic\+Allocation\+Manager\+Ptr}} \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_adfbd5dd1597bf34ed173f303618f9453}{create\+New}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Allocation\+Manager is a simple qubit and results allocator that can be used at compile-\/time. It is based on an assumption that all qubit allocating function calls are inlined and that qubits/results can be allocated with strictly growing IDs. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_aa6eff65c005184b4f42402c4d10abf0e}\label{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_aa6eff65c005184b4f42402c4d10abf0e}} 
+\index{microsoft::quantum::BasicAllocationManager@{microsoft::quantum::BasicAllocationManager}!allocate@{allocate}}
+\index{allocate@{allocate}!microsoft::quantum::BasicAllocationManager@{microsoft::quantum::BasicAllocationManager}}
+\doxysubsubsection{\texorpdfstring{allocate()}{allocate()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a8b959912df70a013f90086320202f833}{Basic\+Allocation\+Manager\+::\+Index}} microsoft\+::quantum\+::\+Basic\+Allocation\+Manager\+::allocate (\begin{DoxyParamCaption}\item[{String const \&}]{name = {\ttfamily \char`\"{}\char`\"{}},  }\item[{\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a8b959912df70a013f90086320202f833}{Index}} const \&}]{count = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Allocates a possibly named segment of a given count. Calling allocate without and arguments allocates a single anonymous resource and returns the address. In case of a larger segment, the function returns the address pointing to the first element. Allocation is guaranteed to be sequential. 
+
+Implements \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a0477e1fd52989e76d877dc7329f7ce3d}{microsoft\+::quantum\+::\+IAllocation\+Manager}}.
+
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_adfbd5dd1597bf34ed173f303618f9453}\label{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_adfbd5dd1597bf34ed173f303618f9453}} 
+\index{microsoft::quantum::BasicAllocationManager@{microsoft::quantum::BasicAllocationManager}!createNew@{createNew}}
+\index{createNew@{createNew}!microsoft::quantum::BasicAllocationManager@{microsoft::quantum::BasicAllocationManager}}
+\doxysubsubsection{\texorpdfstring{createNew()}{createNew()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_ab2a8de7c7e97d8d6215ce9a9ab33efb8}{Basic\+Allocation\+Manager\+::\+Basic\+Allocation\+Manager\+Ptr}} microsoft\+::quantum\+::\+Basic\+Allocation\+Manager\+::create\+New (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Creates a new allocation manager. The manager is kept as a shared pointer to enable allocation across different passes and/or replacement rules. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a9da0b491a9905108ac5272b8ce77c4da}\label{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a9da0b491a9905108ac5272b8ce77c4da}} 
+\index{microsoft::quantum::BasicAllocationManager@{microsoft::quantum::BasicAllocationManager}!setReuseRegisters@{setReuseRegisters}}
+\index{setReuseRegisters@{setReuseRegisters}!microsoft::quantum::BasicAllocationManager@{microsoft::quantum::BasicAllocationManager}}
+\doxysubsubsection{\texorpdfstring{setReuseRegisters()}{setReuseRegisters()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Basic\+Allocation\+Manager\+::set\+Reuse\+Registers (\begin{DoxyParamCaption}\item[{bool}]{val }\end{DoxyParamCaption})}
+
+Configuration function to set mode of qubit allocation. If function argument is true, the allocation manager will reuse qubits. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Allocation\+Manager/Allocation\+Manager.\+hpp\item 
+Allocation\+Manager/Allocation\+Manager.\+cpp\end{DoxyCompactItemize}

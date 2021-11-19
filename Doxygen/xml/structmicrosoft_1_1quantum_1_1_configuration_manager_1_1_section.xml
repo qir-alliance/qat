@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section" kind="struct" language="C++" prot="public">
+    <compoundname>microsoft::quantum::ConfigurationManager::Section</compoundname>
+    <includes refid="_configuration_manager_8hpp" local="no">Commandline/ConfigurationManager.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1afec35e68ca96f14439b46e5b798dc8d4" prot="public" static="no" mutable="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1aa6b9c062753af58a8d594990aef93a56" kindref="member">TypeId</ref></type>
+        <definition>TypeId microsoft::quantum::ConfigurationManager::Section::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <initializer>{<ref refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1aa6b9c062753af58a8d594990aef93a56" kindref="member">TypeId</ref>(typeid(std::nullptr_t))}</initializer>
+        <briefdescription>
+<para>Type of the configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ConfigurationManager.hpp" line="44" column="24" bodyfile="Commandline/ConfigurationManager.hpp" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1aa5869e1e1f4c39f53a774ea0a2c4874c" prot="public" static="no" mutable="no">
+        <type>String</type>
+        <definition>String microsoft::quantum::ConfigurationManager::Section::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+<para>Name of the section. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ConfigurationManager.hpp" line="45" column="24" bodyfile="Commandline/ConfigurationManager.hpp" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1afa4fa7ebdac7845f745567ae6ce043b7" prot="public" static="no" mutable="no">
+        <type>String</type>
+        <definition>String microsoft::quantum::ConfigurationManager::Section::description</definition>
+        <argsstring></argsstring>
+        <name>description</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+<para>Description of the section. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ConfigurationManager.hpp" line="46" column="24" bodyfile="Commandline/ConfigurationManager.hpp" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a689440e2171f234cfb3e49016ee29ea4" prot="public" static="no" mutable="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a7a7a51a321cb6c140f34431e1f2371a9" kindref="member">VoidPtr</ref></type>
+        <definition>VoidPtr microsoft::quantum::ConfigurationManager::Section::configuration</definition>
+        <argsstring></argsstring>
+        <name>configuration</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+<para>Configuration class instance. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ConfigurationManager.hpp" line="47" column="24" bodyfile="Commandline/ConfigurationManager.hpp" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a6930799c8a556e6b212f1d10817a8d24" prot="public" static="no" mutable="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a26f163aa8940c36278da8b280882583d" kindref="member">ConfigList</ref></type>
+        <definition>ConfigList microsoft::quantum::ConfigurationManager::Section::settings</definition>
+        <argsstring></argsstring>
+        <name>settings</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+<para>List of parameter bindings. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ConfigurationManager.hpp" line="48" column="24" bodyfile="Commandline/ConfigurationManager.hpp" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a8d790e3ceb4e78675dfac053bf75164a" prot="public" static="no" mutable="no">
+        <type>BoolPtr</type>
+        <definition>BoolPtr microsoft::quantum::ConfigurationManager::Section::active</definition>
+        <argsstring></argsstring>
+        <name>active</name>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+<para>Whether or not this component is active;. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ConfigurationManager.hpp" line="49" column="24" bodyfile="Commandline/ConfigurationManager.hpp" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a9cace218e8ade25b3c4aa2317d21e9a9" prot="public" static="no" mutable="no">
+        <type>String</type>
+        <definition>String microsoft::quantum::ConfigurationManager::Section::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+<para>Id referring to this component. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ConfigurationManager.hpp" line="50" column="24" bodyfile="Commandline/ConfigurationManager.hpp" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section" kindref="compound">Section</ref> defines a section in the configuration. It holds the type of the configuration class, the name of the section a description, the instance of the configuration class itself and list of parameter bindings. </para>
+    </detaileddescription>
+    <location file="Commandline/ConfigurationManager.hpp" line="42" column="9" bodyfile="Commandline/ConfigurationManager.hpp" bodystart="43" bodyend="51"/>
+    <listofallmembers>
+      <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a8d790e3ceb4e78675dfac053bf75164a" prot="public" virt="non-virtual"><scope>microsoft::quantum::ConfigurationManager::Section</scope><name>active</name></member>
+      <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a689440e2171f234cfb3e49016ee29ea4" prot="public" virt="non-virtual"><scope>microsoft::quantum::ConfigurationManager::Section</scope><name>configuration</name></member>
+      <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1afa4fa7ebdac7845f745567ae6ce043b7" prot="public" virt="non-virtual"><scope>microsoft::quantum::ConfigurationManager::Section</scope><name>description</name></member>
+      <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a9cace218e8ade25b3c4aa2317d21e9a9" prot="public" virt="non-virtual"><scope>microsoft::quantum::ConfigurationManager::Section</scope><name>id</name></member>
+      <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1aa5869e1e1f4c39f53a774ea0a2c4874c" prot="public" virt="non-virtual"><scope>microsoft::quantum::ConfigurationManager::Section</scope><name>name</name></member>
+      <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a6930799c8a556e6b212f1d10817a8d24" prot="public" virt="non-virtual"><scope>microsoft::quantum::ConfigurationManager::Section</scope><name>settings</name></member>
+      <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1afec35e68ca96f14439b46e5b798dc8d4" prot="public" virt="non-virtual"><scope>microsoft::quantum::ConfigurationManager::Section</scope><name>type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

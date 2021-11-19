@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_default_profile_generator" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::DefaultProfileGenerator</compoundname>
+    <basecompoundref refid="classmicrosoft_1_1quantum_1_1_profile_generator" prot="public" virt="non-virtual">microsoft::quantum::ProfileGenerator</basecompoundref>
+    <includes refid="_default_profile_generator_8hpp" local="no">Generators/DefaultProfileGenerator.hpp</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a22f659469ab3e13156e2620d786bd808" prot="public" static="no">
+        <type>std::function&lt; void(<ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref> &amp;)&gt;</type>
+        <definition>using microsoft::quantum::DefaultProfileGenerator::ConfigureFunction =  std::function&lt;void(RuleSet&amp;)&gt;</definition>
+        <argsstring></argsstring>
+        <name>ConfigureFunction</name>
+        <briefdescription>
+<para>Function type that configures a rule set. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Generators/DefaultProfileGenerator.hpp" line="25" column="9" bodyfile="Generators/DefaultProfileGenerator.hpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a858468c67dab40c190f769acfc31124f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::DefaultProfileGenerator::DefaultProfileGenerator</definition>
+        <argsstring>()</argsstring>
+        <name>DefaultProfileGenerator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Default constructor. This constructor adds components for rule transformation and LLVM passes. These are configurable through the corresponding configuration classes which can be access through the configuration manager. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Generators/DefaultProfileGenerator.hpp" line="30" column="9" bodyfile="Generators/DefaultProfileGenerator.cpp" bodystart="19" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a5ebae1a00834f9f572af68d9ef2f0d8f" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::DefaultProfileGenerator::DefaultProfileGenerator</definition>
+        <argsstring>(ConfigureFunction const &amp;configure, TransformationRulesPassConfiguration const &amp;profile_pass_config=TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration const &amp;llvm_config=LlvmPassesConfiguration())</argsstring>
+        <name>DefaultProfileGenerator</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a22f659469ab3e13156e2620d786bd808" kindref="member">ConfigureFunction</ref> const &amp;</type>
+          <declname>configure</declname>
+        </param>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration" kindref="compound">TransformationRulesPassConfiguration</ref> const &amp;</type>
+          <declname>profile_pass_config</declname>
+          <defval><ref refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1ad2493200a8bdb35e45c8ebcab15a3f4b" kindref="member">TransformationRulesPassConfiguration::createDisabled</ref>()</defval>
+        </param>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration" kindref="compound">LlvmPassesConfiguration</ref> const &amp;</type>
+          <declname>llvm_config</declname>
+          <defval><ref refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration" kindref="compound">LlvmPassesConfiguration</ref>()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The constructor takes a lambda function which configures the rule set. This function is invoked during the creation of the generation module. This constructor further overrides the default configuration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Generators/DefaultProfileGenerator.hpp" line="35" column="18" bodyfile="Generators/DefaultProfileGenerator.cpp" bodystart="87" bodyend="159"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a995ddd27c16ae4353c6a22be811f1a8d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration" kindref="compound">TransformationRulesPassConfiguration</ref> const  &amp;</type>
+        <definition>TransformationRulesPassConfiguration const  &amp; microsoft::quantum::DefaultProfileGenerator::ruleTransformationConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>ruleTransformationConfig</name>
+        <briefdescription>
+<para>Returns a constant reference to the rule transformation configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Generators/DefaultProfileGenerator.hpp" line="45" column="52" bodyfile="Generators/DefaultProfileGenerator.cpp" bodystart="161" bodyend="164"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a61b348299ef721fa1adfc8cec28c8792" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration" kindref="compound">LlvmPassesConfiguration</ref> const  &amp;</type>
+        <definition>LlvmPassesConfiguration const  &amp; microsoft::quantum::DefaultProfileGenerator::llvmPassesConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>llvmPassesConfig</name>
+        <briefdescription>
+<para>Returns a constant reference to the LLVM passes configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Generators/DefaultProfileGenerator.hpp" line="48" column="39" bodyfile="Generators/DefaultProfileGenerator.cpp" bodystart="166" bodyend="169"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="classmicrosoft_1_1quantum_1_1_default_profile_generator" kindref="compound">DefaultProfileGenerator</ref> defines a profile that configures the rule set used by the <ref refid="classmicrosoft_1_1quantum_1_1_profile" kindref="compound">Profile</ref> pass. This profile is useful for generating dynamic profiles and is well suited for testing purposes or YAML configured transformation of the IR. </para>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>microsoft::quantum::DefaultProfileGenerator</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_default_profile_generator"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>microsoft::quantum::ProfileGenerator</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_profile_generator"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>microsoft::quantum::DefaultProfileGenerator</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_default_profile_generator"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>microsoft::quantum::ProfileGenerator</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_profile_generator"/>
+      </node>
+    </collaborationgraph>
+    <location file="Generators/DefaultProfileGenerator.hpp" line="22" column="5" bodyfile="Generators/DefaultProfileGenerator.hpp" bodystart="23" bodyend="49"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ae761d436e0b66b332d4e277897ce1a26" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>Components</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a14bbc624cc852be140ed032bd3c7752a" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>configurationManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a7b606f3166713252d2e78837edd8e667" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>configurationManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a22f659469ab3e13156e2620d786bd808" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>ConfigureFunction</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ace821e01e45a2d3dd2792d1e475c8da7" prot="protected" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>createGenerationModulePassManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1aa4e73ca81ae2a0900e8b0b0aeb945792" prot="protected" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>createValidationModulePass</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a858468c67dab40c190f769acfc31124f" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>DefaultProfileGenerator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a5ebae1a00834f9f572af68d9ef2f0d8f" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>DefaultProfileGenerator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a0625ff7f8618719933bdd0514598343e" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>FunctionAnalysisManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ac255ea9cc3c7c5f88f5903473fee7da1" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>isDebugMode</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a61b348299ef721fa1adfc8cec28c8792" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>llvmPassesConfig</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ae289e9c38bf45007458de7ab0c79ff51" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>modulePassManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a168e08f8ff33740f114301f710ce20aa" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>newProfile</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a295809dfe8e10b8145afac42c2ff08f2" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a1d7df7c22d05325a1c3a64a0487e6dae" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a8bc3a5764dab551423dd241839d6bbbe" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>optimisationLevel</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a3bf46b184cf740e682777bdbd026cda6" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>OptimizationLevel</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a43a7f4e1d1b05178481d90ee1b81834c" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>passBuilder</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ae359b7cc2141a5a59eba89ffaf9af2d8" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>PassBuilder</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a92bb0d73be14b88f8327a396f7da037d" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>ProfileGenerator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a23e7a76237a9aeb634a68ce8a788af73" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>ProfileGenerator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1aed9fead48ad2642c407be15b6e3e22d3" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>ProfileGenerator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1aa2da3c24cf79bd0507c8e1140c387054" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>registerProfileComponent</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a995ddd27c16ae4353c6a22be811f1a8d" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>ruleTransformationConfig</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1afd30796c3a7c3a9775641b3ae5e2e7b7" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>SetupFunction</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a739d6ddc015e59e3ea80ec39056d3a54" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>SetupFunctionWrapper</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ac5b102f7f11218a4d0aa437097490be6" prot="public" virt="non-virtual"><scope>microsoft::quantum::DefaultProfileGenerator</scope><name>~ProfileGenerator</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

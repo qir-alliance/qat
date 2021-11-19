@@ -1,0 +1,1115 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.9.1" xml:lang="en-US">
+  <compound refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block" kind="struct"><name>microsoft::quantum::BasicAllocationManager::AllocatedMemoryBlock</name>
+    <member refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1a5efa65d2923020ff8bc5982ade5ddb34" kind="variable"><name>name</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1ab7d942f1ce6cb09cd350ff57128715f3" kind="variable"><name>count</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1af9df8901f253993fa54e39083e809ab0" kind="variable"><name>start</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1a5393d491ea56a3dc30f7b0a486c10b9b" kind="variable"><name>end</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_any_pattern" kind="class"><name>microsoft::quantum::AnyPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_any_pattern_1a90a58ce4d1df1b0e4b5db196252ca3b9" kind="function"><name>AnyPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_any_pattern_1a987642ef6a9088bde75122b81ced329c" kind="function"><name>~AnyPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_any_pattern_1ade07c6212d676205ed8ff8f76d01eac3" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_any_pattern_1a275a1e5e946aabd7ccba2b6ef8494d76" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager" kind="class"><name>microsoft::quantum::BasicAllocationManager</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a5745fc89f2ee86a2c4eb06f3ab18cd81" kind="typedef"><name>Mappings</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1ab2a8de7c7e97d8d6215ce9a9ab33efb8" kind="typedef"><name>BasicAllocationManagerPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a30e5762f371872889ad4c9b94634ef84" kind="variable"><name>next_qubit_index_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a3c19ab0794038faca7938067e32e1044" kind="variable"><name>mappings_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a753c355029564baad30e65463237e66d" kind="variable"><name>allocation_index_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a39aa4f5770f4ec8833bf5a23d167e0a2" kind="variable"><name>reuse_qubits_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" kind="function"><name>createNew</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1aa6eff65c005184b4f42402c4d10abf0e" kind="function"><name>allocate</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a11c187cae2ab95bb7455b8cbba5ec31a" kind="function"><name>release</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a264bece62aef1a34fd44f9a31a4cc1f7" kind="function"><name>reset</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a9da0b491a9905108ac5272b8ce77c4da" kind="function"><name>setReuseRegisters</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a89f658a262734938a4a0bdc3d65da1f3" kind="function"><name>BasicAllocationManager</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_basic_block_pattern" kind="class"><name>microsoft::quantum::BasicBlockPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_block_pattern_1a19329f853e85f43be513dd96b980580a" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_basic_block_pattern_1a0b6bcfffcc0e2af94b132e41a526a3d7" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_bit_cast_pattern" kind="class"><name>microsoft::quantum::BitCastPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_bit_cast_pattern_1ad928c51af6c5e8662eb6fe0f8f37e6ca" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_bit_cast_pattern_1ae759a4a83c3d3a4fdeface11f767d40f" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_branch_pattern" kind="class"><name>microsoft::quantum::BranchPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_branch_pattern_1a66c84e12d5838e2dbd4be1c90a674cfc" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_branch_pattern_1a1e01906663829810bd1dbd5154ae8276" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_call_pattern" kind="class"><name>microsoft::quantum::CallPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_call_pattern_1a8723c35b5849f7476b396592cb6951f7" kind="typedef"><name>String</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_call_pattern_1ab77926784d61ea20519aa0e48d431f12" kind="variable"><name>name_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_call_pattern_1a4328b1cef879715abf74a1a046ce826a" kind="function"><name>CallPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_call_pattern_1aefa987bfd9fc0febd955b6c93763c6fc" kind="function"><name>CallPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_call_pattern_1a603094e2e6db4a79b81e77d2f35f3eaa" kind="function"><name>CallPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_call_pattern_1ae8f43eb5818bda787ff3bb0819d19302" kind="function"><name>~CallPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_call_pattern_1a8084bd76394d0273ed73251cda2869d9" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_call_pattern_1a0181e57334a8fec2219474f6661768e4" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1notation_1_1_capture" kind="class"><name>microsoft::quantum::notation::Capture</name>
+    <member refid="group__shorthand_notation_1ga438cd693264597e73300e12811e46810" kind="variable"><name>name_</name></member>
+    <member refid="group__shorthand_notation_1ga75cc713660bd3bfdae9ed36001c31591" kind="function"><name>Capture</name></member>
+    <member refid="group__shorthand_notation_1ga067f53b718d424ca59ec3b70a6b5c9b1" kind="function"><name>operator=</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_comment_logger" kind="class"><name>microsoft::quantum::CommentLogger</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_comment_logger_1ab8a5ca77482c538b9611daf478f1fc80" kind="variable"><name>location_name_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_comment_logger_1af5f5319c88f800998ab2ed78ad7a7cb7" kind="variable"><name>location_row_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_comment_logger_1a59781e14045bed794cb4f5f930e397af" kind="variable"><name>location_col_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_comment_logger_1a14d9062cc652849a0fa88fbc256067cd" kind="function"><name>debug</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_comment_logger_1a1aba56032627b859cde4a5f0c7c5c359" kind="function"><name>info</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_comment_logger_1aa86a0a2240efc90df6e16b7454505f8e" kind="function"><name>warning</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_comment_logger_1a581501a0a86a5f56474b94e43710599e" kind="function"><name>error</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_comment_logger_1ad57d890561e4b79395f5f8ce100f01c9" kind="function"><name>internalError</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_comment_logger_1a33f3ab1fa8133b84474ac50def208baa" kind="function"><name>setLocation</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_config_bind" kind="class"><name>microsoft::quantum::ConfigBind</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a34ce5439e320211aa46f8e19d69ef005" kind="typedef"><name>Type</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a1ed6bdd7a038383a0e05092e2db38dc2" kind="typedef"><name>EnableIf</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1adb5f78032f7ff3a25ebfce01722248fd" kind="variable"><name>bind_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1adf3bf81ad0af724a356c3a7cf748961b" kind="variable"><name>default_value_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1add72d6ec0b9c45ba77ab6a09fc8fdb64" kind="function"><name>ConfigBind</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a3c94547061224e639410f1a9f1aad7d5" kind="function"><name>ConfigBind</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a8101db17a9cdd06af800d4dfde69429b" kind="function"><name>ConfigBind</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1aa9e6d006f4cf1f84c37e12db08bf4f6f" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1af9aa44e312eee794fd285e08ff3c5a1f" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a34ce40d1f7ce30de6a89e0b92361facb" kind="function"><name>~ConfigBind</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a2def0c5e98c88c3d42a69bed7576531b" kind="function"><name>ConfigBind</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a982835cd6cae95c8212bad2b1784a8aa" kind="function"><name>setupArguments</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a76d719752f3842a2358e320dd1ae36d1" kind="function"><name>configure</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1af0690262d2d2d5ffefa00637e8b28d6e" kind="function"><name>value</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a03c3168509e9de32089d771495a44569" kind="function"><name>setupArguments</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1adafa765a888b90743bb8bb580f4c918b" kind="function"><name>setupArguments</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a5db8c4c39dfa20601d8e58347fc38c59" kind="function"><name>alterNameBasedOnType</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a019a0e9aa950c8bd42c4eacced067c2b" kind="function"><name>alterNameBasedOnType</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a98323b299e3d27dec347ccd309f3b200" kind="function"><name>valueAsString</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a7e33292902037a5a90e3d4e3ce8755d5" kind="function"><name>valueAsString</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a5cbd568fff11a1c40158fa03122688e5" kind="function"><name>loadValue</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1ae4b367794d58331a4d11cc0629a1f0b0" kind="function"><name>loadValue</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_config_bind_1a07acf17c320eb3289b9b662f16bab122" kind="function"><name>loadValue</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_configuration_manager" kind="class"><name>microsoft::quantum::ConfigurationManager</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1af61fa67ec0014fbd15ba33935de6e216" kind="typedef"><name>IConfigBindPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a26f163aa8940c36278da8b280882583d" kind="typedef"><name>ConfigList</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a7a7a51a321cb6c140f34431e1f2371a9" kind="typedef"><name>VoidPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1aa6b9c062753af58a8d594990aef93a56" kind="typedef"><name>TypeId</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1aedde069c5d62d2e2d5c32208f8782627" kind="typedef"><name>BoolPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1ae10ebe2dca9e7e51aed342e178f48835" kind="typedef"><name>Sections</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a1277e12e4bc8bd24f61373101ebbd1da" kind="variable"><name>config_sections_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a3a000c5eef536e365983e27e78bb9925" kind="function"><name>ConfigurationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1ae1baf10338105bd77858f23a6b36496b" kind="function"><name>ConfigurationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a84f40eee5235c96e4a6720956863a436" kind="function"><name>ConfigurationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a7a63e5acf3323db8b8cb692f24e423a8" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a04894caab8e065333c355fa91615e13b" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a7e86e3245a053f6ff51a0dbf0400cc63" kind="function"><name>setupArguments</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1ac77595dff2caa3a03a10a2ce28a015cc" kind="function"><name>configure</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a5c48db919bc0000008f4b5be4a392c75" kind="function"><name>setConfig</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1abfc9248a27430fbfc8fca5dff9396ea9" kind="function"><name>get</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1aca98cb6740798749a66641756def243f" kind="function"><name>printHelp</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a7759fda07cacba7d9fa33a6b7e592649" kind="function"><name>printConfiguration</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a26df4c5ae50f18bac796518303f8aa92" kind="function"><name>addConfig</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a7b0d12b1e6b3aa4461c4a2fcde23e559" kind="function"><name>isActive</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1aff1f83daecc597a806f001a738d16dd3" kind="function"><name>setSectionName</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a4fc3568630101aa029ca87b48d2cd199" kind="function"><name>addParameter</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1aa67d059880a727bfabc5b6467d13d301" kind="function"><name>addParameter</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_configuration_manager_1a01b68d0766c26df13ff50f94e20fa609" kind="function"><name>getInternal</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_const_int_pattern" kind="class"><name>microsoft::quantum::ConstIntPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_const_int_pattern_1ae02f573f32c166d13c561830dfdb8e2e" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_const_int_pattern_1ad6caaf1d53b74bf3cc1768f9146a0a55" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_default_profile_generator" kind="class"><name>microsoft::quantum::DefaultProfileGenerator</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a22f659469ab3e13156e2620d786bd808" kind="typedef"><name>ConfigureFunction</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a858468c67dab40c190f769acfc31124f" kind="function"><name>DefaultProfileGenerator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a5ebae1a00834f9f572af68d9ef2f0d8f" kind="function"><name>DefaultProfileGenerator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a995ddd27c16ae4353c6a22be811f1a8d" kind="function"><name>ruleTransformationConfig</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_default_profile_generator_1a61b348299ef721fa1adfc8cec28c8792" kind="function"><name>llvmPassesConfig</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_factory_configuration" kind="class"><name>microsoft::quantum::FactoryConfiguration</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1ae975d89dae8d9e6119f35ec221caa08c" kind="variable"><name>disable_reference_counting_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a0af8d1dced9bcd8e6816c4df04b73c9e" kind="variable"><name>disable_alias_counting_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a379aaabba7e896e9c62421745108adbc" kind="variable"><name>disable_string_support_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a97a952a78fd06b8ac0eee5623784ee95" kind="variable"><name>optimise_result_one_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1ab867f0d24458db1c41407b10dd8be70c" kind="variable"><name>optimise_result_zero_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a3f6b88834708e5b180a0ba9b35bcb28b" kind="variable"><name>use_static_qubit_array_allocation_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1aaa1c8f70ca92b964f5941ed0fef640be" kind="variable"><name>use_static_qubit_allocation_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a15cdd50369b5198456f3f80d162274a4" kind="variable"><name>use_static_result_allocation_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a3f4bb300a59c3fc97cd9d2fce78aa651" kind="variable"><name>default_integer_width_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1aa9c0d494221d2010cebcdc25fa626382" kind="function"><name>setup</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a5af06cd14354127b8e313c4b27ba4f48" kind="function"><name>disableReferenceCounting</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1ae5968650d3fc87a65b07c877ea041cb5" kind="function"><name>disableAliasCounting</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a33cb7a079ee033327ea6d278efd7bff2" kind="function"><name>disableStringSupport</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a35133252393ac455dd705735ff6d352b" kind="function"><name>optimiseResultOne</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1aeb99c7d43abd2cdcbbd02c2d6601cd78" kind="function"><name>optimiseResultZero</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1aa139251da7877b66f62538196dd33fe4" kind="function"><name>useStaticQubitArrayAllocation</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1abe94b94c4be4dafaf208dd055f7e03a8" kind="function"><name>useStaticQubitAllocation</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a6e201cc4e9ef8de340540e2b943cb8ef" kind="function"><name>useStaticResultAllocation</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a2a1854abdcb4cf4c8200f53e3cbe7864" kind="function"><name>defaultIntegerWidth</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a30b261e93d6ffe5d6620277a4d2d5911" kind="function"><name>isDisabled</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a8aae2abc97beddb5049bde0b978bdec8" kind="function"><name>isDefault</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1accfe872d1dce5c683ab92ebd281f89a9" kind="function"><name>createDisabled</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager" kind="class"><name>microsoft::quantum::IAllocationManager</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1abf24411fc914344277ef965d27112b18" kind="typedef"><name>Address</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a8b959912df70a013f90086320202f833" kind="typedef"><name>Index</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a7c77d7b2d94d3b6a98bb5402a854cca4" kind="typedef"><name>AllocationManagerPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a701b23ea261abe369472f06bb5622aaf" kind="variable"><name>registers_in_use_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a3b015daabc5ca30e78ef3f3489bff9ea" kind="variable"><name>max_registers_used_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1afe2f09c01ee0cf4312ba249fba743826" kind="function"><name>IAllocationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a563e54784aa25d9af5a27d9db84cd4f5" kind="function"><name>IAllocationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a81ca574ab646c14ca8a7995558f3c503" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a86f9df1c929eec9cff34ad6ae2e96a90" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1af0c9a4cf370d3d2bd7932c3af24b8584" kind="function"><name>~IAllocationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a0477e1fd52989e76d877dc7329f7ce3d" kind="function"><name>allocate</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a0fcd1d870506fb163d70c63cc865cb06" kind="function"><name>release</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1ae53a2911903febc00fb6a9139ef247af" kind="function"><name>reset</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a7c2530c73296df6cf87ff54dc9c6509c" kind="function"><name>allocationsInUse</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a6b70408d5752024218c5dbc7cc88a2b1" kind="function"><name>maxAllocationsUsed</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a7e7355f5d220774b4ac4b93227f1c215" kind="function"><name>IAllocationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1ac135ced7582a21cdb00ab4704f78c988" kind="function"><name>updateRegistersInUse</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_i_config_bind" kind="class"><name>microsoft::quantum::IConfigBind</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1ad97b29afc3c77ad11b400e138d2b87da" kind="variable"><name>name_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a99429d9ff1c5d4601639e9a878aff41f" kind="variable"><name>description_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a32666735548c2b47a41fcd69aa8766a7" kind="variable"><name>is_flag_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1aa38d24ea1236026ce9d0999cdf8028dc" kind="variable"><name>str_default_value_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a8ad4e44ae06aacf028e7fc681307efa3" kind="function"><name>IConfigBind</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a3ba0b08a28da75373db5d0e5a599013a" kind="function"><name>IConfigBind</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a756eeb8edd0c1676add6e03ea9e4fedd" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a40ced58da1e452732da73331c7ccc205" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a2ef8237b235046d22204dd80fa64fae9" kind="function"><name>~IConfigBind</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a60b9e73508ca17f3d7518fde2f580d46" kind="function"><name>setupArguments</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a725ccd6465a61592f6cb4e1f87370738" kind="function"><name>configure</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a5357cc356c1c63c1a8cb2e9a3f43a1e3" kind="function"><name>value</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a096663f66f40163008233c33527d0c2e" kind="function"><name>name</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a33614ced55a79616bc49cc0988dcb66c" kind="function"><name>description</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a95f172bbce1351aa41abc299612e922d" kind="function"><name>isFlag</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a1e2b1af76ff1512d8c21948578a23ae4" kind="function"><name>defaultValue</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a80643a3184930cfd50916938d3366d56" kind="function"><name>IConfigBind</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a499e109b9801672e834c0aa4e17d3e3b" kind="function"><name>setName</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a4e4047b01a89a7f4c259442c4a46386f" kind="function"><name>markAsFlag</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1ac618493c6e80ac1393785b3b772b7cce" kind="function"><name>setDefault</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_i_logger" kind="class"><name>microsoft::quantum::ILogger</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a55e7a7d863df6b0fff0ddaed3c391b1c" kind="function"><name>ILogger</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2a5e5904c7923ba45fbf16fb63458d00" kind="function"><name>ILogger</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1afca368c3ab3390324cd44cf80381f045" kind="function"><name>ILogger</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a10dc85acccfb41d71f1fd447a840ad9a" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1ac08799390f3411fe416364cebf663cac" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2a0c328088870ccf8f658a66b3642d38" kind="function"><name>~ILogger</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1ad4b3d523d70a898a41ac232a798c283b" kind="function"><name>debug</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1adc71a69251d09da76acca8e7be6c60b5" kind="function"><name>info</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2bf3c83b9cab41858359ef3e68d5e602" kind="function"><name>warning</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2554154ca0367271c8e0d8cb5e33a92e" kind="function"><name>error</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1ae35be2c1c382efd0ba64115bad725415" kind="function"><name>internalError</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a93a18ddd4a47de3ea1aa007dc5064a7b" kind="function"><name>setLocation</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_int_to_ptr_pattern" kind="class"><name>microsoft::quantum::IntToPtrPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_int_to_ptr_pattern_1ab25edadcb4b25f3af498ada16d43fbe8" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_int_to_ptr_pattern_1a349b928e39fe516c8b121c26539ef784" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype" kind="class"><name>microsoft::quantum::IOperandPrototype</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1ad0ac73c9329bbc7917b6f0e5ccb76ac3" kind="typedef"><name>Instruction</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1ac2402fc46807d48aebed3384a9cec8ed" kind="typedef"><name>String</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a823a98568040aa7bf8e2b7da13c19990" kind="typedef"><name>Value</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a909d5269c5569a5948bce3395cb59cb7" kind="typedef"><name>Child</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a99846defccd39bf81668c12dac580510" kind="typedef"><name>Children</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a31fcffca4d5e1447f17c7ce64a490a6a" kind="typedef"><name>Captures</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a999f7562d379e2022be98734e563ae76" kind="variable"><name>capture_name_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a1290d9a7bf778b01284d66f4f9563eaa" kind="variable"><name>children_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a3c05f7599d41ac5179ff5ceceb97734c" kind="function"><name>IOperandPrototype</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1ac6fc06942a148f05ffea8d53e62f8506" kind="function"><name>~IOperandPrototype</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a9a4157b4f5b74dff9e5b413a64240236" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a82a0fd5f7297e519eaf8eddac0f38ed3" kind="function"><name>copy</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1af998b63b21e8a0500a952248c140d0d0" kind="function"><name>addChild</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a166b955925cb5f1464e20c2b94f91a78" kind="function"><name>captureAs</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a25043289d7efcbe79db466f49dd51cd2" kind="function"><name>fail</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1af9cf2561fc7d6bb39ec9f9486156d133" kind="function"><name>success</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a98d4e08ac8b7098713c3adc0e3ce1e95" kind="function"><name>matchChildren</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a88789e3c997ddbad72a2ad2221652bcc" kind="function"><name>copyPropertiesFrom</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1aee02b9141fc1ffa0c9318297a2009c17" kind="function"><name>capture</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a9cc3002e80a014cd52a52c0d33c4e53d" kind="function"><name>uncapture</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper" kind="class"><name>microsoft::quantum::IrManipulationTestHelper</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a56024ef2e0ef9533e99244fc21bbadb4" kind="typedef"><name>String</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a2d4d102afdb106e7c9e805dd7aada78b" kind="typedef"><name>LLVMContext</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1af39b11478913d614a64df980fd6b95de" kind="typedef"><name>SMDiagnostic</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a95c04fd344be1d2d8afa6ae09f05c41d" kind="typedef"><name>Module</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a70642b0bb74d2ce7357a63a144e0820b" kind="typedef"><name>ModulePtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1aaddbaae145986f5960a67c2b30779d98" kind="typedef"><name>Strings</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a189fd55760c36904970ffaded09f14ac" kind="typedef"><name>OptimizationLevel</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1acdd48df6b9d535a6a50ea1571ffd870c" kind="typedef"><name>GeneratorPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a828e75be0d72aa6d0afb03661b15b2a6" kind="variable"><name>opaque_declarations_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1addb1799b7e2d7fbac12bae165d24a24f" kind="variable"><name>function_declarations_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ae21570adabe83466b89afa831f61762c" kind="variable"><name>compilation_failed_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ae15b6ef38fc3e5fca602d9096fa85aa8" kind="variable"><name>error_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a19901fd1188eb3deecb3416b8d37feef" kind="variable"><name>context_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1afb8a5e01ee84916aaf5452aa9a83e06e" kind="variable"><name>module_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ab9622ea38897cb662382424c89c621f3" kind="variable"><name>pass_builder_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ad38c75f2c8dc161363a61da190e4126d" kind="variable"><name>loop_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ae22051c193e2b248b7a6a559bb78c8da" kind="variable"><name>function_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ac91d13cb17d859a4f94f1aaab4ce42d4" kind="variable"><name>gscc_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ab290d3a5c8572d57eea0379e49541dca" kind="variable"><name>module_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a002660c6f2da34f069d47f8c54b00944" kind="function"><name>IrManipulationTestHelper</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ac3fa0b31a56b3fba128a0c12f80b0b66" kind="function"><name>IrManipulationTestHelper</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1acb503ab846564bbd45c60120bd7250b6" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ad58c3fdabc2589426f8aa3a511039350" kind="function"><name>IrManipulationTestHelper</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a1cb50e61082d6852c9ab3cbabc0b0541" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a512daff52a5607ad0cf21e072584295d" kind="function"><name>toString</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ab49ea98df2fc8452bc3a70a6def6e066" kind="function"><name>toBodyInstructions</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ae9ad9386966f23f52e9ebed211719a51" kind="function"><name>hasInstructionSequence</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a819d74f6dbfbb8319612f4293c23a1b8" kind="function"><name>applyProfile</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a1a1ed5ffdaeac6763826ce7996dc7f7d" kind="function"><name>declareOpaque</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1aa510af2e3424a9ac7678de251d87be3c" kind="function"><name>declareFunction</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ac246a17feb952bafd30d44649879ef55" kind="function"><name>fromBodyString</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1acfd7552b58366ca59cdaf211fb8aa144" kind="function"><name>generateScript</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1abcf3ed59354363bdf31926cdde99d17a" kind="function"><name>fromString</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1ace87d6ad59287dbe58a8f33f62afbee8" kind="function"><name>getErrorMessage</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a2a90342ccb92bd7fccb9adc0a5fe0c8d" kind="function"><name>isModuleBroken</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_1a0b856761e771e6cfe4210132bb048113" kind="function"><name>module</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration" kind="class"><name>microsoft::quantum::LlvmPassesConfiguration</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1afad29ad385ae9f80196aa359ae759a88" kind="variable"><name>always_inline_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a7777ee46f66598717785d0a56182b1c1" kind="variable"><name>default_pipeline_is_disabled_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1ac9c696e060592665ebaa695d2ca5dd19" kind="variable"><name>pass_pipeline_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a0251081b77df0d38b0194cd58d16e44d" kind="variable"><name>inline_parameter_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1aaa6c3f76591c6531e2504b607d72badc" kind="function"><name>LlvmPassesConfiguration</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a645eb2cccc3f75eca6fccf7420beea9a" kind="function"><name>setup</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1affc954f9eda3eb1dc90ffd02bb281806" kind="function"><name>isDisabled</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a0bd9dc0d97efd91781d812fdeda14a75" kind="function"><name>operator==</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a88b8eb6fdc55092fa82a9c156a4a94d4" kind="function"><name>alwaysInline</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1aa1e9204a5eb31e36887e648d8b455613" kind="function"><name>disableDefaultPipeline</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a889babb3348b6c8f5b61b373db5c51d2" kind="function"><name>passPipeline</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a715ea1809e88e7f4f1cb3e7f8acd7967" kind="function"><name>inlineParameter</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_1a175c3567995b098ef9d3330aca82bd1d" kind="function"><name>createDisabled</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_load_pattern" kind="class"><name>microsoft::quantum::LoadPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_load_pattern_1a6dacbaef74232223d5b26aac1517602e" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_load_pattern_1ae684a0104ea08efe685518c2d42324bf" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_location" kind="struct"><name>microsoft::quantum::LogCollection::Location</name>
+    <member refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_location_1aba7147a3055edec4cb60df7f2daadf77" kind="variable"><name>name</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_location_1a952633a590a9a7f1243ea06ab36ffed8" kind="variable"><name>row</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_location_1abbecbf6fce6745668d68a5b86956a53f" kind="variable"><name>col</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_log_collection" kind="class"><name>microsoft::quantum::LogCollection</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678f" kind="enum"><name>Type</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678faa603905470e2a5b8c13e96b579ef0dba" kind="enumvalue"><name>Debug</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678fa4059b0251f66a18cb56f544728796875" kind="enumvalue"><name>Info</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678fa0eaadb4fcb48a0a0ed7bc9868be9fbaa" kind="enumvalue"><name>Warning</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678fa902b0d55fddef6f8d651fe1035b7d4bd" kind="enumvalue"><name>Error</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678fa8462b58246e70e5c83e5b939a9332cb5" kind="enumvalue"><name>InternalError</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a768acf247c9c42e50789812548740b7b" kind="typedef"><name>Messages</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a3e927e09a746f599551f9cbb0d0e982a" kind="variable"><name>current_location_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1aa8782a1279b6cab470bf7fa69c775c0b" kind="variable"><name>messages_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1ae1611b74f5f89836a32f45becd19ae65" kind="function"><name>debug</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a3d59bd8a9acf1cd0a647cc2428bb53fa" kind="function"><name>info</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1ad12313dc42bbefef79db2efdd2a13b1f" kind="function"><name>warning</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a3ccc0b418d809e8bc86c66bbbff8faf0" kind="function"><name>error</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a94e877100b2d7d4cb1d6e22075238e0a" kind="function"><name>internalError</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a88bb68267f9b07f7798fbb080838f0e4" kind="function"><name>setLocation</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1ab15808df328ec4527b2cbbdc8c9269e1" kind="function"><name>messages</name></member>
+  </compound>
+  <compound refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_message" kind="struct"><name>microsoft::quantum::LogCollection::Message</name>
+    <member refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_message_1a668661e9658d3c4495b31b2d3c39982e" kind="variable"><name>type</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_message_1aed5aa9af706966901c70c40500ea5125" kind="variable"><name>location</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_message_1ac7c397bd49f9f9feb8073755b2b1afd9" kind="variable"><name>message</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_module_loader" kind="class"><name>microsoft::quantum::ModuleLoader</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1a742c8b5ec327f6a1b2a81335b02aa019" kind="typedef"><name>Module</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1a870fc6112d429a13ca0d5ed2588988c6" kind="typedef"><name>Linker</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1ad54ed1e8834040fb08735c3aae738eee" kind="typedef"><name>SMDiagnostic</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1af267f511a67f5f141e651e1ef5afcffd" kind="variable"><name>final_module_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1a2ffc9f495d8176b1e69926dff11405ba" kind="variable"><name>linker_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1a800df541b482f66141f9c7b8a4ae7c16" kind="function"><name>ModuleLoader</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1aa9b7ea0111e059283da76a8505900785" kind="function"><name>addModule</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1a9337b976a75e32f0bdb8aa4c16927c68" kind="function"><name>addIrFile</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_parameter_parser" kind="class"><name>microsoft::quantum::ParameterParser</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a32b7d3e30b5e4b84b8cff1773e61f022" kind="typedef"><name>Arguments</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a78c62c5acdbd5dad00859180b7f8a1e1" kind="typedef"><name>Flags</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a1fd64474896242bcd82e9eb04af4b890" kind="typedef"><name>SettingsMap</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1aae6abbe2d881de7f5809d9e2ec591408" kind="variable"><name>flags_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a52410c65c0f7ea56c9dbce2d72cffba2" kind="variable"><name>arguments_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1ada84d1c5887f8c664a6e77dd92e220b5" kind="variable"><name>settings_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a4005df4ec69c557362470db040b0a27e" kind="function"><name>ParameterParser</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a5d9cc685032c90dfce8a61aad4cc816d" kind="function"><name>ParameterParser</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a1e1ec6b6c3ceb9571d270a778730404a" kind="function"><name>ParameterParser</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1ac5a1269991272ddd0d6e79b481fe6a32" kind="function"><name>~ParameterParser</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a448e50a91e29de07838a4afd0cae8b6d" kind="function"><name>addFlag</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a7ffcc25257b4238a318e08d0a1cbb650" kind="function"><name>parseArgs</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a6984127bf1ab2999671d9079f796c966" kind="function"><name>arguments</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1abbb53cf9bd3bf7d9f238514531dc43da" kind="function"><name>getArg</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a2d4d430e04414d805deebb3e40c9576a" kind="function"><name>get</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a30c16fd01aa8a0d6cfc2dff4f67f6960" kind="function"><name>get</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1ab01ffb6089e66a6d435cd0d0f5329282" kind="function"><name>has</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a537b7e34f7b781fcbd89c1197f8d9e56" kind="function"><name>reset</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a5ebe33583694921da26143a2b86b6c57" kind="function"><name>parseSingleArg</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a76f6121fe3a10a2ab83709d5360373ba" kind="function"><name>isOption</name></member>
+  </compound>
+  <compound refid="structmicrosoft_1_1quantum_1_1_parameter_parser_1_1_parsed_value" kind="struct"><name>microsoft::quantum::ParameterParser::ParsedValue</name>
+    <member refid="structmicrosoft_1_1quantum_1_1_parameter_parser_1_1_parsed_value_1aa861b7e0c375dbb6e49eaa427e614eb2" kind="variable"><name>is_key</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_parameter_parser_1_1_parsed_value_1aa385fb0c3a431090a0c02809db161254" kind="variable"><name>value</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_phi_pattern" kind="class"><name>microsoft::quantum::PhiPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1a4d1aff56a9ca37902ef1fbabfbe0fdd2" kind="typedef"><name>String</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1aa5e10d4a47ea0a496adc95f4ccb0be98" kind="function"><name>PhiPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1af731888aa0ace507e45f2053af0305d5" kind="function"><name>PhiPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1aa8c62a2c6e98ff151418f3890940947b" kind="function"><name>PhiPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1acec3e7884aa54322abb1e62c225aedf2" kind="function"><name>~PhiPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1a2b9583d067a78efe68155abd8bc9edc6" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1a5ae073047f9b0dd18f8333b6423307ff" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_profile" kind="class"><name>microsoft::quantum::Profile</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1afbb7b83f602e4746a4912a5e47658304" kind="typedef"><name>AllocationManagerPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1aecedd32ceddf4b4058c6a0c7f74aa386" kind="typedef"><name>ValidatorPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a23c3397442953314f62d12b61545e0ca" kind="typedef"><name>PassInstrumentationCallbacksPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1aed145f8064f54c9baaaca28fd8d88805" kind="typedef"><name>StandardInstrumentationsPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1ab6f4d785f331c7c5932aea1c5497d24e" kind="typedef"><name>PassBuilderPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1acac5dfd8d0c9e2b40c82ff32f84880ec" kind="friend"><name>ProfileGenerator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a046f7549d816bec4c2f1d4398b7cf54e" kind="variable"><name>name_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1ae0b3d690ca7eaefe6acdccc7b6e6f55e" kind="variable"><name>loop_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a2506a7af76adfc5f4e6b65f2e1d9fb01" kind="variable"><name>function_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a8aeadc987d5e8803e34ed76b65795e6f" kind="variable"><name>gscc_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a82c358017bc12cd2e64b2130ada91efd" kind="variable"><name>module_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a65de6ba97fefc071b4932cea8d278193" kind="variable"><name>pgo_options_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a1a8f73cf8b3f0dc7ce0b8531ae0c8cc3" kind="variable"><name>pass_instrumentation_callbacks_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1addf422a94ee1999710cc1a5c846f9131" kind="variable"><name>standard_instrumentations_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1ac367294fcb04a5c034424a3be0ad13db" kind="variable"><name>pipeline_tuning_options_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a54b6d8bb40deb82d5b6e4eb196a74af6" kind="variable"><name>pass_builder_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a242e97e7813386438df13c3c336af9b6" kind="variable"><name>module_pass_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a7b69a4e439b1d11cb5d76e6ef8944ba6" kind="variable"><name>qubit_allocation_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a12722216b4851b6050e8ba096641efcd" kind="variable"><name>result_allocation_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a6e62cb294523d19f0ccefb829e5502a3" kind="variable"><name>validator_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a95979cdc42e787aa7b7154d8f4700672" kind="variable"><name>peephole_ep_pipeline_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a4b3400f3d8033510b18811c0e0f78e26" kind="variable"><name>late_loop_optimizations_ep_pipeline_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a77d8e46a836e06d704718ecb1e6ecbd2" kind="variable"><name>loop_optimizer_end_ep_pipeline_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a60487e2a6ee5269b9110945cac5de2c7" kind="variable"><name>scalar_optimizer_late_ep_pipeline_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a9bfeba36b354d8e21e98c500aeb45ca1" kind="variable"><name>cgscc_optimizer_late_ep_pipeline_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a5c39c134ef9b82dcaeb7ec76ebe48080" kind="variable"><name>vectorizer_start_ep_pipeline_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a272ddc0ca5d22e11fa642d792407525f" kind="variable"><name>pipeline_start_ep_pipeline_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a23499fdbae5b24d3da97d6f27a60b8bd" kind="variable"><name>optimizer_last_ep_pipeline_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1acb31c2ea1c22ca72f66bb7330ce47219" kind="function"><name>Profile</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a522c423454556e7715608dd953b56d74" kind="function"><name>Profile</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a0efc48be86de9271b6d4d2f89f35a346" kind="function"><name>Profile</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1aedeebca308bc1e8cf7576c74ec3ab569" kind="function"><name>Profile</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1ae85a88f88a5d04c7ca6e55953ed9c2a2" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a9c519bde17a927216de63cedc07a3099" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a3071a7b8da17a5ce9c578e85b41b53a1" kind="function"><name>~Profile</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a4e15a93d7b5f5d7174e8c63947787ffb" kind="function"><name>apply</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a2df872e9e0d0cfa7c1261e25a32fb501" kind="function"><name>verify</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1ae4264aceff4ee846d62a500329b4d0e2" kind="function"><name>validate</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a0ca2882f9d1c98a5bee120ae96048e87" kind="function"><name>getQubitAllocationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a299ab1ffa4fea7cf6ad45ee4a690bf2f" kind="function"><name>getResultAllocationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a036cd42956f72e095b1c5c09ad21ea88" kind="function"><name>name</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a789d98dc3ff0c7900a5e752aac80a4dd" kind="function"><name>setModulePassManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a7064cdc9c5b0673d27b01d12f23c3528" kind="function"><name>setValidator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1ab3226330daa11ac92dc8ec243d8a14b7" kind="function"><name>passBuilder</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a7e72137e5679ffc344504a8259a2480a" kind="function"><name>loopAnalysisManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1afde169bb2afbf338563bcd6f7afaf06a" kind="function"><name>functionAnalysisManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1aacd449e39f53fc37829826a9c71b78ae" kind="function"><name>gsccAnalysisManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a9be63ecec09cad26dfc1c99e54845bee" kind="function"><name>moduleAnalysisManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a2bddd50225c9b1e57d05ab6f8c1683f3" kind="function"><name>registerEPCallbacks</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_1a3b75a516d8c488c76ac9bf8ff0f990d3" kind="function"><name>tryParsePipelineText</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_profile_generator" kind="class"><name>microsoft::quantum::ProfileGenerator</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ae359b7cc2141a5a59eba89ffaf9af2d8" kind="typedef"><name>PassBuilder</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a3bf46b184cf740e682777bdbd026cda6" kind="typedef"><name>OptimizationLevel</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a0625ff7f8618719933bdd0514598343e" kind="typedef"><name>FunctionAnalysisManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1afd30796c3a7c3a9775641b3ae5e2e7b7" kind="typedef"><name>SetupFunction</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a739d6ddc015e59e3ea80ec39056d3a54" kind="typedef"><name>SetupFunctionWrapper</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ae761d436e0b66b332d4e277897ce1a26" kind="typedef"><name>Components</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ad6bb9ccbcf1542f84fbb770b0f799399" kind="variable"><name>configuration_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a795d312927c19dcbf51d97fa3853a2d0" kind="variable"><name>components_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a87248ea9e2bec651d317ab03c34ac7fe" kind="variable"><name>module_pass_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1af9aab3713ff9c8924c6c0ea6191886a3" kind="variable"><name>pass_builder_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1aabad7e3178a7e304b7be589c7f655fda" kind="variable"><name>optimisation_level_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a6a8ac9b3d264de827ac778d979e692e4" kind="variable"><name>debug_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a92bb0d73be14b88f8327a396f7da037d" kind="function"><name>ProfileGenerator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ac5b102f7f11218a4d0aa437097490be6" kind="function"><name>~ProfileGenerator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a23e7a76237a9aeb634a68ce8a788af73" kind="function"><name>ProfileGenerator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1aed9fead48ad2642c407be15b6e3e22d3" kind="function"><name>ProfileGenerator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a295809dfe8e10b8145afac42c2ff08f2" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a1d7df7c22d05325a1c3a64a0487e6dae" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a14bbc624cc852be140ed032bd3c7752a" kind="function"><name>configurationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a7b606f3166713252d2e78837edd8e667" kind="function"><name>configurationManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a168e08f8ff33740f114301f710ce20aa" kind="function"><name>newProfile</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1aa2da3c24cf79bd0507c8e1140c387054" kind="function"><name>registerProfileComponent</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ae289e9c38bf45007458de7ab0c79ff51" kind="function"><name>modulePassManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a43a7f4e1d1b05178481d90ee1b81834c" kind="function"><name>passBuilder</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1a8bc3a5764dab551423dd241839d6bbbe" kind="function"><name>optimisationLevel</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ac255ea9cc3c7c5f88f5903473fee7da1" kind="function"><name>isDebugMode</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1ace821e01e45a2d3dd2792d1e475c8da7" kind="function"><name>createGenerationModulePassManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_profile_generator_1aa4e73ca81ae2a0900e8b0b0aeb945792" kind="function"><name>createValidationModulePass</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_qat_config" kind="class"><name>microsoft::quantum::QatConfig</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a91faee45348489f2215cbfa11bc43019" kind="variable"><name>load_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1ab17c42cbb679a537ec0e6c1fc3e924f6" kind="variable"><name>generate_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a7226beebeae29c70f01e6dc331eddc81" kind="variable"><name>validate_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a47d998af25ec5c06f3bca65a9ce8154b" kind="variable"><name>profile_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a6efd888d4abe462700262ee12e550444" kind="variable"><name>emit_llvm_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1abcbb79bf5d4d7df71531aca85b94ab61" kind="variable"><name>opt0_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a30b3a68d4498d0a2bd8a715010c482a8" kind="variable"><name>opt1_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a50e79c9388340fb4c0a0d8c5f1f43a62" kind="variable"><name>opt2_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a6c228a9c86d12a046c90ba1bb2b740e8" kind="variable"><name>opt3_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a1296f13fbf364b2616d3ec369e29a190" kind="variable"><name>verify_module_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1ad1306d2947481e57c34008cb2cff265c" kind="variable"><name>debug_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a367e8e2d039e15e414e6a0d66cc5082e" kind="variable"><name>dump_config_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a3453916656ed32adc70d0e16ea9f8ff2" kind="function"><name>setup</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a73a541e8890c7ed75d2aec2df80effd1" kind="function"><name>load</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1ab86a6de025d87d49c79463d91ba6b1fb" kind="function"><name>shouldGenerate</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1ab771ab8819977883ff040ba696944a91" kind="function"><name>verifyModule</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a5e52d30213e859ac0f6c092739f7a76f" kind="function"><name>shouldValidate</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a8471474e4cd2ed108c1b2fa8a43b6be1" kind="function"><name>profile</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a9c1e8c39ad5357fdce6d78958edf5734" kind="function"><name>shouldEmitLlvm</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a661187744fb869aac04c61a1b891ef4a" kind="function"><name>isOpt0Enabled</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a18b7791a32761b123d41e978b22bace2" kind="function"><name>isOpt1Enabled</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1ab90482eeb3f65c1615de6190d2f397f6" kind="function"><name>isOpt2Enabled</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1aaee0c9d224c6c35685cfbc876cf1c33b" kind="function"><name>isOpt3Enabled</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a4759429710fdce34260511cefdce97c3" kind="function"><name>isDebugMode</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_qat_config_1a125ccb99efb430e7ac9169058066c724" kind="function"><name>shouldDumpConfig</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_remove_disallowed_attributes_pass" kind="class"><name>microsoft::quantum::RemoveDisallowedAttributesPass</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_remove_disallowed_attributes_pass_1a2f6423b12da2839bb9e6ac724a7a3419" kind="variable"><name>allowed_attrs_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_remove_disallowed_attributes_pass_1ad5f3d7f52625feb5e20acc8e6322073f" kind="function"><name>RemoveDisallowedAttributesPass</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_remove_disallowed_attributes_pass_1a9e9c343ef56c3725bacd7f670b6d773b" kind="function"><name>run</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_replacement_rule" kind="class"><name>microsoft::quantum::ReplacementRule</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1a5d9d153c6aede2708519758e4386cfad" kind="typedef"><name>Captures</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1afd9ba523c6b96524a36d66f81a3dbd3d" kind="typedef"><name>Value</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1a61bfa72f03fbfa6c53b8002a969a595a" kind="typedef"><name>IOperandPrototypePtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1ab975e38f598fc4e3a84039f84ab404d1" kind="typedef"><name>Builder</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1aca9c759c6f4aace29dc3b0b3b05ce9e1" kind="typedef"><name>Replacements</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1a029532362e33598a7ecc745bc279001d" kind="typedef"><name>ReplaceFunction</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1a9888b53ae55a7817f663b5c76d3fc98f" kind="variable"><name>pattern_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1a023c4a5bb746879b1a8dbb9ea51204e9" kind="variable"><name>replacer_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1ae6c109db87ff696539623251ccdc71fa" kind="function"><name>ReplacementRule</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1a330c8c2fabc0c59f2c62a79c1266c7b5" kind="function"><name>ReplacementRule</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1a700843e032ddafe2b7ec6fe640cf4ad9" kind="function"><name>setPattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1ab4ce49eba7841ca64eeba4bdd026abe2" kind="function"><name>setReplacer</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1ac7e58dc7feced5ca2b8924a38e88dea5" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1a00d6dda8b13a01e059889afbd8b619ca" kind="function"><name>replace</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_rule_factory" kind="class"><name>microsoft::quantum::RuleFactory</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a327402fcfe90837fb0efb5fc14153986" kind="typedef"><name>ReplacementRulePtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a65db113bde77cbc5cb163bb7f53263a1" kind="typedef"><name>AllocationManagerPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a1359a09d4c22413fd6d6b1b8f6f04630" kind="variable"><name>rule_set_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a687bce86ccb7d7152742e913317fd953" kind="variable"><name>qubit_alloc_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a7904c8dd039dec01a2c32f08722835a2" kind="variable"><name>result_alloc_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1ae95869683adb8c77f88118bd483be2c6" kind="variable"><name>default_integer_width_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1adda40e9c4d6efd68793c81c13381296e" kind="function"><name>RuleFactory</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a37d0ae9c05e1e0c3e430c16f4559f549" kind="function"><name>RuleFactory</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1acd0c174d59ce9be84969b73381b59c64" kind="function"><name>RuleFactory</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a6de741f9ddda4c082f701c42cc8913a6" kind="function"><name>RuleFactory</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a4bd75ddd6e9fbf275bb0f1b43d16194b" kind="function"><name>~RuleFactory</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a64de24c930b2959d93e93d2055b7473e" kind="function"><name>usingConfiguration</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a562f68309c4687105898a2085838fd0f" kind="function"><name>removeFunctionCall</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a1df0940ef8c5733f06ce28299708f587" kind="function"><name>useStaticQubitArrayAllocation</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a8c32ae37eba8ae340e1817b27efcf66a" kind="function"><name>useStaticQubitAllocation</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a4e0f22992717e3fd8303e5035e4e6d9f" kind="function"><name>useStaticResultAllocation</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1afa8a50b1614a3de7d396e5f5c94764ee" kind="function"><name>resolveConstantArraySizes</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a3bbef0bbe40c078c2087506e5a246a2f" kind="function"><name>inlineCallables</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a3f73c72f050c1206d22cfa001401e029" kind="function"><name>optimiseResultOne</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a6f0f64631dbcdf7b4e65debe57c8edaa" kind="function"><name>optimiseResultZero</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1ad235feb32d4c66d5ca304399e3fb35fb" kind="function"><name>disableReferenceCounting</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1af9f7a6296e7912c8a6ab5fc7ad3890c8" kind="function"><name>disableAliasCounting</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1a7f80b73c026d75b58349dd9aef93ef71" kind="function"><name>disableStringSupport</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1ada0ef5df9369d8622758648742a137f5" kind="function"><name>setDefaultIntegerWidth</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_factory_1af8b176b89e15be0b14053d056ff735b2" kind="function"><name>addRule</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_rule_set" kind="class"><name>microsoft::quantum::RuleSet</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a40ec2f95689cf5a781ba534950fd4d5c" kind="typedef"><name>ReplacementRulePtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1ac49bd61bd798f535d96fd54d4562b863" kind="typedef"><name>Rules</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1abe997774d4b73e2741fec5613855d514" kind="typedef"><name>Replacements</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a12758e6398082ad8a4eaf8b08643e8fe" kind="typedef"><name>Captures</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a2ee707e4d65377db742a2ceefdad537a" kind="typedef"><name>Instruction</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a3eff80c6252f2ad26e5af84828cb108d" kind="typedef"><name>Value</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1abb4fae44e416b048528bc0cd52f3b258" kind="typedef"><name>Builder</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1acf63ad10024173a3b1b9d5ce67c482fc" kind="typedef"><name>AllocationManagerPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1aa873fe4f9d974dbdff1cd1c608c98a9b" kind="variable"><name>rules_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a5c4a1fc09d55364d5f27d7599e1a6bc9" kind="function"><name>RuleSet</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a4249380a6d81da327e1a82d246e35983" kind="function"><name>RuleSet</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1aac4db8d5c13eda207de4c939de116ca3" kind="function"><name>RuleSet</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1ac501082fdec24d35dddae03b5dc51895" kind="function"><name>~RuleSet</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1af21a93893d96649ffa413c3b378c354a" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a5dc8172a3eae38d8d6898e231564e60e" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a0d6c972010cf86830f113fdf6a3a877c" kind="function"><name>matchAndReplace</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1ad26c91b5a8f3bd63abc39b13f1a23b85" kind="function"><name>addRule</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a48052fbd8d05796b80e499788e0167e4" kind="function"><name>addRule</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1aa5500ad922f898edcb15a14dd1439ccf" kind="function"><name>clear</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a64a15bf9496696db0613bab1c80487f2" kind="function"><name>size</name></member>
+  </compound>
+  <compound refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section" kind="struct"><name>microsoft::quantum::ConfigurationManager::Section</name>
+    <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1afec35e68ca96f14439b46e5b798dc8d4" kind="variable"><name>type</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1aa5869e1e1f4c39f53a774ea0a2c4874c" kind="variable"><name>name</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1afa4fa7ebdac7845f745567ae6ce043b7" kind="variable"><name>description</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a689440e2171f234cfb3e49016ee29ea4" kind="variable"><name>configuration</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a6930799c8a556e6b212f1d10817a8d24" kind="variable"><name>settings</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a8d790e3ceb4e78675dfac053bf75164a" kind="variable"><name>active</name></member>
+    <member refid="structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section_1a9cace218e8ade25b3c4aa2317d21e9a9" kind="variable"><name>id</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_select_pattern" kind="class"><name>microsoft::quantum::SelectPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_select_pattern_1aace2c5289656f1c86e03f5a0a9a0a65c" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_select_pattern_1a6592d610b3d46c307a885432a1ef4f46" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation" kind="class"><name>microsoft::quantum::ModuleLoader::SingleModuleTransformation</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1ad30042cf934882eb233c22ccf78ca77f" kind="typedef"><name>PassBuilder</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1a0159e93092221942a7f96c1964d6fbc7" kind="typedef"><name>OptimizationLevel</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1a6e490edbf50c7b52074e07c9b377cb35" kind="typedef"><name>FunctionAnalysisManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1ae226e25d786482440021b3c5d7debb11" kind="variable"><name>pass_builder_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1aebeabfc4bf2302b881d2b94abee9f41e" kind="variable"><name>loop_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1a5f3b38df56137f5f74418f0405fef67b" kind="variable"><name>function_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1aae240f91dce81b35fe48fdae2829c9d4" kind="variable"><name>gscc_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1a48838bece9458c2cd0a284490f9e7e98" kind="variable"><name>module_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1ac36e484881dfaa7329513930c8213bc9" kind="variable"><name>module_pass_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1af2e4110a74829034827f02bf255e8911" kind="variable"><name>optimisation_level_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1abd72939faa0b735e8418de359f25c393" kind="variable"><name>debug_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1a423adbc88e7fdc5422376d8a41670a64" kind="function"><name>SingleModuleTransformation</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1a1b51a04ac60a5994c4bf6ee50afca192" kind="function"><name>apply</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation_1a52cebd2d1678855a2428d305cb3d4bed" kind="function"><name>isDebugMode</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_store_pattern" kind="class"><name>microsoft::quantum::StorePattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_store_pattern_1a1a6f7b94623d2d9706784e5c2e6632c7" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_store_pattern_1a7bfd5b1923bb1e4cea37d5825ad663ac" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_switch_pattern" kind="class"><name>microsoft::quantum::SwitchPattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_switch_pattern_1a736b3d9b93de5e9c91fd5e894ba2d7bc" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_switch_pattern_1a0ce0c7c2a53fc3251d9ee575364d0956" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass" kind="class"><name>microsoft::quantum::TransformationRulesPass</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1af0a45129ba9202ac90347601f719134f" kind="typedef"><name>Replacements</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a5b814f3af3684d6b66f405b516d33981" kind="typedef"><name>Instruction</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1abf8768343b0fa26c376f2098a313a4ee" kind="typedef"><name>Rules</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a7507d540699f7033bcb6aeb37a0a1755" kind="typedef"><name>Value</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a8dc84138fb75565886b7f8c586827be5" kind="typedef"><name>Builder</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a0b426f8ca398834a0904d11e182d810d" kind="typedef"><name>AllocationManagerPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a529fcc11a8a71893a98d5a967c400016" kind="typedef"><name>Captures</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a07ac388be0bc998c320576e5c659ff91" kind="typedef"><name>ConstantArguments</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1ab1bf7939cea62871c46f2831c7d4bd08" kind="typedef"><name>ILoggerPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a96436bab68086f9477de7cb38a7ba6d2" kind="typedef"><name>DeletableInstructions</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a5c02846dcce74acafbecaebab953224f" kind="typedef"><name>InstructionModifier</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a5d02953429b53ef034e3872538cc2df2" kind="variable"><name>rule_set_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1aa3102df33b8b3f21826ebd6fb90856cc" kind="variable"><name>config_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a34256cf8cf42c2d7621853dde04b3611" kind="variable"><name>logger_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a219511054f21c56b39f0313f0d5036c5" kind="variable"><name>depth_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1ac2c05943cb52fb5a7cd95d653047a1c7" kind="variable"><name>const_expr_replacements_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1aa5b24d39ac5feba7340d5d25e9240944" kind="variable"><name>active_pieces_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1ad897201e051c45e390e527f40162a92a" kind="variable"><name>blocks_to_delete_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a28cd67ab06533636f830fcb2f5230b1e" kind="variable"><name>functions_to_delete_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a591bfdc977b29fa9b91bd8da79925367" kind="variable"><name>replacements_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a325cde9035481f4c15cdff8090c179e8" kind="variable"><name>profile_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1ad2be262fef91d79effa0b39af820967a" kind="function"><name>TransformationRulesPass</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a4021ba207d45c28c5f844a2ffab41d5f" kind="function"><name>TransformationRulesPass</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a8180e267b570649b10ea8c900b578f30" kind="function"><name>TransformationRulesPass</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a08deb76861a6aa5d8fb3918d6e8b2739" kind="function"><name>~TransformationRulesPass</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1acf8a44eebe50e5141a1f9f088c1fa8ff" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a058805fa119b33e409c40cdc8787a6f8" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a00addfd679de49affe569810b6cd79f3" kind="function"><name>run</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1acddcbb6d2c3664db23f00db0f5138ea3" kind="function"><name>runOnFunction</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a11a631e532b56a74f4682d4de8a78cb2" kind="function"><name>processReplacements</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a0eb589b31225635c588c08456b593d72" kind="function"><name>setupCopyAndExpand</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1adc26444e98922ba682254232d46be841" kind="function"><name>runCopyAndExpand</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a213929ddf4a326cc4f0e049c402ab9af" kind="function"><name>copyAndExpand</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1af7b21ae47a34ac3db1662812b8f20a68" kind="function"><name>expandFunctionCall</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a0e09cd930eff6dd76c11f2cbe8f426fa" kind="function"><name>constantFoldFunction</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a12db5661405c6b172188fc145eaf4582" kind="function"><name>addConstExprRule</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a52f2dabdac85110b1cfba2dbe642d6c6" kind="function"><name>runDetectActiveCode</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1ae5cc37e351fdd49382fdebafcb98d2b3" kind="function"><name>runDeleteDeadCode</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1ab43309dc425d43456f06abaf4eb55999" kind="function"><name>detectActiveCode</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a2c328d9003c914726e99201f854c5a59" kind="function"><name>deleteDeadCode</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a09c4210fc38ebf4bea3c9ce4704eba7a" kind="function"><name>isActive</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a1b76d2e69bd1db38df96227b177c23b0" kind="function"><name>followUsers</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1aec2f95af82310283c7ec1457fea6f7e7" kind="function"><name>runReplacePhi</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1ae969e346542cbbe0902e2f1a93d563db" kind="function"><name>runApplyRules</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a884450ed469cd68d650311179c022f2f" kind="function"><name>onQubitRelease</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a480b9c053224192ecc6dcb19f909883e" kind="function"><name>onQubitAllocate</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1a45642740d08894a7c7329eb829f6f2aa" kind="function"><name>setLogger</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_1ac928c8cb0c26cd36ee3f7e90ca7f9f1e" kind="function"><name>isRequired</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration" kind="class"><name>microsoft::quantum::TransformationRulesPassConfiguration</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1aa2122dd8fb4813ec97b62e93b178d7eb" kind="variable"><name>delete_dead_code_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a3b3f4fc464c015edba7625fe533420dc" kind="variable"><name>clone_functions_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1aa272946855d21349352f24728d7333d0" kind="variable"><name>transform_execution_path_only_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a3349d12caa550950d18a224c041aaa79" kind="variable"><name>max_recursion_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1ab107f5143d7e855de1903c84b922465d" kind="variable"><name>entry_point_attr_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1af15bbd32615b62600e8a8c4527820d9f" kind="variable"><name>simplify_prior_transformation_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1aa50dd84f548fd7bfbc483da461cbc540" kind="variable"><name>assume_no_exceptions_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a4dcb226196399999d8dea34f9800bad6" kind="variable"><name>reuse_qubits_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1aa2919f3d6d71d204ac1e23de7db1d280" kind="variable"><name>annotate_qubit_use_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1af69975199e5a3bc9a4b655a64584ff0b" kind="variable"><name>reuse_results_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a2e11043c73aab715955c1d9d5a59ddc4" kind="variable"><name>annotate_result_use_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a8dda99dcd42f8af296379d606cc3dc80" kind="variable"><name>group_measurements_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a02d62c864780aee947adf8c9b062e4df" kind="variable"><name>one_shot_measurement_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a5b9ebdb3083d5fa17dcd60765c629623" kind="function"><name>setup</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a726c051578ab6a6b6d77af1df0b955fa" kind="function"><name>isDisabled</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a0da974cb0bcac3402e864252576e5967" kind="function"><name>operator==</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1ab95f924bde7f3a4884722dfbb29f28a1" kind="function"><name>shouldDeleteDeadCode</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a2f2e9c0ddc9e2bfb7ae891e53f6646f9" kind="function"><name>shouldCloneFunctions</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1afa8268b4b9bea760bce841225609fae5" kind="function"><name>assumeNoExceptions</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a96661a4711bd3bea8788865ec70c6907" kind="function"><name>shouldTransformExecutionPathOnly</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1abafd8ac31350dcf307fc64defc8520ef" kind="function"><name>maxRecursion</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1acce4ab33f0f09a10d10e601f20a6cd31" kind="function"><name>shouldReuseQubits</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1aa6bec9384a7cb546fc6059e145a6034e" kind="function"><name>shouldAnnotateQubitUse</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a97dc372ed702c161657ef9b341a2618b" kind="function"><name>shouldReuseResults</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a0dc9bf3a8a78ee1d151663e58538a30a" kind="function"><name>shouldAnnotateResultUse</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a380c53738fc8e0e483b503e99a86a28b" kind="function"><name>shouldGroupMeasurements</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a3630d5f6c09f2b2d7d93107597d25ce1" kind="function"><name>oneShotMeasurement</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1a96ead027da602486b19e1c0e29cc5b85" kind="function"><name>shouldSimplifyPriorTransform</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1aeb2660c93da473cf6623fce821368a4c" kind="function"><name>entryPointAttr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_1ad2493200a8bdb35e45c8ebcab15a3f4b" kind="function"><name>createDisabled</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern" kind="class"><name>microsoft::quantum::UnnamedInvokePattern</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1aa89b547d893455bf4cae84eae7cb8ad1" kind="typedef"><name>String</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a775f77f370fe7739f9ffd445a8614c28" kind="function"><name>UnnamedInvokePattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a82c6e63ecc81b7aeb73571c95e86e65a" kind="function"><name>UnnamedInvokePattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a488d7e263ab34ae1bbc97dd12bed30e4" kind="function"><name>UnnamedInvokePattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1acf1db905f087aca73b16d9fbc73b1a94" kind="function"><name>~UnnamedInvokePattern</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a7a64146e6ba54c237e73328b127cbfe6" kind="function"><name>match</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1af9c838c21dcab2a56e1b4f5f6ddcdcda" kind="function"><name>copy</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_validation_pass" kind="class"><name>microsoft::quantum::ValidationPass</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1ad49d39e11b44251627f5230685d97d59" kind="typedef"><name>Instruction</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1a0663458e9134ed44156e7d35d8cc84a9" kind="typedef"><name>Value</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1a32551b4f108e128bf65e1adf785fb814" kind="typedef"><name>ILoggerPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1a94fb1525b72f3eb746310fa202144f50" kind="variable"><name>config_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1aeffff6419f75ed4c16f0233a3f944d68" kind="variable"><name>opcodes_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1a86b97c563799759f5eadb5cfdc3266b3" kind="variable"><name>external_calls_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1a474fd9f6e01445aaded21daf55c9ed58" kind="variable"><name>internal_calls_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1a668d78cc21333856610d2c178a6a5eb8" kind="variable"><name>logger_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1aa80f01e06b24a2b6b8f1ad6fd51f61d6" kind="function"><name>ValidationPass</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1a01d0f69c64c3c646839d4a7239c74418" kind="function"><name>ValidationPass</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1a3c3d4859a9792ba42c2709c6b7f4be73" kind="function"><name>ValidationPass</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1a7ccc70a49116a16b88b35d39ebca871c" kind="function"><name>~ValidationPass</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1a05a00cd4a93bb67cdf6a21d47c0b4c1a" kind="function"><name>run</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_1ac39981bc98871f0de2c35be92ccd01dc" kind="function"><name>isRequired</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration" kind="class"><name>microsoft::quantum::ValidationPassConfiguration</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1ab6548df53ee8fc0af5acb07b277a26a0" kind="typedef"><name>Set</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a109fd51ccaccdbe9c8bf16584c5ea83d" kind="variable"><name>opcodes_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a092cfaa11b7500ae406ee7dabe05c6f6" kind="variable"><name>external_calls_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a9b66ebc1c642440ddc32800f6ec60448" kind="variable"><name>save_report_to_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1ad228c7c200db350b0912ef0ffd8ae4a1" kind="variable"><name>allowlist_opcodes_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a53d9ac020c6a8f6d2bd9ee615efd0e15" kind="variable"><name>allowlist_external_calls_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1af2f8625c14229a8c15187241a67856b5" kind="variable"><name>allow_internal_calls_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a8f85c743f4b35bd669eba2ec9d490a3d" kind="function"><name>setup</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1ac4a34dadaaf63eca2593c9338f772e68" kind="function"><name>allowedOpcodes</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a0f63cf12ed449222d4ed07264df02d5f" kind="function"><name>allowedExternalCallNames</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a2880d9f0c5631444d84a70540849cd76" kind="function"><name>allowInternalCalls</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a4e623e25413a7c45597637896a58217a" kind="function"><name>allowlistOpcodes</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a7e6b97a0c6d45865a1406214ecae583f" kind="function"><name>allowlistExternalCalls</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a74598cea51158e2bd184111fbd4290d1" kind="function"><name>saveReportTo</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration_1a0ec70903c2351e0a12cbc65bbea30aa6" kind="function"><name>fromProfileName</name></member>
+  </compound>
+  <compound refid="classmicrosoft_1_1quantum_1_1_validator" kind="class"><name>microsoft::quantum::Validator</name>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a32dfb51f3d2bc3b2e5d004af2733c6cf" kind="typedef"><name>ValidatorPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1ae8e30d9652a8ca05223fde0e3e05c015" kind="typedef"><name>LogColloectionPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1afbe90ef0ed823fee80daf5e6a594c824" kind="typedef"><name>PassBuilderPtr</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1aac5625d250a18c5aa3a2baf2e714a832" kind="variable"><name>loop_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a0e3453adc4e78f7a26614197ecb86599" kind="variable"><name>function_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a0e0044e5032e2a0d217212ed46ffce0a" kind="variable"><name>gscc_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1acc1ab3578b06f2980b9af091ef6d6f01" kind="variable"><name>module_analysis_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a988f08b850c1b621ee80895757f424d6" kind="variable"><name>pass_builder_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a49c7b1b6514e965fc4cf6b3abdb34105" kind="variable"><name>module_pass_manager_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a5a1c8787b20c5aecfb5fc10b5f3e23c4" kind="variable"><name>logger_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1ad85a4d0b974fadbebd1d9f585a02dcfa" kind="variable"><name>save_to_filename_</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a63e5eb7b96db08e726bebdb54e5a741d" kind="function"><name>Validator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a7527f46e959c8612d6a275b5e55db33e" kind="function"><name>Validator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a6beec7b3a7d977e953be06744b174346" kind="function"><name>Validator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a238a1c43da2b3e0b19b1823db18f6b47" kind="function"><name>Validator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a561411cb50cbf6e6b14b9a790e5ebcba" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1abbb11ea9322f5e70bd625ea7f43aa0a5" kind="function"><name>operator=</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1ac59173066371fba95b20a811adb94790" kind="function"><name>~Validator</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a7aa811713a0b2f012ed7a4af2a7ddc6d" kind="function"><name>validate</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1ad6e91ef85395e8164f394a7b42de6d4b" kind="function"><name>passBuilder</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a742f5abec1d3f8614aeb3aed8849eb87" kind="function"><name>loopAnalysisManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1ad8cc077121ae084af8fa1159a1ea8e26" kind="function"><name>functionAnalysisManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1abe4b242cf8537bf210376d8312f2597c" kind="function"><name>gsccAnalysisManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a60e93d178b54d6cbab85c961e5892e70" kind="function"><name>moduleAnalysisManager</name></member>
+    <member refid="classmicrosoft_1_1quantum_1_1_validator_1a3216e0a17f4ceef9f1bc79ada8a13b2c" kind="function"><name>saveReportToFileIfNeeded</name></member>
+  </compound>
+  <compound refid="namespace_0d15" kind="namespace"><name>@15</name>
+  </compound>
+  <compound refid="namespace_0d22" kind="namespace"><name>@22</name>
+  </compound>
+  <compound refid="namespace_0d71" kind="namespace"><name>@71</name>
+  </compound>
+  <compound refid="namespace_0d72" kind="namespace"><name>@72</name>
+  </compound>
+  <compound refid="namespace_0d73" kind="namespace"><name>@73</name>
+  </compound>
+  <compound refid="namespace_0d74" kind="namespace"><name>@74</name>
+  </compound>
+  <compound refid="namespace_0d75" kind="namespace"><name>@75</name>
+  </compound>
+  <compound refid="namespace_0d76" kind="namespace"><name>@76</name>
+  </compound>
+  <compound refid="namespace_0d78" kind="namespace"><name>@78</name>
+  </compound>
+  <compound refid="namespace_0d79" kind="namespace"><name>@79</name>
+  </compound>
+  <compound refid="namespace_0d80" kind="namespace"><name>@80</name>
+  </compound>
+  <compound refid="namespace_0d81" kind="namespace"><name>@81</name>
+  </compound>
+  <compound refid="namespace_0d82" kind="namespace"><name>@82</name>
+  </compound>
+  <compound refid="namespace_0d86" kind="namespace"><name>@86</name>
+  </compound>
+  <compound refid="namespace_0d87" kind="namespace"><name>@87</name>
+  </compound>
+  <compound refid="namespace_0d88" kind="namespace"><name>@88</name>
+  </compound>
+  <compound refid="namespacellvm" kind="namespace"><name>llvm</name>
+  </compound>
+  <compound refid="namespacemicrosoft" kind="namespace"><name>microsoft</name>
+  </compound>
+  <compound refid="namespacemicrosoft_1_1quantum" kind="namespace"><name>microsoft::quantum</name>
+    <member refid="_qat_types_8hpp_1aba853e4bb159d55a38abf2860db3af9d" kind="typedef"><name>String</name></member>
+    <member refid="_factory_8cpp_1a1fa88414480cbb6c38e353f23f6a740e" kind="typedef"><name>ReplacementRulePtr</name></member>
+  </compound>
+  <compound refid="namespacemicrosoft_1_1quantum_1_1_0d35" kind="namespace"><name>microsoft::quantum::@35</name>
+  </compound>
+  <compound refid="namespacemicrosoft_1_1quantum_1_1_0d83" kind="namespace"><name>microsoft::quantum::@83</name>
+  </compound>
+  <compound refid="namespacemicrosoft_1_1quantum_1_1notation" kind="namespace"><name>microsoft::quantum::notation</name>
+    <member refid="namespacemicrosoft_1_1quantum_1_1notation_1a2304b2a242bd336d85d70942eba3328e" kind="typedef"><name>IOperandPrototypePtr</name></member>
+    <member refid="namespacemicrosoft_1_1quantum_1_1notation_1af09cbd4890d9958ed2982c6f80fe0a05" kind="typedef"><name>ReplacerFunction</name></member>
+    <member refid="group__shorthand_notation_1ga3d686074e1ec3555f3ffe12c8794c0fd" kind="variable"><name>_</name></member>
+    <member refid="group__shorthand_notation_1ga1df4795986302aa16342db829b457071" kind="function"><name>basicBlock</name></member>
+    <member refid="group__shorthand_notation_1gad649d125a7dfa6d4fd594400b1638683" kind="function"><name>bitCast</name></member>
+    <member refid="group__shorthand_notation_1gad06c9d1eace6451c6cb6a80150b87576" kind="function"><name>branch</name></member>
+    <member refid="group__shorthand_notation_1gabb463c16465034b9d9b85290edd9a4bc" kind="function"><name>call</name></member>
+    <member refid="group__shorthand_notation_1ga766351375d479dbb164ee827ee330219" kind="function"><name>callByNameOnly</name></member>
+    <member refid="group__shorthand_notation_1ga566037f3a56a77f63868af1ed5743731" kind="function"><name>operator&quot;&quot;_cap</name></member>
+    <member refid="group__shorthand_notation_1gaea3374cd06fe2f3b4d9bff4ad23a4af4" kind="function"><name>constInt</name></member>
+    <member refid="group__shorthand_notation_1gacdb76f23b9282dead50b4b5bf6c6ab64" kind="function"><name>intToPtr</name></member>
+    <member refid="group__shorthand_notation_1ga44ddd41276fac20964ede0e3b3a2c864" kind="function"><name>load</name></member>
+    <member refid="group__shorthand_notation_1gae89b441f450b5df53717bbf6f5c134c4" kind="function"><name>deleteInstruction</name></member>
+    <member refid="group__shorthand_notation_1gad1881ef24c25dfceb3ad71f18aa2c43f" kind="function"><name>unnamedInvoke</name></member>
+    <member refid="group__shorthand_notation_1gad70623d62fe54e6077fd102a33a93e5b" kind="function"><name>phi</name></member>
+    <member refid="group__shorthand_notation_1gaa8a0123f4724cb44f2484e7d8e38d086" kind="function"><name>switchOp</name></member>
+    <member refid="group__shorthand_notation_1ga2b184fe960d85fd09167f16c833907b3" kind="function"><name>select</name></member>
+    <member refid="group__shorthand_notation_1ga2fb129cfb7135e02513ac0eea14b94bc" kind="function"><name>store</name></member>
+  </compound>
+  <compound refid="_allocation_manager_8cpp" kind="file"><name>AllocationManager.cpp</name>
+  </compound>
+  <compound refid="_allocation_manager_8hpp" kind="file"><name>AllocationManager.hpp</name>
+  </compound>
+  <compound refid="_i_allocation_manager_8cpp" kind="file"><name>IAllocationManager.cpp</name>
+  </compound>
+  <compound refid="_i_allocation_manager_8hpp" kind="file"><name>IAllocationManager.hpp</name>
+  </compound>
+  <compound refid="_allocation_manager_2_tests_2_unit_2main_8cpp" kind="file"><name>main.cpp</name>
+    <member refid="_allocation_manager_2_tests_2_unit_2main_8cpp_1a7c1508e33135afec597edc1e6af64de9" kind="function"><name>TEST</name></member>
+    <member refid="_allocation_manager_2_tests_2_unit_2main_8cpp_1abfc8b1ca1d1988a2135cd864d5c7ed38" kind="function"><name>TEST</name></member>
+    <member refid="_allocation_manager_2_tests_2_unit_2main_8cpp_1a455131fb43b61902e4b3212a6ab3eddb" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_generators_2_tests_2_unit_2main_8cpp" kind="file"><name>main.cpp</name>
+    <member refid="_generators_2_tests_2_unit_2main_8cpp_1a69d324dc4b3b6d34f58eef910b13791b" kind="typedef"><name>GeneratorPtr</name></member>
+    <member refid="_generators_2_tests_2_unit_2main_8cpp_1a8e8a5cdb6c967fdede03337c5936c15e" kind="function"><name>TEST</name></member>
+    <member refid="_generators_2_tests_2_unit_2main_8cpp_1a09407c874e455945d95f451348d83871" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_test_tools_2_tests_2_unit_2main_8cpp" kind="file"><name>main.cpp</name>
+    <member refid="_test_tools_2_tests_2_unit_2main_8cpp_1ab2d527789785d8d1e8c28135e94bc92b" kind="function"><name>TEST</name></member>
+    <member refid="_test_tools_2_tests_2_unit_2main_8cpp_1a17a4c0105b2e16614c1e4ac0bc86c104" kind="function"><name>TEST</name></member>
+    <member refid="_test_tools_2_tests_2_unit_2main_8cpp_1a4bcd03bdf8e4f7d79060c9ac9c43de31" kind="function"><name>TEST</name></member>
+    <member refid="_test_tools_2_tests_2_unit_2main_8cpp_1a357be33c772342a82687b5542baa0ca5" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_qat_8cpp" kind="file"><name>Qat.cpp</name>
+    <member refid="_qat_8cpp_1a02fd73d861ef2e4aabb38c0c9ff82947" kind="function"><name>init</name></member>
+    <member refid="_qat_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627" kind="function"><name>main</name></member>
+  </compound>
+  <compound refid="_qat_config_8cpp" kind="file"><name>QatConfig.cpp</name>
+  </compound>
+  <compound refid="_qat_config_8hpp" kind="file"><name>QatConfig.hpp</name>
+  </compound>
+  <compound refid="_config_bind_8hpp" kind="file"><name>ConfigBind.hpp</name>
+  </compound>
+  <compound refid="_configuration_manager_8cpp" kind="file"><name>ConfigurationManager.cpp</name>
+  </compound>
+  <compound refid="_configuration_manager_8hpp" kind="file"><name>ConfigurationManager.hpp</name>
+  </compound>
+  <compound refid="_i_config_bind_8cpp" kind="file"><name>IConfigBind.cpp</name>
+  </compound>
+  <compound refid="_i_config_bind_8hpp" kind="file"><name>IConfigBind.hpp</name>
+  </compound>
+  <compound refid="_parameter_parser_8cpp" kind="file"><name>ParameterParser.cpp</name>
+  </compound>
+  <compound refid="_parameter_parser_8hpp" kind="file"><name>ParameterParser.hpp</name>
+  </compound>
+  <compound refid="configuration_8cpp" kind="file"><name>configuration.cpp</name>
+    <member refid="configuration_8cpp_1a54fb2b83a4f5aaa824c1bebed48aa024" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_default_profile_generator_8cpp" kind="file"><name>DefaultProfileGenerator.cpp</name>
+  </compound>
+  <compound refid="_default_profile_generator_8hpp" kind="file"><name>DefaultProfileGenerator.hpp</name>
+  </compound>
+  <compound refid="_llvm_passes_configuration_8cpp" kind="file"><name>LlvmPassesConfiguration.cpp</name>
+  </compound>
+  <compound refid="_llvm_passes_configuration_8hpp" kind="file"><name>LlvmPassesConfiguration.hpp</name>
+  </compound>
+  <compound refid="_profile_generator_8cpp" kind="file"><name>ProfileGenerator.cpp</name>
+  </compound>
+  <compound refid="_profile_generator_8hpp" kind="file"><name>ProfileGenerator.hpp</name>
+  </compound>
+  <compound refid="_llvm_8hpp" kind="file"><name>Llvm.hpp</name>
+  </compound>
+  <compound refid="_comment_logger_8cpp" kind="file"><name>CommentLogger.cpp</name>
+  </compound>
+  <compound refid="_comment_logger_8hpp" kind="file"><name>CommentLogger.hpp</name>
+  </compound>
+  <compound refid="_i_logger_8cpp" kind="file"><name>ILogger.cpp</name>
+  </compound>
+  <compound refid="_i_logger_8hpp" kind="file"><name>ILogger.hpp</name>
+  </compound>
+  <compound refid="_log_collection_8cpp" kind="file"><name>LogCollection.cpp</name>
+  </compound>
+  <compound refid="_log_collection_8hpp" kind="file"><name>LogCollection.hpp</name>
+  </compound>
+  <compound refid="_module_loader_8hpp" kind="file"><name>ModuleLoader.hpp</name>
+  </compound>
+  <compound refid="_profile_8cpp" kind="file"><name>Profile.cpp</name>
+  </compound>
+  <compound refid="_profile_8hpp" kind="file"><name>Profile.hpp</name>
+  </compound>
+  <compound refid="_qat_types_8hpp" kind="file"><name>QatTypes.hpp</name>
+  </compound>
+  <compound refid="_remove_disallowed_attributes_pass_8hpp" kind="file"><name>RemoveDisallowedAttributesPass.hpp</name>
+  </compound>
+  <compound refid="_factory_8cpp" kind="file"><name>Factory.cpp</name>
+  </compound>
+  <compound refid="_factory_8hpp" kind="file"><name>Factory.hpp</name>
+  </compound>
+  <compound refid="_factory_config_8hpp" kind="file"><name>FactoryConfig.hpp</name>
+  </compound>
+  <compound refid="_i_operand_prototype_8cpp" kind="file"><name>IOperandPrototype.cpp</name>
+  </compound>
+  <compound refid="_i_operand_prototype_8hpp" kind="file"><name>IOperandPrototype.hpp</name>
+  </compound>
+  <compound refid="_basic_block_8cpp" kind="file"><name>BasicBlock.cpp</name>
+  </compound>
+  <compound refid="_bit_cast_8cpp" kind="file"><name>BitCast.cpp</name>
+  </compound>
+  <compound refid="_branch_8cpp" kind="file"><name>Branch.cpp</name>
+  </compound>
+  <compound refid="_call_8hpp" kind="file"><name>Call.hpp</name>
+  </compound>
+  <compound refid="_call_8ipp" kind="file"><name>Call.ipp</name>
+  </compound>
+  <compound refid="_call_by_name_only_8cpp" kind="file"><name>CallByNameOnly.cpp</name>
+  </compound>
+  <compound refid="_capture_8cpp" kind="file"><name>Capture.cpp</name>
+  </compound>
+  <compound refid="_const_int_8cpp" kind="file"><name>ConstInt.cpp</name>
+  </compound>
+  <compound refid="_int_to_ptr_8cpp" kind="file"><name>IntToPtr.cpp</name>
+  </compound>
+  <compound refid="_load_8cpp" kind="file"><name>Load.cpp</name>
+  </compound>
+  <compound refid="_notation_8cpp" kind="file"><name>Notation.cpp</name>
+  </compound>
+  <compound refid="_notation_8hpp" kind="file"><name>Notation.hpp</name>
+  </compound>
+  <compound refid="_phi_8ipp" kind="file"><name>Phi.ipp</name>
+  </compound>
+  <compound refid="_select_8cpp" kind="file"><name>Select.cpp</name>
+  </compound>
+  <compound refid="_store_8cpp" kind="file"><name>Store.cpp</name>
+  </compound>
+  <compound refid="_switch_8cpp" kind="file"><name>Switch.cpp</name>
+  </compound>
+  <compound refid="_unnamed_invoke_8cpp" kind="file"><name>UnnamedInvoke.cpp</name>
+  </compound>
+  <compound refid="_any_pattern_8cpp" kind="file"><name>AnyPattern.cpp</name>
+  </compound>
+  <compound refid="_any_pattern_8hpp" kind="file"><name>AnyPattern.hpp</name>
+  </compound>
+  <compound refid="_call_pattern_8cpp" kind="file"><name>CallPattern.cpp</name>
+  </compound>
+  <compound refid="_call_pattern_8hpp" kind="file"><name>CallPattern.hpp</name>
+  </compound>
+  <compound refid="_instruction_8cpp" kind="file"><name>Instruction.cpp</name>
+  </compound>
+  <compound refid="_instruction_8hpp" kind="file"><name>Instruction.hpp</name>
+  </compound>
+  <compound refid="_phi_pattern_8cpp" kind="file"><name>PhiPattern.cpp</name>
+  </compound>
+  <compound refid="_phi_pattern_8hpp" kind="file"><name>PhiPattern.hpp</name>
+  </compound>
+  <compound refid="_unnamed_invoke_pattern_8cpp" kind="file"><name>UnnamedInvokePattern.cpp</name>
+  </compound>
+  <compound refid="_unnamed_invoke_pattern_8hpp" kind="file"><name>UnnamedInvokePattern.hpp</name>
+  </compound>
+  <compound refid="_replacement_rule_8cpp" kind="file"><name>ReplacementRule.cpp</name>
+  </compound>
+  <compound refid="_replacement_rule_8hpp" kind="file"><name>ReplacementRule.hpp</name>
+  </compound>
+  <compound refid="_rule_set_8cpp" kind="file"><name>RuleSet.cpp</name>
+  </compound>
+  <compound refid="_rule_set_8hpp" kind="file"><name>RuleSet.hpp</name>
+  </compound>
+  <compound refid="_basic_rule_set_ops_8cpp" kind="file"><name>BasicRuleSetOps.cpp</name>
+    <member refid="_basic_rule_set_ops_8cpp_1a0d8653d075fce23a04ed50f8fd7634f1" kind="function"><name>TEST</name></member>
+    <member refid="_basic_rule_set_ops_8cpp_1ac216dfe0d408d24849d83c483c27d66a" kind="function"><name>TEST</name></member>
+    <member refid="_basic_rule_set_ops_8cpp_1ad29362c6446a34b9de320a22789319c7" kind="function"><name>TEST</name></member>
+    <member refid="_basic_rule_set_ops_8cpp_1a9780fbed2561952cbe7c7db526e0ac6b" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_branch_on_one_8cpp" kind="file"><name>BranchOnOne.cpp</name>
+    <member refid="_branch_on_one_8cpp_1a74620ff33c934ef357ec732736e53063" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_branch_on_zero_8cpp" kind="file"><name>BranchOnZero.cpp</name>
+    <member refid="_branch_on_zero_8cpp_1a882d88a6470ec2edc26432e4963eca1f" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_disable_alias_counting_8cpp" kind="file"><name>DisableAliasCounting.cpp</name>
+    <member refid="_disable_alias_counting_8cpp_1a41add4a17f2ab7c2ea13fc85b70d4188" kind="function"><name>TEST</name></member>
+    <member refid="_disable_alias_counting_8cpp_1af2125c89443c364a69e27f59a73007fb" kind="function"><name>TEST</name></member>
+    <member refid="_disable_alias_counting_8cpp_1ad774c33bee10bf0408504c453510cbc9" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_disable_reference_counting_8cpp" kind="file"><name>DisableReferenceCounting.cpp</name>
+    <member refid="_disable_reference_counting_8cpp_1a18991f025be81a9a73679c1c42fcc060" kind="function"><name>TEST</name></member>
+    <member refid="_disable_reference_counting_8cpp_1a3c66b860f0ad419b5c49f87336485d2c" kind="function"><name>TEST</name></member>
+    <member refid="_disable_reference_counting_8cpp_1a9316c2b9bb454c9c22004cb6be7aa0ea" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_disable_strings_8cpp" kind="file"><name>DisableStrings.cpp</name>
+    <member refid="_disable_strings_8cpp_1a3a0b7da9bbac521c2dd18b022ea7c25c" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_factory_configuration_8cpp" kind="file"><name>FactoryConfiguration.cpp</name>
+    <member refid="_factory_configuration_8cpp_1ae4a0216b4b18b38326bf68ed8b185518" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_remove_function_call_8cpp" kind="file"><name>RemoveFunctionCall.cpp</name>
+    <member refid="_remove_function_call_8cpp_1a2f3d9c602c9be146c5192a2d2bb031df" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_select_on_one_8cpp" kind="file"><name>SelectOnOne.cpp</name>
+    <member refid="_select_on_one_8cpp_1a37c9d6aefefd0648a85724f8e55137ac" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_single_qubit_allocation_8cpp" kind="file"><name>SingleQubitAllocation.cpp</name>
+    <member refid="_single_qubit_allocation_8cpp_1a2de02e586a2f807ce1cbfaa49e6002c6" kind="function"><name>TEST</name></member>
+    <member refid="_single_qubit_allocation_8cpp_1a8ed07ed0143c085149d3010030bb48f1" kind="function"><name>TEST</name></member>
+    <member refid="_single_qubit_allocation_8cpp_1a3b2e964ca60b5cb08ab304125a6bfb9f" kind="function"><name>TEST</name></member>
+    <member refid="_single_qubit_allocation_8cpp_1a7b5e5f3b5b4dbc40020d4d6028ae82e9" kind="function"><name>TEST</name></member>
+    <member refid="_single_qubit_allocation_8cpp_1ae09a437ca43fc7aecb3f16b7895e2b07" kind="function"><name>TEST</name></member>
+    <member refid="_single_qubit_allocation_8cpp_1a2d993d97d11a57fc60b5c9527999bc0b" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_static_qubit_array_allocation_8cpp" kind="file"><name>StaticQubitArrayAllocation.cpp</name>
+    <member refid="_static_qubit_array_allocation_8cpp_1a7b00064b70635a112627b99978722682" kind="function"><name>TEST</name></member>
+    <member refid="_static_qubit_array_allocation_8cpp_1a257377073d38561b4cf7ebdd9d134bb4" kind="function"><name>TEST</name></member>
+    <member refid="_static_qubit_array_allocation_8cpp_1a6ef73a551b69d80158fdb2116505dc71" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_static_result_allocation_8cpp" kind="file"><name>StaticResultAllocation.cpp</name>
+    <member refid="_static_result_allocation_8cpp_1a5056ca14a5b3cfaba30498453ed1e9b4" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_ir_manipulation_test_helper_8cpp" kind="file"><name>IrManipulationTestHelper.cpp</name>
+  </compound>
+  <compound refid="_ir_manipulation_test_helper_8hpp" kind="file"><name>IrManipulationTestHelper.hpp</name>
+  </compound>
+  <compound refid="_loop_unrolling_8cpp" kind="file"><name>LoopUnrolling.cpp</name>
+    <member refid="_loop_unrolling_8cpp_1af1b3915e5394c84e4267372975dcfc4e" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_mini_tele_chain_8cpp" kind="file"><name>MiniTeleChain.cpp</name>
+    <member refid="_mini_tele_chain_8cpp_1a96cbb519d7013e655eb05ff0223a4d48" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_phi_elimination_8cpp" kind="file"><name>PhiElimination.cpp</name>
+    <member refid="_phi_elimination_8cpp_1af52bf3984c62ec351dbaad8bdeaa69ba" kind="function"><name>TEST</name></member>
+    <member refid="_phi_elimination_8cpp_1ab6a6a42f86d0bf3179204dcd5fb7e49e" kind="function"><name>TEST</name></member>
+  </compound>
+  <compound refid="_transformation_rules_pass_8cpp" kind="file"><name>TransformationRulesPass.cpp</name>
+  </compound>
+  <compound refid="_transformation_rules_pass_8hpp" kind="file"><name>TransformationRulesPass.hpp</name>
+  </compound>
+  <compound refid="_transformation_rules_pass_configuration_8cpp" kind="file"><name>TransformationRulesPassConfiguration.cpp</name>
+  </compound>
+  <compound refid="_transformation_rules_pass_configuration_8hpp" kind="file"><name>TransformationRulesPassConfiguration.hpp</name>
+  </compound>
+  <compound refid="_validation_pass_8cpp" kind="file"><name>ValidationPass.cpp</name>
+  </compound>
+  <compound refid="_validation_pass_8hpp" kind="file"><name>ValidationPass.hpp</name>
+  </compound>
+  <compound refid="_validation_pass_configuration_8hpp" kind="file"><name>ValidationPassConfiguration.hpp</name>
+  </compound>
+  <compound refid="_validator_8cpp" kind="file"><name>Validator.cpp</name>
+  </compound>
+  <compound refid="_validator_8hpp" kind="file"><name>Validator.hpp</name>
+  </compound>
+  <compound refid="group__shorthand_notation" kind="group"><name>shorthandNotation</name>
+    <member refid="group__shorthand_notation_1ga438cd693264597e73300e12811e46810" kind="variable"><name>name_</name></member>
+    <member refid="group__shorthand_notation_1ga3d686074e1ec3555f3ffe12c8794c0fd" kind="variable"><name>_</name></member>
+    <member refid="group__shorthand_notation_1ga75cc713660bd3bfdae9ed36001c31591" kind="function"><name>Capture</name></member>
+    <member refid="group__shorthand_notation_1ga067f53b718d424ca59ec3b70a6b5c9b1" kind="function"><name>operator=</name></member>
+    <member refid="group__shorthand_notation_1gabb463c16465034b9d9b85290edd9a4bc" kind="function"><name>call</name></member>
+    <member refid="group__shorthand_notation_1gad1881ef24c25dfceb3ad71f18aa2c43f" kind="function"><name>unnamedInvoke</name></member>
+    <member refid="group__shorthand_notation_1gad70623d62fe54e6077fd102a33a93e5b" kind="function"><name>phi</name></member>
+    <member refid="group__shorthand_notation_1ga766351375d479dbb164ee827ee330219" kind="function"><name>callByNameOnly</name></member>
+    <member refid="group__shorthand_notation_1gad649d125a7dfa6d4fd594400b1638683" kind="function"><name>bitCast</name></member>
+    <member refid="group__shorthand_notation_1gacdb76f23b9282dead50b4b5bf6c6ab64" kind="function"><name>intToPtr</name></member>
+    <member refid="group__shorthand_notation_1gaea3374cd06fe2f3b4d9bff4ad23a4af4" kind="function"><name>constInt</name></member>
+    <member refid="group__shorthand_notation_1gad06c9d1eace6451c6cb6a80150b87576" kind="function"><name>branch</name></member>
+    <member refid="group__shorthand_notation_1gaa8a0123f4724cb44f2484e7d8e38d086" kind="function"><name>switchOp</name></member>
+    <member refid="group__shorthand_notation_1ga2b184fe960d85fd09167f16c833907b3" kind="function"><name>select</name></member>
+    <member refid="group__shorthand_notation_1ga44ddd41276fac20964ede0e3b3a2c864" kind="function"><name>load</name></member>
+    <member refid="group__shorthand_notation_1ga2fb129cfb7135e02513ac0eea14b94bc" kind="function"><name>store</name></member>
+    <member refid="group__shorthand_notation_1ga1df4795986302aa16342db829b457071" kind="function"><name>basicBlock</name></member>
+    <member refid="group__shorthand_notation_1gae89b441f450b5df53717bbf6f5c134c4" kind="function"><name>deleteInstruction</name></member>
+    <member refid="group__shorthand_notation_1ga566037f3a56a77f63868af1ed5743731" kind="function"><name>operator&quot;&quot;_cap</name></member>
+  </compound>
+  <compound refid="dir_13002e6e9a3be65aeac8e1b6c1ea9008" kind="dir"><name>AllocationManager</name>
+  </compound>
+  <compound refid="dir_6098f77c224c930825758694068d4cda" kind="dir"><name>Apps</name>
+  </compound>
+  <compound refid="dir_76e799bfaed323ed7497703f1980580e" kind="dir"><name>Commandline</name>
+  </compound>
+  <compound refid="dir_0b342c6c6b7d2278121a0bb9c4985063" kind="dir"><name>Generators</name>
+  </compound>
+  <compound refid="dir_9986e114415b3247b7f935fba61974ba" kind="dir"><name>Llvm</name>
+  </compound>
+  <compound refid="dir_d9949a2e036493f8647151a4ab6ee0ce" kind="dir"><name>Logging</name>
+  </compound>
+  <compound refid="dir_d31ef966b0cb1225b2b298e923bbc249" kind="dir"><name>ModuleLoader</name>
+  </compound>
+  <compound refid="dir_b392e36b8bc0ffd1fb6a4bd773438243" kind="dir"><name>Rules/Notation</name>
+  </compound>
+  <compound refid="dir_f11d3c47e762e38fcdfbd4cfb049caab" kind="dir"><name>Rules/Patterns</name>
+  </compound>
+  <compound refid="dir_ba276cc22cfffca1a089fe33ae082ee3" kind="dir"><name>Profile</name>
+  </compound>
+  <compound refid="dir_a39c9fcb9602962ff81ab62a3013c5cf" kind="dir"><name>Apps/Qat</name>
+  </compound>
+  <compound refid="dir_46e4ac26363cdfa62d85590f6bd5db50" kind="dir"><name>QatTypes</name>
+  </compound>
+  <compound refid="dir_524e0ced49e0a8528dd8fd75cd7543b6" kind="dir"><name>RemoveDisallowedAttributesPass</name>
+  </compound>
+  <compound refid="dir_ed349e2d4b607ef61e27eb2c0c0c4b3d" kind="dir"><name>Rules</name>
+  </compound>
+  <compound refid="dir_98fd089881264eb613bf89a45540d12f" kind="dir"><name>AllocationManager/Tests</name>
+  </compound>
+  <compound refid="dir_b933e80d7be585e33e0b215013198969" kind="dir"><name>Generators/Tests</name>
+  </compound>
+  <compound refid="dir_b5c395f6bcd29dee1bce472ffc86b45d" kind="dir"><name>Commandline/Tests</name>
+  </compound>
+  <compound refid="dir_1ac31f0ad19e6e70229b8be25708d179" kind="dir"><name>TestTools/Tests</name>
+  </compound>
+  <compound refid="dir_6069a059e5434331e3b1d76f58abe873" kind="dir"><name>Rules/Tests</name>
+  </compound>
+  <compound refid="dir_6e62bfc077e9135e8e7652f871dd426f" kind="dir"><name>TransformationRulesPass/Tests</name>
+  </compound>
+  <compound refid="dir_057849f2a92a904b8f008cf0365e4758" kind="dir"><name>TestTools</name>
+  </compound>
+  <compound refid="dir_8f912e5e736424b0d79274234fdd791d" kind="dir"><name>TransformationRulesPass</name>
+  </compound>
+  <compound refid="dir_e3ce76e123ee2294d37cd4ff5e418b83" kind="dir"><name>Commandline/Tests/Unit</name>
+  </compound>
+  <compound refid="dir_9d1d7e504383a34af727f7e894e011d6" kind="dir"><name>AllocationManager/Tests/Unit</name>
+  </compound>
+  <compound refid="dir_1833a7894b5a75b220b1d3511201084c" kind="dir"><name>Rules/Tests/Unit</name>
+  </compound>
+  <compound refid="dir_2ec174d07e4760e39ac00c02aafa05bd" kind="dir"><name>Generators/Tests/Unit</name>
+  </compound>
+  <compound refid="dir_6b8ce007e224e28261a5a1609daedfb1" kind="dir"><name>TestTools/Tests/Unit</name>
+  </compound>
+  <compound refid="dir_330962e0cca6e5beca01291183583700" kind="dir"><name>TransformationRulesPass/Tests/Unit</name>
+  </compound>
+  <compound refid="dir_82b5296fc6745e5fe86b01060885a57b" kind="dir"><name>ValidationPass</name>
+  </compound>
+  <compound refid="dir_f32fa1f684a45b73f347439bab6df68d" kind="dir"><name>Validator</name>
+  </compound>
+</doxygenindex>

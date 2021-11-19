@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_8f912e5e736424b0d79274234fdd791d" kind="dir">
+    <compoundname>TransformationRulesPass</compoundname>
+    <innerdir refid="dir_6e62bfc077e9135e8e7652f871dd426f">TransformationRulesPass/Tests</innerdir>
+    <innerfile refid="_transformation_rules_pass_8cpp">TransformationRulesPass.cpp</innerfile>
+    <innerfile refid="_transformation_rules_pass_8hpp">TransformationRulesPass.hpp</innerfile>
+    <innerfile refid="_transformation_rules_pass_configuration_8cpp">TransformationRulesPassConfiguration.cpp</innerfile>
+    <innerfile refid="_transformation_rules_pass_configuration_8hpp">TransformationRulesPassConfiguration.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="TransformationRulesPass/"/>
+  </compounddef>
+</doxygen>

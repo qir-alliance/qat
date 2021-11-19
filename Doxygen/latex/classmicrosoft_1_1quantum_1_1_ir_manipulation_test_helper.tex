@@ -1,0 +1,147 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper}{}\doxysection{microsoft\+::quantum\+::Ir\+Manipulation\+Test\+Helper Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper}\index{microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a56024ef2e0ef9533e99244fc21bbadb4}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a56024ef2e0ef9533e99244fc21bbadb4}} 
+using {\bfseries String} = std\+::string
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a2d4d102afdb106e7c9e805dd7aada78b}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a2d4d102afdb106e7c9e805dd7aada78b}} 
+using {\bfseries LLVMContext} = llvm\+::\+LLVMContext
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_af39b11478913d614a64df980fd6b95de}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_af39b11478913d614a64df980fd6b95de}} 
+using {\bfseries SMDiagnostic} = llvm\+::\+SMDiagnostic
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a95c04fd344be1d2d8afa6ae09f05c41d}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a95c04fd344be1d2d8afa6ae09f05c41d}} 
+using {\bfseries Module} = llvm\+::\+Module
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a70642b0bb74d2ce7357a63a144e0820b}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a70642b0bb74d2ce7357a63a144e0820b}} 
+using {\bfseries Module\+Ptr} = std\+::unique\+\_\+ptr$<$ Module $>$
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_aaddbaae145986f5960a67c2b30779d98}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_aaddbaae145986f5960a67c2b30779d98}} 
+using {\bfseries Strings} = std\+::vector$<$ String $>$
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a189fd55760c36904970ffaded09f14ac}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a189fd55760c36904970ffaded09f14ac}} 
+using {\bfseries Optimization\+Level} = llvm\+::\+Pass\+Builder\+::\+Optimization\+Level
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_acdd48df6b9d535a6a50ea1571ffd870c}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_acdd48df6b9d535a6a50ea1571ffd870c}} 
+using {\bfseries Generator\+Ptr} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator}{Profile\+Generator}} $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ac3fa0b31a56b3fba128a0c12f80b0b66}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ac3fa0b31a56b3fba128a0c12f80b0b66}} 
+{\bfseries Ir\+Manipulation\+Test\+Helper} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper}{Ir\+Manipulation\+Test\+Helper}} const \&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_acb503ab846564bbd45c60120bd7250b6}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_acb503ab846564bbd45c60120bd7250b6}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper}{Ir\+Manipulation\+Test\+Helper}} \& {\bfseries operator=} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper}{Ir\+Manipulation\+Test\+Helper}} const \&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ad58c3fdabc2589426f8aa3a511039350}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ad58c3fdabc2589426f8aa3a511039350}} 
+{\bfseries Ir\+Manipulation\+Test\+Helper} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper}{Ir\+Manipulation\+Test\+Helper}} \&\&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a1cb50e61082d6852c9ab3cbabc0b0541}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a1cb50e61082d6852c9ab3cbabc0b0541}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper}{Ir\+Manipulation\+Test\+Helper}} \& {\bfseries operator=} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper}{Ir\+Manipulation\+Test\+Helper}} \&\&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a512daff52a5607ad0cf21e072584295d}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a512daff52a5607ad0cf21e072584295d}} 
+String \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a512daff52a5607ad0cf21e072584295d}{to\+String}} () const
+\begin{DoxyCompactList}\small\item\em Generates a string for the IR currently held in the module. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ab49ea98df2fc8452bc3a70a6def6e066}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ab49ea98df2fc8452bc3a70a6def6e066}} 
+Strings \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ab49ea98df2fc8452bc3a70a6def6e066}{to\+Body\+Instructions}} ()
+\begin{DoxyCompactList}\small\item\em Generates a list of instructions for the main function in the module. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ae9ad9386966f23f52e9ebed211719a51}{has\+Instruction\+Sequence}} (Strings const \&instructions)
+\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a819d74f6dbfbb8319612f4293c23a1b8}{apply\+Profile}} (Generator\+Ptr const \&profile, Optimization\+Level const \&optimisation\+\_\+level=Optimization\+Level\+::\+O0, bool debug=false)
+\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a1a1ed5ffdaeac6763826ce7996dc7f7d}{declare\+Opaque}} (String const \&name)
+\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_aa510af2e3424a9ac7678de251d87be3c}{declare\+Function}} (String const \&declaration)
+\item 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ac246a17feb952bafd30d44649879ef55}{from\+Body\+String}} (String const \&body, String const \&args=\char`\"{}\char`\"{})
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_acfd7552b58366ca59cdaf211fb8aa144}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_acfd7552b58366ca59cdaf211fb8aa144}} 
+String \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_acfd7552b58366ca59cdaf211fb8aa144}{generate\+Script}} (String const \&body, String const \&args=\char`\"{}\char`\"{}) const
+\begin{DoxyCompactList}\small\item\em Generates a script given the body of the main function. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_abcf3ed59354363bdf31926cdde99d17a}{from\+String}} (String const \&data)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ace87d6ad59287dbe58a8f33f62afbee8}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ace87d6ad59287dbe58a8f33f62afbee8}} 
+String \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ace87d6ad59287dbe58a8f33f62afbee8}{get\+Error\+Message}} () const
+\begin{DoxyCompactList}\small\item\em Gets an error message if the compilation failed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a2a90342ccb92bd7fccb9adc0a5fe0c8d}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a2a90342ccb92bd7fccb9adc0a5fe0c8d}} 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a2a90342ccb92bd7fccb9adc0a5fe0c8d}{is\+Module\+Broken}} ()
+\begin{DoxyCompactList}\small\item\em Whether or not the module is broken. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a0b856761e771e6cfe4210132bb048113}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a0b856761e771e6cfe4210132bb048113}} 
+Module\+Ptr \& \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a0b856761e771e6cfe4210132bb048113}{module}} ()
+\begin{DoxyCompactList}\small\item\em Returns a reference to the module. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a819d74f6dbfbb8319612f4293c23a1b8}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a819d74f6dbfbb8319612f4293c23a1b8}} 
+\index{microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}!applyProfile@{applyProfile}}
+\index{applyProfile@{applyProfile}!microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}}
+\doxysubsubsection{\texorpdfstring{applyProfile()}{applyProfile()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Ir\+Manipulation\+Test\+Helper\+::apply\+Profile (\begin{DoxyParamCaption}\item[{Generator\+Ptr const \&}]{profile,  }\item[{Optimization\+Level const \&}]{optimisation\+\_\+level = {\ttfamily OptimizationLevel\+:\+:O0},  }\item[{bool}]{debug = {\ttfamily false} }\end{DoxyParamCaption})}
+
+Applies a profile to the module to allow which transforms the IR. This allow us to write small profiles to test a single piece of transformation. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_aa510af2e3424a9ac7678de251d87be3c}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_aa510af2e3424a9ac7678de251d87be3c}} 
+\index{microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}!declareFunction@{declareFunction}}
+\index{declareFunction@{declareFunction}!microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}}
+\doxysubsubsection{\texorpdfstring{declareFunction()}{declareFunction()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Ir\+Manipulation\+Test\+Helper\+::declare\+Function (\begin{DoxyParamCaption}\item[{String const \&}]{declaration }\end{DoxyParamCaption})}
+
+Declares a function. The full signature should be supplied to as the first argument. Example usage
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{irmanip.declareOpaque(\textcolor{stringliteral}{"{}\%Result* @\_\_quantum\_\_rt\_\_result\_get\_zero()"{}});}
+
+\end{DoxyCode}
+ \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a1a1ed5ffdaeac6763826ce7996dc7f7d}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a1a1ed5ffdaeac6763826ce7996dc7f7d}} 
+\index{microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}!declareOpaque@{declareOpaque}}
+\index{declareOpaque@{declareOpaque}!microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}}
+\doxysubsubsection{\texorpdfstring{declareOpaque()}{declareOpaque()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Ir\+Manipulation\+Test\+Helper\+::declare\+Opaque (\begin{DoxyParamCaption}\item[{String const \&}]{name }\end{DoxyParamCaption})}
+
+Declares a opaque type. Only the name of the type should be supplied to this function. Example usage
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{irmanip.declareOpaque(\textcolor{stringliteral}{"{}Qubit"{}});}
+
+\end{DoxyCode}
+ \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ac246a17feb952bafd30d44649879ef55}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ac246a17feb952bafd30d44649879ef55}} 
+\index{microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}!fromBodyString@{fromBodyString}}
+\index{fromBodyString@{fromBodyString}!microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}}
+\doxysubsubsection{\texorpdfstring{fromBodyString()}{fromBodyString()}}
+{\footnotesize\ttfamily bool microsoft\+::quantum\+::\+Ir\+Manipulation\+Test\+Helper\+::from\+Body\+String (\begin{DoxyParamCaption}\item[{String const \&}]{body,  }\item[{String const \&}]{args = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+Creates an LLVM module given a function body. This function makes use of the inputs from \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a1a1ed5ffdaeac6763826ce7996dc7f7d}{Ir\+Manipulation\+Test\+Helper\+::declare\+Opaque}} and \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_aa510af2e3424a9ac7678de251d87be3c}{Ir\+Manipulation\+Test\+Helper\+::declare\+Function}} to construct the full IR. Example usage\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{irmanip.fromBodyString(R\textcolor{stringliteral}{"{}script(}}
+\DoxyCodeLine{\textcolor{stringliteral}{\%leftMessage = call \%Qubit* @\_\_quantum\_\_rt\_\_qubit\_allocate()}}
+\DoxyCodeLine{\textcolor{stringliteral}{call void @\_\_quantum\_\_qis\_\_h\_\_body(\%Qubit* \%leftMessage)}}
+\DoxyCodeLine{\textcolor{stringliteral}{)script"{});}}
+
+\end{DoxyCode}
+
+
+Returns false if the IR is invalid. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_abcf3ed59354363bdf31926cdde99d17a}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_abcf3ed59354363bdf31926cdde99d17a}} 
+\index{microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}!fromString@{fromString}}
+\index{fromString@{fromString}!microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}}
+\doxysubsubsection{\texorpdfstring{fromString()}{fromString()}}
+{\footnotesize\ttfamily bool microsoft\+::quantum\+::\+Ir\+Manipulation\+Test\+Helper\+::from\+String (\begin{DoxyParamCaption}\item[{String const \&}]{data }\end{DoxyParamCaption})}
+
+Creates an LLVM module given from a fully specified IR. This function ignores all inputs from \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_a1a1ed5ffdaeac6763826ce7996dc7f7d}{Ir\+Manipulation\+Test\+Helper\+::declare\+Opaque}} and \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_aa510af2e3424a9ac7678de251d87be3c}{Ir\+Manipulation\+Test\+Helper\+::declare\+Function}}.
+
+Returns false if the IR is invalid. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ae9ad9386966f23f52e9ebed211719a51}\label{classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper_ae9ad9386966f23f52e9ebed211719a51}} 
+\index{microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}!hasInstructionSequence@{hasInstructionSequence}}
+\index{hasInstructionSequence@{hasInstructionSequence}!microsoft::quantum::IrManipulationTestHelper@{microsoft::quantum::IrManipulationTestHelper}}
+\doxysubsubsection{\texorpdfstring{hasInstructionSequence()}{hasInstructionSequence()}}
+{\footnotesize\ttfamily bool microsoft\+::quantum\+::\+Ir\+Manipulation\+Test\+Helper\+::has\+Instruction\+Sequence (\begin{DoxyParamCaption}\item[{Strings const \&}]{instructions }\end{DoxyParamCaption})}
+
+Tests whether the main body contains a sequence of instructions. This function ignores instructions in-\/between the instruction set given. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Test\+Tools/Ir\+Manipulation\+Test\+Helper.\+hpp\item 
+Test\+Tools/Ir\+Manipulation\+Test\+Helper.\+cpp\end{DoxyCompactItemize}

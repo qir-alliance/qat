@@ -1,0 +1,503 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="_validator_8hpp" kind="file" language="C++">
+    <compoundname>Validator.hpp</compoundname>
+    <includes refid="_allocation_manager_8hpp" local="yes">AllocationManager/AllocationManager.hpp</includes>
+    <includes refid="_i_allocation_manager_8hpp" local="yes">AllocationManager/IAllocationManager.hpp</includes>
+    <includes refid="_i_logger_8hpp" local="yes">Logging/ILogger.hpp</includes>
+    <includes refid="_log_collection_8hpp" local="yes">Logging/LogCollection.hpp</includes>
+    <includes refid="_validation_pass_configuration_8hpp" local="yes">ValidationPass/ValidationPassConfiguration.hpp</includes>
+    <includes refid="_llvm_8hpp" local="yes">Llvm/Llvm.hpp</includes>
+    <includes local="no">memory</includes>
+    <includedby refid="_qat_8cpp" local="yes">Apps/Qat/Qat.cpp</includedby>
+    <includedby refid="_profile_8hpp" local="yes">Profile/Profile.hpp</includedby>
+    <includedby refid="_validator_8cpp" local="yes">Validator/Validator.cpp</includedby>
+    <incdepgraph>
+      <node id="21">
+        <label>llvm/IR/Module.h</label>
+      </node>
+      <node id="51">
+        <label>iomanip</label>
+      </node>
+      <node id="19">
+        <label>llvm/IR/IRBuilder.h</label>
+      </node>
+      <node id="18">
+        <label>llvm/IR/Function.h</label>
+      </node>
+      <node id="33">
+        <label>llvm/InitializePasses.h</label>
+      </node>
+      <node id="20">
+        <label>llvm/IR/LLVMContext.h</label>
+      </node>
+      <node id="11">
+        <label>llvm/Support/raw_ostream.h</label>
+      </node>
+      <node id="43">
+        <label>cstdint</label>
+      </node>
+      <node id="8">
+        <label>llvm/Analysis/InlineCost.h</label>
+      </node>
+      <node id="34">
+        <label>llvm/LinkAllIR.h</label>
+      </node>
+      <node id="36">
+        <label>llvm/Passes/StandardInstrumentations.h</label>
+      </node>
+      <node id="7">
+        <label>Llvm/Llvm.hpp</label>
+        <link refid="_llvm_8hpp_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>llvm/Support/TargetSelect.h</label>
+      </node>
+      <node id="23">
+        <label>llvm/IR/Verifier.h</label>
+      </node>
+      <node id="2">
+        <label>AllocationManager/AllocationManager.hpp</label>
+        <link refid="_allocation_manager_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>string</label>
+      </node>
+      <node id="29">
+        <label>llvm/Transforms/Scalar/DCE.h</label>
+      </node>
+      <node id="50">
+        <label>unordered_set</label>
+      </node>
+      <node id="45">
+        <label>ValidationPass/ValidationPassConfiguration.hpp</label>
+        <link refid="_validation_pass_configuration_8hpp_source"/>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>AllocationManager/IAllocationManager.hpp</label>
+        <link refid="_i_allocation_manager_8hpp_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>Commandline/ConfigurationManager.hpp</label>
+        <link refid="_configuration_manager_8hpp_source"/>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>llvm/Transforms/Scalar/LoopUnrollPass.h</label>
+      </node>
+      <node id="28">
+        <label>llvm/Transforms/Scalar/ADCE.h</label>
+      </node>
+      <node id="35">
+        <label>llvm/MC/SubtargetFeature.h</label>
+      </node>
+      <node id="42">
+        <label>Logging/ILogger.hpp</label>
+        <link refid="_i_logger_8hpp_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>Validator/Validator.hpp</label>
+        <link refid="_validator_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>llvm/Passes/PassPlugin.h</label>
+      </node>
+      <node id="47">
+        <label>Commandline/ConfigBind.hpp</label>
+        <link refid="_config_bind_8hpp_source"/>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>vector</label>
+      </node>
+      <node id="44">
+        <label>Logging/LogCollection.hpp</label>
+        <link refid="_log_collection_8hpp_source"/>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>Commandline/ParameterParser.hpp</label>
+        <link refid="_parameter_parser_8hpp_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>sstream</label>
+      </node>
+      <node id="27">
+        <label>llvm/LinkAllPasses.h</label>
+      </node>
+      <node id="15">
+        <label>llvm/IR/BasicBlock.h</label>
+      </node>
+      <node id="52">
+        <label>iostream</label>
+      </node>
+      <node id="39">
+        <label>llvm/Target/TargetMachine.h</label>
+      </node>
+      <node id="12">
+        <label>llvm/Transforms/IPO/Inliner.h</label>
+      </node>
+      <node id="40">
+        <label>unordered_map</label>
+      </node>
+      <node id="24">
+        <label>llvm/IRReader/IRReader.h</label>
+      </node>
+      <node id="14">
+        <label>llvm/Transforms/Utils/Cloning.h</label>
+      </node>
+      <node id="9">
+        <label>llvm/Passes/PassBuilder.h</label>
+      </node>
+      <node id="16">
+        <label>llvm/IR/Constants.h</label>
+      </node>
+      <node id="22">
+        <label>llvm/IR/Type.h</label>
+      </node>
+      <node id="37">
+        <label>llvm/Support/InitLLVM.h</label>
+      </node>
+      <node id="4">
+        <label>QatTypes/QatTypes.hpp</label>
+        <link refid="_qat_types_8hpp_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>Commandline/IConfigBind.hpp</label>
+        <link refid="_i_config_bind_8hpp_source"/>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>llvm/Bitcode/BitcodeWriter.h</label>
+      </node>
+      <node id="31">
+        <label>llvm/Linker/Linker.h</label>
+      </node>
+      <node id="54">
+        <label>type_traits</label>
+      </node>
+      <node id="13">
+        <label>llvm/Transforms/Utils/BasicBlockUtils.h</label>
+      </node>
+      <node id="30">
+        <label>llvm/Analysis/ConstantFolding.h</label>
+      </node>
+      <node id="17">
+        <label>llvm/IR/DerivedTypes.h</label>
+      </node>
+      <node id="25">
+        <label>llvm/Support/SourceMgr.h</label>
+      </node>
+      <node id="6">
+        <label>memory</label>
+      </node>
+      <node id="55">
+        <label>typeindex</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="6">
+        <label>TransformationRulesPass/TransformationRulesPass.hpp</label>
+        <link refid="_transformation_rules_pass_8hpp_source"/>
+      </node>
+      <node id="5">
+        <label>TestTools/IrManipulationTestHelper.hpp</label>
+        <link refid="_ir_manipulation_test_helper_8hpp_source"/>
+      </node>
+      <node id="3">
+        <label>Generators/ProfileGenerator.hpp</label>
+        <link refid="_profile_generator_8hpp_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>Validator/Validator.hpp</label>
+        <link refid="_validator_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>ValidationPass/ValidationPass.hpp</label>
+        <link refid="_validation_pass_8hpp_source"/>
+      </node>
+      <node id="4">
+        <label>Generators/DefaultProfileGenerator.hpp</label>
+        <link refid="_default_profile_generator_8hpp_source"/>
+      </node>
+      <node id="2">
+        <label>Profile/Profile.hpp</label>
+        <link refid="_profile_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classmicrosoft_1_1quantum_1_1_validator" prot="public">microsoft::quantum::Validator</innerclass>
+    <innernamespace refid="namespacemicrosoft">microsoft</innernamespace>
+    <innernamespace refid="namespacemicrosoft_1_1quantum">microsoft::quantum</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Copyright<sp/>(c)<sp/>Microsoft<sp/>Corporation.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Licensed<sp/>under<sp/>the<sp/>MIT<sp/>License.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;AllocationManager/AllocationManager.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;AllocationManager/IAllocationManager.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Logging/ILogger.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Logging/LogCollection.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;ValidationPass/ValidationPassConfiguration.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Llvm/Llvm.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;memory&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">microsoft</highlight></codeline>
+<codeline lineno="16"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">quantum</highlight></codeline>
+<codeline lineno="18"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23" refid="classmicrosoft_1_1quantum_1_1_validator" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>ValidatorPtr<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>std::unique_ptr&lt;Validator&gt;;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>LogColloectionPtr<sp/>=<sp/>std::shared_ptr&lt;LogCollection&gt;;</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Constructors</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">explicit</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref>(</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration" kindref="compound">ValidationPassConfiguration</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">&amp;<sp/>cfg,</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>debug,</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::TargetMachine*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>target_machine<sp/>=<sp/></highlight><highlight class="keyword">nullptr</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Default<sp/>construction<sp/>not<sp/>allowed<sp/>to<sp/>ensure<sp/>that<sp/>LLVM<sp/>modules<sp/>and<sp/>passes<sp/>are<sp/>set<sp/>up<sp/>correctly.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Copy<sp/>construction<sp/>is<sp/>prohibited<sp/>due<sp/>to<sp/>restriction<sp/>on<sp/>classes<sp/>held<sp/>by<sp/>Validator.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref>()<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref>(<ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">&amp;)<sp/>=<sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref>(<ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref>&amp;&amp;)<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref>&amp;<sp/>operator=(<ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">&amp;)<sp/>=<sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref>&amp;<sp/>operator=(<ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref>&amp;&amp;)<sp/>=<sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>~<ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref>()<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Validator<sp/>methods</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator_1a7aa811713a0b2f012ed7a4af2a7ddc6d" kindref="member">validate</ref>(llvm::Module&amp;<sp/>module);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>PassBuilderPtr<sp/>=<sp/>std::unique_ptr&lt;llvm::PassBuilder&gt;;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::PassBuilder&amp;<sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator_1ad6e91ef85395e8164f394a7b42de6d4b" kindref="member">passBuilder</ref>();</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::LoopAnalysisManager&amp;<sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator_1a742f5abec1d3f8614aeb3aed8849eb87" kindref="member">loopAnalysisManager</ref>();</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::FunctionAnalysisManager&amp;<sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator_1ad8cc077121ae084af8fa1159a1ea8e26" kindref="member">functionAnalysisManager</ref>();</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::CGSCCAnalysisManager&amp;<sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator_1abe4b242cf8537bf210376d8312f2597c" kindref="member">gsccAnalysisManager</ref>();</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::ModuleAnalysisManager&amp;<sp/><ref refid="classmicrosoft_1_1quantum_1_1_validator_1a60e93d178b54d6cbab85c961e5892e70" kindref="member">moduleAnalysisManager</ref>();</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>saveReportToFileIfNeeded();</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>LLVM<sp/>logic<sp/>to<sp/>run<sp/>the<sp/>passes</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::LoopAnalysisManager<sp/><sp/><sp/><sp/><sp/>loop_analysis_manager_;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::FunctionAnalysisManager<sp/>function_analysis_manager_;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::CGSCCAnalysisManager<sp/><sp/><sp/><sp/>gscc_analysis_manager_;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::ModuleAnalysisManager<sp/><sp/><sp/>module_analysis_manager_;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>PassBuilderPtr<sp/>pass_builder_;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>llvm::ModulePassManager<sp/>module_pass_manager_{};</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>LogColloectionPtr<sp/>logger_{</highlight><highlight class="keyword">nullptr</highlight><highlight class="normal">};<sp/></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>String<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>save_to_filename_{</highlight><highlight class="stringliteral">&quot;&quot;</highlight><highlight class="normal">};</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>namespace<sp/>quantum</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>namespace<sp/>microsoft</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="Validator/Validator.hpp"/>
+  </compounddef>
+</doxygen>

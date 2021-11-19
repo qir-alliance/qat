@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_0b342c6c6b7d2278121a0bb9c4985063" kind="dir">
+    <compoundname>Generators</compoundname>
+    <innerdir refid="dir_b933e80d7be585e33e0b215013198969">Generators/Tests</innerdir>
+    <innerfile refid="_default_profile_generator_8cpp">DefaultProfileGenerator.cpp</innerfile>
+    <innerfile refid="_default_profile_generator_8hpp">DefaultProfileGenerator.hpp</innerfile>
+    <innerfile refid="_llvm_passes_configuration_8cpp">LlvmPassesConfiguration.cpp</innerfile>
+    <innerfile refid="_llvm_passes_configuration_8hpp">LlvmPassesConfiguration.hpp</innerfile>
+    <innerfile refid="_profile_generator_8cpp">ProfileGenerator.cpp</innerfile>
+    <innerfile refid="_profile_generator_8hpp">ProfileGenerator.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="Generators/"/>
+  </compounddef>
+</doxygen>

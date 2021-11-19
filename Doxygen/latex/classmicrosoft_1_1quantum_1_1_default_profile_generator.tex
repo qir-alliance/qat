@@ -1,0 +1,56 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_default_profile_generator}{}\doxysection{microsoft\+::quantum\+::Default\+Profile\+Generator Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_default_profile_generator}\index{microsoft::quantum::DefaultProfileGenerator@{microsoft::quantum::DefaultProfileGenerator}}
+
+
+{\ttfamily \#include $<$Generators/\+Default\+Profile\+Generator.\+hpp$>$}
+
+Inheritance diagram for microsoft\+::quantum\+::Default\+Profile\+Generator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicrosoft_1_1quantum_1_1_default_profile_generator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_default_profile_generator_a22f659469ab3e13156e2620d786bd808}\label{classmicrosoft_1_1quantum_1_1_default_profile_generator_a22f659469ab3e13156e2620d786bd808}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_default_profile_generator_a22f659469ab3e13156e2620d786bd808}{Configure\+Function}} = std\+::function$<$ void(\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} \&)$>$
+\begin{DoxyCompactList}\small\item\em Function type that configures a rule set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_default_profile_generator_a858468c67dab40c190f769acfc31124f}{Default\+Profile\+Generator}} ()
+\item 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_default_profile_generator_a5ebae1a00834f9f572af68d9ef2f0d8f}{Default\+Profile\+Generator}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_default_profile_generator_a22f659469ab3e13156e2620d786bd808}{Configure\+Function}} const \&configure, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration}{Transformation\+Rules\+Pass\+Configuration}} const \&profile\+\_\+pass\+\_\+config=\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_ad2493200a8bdb35e45c8ebcab15a3f4b}{Transformation\+Rules\+Pass\+Configuration\+::create\+Disabled}}(), \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration}{Llvm\+Passes\+Configuration}} const \&llvm\+\_\+config=\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration}{Llvm\+Passes\+Configuration}}())
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_default_profile_generator_a995ddd27c16ae4353c6a22be811f1a8d}\label{classmicrosoft_1_1quantum_1_1_default_profile_generator_a995ddd27c16ae4353c6a22be811f1a8d}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration}{Transformation\+Rules\+Pass\+Configuration}} const  \& \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_default_profile_generator_a995ddd27c16ae4353c6a22be811f1a8d}{rule\+Transformation\+Config}} () const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to the rule transformation configuration. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_default_profile_generator_a61b348299ef721fa1adfc8cec28c8792}\label{classmicrosoft_1_1quantum_1_1_default_profile_generator_a61b348299ef721fa1adfc8cec28c8792}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration}{Llvm\+Passes\+Configuration}} const  \& \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_default_profile_generator_a61b348299ef721fa1adfc8cec28c8792}{llvm\+Passes\+Config}} () const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to the LLVM passes configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_default_profile_generator}{Default\+Profile\+Generator}} defines a profile that configures the rule set used by the \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile}{Profile}} pass. This profile is useful for generating dynamic profiles and is well suited for testing purposes or YAML configured transformation of the IR. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_default_profile_generator_a858468c67dab40c190f769acfc31124f}\label{classmicrosoft_1_1quantum_1_1_default_profile_generator_a858468c67dab40c190f769acfc31124f}} 
+\index{microsoft::quantum::DefaultProfileGenerator@{microsoft::quantum::DefaultProfileGenerator}!DefaultProfileGenerator@{DefaultProfileGenerator}}
+\index{DefaultProfileGenerator@{DefaultProfileGenerator}!microsoft::quantum::DefaultProfileGenerator@{microsoft::quantum::DefaultProfileGenerator}}
+\doxysubsubsection{\texorpdfstring{DefaultProfileGenerator()}{DefaultProfileGenerator()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily microsoft\+::quantum\+::\+Default\+Profile\+Generator\+::\+Default\+Profile\+Generator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default constructor. This constructor adds components for rule transformation and LLVM passes. These are configurable through the corresponding configuration classes which can be access through the configuration manager. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_default_profile_generator_a5ebae1a00834f9f572af68d9ef2f0d8f}\label{classmicrosoft_1_1quantum_1_1_default_profile_generator_a5ebae1a00834f9f572af68d9ef2f0d8f}} 
+\index{microsoft::quantum::DefaultProfileGenerator@{microsoft::quantum::DefaultProfileGenerator}!DefaultProfileGenerator@{DefaultProfileGenerator}}
+\index{DefaultProfileGenerator@{DefaultProfileGenerator}!microsoft::quantum::DefaultProfileGenerator@{microsoft::quantum::DefaultProfileGenerator}}
+\doxysubsubsection{\texorpdfstring{DefaultProfileGenerator()}{DefaultProfileGenerator()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily microsoft\+::quantum\+::\+Default\+Profile\+Generator\+::\+Default\+Profile\+Generator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_default_profile_generator_a22f659469ab3e13156e2620d786bd808}{Configure\+Function}} const \&}]{configure,  }\item[{\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration}{Transformation\+Rules\+Pass\+Configuration}} const \&}]{profile\+\_\+pass\+\_\+config = {\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration_ad2493200a8bdb35e45c8ebcab15a3f4b}{Transformation\+Rules\+Pass\+Configuration\+::create\+Disabled}}()},  }\item[{\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration}{Llvm\+Passes\+Configuration}} const \&}]{llvm\+\_\+config = {\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration}{Llvm\+Passes\+Configuration}}()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+The constructor takes a lambda function which configures the rule set. This function is invoked during the creation of the generation module. This constructor further overrides the default configuration 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Generators/Default\+Profile\+Generator.\+hpp\item 
+Generators/Default\+Profile\+Generator.\+cpp\end{DoxyCompactItemize}

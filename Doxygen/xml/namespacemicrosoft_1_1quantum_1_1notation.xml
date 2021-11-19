@@ -1,0 +1,390 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacemicrosoft_1_1quantum_1_1notation" kind="namespace" language="C++">
+    <compoundname>microsoft::quantum::notation</compoundname>
+    <innerclass refid="classmicrosoft_1_1quantum_1_1notation_1_1_capture" prot="public">microsoft::quantum::notation::Capture</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="namespacemicrosoft_1_1quantum_1_1notation_1a2304b2a242bd336d85d70942eba3328e" prot="public" static="no">
+        <type>std::shared_ptr&lt; <ref refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype" kindref="compound">IOperandPrototype</ref> &gt;</type>
+        <definition>typedef std::shared_ptr&lt; IOperandPrototype &gt; microsoft::quantum::notation::IOperandPrototypePtr</definition>
+        <argsstring></argsstring>
+        <name>IOperandPrototypePtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/BasicBlock.cpp" line="19" column="9" bodyfile="Rules/Notation/BasicBlock.cpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="namespacemicrosoft_1_1quantum_1_1notation_1af09cbd4890d9958ed2982c6f80fe0a05" prot="public" static="no">
+        <type>std::function&lt; bool(<ref refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1ab975e38f598fc4e3a84039f84ab404d1" kindref="member">ReplacementRule::Builder</ref> &amp;, <ref refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1afd9ba523c6b96524a36d66f81a3dbd3d" kindref="member">ReplacementRule::Value</ref> *, <ref refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1a5d9d153c6aede2708519758e4386cfad" kindref="member">ReplacementRule::Captures</ref> &amp;, <ref refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1aca9c759c6f4aace29dc3b0b3b05ce9e1" kindref="member">ReplacementRule::Replacements</ref> &amp;)&gt;</type>
+        <definition>using microsoft::quantum::notation::ReplacerFunction = typedef std::function&lt;bool( ReplacementRule::Builder&amp;, ReplacementRule::Value*, ReplacementRule::Captures&amp;, ReplacementRule::Replacements&amp;)&gt;</definition>
+        <argsstring></argsstring>
+        <name>ReplacerFunction</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Notation.hpp" line="31" column="9" bodyfile="Rules/Notation/Notation.hpp" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="group__shorthand_notation_1ga3d686074e1ec3555f3ffe12c8794c0fd" prot="public" static="yes" mutable="no">
+        <type>std::shared_ptr&lt; <ref refid="classmicrosoft_1_1quantum_1_1_any_pattern" kindref="compound">AnyPattern</ref> &gt; const</type>
+        <definition>std::shared_ptr&lt;AnyPattern&gt; const microsoft::quantum::notation::_</definition>
+        <argsstring></argsstring>
+        <name>_</name>
+        <initializer>= std::make_shared&lt;<ref refid="classmicrosoft_1_1quantum_1_1_any_pattern" kindref="compound">AnyPattern</ref>&gt;()</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Shorthand notation for a wildcard which matches anything. This value is useful when for instance capturing the arguments of a function call where the origin of the value does not matter to the pattern. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Notation.hpp" line="160" column="38" bodyfile="Rules/Notation/Notation.hpp" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__shorthand_notation_1ga1df4795986302aa16342db829b457071" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::basicBlock</definition>
+        <argsstring>()</argsstring>
+        <name>basicBlock</name>
+        <briefdescription>
+<para>Matches a load instruction with one argument. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/BasicBlock.cpp" line="21" column="30" bodyfile="Rules/Notation/BasicBlock.cpp" bodystart="21" bodyend="26" declfile="Rules/Notation/Notation.hpp" declline="151" declcolumn="30"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1gad649d125a7dfa6d4fd594400b1638683" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::bitCast</definition>
+        <argsstring>(IOperandPrototypePtr const  &amp;arg)</argsstring>
+        <name>bitCast</name>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+<para>Matches the llvm::BitCast instructruction. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/BitCast.cpp" line="23" column="30" bodyfile="Rules/Notation/BitCast.cpp" bodystart="23" bodyend="29" declfile="Rules/Notation/Notation.hpp" declline="113" declcolumn="30"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1gad06c9d1eace6451c6cb6a80150b87576" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::branch</definition>
+        <argsstring>(IOperandPrototypePtr const  &amp;cond, IOperandPrototypePtr const  &amp;arg1, IOperandPrototypePtr const  &amp;arg2)</argsstring>
+        <name>branch</name>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>cond</declname>
+        </param>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>arg1</declname>
+        </param>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>arg2</declname>
+        </param>
+        <briefdescription>
+<para>Matches a branch instruction given a condition and two arguments. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Branch.cpp" line="23" column="30" bodyfile="Rules/Notation/Branch.cpp" bodystart="23" bodyend="35" declfile="Rules/Notation/Notation.hpp" declline="122" declcolumn="30"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1gabb463c16465034b9d9b85290edd9a4bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename...</type>
+            <declname>Args</declname>
+            <defname>Args</defname>
+          </param>
+        </templateparamlist>
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::call</definition>
+        <argsstring>(std::string const &amp;name, Args... args)</argsstring>
+        <name>call</name>
+        <param>
+          <type>std::string const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>Args...</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Shorthand notations are made to make it possible to match patterns in the QIR. This part of the library focuses on making it easy to express advance patterns in just a few lines and specify what parts of the IR is of interest to the replacer function. An example is following pattern</para>
+<para><programlisting><codeline><highlight class="normal">auto<sp/>get_one<sp/>=<sp/>call(&quot;__quantum__rt__result_get_one&quot;);</highlight></codeline>
+<codeline><highlight class="normal">addRule(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>{branch(&quot;cond&quot;_cap<sp/>=<sp/>call(&quot;__quantum__rt__result_equal&quot;,<sp/>&quot;result&quot;_cap<sp/>=<sp/>_,<sp/>&quot;one&quot;_cap<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>get_one),<sp/>_,<sp/>_),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>replace_branch_positive});</highlight></codeline>
+</programlisting></para>
+<para>which matches IRs of the form</para>
+<para><programlisting><codeline><highlight class="normal">%1<sp/>=<sp/>call<sp/>%Result*<sp/>@__quantum__rt__result_get_one()</highlight></codeline>
+<codeline><highlight class="normal">%2<sp/>=<sp/>call<sp/>i1<sp/>@__quantum__rt__result_equal(%Result*<sp/>%0,<sp/>%Result*<sp/>%1)</highlight></codeline>
+<codeline><highlight class="normal">br<sp/>i1<sp/>%2,<sp/>label<sp/>%then0__1,<sp/>label<sp/>%continue__1</highlight></codeline>
+</programlisting></para>
+<para>The pattern futher specifies that as a successful match is obtained, a table capturing certain values must be created. In the above example, the table would contain three entries: <computeroutput>cond</computeroutput>, <computeroutput>result</computeroutput> and <computeroutput>one</computeroutput> each of which would point to a a llvm::Value* in the QIR. This allows the replacement function to easily manipulate the DAG in these three places (four if you include the main captured value which is always passed to the replacement function). Shorthand notation to match an instruction for a function call. The resulting <ref refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype" kindref="compound">IOperandPrototype</ref> matches a function call with arguments as specified by the arguments given. For instance,</para>
+<para><programlisting><codeline><highlight class="normal">addRule({call(&quot;foo&quot;,<sp/>_,<sp/>_),<sp/>deleteInstruction()});</highlight></codeline>
+</programlisting></para>
+<para>matches a call to the function <computeroutput>foo</computeroutput> with exactly two arguments.</para>
+<para>Shorthand notation to match an instruction for a function call. The resulting <ref refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype" kindref="compound">IOperandPrototype</ref> matches a function call with arguments as specified by the arguments given. For instance,</para>
+<para><programlisting><codeline><highlight class="normal">addRule({call(&quot;foo&quot;,<sp/>_,<sp/>_),<sp/>deleteInstruction()});</highlight></codeline>
+</programlisting></para>
+<para>matches a call to the function <computeroutput>foo</computeroutput> with exactly two arguments. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Call.ipp" line="19" column="22" bodyfile="Rules/Notation/Call.ipp" bodystart="19" bodyend="34" declfile="Rules/Notation/Notation.hpp" declline="93" declcolumn="42"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1ga766351375d479dbb164ee827ee330219" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::callByNameOnly</definition>
+        <argsstring>(std::string const &amp;name)</argsstring>
+        <name>callByNameOnly</name>
+        <param>
+          <type>std::string const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Shorthand notation to match an instruction with a specified name. Unlike call, this pattern matches by name only and ignore the arguments.</para>
+<para><programlisting><codeline><highlight class="normal">addRule({callByNameOnly(&quot;foo&quot;),<sp/>deleteInstruction()});</highlight></codeline>
+</programlisting></para>
+<para>matches calls to the function <computeroutput>foo</computeroutput> regardless of the number of arguments. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/CallByNameOnly.cpp" line="23" column="30" bodyfile="Rules/Notation/CallByNameOnly.cpp" bodystart="23" bodyend="27" declfile="Rules/Notation/Notation.hpp" declline="110" declcolumn="30"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1ga566037f3a56a77f63868af1ed5743731" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1notation_1_1_capture" kindref="compound">Capture</ref></type>
+        <definition>Capture microsoft::quantum::notation::operator&quot;&quot;_cap</definition>
+        <argsstring>(char const *name, std::size_t)</argsstring>
+        <name>operator&quot;&quot;_cap</name>
+        <param>
+          <type>char const *</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>std::size_t</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Literal for specifying the capture of a llvm::Value*. This literal calls the IOperandPrototype::enableCapture through the assignment of a IOperandPrototypePtr to the class <ref refid="classmicrosoft_1_1quantum_1_1notation_1_1_capture" kindref="compound">Capture</ref>.</para>
+<para>As an example, one may want to match the pattern <computeroutput>foo(bar(baz(x)), y)</computeroutput> and extract the variable <computeroutput>x</computeroutput> to add meta data to it. The corresponding IR could look like: <programlisting><codeline><highlight class="normal">%1<sp/>=<sp/>call<sp/>%Type*<sp/>@baz(%Type*<sp/>%0)</highlight></codeline>
+<codeline><highlight class="normal">%2<sp/>=<sp/>call<sp/>%Type*<sp/>@bar(%Type*<sp/>%1)</highlight></codeline>
+<codeline><highlight class="normal">call<sp/>void<sp/>@foo(%Type*<sp/>%2,<sp/>%Type*<sp/>%3)</highlight></codeline>
+</programlisting> To match this pattern, one would create the pattern <computeroutput>call(&quot;foo&quot;, call(&quot;bar&quot;, call(&quot;baz&quot;, &quot;x&quot;_cap = _)), _)</computeroutput>. This pattern would ensure that at the time where the replacer function is called, the value stored in <computeroutput>%0</computeroutput> is captured under the name <computeroutput>x</computeroutput>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Capture.cpp" line="35" column="17" bodyfile="Rules/Notation/Capture.cpp" bodystart="35" bodyend="38" declfile="Rules/Notation/Notation.hpp" declline="198" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1gaea3374cd06fe2f3b4d9bff4ad23a4af4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::constInt</definition>
+        <argsstring>()</argsstring>
+        <name>constInt</name>
+        <briefdescription>
+<para>Matches the llvm::ConstantInt instructruction. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/ConstInt.cpp" line="23" column="30" bodyfile="Rules/Notation/ConstInt.cpp" bodystart="23" bodyend="28" declfile="Rules/Notation/Notation.hpp" declline="119" declcolumn="30"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1gacdb76f23b9282dead50b4b5bf6c6ab64" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::intToPtr</definition>
+        <argsstring>(IOperandPrototypePtr const  &amp;arg)</argsstring>
+        <name>intToPtr</name>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+<para>Matches the llvm::IntToPtr instructruction. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/IntToPtr.cpp" line="23" column="30" bodyfile="Rules/Notation/IntToPtr.cpp" bodystart="23" bodyend="29" declfile="Rules/Notation/Notation.hpp" declline="116" declcolumn="30"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1ga44ddd41276fac20964ede0e3b3a2c864" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::load</definition>
+        <argsstring>(IOperandPrototypePtr const  &amp;arg)</argsstring>
+        <name>load</name>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+<para>Matches a load instruction with one argument. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Load.cpp" line="23" column="30" bodyfile="Rules/Notation/Load.cpp" bodystart="23" bodyend="29" declfile="Rules/Notation/Notation.hpp" declline="139" declcolumn="30"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1gae89b441f450b5df53717bbf6f5c134c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>ReplacerFunction</type>
+        <definition>ReplacerFunction microsoft::quantum::notation::deleteInstruction</definition>
+        <argsstring>()</argsstring>
+        <name>deleteInstruction</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Shorthand notation to delete an instruction. If passed as the replacement function, this function generates a replacer that deletes the instruction. This is a shorthand notation for deleting an instruction that can be used with a custom rule when building a ruleset. This function can be used with shorthand notation for patterns as follows: <programlisting><codeline><highlight class="normal">addRule({callByNameOnly(name),<sp/>deleteInstruction()});</highlight></codeline>
+</programlisting> to delete the instructions that calls functions with the name <computeroutput>name</computeroutput>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Notation.cpp" line="21" column="26" bodyfile="Rules/Notation/Notation.cpp" bodystart="21" bodyend="30" declfile="Rules/Notation/Notation.hpp" declline="176" declcolumn="26"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1gad1881ef24c25dfceb3ad71f18aa2c43f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::unnamedInvoke</definition>
+        <argsstring>()</argsstring>
+        <name>unnamedInvoke</name>
+        <briefdescription>
+<para>Matches a invoke instruction. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/UnnamedInvoke.cpp" line="21" column="30" bodyfile="Rules/Notation/UnnamedInvoke.cpp" bodystart="21" bodyend="26" declfile="Rules/Notation/Notation.hpp" declline="96" declcolumn="30"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1gad70623d62fe54e6077fd102a33a93e5b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename...</type>
+            <declname>Args</declname>
+            <defname>Args</defname>
+          </param>
+        </templateparamlist>
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::phi</definition>
+        <argsstring>(Args... args)</argsstring>
+        <name>phi</name>
+        <param>
+          <type>Args...</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+<para>Matches a phi node with N arguments. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Phi.ipp" line="22" column="22" bodyfile="Rules/Notation/Phi.ipp" bodystart="22" bodyend="34" declfile="Rules/Notation/Notation.hpp" declline="99" declcolumn="42"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1gaa8a0123f4724cb44f2484e7d8e38d086" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::switchOp</definition>
+        <argsstring>(IOperandPrototypePtr const &amp;cond, IOperandPrototypePtr const &amp;arg1, IOperandPrototypePtr const &amp;arg2)</argsstring>
+        <name>switchOp</name>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>cond</declname>
+        </param>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>arg1</declname>
+        </param>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>arg2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Switch.cpp" line="23" column="30" bodyfile="Rules/Notation/Switch.cpp" bodystart="23" bodyend="36" declfile="Rules/Notation/Notation.hpp" declline="127" declcolumn="30"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1ga2b184fe960d85fd09167f16c833907b3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::select</definition>
+        <argsstring>(IOperandPrototypePtr const &amp;cond, IOperandPrototypePtr const &amp;arg1, IOperandPrototypePtr const &amp;arg2)</argsstring>
+        <name>select</name>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>cond</declname>
+        </param>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>arg1</declname>
+        </param>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>arg2</declname>
+        </param>
+        <briefdescription>
+<para>Matches a select instruction given a condition and two arguments. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Select.cpp" line="23" column="30" bodyfile="Rules/Notation/Select.cpp" bodystart="23" bodyend="35" declfile="Rules/Notation/Notation.hpp" declline="133" declcolumn="30"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1ga2fb129cfb7135e02513ac0eea14b94bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::store</definition>
+        <argsstring>(IOperandPrototypePtr const &amp;target, IOperandPrototypePtr const &amp;value)</argsstring>
+        <name>store</name>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>target</declname>
+        </param>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Matches a store instruction with a target and a value. <programlisting><codeline><highlight class="normal">addRule({store(&quot;target&quot;_cap<sp/>=<sp/>_,<sp/>&quot;value&quot;_cap<sp/>=<sp/>_),<sp/>replaceConstExpr});</highlight></codeline>
+</programlisting> where we want to match all store instructions and do not really care about how the target or value came about. In this case, we may want to capture the values to, for instance, make assignment at compile time. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Store.cpp" line="21" column="30" bodyfile="Rules/Notation/Store.cpp" bodystart="21" bodyend="28" declfile="Rules/Notation/Notation.hpp" declline="148" declcolumn="30"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Shorthand notations to make it easy and readible to create patterns. </para>
+    </detaileddescription>
+    <location file="Rules/Notation/BasicBlock.cpp" line="16" column="5"/>
+  </compounddef>
+</doxygen>

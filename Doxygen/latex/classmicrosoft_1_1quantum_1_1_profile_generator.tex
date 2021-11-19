@@ -1,0 +1,126 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator}{}\doxysection{microsoft\+::quantum\+::Profile\+Generator Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_profile_generator}\index{microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}}
+Inheritance diagram for microsoft\+::quantum\+::Profile\+Generator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicrosoft_1_1quantum_1_1_profile_generator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_ae359b7cc2141a5a59eba89ffaf9af2d8}\label{classmicrosoft_1_1quantum_1_1_profile_generator_ae359b7cc2141a5a59eba89ffaf9af2d8}} 
+using {\bfseries Pass\+Builder} = llvm\+::\+Pass\+Builder
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a3bf46b184cf740e682777bdbd026cda6}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a3bf46b184cf740e682777bdbd026cda6}} 
+using {\bfseries Optimization\+Level} = Pass\+Builder\+::\+Optimization\+Level
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a0625ff7f8618719933bdd0514598343e}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a0625ff7f8618719933bdd0514598343e}} 
+using {\bfseries Function\+Analysis\+Manager} = llvm\+::\+Function\+Analysis\+Manager
+\item 
+{\footnotesize template$<$typename R $>$ }\\using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_afd30796c3a7c3a9775641b3ae5e2e7b7}{Setup\+Function}} = std\+::function$<$ void(R const  \&, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator}{Profile\+Generator}} $\ast$, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile}{Profile}} \&)$>$
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a739d6ddc015e59e3ea80ec39056d3a54}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a739d6ddc015e59e3ea80ec39056d3a54}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_a739d6ddc015e59e3ea80ec39056d3a54}{Setup\+Function\+Wrapper}} = std\+::function$<$ void(\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator}{Profile\+Generator}} $\ast$, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile}{Profile}} \&)$>$
+\begin{DoxyCompactList}\small\item\em Wrapper function type for invoking the profile setup function. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_ae761d436e0b66b332d4e277897ce1a26}\label{classmicrosoft_1_1quantum_1_1_profile_generator_ae761d436e0b66b332d4e277897ce1a26}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_ae761d436e0b66b332d4e277897ce1a26}{Components}} = std\+::vector$<$ std\+::pair$<$ String, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_a739d6ddc015e59e3ea80ec39056d3a54}{Setup\+Function\+Wrapper}} $>$ $>$
+\begin{DoxyCompactList}\small\item\em List of components to be configured. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a23e7a76237a9aeb634a68ce8a788af73}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a23e7a76237a9aeb634a68ce8a788af73}} 
+{\bfseries Profile\+Generator} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator}{Profile\+Generator}} const \&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_aed9fead48ad2642c407be15b6e3e22d3}\label{classmicrosoft_1_1quantum_1_1_profile_generator_aed9fead48ad2642c407be15b6e3e22d3}} 
+{\bfseries Profile\+Generator} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator}{Profile\+Generator}} \&\&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a295809dfe8e10b8145afac42c2ff08f2}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a295809dfe8e10b8145afac42c2ff08f2}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator}{Profile\+Generator}} \& {\bfseries operator=} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator}{Profile\+Generator}} const \&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a1d7df7c22d05325a1c3a64a0487e6dae}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a1d7df7c22d05325a1c3a64a0487e6dae}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator}{Profile\+Generator}} \& {\bfseries operator=} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator}{Profile\+Generator}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_configuration_manager}{Configuration\+Manager}} \& \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_a14bbc624cc852be140ed032bd3c7752a}{configuration\+Manager}} ()
+\item 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_configuration_manager}{Configuration\+Manager}} const  \& \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_a7b606f3166713252d2e78837edd8e667}{configuration\+Manager}} () const
+\item 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile}{Profile}} \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_a168e08f8ff33740f114301f710ce20aa}{new\+Profile}} (String const \&name, Optimization\+Level const \&optimisation\+\_\+level, bool debug)
+\item 
+{\footnotesize template$<$typename R $>$ }\\void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_aa2da3c24cf79bd0507c8e1140c387054}{register\+Profile\+Component}} (String const \&id, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_afd30796c3a7c3a9775641b3ae5e2e7b7}{Setup\+Function}}$<$ R $>$ setup)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_ae289e9c38bf45007458de7ab0c79ff51}\label{classmicrosoft_1_1quantum_1_1_profile_generator_ae289e9c38bf45007458de7ab0c79ff51}} 
+llvm\+::\+Module\+Pass\+Manager \& \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_ae289e9c38bf45007458de7ab0c79ff51}{module\+Pass\+Manager}} ()
+\begin{DoxyCompactList}\small\item\em Returns the module pass manager. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a43a7f4e1d1b05178481d90ee1b81834c}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a43a7f4e1d1b05178481d90ee1b81834c}} 
+llvm\+::\+Pass\+Builder \& \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_a43a7f4e1d1b05178481d90ee1b81834c}{pass\+Builder}} ()
+\begin{DoxyCompactList}\small\item\em Returns the pass builder. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a8bc3a5764dab551423dd241839d6bbbe}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a8bc3a5764dab551423dd241839d6bbbe}} 
+Optimization\+Level \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_a8bc3a5764dab551423dd241839d6bbbe}{optimisation\+Level}} () const
+\begin{DoxyCompactList}\small\item\em Returns the optimisation level. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_ac255ea9cc3c7c5f88f5903473fee7da1}\label{classmicrosoft_1_1quantum_1_1_profile_generator_ac255ea9cc3c7c5f88f5903473fee7da1}} 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_ac255ea9cc3c7c5f88f5903473fee7da1}{is\+Debug\+Mode}} () const
+\begin{DoxyCompactList}\small\item\em Flag indicating whether we are operating in debug mode or not. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+llvm\+::\+Module\+Pass\+Manager \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_ace821e01e45a2d3dd2792d1e475c8da7}{create\+Generation\+Module\+Pass\+Manager}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile}{Profile}} \&profile, Optimization\+Level const \&optimisation\+\_\+level, bool debug)
+\item 
+llvm\+::\+Module\+Pass\+Manager \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_aa4e73ca81ae2a0900e8b0b0aeb945792}{create\+Validation\+Module\+Pass}} (Pass\+Builder \&pass\+\_\+builder, Optimization\+Level const \&optimisation\+\_\+level, bool debug)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_afd30796c3a7c3a9775641b3ae5e2e7b7}\label{classmicrosoft_1_1quantum_1_1_profile_generator_afd30796c3a7c3a9775641b3ae5e2e7b7}} 
+\index{microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}!SetupFunction@{SetupFunction}}
+\index{SetupFunction@{SetupFunction}!microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}}
+\doxysubsubsection{\texorpdfstring{SetupFunction}{SetupFunction}}
+{\footnotesize\ttfamily template$<$typename R $>$ \\
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_afd30796c3a7c3a9775641b3ae5e2e7b7}{microsoft\+::quantum\+::\+Profile\+Generator\+::\+Setup\+Function}} =  std\+::function$<$void(R const\&, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator}{Profile\+Generator}}$\ast$, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile}{Profile}}\&)$>$}
+
+Setup function that uses a configuration type R to configure the profile and/or generator. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a14bbc624cc852be140ed032bd3c7752a}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a14bbc624cc852be140ed032bd3c7752a}} 
+\index{microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}!configurationManager@{configurationManager}}
+\index{configurationManager@{configurationManager}!microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}}
+\doxysubsubsection{\texorpdfstring{configurationManager()}{configurationManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_configuration_manager}{Configuration\+Manager}} \& microsoft\+::quantum\+::\+Profile\+Generator\+::configuration\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Reference to configuration manager. This property allows to access and modify configurations of the generator. This property is intended for managing the configuration. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a7b606f3166713252d2e78837edd8e667}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a7b606f3166713252d2e78837edd8e667}} 
+\index{microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}!configurationManager@{configurationManager}}
+\index{configurationManager@{configurationManager}!microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}}
+\doxysubsubsection{\texorpdfstring{configurationManager()}{configurationManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_configuration_manager}{Configuration\+Manager}} const  \& microsoft\+::quantum\+::\+Profile\+Generator\+::configuration\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Constant reference to the configuration manager. This property allows read access to the configuration manager and is intended for profile generation. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_ace821e01e45a2d3dd2792d1e475c8da7}\label{classmicrosoft_1_1quantum_1_1_profile_generator_ace821e01e45a2d3dd2792d1e475c8da7}} 
+\index{microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}!createGenerationModulePassManager@{createGenerationModulePassManager}}
+\index{createGenerationModulePassManager@{createGenerationModulePassManager}!microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}}
+\doxysubsubsection{\texorpdfstring{createGenerationModulePassManager()}{createGenerationModulePassManager()}}
+{\footnotesize\ttfamily llvm\+::\+Module\+Pass\+Manager microsoft\+::quantum\+::\+Profile\+Generator\+::create\+Generation\+Module\+Pass\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile}{Profile}} \&}]{profile,  }\item[{Optimization\+Level const \&}]{optimisation\+\_\+level,  }\item[{bool}]{debug }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Internal function that creates a module pass for QIR transformation. The module pass is defined through the profile, the optimisation level and whether or not we are in debug mode. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_aa4e73ca81ae2a0900e8b0b0aeb945792}\label{classmicrosoft_1_1quantum_1_1_profile_generator_aa4e73ca81ae2a0900e8b0b0aeb945792}} 
+\index{microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}!createValidationModulePass@{createValidationModulePass}}
+\index{createValidationModulePass@{createValidationModulePass}!microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}}
+\doxysubsubsection{\texorpdfstring{createValidationModulePass()}{createValidationModulePass()}}
+{\footnotesize\ttfamily llvm\+::\+Module\+Pass\+Manager microsoft\+::quantum\+::\+Profile\+Generator\+::create\+Validation\+Module\+Pass (\begin{DoxyParamCaption}\item[{Pass\+Builder \&}]{pass\+\_\+builder,  }\item[{Optimization\+Level const \&}]{optimisation\+\_\+level,  }\item[{bool}]{debug }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Internal function that creates a module pass for QIR validation. At the moment, this function is a placeholder for future functionality. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_a168e08f8ff33740f114301f710ce20aa}\label{classmicrosoft_1_1quantum_1_1_profile_generator_a168e08f8ff33740f114301f710ce20aa}} 
+\index{microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}!newProfile@{newProfile}}
+\index{newProfile@{newProfile}!microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}}
+\doxysubsubsection{\texorpdfstring{newProfile()}{newProfile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile}{Profile}} microsoft\+::quantum\+::\+Profile\+Generator\+::new\+Profile (\begin{DoxyParamCaption}\item[{String const \&}]{name,  }\item[{Optimization\+Level const \&}]{optimisation\+\_\+level,  }\item[{bool}]{debug }\end{DoxyParamCaption})}
+
+Creates a new profile based on the registered components, optimisation level and debug requirements. The returned profile can be applied to an IR to transform it in accordance with the configurations given. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_profile_generator_aa2da3c24cf79bd0507c8e1140c387054}\label{classmicrosoft_1_1quantum_1_1_profile_generator_aa2da3c24cf79bd0507c8e1140c387054}} 
+\index{microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}!registerProfileComponent@{registerProfileComponent}}
+\index{registerProfileComponent@{registerProfileComponent}!microsoft::quantum::ProfileGenerator@{microsoft::quantum::ProfileGenerator}}
+\doxysubsubsection{\texorpdfstring{registerProfileComponent()}{registerProfileComponent()}}
+{\footnotesize\ttfamily template$<$typename R $>$ \\
+void microsoft\+::quantum\+::\+Profile\+Generator\+::register\+Profile\+Component (\begin{DoxyParamCaption}\item[{String const \&}]{id,  }\item[{\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile_generator_afd30796c3a7c3a9775641b3ae5e2e7b7}{Setup\+Function}}$<$ R $>$}]{setup }\end{DoxyParamCaption})}
+
+Registers a new profile component with a given configuration R. The profile component is given a name and a setup function which is responsible for configuring the profile in accordance with the configuration. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Generators/Profile\+Generator.\+hpp\item 
+Generators/Profile\+Generator.\+cpp\end{DoxyCompactItemize}

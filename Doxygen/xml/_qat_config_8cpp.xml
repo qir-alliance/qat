@@ -1,0 +1,404 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="_qat_config_8cpp" kind="file" language="C++">
+    <compoundname>QatConfig.cpp</compoundname>
+    <includes refid="_qat_config_8hpp" local="yes">Apps/Qat/QatConfig.hpp</includes>
+    <includes refid="_configuration_manager_8hpp" local="yes">Commandline/ConfigurationManager.hpp</includes>
+    <incdepgraph>
+      <node id="26">
+        <label>llvm/IR/Module.h</label>
+      </node>
+      <node id="45">
+        <label>iomanip</label>
+      </node>
+      <node id="24">
+        <label>llvm/IR/IRBuilder.h</label>
+      </node>
+      <node id="23">
+        <label>llvm/IR/Function.h</label>
+      </node>
+      <node id="38">
+        <label>llvm/InitializePasses.h</label>
+      </node>
+      <node id="2">
+        <label>Apps/Qat/QatConfig.hpp</label>
+        <link refid="_qat_config_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>llvm/IR/LLVMContext.h</label>
+      </node>
+      <node id="16">
+        <label>llvm/Support/raw_ostream.h</label>
+      </node>
+      <node id="13">
+        <label>llvm/Analysis/InlineCost.h</label>
+      </node>
+      <node id="39">
+        <label>llvm/LinkAllIR.h</label>
+      </node>
+      <node id="41">
+        <label>llvm/Passes/StandardInstrumentations.h</label>
+      </node>
+      <node id="12">
+        <label>Llvm/Llvm.hpp</label>
+        <link refid="_llvm_8hpp_source"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>llvm/Support/TargetSelect.h</label>
+      </node>
+      <node id="28">
+        <label>llvm/IR/Verifier.h</label>
+      </node>
+      <node id="8">
+        <label>string</label>
+      </node>
+      <node id="34">
+        <label>llvm/Transforms/Scalar/DCE.h</label>
+      </node>
+      <node id="10">
+        <label>unordered_set</label>
+      </node>
+      <node id="3">
+        <label>Commandline/ConfigurationManager.hpp</label>
+        <link refid="_configuration_manager_8hpp_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>llvm/Transforms/Scalar/LoopUnrollPass.h</label>
+      </node>
+      <node id="33">
+        <label>llvm/Transforms/Scalar/ADCE.h</label>
+      </node>
+      <node id="40">
+        <label>llvm/MC/SubtargetFeature.h</label>
+      </node>
+      <node id="15">
+        <label>llvm/Passes/PassPlugin.h</label>
+      </node>
+      <node id="4">
+        <label>Commandline/ConfigBind.hpp</label>
+        <link refid="_config_bind_8hpp_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vector</label>
+      </node>
+      <node id="6">
+        <label>Commandline/ParameterParser.hpp</label>
+        <link refid="_parameter_parser_8hpp_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>sstream</label>
+      </node>
+      <node id="32">
+        <label>llvm/LinkAllPasses.h</label>
+      </node>
+      <node id="20">
+        <label>llvm/IR/BasicBlock.h</label>
+      </node>
+      <node id="46">
+        <label>iostream</label>
+      </node>
+      <node id="44">
+        <label>llvm/Target/TargetMachine.h</label>
+      </node>
+      <node id="17">
+        <label>llvm/Transforms/IPO/Inliner.h</label>
+      </node>
+      <node id="9">
+        <label>unordered_map</label>
+      </node>
+      <node id="29">
+        <label>llvm/IRReader/IRReader.h</label>
+      </node>
+      <node id="19">
+        <label>llvm/Transforms/Utils/Cloning.h</label>
+      </node>
+      <node id="14">
+        <label>llvm/Passes/PassBuilder.h</label>
+      </node>
+      <node id="21">
+        <label>llvm/IR/Constants.h</label>
+      </node>
+      <node id="27">
+        <label>llvm/IR/Type.h</label>
+      </node>
+      <node id="42">
+        <label>llvm/Support/InitLLVM.h</label>
+      </node>
+      <node id="7">
+        <label>QatTypes/QatTypes.hpp</label>
+        <link refid="_qat_types_8hpp_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>Apps/Qat/QatConfig.cpp</label>
+        <link refid="_qat_config_8cpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>Commandline/IConfigBind.hpp</label>
+        <link refid="_i_config_bind_8hpp_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>llvm/Bitcode/BitcodeWriter.h</label>
+      </node>
+      <node id="36">
+        <label>llvm/Linker/Linker.h</label>
+      </node>
+      <node id="48">
+        <label>type_traits</label>
+      </node>
+      <node id="18">
+        <label>llvm/Transforms/Utils/BasicBlockUtils.h</label>
+      </node>
+      <node id="35">
+        <label>llvm/Analysis/ConstantFolding.h</label>
+      </node>
+      <node id="22">
+        <label>llvm/IR/DerivedTypes.h</label>
+      </node>
+      <node id="30">
+        <label>llvm/Support/SourceMgr.h</label>
+      </node>
+      <node id="49">
+        <label>typeindex</label>
+      </node>
+    </incdepgraph>
+    <innernamespace refid="namespacemicrosoft">microsoft</innernamespace>
+    <innernamespace refid="namespacemicrosoft_1_1quantum">microsoft::quantum</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>Copyright<sp/>(c)<sp/>Microsoft<sp/>Corporation.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Licensed<sp/>under<sp/>the<sp/>MIT<sp/>License.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Apps/Qat/QatConfig.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Commandline/ConfigurationManager.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">microsoft</highlight></codeline>
+<codeline lineno="8"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">quantum</highlight></codeline>
+<codeline lineno="10"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1a3453916656ed32adc70d0e16ea9f8ff2" kindref="member">QatConfig::setup</ref>(ConfigurationManager&amp;<sp/>config)</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.setSectionName(</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;Base<sp/>configuration&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Configuration<sp/>of<sp/>the<sp/>quantum<sp/>adoption<sp/>tool<sp/>to<sp/>execute<sp/>a<sp/>specific<sp/>behaviour.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(load_,<sp/></highlight><highlight class="stringliteral">&quot;load&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Load<sp/>component.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>generate_,<sp/></highlight><highlight class="stringliteral">&quot;apply&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Applies<sp/>a<sp/>profile<sp/>to<sp/>transform<sp/>the<sp/>IR<sp/>in<sp/>correspondence<sp/>with<sp/>the<sp/>profile.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(validate_,<sp/></highlight><highlight class="stringliteral">&quot;validate&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Executes<sp/>the<sp/>validation<sp/>procedure.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(profile_,<sp/></highlight><highlight class="stringliteral">&quot;profile&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Sets<sp/>the<sp/>profile.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(emit_llvm_,<sp/></highlight><highlight class="stringliteral">&quot;S&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Emits<sp/>LLVM<sp/>IR<sp/>to<sp/>the<sp/>standard<sp/>output.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(opt0_,<sp/></highlight><highlight class="stringliteral">&quot;O0&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Optimisation<sp/>level<sp/>0.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(opt1_,<sp/></highlight><highlight class="stringliteral">&quot;O1&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Optimisation<sp/>level<sp/>1.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(opt2_,<sp/></highlight><highlight class="stringliteral">&quot;O2&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Optimisation<sp/>level<sp/>2.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(opt3_,<sp/></highlight><highlight class="stringliteral">&quot;O3&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Optimisation<sp/>level<sp/>3.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(verify_module_,<sp/></highlight><highlight class="stringliteral">&quot;verify-module&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Verifies<sp/>the<sp/>module<sp/>after<sp/>transformation.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.addParameter(dump_config_,<sp/></highlight><highlight class="stringliteral">&quot;dump-config&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Prints<sp/>the<sp/>configuration<sp/>to<sp/>the<sp/>standard<sp/>output.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1ab86a6de025d87d49c79463d91ba6b1fb" kindref="member">QatConfig::shouldGenerate</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="34"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>generate_;</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1a5e52d30213e859ac0f6c092739f7a76f" kindref="member">QatConfig::shouldValidate</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="39"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>validate_;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>String<sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1a8471474e4cd2ed108c1b2fa8a43b6be1" kindref="member">QatConfig::profile</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="44"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>profile_;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1a9c1e8c39ad5357fdce6d78958edf5734" kindref="member">QatConfig::shouldEmitLlvm</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="49"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>emit_llvm_;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1a661187744fb869aac04c61a1b891ef4a" kindref="member">QatConfig::isOpt0Enabled</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="54"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>opt0_;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1a18b7791a32761b123d41e978b22bace2" kindref="member">QatConfig::isOpt1Enabled</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="59"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>opt1_;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1ab90482eeb3f65c1615de6190d2f397f6" kindref="member">QatConfig::isOpt2Enabled</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="64"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>opt2_;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1aaee0c9d224c6c35685cfbc876cf1c33b" kindref="member">QatConfig::isOpt3Enabled</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="69"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>opt3_;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1ab771ab8819977883ff040ba696944a91" kindref="member">QatConfig::verifyModule</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="74"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>verify_module_;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1a4759429710fdce34260511cefdce97c3" kindref="member">QatConfig::isDebugMode</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="79"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>debug_;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1a125ccb99efb430e7ac9169058066c724" kindref="member">QatConfig::shouldDumpConfig</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="84"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>dump_config_;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/>String<sp/><ref refid="classmicrosoft_1_1quantum_1_1_qat_config_1a73a541e8890c7ed75d2aec2df80effd1" kindref="member">QatConfig::load</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="89"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>load_;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>namespace<sp/>quantum</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>namespace<sp/>microsoft</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="Apps/Qat/QatConfig.cpp"/>
+  </compounddef>
+</doxygen>

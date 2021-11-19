@@ -1,0 +1,176 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass}{}\doxysection{microsoft\+::quantum\+::Transformation\+Rules\+Pass Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass}\index{microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}}
+
+
+{\ttfamily \#include $<$Transformation\+Rules\+Pass/\+Transformation\+Rules\+Pass.\+hpp$>$}
+
+Inheritance diagram for microsoft\+::quantum\+::Transformation\+Rules\+Pass\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicrosoft_1_1quantum_1_1_transformation_rules_pass}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_af0a45129ba9202ac90347601f719134f}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_af0a45129ba9202ac90347601f719134f}} 
+using {\bfseries Replacements} = \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule_aca9c759c6f4aace29dc3b0b3b05ce9e1}{Replacement\+Rule\+::\+Replacements}}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a5b814f3af3684d6b66f405b516d33981}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a5b814f3af3684d6b66f405b516d33981}} 
+using {\bfseries Instruction} = llvm\+::\+Instruction
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_abf8768343b0fa26c376f2098a313a4ee}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_abf8768343b0fa26c376f2098a313a4ee}} 
+using {\bfseries Rules} = std\+::vector$<$ \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule}{Replacement\+Rule}} $>$
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a7507d540699f7033bcb6aeb37a0a1755}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a7507d540699f7033bcb6aeb37a0a1755}} 
+using {\bfseries Value} = llvm\+::\+Value
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a8dc84138fb75565886b7f8c586827be5}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a8dc84138fb75565886b7f8c586827be5}} 
+using {\bfseries Builder} = \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule_ab975e38f598fc4e3a84039f84ab404d1}{Replacement\+Rule\+::\+Builder}}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a0b426f8ca398834a0904d11e182d810d}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a0b426f8ca398834a0904d11e182d810d}} 
+using {\bfseries Allocation\+Manager\+Ptr} = \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a7c77d7b2d94d3b6a98bb5402a854cca4}{IAllocation\+Manager\+::\+Allocation\+Manager\+Ptr}}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a529fcc11a8a71893a98d5a967c400016}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a529fcc11a8a71893a98d5a967c400016}} 
+using {\bfseries Captures} = Rule\+Set\+::\+Captures
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a07ac388be0bc998c320576e5c659ff91}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a07ac388be0bc998c320576e5c659ff91}} 
+using {\bfseries Constant\+Arguments} = std\+::unordered\+\_\+map$<$ std\+::string, llvm\+::\+Constant\+Int $\ast$ $>$
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ab1bf7939cea62871c46f2831c7d4bd08}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ab1bf7939cea62871c46f2831c7d4bd08}} 
+using {\bfseries ILogger\+Ptr} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_logger}{ILogger}} $>$
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a96436bab68086f9477de7cb38a7ba6d2}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a96436bab68086f9477de7cb38a7ba6d2}} 
+using {\bfseries Deletable\+Instructions} = std\+::vector$<$ llvm\+::\+Instruction $\ast$ $>$
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a5c02846dcce74acafbecaebab953224f}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a5c02846dcce74acafbecaebab953224f}} 
+using {\bfseries Instruction\+Modifier} = std\+::function$<$ llvm\+::\+Value $\ast$(llvm\+::\+Value $\ast$, Deletable\+Instructions \&)$>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ad2be262fef91d79effa0b39af820967a}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ad2be262fef91d79effa0b39af820967a}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ad2be262fef91d79effa0b39af820967a}{Transformation\+Rules\+Pass}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} \&\&rule\+\_\+set, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration}{Transformation\+Rules\+Pass\+Configuration}} const \&config, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_profile}{Profile}} $\ast$profile)
+\begin{DoxyCompactList}\small\item\em Custom default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a4021ba207d45c28c5f844a2ffab41d5f}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a4021ba207d45c28c5f844a2ffab41d5f}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a4021ba207d45c28c5f844a2ffab41d5f}{Transformation\+Rules\+Pass}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass}{Transformation\+Rules\+Pass}} const \&)=delete
+\begin{DoxyCompactList}\small\item\em Copy construction is banned. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a8180e267b570649b10ea8c900b578f30}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a8180e267b570649b10ea8c900b578f30}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a8180e267b570649b10ea8c900b578f30}{Transformation\+Rules\+Pass}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass}{Transformation\+Rules\+Pass}} \&\&)=default
+\begin{DoxyCompactList}\small\item\em We allow move semantics. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a08deb76861a6aa5d8fb3918d6e8b2739}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a08deb76861a6aa5d8fb3918d6e8b2739}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a08deb76861a6aa5d8fb3918d6e8b2739}{$\sim$\+Transformation\+Rules\+Pass}} ()=default
+\begin{DoxyCompactList}\small\item\em Default destruction. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_acf8a44eebe50e5141a1f9f088c1fa8ff}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_acf8a44eebe50e5141a1f9f088c1fa8ff}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass}{Transformation\+Rules\+Pass}} \& \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_acf8a44eebe50e5141a1f9f088c1fa8ff}{operator=}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass}{Transformation\+Rules\+Pass}} const \&)=delete
+\begin{DoxyCompactList}\small\item\em Copy assignment is banned. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a058805fa119b33e409c40cdc8787a6f8}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a058805fa119b33e409c40cdc8787a6f8}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass}{Transformation\+Rules\+Pass}} \& \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a058805fa119b33e409c40cdc8787a6f8}{operator=}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass}{Transformation\+Rules\+Pass}} \&\&)=default
+\begin{DoxyCompactList}\small\item\em Move assignment is permitted. \end{DoxyCompactList}\item 
+llvm\+::\+Preserved\+Analyses \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a00addfd679de49affe569810b6cd79f3}{run}} (llvm\+::\+Module \&module, llvm\+::\+Module\+Analysis\+Manager \&mam)
+\item 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_acddcbb6d2c3664db23f00db0f5138ea3}{run\+On\+Function}} (llvm\+::\+Function \&function, Instruction\+Modifier const \&modifier)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a11a631e532b56a74f4682d4de8a78cb2}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a11a631e532b56a74f4682d4de8a78cb2}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a11a631e532b56a74f4682d4de8a78cb2}{process\+Replacements}} ()
+\begin{DoxyCompactList}\small\item\em Applies each of the replacements in the {\ttfamily replacements\+\_\+} variable. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a0eb589b31225635c588c08456b593d72}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a0eb589b31225635c588c08456b593d72}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a0eb589b31225635c588c08456b593d72}{setup\+Copy\+And\+Expand}} ()
+\begin{DoxyCompactList}\small\item\em Configuration function for copy and expand to setup the necessary rules. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_adc26444e98922ba682254232d46be841}{run\+Copy\+And\+Expand}} (llvm\+::\+Module \&module, llvm\+::\+Module\+Analysis\+Manager \&mam)
+\item 
+llvm\+::\+Value $\ast$ \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a213929ddf4a326cc4f0e049c402ab9af}{copy\+And\+Expand}} (llvm\+::\+Value $\ast$input, Deletable\+Instructions \&)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_af7b21ae47a34ac3db1662812b8f20a68}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_af7b21ae47a34ac3db1662812b8f20a68}} 
+llvm\+::\+Function $\ast$ \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_af7b21ae47a34ac3db1662812b8f20a68}{expand\+Function\+Call}} (llvm\+::\+Function \&callee, Constant\+Arguments const \&const\+\_\+args=\{\})
+\begin{DoxyCompactList}\small\item\em Copies the function body and replace function arguments whenever arguments are constant. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a0e09cd930eff6dd76c11f2cbe8f426fa}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a0e09cd930eff6dd76c11f2cbe8f426fa}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a0e09cd930eff6dd76c11f2cbe8f426fa}{constant\+Fold\+Function}} (llvm\+::\+Function \&callee)
+\begin{DoxyCompactList}\small\item\em Folds all constant expression in function. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a12db5661405c6b172188fc145eaf4582}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a12db5661405c6b172188fc145eaf4582}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a12db5661405c6b172188fc145eaf4582}{add\+Const\+Expr\+Rule}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule}{Replacement\+Rule}} \&\&rule)
+\begin{DoxyCompactList}\small\item\em Helper function to create replacements for constant expressions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a52f2dabdac85110b1cfba2dbe642d6c6}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a52f2dabdac85110b1cfba2dbe642d6c6}} 
+void {\bfseries run\+Detect\+Active\+Code} (llvm\+::\+Module \&module, llvm\+::\+Module\+Analysis\+Manager \&mam)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ae5cc37e351fdd49382fdebafcb98d2b3}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ae5cc37e351fdd49382fdebafcb98d2b3}} 
+void {\bfseries run\+Delete\+Dead\+Code} (llvm\+::\+Module \&module, llvm\+::\+Module\+Analysis\+Manager \&mam)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ab43309dc425d43456f06abaf4eb55999}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ab43309dc425d43456f06abaf4eb55999}} 
+llvm\+::\+Value $\ast$ {\bfseries detect\+Active\+Code} (llvm\+::\+Value $\ast$input, Deletable\+Instructions \&)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a2c328d9003c914726e99201f854c5a59}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a2c328d9003c914726e99201f854c5a59}} 
+llvm\+::\+Value $\ast$ {\bfseries delete\+Dead\+Code} (llvm\+::\+Value $\ast$input, Deletable\+Instructions \&)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a09c4210fc38ebf4bea3c9ce4704eba7a}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a09c4210fc38ebf4bea3c9ce4704eba7a}} 
+bool {\bfseries is\+Active} (llvm\+::\+Value $\ast$value) const
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a1b76d2e69bd1db38df96227b177c23b0}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a1b76d2e69bd1db38df96227b177c23b0}} 
+void {\bfseries follow\+Users} (llvm\+::\+Value $\ast$value)
+\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_aec2f95af82310283c7ec1457fea6f7e7}{run\+Replace\+Phi}} (llvm\+::\+Module \&module, llvm\+::\+Module\+Analysis\+Manager \&mam)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ae969e346542cbbe0902e2f1a93d563db}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ae969e346542cbbe0902e2f1a93d563db}} 
+void {\bfseries run\+Apply\+Rules} (llvm\+::\+Module \&module, llvm\+::\+Module\+Analysis\+Manager \&mam)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a884450ed469cd68d650311179c022f2f}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a884450ed469cd68d650311179c022f2f}} 
+bool {\bfseries on\+Qubit\+Release} (llvm\+::\+Instruction $\ast$instruction, Captures \&captures)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a480b9c053224192ecc6dcb19f909883e}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a480b9c053224192ecc6dcb19f909883e}} 
+bool {\bfseries on\+Qubit\+Allocate} (llvm\+::\+Instruction $\ast$instruction, Captures \&captures)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a45642740d08894a7c7329eb829f6f2aa}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a45642740d08894a7c7329eb829f6f2aa}} 
+void {\bfseries set\+Logger} (ILogger\+Ptr logger)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ac928c8cb0c26cd36ee3f7e90ca7f9f1e}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ac928c8cb0c26cd36ee3f7e90ca7f9f1e}} 
+static bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_ac928c8cb0c26cd36ee3f7e90ca7f9f1e}{is\+Required}} ()
+\begin{DoxyCompactList}\small\item\em Whether or not this pass is required to run. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class applies a set of transformation rules to the IR to transform it into a new IR. The rules are added using the \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} class which allows the developer to create one or more rules on how to transform the IR.
+
+The module executes the following steps\+: ┌─────────────────┐ │ Apply profile │ └─────────────────┘ │ ┌───────────────────────────────┐ ├───────────────▶│ Copy and expand functions │──┐ │ clone └───────────────────────────────┘ │ │ functions? │ delete dead │ │ ▼ code? │ │ ┌───────────────────────────────┐ │ ├───────────────▶│ Determine active code │ │ │ delete dead └───────────────────────────────┘ │ │ code? │ │ leave dead │ ▼ │ code? │ ┌───────────────────────────────┐ │ │ │ Simplify phi nodes │ │ │ └───────────────────────────────┘ │ │ │ │ │ ▼ │ │ ┌───────────────────────────────┐ │ │ │ Delete dead code │ │ │ └───────────────────────────────┘ │ │ │ │ │ ▼ │ │ fallback ┌───────────────────────────────┐ │ └───────────────▶│ Apply rules │◀─┘ └───────────────────────────────┘
+
+Copying and expanding functions identifies function calls and identifies compile time constants passed to the function. It then copies the full implementation of the function, replacing all compile-\/time constants (and hence changing the function signature). That is, if a function call {\ttfamily f(x, 9)} is identified, it is replaced with {\ttfamily f.\+1(x)} where {\ttfamily f.\+1} is a copy of {\ttfamily f} with second argument written into the function. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a213929ddf4a326cc4f0e049c402ab9af}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a213929ddf4a326cc4f0e049c402ab9af}} 
+\index{microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}!copyAndExpand@{copyAndExpand}}
+\index{copyAndExpand@{copyAndExpand}!microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}}
+\doxysubsubsection{\texorpdfstring{copyAndExpand()}{copyAndExpand()}}
+{\footnotesize\ttfamily llvm\+::\+Value $\ast$ microsoft\+::quantum\+::\+Transformation\+Rules\+Pass\+::copy\+And\+Expand (\begin{DoxyParamCaption}\item[{llvm\+::\+Value $\ast$}]{input,  }\item[{Deletable\+Instructions \&}]{schedule\+\_\+instruction\+\_\+deletion }\end{DoxyParamCaption})}
+
+Test whether the instruction is a call instruction and copy the callee in case it is. This function collects instructions which are scheduled for deletion at a later point. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a00addfd679de49affe569810b6cd79f3}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_a00addfd679de49affe569810b6cd79f3}} 
+\index{microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}!run@{run}}
+\index{run@{run}!microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily llvm\+::\+Preserved\+Analyses microsoft\+::quantum\+::\+Transformation\+Rules\+Pass\+::run (\begin{DoxyParamCaption}\item[{llvm\+::\+Module \&}]{module,  }\item[{llvm\+::\+Module\+Analysis\+Manager \&}]{mam }\end{DoxyParamCaption})}
+
+Implements the transformation analysis which uses the supplied ruleset to make substitutions in each function. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_adc26444e98922ba682254232d46be841}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_adc26444e98922ba682254232d46be841}} 
+\index{microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}!runCopyAndExpand@{runCopyAndExpand}}
+\index{runCopyAndExpand@{runCopyAndExpand}!microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}}
+\doxysubsubsection{\texorpdfstring{runCopyAndExpand()}{runCopyAndExpand()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Transformation\+Rules\+Pass\+::run\+Copy\+And\+Expand (\begin{DoxyParamCaption}\item[{llvm\+::\+Module \&}]{module,  }\item[{llvm\+::\+Module\+Analysis\+Manager \&}]{mam }\end{DoxyParamCaption})}
+
+Main function for running the copy and expand functionality. This function first identifies the entry point and then follows every execution path to copy the callee function for every call instruction encountered. This makes that every call in the code has its own unique callee function which ensures that when allocating qubits or results, the assigned registers are not accidentally reused. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_acddcbb6d2c3664db23f00db0f5138ea3}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_acddcbb6d2c3664db23f00db0f5138ea3}} 
+\index{microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}!runOnFunction@{runOnFunction}}
+\index{runOnFunction@{runOnFunction}!microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}}
+\doxysubsubsection{\texorpdfstring{runOnFunction()}{runOnFunction()}}
+{\footnotesize\ttfamily bool microsoft\+::quantum\+::\+Transformation\+Rules\+Pass\+::run\+On\+Function (\begin{DoxyParamCaption}\item[{llvm\+::\+Function \&}]{function,  }\item[{Instruction\+Modifier const \&}]{modifier }\end{DoxyParamCaption})}
+
+Generic function to apply a instruction\+Modifier (lambda function) to every instruction in the function {\ttfamily function}. This method follows the execution path to the extend possible and deals with branching if the branch statement can be evaluated at compile time. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_aec2f95af82310283c7ec1457fea6f7e7}\label{classmicrosoft_1_1quantum_1_1_transformation_rules_pass_aec2f95af82310283c7ec1457fea6f7e7}} 
+\index{microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}!runReplacePhi@{runReplacePhi}}
+\index{runReplacePhi@{runReplacePhi}!microsoft::quantum::TransformationRulesPass@{microsoft::quantum::TransformationRulesPass}}
+\doxysubsubsection{\texorpdfstring{runReplacePhi()}{runReplacePhi()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Transformation\+Rules\+Pass\+::run\+Replace\+Phi (\begin{DoxyParamCaption}\item[{llvm\+::\+Module \&}]{module,  }\item[{llvm\+::\+Module\+Analysis\+Manager \&}]{mam }\end{DoxyParamCaption})}
+
+Function which replaces phi nodes which refer to inactive blocks. That is, in cases where branch statement evaluates at compile time, only one block will be marked as active. For those case we can eliminate the phi nodes. In the case where branch statements cannot be evaluated all are marked as active. In this case, phi nodes are left unchanged. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Transformation\+Rules\+Pass/Transformation\+Rules\+Pass.\+hpp\item 
+Transformation\+Rules\+Pass/Transformation\+Rules\+Pass.\+cpp\end{DoxyCompactItemize}

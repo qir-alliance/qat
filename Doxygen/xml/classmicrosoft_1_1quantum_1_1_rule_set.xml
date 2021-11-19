@@ -1,0 +1,334 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_rule_set" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::RuleSet</compoundname>
+    <includes refid="_rule_set_8hpp" local="no">Rules/RuleSet.hpp</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_rule_set_1a40ec2f95689cf5a781ba534950fd4d5c" prot="public" static="no">
+        <type>std::shared_ptr&lt; <ref refid="classmicrosoft_1_1quantum_1_1_replacement_rule" kindref="compound">ReplacementRule</ref> &gt;</type>
+        <definition>using microsoft::quantum::RuleSet::ReplacementRulePtr =  std::shared_ptr&lt;ReplacementRule&gt;</definition>
+        <argsstring></argsstring>
+        <name>ReplacementRulePtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="26" column="9" bodyfile="Rules/RuleSet.hpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_rule_set_1ac49bd61bd798f535d96fd54d4562b863" prot="public" static="no">
+        <type>std::vector&lt; ReplacementRulePtr &gt;</type>
+        <definition>using microsoft::quantum::RuleSet::Rules =  std::vector&lt;ReplacementRulePtr&gt;</definition>
+        <argsstring></argsstring>
+        <name>Rules</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="27" column="9" bodyfile="Rules/RuleSet.hpp" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_rule_set_1abe997774d4b73e2741fec5613855d514" prot="public" static="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1aca9c759c6f4aace29dc3b0b3b05ce9e1" kindref="member">ReplacementRule::Replacements</ref></type>
+        <definition>using microsoft::quantum::RuleSet::Replacements =  ReplacementRule::Replacements</definition>
+        <argsstring></argsstring>
+        <name>Replacements</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="28" column="9" bodyfile="Rules/RuleSet.hpp" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_rule_set_1a12758e6398082ad8a4eaf8b08643e8fe" prot="public" static="no">
+        <type>IOperandPrototype::Captures</type>
+        <definition>using microsoft::quantum::RuleSet::Captures =  IOperandPrototype::Captures</definition>
+        <argsstring></argsstring>
+        <name>Captures</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="29" column="9" bodyfile="Rules/RuleSet.hpp" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_rule_set_1a2ee707e4d65377db742a2ceefdad537a" prot="public" static="no">
+        <type>llvm::Instruction</type>
+        <definition>using microsoft::quantum::RuleSet::Instruction =  llvm::Instruction</definition>
+        <argsstring></argsstring>
+        <name>Instruction</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="30" column="9" bodyfile="Rules/RuleSet.hpp" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_rule_set_1a3eff80c6252f2ad26e5af84828cb108d" prot="public" static="no">
+        <type>llvm::Value</type>
+        <definition>using microsoft::quantum::RuleSet::Value =  llvm::Value</definition>
+        <argsstring></argsstring>
+        <name>Value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="31" column="9" bodyfile="Rules/RuleSet.hpp" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_rule_set_1abb4fae44e416b048528bc0cd52f3b258" prot="public" static="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_replacement_rule_1ab975e38f598fc4e3a84039f84ab404d1" kindref="member">ReplacementRule::Builder</ref></type>
+        <definition>using microsoft::quantum::RuleSet::Builder =  ReplacementRule::Builder</definition>
+        <argsstring></argsstring>
+        <name>Builder</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="32" column="9" bodyfile="Rules/RuleSet.hpp" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_rule_set_1acf63ad10024173a3b1b9d5ce67c482fc" prot="public" static="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a7c77d7b2d94d3b6a98bb5402a854cca4" kindref="member">IAllocationManager::AllocationManagerPtr</ref></type>
+        <definition>using microsoft::quantum::RuleSet::AllocationManagerPtr =  IAllocationManager::AllocationManagerPtr</definition>
+        <argsstring></argsstring>
+        <name>AllocationManagerPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="33" column="9" bodyfile="Rules/RuleSet.hpp" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_rule_set_1aa873fe4f9d974dbdff1cd1c608c98a9b" prot="private" static="no" mutable="no">
+        <type>Rules</type>
+        <definition>Rules microsoft::quantum::RuleSet::rules_</definition>
+        <argsstring></argsstring>
+        <name>rules_</name>
+        <briefdescription>
+<para>Rules that describes QIR mappings. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="71" column="15" bodyfile="Rules/RuleSet.hpp" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1a5c4a1fc09d55364d5f27d7599e1a6bc9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::RuleSet::RuleSet</definition>
+        <argsstring>()=default</argsstring>
+        <name>RuleSet</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="37" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1a4249380a6d81da327e1a82d246e35983" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::RuleSet::RuleSet</definition>
+        <argsstring>(RuleSet const &amp;)=default</argsstring>
+        <name>RuleSet</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="38" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1aac4db8d5c13eda207de4c939de116ca3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::RuleSet::RuleSet</definition>
+        <argsstring>(RuleSet &amp;&amp;)=default</argsstring>
+        <name>RuleSet</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="39" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1ac501082fdec24d35dddae03b5dc51895" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::RuleSet::~RuleSet</definition>
+        <argsstring>()=default</argsstring>
+        <name>~RuleSet</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="40" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1af21a93893d96649ffa413c3b378c354a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref> &amp;</type>
+        <definition>RuleSet&amp; microsoft::quantum::RuleSet::operator=</definition>
+        <argsstring>(RuleSet const &amp;)=default</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="45" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1a5dc8172a3eae38d8d6898e231564e60e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref> &amp;</type>
+        <definition>RuleSet&amp; microsoft::quantum::RuleSet::operator=</definition>
+        <argsstring>(RuleSet &amp;&amp;)=default</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="46" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1a0d6c972010cf86830f113fdf6a3a877c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::RuleSet::matchAndReplace</definition>
+        <argsstring>(Instruction *value, Replacements &amp;replacements)</argsstring>
+        <name>matchAndReplace</name>
+        <param>
+          <type>Instruction *</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>Replacements &amp;</type>
+          <declname>replacements</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Matches patterns and runs the replacement routines if a match is found. The function returns true if a pattern is matched and and the replacement was a success. In all other cases, it returns false. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="55" column="14" bodyfile="Rules/RuleSet.cpp" bodystart="16" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1ad26c91b5a8f3bd63abc39b13f1a23b85" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::RuleSet::addRule</definition>
+        <argsstring>(ReplacementRulePtr const &amp;rule)</argsstring>
+        <name>addRule</name>
+        <param>
+          <type>ReplacementRulePtr const &amp;</type>
+          <declname>rule</declname>
+        </param>
+        <briefdescription>
+<para>Adds a new replacement rule to the set. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="61" column="14" bodyfile="Rules/RuleSet.cpp" bodystart="40" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1a48052fbd8d05796b80e499788e0167e4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::RuleSet::addRule</definition>
+        <argsstring>(ReplacementRule &amp;&amp;rule)</argsstring>
+        <name>addRule</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_replacement_rule" kindref="compound">ReplacementRule</ref> &amp;&amp;</type>
+          <declname>rule</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="62" column="14" bodyfile="Rules/RuleSet.cpp" bodystart="45" bodyend="48"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1aa5500ad922f898edcb15a14dd1439ccf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::RuleSet::clear</definition>
+        <argsstring>()</argsstring>
+        <name>clear</name>
+        <briefdescription>
+<para>Clears the rule set for all rules. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="65" column="14" bodyfile="Rules/RuleSet.cpp" bodystart="50" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_rule_set_1a64a15bf9496696db0613bab1c80487f2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>uint64_t</type>
+        <definition>uint64_t microsoft::quantum::RuleSet::size</definition>
+        <argsstring>() const</argsstring>
+        <name>size</name>
+        <briefdescription>
+<para>Returns the size of the rule set. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/RuleSet.hpp" line="68" column="18" bodyfile="Rules/RuleSet.cpp" bodystart="55" bodyend="58"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="classmicrosoft_1_1quantum_1_1_rule_set" kindref="compound">RuleSet</ref> contains a set of replacement rules and the corresponding logic to apply the rules. The class allows one to apply the rules by which each rule is tested one-by-one until a successful attempt at performing a replace has happened, or the list was exhausted. </para>
+    </detaileddescription>
+    <location file="Rules/RuleSet.hpp" line="23" column="5" bodyfile="Rules/RuleSet.hpp" bodystart="24" bodyend="72"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1ad26c91b5a8f3bd63abc39b13f1a23b85" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>addRule</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a48052fbd8d05796b80e499788e0167e4" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>addRule</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1acf63ad10024173a3b1b9d5ce67c482fc" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>AllocationManagerPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1abb4fae44e416b048528bc0cd52f3b258" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>Builder</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a12758e6398082ad8a4eaf8b08643e8fe" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>Captures</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1aa5500ad922f898edcb15a14dd1439ccf" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>clear</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a2ee707e4d65377db742a2ceefdad537a" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>Instruction</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a0d6c972010cf86830f113fdf6a3a877c" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>matchAndReplace</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1af21a93893d96649ffa413c3b378c354a" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a5dc8172a3eae38d8d6898e231564e60e" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a40ec2f95689cf5a781ba534950fd4d5c" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>ReplacementRulePtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1abe997774d4b73e2741fec5613855d514" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>Replacements</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1ac49bd61bd798f535d96fd54d4562b863" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>Rules</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1aa873fe4f9d974dbdff1cd1c608c98a9b" prot="private" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>rules_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a5c4a1fc09d55364d5f27d7599e1a6bc9" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>RuleSet</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a4249380a6d81da327e1a82d246e35983" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>RuleSet</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1aac4db8d5c13eda207de4c939de116ca3" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>RuleSet</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a64a15bf9496696db0613bab1c80487f2" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>size</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1a3eff80c6252f2ad26e5af84828cb108d" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>Value</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_rule_set_1ac501082fdec24d35dddae03b5dc51895" prot="public" virt="non-virtual"><scope>microsoft::quantum::RuleSet</scope><name>~RuleSet</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

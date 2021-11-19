@@ -1,0 +1,368 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_i_config_bind" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>microsoft::quantum::IConfigBind</compoundname>
+    <derivedcompoundref refid="classmicrosoft_1_1quantum_1_1_config_bind" prot="public" virt="non-virtual">microsoft::quantum::ConfigBind&lt; T &gt;</derivedcompoundref>
+    <includes refid="_i_config_bind_8hpp" local="no">Commandline/IConfigBind.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1ad97b29afc3c77ad11b400e138d2b87da" prot="private" static="no" mutable="no">
+        <type>String</type>
+        <definition>String microsoft::quantum::IConfigBind::name_</definition>
+        <argsstring></argsstring>
+        <name>name_</name>
+        <briefdescription>
+<para>Name that which sets the value. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="93" column="16" bodyfile="Commandline/IConfigBind.hpp" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a99429d9ff1c5d4601639e9a878aff41f" prot="private" static="no" mutable="no">
+        <type>String</type>
+        <definition>String microsoft::quantum::IConfigBind::description_</definition>
+        <argsstring></argsstring>
+        <name>description_</name>
+        <briefdescription>
+<para>Description of the option or flag. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="94" column="16" bodyfile="Commandline/IConfigBind.hpp" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a32666735548c2b47a41fcd69aa8766a7" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::IConfigBind::is_flag_</definition>
+        <argsstring></argsstring>
+        <name>is_flag_</name>
+        <initializer>{false}</initializer>
+        <briefdescription>
+<para>Whether or not the variable is a flag. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="95" column="16" bodyfile="Commandline/IConfigBind.hpp" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1aa38d24ea1236026ce9d0999cdf8028dc" prot="private" static="no" mutable="no">
+        <type>String</type>
+        <definition>String microsoft::quantum::IConfigBind::str_default_value_</definition>
+        <argsstring></argsstring>
+        <name>str_default_value_</name>
+        <briefdescription>
+<para>Default value represented as a string. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="96" column="16" bodyfile="Commandline/IConfigBind.hpp" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a8ad4e44ae06aacf028e7fc681307efa3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::IConfigBind::IConfigBind</definition>
+        <argsstring>(IConfigBind const &amp;)=delete</argsstring>
+        <name>IConfigBind</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_i_config_bind" kindref="compound">IConfigBind</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="32" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a3ba0b08a28da75373db5d0e5a599013a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::IConfigBind::IConfigBind</definition>
+        <argsstring>(IConfigBind &amp;&amp;)=delete</argsstring>
+        <name>IConfigBind</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_i_config_bind" kindref="compound">IConfigBind</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="33" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a756eeb8edd0c1676add6e03ea9e4fedd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_i_config_bind" kindref="compound">IConfigBind</ref> &amp;</type>
+        <definition>IConfigBind&amp; microsoft::quantum::IConfigBind::operator=</definition>
+        <argsstring>(IConfigBind const &amp;)=delete</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_i_config_bind" kindref="compound">IConfigBind</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="34" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a40ced58da1e452732da73331c7ccc205" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_i_config_bind" kindref="compound">IConfigBind</ref> &amp;</type>
+        <definition>IConfigBind&amp; microsoft::quantum::IConfigBind::operator=</definition>
+        <argsstring>(IConfigBind &amp;&amp;)=delete</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_i_config_bind" kindref="compound">IConfigBind</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="35" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a2ef8237b235046d22204dd80fa64fae9" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>microsoft::quantum::IConfigBind::~IConfigBind</definition>
+        <argsstring>()</argsstring>
+        <name>~IConfigBind</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="39" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a60b9e73508ca17f3d7518fde2f580d46" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>bool</type>
+        <definition>virtual bool microsoft::quantum::IConfigBind::setupArguments</definition>
+        <argsstring>(ParameterParser &amp;parser)=0</argsstring>
+        <name>setupArguments</name>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_config_bind_1a982835cd6cae95c8212bad2b1784a8aa">setupArguments</reimplementedby>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_parameter_parser" kindref="compound">ParameterParser</ref> &amp;</type>
+          <declname>parser</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Interface function to register configuration in the parser. This function register the configuration to the parameter parser. This makes the configuration available in the parameter parsers help function. This method should return true if arguments were successfully setup. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="48" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a725ccd6465a61592f6cb4e1f87370738" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>bool</type>
+        <definition>virtual bool microsoft::quantum::IConfigBind::configure</definition>
+        <argsstring>(ParameterParser const &amp;parser)=0</argsstring>
+        <name>configure</name>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_config_bind_1a76d719752f3842a2358e320dd1ae36d1">configure</reimplementedby>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_parameter_parser" kindref="compound">ParameterParser</ref> const &amp;</type>
+          <declname>parser</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Interface function to extract configuration from the command line arguments. Given an instance of the command line parameter parser, this function is meant to read the command line arguments, interpret it and set the bound variable value (if present). This method should return true if configure operation was successful. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="54" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a5357cc356c1c63c1a8cb2e9a3f43a1e3" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>String</type>
+        <definition>virtual String microsoft::quantum::IConfigBind::value</definition>
+        <argsstring>()=0</argsstring>
+        <name>value</name>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_config_bind_1af0690262d2d2d5ffefa00637e8b28d6e">value</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Interface function to return a string representation of the current value of the bound variable. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="58" column="24"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a096663f66f40163008233c33527d0c2e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>String</type>
+        <definition>String microsoft::quantum::IConfigBind::name</definition>
+        <argsstring>() const</argsstring>
+        <name>name</name>
+        <briefdescription>
+<para>Returns the name of the bound configuration variable. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="64" column="16" bodyfile="Commandline/IConfigBind.cpp" bodystart="22" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a33614ced55a79616bc49cc0988dcb66c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>String</type>
+        <definition>String microsoft::quantum::IConfigBind::description</definition>
+        <argsstring>() const</argsstring>
+        <name>description</name>
+        <briefdescription>
+<para>Returns the description of the configuration variable. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="67" column="16" bodyfile="Commandline/IConfigBind.cpp" bodystart="27" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a95f172bbce1351aa41abc299612e922d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::IConfigBind::isFlag</definition>
+        <argsstring>() const</argsstring>
+        <name>isFlag</name>
+        <briefdescription>
+<para>Indicates whether or not this. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="70" column="14" bodyfile="Commandline/IConfigBind.cpp" bodystart="37" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a1e2b1af76ff1512d8c21948578a23ae4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>String</type>
+        <definition>String microsoft::quantum::IConfigBind::defaultValue</definition>
+        <argsstring>() const</argsstring>
+        <name>defaultValue</name>
+        <briefdescription>
+<para>Returns the default value for the flag. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="73" column="16" bodyfile="Commandline/IConfigBind.cpp" bodystart="42" bodyend="45"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a80643a3184930cfd50916938d3366d56" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::IConfigBind::IConfigBind</definition>
+        <argsstring>(String const &amp;name, String const &amp;description)</argsstring>
+        <name>IConfigBind</name>
+        <param>
+          <type>String const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>String const &amp;</type>
+          <declname>description</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="78" column="9" bodyfile="Commandline/IConfigBind.cpp" bodystart="14" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a499e109b9801672e834c0aa4e17d3e3b" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::IConfigBind::setName</definition>
+        <argsstring>(String const &amp;name)</argsstring>
+        <name>setName</name>
+        <param>
+          <type>String const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Sets the name of the configuration variable. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="84" column="14" bodyfile="Commandline/IConfigBind.cpp" bodystart="32" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1a4e4047b01a89a7f4c259442c4a46386f" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::IConfigBind::markAsFlag</definition>
+        <argsstring>()</argsstring>
+        <name>markAsFlag</name>
+        <briefdescription>
+<para>Marks the variable as a flag. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="87" column="14" bodyfile="Commandline/IConfigBind.cpp" bodystart="47" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_config_bind_1ac618493c6e80ac1393785b3b772b7cce" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::IConfigBind::setDefault</definition>
+        <argsstring>(String const &amp;v)</argsstring>
+        <name>setDefault</name>
+        <param>
+          <type>String const &amp;</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+<para>Sets the default value as a string. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/IConfigBind.hpp" line="90" column="14" bodyfile="Commandline/IConfigBind.cpp" bodystart="52" bodyend="55"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Interface class to bind a variable to a configuration flag. This class provides the necessary interface to bind variables and populate their value based on given command-line arguments. </para>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>microsoft::quantum::ConfigBind&lt; T &gt;</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_config_bind"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>microsoft::quantum::IConfigBind</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_i_config_bind"/>
+      </node>
+    </inheritancegraph>
+    <location file="Commandline/IConfigBind.hpp" line="24" column="5" bodyfile="Commandline/IConfigBind.hpp" bodystart="25" bodyend="97"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a725ccd6465a61592f6cb4e1f87370738" prot="public" virt="pure-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>configure</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a1e2b1af76ff1512d8c21948578a23ae4" prot="public" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>defaultValue</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a33614ced55a79616bc49cc0988dcb66c" prot="public" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>description</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a99429d9ff1c5d4601639e9a878aff41f" prot="private" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>description_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a8ad4e44ae06aacf028e7fc681307efa3" prot="public" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>IConfigBind</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a3ba0b08a28da75373db5d0e5a599013a" prot="public" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>IConfigBind</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a80643a3184930cfd50916938d3366d56" prot="protected" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>IConfigBind</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a32666735548c2b47a41fcd69aa8766a7" prot="private" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>is_flag_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a95f172bbce1351aa41abc299612e922d" prot="public" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>isFlag</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a4e4047b01a89a7f4c259442c4a46386f" prot="protected" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>markAsFlag</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a096663f66f40163008233c33527d0c2e" prot="public" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>name</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1ad97b29afc3c77ad11b400e138d2b87da" prot="private" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>name_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a756eeb8edd0c1676add6e03ea9e4fedd" prot="public" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a40ced58da1e452732da73331c7ccc205" prot="public" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1ac618493c6e80ac1393785b3b772b7cce" prot="protected" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>setDefault</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a499e109b9801672e834c0aa4e17d3e3b" prot="protected" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>setName</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a60b9e73508ca17f3d7518fde2f580d46" prot="public" virt="pure-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>setupArguments</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1aa38d24ea1236026ce9d0999cdf8028dc" prot="private" virt="non-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>str_default_value_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a5357cc356c1c63c1a8cb2e9a3f43a1e3" prot="public" virt="pure-virtual"><scope>microsoft::quantum::IConfigBind</scope><name>value</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_config_bind_1a2ef8237b235046d22204dd80fa64fae9" prot="public" virt="virtual"><scope>microsoft::quantum::IConfigBind</scope><name>~IConfigBind</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

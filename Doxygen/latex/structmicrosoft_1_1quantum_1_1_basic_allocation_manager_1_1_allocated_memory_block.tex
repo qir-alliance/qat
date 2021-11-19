@@ -1,0 +1,34 @@
+\hypertarget{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block}{}\doxysection{microsoft\+::quantum\+::Basic\+Allocation\+Manager\+::Allocated\+Memory\+Block Struct Reference}
+\label{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block}\index{microsoft::quantum::BasicAllocationManager::AllocatedMemoryBlock@{microsoft::quantum::BasicAllocationManager::AllocatedMemoryBlock}}
+
+
+{\ttfamily \#include $<$Allocation\+Manager/\+Allocation\+Manager.\+hpp$>$}
+
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_a5efa65d2923020ff8bc5982ade5ddb34}\label{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_a5efa65d2923020ff8bc5982ade5ddb34}} 
+String \mbox{\hyperlink{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_a5efa65d2923020ff8bc5982ade5ddb34}{name}} \{\char`\"{}\char`\"{}\}
+\begin{DoxyCompactList}\small\item\em Name of the segment, if any given. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_ab7d942f1ce6cb09cd350ff57128715f3}\label{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_ab7d942f1ce6cb09cd350ff57128715f3}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a8b959912df70a013f90086320202f833}{Index}} \mbox{\hyperlink{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_ab7d942f1ce6cb09cd350ff57128715f3}{count}} \{0\}
+\begin{DoxyCompactList}\small\item\em Number of elements contained within memory address segment. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_af9df8901f253993fa54e39083e809ab0}\label{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_af9df8901f253993fa54e39083e809ab0}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}{Address}} \mbox{\hyperlink{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_af9df8901f253993fa54e39083e809ab0}{start}} \{0\}
+\begin{DoxyCompactList}\small\item\em Start address of memory address segment. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_a5393d491ea56a3dc30f7b0a486c10b9b}\label{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_a5393d491ea56a3dc30f7b0a486c10b9b}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}{Address}} \mbox{\hyperlink{structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_a5393d491ea56a3dc30f7b0a486c10b9b}{end}} \{0\}
+\begin{DoxyCompactList}\small\item\em End address (not included in memory address segment) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Defines a named register/memory address segment with start position, end position and count. We think of the address space as a continuous sequence of spaces that can store values and we refer to a bounded continuous sequence memory addresses as a segment (or memory address segment)\+: \begin{DoxyVerb}         start                   end
+           │                      │
+           ▼                      ▼
+        ┌  ─  ─  ─  ─  ─  ─  ─
+\end{DoxyVerb}
+ ┌ ─ ─ ┬ ─ ─ ┬─────┬─────┐ ┌─────┼ ─ ─ ┬ ─ ─ ┐ 0 1 │ 2 │ 3 │... │ N+1 │ N+2 N+3 └ ─ ─ ┴ ─ ─ ┴─────┴─────┘ └─────┴ ─ ─ ┴ ─ ─ ┘ Address │ space │ Memory address segment of N elements │ └ ─ ─ ─ ─ ─ ─ ─ 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Allocation\+Manager/Allocation\+Manager.\+hpp\end{DoxyCompactItemize}

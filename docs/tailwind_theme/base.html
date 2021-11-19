@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {%- block site_meta %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% if page and page.is_homepage %}
+    <meta name="description" content="{{ config['site_description'] }}" />
+    {% endif %} {% if config.site_author %}
+    <meta name="author" content="{{ config.site_author }}" />
+    {% endif %} {% if page and page.canonical_url %}
+    <link rel="canonical" href="{{ page.canonical_url }}" />
+    {% endif %} {% if config.site_favicon %}
+    <link rel="shortcut icon" href="{{ config.site_favicon|url }}" />
+    {% else %}
+    <link rel="shortcut icon" href="{{ 'img/favicon.ico'|url }}" />
+    {% endif %} {%- endblock %} {%- block htmltitle %}
+    <title>
+      {% if page and page.title and not page.is_homepage %}{{ page.title }} - {%
+      endif %}{{ config.site_name }}
+    </title>
+    {%- endblock %} {%- block styles %}
+    <link href="{{ 'css/styles.css'|url }}" rel="stylesheet" />
+    <link href="{{ 'css/qauntum-colors.css'|url }}" rel="stylesheet" />
+    <link href="{{ 'css/font-awesome.min.css'|url }}" rel="stylesheet" />
+    {%- if config.theme.highlightjs %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/{{ config.theme.hljs_style }}.min.css"
+    />
+    {%- endif %} {%- for path in config['extra_css'] %}
+    <link href="{{ path|url }}" rel="stylesheet" />
+    {%- endfor %} {%- endblock %} {%- block libs %}
+
+    <script src="{{ 'js/jquery-1.10.2.min.js'|url }}"></script>
+    {%- if config.theme.highlightjs %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    {%- for lang in config.theme.hljs_languages %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/{{lang}}.min.js"></script>
+    {%- endfor %}
+    <script src="{{ 'js/rock-lang.js'|url }}" defer></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+    {%- endif %} {%- endblock %} {%- block analytics %} {%- if
+    config.google_analytics %}
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        (i[r] =
+          i[r] ||
+          function () {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        "script",
+        "https://www.google-analytics.com/analytics.js",
+        "ga"
+      );
+
+      ga(
+        "create",
+        "{{ config.google_analytics[0] }}",
+        "{{ config.google_analytics[1] }}"
+      );
+      ga("send", "pageview");
+    </script>
+    {%- endif %} {%- endblock %} {%- block extrahead %} {% endblock %} 
+  </head>
+
+  <body>
+    <div class="h-screen flex overflow-hidden bg-white">
+      <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+      <div class="lg:hidden hidden" id="sidebar">
+        <div class="fixed inset-0 flex z-40">
+          <!--
+        Off-canvas menu overlay, show/hide based on off-canvas menu state.
+
+        Entering: "transition-opacity ease-linear duration-300"
+          From: "opacity-0"
+          To: "opacity-100"
+        Leaving: "transition-opacity ease-linear duration-300"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+          <div class="fixed inset-0" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
+          </div>
+          <!--
+        Off-canvas menu, show/hide based on off-canvas menu state.
+
+        Entering: "transition ease-in-out duration-300 transform"
+          From: "-translate-x-full"
+          To: "translate-x-0"
+        Leaving: "transition ease-in-out duration-300 transform"
+          From: "translate-x-0"
+          To: "-translate-x-full"
+      -->
+          <div
+            class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800"
+          >
+            <div class="absolute top-0 right-0 -mr-12 pt-2">
+              <button
+                class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                id="sidebarClose"                
+              >
+                <span class="sr-only">Close sidebar</span>
+                <!-- Heroicon name: x -->
+                <svg
+                  class="h-6 w-6 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            {% include 'logo.html' %}
+            <div class="mt-5 flex-1 h-0 overflow-y-auto">
+              <nav class="px-2">
+
+              {%- block site_nav_mobile %} {%- for nav_item in nav %} {%- if
+              nav_item.children %}
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                {{nav_item.title}}
+              </h3>
+              {%- for nav_sub_item in nav_item.children %}
+              <a
+                class="{% if nav_sub_item.active %}bg-gray-900{% else %} hover:bg-gray-700{% endif %} text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="{{ nav_sub_item.url|url }}"
+                >{{ nav_sub_item.title }}</a
+              >
+              {%- endfor %} {% else %}
+              <a
+                class="{% if nav_item.active %}bg-gray-900{% else %} hover:bg-gray-700{% endif %} text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="{{ nav_item.url|url }}"
+                >{{ nav_item.title }}</a
+              >
+              {% endif %} {%- endfor %} {%- endblock %}
+
+              </nav>
+            </div>
+          </div>
+          <div class="flex-shrink-0 w-14" aria-hidden="true">
+            <!-- Dummy element to force sidebar to shrink to fit close icon -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Static sidebar for desktop -->
+      <div class="hidden lg:flex lg:flex-shrink-0">
+        <div
+          class="flex flex-col w-64 border-r border-gray-200 pt-5 pb-4 bg-gray-800"
+        >
+          {% include 'logo.html' %}
+
+          <!-- Sidebar component, swap this element with another sidebar if you like -->
+          <div class="h-0 flex-1 flex flex-col overflow-y-auto">
+            <!-- Navigation -->
+            <nav class="mt-2 flex-1 px-2 bg-gray-800">
+              {%- block site_nav %} {%- for nav_item in nav %} {%- if
+              nav_item.children %}
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                {{nav_item.title}}
+              </h3>
+              {%- for nav_sub_item in nav_item.children %}
+              <a
+                class="{% if nav_sub_item.active %}bg-gray-900{% else %} hover:bg-gray-700{% endif %} text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="{{ nav_sub_item.url|url }}"
+                >{{ nav_sub_item.title }}</a
+              >
+              {%- endfor %} {% else %}
+              <a
+                class="{% if nav_item.active %}bg-gray-900{% else %} hover:bg-gray-700{% endif %} text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="{{ nav_item.url|url }}"
+                >{{ nav_item.title }}</a
+              >
+              {% endif %} {%- endfor %} {%- endblock %}
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main column -->
+      <div class="flex flex-col w-0 flex-1 overflow-hidden">
+
+        <!-- Top bar -->
+        <div
+          class="relative z-20 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 focus:outline-none"
+        >
+          <button
+            class="px-4 border-r border-gray-200 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden"
+            id="sidebarOpen"                            
+          >
+            <span class="sr-only">Open sidebar</span>
+            <!-- Heroicon name: menu-alt-1 -->
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </button>
+
+          <div
+            class="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8"
+          >
+            <div class="flex-1 flex">
+              <form class="w-full flex md:ml-0" action="#" method="GET">
+                <label for="mkdocs-search-query" class="sr-only">Search</label>
+                <div
+                  class="relative w-full text-gray-400 focus-within:text-gray-600"
+                >
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
+                    aria-hidden="true"
+                  >
+                    <!-- Heroicon name: search -->
+                    <svg
+                      class="h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    id="mkdocs-search-query"
+                    name="mkdocs-search-query"
+                    class="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
+                    placeholder="Search documentation"
+                    type="search"
+                  />       
+                </div>
+              </form>
+              <div id="searchResults" class="fixed sm:absolute mt-16 z-10 inset-0 overflow-y-auto min-h-screen min-w-screen flex flex-col justify-start sm:pb-16 lg:pb-96 lg:max-w-6xl lg:mx-auto hidden">
+                  <div class="bg-gray-100 text-gray-400 p-2">
+                    Results
+                  </div>
+                  <div class="bg-white min-h-96 z-100 p-4 sm:p-8 rounded-b space-y-4 flex flex-col overflow-y-auto w-full max-h-full">
+                    <div class="prose"  id="mkdocs-search-results">
+                    </div>
+                  </div>
+              </div>                         
+            </div>
+            {# TODO: Add github link
+            <div class="ml-4 flex items-center md:ml-6">
+              <button
+                class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+              >
+                <span class="sr-only">View notifications</span>
+                <svg
+                  class="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                  />
+                </svg>
+              </button>
+            </div>
+            #}
+          </div>
+        </div>
+
+        <main
+          class="relative flex flex-col flex-grow h-0 min-h-full justify-between bg-white focus:outline-none overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+          tabindex="0"
+        >
+
+        <div class="fixed inset-0 transition-opacity hidden searchOverlayElement" aria-hidden="true" id="searchOverlay">
+          <div class="absolute inset-0 bg-gray-500 opacity-75 searchOverlayElement"></div>
+        </div>
+
+          <div
+            class="lg:px-8 flex flex-col space-y-4 p-4 md:px-6 sm:px-8 w-full mb-96"
+          >
+            {%- block content %} {# TODO:
+            <div class="col-md-3">
+              {% include "toc.html" %}
+            </div>
+            #}
+
+            {% include "content.html" %}
+            {%- endblock %}
+          </div>
+        </main>
+
+      </div>
+    </div>
+
+    {%- block scripts %}
+    <script>
+      var base_url = {{ base_url | tojson }},
+          shortcuts = {{ config.theme.shortcuts | tojson }};
+    </script>
+    <script src="{{ 'js/base.js'|url }}" defer></script>
+    {%- for path in config['extra_javascript'] %}
+    <script src="{{ path|url }}" defer></script>
+    {%- endfor %} {%- endblock %} {# TODO if 'search' in config['plugins'] %}{%-
+    include "search-modal.html" %}{% endif #} {# TODO - include
+    "keyboard-modal.html" #}
+  </body>
+
+</html>
+{% if page and page.is_homepage %}
+<!--
+MkDocs version : {{ mkdocs_version }}
+Build Date UTC : {{ build_date_utc }}
+-->
+{% endif %}

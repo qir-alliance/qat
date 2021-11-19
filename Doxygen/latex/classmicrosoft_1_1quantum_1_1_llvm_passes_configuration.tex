@@ -1,0 +1,51 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration}{}\doxysection{microsoft\+::quantum\+::Llvm\+Passes\+Configuration Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration}\index{microsoft::quantum::LlvmPassesConfiguration@{microsoft::quantum::LlvmPassesConfiguration}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a645eb2cccc3f75eca6fccf7420beea9a}\label{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a645eb2cccc3f75eca6fccf7420beea9a}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a645eb2cccc3f75eca6fccf7420beea9a}{setup}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_configuration_manager}{Configuration\+Manager}} \&config)
+\begin{DoxyCompactList}\small\item\em Setup function that registers the different LLVM passes available via LLVM component. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_affc954f9eda3eb1dc90ffd02bb281806}{is\+Disabled}} () const
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a0bd9dc0d97efd91781d812fdeda14a75}\label{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a0bd9dc0d97efd91781d812fdeda14a75}} 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a0bd9dc0d97efd91781d812fdeda14a75}{operator==}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration}{Llvm\+Passes\+Configuration}} const \&ref) const
+\begin{DoxyCompactList}\small\item\em Compares equality of two configurations. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a88b8eb6fdc55092fa82a9c156a4a94d4}\label{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a88b8eb6fdc55092fa82a9c156a4a94d4}} 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a88b8eb6fdc55092fa82a9c156a4a94d4}{always\+Inline}} () const
+\begin{DoxyCompactList}\small\item\em Whether or not the LLVM Always\+Inline pass should be added to the profile. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_aa1e9204a5eb31e36887e648d8b455613}\label{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_aa1e9204a5eb31e36887e648d8b455613}} 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_aa1e9204a5eb31e36887e648d8b455613}{disable\+Default\+Pipeline}} () const
+\begin{DoxyCompactList}\small\item\em Whether or not the default LLVM pipeline is disabled. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a889babb3348b6c8f5b61b373db5c51d2}\label{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a889babb3348b6c8f5b61b373db5c51d2}} 
+std\+::string {\bfseries pass\+Pipeline} () const
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a715ea1809e88e7f4f1cb3e7f8acd7967}\label{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a715ea1809e88e7f4f1cb3e7f8acd7967}} 
+int32\+\_\+t \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a715ea1809e88e7f4f1cb3e7f8acd7967}{inline\+Parameter}} () const
+\begin{DoxyCompactList}\small\item\em Parameter that defines the maximum number of lines of code allowed for inlining. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration}{Llvm\+Passes\+Configuration}} \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a175c3567995b098ef9d3330aca82bd1d}{create\+Disabled}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a175c3567995b098ef9d3330aca82bd1d}\label{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_a175c3567995b098ef9d3330aca82bd1d}} 
+\index{microsoft::quantum::LlvmPassesConfiguration@{microsoft::quantum::LlvmPassesConfiguration}!createDisabled@{createDisabled}}
+\index{createDisabled@{createDisabled}!microsoft::quantum::LlvmPassesConfiguration@{microsoft::quantum::LlvmPassesConfiguration}}
+\doxysubsubsection{\texorpdfstring{createDisabled()}{createDisabled()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration}{Llvm\+Passes\+Configuration}} microsoft\+::quantum\+::\+Llvm\+Passes\+Configuration\+::create\+Disabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Static function creates a new configuration where all transformations/validation requirements are disabled. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_affc954f9eda3eb1dc90ffd02bb281806}\label{classmicrosoft_1_1quantum_1_1_llvm_passes_configuration_affc954f9eda3eb1dc90ffd02bb281806}} 
+\index{microsoft::quantum::LlvmPassesConfiguration@{microsoft::quantum::LlvmPassesConfiguration}!isDisabled@{isDisabled}}
+\index{isDisabled@{isDisabled}!microsoft::quantum::LlvmPassesConfiguration@{microsoft::quantum::LlvmPassesConfiguration}}
+\doxysubsubsection{\texorpdfstring{isDisabled()}{isDisabled()}}
+{\footnotesize\ttfamily bool microsoft\+::quantum\+::\+Llvm\+Passes\+Configuration\+::is\+Disabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns true if the configuration disables all effects of this component. The effect of this function being true is that registered component should have no effect on transformation and/or validation of the QIR. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Generators/Llvm\+Passes\+Configuration.\+hpp\item 
+Generators/Llvm\+Passes\+Configuration.\+cpp\end{DoxyCompactItemize}

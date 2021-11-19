@@ -1,0 +1,267 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::BasicAllocationManager</compoundname>
+    <basecompoundref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager" prot="public" virt="non-virtual">microsoft::quantum::IAllocationManager</basecompoundref>
+    <includes refid="_allocation_manager_8hpp" local="no">AllocationManager/AllocationManager.hpp</includes>
+    <innerclass refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block" prot="public">microsoft::quantum::BasicAllocationManager::AllocatedMemoryBlock</innerclass>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a5745fc89f2ee86a2c4eb06f3ab18cd81" prot="public" static="no">
+        <type>std::vector&lt; <ref refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block" kindref="compound">AllocatedMemoryBlock</ref> &gt;</type>
+        <definition>using microsoft::quantum::BasicAllocationManager::Mappings =  std::vector&lt;AllocatedMemoryBlock&gt;</definition>
+        <argsstring></argsstring>
+        <name>Mappings</name>
+        <briefdescription>
+<para>Vector of memory segments. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="51" column="9" bodyfile="AllocationManager/AllocationManager.hpp" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1ab2a8de7c7e97d8d6215ce9a9ab33efb8" prot="public" static="no">
+        <type>std::shared_ptr&lt; <ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager" kindref="compound">BasicAllocationManager</ref> &gt;</type>
+        <definition>using microsoft::quantum::BasicAllocationManager::BasicAllocationManagerPtr =  std::shared_ptr&lt;BasicAllocationManager&gt;</definition>
+        <argsstring></argsstring>
+        <name>BasicAllocationManagerPtr</name>
+        <briefdescription>
+<para>Allocator pointer type. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="52" column="9" bodyfile="AllocationManager/AllocationManager.hpp" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a30e5762f371872889ad4c9b94634ef84" prot="private" static="no" mutable="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a8b959912df70a013f90086320202f833" kindref="member">Index</ref></type>
+        <definition>Index microsoft::quantum::BasicAllocationManager::next_qubit_index_</definition>
+        <argsstring></argsstring>
+        <name>next_qubit_index_</name>
+        <initializer>{0}</initializer>
+        <briefdescription>
+<para>Variable to keep track of the next qubit to be allocated. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="92" column="15" bodyfile="AllocationManager/AllocationManager.hpp" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a3c19ab0794038faca7938067e32e1044" prot="private" static="no" mutable="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a5745fc89f2ee86a2c4eb06f3ab18cd81" kindref="member">Mappings</ref></type>
+        <definition>Mappings microsoft::quantum::BasicAllocationManager::mappings_</definition>
+        <argsstring></argsstring>
+        <name>mappings_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Each allocation has a register/memory mapping which keeps track of the allocation index, the segment count and its name (if any). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="100" column="18" bodyfile="AllocationManager/AllocationManager.hpp" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a753c355029564baad30e65463237e66d" prot="private" static="no" mutable="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a8b959912df70a013f90086320202f833" kindref="member">Index</ref></type>
+        <definition>Index microsoft::quantum::BasicAllocationManager::allocation_index_</definition>
+        <argsstring></argsstring>
+        <name>allocation_index_</name>
+        <initializer>{0}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="101" column="18" bodyfile="AllocationManager/AllocationManager.hpp" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a39aa4f5770f4ec8833bf5a23d167e0a2" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::BasicAllocationManager::reuse_qubits_</definition>
+        <argsstring></argsstring>
+        <name>reuse_qubits_</name>
+        <initializer>{true}</initializer>
+        <briefdescription>
+<para>Whether or not to reuse qubits. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="106" column="14" bodyfile="AllocationManager/AllocationManager.hpp" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1ab2a8de7c7e97d8d6215ce9a9ab33efb8" kindref="member">BasicAllocationManagerPtr</ref></type>
+        <definition>BasicAllocationManager::BasicAllocationManagerPtr microsoft::quantum::BasicAllocationManager::createNew</definition>
+        <argsstring>()</argsstring>
+        <name>createNew</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Creates a new allocation manager. The manager is kept as a shared pointer to enable allocation across different passes and/or replacement rules. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="61" column="42" bodyfile="AllocationManager/AllocationManager.cpp" bodystart="15" bodyend="21"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1aa6eff65c005184b4f42402c4d10abf0e" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1abf24411fc914344277ef965d27112b18" kindref="member">Address</ref></type>
+        <definition>BasicAllocationManager::Index microsoft::quantum::BasicAllocationManager::allocate</definition>
+        <argsstring>(String const &amp;name=&quot;&quot;, Index const &amp;count=1) override</argsstring>
+        <name>allocate</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a0477e1fd52989e76d877dc7329f7ce3d">allocate</reimplements>
+        <param>
+          <type>String const &amp;</type>
+          <declname>name</declname>
+          <defval>&quot;&quot;</defval>
+        </param>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a8b959912df70a013f90086320202f833" kindref="member">Index</ref> const &amp;</type>
+          <declname>count</declname>
+          <defval>1</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Allocates a possibly named segment of a given count. Calling allocate without and arguments allocates a single anonymous resource and returns the address. In case of a larger segment, the function returns the address pointing to the first element. Allocation is guaranteed to be sequential. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="70" column="17" bodyfile="AllocationManager/AllocationManager.cpp" bodystart="23" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a11c187cae2ab95bb7455b8cbba5ec31a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::BasicAllocationManager::release</definition>
+        <argsstring>(Address const &amp;address) override</argsstring>
+        <name>release</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a0fcd1d870506fb163d70c63cc865cb06">release</reimplements>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1abf24411fc914344277ef965d27112b18" kindref="member">Address</ref> const &amp;</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>Releases the segment by address. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="73" column="14" bodyfile="AllocationManager/AllocationManager.cpp" bodystart="48" bodyend="94"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a264bece62aef1a34fd44f9a31a4cc1f7" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::BasicAllocationManager::reset</definition>
+        <argsstring>() override</argsstring>
+        <name>reset</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1ae53a2911903febc00fb6a9139ef247af">reset</reimplements>
+        <briefdescription>
+<para>Resets the allocation manager and all its statistics. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="76" column="14" bodyfile="AllocationManager/AllocationManager.cpp" bodystart="101" bodyend="107"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a9da0b491a9905108ac5272b8ce77c4da" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::BasicAllocationManager::setReuseRegisters</definition>
+        <argsstring>(bool val)</argsstring>
+        <name>setReuseRegisters</name>
+        <param>
+          <type>bool</type>
+          <declname>val</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Configuration function to set mode of qubit allocation. If function argument is true, the allocation manager will reuse qubits. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="80" column="14" bodyfile="AllocationManager/AllocationManager.cpp" bodystart="96" bodyend="99"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a89f658a262734938a4a0bdc3d65da1f3" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::BasicAllocationManager::BasicAllocationManager</definition>
+        <argsstring>()=default</argsstring>
+        <name>BasicAllocationManager</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Public construction of this object is only allowed as a shared pointer. To create a new AllocationManager, use AllocationManager::createNew(). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="AllocationManager/AllocationManager.hpp" line="89" column="9"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>AllocationManager is a simple qubit and results allocator that can be used at compile-time. It is based on an assumption that all qubit allocating function calls are inlined and that qubits/results can be allocated with strictly growing IDs. </para>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>microsoft::quantum::BasicAllocationManager</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>microsoft::quantum::IAllocationManager</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>microsoft::quantum::BasicAllocationManager</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>microsoft::quantum::IAllocationManager</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager"/>
+      </node>
+    </collaborationgraph>
+    <location file="AllocationManager/AllocationManager.hpp" line="21" column="5" bodyfile="AllocationManager/AllocationManager.hpp" bodystart="22" bodyend="107"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1abf24411fc914344277ef965d27112b18" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>Address</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1aa6eff65c005184b4f42402c4d10abf0e" prot="public" virt="virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>allocate</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a753c355029564baad30e65463237e66d" prot="private" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>allocation_index_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a7c77d7b2d94d3b6a98bb5402a854cca4" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>AllocationManagerPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a7c2530c73296df6cf87ff54dc9c6509c" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>allocationsInUse</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a89f658a262734938a4a0bdc3d65da1f3" prot="private" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>BasicAllocationManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1ab2a8de7c7e97d8d6215ce9a9ab33efb8" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>BasicAllocationManagerPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>createNew</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1afe2f09c01ee0cf4312ba249fba743826" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>IAllocationManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a563e54784aa25d9af5a27d9db84cd4f5" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>IAllocationManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a7e7355f5d220774b4ac4b93227f1c215" prot="protected" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>IAllocationManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a8b959912df70a013f90086320202f833" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>Index</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a5745fc89f2ee86a2c4eb06f3ab18cd81" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>Mappings</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a3c19ab0794038faca7938067e32e1044" prot="private" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>mappings_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a6b70408d5752024218c5dbc7cc88a2b1" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>maxAllocationsUsed</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a30e5762f371872889ad4c9b94634ef84" prot="private" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>next_qubit_index_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a81ca574ab646c14ca8a7995558f3c503" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a86f9df1c929eec9cff34ad6ae2e96a90" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a11c187cae2ab95bb7455b8cbba5ec31a" prot="public" virt="virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>release</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a264bece62aef1a34fd44f9a31a4cc1f7" prot="public" virt="virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>reset</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a39aa4f5770f4ec8833bf5a23d167e0a2" prot="private" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>reuse_qubits_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a9da0b491a9905108ac5272b8ce77c4da" prot="public" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>setReuseRegisters</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1ac135ced7582a21cdb00ab4704f78c988" prot="protected" virt="non-virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>updateRegistersInUse</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1af0c9a4cf370d3d2bd7932c3af24b8584" prot="public" virt="virtual"><scope>microsoft::quantum::BasicAllocationManager</scope><name>~IAllocationManager</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

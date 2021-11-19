@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_phi_pattern" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::PhiPattern</compoundname>
+    <basecompoundref refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype" prot="public" virt="non-virtual">microsoft::quantum::IOperandPrototype</basecompoundref>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_phi_pattern_1a4d1aff56a9ca37902ef1fbabfbe0fdd2" prot="public" static="no">
+        <type>std::string</type>
+        <definition>using microsoft::quantum::PhiPattern::String =  std::string</definition>
+        <argsstring></argsstring>
+        <name>String</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/PhiPattern.hpp" line="20" column="9" bodyfile="Rules/Patterns/PhiPattern.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_phi_pattern_1aa5e10d4a47ea0a496adc95f4ccb0be98" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::PhiPattern::PhiPattern</definition>
+        <argsstring>()=default</argsstring>
+        <name>PhiPattern</name>
+        <briefdescription>
+<para>Construction by name. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/PhiPattern.hpp" line="26" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_phi_pattern_1af731888aa0ace507e45f2053af0305d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::PhiPattern::PhiPattern</definition>
+        <argsstring>(PhiPattern const &amp;other)=delete</argsstring>
+        <name>PhiPattern</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_phi_pattern" kindref="compound">PhiPattern</ref> const &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Copy construction prohibited. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/PhiPattern.hpp" line="29" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_phi_pattern_1aa8c62a2c6e98ff151418f3890940947b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::PhiPattern::PhiPattern</definition>
+        <argsstring>(PhiPattern &amp;&amp;other)=default</argsstring>
+        <name>PhiPattern</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_phi_pattern" kindref="compound">PhiPattern</ref> &amp;&amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Move construction allowed. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/PhiPattern.hpp" line="32" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_phi_pattern_1acec3e7884aa54322abb1e62c225aedf2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::PhiPattern::~PhiPattern</definition>
+        <argsstring>() override</argsstring>
+        <name>~PhiPattern</name>
+        <briefdescription>
+<para>Destructor implementation. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/PhiPattern.hpp" line="35" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_phi_pattern_1a2b9583d067a78efe68155abd8bc9edc6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::PhiPattern::match</definition>
+        <argsstring>(Value *instr, Captures &amp;captures) const override</argsstring>
+        <name>match</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a9a4157b4f5b74dff9e5b413a64240236">match</reimplements>
+        <param>
+          <type>Value *</type>
+          <declname>instr</declname>
+        </param>
+        <param>
+          <type>Captures &amp;</type>
+          <declname>captures</declname>
+        </param>
+        <briefdescription>
+<para>Matches the phi node. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/PhiPattern.hpp" line="41" column="14" bodyfile="Rules/Patterns/PhiPattern.cpp" bodystart="14" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_phi_pattern_1a5ae073047f9b0dd18f8333b6423307ff" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>Child</type>
+        <definition>PhiPattern::Child microsoft::quantum::PhiPattern::copy</definition>
+        <argsstring>() const override</argsstring>
+        <name>copy</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a82a0fd5f7297e519eaf8eddac0f38ed3">copy</reimplements>
+        <briefdescription>
+<para>Creates a copy of itself. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/PhiPattern.hpp" line="44" column="15" bodyfile="Rules/Patterns/PhiPattern.cpp" bodystart="25" bodyend="30"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>microsoft::quantum::IOperandPrototype</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype"/>
+      </node>
+      <node id="1">
+        <label>microsoft::quantum::PhiPattern</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_phi_pattern"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>microsoft::quantum::IOperandPrototype</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype"/>
+      </node>
+      <node id="1">
+        <label>microsoft::quantum::PhiPattern</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_phi_pattern"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="Rules/Patterns/PhiPattern.hpp" line="17" column="5" bodyfile="Rules/Patterns/PhiPattern.hpp" bodystart="18" bodyend="45"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1af998b63b21e8a0500a952248c140d0d0" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>addChild</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a166b955925cb5f1464e20c2b94f91a78" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>captureAs</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a31fcffca4d5e1447f17c7ce64a490a6a" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>Captures</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a909d5269c5569a5948bce3395cb59cb7" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>Child</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a99846defccd39bf81668c12dac580510" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>Children</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1a5ae073047f9b0dd18f8333b6423307ff" prot="public" virt="virtual"><scope>microsoft::quantum::PhiPattern</scope><name>copy</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a88789e3c997ddbad72a2ad2221652bcc" prot="protected" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>copyPropertiesFrom</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a25043289d7efcbe79db466f49dd51cd2" prot="protected" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>fail</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1ad0ac73c9329bbc7917b6f0e5ccb76ac3" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>Instruction</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a3c05f7599d41ac5179ff5ceceb97734c" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>IOperandPrototype</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1a2b9583d067a78efe68155abd8bc9edc6" prot="public" virt="virtual"><scope>microsoft::quantum::PhiPattern</scope><name>match</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a98d4e08ac8b7098713c3adc0e3ce1e95" prot="protected" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>matchChildren</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1aa5e10d4a47ea0a496adc95f4ccb0be98" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>PhiPattern</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1af731888aa0ace507e45f2053af0305d5" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>PhiPattern</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1aa8c62a2c6e98ff151418f3890940947b" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>PhiPattern</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1a4d1aff56a9ca37902ef1fbabfbe0fdd2" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>String</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1af9cf2561fc7d6bb39ec9f9486156d133" prot="protected" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>success</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a823a98568040aa7bf8e2b7da13c19990" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>Value</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1ac6fc06942a148f05ffea8d53e62f8506" prot="public" virt="virtual"><scope>microsoft::quantum::PhiPattern</scope><name>~IOperandPrototype</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_phi_pattern_1acec3e7884aa54322abb1e62c225aedf2" prot="public" virt="non-virtual"><scope>microsoft::quantum::PhiPattern</scope><name>~PhiPattern</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,346 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_factory_configuration" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::FactoryConfiguration</compoundname>
+      <sectiondef kind="user-defined">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1ae975d89dae8d9e6119f35ec221caa08c" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::disable_reference_counting_</definition>
+        <argsstring></argsstring>
+        <name>disable_reference_counting_</name>
+        <initializer>{true}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Factory Configuration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="134" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a0af8d1dced9bcd8e6816c4df04b73c9e" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::disable_alias_counting_</definition>
+        <argsstring></argsstring>
+        <name>disable_alias_counting_</name>
+        <initializer>{true}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="135" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="135" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a379aaabba7e896e9c62421745108adbc" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::disable_string_support_</definition>
+        <argsstring></argsstring>
+        <name>disable_string_support_</name>
+        <initializer>{true}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="136" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="136" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="user-defined">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a97a952a78fd06b8ac0eee5623784ee95" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::optimise_result_one_</definition>
+        <argsstring></argsstring>
+        <name>optimise_result_one_</name>
+        <initializer>{true}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Optimisations </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="141" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="141" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1ab867f0d24458db1c41407b10dd8be70c" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::optimise_result_zero_</definition>
+        <argsstring></argsstring>
+        <name>optimise_result_zero_</name>
+        <initializer>{true}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="142" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a3f6b88834708e5b180a0ba9b35bcb28b" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::use_static_qubit_array_allocation_</definition>
+        <argsstring></argsstring>
+        <name>use_static_qubit_array_allocation_</name>
+        <initializer>{true}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="145" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1aaa1c8f70ca92b964f5941ed0fef640be" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::use_static_qubit_allocation_</definition>
+        <argsstring></argsstring>
+        <name>use_static_qubit_allocation_</name>
+        <initializer>{true}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="146" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a15cdd50369b5198456f3f80d162274a4" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::use_static_result_allocation_</definition>
+        <argsstring></argsstring>
+        <name>use_static_result_allocation_</name>
+        <initializer>{true}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="147" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a3f4bb300a59c3fc97cd9d2fce78aa651" prot="private" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t microsoft::quantum::FactoryConfiguration::default_integer_width_</definition>
+        <argsstring></argsstring>
+        <name>default_integer_width_</name>
+        <initializer>{64}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="149" column="18" bodyfile="Rules/FactoryConfig.hpp" bodystart="149" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1aa9c0d494221d2010cebcdc25fa626382" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::FactoryConfiguration::setup</definition>
+        <argsstring>(ConfigurationManager &amp;config)</argsstring>
+        <name>setup</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_configuration_manager" kindref="compound">ConfigurationManager</ref> &amp;</type>
+          <declname>config</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="15" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="15" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a5af06cd14354127b8e313c4b27ba4f48" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::disableReferenceCounting</definition>
+        <argsstring>() const</argsstring>
+        <name>disableReferenceCounting</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="62" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="62" bodyend="65"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1ae5968650d3fc87a65b07c877ea041cb5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::disableAliasCounting</definition>
+        <argsstring>() const</argsstring>
+        <name>disableAliasCounting</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="67" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="67" bodyend="70"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a33cb7a079ee033327ea6d278efd7bff2" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::disableStringSupport</definition>
+        <argsstring>() const</argsstring>
+        <name>disableStringSupport</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="72" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="72" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a35133252393ac455dd705735ff6d352b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::optimiseResultOne</definition>
+        <argsstring>() const</argsstring>
+        <name>optimiseResultOne</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="77" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="77" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1aeb99c7d43abd2cdcbbd02c2d6601cd78" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::optimiseResultZero</definition>
+        <argsstring>() const</argsstring>
+        <name>optimiseResultZero</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="82" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="82" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1aa139251da7877b66f62538196dd33fe4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::useStaticQubitArrayAllocation</definition>
+        <argsstring>() const</argsstring>
+        <name>useStaticQubitArrayAllocation</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="87" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="87" bodyend="90"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1abe94b94c4be4dafaf208dd055f7e03a8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::useStaticQubitAllocation</definition>
+        <argsstring>() const</argsstring>
+        <name>useStaticQubitAllocation</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="92" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="92" bodyend="95"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a6e201cc4e9ef8de340540e2b943cb8ef" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::useStaticResultAllocation</definition>
+        <argsstring>() const</argsstring>
+        <name>useStaticResultAllocation</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="97" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="97" bodyend="100"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a2a1854abdcb4cf4c8200f53e3cbe7864" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>uint32_t</type>
+        <definition>uint32_t microsoft::quantum::FactoryConfiguration::defaultIntegerWidth</definition>
+        <argsstring>() const</argsstring>
+        <name>defaultIntegerWidth</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="102" column="18" bodyfile="Rules/FactoryConfig.hpp" bodystart="102" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a30b261e93d6ffe5d6620277a4d2d5911" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::isDisabled</definition>
+        <argsstring>() const</argsstring>
+        <name>isDisabled</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="107" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="107" bodyend="114"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1a8aae2abc97beddb5049bde0b978bdec8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::FactoryConfiguration::isDefault</definition>
+        <argsstring>() const</argsstring>
+        <name>isDefault</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="116" column="14" bodyfile="Rules/FactoryConfig.hpp" bodystart="116" bodyend="129"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_factory_configuration_1accfe872d1dce5c683ab92ebd281f89a9" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_factory_configuration" kindref="compound">FactoryConfiguration</ref></type>
+        <definition>static FactoryConfiguration microsoft::quantum::FactoryConfiguration::createDisabled</definition>
+        <argsstring>()</argsstring>
+        <name>createDisabled</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/FactoryConfig.hpp" line="48" column="37" bodyfile="Rules/FactoryConfig.hpp" bodystart="48" bodyend="60"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="Rules/FactoryConfig.hpp" line="12" column="5" bodyfile="Rules/FactoryConfig.hpp" bodystart="13" bodyend="150"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1accfe872d1dce5c683ab92ebd281f89a9" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>createDisabled</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a3f4bb300a59c3fc97cd9d2fce78aa651" prot="private" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>default_integer_width_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a2a1854abdcb4cf4c8200f53e3cbe7864" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>defaultIntegerWidth</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a0af8d1dced9bcd8e6816c4df04b73c9e" prot="private" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>disable_alias_counting_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1ae975d89dae8d9e6119f35ec221caa08c" prot="private" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>disable_reference_counting_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a379aaabba7e896e9c62421745108adbc" prot="private" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>disable_string_support_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1ae5968650d3fc87a65b07c877ea041cb5" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>disableAliasCounting</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a5af06cd14354127b8e313c4b27ba4f48" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>disableReferenceCounting</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a33cb7a079ee033327ea6d278efd7bff2" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>disableStringSupport</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a8aae2abc97beddb5049bde0b978bdec8" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>isDefault</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a30b261e93d6ffe5d6620277a4d2d5911" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>isDisabled</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a97a952a78fd06b8ac0eee5623784ee95" prot="private" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>optimise_result_one_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1ab867f0d24458db1c41407b10dd8be70c" prot="private" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>optimise_result_zero_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a35133252393ac455dd705735ff6d352b" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>optimiseResultOne</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1aeb99c7d43abd2cdcbbd02c2d6601cd78" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>optimiseResultZero</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1aa9c0d494221d2010cebcdc25fa626382" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>setup</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1aaa1c8f70ca92b964f5941ed0fef640be" prot="private" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>use_static_qubit_allocation_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a3f6b88834708e5b180a0ba9b35bcb28b" prot="private" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>use_static_qubit_array_allocation_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a15cdd50369b5198456f3f80d162274a4" prot="private" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>use_static_result_allocation_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1abe94b94c4be4dafaf208dd055f7e03a8" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>useStaticQubitAllocation</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1aa139251da7877b66f62538196dd33fe4" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>useStaticQubitArrayAllocation</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_factory_configuration_1a6e201cc4e9ef8de340540e2b943cb8ef" prot="public" virt="non-virtual"><scope>microsoft::quantum::FactoryConfiguration</scope><name>useStaticResultAllocation</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,80 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_rule_set}{}\doxysection{microsoft\+::quantum\+::Rule\+Set Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_rule_set}\index{microsoft::quantum::RuleSet@{microsoft::quantum::RuleSet}}
+
+
+{\ttfamily \#include $<$Rules/\+Rule\+Set.\+hpp$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_a40ec2f95689cf5a781ba534950fd4d5c}\label{classmicrosoft_1_1quantum_1_1_rule_set_a40ec2f95689cf5a781ba534950fd4d5c}} 
+using {\bfseries Replacement\+Rule\+Ptr} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule}{Replacement\+Rule}} $>$
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_ac49bd61bd798f535d96fd54d4562b863}\label{classmicrosoft_1_1quantum_1_1_rule_set_ac49bd61bd798f535d96fd54d4562b863}} 
+using {\bfseries Rules} = std\+::vector$<$ Replacement\+Rule\+Ptr $>$
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_abe997774d4b73e2741fec5613855d514}\label{classmicrosoft_1_1quantum_1_1_rule_set_abe997774d4b73e2741fec5613855d514}} 
+using {\bfseries Replacements} = \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule_aca9c759c6f4aace29dc3b0b3b05ce9e1}{Replacement\+Rule\+::\+Replacements}}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_a12758e6398082ad8a4eaf8b08643e8fe}\label{classmicrosoft_1_1quantum_1_1_rule_set_a12758e6398082ad8a4eaf8b08643e8fe}} 
+using {\bfseries Captures} = IOperand\+Prototype\+::\+Captures
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_a2ee707e4d65377db742a2ceefdad537a}\label{classmicrosoft_1_1quantum_1_1_rule_set_a2ee707e4d65377db742a2ceefdad537a}} 
+using {\bfseries Instruction} = llvm\+::\+Instruction
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_a3eff80c6252f2ad26e5af84828cb108d}\label{classmicrosoft_1_1quantum_1_1_rule_set_a3eff80c6252f2ad26e5af84828cb108d}} 
+using {\bfseries Value} = llvm\+::\+Value
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_abb4fae44e416b048528bc0cd52f3b258}\label{classmicrosoft_1_1quantum_1_1_rule_set_abb4fae44e416b048528bc0cd52f3b258}} 
+using {\bfseries Builder} = \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule_ab975e38f598fc4e3a84039f84ab404d1}{Replacement\+Rule\+::\+Builder}}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_acf63ad10024173a3b1b9d5ce67c482fc}\label{classmicrosoft_1_1quantum_1_1_rule_set_acf63ad10024173a3b1b9d5ce67c482fc}} 
+using {\bfseries Allocation\+Manager\+Ptr} = \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a7c77d7b2d94d3b6a98bb5402a854cca4}{IAllocation\+Manager\+::\+Allocation\+Manager\+Ptr}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_a4249380a6d81da327e1a82d246e35983}\label{classmicrosoft_1_1quantum_1_1_rule_set_a4249380a6d81da327e1a82d246e35983}} 
+{\bfseries Rule\+Set} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} const \&)=default
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_aac4db8d5c13eda207de4c939de116ca3}\label{classmicrosoft_1_1quantum_1_1_rule_set_aac4db8d5c13eda207de4c939de116ca3}} 
+{\bfseries Rule\+Set} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} \&\&)=default
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_af21a93893d96649ffa413c3b378c354a}\label{classmicrosoft_1_1quantum_1_1_rule_set_af21a93893d96649ffa413c3b378c354a}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} \& {\bfseries operator=} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} const \&)=default
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_a5dc8172a3eae38d8d6898e231564e60e}\label{classmicrosoft_1_1quantum_1_1_rule_set_a5dc8172a3eae38d8d6898e231564e60e}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} \& {\bfseries operator=} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} \&\&)=default
+\item 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set_a0d6c972010cf86830f113fdf6a3a877c}{match\+And\+Replace}} (Instruction $\ast$value, Replacements \&replacements)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_ad26c91b5a8f3bd63abc39b13f1a23b85}\label{classmicrosoft_1_1quantum_1_1_rule_set_ad26c91b5a8f3bd63abc39b13f1a23b85}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set_ad26c91b5a8f3bd63abc39b13f1a23b85}{add\+Rule}} (Replacement\+Rule\+Ptr const \&rule)
+\begin{DoxyCompactList}\small\item\em Adds a new replacement rule to the set. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_a48052fbd8d05796b80e499788e0167e4}\label{classmicrosoft_1_1quantum_1_1_rule_set_a48052fbd8d05796b80e499788e0167e4}} 
+void {\bfseries add\+Rule} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule}{Replacement\+Rule}} \&\&rule)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_aa5500ad922f898edcb15a14dd1439ccf}\label{classmicrosoft_1_1quantum_1_1_rule_set_aa5500ad922f898edcb15a14dd1439ccf}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set_aa5500ad922f898edcb15a14dd1439ccf}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Clears the rule set for all rules. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_a64a15bf9496696db0613bab1c80487f2}\label{classmicrosoft_1_1quantum_1_1_rule_set_a64a15bf9496696db0613bab1c80487f2}} 
+uint64\+\_\+t \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set_a64a15bf9496696db0613bab1c80487f2}{size}} () const
+\begin{DoxyCompactList}\small\item\em Returns the size of the rule set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} contains a set of replacement rules and the corresponding logic to apply the rules. The class allows one to apply the rules by which each rule is tested one-\/by-\/one until a successful attempt at performing a replace has happened, or the list was exhausted. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_set_a0d6c972010cf86830f113fdf6a3a877c}\label{classmicrosoft_1_1quantum_1_1_rule_set_a0d6c972010cf86830f113fdf6a3a877c}} 
+\index{microsoft::quantum::RuleSet@{microsoft::quantum::RuleSet}!matchAndReplace@{matchAndReplace}}
+\index{matchAndReplace@{matchAndReplace}!microsoft::quantum::RuleSet@{microsoft::quantum::RuleSet}}
+\doxysubsubsection{\texorpdfstring{matchAndReplace()}{matchAndReplace()}}
+{\footnotesize\ttfamily bool microsoft\+::quantum\+::\+Rule\+Set\+::match\+And\+Replace (\begin{DoxyParamCaption}\item[{Instruction $\ast$}]{value,  }\item[{Replacements \&}]{replacements }\end{DoxyParamCaption})}
+
+Matches patterns and runs the replacement routines if a match is found. The function returns true if a pattern is matched and and the replacement was a success. In all other cases, it returns false. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Rules/Rule\+Set.\+hpp\item 
+Rules/Rule\+Set.\+cpp\end{DoxyCompactItemize}

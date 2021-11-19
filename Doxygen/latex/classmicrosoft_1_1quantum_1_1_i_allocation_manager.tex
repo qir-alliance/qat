@@ -1,0 +1,109 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager}{}\doxysection{microsoft\+::quantum\+::IAllocation\+Manager Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager}\index{microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}}
+
+
+{\ttfamily \#include $<$Allocation\+Manager/\+IAllocation\+Manager.\+hpp$>$}
+
+Inheritance diagram for microsoft\+::quantum\+::IAllocation\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicrosoft_1_1quantum_1_1_i_allocation_manager}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}{Address}} = uint64\+\_\+t
+\begin{DoxyCompactList}\small\item\em Value type for address. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a8b959912df70a013f90086320202f833}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a8b959912df70a013f90086320202f833}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a8b959912df70a013f90086320202f833}{Index}} = uint64\+\_\+t
+\begin{DoxyCompactList}\small\item\em Index type used to access an array element. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a7c77d7b2d94d3b6a98bb5402a854cca4}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a7c77d7b2d94d3b6a98bb5402a854cca4}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a7c77d7b2d94d3b6a98bb5402a854cca4}{Allocation\+Manager\+Ptr}} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager}{IAllocation\+Manager}} $>$
+\begin{DoxyCompactList}\small\item\em Pointer interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_afe2f09c01ee0cf4312ba249fba743826}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_afe2f09c01ee0cf4312ba249fba743826}} 
+{\bfseries IAllocation\+Manager} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager}{IAllocation\+Manager}} const \&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a563e54784aa25d9af5a27d9db84cd4f5}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a563e54784aa25d9af5a27d9db84cd4f5}} 
+{\bfseries IAllocation\+Manager} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager}{IAllocation\+Manager}} \&\&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a81ca574ab646c14ca8a7995558f3c503}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a81ca574ab646c14ca8a7995558f3c503}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager}{IAllocation\+Manager}} \& {\bfseries operator=} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager}{IAllocation\+Manager}} const \&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a86f9df1c929eec9cff34ad6ae2e96a90}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a86f9df1c929eec9cff34ad6ae2e96a90}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager}{IAllocation\+Manager}} \& {\bfseries operator=} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager}{IAllocation\+Manager}} \&\&)=delete
+\item 
+virtual \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}{Address}} \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a0477e1fd52989e76d877dc7329f7ce3d}{allocate}} (String const \&name=\char`\"{}\char`\"{}, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a8b959912df70a013f90086320202f833}{Index}} const \&count=1)=0
+\item 
+virtual void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a0fcd1d870506fb163d70c63cc865cb06}{release}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}{Address}} const \&address)=0
+\item 
+virtual void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_ae53a2911903febc00fb6a9139ef247af}{reset}} ()=0
+\item 
+uint64\+\_\+t \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a7c2530c73296df6cf87ff54dc9c6509c}{allocations\+In\+Use}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a6b70408d5752024218c5dbc7cc88a2b1}{max\+Allocations\+Used}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_ac135ced7582a21cdb00ab4704f78c988}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_ac135ced7582a21cdb00ab4704f78c988}} 
+void {\bfseries update\+Registers\+In\+Use} (uint64\+\_\+t n)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interface class for allocation management. This interface provides means to allocate and release statically allocated resources such as qubits and results. In a future version, it may be extended with get and store in order to support Arrays and Tuples. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a0477e1fd52989e76d877dc7329f7ce3d}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a0477e1fd52989e76d877dc7329f7ce3d}} 
+\index{microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}!allocate@{allocate}}
+\index{allocate@{allocate}!microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}}
+\doxysubsubsection{\texorpdfstring{allocate()}{allocate()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}{Address}} microsoft\+::quantum\+::\+IAllocation\+Manager\+::allocate (\begin{DoxyParamCaption}\item[{String const \&}]{name = {\ttfamily \char`\"{}\char`\"{}},  }\item[{\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a8b959912df70a013f90086320202f833}{Index}} const \&}]{count = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Abstract member function to allocate an element or sequence of elements. The developer should not assume continuity of the address segment as this is not guaranteed. Note this function may throw if allocation is not possible. 
+
+Implemented in \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_aa6eff65c005184b4f42402c4d10abf0e}{microsoft\+::quantum\+::\+Basic\+Allocation\+Manager}}.
+
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a7c2530c73296df6cf87ff54dc9c6509c}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a7c2530c73296df6cf87ff54dc9c6509c}} 
+\index{microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}!allocationsInUse@{allocationsInUse}}
+\index{allocationsInUse@{allocationsInUse}!microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}}
+\doxysubsubsection{\texorpdfstring{allocationsInUse()}{allocationsInUse()}}
+{\footnotesize\ttfamily uint64\+\_\+t microsoft\+::quantum\+::\+IAllocation\+Manager\+::allocations\+In\+Use (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Current number of registers in use. This function is used to inquire about the current number registers/resources in use. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a6b70408d5752024218c5dbc7cc88a2b1}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a6b70408d5752024218c5dbc7cc88a2b1}} 
+\index{microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}!maxAllocationsUsed@{maxAllocationsUsed}}
+\index{maxAllocationsUsed@{maxAllocationsUsed}!microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}}
+\doxysubsubsection{\texorpdfstring{maxAllocationsUsed()}{maxAllocationsUsed()}}
+{\footnotesize\ttfamily uint64\+\_\+t microsoft\+::quantum\+::\+IAllocation\+Manager\+::max\+Allocations\+Used (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Maximum number of registers in use at any one time. The maximum number of registers used at any one time. As an example of usage, this function is useful to calculate the total number of qubits required to execute the entry function. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a0fcd1d870506fb163d70c63cc865cb06}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a0fcd1d870506fb163d70c63cc865cb06}} 
+\index{microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}!release@{release}}
+\index{release@{release}!microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily virtual void microsoft\+::quantum\+::\+IAllocation\+Manager\+::release (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_abf24411fc914344277ef965d27112b18}{Address}} const \&}]{address }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Abstract member function to release a previously allocated function. Note this function may throw if an invalid address is passed. 
+
+Implemented in \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a11c187cae2ab95bb7455b8cbba5ec31a}{microsoft\+::quantum\+::\+Basic\+Allocation\+Manager}}.
+
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_i_allocation_manager_ae53a2911903febc00fb6a9139ef247af}\label{classmicrosoft_1_1quantum_1_1_i_allocation_manager_ae53a2911903febc00fb6a9139ef247af}} 
+\index{microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}!reset@{reset}}
+\index{reset@{reset}!microsoft::quantum::IAllocationManager@{microsoft::quantum::IAllocationManager}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily virtual void microsoft\+::quantum\+::\+IAllocation\+Manager\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Abstract member function to reset the allocation manager. This function clears all allocations and resets all statistics. 
+
+Implemented in \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager_a264bece62aef1a34fd44f9a31a4cc1f7}{microsoft\+::quantum\+::\+Basic\+Allocation\+Manager}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Allocation\+Manager/IAllocation\+Manager.\+hpp\item 
+Allocation\+Manager/IAllocation\+Manager.\+cpp\end{DoxyCompactItemize}

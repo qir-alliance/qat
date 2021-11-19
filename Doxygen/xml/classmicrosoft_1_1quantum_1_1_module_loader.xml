@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_module_loader" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::ModuleLoader</compoundname>
+    <innerclass refid="classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation" prot="private">microsoft::quantum::ModuleLoader::SingleModuleTransformation</innerclass>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_module_loader_1a742c8b5ec327f6a1b2a81335b02aa019" prot="public" static="no">
+        <type>llvm::Module</type>
+        <definition>using microsoft::quantum::ModuleLoader::Module =  llvm::Module</definition>
+        <argsstring></argsstring>
+        <name>Module</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ModuleLoader/ModuleLoader.hpp" line="18" column="9" bodyfile="ModuleLoader/ModuleLoader.hpp" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_module_loader_1a870fc6112d429a13ca0d5ed2588988c6" prot="public" static="no">
+        <type>llvm::Linker</type>
+        <definition>using microsoft::quantum::ModuleLoader::Linker =  llvm::Linker</definition>
+        <argsstring></argsstring>
+        <name>Linker</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ModuleLoader/ModuleLoader.hpp" line="19" column="9" bodyfile="ModuleLoader/ModuleLoader.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_module_loader_1ad54ed1e8834040fb08735c3aae738eee" prot="public" static="no">
+        <type>llvm::SMDiagnostic</type>
+        <definition>using microsoft::quantum::ModuleLoader::SMDiagnostic =  llvm::SMDiagnostic</definition>
+        <argsstring></argsstring>
+        <name>SMDiagnostic</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ModuleLoader/ModuleLoader.hpp" line="20" column="9" bodyfile="ModuleLoader/ModuleLoader.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_module_loader_1af267f511a67f5f141e651e1ef5afcffd" prot="private" static="no" mutable="no">
+        <type>Module *</type>
+        <definition>Module* microsoft::quantum::ModuleLoader::final_module_</definition>
+        <argsstring></argsstring>
+        <name>final_module_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ModuleLoader/ModuleLoader.hpp" line="66" column="16" bodyfile="ModuleLoader/ModuleLoader.hpp" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_module_loader_1a2ffc9f495d8176b1e69926dff11405ba" prot="private" static="no" mutable="no">
+        <type>Linker</type>
+        <definition>Linker microsoft::quantum::ModuleLoader::linker_</definition>
+        <argsstring></argsstring>
+        <name>linker_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ModuleLoader/ModuleLoader.hpp" line="67" column="17" bodyfile="ModuleLoader/ModuleLoader.hpp" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_module_loader_1a800df541b482f66141f9c7b8a4ae7c16" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::ModuleLoader::ModuleLoader</definition>
+        <argsstring>(Module *final_module)</argsstring>
+        <name>ModuleLoader</name>
+        <param>
+          <type>Module *</type>
+          <declname>final_module</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ModuleLoader/ModuleLoader.hpp" line="22" column="18" bodyfile="ModuleLoader/ModuleLoader.hpp" bodystart="22" bodyend="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_module_loader_1aa9b7ea0111e059283da76a8505900785" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::ModuleLoader::addModule</definition>
+        <argsstring>(std::unique_ptr&lt; Module &gt; &amp;&amp;module, String const &amp;filename=&quot;unknown&quot;)</argsstring>
+        <name>addModule</name>
+        <param>
+          <type>std::unique_ptr&lt; Module &gt; &amp;&amp;</type>
+          <declname>module</declname>
+        </param>
+        <param>
+          <type>String const &amp;</type>
+          <declname>filename</declname>
+          <defval>&quot;unknown&quot;</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ModuleLoader/ModuleLoader.hpp" line="29" column="14" bodyfile="ModuleLoader/ModuleLoader.hpp" bodystart="29" bodyend="39"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_module_loader_1a9337b976a75e32f0bdb8aa4c16927c68" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::ModuleLoader::addIrFile</definition>
+        <argsstring>(String const &amp;filename)</argsstring>
+        <name>addIrFile</name>
+        <param>
+          <type>String const &amp;</type>
+          <declname>filename</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ModuleLoader/ModuleLoader.hpp" line="41" column="14" bodyfile="ModuleLoader/ModuleLoader.hpp" bodystart="41" bodyend="63"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="ModuleLoader/ModuleLoader.hpp" line="15" column="5" bodyfile="ModuleLoader/ModuleLoader.hpp" bodystart="16" bodyend="130"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1a9337b976a75e32f0bdb8aa4c16927c68" prot="public" virt="non-virtual"><scope>microsoft::quantum::ModuleLoader</scope><name>addIrFile</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1aa9b7ea0111e059283da76a8505900785" prot="public" virt="non-virtual"><scope>microsoft::quantum::ModuleLoader</scope><name>addModule</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1af267f511a67f5f141e651e1ef5afcffd" prot="private" virt="non-virtual"><scope>microsoft::quantum::ModuleLoader</scope><name>final_module_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1a870fc6112d429a13ca0d5ed2588988c6" prot="public" virt="non-virtual"><scope>microsoft::quantum::ModuleLoader</scope><name>Linker</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1a2ffc9f495d8176b1e69926dff11405ba" prot="private" virt="non-virtual"><scope>microsoft::quantum::ModuleLoader</scope><name>linker_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1a742c8b5ec327f6a1b2a81335b02aa019" prot="public" virt="non-virtual"><scope>microsoft::quantum::ModuleLoader</scope><name>Module</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1a800df541b482f66141f9c7b8a4ae7c16" prot="public" virt="non-virtual"><scope>microsoft::quantum::ModuleLoader</scope><name>ModuleLoader</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_module_loader_1ad54ed1e8834040fb08735c3aae738eee" prot="public" virt="non-virtual"><scope>microsoft::quantum::ModuleLoader</scope><name>SMDiagnostic</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,291 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_log_collection" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::LogCollection</compoundname>
+    <basecompoundref refid="classmicrosoft_1_1quantum_1_1_i_logger" prot="public" virt="non-virtual">microsoft::quantum::ILogger</basecompoundref>
+    <includes refid="_log_collection_8hpp" local="no">Logging/LogCollection.hpp</includes>
+    <innerclass refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_location" prot="public">microsoft::quantum::LogCollection::Location</innerclass>
+    <innerclass refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_message" prot="public">microsoft::quantum::LogCollection::Message</innerclass>
+      <sectiondef kind="public-type">
+      <memberdef kind="enum" id="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678f" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>Type</name>
+        <enumvalue id="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678faa603905470e2a5b8c13e96b579ef0dba" prot="public">
+          <name>Debug</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678fa4059b0251f66a18cb56f544728796875" prot="public">
+          <name>Info</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678fa0eaadb4fcb48a0a0ed7bc9868be9fbaa" prot="public">
+          <name>Warning</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678fa902b0d55fddef6f8d651fe1035b7d4bd" prot="public">
+          <name>Error</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678fa8462b58246e70e5c83e5b939a9332cb5" prot="public">
+          <name>InternalError</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Enum description what type of information we are conveying. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="28" column="9" bodyfile="Logging/LogCollection.hpp" bodystart="29" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_log_collection_1a768acf247c9c42e50789812548740b7b" prot="public" static="no">
+        <type>std::vector&lt; <ref refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_message" kindref="compound">Message</ref> &gt;</type>
+        <definition>using microsoft::quantum::LogCollection::Messages =  std::vector&lt;Message&gt;</definition>
+        <argsstring></argsstring>
+        <name>Messages</name>
+        <briefdescription>
+<para>List of messages defined as alias. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="46" column="9" bodyfile="Logging/LogCollection.hpp" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_log_collection_1a3e927e09a746f599551f9cbb0d0e982a" prot="private" static="no" mutable="no">
+        <type><ref refid="structmicrosoft_1_1quantum_1_1_log_collection_1_1_location" kindref="compound">Location</ref></type>
+        <definition>Location microsoft::quantum::LogCollection::current_location_</definition>
+        <argsstring></argsstring>
+        <name>current_location_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+<para>Holds current location. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="73" column="18" bodyfile="Logging/LogCollection.hpp" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_log_collection_1aa8782a1279b6cab470bf7fa69c775c0b" prot="private" static="no" mutable="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_log_collection_1a768acf247c9c42e50789812548740b7b" kindref="member">Messages</ref></type>
+        <definition>Messages microsoft::quantum::LogCollection::messages_</definition>
+        <argsstring></argsstring>
+        <name>messages_</name>
+        <briefdescription>
+<para>All messages emitted. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="74" column="18" bodyfile="Logging/LogCollection.hpp" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_log_collection_1ae1611b74f5f89836a32f45becd19ae65" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::LogCollection::debug</definition>
+        <argsstring>(String const &amp;message) override</argsstring>
+        <name>debug</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_logger_1ad4b3d523d70a898a41ac232a798c283b">debug</reimplements>
+        <param>
+          <type>String const &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+<para>Adds a debug message to the list. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="52" column="14" bodyfile="Logging/LogCollection.cpp" bodystart="13" bodyend="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_log_collection_1a3d59bd8a9acf1cd0a647cc2428bb53fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::LogCollection::info</definition>
+        <argsstring>(String const &amp;message) override</argsstring>
+        <name>info</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_logger_1adc71a69251d09da76acca8e7be6c60b5">info</reimplements>
+        <param>
+          <type>String const &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+<para>Adds an info message to the list. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="55" column="14" bodyfile="Logging/LogCollection.cpp" bodystart="18" bodyend="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_log_collection_1ad12313dc42bbefef79db2efdd2a13b1f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::LogCollection::warning</definition>
+        <argsstring>(String const &amp;message) override</argsstring>
+        <name>warning</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2bf3c83b9cab41858359ef3e68d5e602">warning</reimplements>
+        <param>
+          <type>String const &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+<para>Adds a warning message to the list. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="58" column="14" bodyfile="Logging/LogCollection.cpp" bodystart="23" bodyend="26"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_log_collection_1a3ccc0b418d809e8bc86c66bbbff8faf0" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::LogCollection::error</definition>
+        <argsstring>(String const &amp;message) override</argsstring>
+        <name>error</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2554154ca0367271c8e0d8cb5e33a92e">error</reimplements>
+        <param>
+          <type>String const &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+<para>Adds an error message to the list. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="61" column="14" bodyfile="Logging/LogCollection.cpp" bodystart="28" bodyend="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_log_collection_1a94e877100b2d7d4cb1d6e22075238e0a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::LogCollection::internalError</definition>
+        <argsstring>(String const &amp;message) override</argsstring>
+        <name>internalError</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_logger_1ae35be2c1c382efd0ba64115bad725415">internalError</reimplements>
+        <param>
+          <type>String const &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+<para>Adds an internal error message to the list. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="64" column="14" bodyfile="Logging/LogCollection.cpp" bodystart="33" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_log_collection_1a88bb68267f9b07f7798fbb080838f0e4" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::LogCollection::setLocation</definition>
+        <argsstring>(String const &amp;name, uint64_t row, uint64_t col) override</argsstring>
+        <name>setLocation</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_logger_1a93a18ddd4a47de3ea1aa007dc5064a7b">setLocation</reimplements>
+        <param>
+          <type>String const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>row</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>col</declname>
+        </param>
+        <briefdescription>
+<para>Function that allows to set the current location. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="67" column="14" bodyfile="Logging/LogCollection.cpp" bodystart="38" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_log_collection_1ab15808df328ec4527b2cbbdc8c9269e1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_log_collection_1a768acf247c9c42e50789812548740b7b" kindref="member">Messages</ref> const  &amp;</type>
+        <definition>LogCollection::Messages const  &amp; microsoft::quantum::LogCollection::messages</definition>
+        <argsstring>() const</argsstring>
+        <name>messages</name>
+        <briefdescription>
+<para>Accessor to the messages. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/LogCollection.hpp" line="70" column="24" bodyfile="Logging/LogCollection.cpp" bodystart="45" bodyend="48"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Concrete <ref refid="classmicrosoft_1_1quantum_1_1_i_logger" kindref="compound">ILogger</ref> implementation that collects all messages and their corresponding location in a list that can be traversed later on. </para>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>microsoft::quantum::LogCollection</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_log_collection"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>microsoft::quantum::ILogger</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_i_logger"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>microsoft::quantum::LogCollection</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_log_collection"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>microsoft::quantum::ILogger</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_i_logger"/>
+      </node>
+    </collaborationgraph>
+    <location file="Logging/LogCollection.hpp" line="16" column="5" bodyfile="Logging/LogCollection.hpp" bodystart="17" bodyend="75"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a3e927e09a746f599551f9cbb0d0e982a" prot="private" virt="non-virtual"><scope>microsoft::quantum::LogCollection</scope><name>current_location_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1ae1611b74f5f89836a32f45becd19ae65" prot="public" virt="virtual"><scope>microsoft::quantum::LogCollection</scope><name>debug</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a3ccc0b418d809e8bc86c66bbbff8faf0" prot="public" virt="virtual"><scope>microsoft::quantum::LogCollection</scope><name>error</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a55e7a7d863df6b0fff0ddaed3c391b1c" prot="public" virt="non-virtual"><scope>microsoft::quantum::LogCollection</scope><name>ILogger</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2a5e5904c7923ba45fbf16fb63458d00" prot="public" virt="non-virtual"><scope>microsoft::quantum::LogCollection</scope><name>ILogger</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1afca368c3ab3390324cd44cf80381f045" prot="public" virt="non-virtual"><scope>microsoft::quantum::LogCollection</scope><name>ILogger</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a3d59bd8a9acf1cd0a647cc2428bb53fa" prot="public" virt="virtual"><scope>microsoft::quantum::LogCollection</scope><name>info</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a94e877100b2d7d4cb1d6e22075238e0a" prot="public" virt="virtual"><scope>microsoft::quantum::LogCollection</scope><name>internalError</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a768acf247c9c42e50789812548740b7b" prot="public" virt="non-virtual"><scope>microsoft::quantum::LogCollection</scope><name>Messages</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1ab15808df328ec4527b2cbbdc8c9269e1" prot="public" virt="non-virtual"><scope>microsoft::quantum::LogCollection</scope><name>messages</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1aa8782a1279b6cab470bf7fa69c775c0b" prot="private" virt="non-virtual"><scope>microsoft::quantum::LogCollection</scope><name>messages_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a10dc85acccfb41d71f1fd447a840ad9a" prot="public" virt="non-virtual"><scope>microsoft::quantum::LogCollection</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1ac08799390f3411fe416364cebf663cac" prot="public" virt="non-virtual"><scope>microsoft::quantum::LogCollection</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a88bb68267f9b07f7798fbb080838f0e4" prot="public" virt="virtual"><scope>microsoft::quantum::LogCollection</scope><name>setLocation</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1a8b5d562fd58a95348898743509c8678f" prot="public" virt="non-virtual"><scope>microsoft::quantum::LogCollection</scope><name>Type</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_log_collection_1ad12313dc42bbefef79db2efdd2a13b1f" prot="public" virt="virtual"><scope>microsoft::quantum::LogCollection</scope><name>warning</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2a0c328088870ccf8f658a66b3642d38" prot="public" virt="virtual"><scope>microsoft::quantum::LogCollection</scope><name>~ILogger</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

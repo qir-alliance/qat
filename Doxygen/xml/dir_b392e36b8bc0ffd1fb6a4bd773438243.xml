@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_b392e36b8bc0ffd1fb6a4bd773438243" kind="dir">
+    <compoundname>Rules/Notation</compoundname>
+    <innerfile refid="_basic_block_8cpp">BasicBlock.cpp</innerfile>
+    <innerfile refid="_bit_cast_8cpp">BitCast.cpp</innerfile>
+    <innerfile refid="_branch_8cpp">Branch.cpp</innerfile>
+    <innerfile refid="_call_8hpp">Call.hpp</innerfile>
+    <innerfile refid="_call_8ipp">Call.ipp</innerfile>
+    <innerfile refid="_call_by_name_only_8cpp">CallByNameOnly.cpp</innerfile>
+    <innerfile refid="_capture_8cpp">Capture.cpp</innerfile>
+    <innerfile refid="_const_int_8cpp">ConstInt.cpp</innerfile>
+    <innerfile refid="_int_to_ptr_8cpp">IntToPtr.cpp</innerfile>
+    <innerfile refid="_load_8cpp">Load.cpp</innerfile>
+    <innerfile refid="_notation_8cpp">Notation.cpp</innerfile>
+    <innerfile refid="_notation_8hpp">Notation.hpp</innerfile>
+    <innerfile refid="_phi_8ipp">Phi.ipp</innerfile>
+    <innerfile refid="_select_8cpp">Select.cpp</innerfile>
+    <innerfile refid="_store_8cpp">Store.cpp</innerfile>
+    <innerfile refid="_switch_8cpp">Switch.cpp</innerfile>
+    <innerfile refid="_unnamed_invoke_8cpp">UnnamedInvoke.cpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="Rules/Notation/"/>
+  </compounddef>
+</doxygen>

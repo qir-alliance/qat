@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_b933e80d7be585e33e0b215013198969" kind="dir">
+    <compoundname>Generators/Tests</compoundname>
+    <innerdir refid="dir_2ec174d07e4760e39ac00c02aafa05bd">Generators/Tests/Unit</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="Generators/Tests/"/>
+  </compounddef>
+</doxygen>

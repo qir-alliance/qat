@@ -1,0 +1,365 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="_allocation_manager_8hpp" kind="file" language="C++">
+    <compoundname>AllocationManager.hpp</compoundname>
+    <includes refid="_i_allocation_manager_8hpp" local="yes">AllocationManager/IAllocationManager.hpp</includes>
+    <includes refid="_llvm_8hpp" local="yes">Llvm/Llvm.hpp</includes>
+    <includes local="no">memory</includes>
+    <includes local="no">string</includes>
+    <includes local="no">unordered_map</includes>
+    <includes local="no">vector</includes>
+    <includedby refid="_allocation_manager_8cpp" local="yes">AllocationManager/AllocationManager.cpp</includedby>
+    <includedby refid="_allocation_manager_2_tests_2_unit_2main_8cpp" local="yes">AllocationManager/Tests/Unit/main.cpp</includedby>
+    <includedby refid="configuration_8cpp" local="yes">Commandline/Tests/Unit/configuration.cpp</includedby>
+    <includedby refid="_profile_8hpp" local="yes">Profile/Profile.hpp</includedby>
+    <includedby refid="_factory_8hpp" local="yes">Rules/Factory.hpp</includedby>
+    <includedby refid="_validator_8hpp" local="yes">Validator/Validator.hpp</includedby>
+    <incdepgraph>
+      <node id="20">
+        <label>llvm/IR/Module.h</label>
+      </node>
+      <node id="18">
+        <label>llvm/IR/IRBuilder.h</label>
+      </node>
+      <node id="17">
+        <label>llvm/IR/Function.h</label>
+      </node>
+      <node id="32">
+        <label>llvm/InitializePasses.h</label>
+      </node>
+      <node id="19">
+        <label>llvm/IR/LLVMContext.h</label>
+      </node>
+      <node id="10">
+        <label>llvm/Support/raw_ostream.h</label>
+      </node>
+      <node id="7">
+        <label>llvm/Analysis/InlineCost.h</label>
+      </node>
+      <node id="33">
+        <label>llvm/LinkAllIR.h</label>
+      </node>
+      <node id="35">
+        <label>llvm/Passes/StandardInstrumentations.h</label>
+      </node>
+      <node id="6">
+        <label>Llvm/Llvm.hpp</label>
+        <link refid="_llvm_8hpp_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>llvm/Support/TargetSelect.h</label>
+      </node>
+      <node id="22">
+        <label>llvm/IR/Verifier.h</label>
+      </node>
+      <node id="1">
+        <label>AllocationManager/AllocationManager.hpp</label>
+        <link refid="_allocation_manager_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>string</label>
+      </node>
+      <node id="28">
+        <label>llvm/Transforms/Scalar/DCE.h</label>
+      </node>
+      <node id="2">
+        <label>AllocationManager/IAllocationManager.hpp</label>
+        <link refid="_i_allocation_manager_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>llvm/Transforms/Scalar/LoopUnrollPass.h</label>
+      </node>
+      <node id="27">
+        <label>llvm/Transforms/Scalar/ADCE.h</label>
+      </node>
+      <node id="34">
+        <label>llvm/MC/SubtargetFeature.h</label>
+      </node>
+      <node id="9">
+        <label>llvm/Passes/PassPlugin.h</label>
+      </node>
+      <node id="40">
+        <label>vector</label>
+      </node>
+      <node id="26">
+        <label>llvm/LinkAllPasses.h</label>
+      </node>
+      <node id="14">
+        <label>llvm/IR/BasicBlock.h</label>
+      </node>
+      <node id="38">
+        <label>llvm/Target/TargetMachine.h</label>
+      </node>
+      <node id="11">
+        <label>llvm/Transforms/IPO/Inliner.h</label>
+      </node>
+      <node id="39">
+        <label>unordered_map</label>
+      </node>
+      <node id="23">
+        <label>llvm/IRReader/IRReader.h</label>
+      </node>
+      <node id="13">
+        <label>llvm/Transforms/Utils/Cloning.h</label>
+      </node>
+      <node id="8">
+        <label>llvm/Passes/PassBuilder.h</label>
+      </node>
+      <node id="15">
+        <label>llvm/IR/Constants.h</label>
+      </node>
+      <node id="21">
+        <label>llvm/IR/Type.h</label>
+      </node>
+      <node id="36">
+        <label>llvm/Support/InitLLVM.h</label>
+      </node>
+      <node id="3">
+        <label>QatTypes/QatTypes.hpp</label>
+        <link refid="_qat_types_8hpp_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>llvm/Bitcode/BitcodeWriter.h</label>
+      </node>
+      <node id="30">
+        <label>llvm/Linker/Linker.h</label>
+      </node>
+      <node id="12">
+        <label>llvm/Transforms/Utils/BasicBlockUtils.h</label>
+      </node>
+      <node id="29">
+        <label>llvm/Analysis/ConstantFolding.h</label>
+      </node>
+      <node id="16">
+        <label>llvm/IR/DerivedTypes.h</label>
+      </node>
+      <node id="24">
+        <label>llvm/Support/SourceMgr.h</label>
+      </node>
+      <node id="5">
+        <label>memory</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="6">
+        <label>TransformationRulesPass/TransformationRulesPass.hpp</label>
+        <link refid="_transformation_rules_pass_8hpp_source"/>
+      </node>
+      <node id="5">
+        <label>TestTools/IrManipulationTestHelper.hpp</label>
+        <link refid="_ir_manipulation_test_helper_8hpp_source"/>
+      </node>
+      <node id="1">
+        <label>AllocationManager/AllocationManager.hpp</label>
+        <link refid="_allocation_manager_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>Generators/ProfileGenerator.hpp</label>
+        <link refid="_profile_generator_8hpp_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>Validator/Validator.hpp</label>
+        <link refid="_validator_8hpp_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>ValidationPass/ValidationPass.hpp</label>
+        <link refid="_validation_pass_8hpp_source"/>
+      </node>
+      <node id="4">
+        <label>Generators/DefaultProfileGenerator.hpp</label>
+        <link refid="_default_profile_generator_8hpp_source"/>
+      </node>
+      <node id="2">
+        <label>Profile/Profile.hpp</label>
+        <link refid="_profile_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>Rules/Factory.hpp</label>
+        <link refid="_factory_8hpp_source"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager" prot="public">microsoft::quantum::BasicAllocationManager</innerclass>
+    <innerclass refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block" prot="public">microsoft::quantum::BasicAllocationManager::AllocatedMemoryBlock</innerclass>
+    <innernamespace refid="namespacemicrosoft">microsoft</innernamespace>
+    <innernamespace refid="namespacemicrosoft_1_1quantum">microsoft::quantum</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Copyright<sp/>(c)<sp/>Microsoft<sp/>Corporation.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Licensed<sp/>under<sp/>the<sp/>MIT<sp/>License.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;AllocationManager/IAllocationManager.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Llvm/Llvm.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;memory&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;unordered_map&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;vector&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">microsoft</highlight></codeline>
+<codeline lineno="15"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">quantum</highlight></codeline>
+<codeline lineno="17"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="21" refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager" kindref="compound">BasicAllocationManager</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager" kindref="compound">IAllocationManager</ref></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="43" refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block" kindref="compound">AllocatedMemoryBlock</ref></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="45" refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1a5efa65d2923020ff8bc5982ade5ddb34" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>String<sp/><sp/><ref refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1a5efa65d2923020ff8bc5982ade5ddb34" kindref="member">name</ref>{</highlight><highlight class="stringliteral">&quot;&quot;</highlight><highlight class="normal">};<sp/></highlight></codeline>
+<codeline lineno="46" refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1ab7d942f1ce6cb09cd350ff57128715f3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a8b959912df70a013f90086320202f833" kindref="member">Index</ref><sp/><sp/><sp/><ref refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1ab7d942f1ce6cb09cd350ff57128715f3" kindref="member">count</ref>{0};<sp/></highlight></codeline>
+<codeline lineno="47" refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1af9df8901f253993fa54e39083e809ab0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1abf24411fc914344277ef965d27112b18" kindref="member">Address</ref><sp/><ref refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1af9df8901f253993fa54e39083e809ab0" kindref="member">start</ref>{0};<sp/></highlight></codeline>
+<codeline lineno="48" refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1a5393d491ea56a3dc30f7b0a486c10b9b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1abf24411fc914344277ef965d27112b18" kindref="member">Address</ref><sp/><ref refid="structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block_1a5393d491ea56a3dc30f7b0a486c10b9b" kindref="member">end</ref>{0};<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a5745fc89f2ee86a2c4eb06f3ab18cd81" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a5745fc89f2ee86a2c4eb06f3ab18cd81" kindref="member">Mappings</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>std::vector&lt;AllocatedMemoryBlock&gt;;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="52" refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1ab2a8de7c7e97d8d6215ce9a9ab33efb8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1ab2a8de7c7e97d8d6215ce9a9ab33efb8" kindref="member">BasicAllocationManagerPtr</ref><sp/>=<sp/>std::shared_ptr&lt;BasicAllocationManager&gt;;<sp/></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Construction<sp/>only<sp/>allowed<sp/>using<sp/>smart<sp/>pointer<sp/>allocation<sp/>through<sp/>static<sp/>functions.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Constructors<sp/>are<sp/>private<sp/>to<sp/>prevent</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1ab2a8de7c7e97d8d6215ce9a9ab33efb8" kindref="member">BasicAllocationManagerPtr</ref><sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" kindref="member">createNew</ref>();</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Allocation<sp/>and<sp/>release<sp/>functions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1abf24411fc914344277ef965d27112b18" kindref="member">Address</ref><sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1aa6eff65c005184b4f42402c4d10abf0e" kindref="member">allocate</ref>(String<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">&amp;<sp/>name<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;&quot;</highlight><highlight class="normal">,<sp/><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a8b959912df70a013f90086320202f833" kindref="member">Index</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">&amp;<sp/>count<sp/>=<sp/>1)<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a11c187cae2ab95bb7455b8cbba5ec31a" kindref="member">release</ref>(<ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1abf24411fc914344277ef965d27112b18" kindref="member">Address</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">&amp;<sp/>address)<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a264bece62aef1a34fd44f9a31a4cc1f7" kindref="member">reset</ref>()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a9da0b491a9905108ac5272b8ce77c4da" kindref="member">setReuseRegisters</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>val);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Private<sp/>constructors</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager" kindref="compound">BasicAllocationManager</ref>()<sp/>=<sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a8b959912df70a013f90086320202f833" kindref="member">Index</ref><sp/>next_qubit_index_{0};</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Memory<sp/>mapping</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1a5745fc89f2ee86a2c4eb06f3ab18cd81" kindref="member">Mappings</ref><sp/>mappings_{};</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a8b959912df70a013f90086320202f833" kindref="member">Index</ref><sp/><sp/><sp/><sp/>allocation_index_{0};</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Configuration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>reuse_qubits_{</highlight><highlight class="keyword">true</highlight><highlight class="normal">};<sp/></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>namespace<sp/>quantum</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>namespace<sp/>microsoft</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="AllocationManager/AllocationManager.hpp"/>
+  </compounddef>
+</doxygen>

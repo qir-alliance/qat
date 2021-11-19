@@ -1,0 +1,53 @@
+\hypertarget{namespacemicrosoft_1_1quantum_1_1notation}{}\doxysection{microsoft\+::quantum\+::notation Namespace Reference}
+\label{namespacemicrosoft_1_1quantum_1_1notation}\index{microsoft::quantum::notation@{microsoft::quantum::notation}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1notation_1_1_capture}{Capture}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacemicrosoft_1_1quantum_1_1notation_a2304b2a242bd336d85d70942eba3328e}\label{namespacemicrosoft_1_1quantum_1_1notation_a2304b2a242bd336d85d70942eba3328e}} 
+using {\bfseries IOperand\+Prototype\+Ptr} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_operand_prototype}{IOperand\+Prototype}} $>$
+\item 
+\mbox{\Hypertarget{namespacemicrosoft_1_1quantum_1_1notation_af09cbd4890d9958ed2982c6f80fe0a05}\label{namespacemicrosoft_1_1quantum_1_1notation_af09cbd4890d9958ed2982c6f80fe0a05}} 
+using {\bfseries Replacer\+Function} = std\+::function$<$ bool(\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule_ab975e38f598fc4e3a84039f84ab404d1}{Replacement\+Rule\+::\+Builder}} \&, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule_afd9ba523c6b96524a36d66f81a3dbd3d}{Replacement\+Rule\+::\+Value}} $\ast$, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule_a5d9d153c6aede2708519758e4386cfad}{Replacement\+Rule\+::\+Captures}} \&, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule_aca9c759c6f4aace29dc3b0b3b05ce9e1}{Replacement\+Rule\+::\+Replacements}} \&)$>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_ga1df4795986302aa16342db829b457071}{basic\+Block}} ()
+\begin{DoxyCompactList}\small\item\em Matches a load instruction with one argument. \end{DoxyCompactList}\item 
+IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_gad649d125a7dfa6d4fd594400b1638683}{bit\+Cast}} (IOperand\+Prototype\+Ptr const  \&arg)
+\begin{DoxyCompactList}\small\item\em Matches the llvm\+::\+Bit\+Cast instructruction. \end{DoxyCompactList}\item 
+IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_gad06c9d1eace6451c6cb6a80150b87576}{branch}} (IOperand\+Prototype\+Ptr const  \&cond, IOperand\+Prototype\+Ptr const  \&arg1, IOperand\+Prototype\+Ptr const  \&arg2)
+\begin{DoxyCompactList}\small\item\em Matches a branch instruction given a condition and two arguments. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} (std\+::string const \&name, Args... args)
+\item 
+IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_ga766351375d479dbb164ee827ee330219}{call\+By\+Name\+Only}} (std\+::string const \&name)
+\item 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1notation_1_1_capture}{Capture}} \mbox{\hyperlink{group__shorthand_notation_ga566037f3a56a77f63868af1ed5743731}{operator\char`\"{}\char`\"{}\+\_\+cap}} (char const $\ast$name, std\+::size\+\_\+t)
+\item 
+IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_gaea3374cd06fe2f3b4d9bff4ad23a4af4}{const\+Int}} ()
+\begin{DoxyCompactList}\small\item\em Matches the llvm\+::\+Constant\+Int instructruction. \end{DoxyCompactList}\item 
+IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_gacdb76f23b9282dead50b4b5bf6c6ab64}{int\+To\+Ptr}} (IOperand\+Prototype\+Ptr const  \&arg)
+\begin{DoxyCompactList}\small\item\em Matches the llvm\+::\+Int\+To\+Ptr instructruction. \end{DoxyCompactList}\item 
+IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_ga44ddd41276fac20964ede0e3b3a2c864}{load}} (IOperand\+Prototype\+Ptr const  \&arg)
+\begin{DoxyCompactList}\small\item\em Matches a load instruction with one argument. \end{DoxyCompactList}\item 
+Replacer\+Function \mbox{\hyperlink{group__shorthand_notation_gae89b441f450b5df53717bbf6f5c134c4}{delete\+Instruction}} ()
+\item 
+IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_gad1881ef24c25dfceb3ad71f18aa2c43f}{unnamed\+Invoke}} ()
+\begin{DoxyCompactList}\small\item\em Matches a invoke instruction. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_gad70623d62fe54e6077fd102a33a93e5b}{phi}} (Args... args)
+\begin{DoxyCompactList}\small\item\em Matches a phi node with N arguments. \end{DoxyCompactList}\item 
+IOperand\+Prototype\+Ptr {\bfseries switch\+Op} (IOperand\+Prototype\+Ptr const \&cond, IOperand\+Prototype\+Ptr const \&arg1, IOperand\+Prototype\+Ptr const \&arg2)
+\item 
+IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_ga2b184fe960d85fd09167f16c833907b3}{select}} (IOperand\+Prototype\+Ptr const \&cond, IOperand\+Prototype\+Ptr const \&arg1, IOperand\+Prototype\+Ptr const \&arg2)
+\begin{DoxyCompactList}\small\item\em Matches a select instruction given a condition and two arguments. \end{DoxyCompactList}\item 
+IOperand\+Prototype\+Ptr \mbox{\hyperlink{group__shorthand_notation_ga2fb129cfb7135e02513ac0eea14b94bc}{store}} (IOperand\+Prototype\+Ptr const \&target, IOperand\+Prototype\+Ptr const \&value)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Shorthand notations to make it easy and readible to create patterns. 

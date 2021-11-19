@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_ed349e2d4b607ef61e27eb2c0c0c4b3d" kind="dir">
+    <compoundname>Rules</compoundname>
+    <innerdir refid="dir_b392e36b8bc0ffd1fb6a4bd773438243">Rules/Notation</innerdir>
+    <innerdir refid="dir_f11d3c47e762e38fcdfbd4cfb049caab">Rules/Patterns</innerdir>
+    <innerdir refid="dir_6069a059e5434331e3b1d76f58abe873">Rules/Tests</innerdir>
+    <innerfile refid="_factory_8cpp">Factory.cpp</innerfile>
+    <innerfile refid="_factory_8hpp">Factory.hpp</innerfile>
+    <innerfile refid="_factory_config_8hpp">FactoryConfig.hpp</innerfile>
+    <innerfile refid="_i_operand_prototype_8cpp">IOperandPrototype.cpp</innerfile>
+    <innerfile refid="_i_operand_prototype_8hpp">IOperandPrototype.hpp</innerfile>
+    <innerfile refid="_replacement_rule_8cpp">ReplacementRule.cpp</innerfile>
+    <innerfile refid="_replacement_rule_8hpp">ReplacementRule.hpp</innerfile>
+    <innerfile refid="_rule_set_8cpp">RuleSet.cpp</innerfile>
+    <innerfile refid="_rule_set_8hpp">RuleSet.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="Rules/"/>
+  </compounddef>
+</doxygen>

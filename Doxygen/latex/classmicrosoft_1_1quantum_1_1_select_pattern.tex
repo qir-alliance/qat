@@ -1,0 +1,45 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_select_pattern}{}\doxysection{microsoft\+::quantum\+::Select\+Pattern Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_select_pattern}\index{microsoft::quantum::SelectPattern@{microsoft::quantum::SelectPattern}}
+Inheritance diagram for microsoft\+::quantum\+::Select\+Pattern\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicrosoft_1_1quantum_1_1_select_pattern}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_select_pattern_aace2c5289656f1c86e03f5a0a9a0a65c}{match}} (Value $\ast$instr, Captures \&captures) const override
+\item 
+Child \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_select_pattern_a6592d610b3d46c307a885432a1ef4f46}{copy}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_select_pattern_a6592d610b3d46c307a885432a1ef4f46}\label{classmicrosoft_1_1quantum_1_1_select_pattern_a6592d610b3d46c307a885432a1ef4f46}} 
+\index{microsoft::quantum::SelectPattern@{microsoft::quantum::SelectPattern}!copy@{copy}}
+\index{copy@{copy}!microsoft::quantum::SelectPattern@{microsoft::quantum::SelectPattern}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily Select\+Pattern\+::\+Child microsoft\+::quantum\+::\+Select\+Pattern\+::copy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Interface function which defines a copy operation of the underlying implementation. Note that unlike normal copy operators this operation returns a shared pointer to the new copy. 
+
+Implements \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_operand_prototype_a82a0fd5f7297e519eaf8eddac0f38ed3}{microsoft\+::quantum\+::\+IOperand\+Prototype}}.
+
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_select_pattern_aace2c5289656f1c86e03f5a0a9a0a65c}\label{classmicrosoft_1_1quantum_1_1_select_pattern_aace2c5289656f1c86e03f5a0a9a0a65c}} 
+\index{microsoft::quantum::SelectPattern@{microsoft::quantum::SelectPattern}!match@{match}}
+\index{match@{match}!microsoft::quantum::SelectPattern@{microsoft::quantum::SelectPattern}}
+\doxysubsubsection{\texorpdfstring{match()}{match()}}
+{\footnotesize\ttfamily bool microsoft\+::quantum\+::\+Select\+Pattern\+::match (\begin{DoxyParamCaption}\item[{Value $\ast$}]{value,  }\item[{Captures \&}]{captures }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Interface function which determines if a given Value matches the implemented pattern. It is expected that any implementation of {\ttfamily match} will return a call to either {\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_operand_prototype_af9cf2561fc7d6bb39ec9f9486156d133}{success()}}} or {\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_operand_prototype_a25043289d7efcbe79db466f49dd51cd2}{fail()}}}. These functions will, in turn, ensure that the node is captured in the capture table (and erased upon backtracking) as well as matching children. 
+
+Implements \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_operand_prototype_a9a4157b4f5b74dff9e5b413a64240236}{microsoft\+::quantum\+::\+IOperand\+Prototype}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Rules/\+Patterns/Instruction.\+hpp\item 
+Rules/\+Patterns/Instruction.\+cpp\end{DoxyCompactItemize}

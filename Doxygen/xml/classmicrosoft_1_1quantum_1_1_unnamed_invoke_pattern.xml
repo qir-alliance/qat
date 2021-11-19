@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::UnnamedInvokePattern</compoundname>
+    <basecompoundref refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype" prot="public" virt="non-virtual">microsoft::quantum::IOperandPrototype</basecompoundref>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1aa89b547d893455bf4cae84eae7cb8ad1" prot="public" static="no">
+        <type>std::string</type>
+        <definition>using microsoft::quantum::UnnamedInvokePattern::String =  std::string</definition>
+        <argsstring></argsstring>
+        <name>String</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/UnnamedInvokePattern.hpp" line="20" column="9" bodyfile="Rules/Patterns/UnnamedInvokePattern.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a775f77f370fe7739f9ffd445a8614c28" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::UnnamedInvokePattern::UnnamedInvokePattern</definition>
+        <argsstring>()=default</argsstring>
+        <name>UnnamedInvokePattern</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/UnnamedInvokePattern.hpp" line="25" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a82c6e63ecc81b7aeb73571c95e86e65a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::UnnamedInvokePattern::UnnamedInvokePattern</definition>
+        <argsstring>(UnnamedInvokePattern const &amp;other)=delete</argsstring>
+        <name>UnnamedInvokePattern</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern" kindref="compound">UnnamedInvokePattern</ref> const &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Copy construction prohibited. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/UnnamedInvokePattern.hpp" line="28" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a488d7e263ab34ae1bbc97dd12bed30e4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::UnnamedInvokePattern::UnnamedInvokePattern</definition>
+        <argsstring>(UnnamedInvokePattern &amp;&amp;other)=default</argsstring>
+        <name>UnnamedInvokePattern</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern" kindref="compound">UnnamedInvokePattern</ref> &amp;&amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Move construction allowed. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/UnnamedInvokePattern.hpp" line="31" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1acf1db905f087aca73b16d9fbc73b1a94" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::UnnamedInvokePattern::~UnnamedInvokePattern</definition>
+        <argsstring>() override</argsstring>
+        <name>~UnnamedInvokePattern</name>
+        <briefdescription>
+<para>Destructor implementation. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/UnnamedInvokePattern.hpp" line="34" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a7a64146e6ba54c237e73328b127cbfe6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::UnnamedInvokePattern::match</definition>
+        <argsstring>(Value *instr, Captures &amp;captures) const override</argsstring>
+        <name>match</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a9a4157b4f5b74dff9e5b413a64240236">match</reimplements>
+        <param>
+          <type>Value *</type>
+          <declname>instr</declname>
+        </param>
+        <param>
+          <type>Captures &amp;</type>
+          <declname>captures</declname>
+        </param>
+        <briefdescription>
+<para>Matches the callee by name. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/UnnamedInvokePattern.hpp" line="40" column="14" bodyfile="Rules/Patterns/UnnamedInvokePattern.cpp" bodystart="14" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1af9c838c21dcab2a56e1b4f5f6ddcdcda" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>Child</type>
+        <definition>UnnamedInvokePattern::Child microsoft::quantum::UnnamedInvokePattern::copy</definition>
+        <argsstring>() const override</argsstring>
+        <name>copy</name>
+        <reimplements refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a82a0fd5f7297e519eaf8eddac0f38ed3">copy</reimplements>
+        <briefdescription>
+<para>Creates a copy of itself. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Patterns/UnnamedInvokePattern.hpp" line="43" column="15" bodyfile="Rules/Patterns/UnnamedInvokePattern.cpp" bodystart="25" bodyend="30"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>microsoft::quantum::UnnamedInvokePattern</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>microsoft::quantum::IOperandPrototype</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>microsoft::quantum::UnnamedInvokePattern</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>microsoft::quantum::IOperandPrototype</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype"/>
+      </node>
+    </collaborationgraph>
+    <location file="Rules/Patterns/UnnamedInvokePattern.hpp" line="17" column="5" bodyfile="Rules/Patterns/UnnamedInvokePattern.hpp" bodystart="18" bodyend="46"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1af998b63b21e8a0500a952248c140d0d0" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>addChild</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a166b955925cb5f1464e20c2b94f91a78" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>captureAs</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a31fcffca4d5e1447f17c7ce64a490a6a" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>Captures</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a909d5269c5569a5948bce3395cb59cb7" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>Child</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a99846defccd39bf81668c12dac580510" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>Children</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1af9c838c21dcab2a56e1b4f5f6ddcdcda" prot="public" virt="virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>copy</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a88789e3c997ddbad72a2ad2221652bcc" prot="protected" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>copyPropertiesFrom</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a25043289d7efcbe79db466f49dd51cd2" prot="protected" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>fail</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1ad0ac73c9329bbc7917b6f0e5ccb76ac3" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>Instruction</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a3c05f7599d41ac5179ff5ceceb97734c" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>IOperandPrototype</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a7a64146e6ba54c237e73328b127cbfe6" prot="public" virt="virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>match</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a98d4e08ac8b7098713c3adc0e3ce1e95" prot="protected" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>matchChildren</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1aa89b547d893455bf4cae84eae7cb8ad1" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>String</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1af9cf2561fc7d6bb39ec9f9486156d133" prot="protected" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>success</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a775f77f370fe7739f9ffd445a8614c28" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>UnnamedInvokePattern</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a82c6e63ecc81b7aeb73571c95e86e65a" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>UnnamedInvokePattern</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1a488d7e263ab34ae1bbc97dd12bed30e4" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>UnnamedInvokePattern</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1a823a98568040aa7bf8e2b7da13c19990" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>Value</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype_1ac6fc06942a148f05ffea8d53e62f8506" prot="public" virt="virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>~IOperandPrototype</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern_1acf1db905f087aca73b16d9fbc73b1a94" prot="public" virt="non-virtual"><scope>microsoft::quantum::UnnamedInvokePattern</scope><name>~UnnamedInvokePattern</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,68 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_log_collection}{}\doxysection{microsoft\+::quantum\+::Log\+Collection Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_log_collection}\index{microsoft::quantum::LogCollection@{microsoft::quantum::LogCollection}}
+
+
+{\ttfamily \#include $<$Logging/\+Log\+Collection.\+hpp$>$}
+
+Inheritance diagram for microsoft\+::quantum\+::Log\+Collection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicrosoft_1_1quantum_1_1_log_collection}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmicrosoft_1_1quantum_1_1_log_collection_1_1_location}{Location}}
+\begin{DoxyCompactList}\small\item\em Class that holds the location of where the incident happened. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmicrosoft_1_1quantum_1_1_log_collection_1_1_message}{Message}}
+\begin{DoxyCompactList}\small\item\em Struct to hold a message together with its type and location. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_log_collection_a8b5d562fd58a95348898743509c8678f}\label{classmicrosoft_1_1quantum_1_1_log_collection_a8b5d562fd58a95348898743509c8678f}} 
+enum class \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_log_collection_a8b5d562fd58a95348898743509c8678f}{Type}} \{ \newline
+{\bfseries Debug}
+, {\bfseries Info}
+, {\bfseries Warning}
+, {\bfseries Error}
+, \newline
+{\bfseries Internal\+Error}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum description what type of information we are conveying. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_log_collection_a768acf247c9c42e50789812548740b7b}\label{classmicrosoft_1_1quantum_1_1_log_collection_a768acf247c9c42e50789812548740b7b}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_log_collection_a768acf247c9c42e50789812548740b7b}{Messages}} = std\+::vector$<$ \mbox{\hyperlink{structmicrosoft_1_1quantum_1_1_log_collection_1_1_message}{Message}} $>$
+\begin{DoxyCompactList}\small\item\em List of messages defined as alias. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_log_collection_ae1611b74f5f89836a32f45becd19ae65}\label{classmicrosoft_1_1quantum_1_1_log_collection_ae1611b74f5f89836a32f45becd19ae65}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_log_collection_ae1611b74f5f89836a32f45becd19ae65}{debug}} (String const \&message) override
+\begin{DoxyCompactList}\small\item\em Adds a debug message to the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_log_collection_a3d59bd8a9acf1cd0a647cc2428bb53fa}\label{classmicrosoft_1_1quantum_1_1_log_collection_a3d59bd8a9acf1cd0a647cc2428bb53fa}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_log_collection_a3d59bd8a9acf1cd0a647cc2428bb53fa}{info}} (String const \&message) override
+\begin{DoxyCompactList}\small\item\em Adds an info message to the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_log_collection_ad12313dc42bbefef79db2efdd2a13b1f}\label{classmicrosoft_1_1quantum_1_1_log_collection_ad12313dc42bbefef79db2efdd2a13b1f}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_log_collection_ad12313dc42bbefef79db2efdd2a13b1f}{warning}} (String const \&message) override
+\begin{DoxyCompactList}\small\item\em Adds a warning message to the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_log_collection_a3ccc0b418d809e8bc86c66bbbff8faf0}\label{classmicrosoft_1_1quantum_1_1_log_collection_a3ccc0b418d809e8bc86c66bbbff8faf0}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_log_collection_a3ccc0b418d809e8bc86c66bbbff8faf0}{error}} (String const \&message) override
+\begin{DoxyCompactList}\small\item\em Adds an error message to the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_log_collection_a94e877100b2d7d4cb1d6e22075238e0a}\label{classmicrosoft_1_1quantum_1_1_log_collection_a94e877100b2d7d4cb1d6e22075238e0a}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_log_collection_a94e877100b2d7d4cb1d6e22075238e0a}{internal\+Error}} (String const \&message) override
+\begin{DoxyCompactList}\small\item\em Adds an internal error message to the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_log_collection_a88bb68267f9b07f7798fbb080838f0e4}\label{classmicrosoft_1_1quantum_1_1_log_collection_a88bb68267f9b07f7798fbb080838f0e4}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_log_collection_a88bb68267f9b07f7798fbb080838f0e4}{set\+Location}} (String const \&name, uint64\+\_\+t row, uint64\+\_\+t col) override
+\begin{DoxyCompactList}\small\item\em Function that allows to set the current location. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_log_collection_ab15808df328ec4527b2cbbdc8c9269e1}\label{classmicrosoft_1_1quantum_1_1_log_collection_ab15808df328ec4527b2cbbdc8c9269e1}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_log_collection_a768acf247c9c42e50789812548740b7b}{Messages}} const  \& \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_log_collection_ab15808df328ec4527b2cbbdc8c9269e1}{messages}} () const
+\begin{DoxyCompactList}\small\item\em Accessor to the messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Concrete \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_logger}{ILogger}} implementation that collects all messages and their corresponding location in a list that can be traversed later on. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Logging/Log\+Collection.\+hpp\item 
+Logging/Log\+Collection.\+cpp\end{DoxyCompactItemize}

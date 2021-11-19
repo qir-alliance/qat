@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_1833a7894b5a75b220b1d3511201084c" kind="dir">
+    <compoundname>Rules/Tests/Unit</compoundname>
+    <innerfile refid="_basic_rule_set_ops_8cpp">BasicRuleSetOps.cpp</innerfile>
+    <innerfile refid="_branch_on_one_8cpp">BranchOnOne.cpp</innerfile>
+    <innerfile refid="_branch_on_zero_8cpp">BranchOnZero.cpp</innerfile>
+    <innerfile refid="_disable_alias_counting_8cpp">DisableAliasCounting.cpp</innerfile>
+    <innerfile refid="_disable_reference_counting_8cpp">DisableReferenceCounting.cpp</innerfile>
+    <innerfile refid="_disable_strings_8cpp">DisableStrings.cpp</innerfile>
+    <innerfile refid="_factory_configuration_8cpp">FactoryConfiguration.cpp</innerfile>
+    <innerfile refid="_remove_function_call_8cpp">RemoveFunctionCall.cpp</innerfile>
+    <innerfile refid="_select_on_one_8cpp">SelectOnOne.cpp</innerfile>
+    <innerfile refid="_single_qubit_allocation_8cpp">SingleQubitAllocation.cpp</innerfile>
+    <innerfile refid="_static_qubit_array_allocation_8cpp">StaticQubitArrayAllocation.cpp</innerfile>
+    <innerfile refid="_static_result_allocation_8cpp">StaticResultAllocation.cpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="Rules/Tests/Unit/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,626 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="_llvm_8hpp" kind="file" language="C++">
+    <compoundname>Llvm.hpp</compoundname>
+    <includes local="yes">llvm/Analysis/InlineCost.h</includes>
+    <includes local="yes">llvm/Passes/PassBuilder.h</includes>
+    <includes local="yes">llvm/Passes/PassPlugin.h</includes>
+    <includes local="yes">llvm/Support/raw_ostream.h</includes>
+    <includes local="yes">llvm/Transforms/IPO/Inliner.h</includes>
+    <includes local="yes">llvm/Transforms/Utils/BasicBlockUtils.h</includes>
+    <includes local="yes">llvm/Transforms/Utils/Cloning.h</includes>
+    <includes local="yes">llvm/IR/BasicBlock.h</includes>
+    <includes local="yes">llvm/IR/Constants.h</includes>
+    <includes local="yes">llvm/IR/DerivedTypes.h</includes>
+    <includes local="yes">llvm/IR/Function.h</includes>
+    <includes local="yes">llvm/IR/IRBuilder.h</includes>
+    <includes local="yes">llvm/IR/LLVMContext.h</includes>
+    <includes local="yes">llvm/IR/Module.h</includes>
+    <includes local="yes">llvm/IR/Type.h</includes>
+    <includes local="yes">llvm/IR/Verifier.h</includes>
+    <includes local="yes">llvm/IRReader/IRReader.h</includes>
+    <includes local="yes">llvm/Support/SourceMgr.h</includes>
+    <includes local="yes">llvm/Transforms/Scalar/LoopUnrollPass.h</includes>
+    <includes local="yes">llvm/LinkAllPasses.h</includes>
+    <includes local="yes">llvm/Transforms/Scalar/ADCE.h</includes>
+    <includes local="yes">llvm/Transforms/Scalar/DCE.h</includes>
+    <includes local="yes">llvm/Analysis/ConstantFolding.h</includes>
+    <includes local="yes">llvm/Linker/Linker.h</includes>
+    <includes local="yes">llvm/Bitcode/BitcodeWriter.h</includes>
+    <includes local="yes">llvm/InitializePasses.h</includes>
+    <includes local="yes">llvm/LinkAllIR.h</includes>
+    <includes local="yes">llvm/MC/SubtargetFeature.h</includes>
+    <includes local="yes">llvm/Passes/StandardInstrumentations.h</includes>
+    <includes local="yes">llvm/Support/InitLLVM.h</includes>
+    <includes local="yes">llvm/Support/TargetSelect.h</includes>
+    <includes local="yes">llvm/Target/TargetMachine.h</includes>
+    <includedby refid="_allocation_manager_8hpp" local="yes">AllocationManager/AllocationManager.hpp</includedby>
+    <includedby refid="_qat_8cpp" local="yes">Apps/Qat/Qat.cpp</includedby>
+    <includedby refid="_config_bind_8hpp" local="yes">Commandline/ConfigBind.hpp</includedby>
+    <includedby refid="_configuration_manager_8hpp" local="yes">Commandline/ConfigurationManager.hpp</includedby>
+    <includedby refid="_i_config_bind_8hpp" local="yes">Commandline/IConfigBind.hpp</includedby>
+    <includedby refid="_default_profile_generator_8cpp" local="yes">Generators/DefaultProfileGenerator.cpp</includedby>
+    <includedby refid="_default_profile_generator_8hpp" local="yes">Generators/DefaultProfileGenerator.hpp</includedby>
+    <includedby refid="_profile_generator_8cpp" local="yes">Generators/ProfileGenerator.cpp</includedby>
+    <includedby refid="_profile_generator_8hpp" local="yes">Generators/ProfileGenerator.hpp</includedby>
+    <includedby refid="_comment_logger_8cpp" local="yes">Logging/CommentLogger.cpp</includedby>
+    <includedby refid="_module_loader_8hpp" local="yes">ModuleLoader/ModuleLoader.hpp</includedby>
+    <includedby refid="_profile_8cpp" local="yes">Profile/Profile.cpp</includedby>
+    <includedby refid="_profile_8hpp" local="yes">Profile/Profile.hpp</includedby>
+    <includedby refid="_remove_disallowed_attributes_pass_8hpp" local="yes">RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp</includedby>
+    <includedby refid="_factory_8cpp" local="yes">Rules/Factory.cpp</includedby>
+    <includedby refid="_factory_8hpp" local="yes">Rules/Factory.hpp</includedby>
+    <includedby refid="_i_operand_prototype_8hpp" local="yes">Rules/IOperandPrototype.hpp</includedby>
+    <includedby refid="_basic_block_8cpp" local="yes">Rules/Notation/BasicBlock.cpp</includedby>
+    <includedby refid="_bit_cast_8cpp" local="yes">Rules/Notation/BitCast.cpp</includedby>
+    <includedby refid="_branch_8cpp" local="yes">Rules/Notation/Branch.cpp</includedby>
+    <includedby refid="_call_8hpp" local="yes">Rules/Notation/Call.hpp</includedby>
+    <includedby refid="_call_8ipp" local="yes">Rules/Notation/Call.ipp</includedby>
+    <includedby refid="_call_by_name_only_8cpp" local="yes">Rules/Notation/CallByNameOnly.cpp</includedby>
+    <includedby refid="_capture_8cpp" local="yes">Rules/Notation/Capture.cpp</includedby>
+    <includedby refid="_const_int_8cpp" local="yes">Rules/Notation/ConstInt.cpp</includedby>
+    <includedby refid="_int_to_ptr_8cpp" local="yes">Rules/Notation/IntToPtr.cpp</includedby>
+    <includedby refid="_load_8cpp" local="yes">Rules/Notation/Load.cpp</includedby>
+    <includedby refid="_notation_8cpp" local="yes">Rules/Notation/Notation.cpp</includedby>
+    <includedby refid="_notation_8hpp" local="yes">Rules/Notation/Notation.hpp</includedby>
+    <includedby refid="_phi_8ipp" local="yes">Rules/Notation/Phi.ipp</includedby>
+    <includedby refid="_select_8cpp" local="yes">Rules/Notation/Select.cpp</includedby>
+    <includedby refid="_store_8cpp" local="yes">Rules/Notation/Store.cpp</includedby>
+    <includedby refid="_switch_8cpp" local="yes">Rules/Notation/Switch.cpp</includedby>
+    <includedby refid="_unnamed_invoke_8cpp" local="yes">Rules/Notation/UnnamedInvoke.cpp</includedby>
+    <includedby refid="_any_pattern_8hpp" local="yes">Rules/Patterns/AnyPattern.hpp</includedby>
+    <includedby refid="_call_pattern_8hpp" local="yes">Rules/Patterns/CallPattern.hpp</includedby>
+    <includedby refid="_instruction_8hpp" local="yes">Rules/Patterns/Instruction.hpp</includedby>
+    <includedby refid="_phi_pattern_8hpp" local="yes">Rules/Patterns/PhiPattern.hpp</includedby>
+    <includedby refid="_unnamed_invoke_pattern_8hpp" local="yes">Rules/Patterns/UnnamedInvokePattern.hpp</includedby>
+    <includedby refid="_replacement_rule_8hpp" local="yes">Rules/ReplacementRule.hpp</includedby>
+    <includedby refid="_rule_set_8cpp" local="yes">Rules/RuleSet.cpp</includedby>
+    <includedby refid="_rule_set_8hpp" local="yes">Rules/RuleSet.hpp</includedby>
+    <includedby refid="_branch_on_one_8cpp" local="yes">Rules/Tests/Unit/BranchOnOne.cpp</includedby>
+    <includedby refid="_branch_on_zero_8cpp" local="yes">Rules/Tests/Unit/BranchOnZero.cpp</includedby>
+    <includedby refid="_disable_alias_counting_8cpp" local="yes">Rules/Tests/Unit/DisableAliasCounting.cpp</includedby>
+    <includedby refid="_disable_reference_counting_8cpp" local="yes">Rules/Tests/Unit/DisableReferenceCounting.cpp</includedby>
+    <includedby refid="_disable_strings_8cpp" local="yes">Rules/Tests/Unit/DisableStrings.cpp</includedby>
+    <includedby refid="_remove_function_call_8cpp" local="yes">Rules/Tests/Unit/RemoveFunctionCall.cpp</includedby>
+    <includedby refid="_select_on_one_8cpp" local="yes">Rules/Tests/Unit/SelectOnOne.cpp</includedby>
+    <includedby refid="_single_qubit_allocation_8cpp" local="yes">Rules/Tests/Unit/SingleQubitAllocation.cpp</includedby>
+    <includedby refid="_static_qubit_array_allocation_8cpp" local="yes">Rules/Tests/Unit/StaticQubitArrayAllocation.cpp</includedby>
+    <includedby refid="_static_result_allocation_8cpp" local="yes">Rules/Tests/Unit/StaticResultAllocation.cpp</includedby>
+    <includedby refid="_ir_manipulation_test_helper_8cpp" local="yes">TestTools/IrManipulationTestHelper.cpp</includedby>
+    <includedby refid="_ir_manipulation_test_helper_8hpp" local="yes">TestTools/IrManipulationTestHelper.hpp</includedby>
+    <includedby refid="_loop_unrolling_8cpp" local="yes">TransformationRulesPass/Tests/Unit/LoopUnrolling.cpp</includedby>
+    <includedby refid="_mini_tele_chain_8cpp" local="yes">TransformationRulesPass/Tests/Unit/MiniTeleChain.cpp</includedby>
+    <includedby refid="_phi_elimination_8cpp" local="yes">TransformationRulesPass/Tests/Unit/PhiElimination.cpp</includedby>
+    <includedby refid="_transformation_rules_pass_8cpp" local="yes">TransformationRulesPass/TransformationRulesPass.cpp</includedby>
+    <includedby refid="_transformation_rules_pass_8hpp" local="yes">TransformationRulesPass/TransformationRulesPass.hpp</includedby>
+    <includedby refid="_validation_pass_8cpp" local="yes">ValidationPass/ValidationPass.cpp</includedby>
+    <includedby refid="_validation_pass_8hpp" local="yes">ValidationPass/ValidationPass.hpp</includedby>
+    <includedby refid="_validator_8cpp" local="yes">Validator/Validator.cpp</includedby>
+    <includedby refid="_validator_8hpp" local="yes">Validator/Validator.hpp</includedby>
+    <incdepgraph>
+      <node id="15">
+        <label>llvm/IR/Module.h</label>
+      </node>
+      <node id="13">
+        <label>llvm/IR/IRBuilder.h</label>
+      </node>
+      <node id="12">
+        <label>llvm/IR/Function.h</label>
+      </node>
+      <node id="27">
+        <label>llvm/InitializePasses.h</label>
+      </node>
+      <node id="14">
+        <label>llvm/IR/LLVMContext.h</label>
+      </node>
+      <node id="5">
+        <label>llvm/Support/raw_ostream.h</label>
+      </node>
+      <node id="2">
+        <label>llvm/Analysis/InlineCost.h</label>
+      </node>
+      <node id="28">
+        <label>llvm/LinkAllIR.h</label>
+      </node>
+      <node id="30">
+        <label>llvm/Passes/StandardInstrumentations.h</label>
+      </node>
+      <node id="1">
+        <label>Llvm/Llvm.hpp</label>
+        <link refid="_llvm_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>llvm/Support/TargetSelect.h</label>
+      </node>
+      <node id="17">
+        <label>llvm/IR/Verifier.h</label>
+      </node>
+      <node id="23">
+        <label>llvm/Transforms/Scalar/DCE.h</label>
+      </node>
+      <node id="20">
+        <label>llvm/Transforms/Scalar/LoopUnrollPass.h</label>
+      </node>
+      <node id="22">
+        <label>llvm/Transforms/Scalar/ADCE.h</label>
+      </node>
+      <node id="29">
+        <label>llvm/MC/SubtargetFeature.h</label>
+      </node>
+      <node id="4">
+        <label>llvm/Passes/PassPlugin.h</label>
+      </node>
+      <node id="21">
+        <label>llvm/LinkAllPasses.h</label>
+      </node>
+      <node id="9">
+        <label>llvm/IR/BasicBlock.h</label>
+      </node>
+      <node id="33">
+        <label>llvm/Target/TargetMachine.h</label>
+      </node>
+      <node id="6">
+        <label>llvm/Transforms/IPO/Inliner.h</label>
+      </node>
+      <node id="18">
+        <label>llvm/IRReader/IRReader.h</label>
+      </node>
+      <node id="8">
+        <label>llvm/Transforms/Utils/Cloning.h</label>
+      </node>
+      <node id="3">
+        <label>llvm/Passes/PassBuilder.h</label>
+      </node>
+      <node id="10">
+        <label>llvm/IR/Constants.h</label>
+      </node>
+      <node id="16">
+        <label>llvm/IR/Type.h</label>
+      </node>
+      <node id="31">
+        <label>llvm/Support/InitLLVM.h</label>
+      </node>
+      <node id="26">
+        <label>llvm/Bitcode/BitcodeWriter.h</label>
+      </node>
+      <node id="25">
+        <label>llvm/Linker/Linker.h</label>
+      </node>
+      <node id="7">
+        <label>llvm/Transforms/Utils/BasicBlockUtils.h</label>
+      </node>
+      <node id="24">
+        <label>llvm/Analysis/ConstantFolding.h</label>
+      </node>
+      <node id="11">
+        <label>llvm/IR/DerivedTypes.h</label>
+      </node>
+      <node id="19">
+        <label>llvm/Support/SourceMgr.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="28">
+        <label>Rules/Patterns/Instruction.hpp</label>
+        <link refid="_instruction_8hpp_source"/>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>Rules/IOperandPrototype.hpp</label>
+        <link refid="_i_operand_prototype_8hpp_source"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>Rules/Patterns/AnyPattern.hpp</label>
+        <link refid="_any_pattern_8hpp_source"/>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>Generators/LlvmPassesConfiguration.hpp</label>
+        <link refid="_llvm_passes_configuration_8hpp_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>ModuleLoader/ModuleLoader.hpp</label>
+        <link refid="_module_loader_8hpp_source"/>
+      </node>
+      <node id="13">
+        <label>Apps/Qat/QatConfig.hpp</label>
+        <link refid="_qat_config_8hpp_source"/>
+      </node>
+      <node id="7">
+        <label>TransformationRulesPass/TransformationRulesPass.hpp</label>
+        <link refid="_transformation_rules_pass_8hpp_source"/>
+      </node>
+      <node id="6">
+        <label>TestTools/IrManipulationTestHelper.hpp</label>
+        <link refid="_ir_manipulation_test_helper_8hpp_source"/>
+      </node>
+      <node id="1">
+        <label>Llvm/Llvm.hpp</label>
+        <link refid="_llvm_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp</label>
+        <link refid="_remove_disallowed_attributes_pass_8hpp_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>Rules/Notation/Notation.hpp</label>
+        <link refid="_notation_8hpp_source"/>
+      </node>
+      <node id="2">
+        <label>AllocationManager/AllocationManager.hpp</label>
+        <link refid="_allocation_manager_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>TransformationRulesPass/TransformationRulesPassConfiguration.hpp</label>
+        <link refid="_transformation_rules_pass_configuration_8hpp_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>ValidationPass/ValidationPassConfiguration.hpp</label>
+        <link refid="_validation_pass_configuration_8hpp_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>Commandline/ConfigurationManager.hpp</label>
+        <link refid="_configuration_manager_8hpp_source"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>Rules/FactoryConfig.hpp</label>
+        <link refid="_factory_config_8hpp_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>Generators/ProfileGenerator.hpp</label>
+        <link refid="_profile_generator_8hpp_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>Validator/Validator.hpp</label>
+        <link refid="_validator_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>Commandline/ConfigBind.hpp</label>
+        <link refid="_config_bind_8hpp_source"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>ValidationPass/ValidationPass.hpp</label>
+        <link refid="_validation_pass_8hpp_source"/>
+      </node>
+      <node id="25">
+        <label>Rules/ReplacementRule.hpp</label>
+        <link refid="_replacement_rule_8hpp_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>Rules/Patterns/PhiPattern.hpp</label>
+        <link refid="_phi_pattern_8hpp_source"/>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>Generators/DefaultProfileGenerator.hpp</label>
+        <link refid="_default_profile_generator_8hpp_source"/>
+      </node>
+      <node id="30">
+        <label>Rules/Patterns/UnnamedInvokePattern.hpp</label>
+        <link refid="_unnamed_invoke_pattern_8hpp_source"/>
+      </node>
+      <node id="27">
+        <label>Rules/Patterns/CallPattern.hpp</label>
+        <link refid="_call_pattern_8hpp_source"/>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>Commandline/IConfigBind.hpp</label>
+        <link refid="_i_config_bind_8hpp_source"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>Rules/RuleSet.hpp</label>
+        <link refid="_rule_set_8hpp_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>Profile/Profile.hpp</label>
+        <link refid="_profile_8hpp_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>Rules/Notation/Call.hpp</label>
+        <link refid="_call_8hpp_source"/>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>Rules/Factory.hpp</label>
+        <link refid="_factory_8hpp_source"/>
+      </node>
+    </invincdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Copyright<sp/>(c)<sp/>Microsoft<sp/>Corporation.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Licensed<sp/>under<sp/>the<sp/>MIT<sp/>License.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(__GNUC__)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>GCC<sp/>diagnostic<sp/>push</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>GCC<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wconversion&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>GCC<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wpedantic&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>GCC<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wunused-value&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>GCC<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wsign-compare&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>GCC<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wunknown-warning-option&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>GCC<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wunused-parameter&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>GCC<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wall&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>GCC<sp/>diagnostic<sp/>ignored<sp/>&quot;-Weverything&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(__clang__)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>push</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wconversion&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wpedantic&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>ignored<sp/>&quot;-Werror&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wshadow&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wreturn-std-move&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wunknown-warning-option&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wunused-parameter&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>ignored<sp/>&quot;-Wall&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>ignored<sp/>&quot;-Weverything&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Passes</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Analysis/InlineCost.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Passes/PassBuilder.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Passes/PassPlugin.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Support/raw_ostream.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Transforms/IPO/Inliner.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Transforms/Utils/BasicBlockUtils.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Transforms/Utils/Cloning.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Building</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/IR/BasicBlock.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/IR/Constants.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/IR/DerivedTypes.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/IR/Function.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/IR/IRBuilder.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/IR/LLVMContext.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/IR/Module.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/IR/Type.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/IR/Verifier.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Reader<sp/>tool</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/IRReader/IRReader.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Support/SourceMgr.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Transforms/IPO/Inliner.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Transforms/Scalar/LoopUnrollPass.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Profiles</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/LinkAllPasses.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Transforms/Scalar/ADCE.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Transforms/Scalar/DCE.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Const<sp/>folding</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Analysis/ConstantFolding.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Linking</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Linker/Linker.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Bitcode<sp/>output</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Bitcode/BitcodeWriter.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/InitializePasses.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/LinkAllIR.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/LinkAllPasses.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/MC/SubtargetFeature.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Passes/StandardInstrumentations.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Support/InitLLVM.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Support/TargetSelect.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;llvm/Target/TargetMachine.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(__clang__)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>clang<sp/>diagnostic<sp/>pop</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(__GNUC__)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>GCC<sp/>diagnostic<sp/>pop</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="Llvm/Llvm.hpp"/>
+  </compounddef>
+</doxygen>

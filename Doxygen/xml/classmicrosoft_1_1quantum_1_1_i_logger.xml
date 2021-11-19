@@ -1,0 +1,267 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_i_logger" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>microsoft::quantum::ILogger</compoundname>
+    <derivedcompoundref refid="classmicrosoft_1_1quantum_1_1_comment_logger" prot="public" virt="non-virtual">microsoft::quantum::CommentLogger</derivedcompoundref>
+    <derivedcompoundref refid="classmicrosoft_1_1quantum_1_1_log_collection" prot="public" virt="non-virtual">microsoft::quantum::LogCollection</derivedcompoundref>
+    <includes refid="_i_logger_8hpp" local="no">Logging/ILogger.hpp</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1a55e7a7d863df6b0fff0ddaed3c391b1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::ILogger::ILogger</definition>
+        <argsstring>()=default</argsstring>
+        <name>ILogger</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="23" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1a2a5e5904c7923ba45fbf16fb63458d00" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::ILogger::ILogger</definition>
+        <argsstring>(ILogger const &amp;)=default</argsstring>
+        <name>ILogger</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_i_logger" kindref="compound">ILogger</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="24" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1afca368c3ab3390324cd44cf80381f045" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::ILogger::ILogger</definition>
+        <argsstring>(ILogger &amp;&amp;)=default</argsstring>
+        <name>ILogger</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_i_logger" kindref="compound">ILogger</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="25" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1a10dc85acccfb41d71f1fd447a840ad9a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_i_logger" kindref="compound">ILogger</ref> &amp;</type>
+        <definition>ILogger&amp; microsoft::quantum::ILogger::operator=</definition>
+        <argsstring>(ILogger const &amp;)=default</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_i_logger" kindref="compound">ILogger</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="26" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1ac08799390f3411fe416364cebf663cac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_i_logger" kindref="compound">ILogger</ref> &amp;</type>
+        <definition>ILogger&amp; microsoft::quantum::ILogger::operator=</definition>
+        <argsstring>(ILogger &amp;&amp;)=default</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_i_logger" kindref="compound">ILogger</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="27" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1a2a0c328088870ccf8f658a66b3642d38" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>microsoft::quantum::ILogger::~ILogger</definition>
+        <argsstring>()</argsstring>
+        <name>~ILogger</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="29" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1ad4b3d523d70a898a41ac232a798c283b" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void microsoft::quantum::ILogger::debug</definition>
+        <argsstring>(String const &amp;message)=0</argsstring>
+        <name>debug</name>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_comment_logger_1a14d9062cc652849a0fa88fbc256067cd">debug</reimplementedby>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_log_collection_1ae1611b74f5f89836a32f45becd19ae65">debug</reimplementedby>
+        <param>
+          <type>String const &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+<para>Reports a debug message. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="35" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1adc71a69251d09da76acca8e7be6c60b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void microsoft::quantum::ILogger::info</definition>
+        <argsstring>(String const &amp;message)=0</argsstring>
+        <name>info</name>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_comment_logger_1a1aba56032627b859cde4a5f0c7c5c359">info</reimplementedby>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_log_collection_1a3d59bd8a9acf1cd0a647cc2428bb53fa">info</reimplementedby>
+        <param>
+          <type>String const &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+<para>Reports an info message. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="38" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1a2bf3c83b9cab41858359ef3e68d5e602" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void microsoft::quantum::ILogger::warning</definition>
+        <argsstring>(String const &amp;message)=0</argsstring>
+        <name>warning</name>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_comment_logger_1aa86a0a2240efc90df6e16b7454505f8e">warning</reimplementedby>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_log_collection_1ad12313dc42bbefef79db2efdd2a13b1f">warning</reimplementedby>
+        <param>
+          <type>String const &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+<para>Reports a warning message. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="41" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1a2554154ca0367271c8e0d8cb5e33a92e" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void microsoft::quantum::ILogger::error</definition>
+        <argsstring>(String const &amp;message)=0</argsstring>
+        <name>error</name>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_comment_logger_1a581501a0a86a5f56474b94e43710599e">error</reimplementedby>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_log_collection_1a3ccc0b418d809e8bc86c66bbbff8faf0">error</reimplementedby>
+        <param>
+          <type>String const &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+<para>Reports an error message. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="44" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1ae35be2c1c382efd0ba64115bad725415" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void microsoft::quantum::ILogger::internalError</definition>
+        <argsstring>(String const &amp;message)=0</argsstring>
+        <name>internalError</name>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_comment_logger_1ad57d890561e4b79395f5f8ce100f01c9">internalError</reimplementedby>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_log_collection_1a94e877100b2d7d4cb1d6e22075238e0a">internalError</reimplementedby>
+        <param>
+          <type>String const &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+<para>Reports an internal error message. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="47" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_i_logger_1a93a18ddd4a47de3ea1aa007dc5064a7b" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void microsoft::quantum::ILogger::setLocation</definition>
+        <argsstring>(String const &amp;name, uint64_t row, uint64_t col)=0</argsstring>
+        <name>setLocation</name>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_comment_logger_1a33f3ab1fa8133b84474ac50def208baa">setLocation</reimplementedby>
+        <reimplementedby refid="classmicrosoft_1_1quantum_1_1_log_collection_1a88bb68267f9b07f7798fbb080838f0e4">setLocation</reimplementedby>
+        <param>
+          <type>String const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>row</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>col</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets the current location. Importantly, the location can be set independently of the reported messages. This allows one to update the location upon updating the cursor position without having to worry about keeping a copy of the location to pass when reporting messages. The most obvious case of this is file path (name) with a line and character (row, col). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Logging/ILogger.hpp" line="53" column="22"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Logger interface to allow the collection of different types of messages during QIR transformation and/or validation. </para>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>microsoft::quantum::LogCollection</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_log_collection"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>microsoft::quantum::ILogger</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_i_logger"/>
+      </node>
+      <node id="2">
+        <label>microsoft::quantum::CommentLogger</label>
+        <link refid="classmicrosoft_1_1quantum_1_1_comment_logger"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <location file="Logging/ILogger.hpp" line="17" column="5" bodyfile="Logging/ILogger.hpp" bodystart="18" bodyend="54"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1ad4b3d523d70a898a41ac232a798c283b" prot="public" virt="pure-virtual"><scope>microsoft::quantum::ILogger</scope><name>debug</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2554154ca0367271c8e0d8cb5e33a92e" prot="public" virt="pure-virtual"><scope>microsoft::quantum::ILogger</scope><name>error</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a55e7a7d863df6b0fff0ddaed3c391b1c" prot="public" virt="non-virtual"><scope>microsoft::quantum::ILogger</scope><name>ILogger</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2a5e5904c7923ba45fbf16fb63458d00" prot="public" virt="non-virtual"><scope>microsoft::quantum::ILogger</scope><name>ILogger</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1afca368c3ab3390324cd44cf80381f045" prot="public" virt="non-virtual"><scope>microsoft::quantum::ILogger</scope><name>ILogger</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1adc71a69251d09da76acca8e7be6c60b5" prot="public" virt="pure-virtual"><scope>microsoft::quantum::ILogger</scope><name>info</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1ae35be2c1c382efd0ba64115bad725415" prot="public" virt="pure-virtual"><scope>microsoft::quantum::ILogger</scope><name>internalError</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a10dc85acccfb41d71f1fd447a840ad9a" prot="public" virt="non-virtual"><scope>microsoft::quantum::ILogger</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1ac08799390f3411fe416364cebf663cac" prot="public" virt="non-virtual"><scope>microsoft::quantum::ILogger</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a93a18ddd4a47de3ea1aa007dc5064a7b" prot="public" virt="pure-virtual"><scope>microsoft::quantum::ILogger</scope><name>setLocation</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2bf3c83b9cab41858359ef3e68d5e602" prot="public" virt="pure-virtual"><scope>microsoft::quantum::ILogger</scope><name>warning</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_i_logger_1a2a0c328088870ccf8f658a66b3642d38" prot="public" virt="virtual"><scope>microsoft::quantum::ILogger</scope><name>~ILogger</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

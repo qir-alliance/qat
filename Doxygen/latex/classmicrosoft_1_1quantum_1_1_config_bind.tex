@@ -1,0 +1,82 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_config_bind}{}\doxysection{microsoft\+::quantum\+::Config\+Bind$<$ T $>$ Class Template Reference}
+\label{classmicrosoft_1_1quantum_1_1_config_bind}\index{microsoft::quantum::ConfigBind$<$ T $>$@{microsoft::quantum::ConfigBind$<$ T $>$}}
+
+
+{\ttfamily \#include $<$Commandline/\+Config\+Bind.\+hpp$>$}
+
+Inheritance diagram for microsoft\+::quantum\+::Config\+Bind$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicrosoft_1_1quantum_1_1_config_bind}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_config_bind_a34ce5439e320211aa46f8e19d69ef005}\label{classmicrosoft_1_1quantum_1_1_config_bind_a34ce5439e320211aa46f8e19d69ef005}} 
+using {\bfseries Type} = T
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_config_bind_a1ed6bdd7a038383a0e05092e2db38dc2}\label{classmicrosoft_1_1quantum_1_1_config_bind_a1ed6bdd7a038383a0e05092e2db38dc2}} 
+{\footnotesize template$<$typename A , typename B , typename R $>$ }\\using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind_a1ed6bdd7a038383a0e05092e2db38dc2}{Enable\+If}} = typename std\+::enable\+\_\+if$<$ std\+::is\+\_\+same$<$ A, B $>$\+::\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind_af0690262d2d2d5ffefa00637e8b28d6e}{value}}, R $>$\+::type
+\begin{DoxyCompactList}\small\item\em Helper template to conditionally disable implementation unless a specific type is used. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_config_bind_a3c94547061224e639410f1a9f1aad7d5}\label{classmicrosoft_1_1quantum_1_1_config_bind_a3c94547061224e639410f1a9f1aad7d5}} 
+{\bfseries Config\+Bind} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind}{Config\+Bind}} const \&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_config_bind_a8101db17a9cdd06af800d4dfde69429b}\label{classmicrosoft_1_1quantum_1_1_config_bind_a8101db17a9cdd06af800d4dfde69429b}} 
+{\bfseries Config\+Bind} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind}{Config\+Bind}} \&\&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_config_bind_aa9e6d006f4cf1f84c37e12db08bf4f6f}\label{classmicrosoft_1_1quantum_1_1_config_bind_aa9e6d006f4cf1f84c37e12db08bf4f6f}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind}{Config\+Bind}} \& {\bfseries operator=} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind}{Config\+Bind}} const \&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_config_bind_af9aa44e312eee794fd285e08ff3c5a1f}\label{classmicrosoft_1_1quantum_1_1_config_bind_af9aa44e312eee794fd285e08ff3c5a1f}} 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind}{Config\+Bind}} \& {\bfseries operator=} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind}{Config\+Bind}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind_a2def0c5e98c88c3d42a69bed7576531b}{Config\+Bind}} (Type \&bind, T default\+\_\+value, String const \&\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_config_bind_a096663f66f40163008233c33527d0c2e}{name}}, String const \&\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_config_bind_a33614ced55a79616bc49cc0988dcb66c}{description}})
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_config_bind_a982835cd6cae95c8212bad2b1784a8aa}\label{classmicrosoft_1_1quantum_1_1_config_bind_a982835cd6cae95c8212bad2b1784a8aa}} 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind_a982835cd6cae95c8212bad2b1784a8aa}{setup\+Arguments}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_parameter_parser}{Parameter\+Parser}} \&parser) override
+\begin{DoxyCompactList}\small\item\em Adds the argument to the parser. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind_a76d719752f3842a2358e320dd1ae36d1}{configure}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_parameter_parser}{Parameter\+Parser}} const \&parser) override
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_config_bind_af0690262d2d2d5ffefa00637e8b28d6e}\label{classmicrosoft_1_1quantum_1_1_config_bind_af0690262d2d2d5ffefa00637e8b28d6e}} 
+String \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind_af0690262d2d2d5ffefa00637e8b28d6e}{value}} () override
+\begin{DoxyCompactList}\small\item\em String representation of the bound value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class microsoft\+::quantum\+::\+Config\+Bind$<$ T $>$}
+
+Generic implementation of the bind interface for different types. This class holds the name of the command line parameter and a reference variable corresponding to it. It implements serialisers and deserialisers to allow transforming strings to native values and vice versa. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_config_bind_a2def0c5e98c88c3d42a69bed7576531b}\label{classmicrosoft_1_1quantum_1_1_config_bind_a2def0c5e98c88c3d42a69bed7576531b}} 
+\index{microsoft::quantum::ConfigBind$<$ T $>$@{microsoft::quantum::ConfigBind$<$ T $>$}!ConfigBind@{ConfigBind}}
+\index{ConfigBind@{ConfigBind}!microsoft::quantum::ConfigBind$<$ T $>$@{microsoft::quantum::ConfigBind$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ConfigBind()}{ConfigBind()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind}{microsoft\+::quantum\+::\+Config\+Bind}}$<$ T $>$\+::\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind}{Config\+Bind}} (\begin{DoxyParamCaption}\item[{Type \&}]{bind,  }\item[{T}]{default\+\_\+value,  }\item[{String const \&}]{name,  }\item[{String const \&}]{description }\end{DoxyParamCaption})}
+
+Constructor to bind value to parameter. This class holds a reference to a variable together with the name it is expected to have when passed through the parameter parser. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_config_bind_a76d719752f3842a2358e320dd1ae36d1}\label{classmicrosoft_1_1quantum_1_1_config_bind_a76d719752f3842a2358e320dd1ae36d1}} 
+\index{microsoft::quantum::ConfigBind$<$ T $>$@{microsoft::quantum::ConfigBind$<$ T $>$}!configure@{configure}}
+\index{configure@{configure}!microsoft::quantum::ConfigBind$<$ T $>$@{microsoft::quantum::ConfigBind$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{configure()}{configure()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_config_bind}{microsoft\+::quantum\+::\+Config\+Bind}}$<$ T $>$\+::configure (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_parameter_parser}{Parameter\+Parser}} const \&}]{parser }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Configures the bound value. This method examines the parsed input and use updates the bound value accordingly. 
+
+Implements \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_config_bind_a725ccd6465a61592f6cb4e1f87370738}{microsoft\+::quantum\+::\+IConfig\+Bind}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Commandline/Config\+Bind.\+hpp\end{DoxyCompactItemize}

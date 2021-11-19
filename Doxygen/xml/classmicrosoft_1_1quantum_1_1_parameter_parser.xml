@@ -1,0 +1,366 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_parameter_parser" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::ParameterParser</compoundname>
+    <includes refid="_parameter_parser_8hpp" local="no">Commandline/ParameterParser.hpp</includes>
+    <innerclass refid="structmicrosoft_1_1quantum_1_1_parameter_parser_1_1_parsed_value" prot="private">microsoft::quantum::ParameterParser::ParsedValue</innerclass>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a32b7d3e30b5e4b84b8cff1773e61f022" prot="public" static="no">
+        <type>std::vector&lt; String &gt;</type>
+        <definition>using microsoft::quantum::ParameterParser::Arguments =  std::vector&lt;String&gt;</definition>
+        <argsstring></argsstring>
+        <name>Arguments</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="22" column="9" bodyfile="Commandline/ParameterParser.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a78c62c5acdbd5dad00859180b7f8a1e1" prot="public" static="no">
+        <type>std::unordered_set&lt; String &gt;</type>
+        <definition>using microsoft::quantum::ParameterParser::Flags =  std::unordered_set&lt;String&gt;</definition>
+        <argsstring></argsstring>
+        <name>Flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="23" column="9" bodyfile="Commandline/ParameterParser.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a1fd64474896242bcd82e9eb04af4b890" prot="public" static="no">
+        <type>std::unordered_map&lt; String, String &gt;</type>
+        <definition>using microsoft::quantum::ParameterParser::SettingsMap =  std::unordered_map&lt;String, String&gt;</definition>
+        <argsstring></argsstring>
+        <name>SettingsMap</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="24" column="9" bodyfile="Commandline/ParameterParser.hpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1aae6abbe2d881de7f5809d9e2ec591408" prot="private" static="no" mutable="no">
+        <type>Flags</type>
+        <definition>Flags microsoft::quantum::ParameterParser::flags_</definition>
+        <argsstring></argsstring>
+        <name>flags_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+<para>Set of flags. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="97" column="21" bodyfile="Commandline/ParameterParser.hpp" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a52410c65c0f7ea56c9dbce2d72cffba2" prot="private" static="no" mutable="no">
+        <type>Arguments</type>
+        <definition>Arguments microsoft::quantum::ParameterParser::arguments_</definition>
+        <argsstring></argsstring>
+        <name>arguments_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+<para>List of remaining arguments. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="98" column="21" bodyfile="Commandline/ParameterParser.hpp" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1ada84d1c5887f8c664a6e77dd92e220b5" prot="private" static="no" mutable="no">
+        <type>SettingsMap</type>
+        <definition>SettingsMap microsoft::quantum::ParameterParser::settings_</definition>
+        <argsstring></argsstring>
+        <name>settings_</name>
+        <briefdescription>
+<para>Settings map that keeps all specified settings. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="99" column="21" bodyfile="Commandline/ParameterParser.hpp" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a4005df4ec69c557362470db040b0a27e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::ParameterParser::ParameterParser</definition>
+        <argsstring>()=default</argsstring>
+        <name>ParameterParser</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="29" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a5d9cc685032c90dfce8a61aad4cc816d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::ParameterParser::ParameterParser</definition>
+        <argsstring>(ParameterParser const &amp;other)=delete</argsstring>
+        <name>ParameterParser</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_parameter_parser" kindref="compound">ParameterParser</ref> const &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="32" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a1e1ec6b6c3ceb9571d270a778730404a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::ParameterParser::ParameterParser</definition>
+        <argsstring>(ParameterParser &amp;&amp;other)=default</argsstring>
+        <name>ParameterParser</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_parameter_parser" kindref="compound">ParameterParser</ref> &amp;&amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="35" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1ac5a1269991272ddd0d6e79b481fe6a32" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::ParameterParser::~ParameterParser</definition>
+        <argsstring>()=default</argsstring>
+        <name>~ParameterParser</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="38" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a448e50a91e29de07838a4afd0cae8b6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::ParameterParser::addFlag</definition>
+        <argsstring>(String const &amp;v)</argsstring>
+        <name>addFlag</name>
+        <param>
+          <type>String const &amp;</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Marks a name as a flag (as opposed to an option). This ensures that no parameter is expected after the flag is specified. For instance <computeroutput>--debug</computeroutput> is a flag as opposed to <computeroutput>--log-level 3</computeroutput> which is an option. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="48" column="14" bodyfile="Commandline/ParameterParser.cpp" bodystart="56" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a7ffcc25257b4238a318e08d0a1cbb650" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::ParameterParser::parseArgs</definition>
+        <argsstring>(int argc, char **argv)</argsstring>
+        <name>parseArgs</name>
+        <param>
+          <type>int</type>
+          <declname>argc</declname>
+        </param>
+        <param>
+          <type>char **</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Parses the command line arguments given the argc and argv from the main function. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="55" column="14" bodyfile="Commandline/ParameterParser.cpp" bodystart="16" bodyend="54"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a6984127bf1ab2999671d9079f796c966" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>Arguments const  &amp;</type>
+        <definition>ParameterParser::Arguments const  &amp; microsoft::quantum::ParameterParser::arguments</definition>
+        <argsstring>() const</argsstring>
+        <name>arguments</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns list of arguments without flags and/or options included. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="59" column="25" bodyfile="Commandline/ParameterParser.cpp" bodystart="89" bodyend="92"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1abbb53cf9bd3bf7d9f238514531dc43da" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>String const  &amp;</type>
+        <definition>String const  &amp; microsoft::quantum::ParameterParser::getArg</definition>
+        <argsstring>(Arguments::size_type const &amp;n) const</argsstring>
+        <name>getArg</name>
+        <param>
+          <type>Arguments::size_type const &amp;</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+<para>Returns the n&apos;th commandline argument. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="62" column="22" bodyfile="Commandline/ParameterParser.cpp" bodystart="94" bodyend="97"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a2d4d430e04414d805deebb3e40c9576a" prot="public" static="no" const="yes" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
+        <type>String const  &amp;</type>
+        <definition>String const  &amp; microsoft::quantum::ParameterParser::get</definition>
+        <argsstring>(String const &amp;name, String const &amp;default_value) const noexcept</argsstring>
+        <name>get</name>
+        <param>
+          <type>String const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>String const &amp;</type>
+          <declname>default_value</declname>
+        </param>
+        <briefdescription>
+<para>Gets a named setting, falling back to a default if the key is not found. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="65" column="22" bodyfile="Commandline/ParameterParser.cpp" bodystart="61" bodyend="70"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a30c16fd01aa8a0d6cfc2dff4f67f6960" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>String const  &amp;</type>
+        <definition>String const  &amp; microsoft::quantum::ParameterParser::get</definition>
+        <argsstring>(String const &amp;name) const</argsstring>
+        <name>get</name>
+        <param>
+          <type>String const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Gets a named setting. This method throws if the setting is not present. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="68" column="22" bodyfile="Commandline/ParameterParser.cpp" bodystart="72" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1ab01ffb6089e66a6d435cd0d0f5329282" prot="public" static="no" const="yes" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::ParameterParser::has</definition>
+        <argsstring>(String const &amp;name) const noexcept</argsstring>
+        <name>has</name>
+        <param>
+          <type>String const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Checks whether or not a given parameter is present. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="71" column="14" bodyfile="Commandline/ParameterParser.cpp" bodystart="83" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a537b7e34f7b781fcbd89c1197f8d9e56" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::ParameterParser::reset</definition>
+        <argsstring>()</argsstring>
+        <name>reset</name>
+        <briefdescription>
+<para>Resets the state of the parser to its construction state. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="74" column="14" bodyfile="Commandline/ParameterParser.cpp" bodystart="125" bodyend="130"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a5ebe33583694921da26143a2b86b6c57" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>ParsedValue</type>
+        <definition>ParameterParser::ParsedValue microsoft::quantum::ParameterParser::parseSingleArg</definition>
+        <argsstring>(String key)</argsstring>
+        <name>parseSingleArg</name>
+        <param>
+          <type>String</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="89" column="21" bodyfile="Commandline/ParameterParser.cpp" bodystart="99" bodyend="113"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_parameter_parser_1a76f6121fe3a10a2ab83709d5360373ba" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::ParameterParser::isOption</definition>
+        <argsstring>(String const &amp;key)</argsstring>
+        <name>isOption</name>
+        <param>
+          <type>String const &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Checks whether a key is an option (or a flag). Returns true if it is and option and false if it is a flags. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Commandline/ParameterParser.hpp" line="93" column="14" bodyfile="Commandline/ParameterParser.cpp" bodystart="115" bodyend="123"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Parameter parser class which allows the developer to specify a set of default settings and update those using the commandline argc and argv. </para>
+    </detaileddescription>
+    <location file="Commandline/ParameterParser.hpp" line="19" column="5" bodyfile="Commandline/ParameterParser.hpp" bodystart="20" bodyend="100"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a448e50a91e29de07838a4afd0cae8b6d" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>addFlag</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a32b7d3e30b5e4b84b8cff1773e61f022" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>Arguments</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a6984127bf1ab2999671d9079f796c966" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>arguments</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a52410c65c0f7ea56c9dbce2d72cffba2" prot="private" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>arguments_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a78c62c5acdbd5dad00859180b7f8a1e1" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>Flags</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1aae6abbe2d881de7f5809d9e2ec591408" prot="private" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>flags_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a2d4d430e04414d805deebb3e40c9576a" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>get</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a30c16fd01aa8a0d6cfc2dff4f67f6960" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>get</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1abbb53cf9bd3bf7d9f238514531dc43da" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>getArg</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1ab01ffb6089e66a6d435cd0d0f5329282" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>has</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a76f6121fe3a10a2ab83709d5360373ba" prot="private" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>isOption</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a4005df4ec69c557362470db040b0a27e" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>ParameterParser</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a5d9cc685032c90dfce8a61aad4cc816d" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>ParameterParser</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a1e1ec6b6c3ceb9571d270a778730404a" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>ParameterParser</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a7ffcc25257b4238a318e08d0a1cbb650" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>parseArgs</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a5ebe33583694921da26143a2b86b6c57" prot="private" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>parseSingleArg</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a537b7e34f7b781fcbd89c1197f8d9e56" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>reset</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1ada84d1c5887f8c664a6e77dd92e220b5" prot="private" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>settings_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1a1fd64474896242bcd82e9eb04af4b890" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>SettingsMap</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_parameter_parser_1ac5a1269991272ddd0d6e79b481fe6a32" prot="public" virt="non-virtual"><scope>microsoft::quantum::ParameterParser</scope><name>~ParameterParser</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

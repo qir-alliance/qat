@@ -1,0 +1,836 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_profile" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::Profile</compoundname>
+    <includes refid="_profile_8hpp" local="no">Profile/Profile.hpp</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_profile_1afbb7b83f602e4746a4912a5e47658304" prot="public" static="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_i_allocation_manager_1a7c77d7b2d94d3b6a98bb5402a854cca4" kindref="member">IAllocationManager::AllocationManagerPtr</ref></type>
+        <definition>using microsoft::quantum::Profile::AllocationManagerPtr =  IAllocationManager::AllocationManagerPtr</definition>
+        <argsstring></argsstring>
+        <name>AllocationManagerPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Allocation manager pointer type. Used to reference to concrete allocation manager implementations which defines the allocation logic of the profile. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="27" column="9" bodyfile="Profile/Profile.hpp" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_profile_1aecedd32ceddf4b4058c6a0c7f74aa386" prot="public" static="no">
+        <type>Validator::ValidatorPtr</type>
+        <definition>using microsoft::quantum::Profile::ValidatorPtr =  Validator::ValidatorPtr</definition>
+        <argsstring></argsstring>
+        <name>ValidatorPtr</name>
+        <briefdescription>
+<para><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref> class used to check that an IR fulfils a given specification. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="30" column="9" bodyfile="Profile/Profile.hpp" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_profile_1a23c3397442953314f62d12b61545e0ca" prot="private" static="no">
+        <type>std::unique_ptr&lt; llvm::PassInstrumentationCallbacks &gt;</type>
+        <definition>using microsoft::quantum::Profile::PassInstrumentationCallbacksPtr =  std::unique_ptr&lt;llvm::PassInstrumentationCallbacks&gt;</definition>
+        <argsstring></argsstring>
+        <name>PassInstrumentationCallbacksPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="95" column="9" bodyfile="Profile/Profile.hpp" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_profile_1aed145f8064f54c9baaaca28fd8d88805" prot="private" static="no">
+        <type>std::unique_ptr&lt; llvm::StandardInstrumentations &gt;</type>
+        <definition>using microsoft::quantum::Profile::StandardInstrumentationsPtr =  std::unique_ptr&lt;llvm::StandardInstrumentations&gt;</definition>
+        <argsstring></argsstring>
+        <name>StandardInstrumentationsPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="96" column="9" bodyfile="Profile/Profile.hpp" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_profile_1ab6f4d785f331c7c5932aea1c5497d24e" prot="private" static="no">
+        <type>std::unique_ptr&lt; llvm::PassBuilder &gt;</type>
+        <definition>using microsoft::quantum::Profile::PassBuilderPtr =  std::unique_ptr&lt;llvm::PassBuilder&gt;</definition>
+        <argsstring></argsstring>
+        <name>PassBuilderPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="97" column="9" bodyfile="Profile/Profile.hpp" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classmicrosoft_1_1quantum_1_1_profile_1acac5dfd8d0c9e2b40c82ff32f84880ec" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class ProfileGenerator</definition>
+        <argsstring></argsstring>
+        <name>ProfileGenerator</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_profile_generator" kindref="compound">ProfileGenerator</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="71" column="9" bodyfile="Profile/Profile.hpp" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a046f7549d816bec4c2f1d4398b7cf54e" prot="private" static="no" mutable="no">
+        <type>String</type>
+        <definition>String microsoft::quantum::Profile::name_</definition>
+        <argsstring></argsstring>
+        <name>name_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+<para>Name of the selected profile. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="120" column="16" bodyfile="Profile/Profile.hpp" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1ae0b3d690ca7eaefe6acdccc7b6e6f55e" prot="private" static="no" mutable="no">
+        <type>llvm::LoopAnalysisManager</type>
+        <definition>llvm::LoopAnalysisManager microsoft::quantum::Profile::loop_analysis_manager_</definition>
+        <argsstring></argsstring>
+        <name>loop_analysis_manager_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="125" column="39" bodyfile="Profile/Profile.hpp" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a2506a7af76adfc5f4e6b65f2e1d9fb01" prot="private" static="no" mutable="no">
+        <type>llvm::FunctionAnalysisManager</type>
+        <definition>llvm::FunctionAnalysisManager microsoft::quantum::Profile::function_analysis_manager_</definition>
+        <argsstring></argsstring>
+        <name>function_analysis_manager_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="126" column="39" bodyfile="Profile/Profile.hpp" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a8aeadc987d5e8803e34ed76b65795e6f" prot="private" static="no" mutable="no">
+        <type>llvm::CGSCCAnalysisManager</type>
+        <definition>llvm::CGSCCAnalysisManager microsoft::quantum::Profile::gscc_analysis_manager_</definition>
+        <argsstring></argsstring>
+        <name>gscc_analysis_manager_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="127" column="39" bodyfile="Profile/Profile.hpp" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a82c358017bc12cd2e64b2130ada91efd" prot="private" static="no" mutable="no">
+        <type>llvm::ModuleAnalysisManager</type>
+        <definition>llvm::ModuleAnalysisManager microsoft::quantum::Profile::module_analysis_manager_</definition>
+        <argsstring></argsstring>
+        <name>module_analysis_manager_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="128" column="39" bodyfile="Profile/Profile.hpp" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a65de6ba97fefc071b4932cea8d278193" prot="private" static="no" mutable="no">
+        <type>llvm::Optional&lt; llvm::PGOOptions &gt;</type>
+        <definition>llvm::Optional&lt;llvm::PGOOptions&gt; microsoft::quantum::Profile::pgo_options_</definition>
+        <argsstring></argsstring>
+        <name>pgo_options_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="130" column="24" bodyfile="Profile/Profile.hpp" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a1a8f73cf8b3f0dc7ce0b8531ae0c8cc3" prot="private" static="no" mutable="no">
+        <type>PassInstrumentationCallbacksPtr</type>
+        <definition>PassInstrumentationCallbacksPtr microsoft::quantum::Profile::pass_instrumentation_callbacks_</definition>
+        <argsstring></argsstring>
+        <name>pass_instrumentation_callbacks_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="131" column="42" bodyfile="Profile/Profile.hpp" bodystart="131" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1addf422a94ee1999710cc1a5c846f9131" prot="private" static="no" mutable="no">
+        <type>StandardInstrumentationsPtr</type>
+        <definition>StandardInstrumentationsPtr microsoft::quantum::Profile::standard_instrumentations_</definition>
+        <argsstring></argsstring>
+        <name>standard_instrumentations_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="132" column="42" bodyfile="Profile/Profile.hpp" bodystart="132" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1ac367294fcb04a5c034424a3be0ad13db" prot="private" static="no" mutable="no">
+        <type>llvm::PipelineTuningOptions</type>
+        <definition>llvm::PipelineTuningOptions microsoft::quantum::Profile::pipeline_tuning_options_</definition>
+        <argsstring></argsstring>
+        <name>pipeline_tuning_options_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="133" column="42" bodyfile="Profile/Profile.hpp" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a54b6d8bb40deb82d5b6e4eb196a74af6" prot="private" static="no" mutable="no">
+        <type>PassBuilderPtr</type>
+        <definition>PassBuilderPtr microsoft::quantum::Profile::pass_builder_</definition>
+        <argsstring></argsstring>
+        <name>pass_builder_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="135" column="24" bodyfile="Profile/Profile.hpp" bodystart="135" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a242e97e7813386438df13c3c336af9b6" prot="private" static="no" mutable="no">
+        <type>llvm::ModulePassManager</type>
+        <definition>llvm::ModulePassManager microsoft::quantum::Profile::module_pass_manager_</definition>
+        <argsstring></argsstring>
+        <name>module_pass_manager_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="137" column="33" bodyfile="Profile/Profile.hpp" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a7b69a4e439b1d11cb5d76e6ef8944ba6" prot="private" static="no" mutable="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_profile_1afbb7b83f602e4746a4912a5e47658304" kindref="member">AllocationManagerPtr</ref></type>
+        <definition>AllocationManagerPtr microsoft::quantum::Profile::qubit_allocation_manager_</definition>
+        <argsstring></argsstring>
+        <name>qubit_allocation_manager_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Interface pointer to the qubit allocation manager. Mode of operation depends on the concrete implementation of the manager which is swappable through the interface. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="144" column="30" bodyfile="Profile/Profile.hpp" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a12722216b4851b6050e8ba096641efcd" prot="private" static="no" mutable="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_profile_1afbb7b83f602e4746a4912a5e47658304" kindref="member">AllocationManagerPtr</ref></type>
+        <definition>AllocationManagerPtr microsoft::quantum::Profile::result_allocation_manager_</definition>
+        <argsstring></argsstring>
+        <name>result_allocation_manager_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Interface pointer to the results allocation manager. Again here the manager behaviour is determined by its implementation details. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="148" column="30" bodyfile="Profile/Profile.hpp" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a6e62cb294523d19f0ccefb829e5502a3" prot="private" static="no" mutable="no">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_profile_1aecedd32ceddf4b4058c6a0c7f74aa386" kindref="member">ValidatorPtr</ref></type>
+        <definition>ValidatorPtr microsoft::quantum::Profile::validator_</definition>
+        <argsstring></argsstring>
+        <name>validator_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="151" column="22" bodyfile="Profile/Profile.hpp" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a95979cdc42e787aa7b7154d8f4700672" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string microsoft::quantum::Profile::peephole_ep_pipeline_</definition>
+        <argsstring></argsstring>
+        <name>peephole_ep_pipeline_</name>
+        <initializer>{&quot;&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="153" column="21" bodyfile="Profile/Profile.hpp" bodystart="153" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a4b3400f3d8033510b18811c0e0f78e26" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string microsoft::quantum::Profile::late_loop_optimizations_ep_pipeline_</definition>
+        <argsstring></argsstring>
+        <name>late_loop_optimizations_ep_pipeline_</name>
+        <initializer>{&quot;&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="154" column="21" bodyfile="Profile/Profile.hpp" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a77d8e46a836e06d704718ecb1e6ecbd2" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string microsoft::quantum::Profile::loop_optimizer_end_ep_pipeline_</definition>
+        <argsstring></argsstring>
+        <name>loop_optimizer_end_ep_pipeline_</name>
+        <initializer>{&quot;&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="155" column="21" bodyfile="Profile/Profile.hpp" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a60487e2a6ee5269b9110945cac5de2c7" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string microsoft::quantum::Profile::scalar_optimizer_late_ep_pipeline_</definition>
+        <argsstring></argsstring>
+        <name>scalar_optimizer_late_ep_pipeline_</name>
+        <initializer>{&quot;&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="156" column="21" bodyfile="Profile/Profile.hpp" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a9bfeba36b354d8e21e98c500aeb45ca1" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string microsoft::quantum::Profile::cgscc_optimizer_late_ep_pipeline_</definition>
+        <argsstring></argsstring>
+        <name>cgscc_optimizer_late_ep_pipeline_</name>
+        <initializer>{&quot;&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="157" column="21" bodyfile="Profile/Profile.hpp" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a5c39c134ef9b82dcaeb7ec76ebe48080" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string microsoft::quantum::Profile::vectorizer_start_ep_pipeline_</definition>
+        <argsstring></argsstring>
+        <name>vectorizer_start_ep_pipeline_</name>
+        <initializer>{&quot;&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="158" column="21" bodyfile="Profile/Profile.hpp" bodystart="158" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a272ddc0ca5d22e11fa642d792407525f" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string microsoft::quantum::Profile::pipeline_start_ep_pipeline_</definition>
+        <argsstring></argsstring>
+        <name>pipeline_start_ep_pipeline_</name>
+        <initializer>{&quot;&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="159" column="21" bodyfile="Profile/Profile.hpp" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_profile_1a23499fdbae5b24d3da97d6f27a60b8bd" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string microsoft::quantum::Profile::optimizer_last_ep_pipeline_</definition>
+        <argsstring></argsstring>
+        <name>optimizer_last_ep_pipeline_</name>
+        <initializer>{&quot;&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="160" column="21" bodyfile="Profile/Profile.hpp" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1acb31c2ea1c22ca72f66bb7330ce47219" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::Profile::Profile</definition>
+        <argsstring>(String const &amp;name, bool debug, llvm::TargetMachine *target_machine=nullptr, AllocationManagerPtr qubit_allocation_manager=BasicAllocationManager::createNew(), AllocationManagerPtr result_allocation_manager=BasicAllocationManager::createNew())</argsstring>
+        <name>Profile</name>
+        <param>
+          <type>String const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>debug</declname>
+        </param>
+        <param>
+          <type>llvm::TargetMachine *</type>
+          <declname>target_machine</declname>
+          <defval>nullptr</defval>
+        </param>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_profile_1afbb7b83f602e4746a4912a5e47658304" kindref="member">AllocationManagerPtr</ref></type>
+          <declname>qubit_allocation_manager</declname>
+          <defval><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" kindref="member">BasicAllocationManager::createNew</ref>()</defval>
+        </param>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_profile_1afbb7b83f602e4746a4912a5e47658304" kindref="member">AllocationManagerPtr</ref></type>
+          <declname>result_allocation_manager</declname>
+          <defval><ref refid="classmicrosoft_1_1quantum_1_1_basic_allocation_manager_1adfbd5dd1597bf34ed173f303618f9453" kindref="member">BasicAllocationManager::createNew</ref>()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="35" column="18" bodyfile="Profile/Profile.cpp" bodystart="13" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a522c423454556e7715608dd953b56d74" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::Profile::Profile</definition>
+        <argsstring>()=delete</argsstring>
+        <name>Profile</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="45" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a0efc48be86de9271b6d4d2f89f35a346" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::Profile::Profile</definition>
+        <argsstring>(Profile const &amp;)=delete</argsstring>
+        <name>Profile</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_profile" kindref="compound">Profile</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="46" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1aedeebca308bc1e8cf7576c74ec3ab569" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::Profile::Profile</definition>
+        <argsstring>(Profile &amp;&amp;)=default</argsstring>
+        <name>Profile</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_profile" kindref="compound">Profile</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="47" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1ae85a88f88a5d04c7ca6e55953ed9c2a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_profile" kindref="compound">Profile</ref> &amp;</type>
+        <definition>Profile&amp; microsoft::quantum::Profile::operator=</definition>
+        <argsstring>(Profile const &amp;)=delete</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_profile" kindref="compound">Profile</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="48" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a9c519bde17a927216de63cedc07a3099" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_profile" kindref="compound">Profile</ref> &amp;</type>
+        <definition>Profile&amp; microsoft::quantum::Profile::operator=</definition>
+        <argsstring>(Profile &amp;&amp;)=default</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_profile" kindref="compound">Profile</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="49" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a3071a7b8da17a5ce9c578e85b41b53a1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::Profile::~Profile</definition>
+        <argsstring>()=default</argsstring>
+        <name>~Profile</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="50" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a4e15a93d7b5f5d7174e8c63947787ffb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::Profile::apply</definition>
+        <argsstring>(llvm::Module &amp;module)</argsstring>
+        <name>apply</name>
+        <param>
+          <type>llvm::Module &amp;</type>
+          <declname>module</declname>
+        </param>
+        <briefdescription>
+<para>Applies the profile to a module. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="56" column="14" bodyfile="Profile/Profile.cpp" bodystart="144" bodyend="147"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a2df872e9e0d0cfa7c1261e25a32fb501" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::Profile::verify</definition>
+        <argsstring>(llvm::Module &amp;module)</argsstring>
+        <name>verify</name>
+        <param>
+          <type>llvm::Module &amp;</type>
+          <declname>module</declname>
+        </param>
+        <briefdescription>
+<para>Verifies that a module is a valid LLVM IR. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="59" column="14" bodyfile="Profile/Profile.cpp" bodystart="149" bodyend="154"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1ae4264aceff4ee846d62a500329b4d0e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::Profile::validate</definition>
+        <argsstring>(llvm::Module &amp;module)</argsstring>
+        <name>validate</name>
+        <param>
+          <type>llvm::Module &amp;</type>
+          <declname>module</declname>
+        </param>
+        <briefdescription>
+<para>Validates that a module complies with the specified QIR profile. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="62" column="14" bodyfile="Profile/Profile.cpp" bodystart="156" bodyend="159"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a0ca2882f9d1c98a5bee120ae96048e87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_profile_1afbb7b83f602e4746a4912a5e47658304" kindref="member">AllocationManagerPtr</ref></type>
+        <definition>Profile::AllocationManagerPtr microsoft::quantum::Profile::getQubitAllocationManager</definition>
+        <argsstring>()</argsstring>
+        <name>getQubitAllocationManager</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="64" column="30" bodyfile="Profile/Profile.cpp" bodystart="166" bodyend="169"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a299ab1ffa4fea7cf6ad45ee4a690bf2f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_profile_1afbb7b83f602e4746a4912a5e47658304" kindref="member">AllocationManagerPtr</ref></type>
+        <definition>Profile::AllocationManagerPtr microsoft::quantum::Profile::getResultAllocationManager</definition>
+        <argsstring>()</argsstring>
+        <name>getResultAllocationManager</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="65" column="30" bodyfile="Profile/Profile.cpp" bodystart="171" bodyend="174"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a036cd42956f72e095b1c5c09ad21ea88" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>String const  &amp;</type>
+        <definition>String const  &amp; microsoft::quantum::Profile::name</definition>
+        <argsstring>() const</argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="67" column="22" bodyfile="Profile/Profile.cpp" bodystart="161" bodyend="164"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a789d98dc3ff0c7900a5e752aac80a4dd" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::Profile::setModulePassManager</definition>
+        <argsstring>(llvm::ModulePassManager &amp;&amp;manager)</argsstring>
+        <name>setModulePassManager</name>
+        <param>
+          <type>llvm::ModulePassManager &amp;&amp;</type>
+          <declname>manager</declname>
+        </param>
+        <briefdescription>
+<para>Sets the module pass manager used for the transformation of the IR. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="74" column="14" bodyfile="Profile/Profile.cpp" bodystart="176" bodyend="179"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a7064cdc9c5b0673d27b01d12f23c3528" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::Profile::setValidator</definition>
+        <argsstring>(ValidatorPtr &amp;&amp;validator)</argsstring>
+        <name>setValidator</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_profile_1aecedd32ceddf4b4058c6a0c7f74aa386" kindref="member">ValidatorPtr</ref> &amp;&amp;</type>
+          <declname>validator</declname>
+        </param>
+        <briefdescription>
+<para>Sets the validator. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="77" column="14" bodyfile="Profile/Profile.cpp" bodystart="181" bodyend="184"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1ab3226330daa11ac92dc8ec243d8a14b7" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>llvm::PassBuilder &amp;</type>
+        <definition>llvm::PassBuilder &amp; microsoft::quantum::Profile::passBuilder</definition>
+        <argsstring>()</argsstring>
+        <name>passBuilder</name>
+        <briefdescription>
+<para>Returns a reference to the pass builder. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="80" column="27" bodyfile="Profile/Profile.cpp" bodystart="186" bodyend="189"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a7e72137e5679ffc344504a8259a2480a" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>llvm::LoopAnalysisManager &amp;</type>
+        <definition>llvm::LoopAnalysisManager &amp; microsoft::quantum::Profile::loopAnalysisManager</definition>
+        <argsstring>()</argsstring>
+        <name>loopAnalysisManager</name>
+        <briefdescription>
+<para>Returns a reference to the loop analysis manager. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="83" column="35" bodyfile="Profile/Profile.cpp" bodystart="190" bodyend="193"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1afde169bb2afbf338563bcd6f7afaf06a" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>llvm::FunctionAnalysisManager &amp;</type>
+        <definition>llvm::FunctionAnalysisManager &amp; microsoft::quantum::Profile::functionAnalysisManager</definition>
+        <argsstring>()</argsstring>
+        <name>functionAnalysisManager</name>
+        <briefdescription>
+<para>Returns a reference to the function analysis manager. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="86" column="39" bodyfile="Profile/Profile.cpp" bodystart="194" bodyend="197"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1aacd449e39f53fc37829826a9c71b78ae" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>llvm::CGSCCAnalysisManager &amp;</type>
+        <definition>llvm::CGSCCAnalysisManager &amp; microsoft::quantum::Profile::gsccAnalysisManager</definition>
+        <argsstring>()</argsstring>
+        <name>gsccAnalysisManager</name>
+        <briefdescription>
+<para>Returns a reference to the GSCC analysis manager. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="89" column="36" bodyfile="Profile/Profile.cpp" bodystart="198" bodyend="201"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a9be63ecec09cad26dfc1c99e54845bee" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>llvm::ModuleAnalysisManager &amp;</type>
+        <definition>llvm::ModuleAnalysisManager &amp; microsoft::quantum::Profile::moduleAnalysisManager</definition>
+        <argsstring>()</argsstring>
+        <name>moduleAnalysisManager</name>
+        <briefdescription>
+<para>Returns a reference to the module analysis manager. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="92" column="37" bodyfile="Profile/Profile.cpp" bodystart="202" bodyend="205"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a2bddd50225c9b1e57d05ab6f8c1683f3" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::Profile::registerEPCallbacks</definition>
+        <argsstring>(bool verify_each_pass, bool debug)</argsstring>
+        <name>registerEPCallbacks</name>
+        <param>
+          <type>bool</type>
+          <declname>verify_each_pass</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>debug</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="99" column="14" bodyfile="Profile/Profile.cpp" bodystart="53" bodyend="142"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_profile_1a3b75a516d8c488c76ac9bf8ff0f990d3" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename PassManager</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool microsoft::quantum::Profile::tryParsePipelineText</definition>
+        <argsstring>(llvm::PassBuilder &amp;pass_builder, std::string const &amp;pipeline_options)</argsstring>
+        <name>tryParsePipelineText</name>
+        <param>
+          <type>llvm::PassBuilder &amp;</type>
+          <declname>pass_builder</declname>
+        </param>
+        <param>
+          <type>std::string const &amp;</type>
+          <declname>pipeline_options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Profile/Profile.hpp" line="102" column="14" bodyfile="Profile/Profile.hpp" bodystart="102" bodyend="117"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="classmicrosoft_1_1quantum_1_1_profile" kindref="compound">Profile</ref> class that defines a set of rules which constitutes the profile definition. Each of the rules can be used to transform a generic QIR and/or validate that the QIR is compliant with said rule. </para>
+    </detaileddescription>
+    <location file="Profile/Profile.hpp" line="22" column="5" bodyfile="Profile/Profile.hpp" bodystart="23" bodyend="161"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1afbb7b83f602e4746a4912a5e47658304" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>AllocationManagerPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a4e15a93d7b5f5d7174e8c63947787ffb" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>apply</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a9bfeba36b354d8e21e98c500aeb45ca1" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>cgscc_optimizer_late_ep_pipeline_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a2506a7af76adfc5f4e6b65f2e1d9fb01" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>function_analysis_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1afde169bb2afbf338563bcd6f7afaf06a" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>functionAnalysisManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a0ca2882f9d1c98a5bee120ae96048e87" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>getQubitAllocationManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a299ab1ffa4fea7cf6ad45ee4a690bf2f" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>getResultAllocationManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a8aeadc987d5e8803e34ed76b65795e6f" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>gscc_analysis_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1aacd449e39f53fc37829826a9c71b78ae" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>gsccAnalysisManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a4b3400f3d8033510b18811c0e0f78e26" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>late_loop_optimizations_ep_pipeline_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1ae0b3d690ca7eaefe6acdccc7b6e6f55e" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>loop_analysis_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a77d8e46a836e06d704718ecb1e6ecbd2" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>loop_optimizer_end_ep_pipeline_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a7e72137e5679ffc344504a8259a2480a" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>loopAnalysisManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a82c358017bc12cd2e64b2130ada91efd" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>module_analysis_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a242e97e7813386438df13c3c336af9b6" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>module_pass_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a9be63ecec09cad26dfc1c99e54845bee" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>moduleAnalysisManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a036cd42956f72e095b1c5c09ad21ea88" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>name</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a046f7549d816bec4c2f1d4398b7cf54e" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>name_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1ae85a88f88a5d04c7ca6e55953ed9c2a2" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a9c519bde17a927216de63cedc07a3099" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a23499fdbae5b24d3da97d6f27a60b8bd" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>optimizer_last_ep_pipeline_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a54b6d8bb40deb82d5b6e4eb196a74af6" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>pass_builder_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a1a8f73cf8b3f0dc7ce0b8531ae0c8cc3" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>pass_instrumentation_callbacks_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1ab3226330daa11ac92dc8ec243d8a14b7" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>passBuilder</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1ab6f4d785f331c7c5932aea1c5497d24e" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>PassBuilderPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a23c3397442953314f62d12b61545e0ca" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>PassInstrumentationCallbacksPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a95979cdc42e787aa7b7154d8f4700672" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>peephole_ep_pipeline_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a65de6ba97fefc071b4932cea8d278193" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>pgo_options_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a272ddc0ca5d22e11fa642d792407525f" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>pipeline_start_ep_pipeline_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1ac367294fcb04a5c034424a3be0ad13db" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>pipeline_tuning_options_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1acb31c2ea1c22ca72f66bb7330ce47219" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>Profile</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a522c423454556e7715608dd953b56d74" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>Profile</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a0efc48be86de9271b6d4d2f89f35a346" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>Profile</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1aedeebca308bc1e8cf7576c74ec3ab569" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>Profile</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1acac5dfd8d0c9e2b40c82ff32f84880ec" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>ProfileGenerator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a7b69a4e439b1d11cb5d76e6ef8944ba6" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>qubit_allocation_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a2bddd50225c9b1e57d05ab6f8c1683f3" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>registerEPCallbacks</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a12722216b4851b6050e8ba096641efcd" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>result_allocation_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a60487e2a6ee5269b9110945cac5de2c7" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>scalar_optimizer_late_ep_pipeline_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a789d98dc3ff0c7900a5e752aac80a4dd" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>setModulePassManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a7064cdc9c5b0673d27b01d12f23c3528" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>setValidator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1addf422a94ee1999710cc1a5c846f9131" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>standard_instrumentations_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1aed145f8064f54c9baaaca28fd8d88805" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>StandardInstrumentationsPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a3b75a516d8c488c76ac9bf8ff0f990d3" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>tryParsePipelineText</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1ae4264aceff4ee846d62a500329b4d0e2" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>validate</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a6e62cb294523d19f0ccefb829e5502a3" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>validator_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1aecedd32ceddf4b4058c6a0c7f74aa386" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>ValidatorPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a5c39c134ef9b82dcaeb7ec76ebe48080" prot="private" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>vectorizer_start_ep_pipeline_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a2df872e9e0d0cfa7c1261e25a32fb501" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>verify</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_profile_1a3071a7b8da17a5ce9c578e85b41b53a1" prot="public" virt="non-virtual"><scope>microsoft::quantum::Profile</scope><name>~Profile</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

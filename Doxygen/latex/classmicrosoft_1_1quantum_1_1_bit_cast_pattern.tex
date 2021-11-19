@@ -1,0 +1,45 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_bit_cast_pattern}{}\doxysection{microsoft\+::quantum\+::Bit\+Cast\+Pattern Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_bit_cast_pattern}\index{microsoft::quantum::BitCastPattern@{microsoft::quantum::BitCastPattern}}
+Inheritance diagram for microsoft\+::quantum\+::Bit\+Cast\+Pattern\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicrosoft_1_1quantum_1_1_bit_cast_pattern}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_bit_cast_pattern_ad928c51af6c5e8662eb6fe0f8f37e6ca}{match}} (Value $\ast$instr, Captures \&captures) const override
+\item 
+Child \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_bit_cast_pattern_ae759a4a83c3d3a4fdeface11f767d40f}{copy}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_bit_cast_pattern_ae759a4a83c3d3a4fdeface11f767d40f}\label{classmicrosoft_1_1quantum_1_1_bit_cast_pattern_ae759a4a83c3d3a4fdeface11f767d40f}} 
+\index{microsoft::quantum::BitCastPattern@{microsoft::quantum::BitCastPattern}!copy@{copy}}
+\index{copy@{copy}!microsoft::quantum::BitCastPattern@{microsoft::quantum::BitCastPattern}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily Bit\+Cast\+Pattern\+::\+Child microsoft\+::quantum\+::\+Bit\+Cast\+Pattern\+::copy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Interface function which defines a copy operation of the underlying implementation. Note that unlike normal copy operators this operation returns a shared pointer to the new copy. 
+
+Implements \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_operand_prototype_a82a0fd5f7297e519eaf8eddac0f38ed3}{microsoft\+::quantum\+::\+IOperand\+Prototype}}.
+
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_bit_cast_pattern_ad928c51af6c5e8662eb6fe0f8f37e6ca}\label{classmicrosoft_1_1quantum_1_1_bit_cast_pattern_ad928c51af6c5e8662eb6fe0f8f37e6ca}} 
+\index{microsoft::quantum::BitCastPattern@{microsoft::quantum::BitCastPattern}!match@{match}}
+\index{match@{match}!microsoft::quantum::BitCastPattern@{microsoft::quantum::BitCastPattern}}
+\doxysubsubsection{\texorpdfstring{match()}{match()}}
+{\footnotesize\ttfamily bool microsoft\+::quantum\+::\+Bit\+Cast\+Pattern\+::match (\begin{DoxyParamCaption}\item[{Value $\ast$}]{value,  }\item[{Captures \&}]{captures }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Interface function which determines if a given Value matches the implemented pattern. It is expected that any implementation of {\ttfamily match} will return a call to either {\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_operand_prototype_af9cf2561fc7d6bb39ec9f9486156d133}{success()}}} or {\ttfamily \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_operand_prototype_a25043289d7efcbe79db466f49dd51cd2}{fail()}}}. These functions will, in turn, ensure that the node is captured in the capture table (and erased upon backtracking) as well as matching children. 
+
+Implements \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_operand_prototype_a9a4157b4f5b74dff9e5b413a64240236}{microsoft\+::quantum\+::\+IOperand\+Prototype}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Rules/\+Patterns/Instruction.\+hpp\item 
+Rules/\+Patterns/Instruction.\+cpp\end{DoxyCompactItemize}

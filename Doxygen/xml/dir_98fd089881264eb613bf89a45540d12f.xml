@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_98fd089881264eb613bf89a45540d12f" kind="dir">
+    <compoundname>AllocationManager/Tests</compoundname>
+    <innerdir refid="dir_9d1d7e504383a34af727f7e894e011d6">AllocationManager/Tests/Unit</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="AllocationManager/Tests/"/>
+  </compounddef>
+</doxygen>

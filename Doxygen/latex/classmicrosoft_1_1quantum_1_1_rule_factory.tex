@@ -1,0 +1,220 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory}{}\doxysection{microsoft\+::quantum\+::Rule\+Factory Class Reference}
+\label{classmicrosoft_1_1quantum_1_1_rule_factory}\index{microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}}
+
+
+{\ttfamily \#include $<$Rules/\+Factory.\+hpp$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a327402fcfe90837fb0efb5fc14153986}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a327402fcfe90837fb0efb5fc14153986}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a327402fcfe90837fb0efb5fc14153986}{Replacement\+Rule\+Ptr}} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule}{Replacement\+Rule}} $>$
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_replacement_rule}{Replacement\+Rule}} pointer type used for the construction of replacement rules. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a65db113bde77cbc5cb163bb7f53263a1}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a65db113bde77cbc5cb163bb7f53263a1}} 
+using \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a65db113bde77cbc5cb163bb7f53263a1}{Allocation\+Manager\+Ptr}} = \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_i_allocation_manager_a7c77d7b2d94d3b6a98bb5402a854cca4}{IAllocation\+Manager\+::\+Allocation\+Manager\+Ptr}}
+\begin{DoxyCompactList}\small\item\em Allocation manager pointer used to hold allocation managers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_adda40e9c4d6efd68793c81c13381296e}\label{classmicrosoft_1_1quantum_1_1_rule_factory_adda40e9c4d6efd68793c81c13381296e}} 
+{\bfseries Rule\+Factory} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_set}{Rule\+Set}} \&rule\+\_\+set, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a65db113bde77cbc5cb163bb7f53263a1}{Allocation\+Manager\+Ptr}} qubit\+\_\+alloc\+\_\+manager, \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a65db113bde77cbc5cb163bb7f53263a1}{Allocation\+Manager\+Ptr}} result\+\_\+alloc\+\_\+manager)
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_acd0c174d59ce9be84969b73381b59c64}\label{classmicrosoft_1_1quantum_1_1_rule_factory_acd0c174d59ce9be84969b73381b59c64}} 
+{\bfseries Rule\+Factory} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory}{Rule\+Factory}} const \&)=delete
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a6de741f9ddda4c082f701c42cc8913a6}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a6de741f9ddda4c082f701c42cc8913a6}} 
+{\bfseries Rule\+Factory} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory}{Rule\+Factory}} \&\&)=default
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a64de24c930b2959d93e93d2055b7473e}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a64de24c930b2959d93e93d2055b7473e}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a64de24c930b2959d93e93d2055b7473e}{using\+Configuration}} (\mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_factory_configuration}{Factory\+Configuration}} const \&config)
+\begin{DoxyCompactList}\small\item\em This takes a \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_factory_configuration}{Factory\+Configuration}} as argument and enable rules accordingly. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a562f68309c4687105898a2085838fd0f}{remove\+Function\+Call}} (String const \&name)
+\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a1df0940ef8c5733f06ce28299708f587}{use\+Static\+Qubit\+Array\+Allocation}} ()
+\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a8c32ae37eba8ae340e1817b27efcf66a}{use\+Static\+Qubit\+Allocation}} ()
+\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a4e0f22992717e3fd8303e5035e4e6d9f}{use\+Static\+Result\+Allocation}} ()
+\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_afa8a50b1614a3de7d396e5f5c94764ee}{resolve\+Constant\+Array\+Sizes}} ()
+\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a3bbef0bbe40c078c2087506e5a246a2f}{inline\+Callables}} ()
+\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a3f73c72f050c1206d22cfa001401e029}{optimise\+Result\+One}} ()
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a6f0f64631dbcdf7b4e65debe57c8edaa}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a6f0f64631dbcdf7b4e65debe57c8edaa}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a6f0f64631dbcdf7b4e65debe57c8edaa}{optimise\+Result\+Zero}} ()
+\begin{DoxyCompactList}\small\item\em Replaces branching of quantum results compared to zero. This method is not implemented yet. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_ad235feb32d4c66d5ca304399e3fb35fb}{disable\+Reference\+Counting}} ()
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_af9f7a6296e7912c8a6ab5fc7ad3890c8}\label{classmicrosoft_1_1quantum_1_1_rule_factory_af9f7a6296e7912c8a6ab5fc7ad3890c8}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_af9f7a6296e7912c8a6ab5fc7ad3890c8}{disable\+Alias\+Counting}} ()
+\begin{DoxyCompactList}\small\item\em This method disables alias counting for arrays, strings and results. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_a7f80b73c026d75b58349dd9aef93ef71}{disable\+String\+Support}} ()
+\item 
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_ada0ef5df9369d8622758648742a137f5}\label{classmicrosoft_1_1quantum_1_1_rule_factory_ada0ef5df9369d8622758648742a137f5}} 
+void \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_rule_factory_ada0ef5df9369d8622758648742a137f5}{set\+Default\+Integer\+Width}} (uint32\+\_\+t v)
+\begin{DoxyCompactList}\small\item\em Sets the integer width used when it cannot be deducted from the context of the transformation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Rule factory provides a high-\/level methods to build a rule set that enforces certain aspects of QIR transformation. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_ad235feb32d4c66d5ca304399e3fb35fb}\label{classmicrosoft_1_1quantum_1_1_rule_factory_ad235feb32d4c66d5ca304399e3fb35fb}} 
+\index{microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}!disableReferenceCounting@{disableReferenceCounting}}
+\index{disableReferenceCounting@{disableReferenceCounting}!microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}}
+\doxysubsubsection{\texorpdfstring{disableReferenceCounting()}{disableReferenceCounting()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Rule\+Factory\+::disable\+Reference\+Counting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method disables reference counting for arrays, strings and results. It does so by simply removing the instructions and the resulting code is expected to be executed either on a stack VM or with shared pointer logic. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a7f80b73c026d75b58349dd9aef93ef71}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a7f80b73c026d75b58349dd9aef93ef71}} 
+\index{microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}!disableStringSupport@{disableStringSupport}}
+\index{disableStringSupport@{disableStringSupport}!microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}}
+\doxysubsubsection{\texorpdfstring{disableStringSupport()}{disableStringSupport()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Rule\+Factory\+::disable\+String\+Support (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Removes string support by removing string related instructions. At the moment these include {\ttfamily \+\_\+\+\_\+quantum\+\_\+\+\_\+rt\+\_\+\+\_\+string\+\_\+create}, {\ttfamily \+\_\+\+\_\+quantum\+\_\+\+\_\+rt\+\_\+\+\_\+string\+\_\+update\+\_\+reference\+\_\+count}, {\ttfamily \+\_\+\+\_\+quantum\+\_\+\+\_\+rt\+\_\+\+\_\+string\+\_\+update\+\_\+alias\+\_\+count} and {\ttfamily \+\_\+\+\_\+quantum\+\_\+\+\_\+rt\+\_\+\+\_\+message}. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a3bbef0bbe40c078c2087506e5a246a2f}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a3bbef0bbe40c078c2087506e5a246a2f}} 
+\index{microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}!inlineCallables@{inlineCallables}}
+\index{inlineCallables@{inlineCallables}!microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}}
+\doxysubsubsection{\texorpdfstring{inlineCallables()}{inlineCallables()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Rule\+Factory\+::inline\+Callables (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Array access replacement\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a3f73c72f050c1206d22cfa001401e029}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a3f73c72f050c1206d22cfa001401e029}} 
+\index{microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}!optimiseResultOne@{optimiseResultOne}}
+\index{optimiseResultOne@{optimiseResultOne}!microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}}
+\doxysubsubsection{\texorpdfstring{optimiseResultOne()}{optimiseResultOne()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Rule\+Factory\+::optimise\+Result\+One (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Replaces branching of quantum results compared to one. This is a relatively advanced pattern, intended for base profile-\/like constructs where
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%1 = tail \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} \%Result* @\_\_quantum\_\_rt\_\_result\_get\_one()}
+\DoxyCodeLine{\%2 = tail \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} i1 @\_\_quantum\_\_rt\_\_result\_equal(\%Result* \%0, \%Result* \%1)}
+\DoxyCodeLine{br i1 \%2, label \%then0\_\_1, label \%continue\_\_1}
+
+\end{DoxyCode}
+
+
+is mapped into
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%1 = \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} i1 @\_\_quantum\_\_qis\_\_read\_result\_\_body(\%Result* \%0)}
+\DoxyCodeLine{br i1 \%1, label \%then0\_\_1, label \%continue\_\_1}
+
+\end{DoxyCode}
+
+
+which removes the need for constant one. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a562f68309c4687105898a2085838fd0f}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a562f68309c4687105898a2085838fd0f}} 
+\index{microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}!removeFunctionCall@{removeFunctionCall}}
+\index{removeFunctionCall@{removeFunctionCall}!microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}}
+\doxysubsubsection{\texorpdfstring{removeFunctionCall()}{removeFunctionCall()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Rule\+Factory\+::remove\+Function\+Call (\begin{DoxyParamCaption}\item[{String const \&}]{name }\end{DoxyParamCaption})}
+
+Removes all calls to functions with a specified name. This function matches on name alone and ignores function arguments. \mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_afa8a50b1614a3de7d396e5f5c94764ee}\label{classmicrosoft_1_1quantum_1_1_rule_factory_afa8a50b1614a3de7d396e5f5c94764ee}} 
+\index{microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}!resolveConstantArraySizes@{resolveConstantArraySizes}}
+\index{resolveConstantArraySizes@{resolveConstantArraySizes}!microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}}
+\doxysubsubsection{\texorpdfstring{resolveConstantArraySizes()}{resolveConstantArraySizes()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Rule\+Factory\+::resolve\+Constant\+Array\+Sizes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Array access replacement\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a8c32ae37eba8ae340e1817b27efcf66a}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a8c32ae37eba8ae340e1817b27efcf66a}} 
+\index{microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}!useStaticQubitAllocation@{useStaticQubitAllocation}}
+\index{useStaticQubitAllocation@{useStaticQubitAllocation}!microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}}
+\doxysubsubsection{\texorpdfstring{useStaticQubitAllocation()}{useStaticQubitAllocation()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Rule\+Factory\+::use\+Static\+Qubit\+Allocation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Static qubit allocation identifies allocation and release of single qubits. It uses the qubit allocation manager to track allocation and releases of qubits. It translates
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%qubit1 = \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} \%Qubit* @\_\_quantum\_\_rt\_\_qubit\_allocate()}
+\DoxyCodeLine{\%qubit2 = \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} \%Qubit* @\_\_quantum\_\_rt\_\_qubit\_allocate()}
+\DoxyCodeLine{\%qubit3 = \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} \%Qubit* @\_\_quantum\_\_rt\_\_qubit\_allocate()}
+\DoxyCodeLine{\%qubit4 = \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} \%Qubit* @\_\_quantum\_\_rt\_\_qubit\_allocate()}
+\DoxyCodeLine{\%qubit5 = \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} \%Qubit* @\_\_quantum\_\_rt\_\_qubit\_allocate()}
+
+\end{DoxyCode}
+
+
+to
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%qubit1 = inttoptr i64 0 to \%Qubit*}
+\DoxyCodeLine{\%qubit2 = inttoptr i64 1 to \%Qubit*}
+\DoxyCodeLine{\%qubit3 = inttoptr i64 2 to \%Qubit*}
+\DoxyCodeLine{\%qubit4 = inttoptr i64 3 to \%Qubit*}
+\DoxyCodeLine{\%qubit5 = inttoptr i64 4 to \%Qubit*}
+
+\end{DoxyCode}
+ if the \mbox{\hyperlink{classmicrosoft_1_1quantum_1_1_basic_allocation_manager}{Basic\+Allocation\+Manager}} is used. Release replacement\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a1df0940ef8c5733f06ce28299708f587}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a1df0940ef8c5733f06ce28299708f587}} 
+\index{microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}!useStaticQubitArrayAllocation@{useStaticQubitArrayAllocation}}
+\index{useStaticQubitArrayAllocation@{useStaticQubitArrayAllocation}!microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}}
+\doxysubsubsection{\texorpdfstring{useStaticQubitArrayAllocation()}{useStaticQubitArrayAllocation()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Rule\+Factory\+::use\+Static\+Qubit\+Array\+Allocation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Static qubit array allocation identifies allocations, array access and releases. Each of these are replaced with static values. Patterns recognised include
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%array = \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} \%Array* @\_\_quantum\_\_rt\_\_qubit\_allocate\_array(i64 10)}
+
+\end{DoxyCode}
+
+
+which is replaced by a constant pointer
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%array = inttoptr i64 0 to \%Array*}
+
+\end{DoxyCode}
+
+
+The array allocation is managed through the qubit allocation manager. Access to qubit arrays
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%0 = \mbox{\hyperlink{group__shorthand_notation_gabb463c16465034b9d9b85290edd9a4bc}{call}} i8* @\_\_quantum\_\_rt\_\_array\_get\_element\_ptr\_1d(\%Array* \%array, i64 7)}
+\DoxyCodeLine{\%1 = bitcast i8* \%0 to \%Qubit**}
+\DoxyCodeLine{\%qubit = \mbox{\hyperlink{group__shorthand_notation_ga44ddd41276fac20964ede0e3b3a2c864}{load}} \%Qubit*, \%Qubit** \%1, align 8}
+
+\end{DoxyCode}
+
+
+is replaced by off-\/setting the array value by 7 to get
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%qubit = inttoptr i64 7 to \%Qubit*}
+
+\end{DoxyCode}
+
+
+Finally, release is recognised and the allocation manager is invoked accordingly. Allocation
+
+This rule is replacing the allocate qubit array instruction
+
+left\+Preshared = call Array$\ast$ @\+\_\+\+\_\+quantum\+\_\+\+\_\+rt\+\_\+\+\_\+qubit\+\_\+allocate\+\_\+array(i64 2)
+
+by changing it to a constant pointer
+
+left\+Preshared = inttoptr i64 0 to Array$\ast$
+
+In this way, we use the
+
+Array access replacement
+
+Release replacement\mbox{\Hypertarget{classmicrosoft_1_1quantum_1_1_rule_factory_a4e0f22992717e3fd8303e5035e4e6d9f}\label{classmicrosoft_1_1quantum_1_1_rule_factory_a4e0f22992717e3fd8303e5035e4e6d9f}} 
+\index{microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}!useStaticResultAllocation@{useStaticResultAllocation}}
+\index{useStaticResultAllocation@{useStaticResultAllocation}!microsoft::quantum::RuleFactory@{microsoft::quantum::RuleFactory}}
+\doxysubsubsection{\texorpdfstring{useStaticResultAllocation()}{useStaticResultAllocation()}}
+{\footnotesize\ttfamily void microsoft\+::quantum\+::\+Rule\+Factory\+::use\+Static\+Result\+Allocation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Static allocation of results. This feature is similar to {\ttfamily use\+Static\+Qubit\+Allocation} but uses the result allocation manager. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Rules/Factory.\+hpp\item 
+Rules/Factory.\+cpp\end{DoxyCompactItemize}

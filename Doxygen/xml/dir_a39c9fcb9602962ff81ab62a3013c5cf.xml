@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_a39c9fcb9602962ff81ab62a3013c5cf" kind="dir">
+    <compoundname>Apps/Qat</compoundname>
+    <innerfile refid="_qat_8cpp">Qat.cpp</innerfile>
+    <innerfile refid="_qat_config_8cpp">QatConfig.cpp</innerfile>
+    <innerfile refid="_qat_config_8hpp">QatConfig.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="Apps/Qat/"/>
+  </compounddef>
+</doxygen>

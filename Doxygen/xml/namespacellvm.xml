@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacellvm" kind="namespace" language="C++">
+    <compoundname>llvm</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>QIR Adaptor Tool (QAT)</para>
+<para>QAT is a tool that helps the enduser to easily build and use new profiles. The tool provides a commandline interface which is configurable through YAML files to validate a specific QIR profile and generate a QIR profile compatible IR from a generic IR.</para>
+<para>The tool itself make use of LLVM passes to perform analysis and transformations of the supplied IR. These transfornations are described through high-level tasks such as <computeroutput>useStaticQubitArrayAllocation</computeroutput>.</para>
+<para>To provide an overview of the structure of this tool, we here provide a diagram showing the relation between different instances in the program:</para>
+<para>┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ User input │ │ &quot;Use&quot; relation └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ▼ │ argc, argv ▼ ─ ─▶ &quot;Produce&quot; relation ┌──────────────────────────────┐ │ ParameterParser │◀─┐ Setup arguments └──────────────────────────────┘ │ Load config │ │ ▼ │ ┌──────────────────────────────┐ │ ┌──────────────────────────────────┐ │ ConfigurationManager │──┘ ┌ ─ ─ ─▶│ Ruleset │ └──────────────────────────────┘ └──────────────────────────────────┘ Provide config │ │ │ Rules for ▼ ▼ transformation ┌───────────────────────────────┐─ ─ ─ ┘ ┌──────────────────────────────────┐ │ ProfileGenerator │─ ─ ─ ─ ─ ─ ─▶│ TransformationRulesPass │ └───────────────────────────────┘ └──────────────────────────────────┘ │ LLVM module ▼ pass ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┌──────────────────────────────────┐ Output │◀─ ─ ─ ─ ─ ─ ─ ┤ QAT / LLVM Module Pass Manager │ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ stdout └──────────────────────────────────┘ </para>
+    </detaileddescription>
+    <location file="Apps/Qat/Qat.cpp" line="66" column="1"/>
+  </compounddef>
+</doxygen>

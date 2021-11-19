@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1notation_1_1_capture" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::notation::Capture</compoundname>
+    <includes refid="_notation_8hpp" local="no">Rules/Notation/Notation.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="group__shorthand_notation_1ga438cd693264597e73300e12811e46810" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string microsoft::quantum::notation::Capture::name_</definition>
+        <argsstring></argsstring>
+        <name>name_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+<para>Name that is assigned to the <ref refid="classmicrosoft_1_1quantum_1_1_i_operand_prototype" kindref="compound">IOperandPrototype</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Notation.hpp" line="51" column="25" bodyfile="Rules/Notation/Notation.hpp" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="group__shorthand_notation_1ga75cc713660bd3bfdae9ed36001c31591" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::notation::Capture::Capture</definition>
+        <argsstring>(std::string const &amp;name)</argsstring>
+        <name>Capture</name>
+        <param>
+          <type>std::string const &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Explicit creation using string name constructor. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Notation.hpp" line="45" column="22" bodyfile="Rules/Notation/Capture.cpp" bodystart="23" bodyend="26"/>
+      </memberdef>
+      <memberdef kind="function" id="group__shorthand_notation_1ga067f53b718d424ca59ec3b70a6b5c9b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IOperandPrototypePtr</type>
+        <definition>IOperandPrototypePtr microsoft::quantum::notation::Capture::operator=</definition>
+        <argsstring>(IOperandPrototypePtr const &amp;other)</argsstring>
+        <name>operator=</name>
+        <param>
+          <type>IOperandPrototypePtr const &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Rules/Notation/Notation.hpp" line="48" column="34" bodyfile="Rules/Notation/Capture.cpp" bodystart="28" bodyend="33"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Helper class to enable literals for IR patterns. The main purpose of this class is to enable notation that allows one write <computeroutput>&quot;name&quot;_cap = operandGenerator()</computeroutput> where the operand generator is a function which creates a IOperandPrototypePtr. This notation means that whenever a operand is matched, the matched value is stored under &quot;name&quot;. </para>
+    </detaileddescription>
+    <location file="Rules/Notation/Notation.hpp" line="41" column="9" bodyfile="Rules/Notation/Notation.hpp" bodystart="42" bodyend="52"/>
+    <listofallmembers>
+      <member refid="group__shorthand_notation_1ga75cc713660bd3bfdae9ed36001c31591" prot="public" virt="non-virtual"><scope>microsoft::quantum::notation::Capture</scope><name>Capture</name></member>
+      <member refid="group__shorthand_notation_1ga438cd693264597e73300e12811e46810" prot="private" virt="non-virtual"><scope>microsoft::quantum::notation::Capture</scope><name>name_</name></member>
+      <member refid="group__shorthand_notation_1ga067f53b718d424ca59ec3b70a6b5c9b1" prot="public" virt="non-virtual"><scope>microsoft::quantum::notation::Capture</scope><name>operator=</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,416 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classmicrosoft_1_1quantum_1_1_validator" kind="class" language="C++" prot="public">
+    <compoundname>microsoft::quantum::Validator</compoundname>
+    <includes refid="_validator_8hpp" local="no">Validator/Validator.hpp</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_validator_1a32dfb51f3d2bc3b2e5d004af2733c6cf" prot="public" static="no">
+        <type>std::unique_ptr&lt; <ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref> &gt;</type>
+        <definition>using microsoft::quantum::Validator::ValidatorPtr =  std::unique_ptr&lt;Validator&gt;</definition>
+        <argsstring></argsstring>
+        <name>ValidatorPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="26" column="9" bodyfile="Validator/Validator.hpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_validator_1ae8e30d9652a8ca05223fde0e3e05c015" prot="public" static="no">
+        <type>std::shared_ptr&lt; <ref refid="classmicrosoft_1_1quantum_1_1_log_collection" kindref="compound">LogCollection</ref> &gt;</type>
+        <definition>using microsoft::quantum::Validator::LogColloectionPtr =  std::shared_ptr&lt;LogCollection&gt;</definition>
+        <argsstring></argsstring>
+        <name>LogColloectionPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="27" column="9" bodyfile="Validator/Validator.hpp" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-type">
+      <memberdef kind="typedef" id="classmicrosoft_1_1quantum_1_1_validator_1afbe90ef0ed823fee80daf5e6a594c824" prot="protected" static="no">
+        <type>std::unique_ptr&lt; llvm::PassBuilder &gt;</type>
+        <definition>using microsoft::quantum::Validator::PassBuilderPtr =  std::unique_ptr&lt;llvm::PassBuilder&gt;</definition>
+        <argsstring></argsstring>
+        <name>PassBuilderPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="55" column="9" bodyfile="Validator/Validator.hpp" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_validator_1aac5625d250a18c5aa3a2baf2e714a832" prot="private" static="no" mutable="no">
+        <type>llvm::LoopAnalysisManager</type>
+        <definition>llvm::LoopAnalysisManager microsoft::quantum::Validator::loop_analysis_manager_</definition>
+        <argsstring></argsstring>
+        <name>loop_analysis_manager_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="78" column="39" bodyfile="Validator/Validator.hpp" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_validator_1a0e3453adc4e78f7a26614197ecb86599" prot="private" static="no" mutable="no">
+        <type>llvm::FunctionAnalysisManager</type>
+        <definition>llvm::FunctionAnalysisManager microsoft::quantum::Validator::function_analysis_manager_</definition>
+        <argsstring></argsstring>
+        <name>function_analysis_manager_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="79" column="39" bodyfile="Validator/Validator.hpp" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_validator_1a0e0044e5032e2a0d217212ed46ffce0a" prot="private" static="no" mutable="no">
+        <type>llvm::CGSCCAnalysisManager</type>
+        <definition>llvm::CGSCCAnalysisManager microsoft::quantum::Validator::gscc_analysis_manager_</definition>
+        <argsstring></argsstring>
+        <name>gscc_analysis_manager_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="80" column="39" bodyfile="Validator/Validator.hpp" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_validator_1acc1ab3578b06f2980b9af091ef6d6f01" prot="private" static="no" mutable="no">
+        <type>llvm::ModuleAnalysisManager</type>
+        <definition>llvm::ModuleAnalysisManager microsoft::quantum::Validator::module_analysis_manager_</definition>
+        <argsstring></argsstring>
+        <name>module_analysis_manager_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="81" column="39" bodyfile="Validator/Validator.hpp" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_validator_1a988f08b850c1b621ee80895757f424d6" prot="private" static="no" mutable="no">
+        <type>PassBuilderPtr</type>
+        <definition>PassBuilderPtr microsoft::quantum::Validator::pass_builder_</definition>
+        <argsstring></argsstring>
+        <name>pass_builder_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="83" column="24" bodyfile="Validator/Validator.hpp" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_validator_1a49c7b1b6514e965fc4cf6b3abdb34105" prot="private" static="no" mutable="no">
+        <type>llvm::ModulePassManager</type>
+        <definition>llvm::ModulePassManager microsoft::quantum::Validator::module_pass_manager_</definition>
+        <argsstring></argsstring>
+        <name>module_pass_manager_</name>
+        <initializer>{}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="85" column="33" bodyfile="Validator/Validator.hpp" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_validator_1a5a1c8787b20c5aecfb5fc10b5f3e23c4" prot="private" static="no" mutable="no">
+        <type>LogColloectionPtr</type>
+        <definition>LogColloectionPtr microsoft::quantum::Validator::logger_</definition>
+        <argsstring></argsstring>
+        <name>logger_</name>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+<para>Logger to keep track of errors and warnings occurring. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="87" column="27" bodyfile="Validator/Validator.hpp" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classmicrosoft_1_1quantum_1_1_validator_1ad85a4d0b974fadbebd1d9f585a02dcfa" prot="private" static="no" mutable="no">
+        <type>String</type>
+        <definition>String microsoft::quantum::Validator::save_to_filename_</definition>
+        <argsstring></argsstring>
+        <name>save_to_filename_</name>
+        <initializer>{&quot;&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="88" column="27" bodyfile="Validator/Validator.hpp" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1a63e5eb7b96db08e726bebdb54e5a741d" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::Validator::Validator</definition>
+        <argsstring>(ValidationPassConfiguration const &amp;cfg, bool debug, llvm::TargetMachine *target_machine=nullptr)</argsstring>
+        <name>Validator</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_validation_pass_configuration" kindref="compound">ValidationPassConfiguration</ref> const &amp;</type>
+          <declname>cfg</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>debug</declname>
+        </param>
+        <param>
+          <type>llvm::TargetMachine *</type>
+          <declname>target_machine</declname>
+          <defval>nullptr</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="32" column="18" bodyfile="Validator/Validator.cpp" bodystart="19" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1a7527f46e959c8612d6a275b5e55db33e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::Validator::Validator</definition>
+        <argsstring>()=delete</argsstring>
+        <name>Validator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="40" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1a6beec7b3a7d977e953be06744b174346" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::Validator::Validator</definition>
+        <argsstring>(Validator const &amp;)=delete</argsstring>
+        <name>Validator</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="41" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1a238a1c43da2b3e0b19b1823db18f6b47" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::Validator::Validator</definition>
+        <argsstring>(Validator &amp;&amp;)=default</argsstring>
+        <name>Validator</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="42" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1a561411cb50cbf6e6b14b9a790e5ebcba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref> &amp;</type>
+        <definition>Validator&amp; microsoft::quantum::Validator::operator=</definition>
+        <argsstring>(Validator const &amp;)=delete</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="43" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1abbb11ea9322f5e70bd625ea7f43aa0a5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref> &amp;</type>
+        <definition>Validator&amp; microsoft::quantum::Validator::operator=</definition>
+        <argsstring>(Validator &amp;&amp;)=default</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="44" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1ac59173066371fba95b20a811adb94790" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>microsoft::quantum::Validator::~Validator</definition>
+        <argsstring>()=default</argsstring>
+        <name>~Validator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="45" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1a7aa811713a0b2f012ed7a4af2a7ddc6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool microsoft::quantum::Validator::validate</definition>
+        <argsstring>(llvm::Module &amp;module)</argsstring>
+        <name>validate</name>
+        <param>
+          <type>llvm::Module &amp;</type>
+          <declname>module</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Validates that a module complies with the specified QIR profile. Returns true if the module is valid and false otherwise. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="52" column="14" bodyfile="Validator/Validator.cpp" bodystart="52" bodyend="85"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1ad6e91ef85395e8164f394a7b42de6d4b" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>llvm::PassBuilder &amp;</type>
+        <definition>llvm::PassBuilder &amp; microsoft::quantum::Validator::passBuilder</definition>
+        <argsstring>()</argsstring>
+        <name>passBuilder</name>
+        <briefdescription>
+<para>Returns a reference to the pass builder. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="58" column="27" bodyfile="Validator/Validator.cpp" bodystart="87" bodyend="90"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1a742f5abec1d3f8614aeb3aed8849eb87" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>llvm::LoopAnalysisManager &amp;</type>
+        <definition>llvm::LoopAnalysisManager &amp; microsoft::quantum::Validator::loopAnalysisManager</definition>
+        <argsstring>()</argsstring>
+        <name>loopAnalysisManager</name>
+        <briefdescription>
+<para>Returns a reference to the loop analysis manager. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="61" column="35" bodyfile="Validator/Validator.cpp" bodystart="92" bodyend="95"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1ad8cc077121ae084af8fa1159a1ea8e26" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>llvm::FunctionAnalysisManager &amp;</type>
+        <definition>llvm::FunctionAnalysisManager &amp; microsoft::quantum::Validator::functionAnalysisManager</definition>
+        <argsstring>()</argsstring>
+        <name>functionAnalysisManager</name>
+        <briefdescription>
+<para>Returns a reference to the function analysis manager. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="64" column="39" bodyfile="Validator/Validator.cpp" bodystart="97" bodyend="100"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1abe4b242cf8537bf210376d8312f2597c" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>llvm::CGSCCAnalysisManager &amp;</type>
+        <definition>llvm::CGSCCAnalysisManager &amp; microsoft::quantum::Validator::gsccAnalysisManager</definition>
+        <argsstring>()</argsstring>
+        <name>gsccAnalysisManager</name>
+        <briefdescription>
+<para>Returns a reference to the GSCC analysis manager. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="67" column="36" bodyfile="Validator/Validator.cpp" bodystart="102" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1a60e93d178b54d6cbab85c961e5892e70" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>llvm::ModuleAnalysisManager &amp;</type>
+        <definition>llvm::ModuleAnalysisManager &amp; microsoft::quantum::Validator::moduleAnalysisManager</definition>
+        <argsstring>()</argsstring>
+        <name>moduleAnalysisManager</name>
+        <briefdescription>
+<para>Returns a reference to the module analysis manager. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="70" column="37" bodyfile="Validator/Validator.cpp" bodystart="107" bodyend="110"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classmicrosoft_1_1quantum_1_1_validator_1a3216e0a17f4ceef9f1bc79ada8a13b2c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void microsoft::quantum::Validator::saveReportToFileIfNeeded</definition>
+        <argsstring>()</argsstring>
+        <name>saveReportToFileIfNeeded</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Validator/Validator.hpp" line="73" column="14" bodyfile="Validator/Validator.cpp" bodystart="112" bodyend="161"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="classmicrosoft_1_1quantum_1_1_validator" kindref="compound">Validator</ref> class that defines a set of rules which constitutes the profile definition. Each of the rules can be used to transform a generic QIR and/or validate that the QIR is compliant with said rule. </para>
+    </detaileddescription>
+    <location file="Validator/Validator.hpp" line="23" column="5" bodyfile="Validator/Validator.hpp" bodystart="24" bodyend="89"/>
+    <listofallmembers>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a0e3453adc4e78f7a26614197ecb86599" prot="private" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>function_analysis_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1ad8cc077121ae084af8fa1159a1ea8e26" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>functionAnalysisManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a0e0044e5032e2a0d217212ed46ffce0a" prot="private" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>gscc_analysis_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1abe4b242cf8537bf210376d8312f2597c" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>gsccAnalysisManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1ae8e30d9652a8ca05223fde0e3e05c015" prot="public" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>LogColloectionPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a5a1c8787b20c5aecfb5fc10b5f3e23c4" prot="private" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>logger_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1aac5625d250a18c5aa3a2baf2e714a832" prot="private" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>loop_analysis_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a742f5abec1d3f8614aeb3aed8849eb87" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>loopAnalysisManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1acc1ab3578b06f2980b9af091ef6d6f01" prot="private" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>module_analysis_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a49c7b1b6514e965fc4cf6b3abdb34105" prot="private" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>module_pass_manager_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a60e93d178b54d6cbab85c961e5892e70" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>moduleAnalysisManager</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a561411cb50cbf6e6b14b9a790e5ebcba" prot="public" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1abbb11ea9322f5e70bd625ea7f43aa0a5" prot="public" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>operator=</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a988f08b850c1b621ee80895757f424d6" prot="private" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>pass_builder_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1ad6e91ef85395e8164f394a7b42de6d4b" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>passBuilder</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1afbe90ef0ed823fee80daf5e6a594c824" prot="protected" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>PassBuilderPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1ad85a4d0b974fadbebd1d9f585a02dcfa" prot="private" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>save_to_filename_</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a3216e0a17f4ceef9f1bc79ada8a13b2c" prot="private" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>saveReportToFileIfNeeded</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a7aa811713a0b2f012ed7a4af2a7ddc6d" prot="public" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>validate</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a63e5eb7b96db08e726bebdb54e5a741d" prot="public" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>Validator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a7527f46e959c8612d6a275b5e55db33e" prot="public" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>Validator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a6beec7b3a7d977e953be06744b174346" prot="public" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>Validator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a238a1c43da2b3e0b19b1823db18f6b47" prot="public" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>Validator</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1a32dfb51f3d2bc3b2e5d004af2733c6cf" prot="public" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>ValidatorPtr</name></member>
+      <member refid="classmicrosoft_1_1quantum_1_1_validator_1ac59173066371fba95b20a811adb94790" prot="public" virt="non-virtual"><scope>microsoft::quantum::Validator</scope><name>~Validator</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

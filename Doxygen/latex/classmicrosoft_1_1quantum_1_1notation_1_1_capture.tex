@@ -1,0 +1,22 @@
+\hypertarget{classmicrosoft_1_1quantum_1_1notation_1_1_capture}{}\doxysection{microsoft\+::quantum\+::notation\+::Capture Class Reference}
+\label{classmicrosoft_1_1quantum_1_1notation_1_1_capture}\index{microsoft::quantum::notation::Capture@{microsoft::quantum::notation::Capture}}
+
+
+{\ttfamily \#include $<$Rules/\+Notation/\+Notation.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{group__shorthand_notation_ga75cc713660bd3bfdae9ed36001c31591}{Capture}} (std\+::string const \&name)
+\begin{DoxyCompactList}\small\item\em Explicit creation using string name constructor. \end{DoxyCompactList}\item 
+IOperand\+Prototype\+Ptr {\bfseries operator=} (IOperand\+Prototype\+Ptr const \&other)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Helper class to enable literals for IR patterns. The main purpose of this class is to enable notation that allows one write {\ttfamily \char`\"{}name\char`\"{}\+\_\+cap = operand\+Generator()} where the operand generator is a function which creates a IOperand\+Prototype\+Ptr. This notation means that whenever a operand is matched, the matched value is stored under \char`\"{}name\char`\"{}. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Rules/\+Notation/Notation.\+hpp\item 
+Rules/\+Notation/Capture.\+cpp\end{DoxyCompactItemize}

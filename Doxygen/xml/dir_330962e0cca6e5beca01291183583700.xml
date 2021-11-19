@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_330962e0cca6e5beca01291183583700" kind="dir">
+    <compoundname>TransformationRulesPass/Tests/Unit</compoundname>
+    <innerfile refid="_loop_unrolling_8cpp">LoopUnrolling.cpp</innerfile>
+    <innerfile refid="_mini_tele_chain_8cpp">MiniTeleChain.cpp</innerfile>
+    <innerfile refid="_phi_elimination_8cpp">PhiElimination.cpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="TransformationRulesPass/Tests/Unit/"/>
+  </compounddef>
+</doxygen>
