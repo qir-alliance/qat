@@ -40,9 +40,9 @@ jobs:
           cd ../
           mv docs/site ./
 
-      - name: Deploy to github.io
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.6
         with:
-          deploy_key: ${{ secrets.DOCS_DEPLOY_KEY }}
-          publish_branch: gh-pages
-          publish_dir: ./site
+          branch: gh-pages
+          folder: site
+          ssh-key: ${{ secrets.DOCS_DEPLOY_KEY }}
