@@ -1,6 +1,6 @@
 site_name: QAT Documentation
 site_url: https://qir-alliance.github.io/qat/
-base_url: /
+base_url: /qat/
 docs_dir: src
 site_description: Everything you need to know about QAT API.
 site_author: troels
@@ -36,14 +36,19 @@ nav:
     - Quick start: "UserGuide/QuickStart.md"
     - Building the library: "UserGuide/BuildingLibrary.md"
     - Introduction to profiles: "UserGuide/IntroductionToProfiles.md"
-    - Applying a profile (TODO(issue-8): Yet to be written)
 
   - Developer guide:
     - Architecture Overview: "DeveloperGuide/ArchitectureOverview.md"
     - Writing a Component: "DeveloperGuide/WritingComponent.md"
     - Configuration Library: "DeveloperGuide/ConfigurationLibrary.md"
     - Rule based extensions: "DeveloperGuide/WritingRuleTests.md"
-    - API: "api.md"
+
+  - API:
+      - Classes: "/Classes/"
+      - Namespaces: "/Namespaces/" 
+      - Modules: "/Modules/"
+      - Files: "/Files/"
+      - Pages: "/Pages/" 
 
   - Contributing:
     - Code quality: "DeveloperGuide/CodeQuality.md"

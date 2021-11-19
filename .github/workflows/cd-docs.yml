@@ -20,7 +20,7 @@ jobs:
             pkg-config \
             findutils \
             wget \
-            unzip doxygen        
+            unzip doxygen  texlive-font-utils     
           pip install mkdocs
           pip install mkdocs-gitbook
           wget https://github.com/matusnovak/doxybook2/releases/download/v1.3.6/doxybook2-linux-amd64-v1.3.6.zip
