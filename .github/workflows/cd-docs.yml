@@ -7,21 +7,14 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
-  deploy:
-    runs-on: ubuntu-20.04
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+  build-and-deploy-docs:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
-
-      - name: Installing and upgrading dependencies
+      - name: "Installing dependencies"
         run: |
           sudo apt-get install -y curl \
             pkg-config \
@@ -33,32 +26,23 @@ jobs:
           pip install mkdocs-gitbook
           wget https://github.com/matusnovak/doxybook2/releases/download/v1.3.6/doxybook2-linux-amd64-v1.3.6.zip
           unzip doxybook2-linux-amd64-v1.3.6.zip
-          python3 -m pip install --upgrade pip
 
-      - name: Get pip cache dir
-        id: pip-cache
-        run: echo "::set-output name=dir::$(pip cache dir)"
-
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+      - name: Doxygen generation
+        run: |
+          doxygen doxygen.cfg
+          ./bin/doxybook2 --input Doxygen/xml --config docs/.doxybook/config.json --output docs/src/
+          rm -rf docs/src/Namespaces/namespace_0d*         
 
       - name: Building docs
         run: |
           cd docs/
           mkdocs build
           cd ../
-          mv docs/site ./
+          mv docs/site ./build  
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-#        if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
-
-
+          branch: gh-pages
+          folder: build
+          ssh-key: ${{ secrets.DOCS_DEPLOY_KEY }}
