@@ -21,6 +21,8 @@ jobs:
             findutils \
             wget \
             unzip doxygen        
+          pip install mkdocs
+          pip install mkdocs-gitbook
           wget https://github.com/matusnovak/doxybook2/releases/download/v1.3.6/doxybook2-linux-amd64-v1.3.6.zip
           unzip doxybook2-linux-amd64-v1.3.6.zip
 
@@ -33,10 +35,9 @@ jobs:
       - name: Building docs
         run: |
           cd docs/
-          npm install
-          npm run build
+          mkdocs build
           cd ../
-          mv docs/src/.vuepress/dist ./build
+          mv docs/site ./build                    
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
