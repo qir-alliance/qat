@@ -1,0 +1,66 @@
+name: Mac Release
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: macos-11
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: "Installing dependencies"
+        run: |
+          rm '/usr/local/bin/2to3'        
+          brew install llvm@11
+          brew install cmake
+          brew install python@3.9
+          brew unlink python@3.9
+          brew link python@3.9
+          echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
+          git submodule update --init --recursive
+          pip3 install --user -r requirements.txt 
+          dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573     
+          chmod +x manage
+
+          exec -l $SHELL
+
+      - name: "Running unit tests"
+        run: |
+          ./manage test
+        env:
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          CC: clang
+          CXX: clang++
+
+      - name: "Build project"
+        run: |
+          mkdir -p Release
+          cd Release
+          cmake .. -DMICROSOFT_ENABLE_DYNAMIC_LOADING=0
+          make qat
+          cd ..
+          mv Release/qir/qat/Apps/qat ./
+          chmod +x qat
+          tar cf qat-mac.zip qat          
+        env:
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          CC: clang
+          CXX: clang++
+
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./qat-mac.zip
+          asset_name: qat-mac.zip
+          asset_content_type: application/zip
