@@ -25,7 +25,6 @@
     <script src="../../../js/jquery-1.10.2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/sh.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/cpp.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/llvm.min.js"></script>
@@ -452,13 +451,20 @@
 <h2 id="detailed-description">Detailed Description</h2>
 <pre><code class="language-cpp">struct microsoft::quantum::BasicAllocationManager::AllocatedMemoryBlock;
 </code></pre>
-<p>Defines a named register/memory address segment with start position, end position and count. We think of the address space as a continuous sequence of spaces that can store values and we refer to a bounded continuous sequence memory addresses as a segment (or memory address segment): </p>
-<pre><code>         start                   end
-           │                      │
-           ▼                      ▼
-        ┌  ─  ─  ─  ─  ─  ─  ─
+<p>Defines a named register/memory address segment with start position, end position and count. We think of the address space as a continuous sequence of spaces that can store values and we refer to a bounded continuous sequence memory addresses as a segment (or memory address segment):</p>
+<pre><code class="language-cpp">             start                   end
+               │                      │
+               ▼                      ▼
+            ┌  ─  ─  ─  ─  ─  ─  ─
+┌ ─ ─ ┬ ─ ─ ┬─────┬─────┐    ┌─────┼ ─ ─ ┬ ─ ─ ┐
+   0     1  │  2  │  3  │... │ N+1 │ N+2   N+3
+└ ─ ─ ┴ ─ ─ ┴─────┴─────┘    └─────┴ ─ ─ ┴ ─ ─ ┘
+Address                            │
+space       │    Memory address
+                    segment
+                 of N elements     │
+            └  ─  ─  ─  ─  ─  ─  ─
 </code></pre>
-<p>┌ ─ ─ ┬ ─ ─ ┬─────┬─────┐ ┌─────┼ ─ ─ ┬ ─ ─ ┐ 0 1 │ 2 │ 3 │... │ N+1 │ N+2 N+3 └ ─ ─ ┴ ─ ─ ┴─────┴─────┘ └─────┴ ─ ─ ┴ ─ ─ ┘ Address │ space │ Memory address segment of N elements │ └ ─ ─ ─ ─ ─ ─ ─ </p>
 <h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
 <h3 id="variable-name">variable name</h3>
 <pre><code class="language-cpp">String name {&quot;&quot;};
@@ -477,7 +483,7 @@
 </code></pre>
 <p>End address (not included in memory address segment) </p>
 <hr />
-<p>Updated on 22 November 2021 at 10:39:35 UTC</p>
+<p>Updated on 22 November 2021 at 11:19:44 UTC</p>
   </div>
 </div>
 

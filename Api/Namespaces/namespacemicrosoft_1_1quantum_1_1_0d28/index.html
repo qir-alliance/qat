@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Namespaces/namespacellvm/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d28/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      llvm - QAT Documentation
+      microsoft::quantum::@28 - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -25,7 +25,6 @@
     <script src="../../../js/jquery-1.10.2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/sh.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/cpp.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/llvm.min.js"></script>
@@ -412,23 +411,16 @@
       </span>
       <span class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center">
         <span class="text-center">
-          llvm
+          microsoft::quantum::@28
         </span>
       </span>
     </h1>
     
   </div>
   <div class="mt-6 text-gray-500 mx-auto blog-lg blog">
-    <h1 id="llvm">llvm</h1>
-<p><a href="#detailed-description">More...</a></p>
-<h2 id="detailed-description">Detailed Description</h2>
-<p>QIR Adaptor Tool (QAT)</p>
-<p>QAT is a tool that helps the enduser to easily build and use new profiles. The tool provides a commandline interface which is configurable through YAML files to validate a specific QIR profile and generate a QIR profile compatible IR from a generic IR.</p>
-<p>The tool itself make use of LLVM passes to perform analysis and transformations of the supplied IR. These transfornations are described through high-level tasks such as <code>useStaticQubitArrayAllocation</code>.</p>
-<p>To provide an overview of the structure of this tool, we here provide a diagram showing the relation between different instances in the program:</p>
-<p>┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ User input │ │ "Use" relation └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ▼ │ argc, argv ▼ ─ ─▶ "Produce" relation ┌──────────────────────────────┐ │ ParameterParser │◀─┐ Setup arguments └──────────────────────────────┘ │ Load config │ │ ▼ │ ┌──────────────────────────────┐ │ ┌──────────────────────────────────┐ │ ConfigurationManager │──┘ ┌ ─ ─ ─▶│ Ruleset │ └──────────────────────────────┘ └──────────────────────────────────┘ Provide config │ │ │ Rules for ▼ ▼ transformation ┌───────────────────────────────┐─ ─ ─ ┘ ┌──────────────────────────────────┐ │ ProfileGenerator │─ ─ ─ ─ ─ ─ ─▶│ TransformationRulesPass │ └───────────────────────────────┘ └──────────────────────────────────┘ │ LLVM module ▼ pass ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┌──────────────────────────────────┐ Output │◀─ ─ ─ ─ ─ ─ ─ ┤ QAT / LLVM Module Pass Manager │ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ stdout └──────────────────────────────────┘ </p>
+    <h1 id="microsoftquantum28">microsoft::quantum::@28</h1>
 <hr />
-<p>Updated on 22 November 2021 at 10:39:35 UTC</p>
+<p>Updated on 22 November 2021 at 11:19:44 UTC</p>
   </div>
 </div>
 

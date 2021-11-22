@@ -21,8 +21,9 @@ $(document).ready(function () {
 });
 
 function gotoSearch(url) {
-    console.log("Goto", url);
     $("#searchResults").addClass("hidden");
     $("#searchOverlay").addClass("hidden");
-    //    window.location.href = url;
+    setTimeout(function () {
+        window.location.href = url;
+    }, 25);
 }

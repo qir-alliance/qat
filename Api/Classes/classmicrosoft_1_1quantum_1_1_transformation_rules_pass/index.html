@@ -25,7 +25,6 @@
     <script src="../../../js/jquery-1.10.2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/sh.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/cpp.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/llvm.min.js"></script>
@@ -601,7 +600,34 @@
 <pre><code class="language-cpp">class microsoft::quantum::TransformationRulesPass;
 </code></pre>
 <p>This class applies a set of transformation rules to the IR to transform it into a new IR. The rules are added using the <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/">RuleSet</a> class which allows the developer to create one or more rules on how to transform the IR.</p>
-<p>The module executes the following steps: ┌─────────────────┐ │ Apply profile │ └─────────────────┘ │ ┌───────────────────────────────┐ ├───────────────▶│ Copy and expand functions │──┐ │ clone └───────────────────────────────┘ │ │ functions? │ delete dead │ │ ▼ code? │ │ ┌───────────────────────────────┐ │ ├───────────────▶│ Determine active code │ │ │ delete dead └───────────────────────────────┘ │ │ code? │ │ leave dead │ ▼ │ code? │ ┌───────────────────────────────┐ │ │ │ Simplify phi nodes │ │ │ └───────────────────────────────┘ │ │ │ │ │ ▼ │ │ ┌───────────────────────────────┐ │ │ │ Delete dead code │ │ │ └───────────────────────────────┘ │ │ │ │ │ ▼ │ │ fallback ┌───────────────────────────────┐ │ └───────────────▶│ Apply rules │◀─┘ └───────────────────────────────┘</p>
+<p>The module executes the following steps: </p>
+<pre><code class="language-cpp">┌─────────────────┐
+│  Apply profile  │
+└─────────────────┘
+         │                ┌───────────────────────────────┐
+         ├───────────────▶│   Copy and expand functions   │──┐
+         │     clone      └───────────────────────────────┘  │
+         │   functions?                   │ delete dead      │
+         │                                ▼    code?         │
+         │                ┌───────────────────────────────┐  │
+         ├───────────────▶│     Determine active code     │  │
+         │  delete dead   └───────────────────────────────┘  │
+         │     code?                      │                  │ leave dead
+         │                                ▼                  │    code?
+         │                ┌───────────────────────────────┐  │
+         │                │      Simplify phi nodes       │  │
+         │                └───────────────────────────────┘  │
+         │                                │                  │
+         │                                ▼                  │
+         │                ┌───────────────────────────────┐  │
+         │                │       Delete dead code        │  │
+         │                └───────────────────────────────┘  │
+         │                                │                  │
+         │                                ▼                  │
+         │  fallback      ┌───────────────────────────────┐  │
+         └───────────────▶│          Apply rules          │◀─┘
+                          └───────────────────────────────┘
+</code></pre>
 <p>Copying and expanding functions identifies function calls and identifies compile time constants passed to the function. It then copies the full implementation of the function, replacing all compile-time constants (and hence changing the function signature). That is, if a function call <code>f(x, 9)</code> is identified, it is replaced with <code>f.1(x)</code> where <code>f.1</code> is a copy of <code>f</code> with second argument written into the function. </p>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
 <h3 id="using-replacements">using Replacements</h3>
@@ -798,7 +824,7 @@
 </code></pre>
 <p>Whether or not this pass is required to run. </p>
 <hr />
-<p>Updated on 22 November 2021 at 10:39:35 UTC</p>
+<p>Updated on 22 November 2021 at 11:19:44 UTC</p>
   </div>
 </div>
 
