@@ -21,9 +21,10 @@ $(document).ready(function () {
 });
 
 function gotoSearch(url) {
-    $("#searchResults").addClass("hidden");
-    $("#searchOverlay").addClass("hidden");
+    console.log("Hello: ", url);
+    window.location.href = url;
     setTimeout(function () {
-        window.location.href = url;
+        $("#searchResults").addClass("hidden");
+        $("#searchOverlay").addClass("hidden");
     }, 25);
 }

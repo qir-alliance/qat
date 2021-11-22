@@ -28,7 +28,9 @@ function formatResult(location, title, summary) {
   return (
     '<article><h3><a onClick="' +
     gotoUrl +
-    '" href="javascript:void(0);" >' +
+    '" href="javascript:' +
+    gotoUrl +
+    ';" >' +
     title +
     "</a></h3><p>" +
     summary +
