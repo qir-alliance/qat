@@ -44,11 +44,11 @@ nav:
     - Rule based extensions: "DeveloperGuide/WritingRuleTests.md"
 
   - API:
-      - Classes: "/Classes/"
-      - Namespaces: "/Namespaces/" 
-      - Modules: "/Modules/"
-      - Files: "/Files/"
-      - Pages: "/Pages/" 
+      - Classes: "Classes/"
+      - Namespaces: "Namespaces/" 
+      - Modules: "Modules/"
+      - Files: "Files/"
+      - Pages: "Pages/" 
 
   - Contributing:
     - Code quality: "DeveloperGuide/CodeQuality.md"

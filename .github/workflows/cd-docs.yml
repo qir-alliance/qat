@@ -45,4 +45,3 @@ jobs:
         with:
           branch: gh-pages
           folder: site
-          ssh-key: ${{ secrets.DOCS_DEPLOY_KEY }}
