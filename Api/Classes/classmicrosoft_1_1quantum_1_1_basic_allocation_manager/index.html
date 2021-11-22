@@ -422,7 +422,7 @@
     <h1 id="microsoftquantumbasicallocationmanager">microsoft::quantum::BasicAllocationManager</h1>
 <p><a href="#detailed-description">More...</a></p>
 <p><code>#include &lt;AllocationManager/AllocationManager.hpp&gt;</code></p>
-<p>Inherits from <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">microsoft::quantum::IAllocationManager</a></p>
+<p>Inherits from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">microsoft::quantum::IAllocationManager</a></p>
 <h2 id="public-classes">Public Classes</h2>
 <table>
 <thead>
@@ -434,7 +434,7 @@
 <tbody>
 <tr>
 <td>struct</td>
-<td><strong><a href="/qat/api/Classes/structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block/">AllocatedMemoryBlock</a></strong></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block/">AllocatedMemoryBlock</a></strong></td>
 </tr>
 </tbody>
 </table>
@@ -448,12 +448,12 @@
 </thead>
 <tbody>
 <tr>
-<td>using std::vector&lt; <a href="/qat/api/Classes/structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block/">AllocatedMemoryBlock</a> &gt;</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#using-mappings">Mappings</a></strong> <br>Vector of memory segments.</td>
+<td>using std::vector&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block/">AllocatedMemoryBlock</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#using-mappings">Mappings</a></strong> <br>Vector of memory segments.</td>
 </tr>
 <tr>
-<td>using std::shared_ptr&lt; <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/">BasicAllocationManager</a> &gt;</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#using-basicallocationmanagerptr">BasicAllocationManagerPtr</a></strong> <br>Allocator pointer type.</td>
+<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/">BasicAllocationManager</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#using-basicallocationmanagerptr">BasicAllocationManagerPtr</a></strong> <br>Allocator pointer type.</td>
 </tr>
 </tbody>
 </table>
@@ -467,29 +467,29 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#using-basicallocationmanagerptr">BasicAllocationManagerPtr</a></td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-createnew">createNew</a></strong>()</td>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#using-basicallocationmanagerptr">BasicAllocationManagerPtr</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-createnew">createNew</a></strong>()</td>
 </tr>
 <tr>
-<td>virtual <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-address">Address</a></td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-allocate">allocate</a></strong>(String const &amp; name ="", <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-index">Index</a> const &amp; count =1) override</td>
-</tr>
-<tr>
-<td>virtual void</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-release">release</a></strong>(<a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-address">Address</a> const &amp; address) override<br>Releases the segment by address.</td>
+<td>virtual <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-address">Address</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-allocate">allocate</a></strong>(String const &amp; name ="", <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-index">Index</a> const &amp; count =1) override</td>
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-reset">reset</a></strong>() override<br>Resets the allocation manager and all its statistics.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-release">release</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-address">Address</a> const &amp; address) override<br>Releases the segment by address.</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-reset">reset</a></strong>() override<br>Resets the allocation manager and all its statistics.</td>
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-setreuseregisters">setReuseRegisters</a></strong>(bool val)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-setreuseregisters">setReuseRegisters</a></strong>(bool val)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="additional-inherited-members">Additional inherited members</h2>
-<p><strong>Public Types inherited from <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">microsoft::quantum::IAllocationManager</a></strong></p>
+<p><strong>Public Types inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">microsoft::quantum::IAllocationManager</a></strong></p>
 <table>
 <thead>
 <tr>
@@ -500,19 +500,19 @@
 <tbody>
 <tr>
 <td>using uint64_t</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-address">Address</a></strong> <br>Value type for address.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-address">Address</a></strong> <br>Value type for address.</td>
 </tr>
 <tr>
 <td>using uint64_t</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-index">Index</a></strong> <br>Index type used to access an array element.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-index">Index</a></strong> <br>Index type used to access an array element.</td>
 </tr>
 <tr>
-<td>using std::shared_ptr&lt; <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> &gt;</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-allocationmanagerptr">AllocationManagerPtr</a></strong> <br>Pointer interface.</td>
+<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-allocationmanagerptr">AllocationManagerPtr</a></strong> <br>Pointer interface.</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Public Functions inherited from <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">microsoft::quantum::IAllocationManager</a></strong></p>
+<p><strong>Public Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">microsoft::quantum::IAllocationManager</a></strong></p>
 <table>
 <thead>
 <tr>
@@ -523,35 +523,35 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-iallocationmanager">IAllocationManager</a></strong>(<a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> const &amp; )</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-iallocationmanager">IAllocationManager</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> const &amp; )</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-iallocationmanager">IAllocationManager</a></strong>(<a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> &amp;&amp; )</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-iallocationmanager">IAllocationManager</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> &amp;&amp; )</td>
 </tr>
 <tr>
-<td><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> &amp;</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-operator=">operator=</a></strong>(<a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> const &amp; )</td>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> const &amp; )</td>
 </tr>
 <tr>
-<td><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> &amp;</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-operator=">operator=</a></strong>(<a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> &amp;&amp; )</td>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">IAllocationManager</a> &amp;&amp; )</td>
 </tr>
 <tr>
 <td>virtual</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-~iallocationmanager">~IAllocationManager</a></strong>()</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-~iallocationmanager">~IAllocationManager</a></strong>()</td>
 </tr>
 <tr>
 <td>uint64_t</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-allocationsinuse">allocationsInUse</a></strong>() const</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-allocationsinuse">allocationsInUse</a></strong>() const</td>
 </tr>
 <tr>
 <td>uint64_t</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-maxallocationsused">maxAllocationsUsed</a></strong>() const</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-maxallocationsused">maxAllocationsUsed</a></strong>() const</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Protected Functions inherited from <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">microsoft::quantum::IAllocationManager</a></strong></p>
+<p><strong>Protected Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/">microsoft::quantum::IAllocationManager</a></strong></p>
 <table>
 <thead>
 <tr>
@@ -562,11 +562,11 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-iallocationmanager">IAllocationManager</a></strong>() =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-iallocationmanager">IAllocationManager</a></strong>() =default</td>
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-updateregistersinuse">updateRegistersInUse</a></strong>(uint64_t n)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-updateregistersinuse">updateRegistersInUse</a></strong>(uint64_t n)</td>
 </tr>
 </tbody>
 </table>
@@ -594,7 +594,7 @@
     Index const &amp; count =1
 ) override
 </code></pre>
-<p><strong>Reimplements</strong>: <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-allocate">microsoft::quantum::IAllocationManager::allocate</a></p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-allocate">microsoft::quantum::IAllocationManager::allocate</a></p>
 <p>Allocates a possibly named segment of a given count. Calling allocate without and arguments allocates a single anonymous resource and returns the address. In case of a larger segment, the function returns the address pointing to the first element. Allocation is guaranteed to be sequential. </p>
 <h3 id="function-release">function release</h3>
 <pre><code class="language-cpp">virtual void release(
@@ -602,12 +602,12 @@
 ) override
 </code></pre>
 <p>Releases the segment by address. </p>
-<p><strong>Reimplements</strong>: <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-release">microsoft::quantum::IAllocationManager::release</a></p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-release">microsoft::quantum::IAllocationManager::release</a></p>
 <h3 id="function-reset">function reset</h3>
 <pre><code class="language-cpp">virtual void reset() override
 </code></pre>
 <p>Resets the allocation manager and all its statistics. </p>
-<p><strong>Reimplements</strong>: <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-reset">microsoft::quantum::IAllocationManager::reset</a></p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#function-reset">microsoft::quantum::IAllocationManager::reset</a></p>
 <h3 id="function-setreuseregisters">function setReuseRegisters</h3>
 <pre><code class="language-cpp">void setReuseRegisters(
     bool val
@@ -615,7 +615,7 @@
 </code></pre>
 <p>Configuration function to set mode of qubit allocation. If function argument is true, the allocation manager will reuse qubits. </p>
 <hr />
-<p>Updated on 22 November 2021 at 10:28:34 UTC</p>
+<p>Updated on 22 November 2021 at 10:39:35 UTC</p>
   </div>
 </div>
 

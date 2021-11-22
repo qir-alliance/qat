@@ -426,7 +426,7 @@
     <h1 id="microsoftquantumcommentlogger">microsoft::quantum::CommentLogger</h1>
 <p>Concrete <a href="">ILogger</a> implementation that prints all messages as IR comments to llvm::errs(). </p>
 <p><code>#include &lt;Logging/CommentLogger.hpp&gt;</code></p>
-<p>Inherits from <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></p>
+<p>Inherits from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></p>
 <h2 id="public-functions">Public Functions</h2>
 <table>
 <thead>
@@ -438,32 +438,32 @@
 <tbody>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-debug">debug</a></strong>(String const &amp; message) override<br>Adds a debug message to the list.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-debug">debug</a></strong>(String const &amp; message) override<br>Adds a debug message to the list.</td>
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-info">info</a></strong>(String const &amp; message) override<br>Adds an info message to the list.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-info">info</a></strong>(String const &amp; message) override<br>Adds an info message to the list.</td>
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-warning">warning</a></strong>(String const &amp; message) override<br>Adds a warning message to the list.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-warning">warning</a></strong>(String const &amp; message) override<br>Adds a warning message to the list.</td>
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-error">error</a></strong>(String const &amp; message) override<br>Adds an error message to the list.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-error">error</a></strong>(String const &amp; message) override<br>Adds an error message to the list.</td>
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-internalerror">internalError</a></strong>(String const &amp; message) override<br>Adds an internal error message to the list.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-internalerror">internalError</a></strong>(String const &amp; message) override<br>Adds an internal error message to the list.</td>
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setlocation">setLocation</a></strong>(String const &amp; name, uint64_t row, uint64_t col) override<br>Function that allows to set the current location.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setlocation">setLocation</a></strong>(String const &amp; name, uint64_t row, uint64_t col) override<br>Function that allows to set the current location.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="additional-inherited-members">Additional inherited members</h2>
-<p><strong>Public Functions inherited from <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></strong></p>
+<p><strong>Public Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></strong></p>
 <table>
 <thead>
 <tr>
@@ -474,27 +474,27 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>() =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>() =default</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; ) =default</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; ) =default</td>
 </tr>
 <tr>
-<td><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; ) =default</td>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; ) =default</td>
 </tr>
 <tr>
-<td><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; ) =default</td>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; ) =default</td>
 </tr>
 <tr>
 <td>virtual</td>
-<td><strong><a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-~ilogger">~ILogger</a></strong>()</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-~ilogger">~ILogger</a></strong>()</td>
 </tr>
 </tbody>
 </table>
@@ -505,35 +505,35 @@
 ) override
 </code></pre>
 <p>Adds a debug message to the list. </p>
-<p><strong>Reimplements</strong>: <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-debug">microsoft::quantum::ILogger::debug</a></p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-debug">microsoft::quantum::ILogger::debug</a></p>
 <h3 id="function-info">function info</h3>
 <pre><code class="language-cpp">virtual void info(
     String const &amp; message
 ) override
 </code></pre>
 <p>Adds an info message to the list. </p>
-<p><strong>Reimplements</strong>: <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-info">microsoft::quantum::ILogger::info</a></p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-info">microsoft::quantum::ILogger::info</a></p>
 <h3 id="function-warning">function warning</h3>
 <pre><code class="language-cpp">virtual void warning(
     String const &amp; message
 ) override
 </code></pre>
 <p>Adds a warning message to the list. </p>
-<p><strong>Reimplements</strong>: <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-warning">microsoft::quantum::ILogger::warning</a></p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-warning">microsoft::quantum::ILogger::warning</a></p>
 <h3 id="function-error">function error</h3>
 <pre><code class="language-cpp">virtual void error(
     String const &amp; message
 ) override
 </code></pre>
 <p>Adds an error message to the list. </p>
-<p><strong>Reimplements</strong>: <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-error">microsoft::quantum::ILogger::error</a></p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-error">microsoft::quantum::ILogger::error</a></p>
 <h3 id="function-internalerror">function internalError</h3>
 <pre><code class="language-cpp">virtual void internalError(
     String const &amp; message
 ) override
 </code></pre>
 <p>Adds an internal error message to the list. </p>
-<p><strong>Reimplements</strong>: <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-internalerror">microsoft::quantum::ILogger::internalError</a></p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-internalerror">microsoft::quantum::ILogger::internalError</a></p>
 <h3 id="function-setlocation">function setLocation</h3>
 <pre><code class="language-cpp">virtual void setLocation(
     String const &amp; name,
@@ -542,9 +542,9 @@
 ) override
 </code></pre>
 <p>Function that allows to set the current location. </p>
-<p><strong>Reimplements</strong>: <a href="/qat/api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocation">microsoft::quantum::ILogger::setLocation</a></p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocation">microsoft::quantum::ILogger::setLocation</a></p>
 <hr />
-<p>Updated on 22 November 2021 at 10:28:34 UTC</p>
+<p>Updated on 22 November 2021 at 10:39:35 UTC</p>
   </div>
 </div>
 
