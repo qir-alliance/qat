@@ -422,7 +422,7 @@
     <h1 id="microsoftquantumioperandprototype">microsoft::quantum::IOperandPrototype</h1>
 <p><a href="#detailed-description">More...</a></p>
 <p><code>#include &lt;Rules/IOperandPrototype.hpp&gt;</code></p>
-<p>Inherited by <a href="/Classes/classmicrosoft_1_1quantum_1_1_any_pattern.md">microsoft::quantum::AnyPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_basic_block_pattern.md">microsoft::quantum::BasicBlockPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_bit_cast_pattern.md">microsoft::quantum::BitCastPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_branch_pattern.md">microsoft::quantum::BranchPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_call_pattern.md">microsoft::quantum::CallPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_const_int_pattern.md">microsoft::quantum::ConstIntPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_int_to_ptr_pattern.md">microsoft::quantum::IntToPtrPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_load_pattern.md">microsoft::quantum::LoadPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_phi_pattern.md">microsoft::quantum::PhiPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_select_pattern.md">microsoft::quantum::SelectPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_store_pattern.md">microsoft::quantum::StorePattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_switch_pattern.md">microsoft::quantum::SwitchPattern</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern.md">microsoft::quantum::UnnamedInvokePattern</a></p>
+<p>Inherited by <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_any_pattern.md">microsoft::quantum::AnyPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_basic_block_pattern.md">microsoft::quantum::BasicBlockPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_bit_cast_pattern.md">microsoft::quantum::BitCastPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_branch_pattern.md">microsoft::quantum::BranchPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_call_pattern.md">microsoft::quantum::CallPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_const_int_pattern.md">microsoft::quantum::ConstIntPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_int_to_ptr_pattern.md">microsoft::quantum::IntToPtrPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_load_pattern.md">microsoft::quantum::LoadPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_phi_pattern.md">microsoft::quantum::PhiPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_select_pattern.md">microsoft::quantum::SelectPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_store_pattern.md">microsoft::quantum::StorePattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_switch_pattern.md">microsoft::quantum::SwitchPattern</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern.md">microsoft::quantum::UnnamedInvokePattern</a></p>
 <h2 id="public-types">Public Types</h2>
 <table>
 <thead>
@@ -434,27 +434,27 @@
 <tbody>
 <tr>
 <td>using llvm::Instruction</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-instruction">Instruction</a></strong></td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-instruction">Instruction</a></strong></td>
 </tr>
 <tr>
 <td>using std::string</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-string">String</a></strong></td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-string">String</a></strong></td>
 </tr>
 <tr>
 <td>using llvm::Value</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-value">Value</a></strong></td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-value">Value</a></strong></td>
 </tr>
 <tr>
-<td>using std::shared_ptr&lt; <a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md">IOperandPrototype</a> &gt;</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-child">Child</a></strong></td>
+<td>using std::shared_ptr&lt; <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md">IOperandPrototype</a> &gt;</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-child">Child</a></strong></td>
 </tr>
 <tr>
 <td>using std::vector&lt; Child &gt;</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-children">Children</a></strong></td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-children">Children</a></strong></td>
 </tr>
 <tr>
 <td>using std::unordered_map&lt; std::string, Value * &gt;</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-captures">Captures</a></strong></td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#using-captures">Captures</a></strong></td>
 </tr>
 </tbody>
 </table>
@@ -469,27 +469,27 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-ioperandprototype">IOperandPrototype</a></strong>() =default</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-ioperandprototype">IOperandPrototype</a></strong>() =default</td>
 </tr>
 <tr>
 <td>virtual</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-~ioperandprototype">~IOperandPrototype</a></strong>()</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-~ioperandprototype">~IOperandPrototype</a></strong>()</td>
 </tr>
 <tr>
 <td>virtual bool</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-match">match</a></strong>(Value * value, Captures &amp; captures) const =0</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-match">match</a></strong>(Value * value, Captures &amp; captures) const =0</td>
 </tr>
 <tr>
 <td>virtual Child</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-copy">copy</a></strong>() const =0</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-copy">copy</a></strong>() const =0</td>
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-addchild">addChild</a></strong>(Child const &amp; child)</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-addchild">addChild</a></strong>(Child const &amp; child)</td>
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-captureas">captureAs</a></strong>(std::string capture_name)</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-captureas">captureAs</a></strong>(std::string capture_name)</td>
 </tr>
 </tbody>
 </table>
@@ -504,26 +504,26 @@
 <tbody>
 <tr>
 <td>bool</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-fail">fail</a></strong>(Value * value, Captures &amp; captures) const<br>Function which should be called whenever a match fails.</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-fail">fail</a></strong>(Value * value, Captures &amp; captures) const<br>Function which should be called whenever a match fails.</td>
 </tr>
 <tr>
 <td>bool</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-success">success</a></strong>(Value * value, Captures &amp; captures) const<br>Function which should be called whenever a match is successful.</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-success">success</a></strong>(Value * value, Captures &amp; captures) const<br>Function which should be called whenever a match is successful.</td>
 </tr>
 <tr>
 <td>bool</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-matchchildren">matchChildren</a></strong>(Value * value, Captures &amp; captures) const<br>Subroutine to match all children.</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-matchchildren">matchChildren</a></strong>(Value * value, Captures &amp; captures) const<br>Subroutine to match all children.</td>
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-copypropertiesfrom">copyPropertiesFrom</a></strong>(<a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md">IOperandPrototype</a> const &amp; other)</td>
+<td><strong><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-copypropertiesfrom">copyPropertiesFrom</a></strong>(<a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md">IOperandPrototype</a> const &amp; other)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="detailed-description">Detailed Description</h2>
 <pre><code class="language-cpp">class microsoft::quantum::IOperandPrototype;
 </code></pre>
-<p><a href="/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md">IOperandPrototype</a> describes an IR pattern and allows matching against LLVMs llvm::Value type. Each value may or may not be captured during the matching process which means that they are stored in a map under a given name. Capturing is enabled using <code>captureAs(name)</code> which sets the name the value should be stored under. </p>
+<p><a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md">IOperandPrototype</a> describes an IR pattern and allows matching against LLVMs llvm::Value type. Each value may or may not be captured during the matching process which means that they are stored in a map under a given name. Capturing is enabled using <code>captureAs(name)</code> which sets the name the value should be stored under. </p>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
 <h3 id="using-instruction">using Instruction</h3>
 <pre><code class="language-cpp">using microsoft::quantum::IOperandPrototype::Instruction =  llvm::Instruction;
@@ -556,12 +556,12 @@
     Captures &amp; captures
 ) const =0
 </code></pre>
-<p><strong>Reimplemented by</strong>: <a href="/Classes/classmicrosoft_1_1quantum_1_1_store_pattern.md#function-match">microsoft::quantum::StorePattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_load_pattern.md#function-match">microsoft::quantum::LoadPattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_any_pattern.md#function-match">microsoft::quantum::AnyPattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_bit_cast_pattern.md#function-match">microsoft::quantum::BitCastPattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern.md#function-match">microsoft::quantum::UnnamedInvokePattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_phi_pattern.md#function-match">microsoft::quantum::PhiPattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_int_to_ptr_pattern.md#function-match">microsoft::quantum::IntToPtrPattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_call_pattern.md#function-match">microsoft::quantum::CallPattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_const_int_pattern.md#function-match">microsoft::quantum::ConstIntPattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_branch_pattern.md#function-match">microsoft::quantum::BranchPattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_select_pattern.md#function-match">microsoft::quantum::SelectPattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_basic_block_pattern.md#function-match">microsoft::quantum::BasicBlockPattern::match</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_switch_pattern.md#function-match">microsoft::quantum::SwitchPattern::match</a></p>
-<p>Interface function which determines if a given Value matches the implemented pattern. It is expected that any implementation of <code>match</code> will return a call to either <code>[success()](/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-success)</code> or <code>[fail()](/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-fail)</code>. These functions will, in turn, ensure that the node is captured in the capture table (and erased upon backtracking) as well as matching children. </p>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_store_pattern.md#function-match">microsoft::quantum::StorePattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_load_pattern.md#function-match">microsoft::quantum::LoadPattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_any_pattern.md#function-match">microsoft::quantum::AnyPattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_bit_cast_pattern.md#function-match">microsoft::quantum::BitCastPattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern.md#function-match">microsoft::quantum::UnnamedInvokePattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_phi_pattern.md#function-match">microsoft::quantum::PhiPattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_int_to_ptr_pattern.md#function-match">microsoft::quantum::IntToPtrPattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_call_pattern.md#function-match">microsoft::quantum::CallPattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_const_int_pattern.md#function-match">microsoft::quantum::ConstIntPattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_branch_pattern.md#function-match">microsoft::quantum::BranchPattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_select_pattern.md#function-match">microsoft::quantum::SelectPattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_basic_block_pattern.md#function-match">microsoft::quantum::BasicBlockPattern::match</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_switch_pattern.md#function-match">microsoft::quantum::SwitchPattern::match</a></p>
+<p>Interface function which determines if a given Value matches the implemented pattern. It is expected that any implementation of <code>match</code> will return a call to either <code>[success()](/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-success)</code> or <code>[fail()](/qat/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype.md#function-fail)</code>. These functions will, in turn, ensure that the node is captured in the capture table (and erased upon backtracking) as well as matching children. </p>
 <h3 id="function-copy">function copy</h3>
 <pre><code class="language-cpp">virtual Child copy() const =0
 </code></pre>
-<p><strong>Reimplemented by</strong>: <a href="/Classes/classmicrosoft_1_1quantum_1_1_store_pattern.md#function-copy">microsoft::quantum::StorePattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_load_pattern.md#function-copy">microsoft::quantum::LoadPattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_any_pattern.md#function-copy">microsoft::quantum::AnyPattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_bit_cast_pattern.md#function-copy">microsoft::quantum::BitCastPattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_int_to_ptr_pattern.md#function-copy">microsoft::quantum::IntToPtrPattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern.md#function-copy">microsoft::quantum::UnnamedInvokePattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_phi_pattern.md#function-copy">microsoft::quantum::PhiPattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_call_pattern.md#function-copy">microsoft::quantum::CallPattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_const_int_pattern.md#function-copy">microsoft::quantum::ConstIntPattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_branch_pattern.md#function-copy">microsoft::quantum::BranchPattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_select_pattern.md#function-copy">microsoft::quantum::SelectPattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_basic_block_pattern.md#function-copy">microsoft::quantum::BasicBlockPattern::copy</a>, <a href="/Classes/classmicrosoft_1_1quantum_1_1_switch_pattern.md#function-copy">microsoft::quantum::SwitchPattern::copy</a></p>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_store_pattern.md#function-copy">microsoft::quantum::StorePattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_load_pattern.md#function-copy">microsoft::quantum::LoadPattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_any_pattern.md#function-copy">microsoft::quantum::AnyPattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_bit_cast_pattern.md#function-copy">microsoft::quantum::BitCastPattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_int_to_ptr_pattern.md#function-copy">microsoft::quantum::IntToPtrPattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern.md#function-copy">microsoft::quantum::UnnamedInvokePattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_phi_pattern.md#function-copy">microsoft::quantum::PhiPattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_call_pattern.md#function-copy">microsoft::quantum::CallPattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_const_int_pattern.md#function-copy">microsoft::quantum::ConstIntPattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_branch_pattern.md#function-copy">microsoft::quantum::BranchPattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_select_pattern.md#function-copy">microsoft::quantum::SelectPattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_basic_block_pattern.md#function-copy">microsoft::quantum::BasicBlockPattern::copy</a>, <a href="/qat/Classes/classmicrosoft_1_1quantum_1_1_switch_pattern.md#function-copy">microsoft::quantum::SwitchPattern::copy</a></p>
 <p>Interface function which defines a copy operation of the underlying implementation. Note that unlike normal copy operators this operation returns a shared pointer to the new copy. </p>
 <h3 id="function-addchild">function addChild</h3>
 <pre><code class="language-cpp">void addChild(
@@ -604,7 +604,7 @@
 </code></pre>
 <p>Shallow copy of the operand to allow name change of the capture </p>
 <hr />
-<p>Updated on 22 November 2021 at 09:41:20 UTC</p>
+<p>Updated on 22 November 2021 at 09:48:37 UTC</p>
   </div>
 </div>
 

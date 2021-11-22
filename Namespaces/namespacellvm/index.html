@@ -428,7 +428,7 @@
 <p>To provide an overview of the structure of this tool, we here provide a diagram showing the relation between different instances in the program:</p>
 <p>┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ User input │ │ "Use" relation └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ▼ │ argc, argv ▼ ─ ─▶ "Produce" relation ┌──────────────────────────────┐ │ ParameterParser │◀─┐ Setup arguments └──────────────────────────────┘ │ Load config │ │ ▼ │ ┌──────────────────────────────┐ │ ┌──────────────────────────────────┐ │ ConfigurationManager │──┘ ┌ ─ ─ ─▶│ Ruleset │ └──────────────────────────────┘ └──────────────────────────────────┘ Provide config │ │ │ Rules for ▼ ▼ transformation ┌───────────────────────────────┐─ ─ ─ ┘ ┌──────────────────────────────────┐ │ ProfileGenerator │─ ─ ─ ─ ─ ─ ─▶│ TransformationRulesPass │ └───────────────────────────────┘ └──────────────────────────────────┘ │ LLVM module ▼ pass ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┌──────────────────────────────────┐ Output │◀─ ─ ─ ─ ─ ─ ─ ┤ QAT / LLVM Module Pass Manager │ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ stdout └──────────────────────────────────┘ </p>
 <hr />
-<p>Updated on 22 November 2021 at 09:41:20 UTC</p>
+<p>Updated on 22 November 2021 at 09:48:37 UTC</p>
   </div>
 </div>
 
