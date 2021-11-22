@@ -55,7 +55,7 @@ namespace SimpleLoop {
 
 The tool was ran with three options: `--apply`, `--profile base` and `-S`. First, it tells the tool to apply the profile to the QIR so that it can become a profile-specific QIR according to the profile selected. By specifying the value `baseProfile` to the argument `--profile`, we select which profile to use in the tool and the third argument ensures that LLVM IR will be printed to the terminal in a human readable format. The resulting code emitted (omitting declarations) is:
 
-```ll
+```llvm
 ; ModuleID = 'QSharpVersion/qir/Example.ll'
 source_filename = "QSharpVersion/qir/Example.ll"
 

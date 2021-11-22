@@ -2,6 +2,8 @@
 
 static_templates:
     - 404.html
+extra_css:
+    - css/quantum-colors.css
 
 include_search_page: false
 search_index_only: false

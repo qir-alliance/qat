@@ -4,6 +4,9 @@ base_url: /qat/
 docs_dir: src
 site_description: Everything you need to know about QAT API.
 site_author: troels
+extra_css: 
+  - css/heading.css
+  - css/quantum-colors.css
 
 plugins:
   - search
@@ -19,7 +22,13 @@ theme:
   search_index_only: false
 
   highlightjs: true
-  hljs_languages: []
+  hljs_languages: 
+    - bash
+    - sh
+    - cpp
+    - python
+    - llvm
+    
   hljs_style: "monokai-sublime"
 
   navigation_depth: 2

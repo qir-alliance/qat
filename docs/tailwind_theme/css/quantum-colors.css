@@ -16,6 +16,15 @@
   line-height: 1.3333333;
 }
 
+.blog h3 {
+  color: #111827;
+  font-weight: 700;
+  font-size: 1.2em;
+  margin-top: 1.8em;
+  margin-bottom: 1em;
+  line-height: 1.1;
+}
+
 .blog p {
   margin-top: 1.3333333em;
   margin-bottom: 1.3333333em;
@@ -39,10 +48,12 @@
 .blog ul {
   list-style-type: disc;
   list-style-position: inside;
+  margin-bottom: 1em;
 }
 .blog ol {
   list-style-type: decimal;
   list-style-position: inside;
+  margin-bottom: 1em;
 }
 .blog ul ul,
 .blog ol ul {

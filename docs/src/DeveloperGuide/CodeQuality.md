@@ -109,7 +109,7 @@ This part defines pipelines for `.hpp` files and `.cpp` files allowing the devel
 
 Each of these CI stages can be executed individually using `./manage` or you can run the entire CI process by invoking `./manage runci`. An example of what this may look like is here:
 
-```zsh
+```sh
 ./manage runci
 
 2021-07-21 14:38:04,896 - FormatChecker - ERROR - /Users/tfr/Documents/Projects/qsharp-compiler/src/QsPasses/src/OpsCounter/OpsCounter.cpp was not correctly formatted.
