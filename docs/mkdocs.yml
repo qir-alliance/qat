@@ -25,7 +25,6 @@ theme:
   highlightjs: true
   hljs_languages: 
     - bash
-    - sh
     - cpp
     - python
     - llvm
@@ -54,12 +53,12 @@ nav:
     - Rule based extensions: "DeveloperGuide/WritingRuleTests.md"
 
   - Api:
-      - Classes: "Api/Classes/"
-      - Namespaces: "Api/Namespaces/" 
-      - Modules: "Api/Modules/"
-      - Files: "Api/Files/"
-      - Pages: "Api/Pages/"
+    - Classes: "Api/Classes/"
+    - Namespaces: "Api/Namespaces/" 
+    - Modules: "Api/Modules/"
+    - Files: "Api/Files/"
+    - Pages: "Api/Pages/"
 
   - Contributing:
     - Code quality: "DeveloperGuide/CodeQuality.md"
-    - Developer FAQ: "DeveloperGuide/DeveloperFAQ.md"    
+    - Developer FAQ: "DeveloperGuide/DeveloperFAQ.md"
