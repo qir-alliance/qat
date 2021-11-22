@@ -30,7 +30,7 @@ jobs:
       - name: Doxygen generation
         run: |
           doxygen doxygen.cfg
-          ./bin/doxybook2 --input Doxygen/xml --config docs/.doxybook/config.json --output docs/src/api/
+          ./bin/doxybook2 --input Doxygen/xml --config docs/.doxybook/config.json --output docs/src/Api
 
       - name: Building docs
         run: |
