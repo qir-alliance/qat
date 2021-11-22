@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     
+    <meta name="author" content="troels" />
+     
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_factory_8cpp/" />
+     
+    <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    
+    <title>
+      Rules/Factory.cpp - QAT Documentation
+    </title>
+    <link href="../../../css/styles.css" rel="stylesheet" />
+    <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/monokai-sublime.min.css"
+    />
+    <link href="../../../css/quantum-colors.css" rel="stylesheet" />
+
+    <script src="../../../js/jquery-1.10.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/sh.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/llvm.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>  
+  </head>
+
+  <body>
+    <div class="h-screen flex overflow-hidden bg-white">
+      <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+      <div class="lg:hidden hidden" id="sidebar">
+        <div class="fixed inset-0 flex z-40">
+          <!--
+        Off-canvas menu overlay, show/hide based on off-canvas menu state.
+
+        Entering: "transition-opacity ease-linear duration-300"
+          From: "opacity-0"
+          To: "opacity-100"
+        Leaving: "transition-opacity ease-linear duration-300"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+          <div class="fixed inset-0" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
+          </div>
+          <!--
+        Off-canvas menu, show/hide based on off-canvas menu state.
+
+        Entering: "transition ease-in-out duration-300 transform"
+          From: "-translate-x-full"
+          To: "translate-x-0"
+        Leaving: "transition ease-in-out duration-300 transform"
+          From: "translate-x-0"
+          To: "-translate-x-full"
+      -->
+          <div
+            class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800"
+          >
+            <div class="absolute top-0 right-0 -mr-12 pt-2">
+              <button
+                class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                id="sidebarClose"                
+              >
+                <span class="sr-only">Close sidebar</span>
+                <!-- Heroicon name: x -->
+                <svg
+                  class="h-6 w-6 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="flex items-center flex-shrink-0 px-4"><span class="ml-4 text-white text-xl">QAT</span></div>
+            <div class="mt-5 flex-1 h-0 overflow-y-auto">
+              <nav class="px-2">
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                User guide
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../UserGuide/QuickStart/"
+                >Quick start</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../UserGuide/BuildingLibrary/"
+                >Building the library</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../UserGuide/IntroductionToProfiles/"
+                >Introduction to profiles</a
+              > 
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Developer guide
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/ArchitectureOverview/"
+                >Architecture Overview</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/WritingComponent/"
+                >Writing a Component</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/ConfigurationLibrary/"
+                >Configuration Library</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/WritingRuleTests/"
+                >Rule based extensions</a
+              > 
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Api
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Classes/"
+                >Classes</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Namespaces/"
+                >Namespaces</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Modules/"
+                >Modules</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../"
+                >Files</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Pages/"
+                >Pages</a
+              > 
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Contributing
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/CodeQuality/"
+                >Code quality</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/DeveloperFAQ/"
+                >Developer FAQ</a
+              > 
+
+              </nav>
+            </div>
+          </div>
+          <div class="flex-shrink-0 w-14" aria-hidden="true">
+            <!-- Dummy element to force sidebar to shrink to fit close icon -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Static sidebar for desktop -->
+      <div class="hidden lg:flex lg:flex-shrink-0">
+        <div
+          class="flex flex-col w-64 border-r border-gray-200 pt-5 pb-4 bg-gray-800"
+        >
+          <div class="flex items-center flex-shrink-0 px-4"><span class="ml-4 text-white text-xl">QAT</span></div>
+
+          <!-- Sidebar component, swap this element with another sidebar if you like -->
+          <div class="h-0 flex-1 flex flex-col overflow-y-auto">
+            <!-- Navigation -->
+            <nav class="mt-2 flex-1 px-2 bg-gray-800">
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                User guide
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../UserGuide/QuickStart/"
+                >Quick start</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../UserGuide/BuildingLibrary/"
+                >Building the library</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../UserGuide/IntroductionToProfiles/"
+                >Introduction to profiles</a
+              > 
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Developer guide
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/ArchitectureOverview/"
+                >Architecture Overview</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/WritingComponent/"
+                >Writing a Component</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/ConfigurationLibrary/"
+                >Configuration Library</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/WritingRuleTests/"
+                >Rule based extensions</a
+              > 
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Api
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Classes/"
+                >Classes</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Namespaces/"
+                >Namespaces</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Modules/"
+                >Modules</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../"
+                >Files</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Pages/"
+                >Pages</a
+              > 
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Contributing
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/CodeQuality/"
+                >Code quality</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../../DeveloperGuide/DeveloperFAQ/"
+                >Developer FAQ</a
+              > 
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main column -->
+      <div class="flex flex-col w-0 flex-1 overflow-hidden">
+
+        <!-- Top bar -->
+        <div
+          class="relative z-20 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 focus:outline-none"
+        >
+          <button
+            class="px-4 border-r border-gray-200 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden"
+            id="sidebarOpen"                            
+          >
+            <span class="sr-only">Open sidebar</span>
+            <!-- Heroicon name: menu-alt-1 -->
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </button>
+
+          <div
+            class="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8"
+          >
+            <div class="flex-1 flex">
+              <form class="w-full flex md:ml-0" action="#" method="GET">
+                <label for="mkdocs-search-query" class="sr-only">Search</label>
+                <div
+                  class="relative w-full text-gray-400 focus-within:text-gray-600"
+                >
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
+                    aria-hidden="true"
+                  >
+                    <!-- Heroicon name: search -->
+                    <svg
+                      class="h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    id="mkdocs-search-query"
+                    name="mkdocs-search-query"
+                    class="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
+                    placeholder="Search documentation"
+                    type="search"
+                  />       
+                </div>
+              </form>
+              <div id="searchResults" class="fixed sm:absolute mt-16 z-10 inset-0 overflow-y-auto min-h-screen min-w-screen flex flex-col justify-start sm:pb-16 lg:pb-96 lg:max-w-6xl lg:mx-auto hidden">
+                  <div class="bg-gray-100 text-gray-400 p-2">
+                    Results
+                  </div>
+                  <div class="bg-white min-h-96 z-100 p-4 sm:p-8 rounded-b space-y-4 flex flex-col overflow-y-auto w-full max-h-full">
+                    <div class="prose"  id="mkdocs-search-results">
+                    </div>
+                  </div>
+              </div>                         
+            </div>
+            
+          </div>
+        </div>
+
+        <main
+          class="relative flex flex-col flex-grow h-0 min-h-full justify-between bg-white focus:outline-none overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+          tabindex="0"
+        >
+
+        <div class="fixed inset-0 transition-opacity hidden searchOverlayElement" aria-hidden="true" id="searchOverlay">
+          <div class="absolute inset-0 bg-gray-500 opacity-75 searchOverlayElement"></div>
+        </div>
+
+          <div
+            class="lg:px-8 flex flex-col space-y-4 p-4 md:px-6 sm:px-8 w-full mb-96"
+          > 
+
+            
+
+
+
+<div class="lg:max-w-6xl w-full lg:mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="text-lg max-w-prose mx-auto  py-10">
+    <h1>
+      <span class="block text-base text-center text-qauntum-600 font-semibold tracking-wide uppercase">
+        Documentation for
+      </span>
+      <span class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center">
+        <span class="text-center">
+          Rules/Factory.cpp
+        </span>
+      </span>
+    </h1>
+    
+  </div>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog">
+    <h1 id="rulesfactorycpp">Rules/Factory.cpp</h1>
+<h2 id="namespaces">Namespaces</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/qat/api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="/qat/api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="source-code">Source code</h2>
+<pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include &quot;Rules/Factory.hpp&quot;
+#include &quot;Rules/Notation/Notation.hpp&quot;
+
+#include &quot;Llvm/Llvm.hpp&quot;
+
+namespace microsoft
+{
+namespace quantum
+{
+    namespace
+    {
+        using Instruction  = llvm::Instruction;
+        using Value        = llvm::Value;
+        using Builder      = ReplacementRule::Builder;
+        using Captures     = ReplacementRule::Captures;
+        using Replacements = ReplacementRule::Replacements;
+
+    } // namespace
+
+    using ReplacementRulePtr = RuleFactory::ReplacementRulePtr;
+    using namespace microsoft::quantum::notation;
+
+    RuleFactory::RuleFactory(
+        RuleSet&amp;             rule_set,
+        AllocationManagerPtr qubit_alloc_manager,
+        AllocationManagerPtr result_alloc_manager)
+      : rule_set_{rule_set}
+      , qubit_alloc_manager_{std::move(qubit_alloc_manager)}
+      , result_alloc_manager_{std::move(result_alloc_manager)}
+    {
+    }
+
+    void RuleFactory::usingConfiguration(FactoryConfiguration const&amp; config)
+    {
+        default_integer_width_ = config.defaultIntegerWidth();
+
+        if (config.disableReferenceCounting())
+        {
+            disableReferenceCounting();
+        }
+
+        if (config.disableAliasCounting())
+        {
+            disableAliasCounting();
+        }
+
+        if (config.disableStringSupport())
+        {
+            disableStringSupport();
+        }
+
+        if (config.optimiseResultOne())
+        {
+            optimiseResultOne();
+        }
+
+        if (config.optimiseResultZero())
+        {
+            optimiseResultZero();
+        }
+
+        if (config.useStaticQubitArrayAllocation())
+        {
+            useStaticQubitArrayAllocation();
+        }
+
+        if (config.useStaticQubitAllocation())
+        {
+            useStaticQubitAllocation();
+        }
+
+        if (config.useStaticResultAllocation())
+        {
+            useStaticResultAllocation();
+        }
+    }
+
+    void RuleFactory::removeFunctionCall(String const&amp; name)
+    {
+        addRule({callByNameOnly(name), deleteInstruction()});
+    }
+
+    void RuleFactory::resolveConstantArraySizes()
+    {
+        auto size_replacer = [](Builder&amp;, Value* val, Captures&amp; cap, Replacements&amp; replacements) {
+            // Get the index and testing that it is a constant int
+            auto cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(cap[&quot;size&quot;]);
+            if (cst == nullptr)
+            {
+                // ... if not, we cannot perform the mapping.
+                return false;
+            }
+
+            val-&gt;replaceAllUsesWith(cst);
+            replacements.push_back({llvm::dyn_cast&lt;Instruction&gt;(val), nullptr});
+
+            return true;
+        };
+        llvm::errs() &lt;&lt; &quot;Creating pattern\n&quot;;
+
+        auto create_array = call(&quot;__quantum__rt__array_create_1d&quot;, &quot;elementSize&quot;_cap = _, &quot;size&quot;_cap = _);
+        auto get_size     = call(&quot;__quantum__rt__array_get_size_1d&quot;, create_array);
+
+        addRule({std::move(get_size), size_replacer});
+    }
+
+    void RuleFactory::inlineCallables()
+    {
+        auto callable_replacer = [](Builder&amp;, Value* val, Captures&amp; captures, Replacements&amp;) {
+            llvm::errs() &lt;&lt; &quot;FOUND CALLABLE\n&quot;;
+            llvm::errs() &lt;&lt; *val &lt;&lt; &quot;\n&quot;;
+            llvm::errs() &lt;&lt; &quot;Calling &quot; &lt;&lt; *captures[&quot;function&quot;] &lt;&lt; &quot;\n&quot;;
+            return false;
+        };
+
+        auto create_callable = call(&quot;__quantum__rt__callable_create&quot;, &quot;function&quot;_cap = _, &quot;size&quot;_cap = _, _);
+        auto invoke          = call(&quot;__quantum__rt__callable_invoke&quot;, create_callable, &quot;args&quot;_cap = _, &quot;ret&quot;_cap = _);
+
+        addRule({std::move(invoke), callable_replacer});
+    }
+
+    void RuleFactory::useStaticQubitArrayAllocation()
+    {
+        // TODO(issue-14): Use weak pointers to capture allocation managers
+        auto qubit_alloc_manager = qubit_alloc_manager_;
+
+        auto default_iw = default_integer_width_;
+        auto allocation_replacer =
+            [default_iw, qubit_alloc_manager](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; replacements) {
+                auto cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(cap[&quot;size&quot;]);
+                if (cst == nullptr)
+                {
+                    return false;
+                }
+
+                auto ptr_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(val-&gt;getType());
+                if (ptr_type == nullptr)
+                {
+                    return false;
+                }
+
+                if (cst == nullptr)
+                {
+                    return false;
+                }
+
+                auto llvm_size = cst-&gt;getValue();
+                auto name      = val-&gt;getName().str();
+                auto size      = llvm_size.getZExtValue();
+                auto offset    = qubit_alloc_manager-&gt;allocate(name, size);
+
+                // Creating a new index APInt that is shifted by the offset of the allocation
+                auto idx = llvm::APInt(default_iw, offset);
+
+                // Computing offset
+                auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
+
+                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
+                instr-&gt;takeName(val);
+
+                // Replacing the instruction with new instruction
+                auto old_instr = llvm::dyn_cast&lt;Instruction&gt;(val);
+
+                // Safety precaution to ensure that we are dealing with a Instruction
+                if (old_instr == nullptr)
+                {
+                    return false;
+                }
+
+                // Ensuring that we have replaced the instruction before
+                // identifying release
+                old_instr-&gt;replaceAllUsesWith(instr);
+
+                replacements.push_back({old_instr, instr});
+                return true;
+            };
+
+
+        addRule({call(&quot;__quantum__rt__qubit_allocate_array&quot;, &quot;size&quot;_cap = _), allocation_replacer});
+
+        auto access_replacer =
+            [qubit_alloc_manager](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; replacements) {
+                // Getting the type pointer
+                auto ptr_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(val-&gt;getType());
+                if (ptr_type == nullptr)
+                {
+                    return false;
+                }
+
+                // Get the index and testing that it is a constant int
+                auto cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(cap[&quot;index&quot;]);
+                if (cst == nullptr)
+                {
+                    // ... if not, we cannot perform the mapping.
+                    return false;
+                }
+
+                // Computing the index by getting the current index value and offsetting by
+                // the offset at which the qubit array is allocated.
+                auto offset_cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(cap[&quot;arrayName&quot;]);
+                if (offset_cst == nullptr)
+                {
+                    return false;
+                }
+                auto llvm_offset = offset_cst-&gt;getValue();
+                auto offset      = llvm_offset.getZExtValue();
+
+                // Creating a new index APInt that is shifted by the offset of the allocation
+                auto llvm_size = cst-&gt;getValue();
+                auto idx       = llvm::APInt(llvm_size.getBitWidth(), llvm_size.getZExtValue() + offset);
+
+                // Computing offset
+                auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
+
+                // Converting pointer
+                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
+                instr-&gt;takeName(val);
+
+                // Replacing the instruction with new instruction
+                replacements.push_back({llvm::dyn_cast&lt;Instruction&gt;(val), instr});
+
+                // Deleting the getelement and cast operations
+                replacements.push_back({llvm::dyn_cast&lt;Instruction&gt;(cap[&quot;getElement&quot;]), nullptr});
+                replacements.push_back({llvm::dyn_cast&lt;Instruction&gt;(cap[&quot;cast&quot;]), nullptr});
+
+                return true;
+            };
+
+        auto get_element = call(
+            &quot;__quantum__rt__array_get_element_ptr_1d&quot;, intToPtr(&quot;arrayName&quot;_cap = constInt()),
+            &quot;index&quot;_cap = constInt());
+        auto cast_pattern = bitCast(&quot;getElement&quot;_cap = get_element);
+        auto load_pattern = load(&quot;cast&quot;_cap = cast_pattern);
+
+        addRule({std::move(load_pattern), access_replacer});
+
+        auto deleter = deleteInstruction();
+
+        addRule(
+            {call(&quot;__quantum__rt__qubit_release_array&quot;, intToPtr(&quot;const&quot;_cap = constInt())),
+             [qubit_alloc_manager, deleter](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; rep) {
+                 // Recovering the qubit id
+                 auto cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(cap[&quot;const&quot;]);
+                 if (cst == nullptr)
+                 {
+                     return false;
+                 }
+                 auto address = cst-&gt;getValue().getZExtValue();
+
+                 // Releasing
+                 qubit_alloc_manager-&gt;release(address);
+
+                 // Deleting instruction
+                 return deleter(builder, val, cap, rep);
+             }});
+    }
+
+    void RuleFactory::useStaticQubitAllocation()
+    {
+        auto qubit_alloc_manager = qubit_alloc_manager_;
+        auto default_iw          = default_integer_width_;
+        auto allocation_replacer =
+            [default_iw, qubit_alloc_manager](Builder&amp; builder, Value* val, Captures&amp;, Replacements&amp; replacements) {
+                // Getting the type pointer
+                auto ptr_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(val-&gt;getType());
+                if (ptr_type == nullptr)
+                {
+                    return false;
+                }
+
+                auto qubit_name = val-&gt;getName().str();
+
+                // Computing the index by getting the current index value and offseting by
+                // the offset at which the qubit array is allocated.
+                auto offset = qubit_alloc_manager-&gt;allocate(qubit_name);
+
+                // Creating a new index APInt that is shifted by the offset of the allocation
+                auto idx = llvm::APInt(default_iw, offset);
+
+                // Computing offset
+                auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
+
+                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
+                instr-&gt;takeName(val);
+
+                // Replacing the instruction with new instruction
+                auto old_instr = llvm::dyn_cast&lt;Instruction&gt;(val);
+
+                // Safety precaution to ensure that we are dealing with a Instruction
+                if (old_instr == nullptr)
+                {
+                    return false;
+                }
+
+                // Ensuring that we have replaced the instruction before
+                // identifying release
+                old_instr-&gt;replaceAllUsesWith(instr);
+
+                replacements.push_back({old_instr, instr});
+
+                return true;
+            };
+
+        // Dealing with qubit allocation
+        addRule({call(&quot;__quantum__rt__qubit_allocate&quot;), allocation_replacer});
+
+        auto deleter = deleteInstruction();
+
+        // Handling the case where a constant integer is cast to a pointer and the pointer
+        // is used in a call to qubit_release:
+        //
+        // %0 = inttoptr i64 0 to %Qubit*
+        // call void @__quantum__rt__qubit_release(%Qubit* %0
+        //
+        // The case of named addresses are also covered, by this pattern:
+        // %leftMessage = inttoptr i64 0 to %Qubit*
+        // call void @__quantum__rt__qubit_release(%Qubit* %leftMessage)
+
+        addRule(
+            {call(&quot;__quantum__rt__qubit_release&quot;, intToPtr(&quot;const&quot;_cap = constInt())),
+             [qubit_alloc_manager, deleter](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; rep) {
+                 // Recovering the qubit id
+                 auto cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(cap[&quot;const&quot;]);
+                 if (cst == nullptr)
+                 {
+                     return false;
+                 }
+                 auto address = cst-&gt;getValue().getZExtValue();
+
+                 // Releasing
+                 qubit_alloc_manager-&gt;release(address);
+
+                 // Deleting instruction
+                 return deleter(builder, val, cap, rep);
+             }});
+
+        // Handling where allocation is done by non-standard functions. In
+        // this rule reports an error as we cannot reliably do a mapping.
+        //
+        // %leftMessage = call %Qubit* @__non_standard_allocator()
+        // call void @__quantum__rt__qubit_release(%Qubit* %leftMessage)
+        addRule(
+            {call(&quot;__quantum__rt__qubit_release&quot;, &quot;name&quot;_cap = _),
+             [qubit_alloc_manager, deleter](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; rep) {
+                 // Getting the name
+                 auto name = cap[&quot;name&quot;]-&gt;getName().str();
+
+                 // Returning in case the name comes out empty
+                 if (name.empty())
+                 {
+
+                     // TODO(issue-15): report error
+                     llvm::outs() &lt;&lt; &quot;FAILED due to unnamed non standard allocation:\n&quot;;
+                     llvm::outs() &lt;&lt; *val &lt;&lt; &quot;\n\n&quot;;
+
+                     // Deleting the instruction in order to proceed
+                     // and trying to discover as many other errors as possible
+                     return deleter(builder, val, cap, rep);
+                 }
+
+                 // TODO(issue-15): report error
+                 llvm::outs() &lt;&lt; &quot;FAILED due to non standard allocation:\n&quot;;
+                 llvm::outs() &lt;&lt; *cap[&quot;name&quot;] &lt;&lt; &quot;\n&quot;;
+                 llvm::outs() &lt;&lt; *val &lt;&lt; &quot;\n\n&quot;;
+
+                 return deleter(builder, val, cap, rep);
+             }
+
+            });
+    }
+
+    void RuleFactory::useStaticResultAllocation()
+    {
+        auto result_alloc_manager = result_alloc_manager_;
+        auto default_iw           = default_integer_width_;
+        auto replace_measurement  = [default_iw, result_alloc_manager](
+                                       Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; replacements) {
+            // Getting the type pointer
+            auto ptr_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(val-&gt;getType());
+            if (ptr_type == nullptr)
+            {
+                return false;
+            }
+
+            // Computing the index by getting the current index value and offseting by
+            // the offset at which the qubit array is allocated.
+            auto offset = result_alloc_manager-&gt;allocate();
+
+            // Creating a new index APInt that is shifted by the offset of the allocation
+            auto idx = llvm::APInt(default_iw, offset);
+
+            // Computing offset
+            auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
+
+            auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
+
+            if (instr == nullptr)
+            {
+                return false;
+            }
+
+            instr-&gt;takeName(val);
+
+            auto orig_instr = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
+            if (orig_instr == nullptr)
+            {
+                return false;
+            }
+
+            auto module = orig_instr-&gt;getModule();
+            auto fnc    = module-&gt;getFunction(&quot;__quantum__qis__mz__body&quot;);
+
+            std::vector&lt;llvm::Value*&gt; arguments;
+            arguments.push_back(cap[&quot;qubit&quot;]);
+            arguments.push_back(instr);
+
+            if (!fnc)
+            {
+                std::vector&lt;llvm::Type*&gt; types;
+                types.resize(arguments.size());
+                for (uint64_t i = 0; i &lt; types.size(); ++i)
+                {
+                    types[i] = arguments[i]-&gt;getType();
+                }
+
+                auto return_type = llvm::Type::getVoidTy(val-&gt;getContext());
+
+                llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
+                fnc                          = llvm::Function::Create(
+                    fnc_type, llvm::Function::ExternalLinkage, &quot;__quantum__qis__mz__body&quot;, module);
+            }
+
+            // Ensuring we are inserting after the instruction being deleted
+            builder.SetInsertPoint(llvm::dyn_cast&lt;llvm::Instruction&gt;(val)-&gt;getNextNode());
+
+            builder.CreateCall(fnc, arguments);
+
+            // Replacing the instruction with new instruction
+            replacements.push_back({llvm::dyn_cast&lt;Instruction&gt;(val), instr});
+
+            return true;
+        };
+
+        // This rules identifies result allocations through the function &quot;__quantum__qis__m__body&quot;.
+        // As an example, the following
+        //
+        // %result1 = call %Result* @__quantum__qis__m__body(%Qubit* %0)
+        //
+        // translates into
+        //
+        // %result1 = inttoptr i64 0 to %Result*
+        // call void @__quantum__qis__mz__body(%Qubit* %0, %Result* %result1)
+
+        addRule({call(&quot;__quantum__qis__m__body&quot;, &quot;qubit&quot;_cap = _), std::move(replace_measurement)});
+    }
+
+    void RuleFactory::optimiseResultZero()
+    {
+        auto replace_branch_negative = [](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; replacements) {
+            auto cond = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
+            if (cond == nullptr)
+            {
+                return false;
+            }
+            auto result = cap[&quot;result&quot;];
+            // Replacing result
+            auto orig_instr = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
+            if (orig_instr == nullptr)
+            {
+                return false;
+            }
+
+            auto                      module = orig_instr-&gt;getModule();
+            auto                      fnc    = module-&gt;getFunction(&quot;__quantum__qis__read_result__body&quot;);
+            std::vector&lt;llvm::Value*&gt; arguments;
+            arguments.push_back(result);
+
+            if (!fnc)
+            {
+                std::vector&lt;llvm::Type*&gt; types;
+                types.resize(arguments.size());
+                for (uint64_t i = 0; i &lt; types.size(); ++i)
+                {
+                    types[i] = arguments[i]-&gt;getType();
+                }
+
+                auto return_type = llvm::Type::getInt1Ty(val-&gt;getContext());
+
+                llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
+                fnc                          = llvm::Function::Create(
+                    fnc_type, llvm::Function::ExternalLinkage, &quot;__quantum__qis__read_result__body&quot;, module);
+            }
+
+            builder.SetInsertPoint(llvm::dyn_cast&lt;llvm::Instruction&gt;(val));
+            auto new_call = builder.CreateCall(fnc, arguments);
+            auto new_cond = builder.CreateNot(new_call);
+            new_cond-&gt;takeName(cond);
+
+            for (auto&amp; use : cond-&gt;uses())
+            {
+                llvm::User* user = use.getUser();
+                user-&gt;setOperand(use.getOperandNo(), new_cond);
+            }
+            cond-&gt;replaceAllUsesWith(new_cond);
+
+            // Deleting the previous condition and function to fetch one
+            replacements.push_back({cond, nullptr});
+            replacements.push_back({cap[&quot;zero&quot;], nullptr});
+
+            return true;
+        };
+
+        /*
+          Here is an example IR for which we want to make a match:
+
+          %1 = call %Result* @__quantum__rt__result_get_zero()
+          %2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
+          br i1 %2, label %then0__1, label %continue__1
+        */
+
+        // Variations of get_one
+        auto get_zero = call(&quot;__quantum__rt__result_get_zero&quot;);
+        addRule(
+            {call(&quot;__quantum__rt__result_equal&quot;, &quot;result&quot;_cap = _, &quot;zero&quot;_cap = get_zero), replace_branch_negative});
+
+        addRule(
+            {call(&quot;__quantum__rt__result_equal&quot;, &quot;zero&quot;_cap = get_zero, &quot;result&quot;_cap = _), replace_branch_negative});
+    }
+
+    void RuleFactory::optimiseResultOne()
+    {
+        auto replace_branch_positive = [](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; replacements) {
+            auto cond = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
+            if (cond == nullptr)
+            {
+                return false;
+            }
+            auto result = cap[&quot;result&quot;];
+            // Replacing result
+            auto orig_instr = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
+            if (orig_instr == nullptr)
+            {
+                return false;
+            }
+
+            auto                      module = orig_instr-&gt;getModule();
+            auto                      fnc    = module-&gt;getFunction(&quot;__quantum__qis__read_result__body&quot;);
+            std::vector&lt;llvm::Value*&gt; arguments;
+            arguments.push_back(result);
+
+            if (!fnc)
+            {
+                std::vector&lt;llvm::Type*&gt; types;
+                types.resize(arguments.size());
+                for (uint64_t i = 0; i &lt; types.size(); ++i)
+                {
+                    types[i] = arguments[i]-&gt;getType();
+                }
+
+                auto return_type = llvm::Type::getInt1Ty(val-&gt;getContext());
+
+                llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
+                fnc                          = llvm::Function::Create(
+                    fnc_type, llvm::Function::ExternalLinkage, &quot;__quantum__qis__read_result__body&quot;, module);
+            }
+
+            builder.SetInsertPoint(llvm::dyn_cast&lt;llvm::Instruction&gt;(val));
+            auto new_call = builder.CreateCall(fnc, arguments);
+
+            new_call-&gt;takeName(cond);
+
+            for (auto&amp; use : cond-&gt;uses())
+            {
+                llvm::User* user = use.getUser();
+                user-&gt;setOperand(use.getOperandNo(), new_call);
+            }
+            cond-&gt;replaceAllUsesWith(new_call);
+
+            // Deleting the previous condition and function to fetch one
+            replacements.push_back({cond, nullptr});
+            replacements.push_back({cap[&quot;one&quot;], nullptr});
+
+            return true;
+        };
+
+        /*
+          Here is an example IR for which we want to make a match:
+
+          %1 = call %Result* @__quantum__rt__result_get_one()
+          %2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
+          br i1 %2, label %then0__1, label %continue__1
+        */
+
+        // Variations of get_one
+        auto get_one = call(&quot;__quantum__rt__result_get_one&quot;);
+        addRule({call(&quot;__quantum__rt__result_equal&quot;, &quot;result&quot;_cap = _, &quot;one&quot;_cap = get_one), replace_branch_positive});
+
+        addRule({call(&quot;__quantum__rt__result_equal&quot;, &quot;one&quot;_cap = get_one, &quot;result&quot;_cap = _), replace_branch_positive});
+    }
+
+    void RuleFactory::disableReferenceCounting()
+    {
+        //  removeFunctionCall(&quot;__quantum__rt__array_update_reference_count&quot;);
+        removeFunctionCall(&quot;__quantum__rt__string_update_reference_count&quot;);
+        removeFunctionCall(&quot;__quantum__rt__result_update_reference_count&quot;);
+    }
+
+    void RuleFactory::disableAliasCounting()
+    {
+        //  removeFunctionCall(&quot;__quantum__rt__array_update_alias_count&quot;);
+        removeFunctionCall(&quot;__quantum__rt__string_update_alias_count&quot;);
+        removeFunctionCall(&quot;__quantum__rt__result_update_alias_count&quot;);
+    }
+
+    void RuleFactory::disableStringSupport()
+    {
+        removeFunctionCall(&quot;__quantum__rt__fail&quot;);
+        removeFunctionCall(&quot;__quantum__rt__message&quot;);
+        removeFunctionCall(&quot;__quantum__rt__string_update_alias_count&quot;);
+
+        removeFunctionCall(&quot;__quantum__rt__string_create&quot;);
+        removeFunctionCall(&quot;__quantum__rt__string_get_data&quot;);
+        removeFunctionCall(&quot;__quantum__rt__string_get_length&quot;);
+        removeFunctionCall(&quot;__quantum__rt__string_update_reference_count&quot;);
+        removeFunctionCall(&quot;__quantum__rt__string_concatenate&quot;);
+        removeFunctionCall(&quot;__quantum__rt__string_equal&quot;);
+
+        removeFunctionCall(&quot;__quantum__rt__int_to_string&quot;);
+        removeFunctionCall(&quot;__quantum__rt__double_to_string&quot;);
+        removeFunctionCall(&quot;__quantum__rt__bool_to_string&quot;);
+        removeFunctionCall(&quot;__quantum__rt__result_to_string&quot;);
+        removeFunctionCall(&quot;__quantum__rt__pauli_to_string&quot;);
+        removeFunctionCall(&quot;__quantum__rt__qubit_to_string&quot;);
+        removeFunctionCall(&quot;__quantum__rt__range_to_string&quot;);
+        removeFunctionCall(&quot;__quantum__rt__bigint_to_string&quot;);
+    }
+
+    ReplacementRulePtr RuleFactory::addRule(ReplacementRule&amp;&amp; rule)
+    {
+        auto ret = std::make_shared&lt;ReplacementRule&gt;(std::move(rule));
+
+        rule_set_.addRule(ret);
+
+        return ret;
+    }
+
+    void RuleFactory::setDefaultIntegerWidth(uint32_t v)
+    {
+        default_integer_width_ = v;
+    }
+
+} // namespace quantum
+} // namespace microsoft
+</code></pre>
+<hr />
+<p>Updated on 22 November 2021 at 10:28:34 UTC</p>
+  </div>
+</div>
+
+          </div>
+        </main>
+
+      </div>
+    </div>
+    <script>
+      var base_url = "../../..",
+          shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+    </script>
+    <script src="../../../js/base.js" defer></script>
+    <script src="../../../search/main.js" defer></script>  
+  </body>
+
+</html>
