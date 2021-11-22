@@ -6,6 +6,8 @@ site_description: Everything you need to know about QAT API.
 site_author: troels
 extra_css: 
   - css/quantum-colors.css
+markdown_extensions:
+  - admonition
 
 plugins:
   - search
@@ -51,12 +53,12 @@ nav:
     - Configuration Library: "DeveloperGuide/ConfigurationLibrary.md"
     - Rule based extensions: "DeveloperGuide/WritingRuleTests.md"
 
-  - API:
-      - Classes: "Classes/"
-      - Namespaces: "Namespaces/" 
-      - Modules: "Modules/"
-      - Files: "Files/"
-      - Pages: "Pages/" 
+  - Api:
+      - Classes: "Api/Classes/"
+      - Namespaces: "Api/Namespaces/" 
+      - Modules: "Api/Modules/"
+      - Files: "Api/Files/"
+      - Pages: "Api/Pages/" 
 
   - Contributing:
     - Code quality: "DeveloperGuide/CodeQuality.md"

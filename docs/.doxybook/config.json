@@ -1,5 +1,5 @@
 {
-  "baseUrl": "/qat/",
+  "baseUrl": "/qat/api/",
   "indexInFolders": true,
   "linkSuffix": "/",
   "indexClassesName": "index",
