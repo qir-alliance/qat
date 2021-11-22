@@ -1,0 +1,64 @@
+site_name: QAT Documentation
+site_url: https://qir-alliance.github.io/qat/
+base_url: /qat/
+docs_dir: src
+site_description: Everything you need to know about QAT API.
+site_author: troels
+extra_css: 
+  - css/quantum-colors.css
+markdown_extensions:
+  - admonition
+
+plugins:
+  - search
+
+theme:
+  name: null
+  custom_dir: "tailwind_theme/"
+  theme_dir: "tailwind_theme/"
+  static_templates:
+    - 404.html
+
+  include_search_page: false
+  search_index_only: false
+
+  highlightjs: true
+  hljs_languages: 
+    - bash
+    - cpp
+    - python
+    - llvm
+
+  hljs_style: "monokai-sublime"
+
+  navigation_depth: 2
+  nav_style: primary
+
+  shortcuts:
+    help: 191 # ?
+    next: 78 # n
+    previous: 80 # p
+    search: 83 # s
+
+nav:
+  - User guide:
+    - Quick start: "UserGuide/QuickStart.md"
+    - Building the library: "UserGuide/BuildingLibrary.md"
+    - Introduction to profiles: "UserGuide/IntroductionToProfiles.md"
+
+  - Developer guide:
+    - Architecture Overview: "DeveloperGuide/ArchitectureOverview.md"
+    - Writing a Component: "DeveloperGuide/WritingComponent.md"
+    - Configuration Library: "DeveloperGuide/ConfigurationLibrary.md"
+    - Rule based extensions: "DeveloperGuide/WritingRuleTests.md"
+
+  - Api:
+    - Classes: "Api/Classes/"
+    - Namespaces: "Api/Namespaces/" 
+    - Modules: "Api/Modules/"
+    - Files: "Api/Files/"
+    - Pages: "Api/Pages/"
+
+  - Contributing:
+    - Code quality: "DeveloperGuide/CodeQuality.md"
+    - Developer FAQ: "DeveloperGuide/DeveloperFAQ.md"

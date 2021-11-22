@@ -27,6 +27,7 @@ namespace quantum
         /// refer to a bounded continuous sequence memory addresses as a
         /// segment (or memory address segment):
         ///
+        /// ```
         ///              start                   end
         ///                │                      │
         ///                ▼                      ▼
@@ -39,6 +40,7 @@ namespace quantum
         ///                     segment
         ///                  of N elements     │
         ///             └  ─  ─  ─  ─  ─  ─  ─
+        /// ```
         ///
         struct AllocatedMemoryBlock
         {

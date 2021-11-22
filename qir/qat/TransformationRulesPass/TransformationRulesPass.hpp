@@ -25,6 +25,7 @@ namespace quantum
     ///
     ///
     /// The module executes the following steps:
+    /// ```
     ///           ┌─────────────────┐
     ///           │  Apply profile  │
     ///           └─────────────────┘
@@ -51,6 +52,7 @@ namespace quantum
     ///                    │  fallback      ┌───────────────────────────────┐  │
     ///                    └───────────────▶│          Apply rules          │◀─┘
     ///                                     └───────────────────────────────┘
+    /// ```
     ///
     /// Copying and expanding functions identifies function calls and identifies compile time constants
     /// passed to the function. It then copies the full implementation of the function, replacing all
