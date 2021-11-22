@@ -15,16 +15,22 @@
       Code quality - QAT Documentation
     </title>
     <link href="../../css/styles.css" rel="stylesheet" />
-    <link href="../../css/headings.css" rel="stylesheet" />    
     <link href="../../css/qauntum-colors.css" rel="stylesheet" />
     <link href="../../css/font-awesome.min.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/monokai-sublime.min.css"
     />
+    <link href="../../css/heading.css" rel="stylesheet" />
+    <link href="../../css/quantum-colors.css" rel="stylesheet" />
 
     <script src="../../js/jquery-1.10.2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/sh.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/llvm.min.js"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>  
@@ -486,7 +492,7 @@ make
 </code></pre>
 <p>This part defines pipelines for <code>.hpp</code> files and <code>.cpp</code> files allowing the developer to add such requirements as having copyright in the op of the source file and ensure that formatting follows that given by <code>.clang-format</code>.</p>
 <p>Each of these CI stages can be executed individually using <code>./manage</code> or you can run the entire CI process by invoking <code>./manage runci</code>. An example of what this may look like is here:</p>
-<pre><code class="language-zsh">./manage runci
+<pre><code class="language-sh">./manage runci
 
 2021-07-21 14:38:04,896 - FormatChecker - ERROR - /Users/tfr/Documents/Projects/qsharp-compiler/src/QsPasses/src/OpsCounter/OpsCounter.cpp was not correctly formatted.
 2021-07-21 14:38:04,899 - FormatChecker - ERROR - Your code did not pass formatting.
