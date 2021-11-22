@@ -1,7 +1,7 @@
 {
   "baseUrl": "/qat/",
   "indexInFolders": true,
-  "linkLowercase": false,
+  "linkSuffix": "/",
   "indexClassesName": "index",
   "indexFilesName": "index",
   "indexGroupsName": "index",

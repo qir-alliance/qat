@@ -5,7 +5,6 @@ docs_dir: src
 site_description: Everything you need to know about QAT API.
 site_author: troels
 extra_css: 
-  - css/heading.css
   - css/quantum-colors.css
 
 plugins:
@@ -28,7 +27,7 @@ theme:
     - cpp
     - python
     - llvm
-    
+
   hljs_style: "monokai-sublime"
 
   navigation_depth: 2
