@@ -1,8 +1,14 @@
+lib/stdlib-cxx.ll:
+	clang++ -O1 -mllvm -disable-llvm-optzns -S -emit-llvm -c src/stdlib-cxx.c -o lib/stdlib-cxx.ll
+
 lib/stdlib.ll:
 	clang -O0 -mllvm -disable-llvm-optzns -S -emit-llvm  -c src/stdlib.c -o lib/stdlib.ll
 
 target/stdlib.bc: lib/stdlib.ll
 	llvm-as lib/stdlib.ll -o target/stdlib.bc
+
+target/stdlib-cxx.bc: lib/stdlib-cxx.ll
+	llvm-as lib/stdlib-cxx.ll -o target/stdlib-cxx.bc
 
 target/stdlib.o: target/stdlib.bc
 	mkdir -p target/
