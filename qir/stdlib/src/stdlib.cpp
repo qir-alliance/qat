@@ -79,6 +79,10 @@ extern "C"
   void __quantum__rt__array_update_reference_count(Array *arr, int32_t n)
   {
     arr->ref_count += n;
+    if (arr->ref_count <= 0)
+    {
+      delete arr;
+    }
   }
 
   Array *__quantum__rt__array_copy(Array *arr, bool force)

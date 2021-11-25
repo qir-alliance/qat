@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-/*
+
 typedef void (*CallableSingleFunctor)(int8_t *, int8_t *, int8_t *);
 
 typedef void (*CallableUnknownFunctor)(int8_t *, int32_t);
@@ -51,7 +51,7 @@ void __quantum__rt__callable_invoke(struct Callable *callable, int8_t *args, int
 {
   (*callable->functor)[0](callable->capture, args, ret);
 }
-*/
+
 int8_t *__quantum__rt__tuple_create(int64_t n)
 {
   int8_t * ret = (int8_t *)malloc(n + 3 * sizeof(int64_t));
@@ -122,12 +122,11 @@ void __quantum__rt__array_update_reference_count(struct Array *arr, int32_t n)
 {
   int64_t *r = (int64_t *)((int8_t *)arr + 2 * sizeof(int64_t));
   *r += (int64_t)(n);
-  /*
+
   if (*r <= 0)
   {
     free(arr);
   }
-  */
 }
 
 struct Range
