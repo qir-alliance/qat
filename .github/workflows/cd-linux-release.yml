@@ -1,7 +1,5 @@
-#on:
-#  push:
-#    tags:
-#    - 'v*'
+name: Linux Release
+
 on:
   release:
     types:
