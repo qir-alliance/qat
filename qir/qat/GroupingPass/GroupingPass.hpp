@@ -53,11 +53,11 @@ namespace quantum
     class GroupingPass : public llvm::PassInfoMixin<GroupingPass>
     {
       public:
-        using Instruction = llvm::Instruction;
-        using Value       = llvm::Value;
-        using ILoggerPtr  = std::shared_ptr<ILogger>;
-        using BlockSet    = std::unordered_set<llvm::BasicBlock*>;
-
+        using Instruction   = llvm::Instruction;
+        using Value         = llvm::Value;
+        using ILoggerPtr    = std::shared_ptr<ILogger>;
+        using BlockSet      = std::unordered_set<llvm::BasicBlock*>;
+        using SharedBuilder = std::shared_ptr<llvm::IRBuilder<>>;
         // Construction and destruction configuration.
         //
 
@@ -75,9 +75,9 @@ namespace quantum
 
         /// Default destruction.
         ~GroupingPass() = default;
-
+        void prepareBlockModification(llvm::Module& module, llvm::BasicBlock* block);
+        void nextQuantumCycle(llvm::Module& module, llvm::BasicBlock* block);
         void expandBlockQuantumMeasureClassical(llvm::Module& module, llvm::BasicBlock* block);
-        void expandBlockQuantumClassical(llvm::Module& module, llvm::BasicBlock* block);
 
         llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
 
@@ -88,6 +88,21 @@ namespace quantum
 
       private:
         GroupingPassConfiguration config_{};
+
+        // Basic blocks used to build
+
+        llvm::BasicBlock* post_classical_block_{nullptr};
+        llvm::BasicBlock* readout_block_{nullptr};
+        llvm::BasicBlock* quantum_block_{nullptr};
+        llvm::BasicBlock* pre_classical_block_{nullptr};
+
+        // Builders
+        //
+
+        SharedBuilder pre_classical_builder_{};
+        SharedBuilder quantum_builder_{};
+        SharedBuilder readout_builder_{};
+        SharedBuilder post_classical_builder_{};
 
         BlockSet   visited_blocks_;
         ILoggerPtr logger_{nullptr};
