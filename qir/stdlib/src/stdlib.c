@@ -1,8 +1,10 @@
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+/*
 typedef void (*CallableSingleFunctor)(int8_t *, int8_t *, int8_t *);
 
 typedef void (*CallableUnknownFunctor)(int8_t *, int32_t);
@@ -51,7 +53,7 @@ void __quantum__rt__callable_invoke(struct Callable *callable, int8_t *args, int
 {
   (*callable->functor)[0](callable->capture, args, ret);
 }
-
+*/
 int8_t *__quantum__rt__tuple_create(int64_t n)
 {
   int8_t * ret = (int8_t *)malloc(n + 3 * sizeof(int64_t));
@@ -70,9 +72,12 @@ void __quantum__rt__tuple_update_reference_count(int8_t *tuple, int32_t n)
   int64_t *r   = (int64_t *)(ptr + sizeof(int64_t));
   *r += (int64_t)(n);
 
-  if (*r <= 0)
+  if (n < 0)
   {
-    free(ptr);
+    if (*r <= 0)
+    {
+      free(ptr);
+    }
   }
 }
 
@@ -83,10 +88,9 @@ void __quantum__rt__tuple_update_alias_count(int8_t *tuple, int32_t n)
   *a += (int64_t)(n);
 }
 
-struct Array;
 #define QUANTUM_ARRRAY_RESERVED (4 * sizeof(int64_t))
 
-struct Array *__quantum__rt__array_create_1d(int32_t size, int64_t n)
+int8_t *__quantum__rt__array_create_1d(int32_t size, int64_t n)
 {
   int8_t * ret = (int8_t *)malloc((n * size) + QUANTUM_ARRRAY_RESERVED);
   int64_t *e   = (int64_t *)(ret);
@@ -97,36 +101,55 @@ struct Array *__quantum__rt__array_create_1d(int32_t size, int64_t n)
   *s           = n;
   *r           = 1;
   *a           = 0;
-  return (struct Array *)ret;
+  return (int8_t *)ret;
 }
 
-int64_t __quantum__rt__array_get_size_1d(struct Array *array)
+int64_t __quantum__rt__array_get_size_1d(int8_t *array)
 {
   int64_t *s = (int64_t *)((int8_t *)array + sizeof(int64_t));
   return *s;
 }
 
-int8_t *__quantum__rt__array_get_element_ptr_1d(struct Array *array, int64_t n)
+int8_t *__quantum__rt__array_get_element_ptr_1d(int8_t *array, int64_t n)
 {
   int64_t *e = (int64_t *)(array);
-  return ((int8_t *)array + (*e) * n + QUANTUM_ARRRAY_RESERVED);
+  return ((int8_t *)(array) + (*e) * n + QUANTUM_ARRRAY_RESERVED);
 }
 
-void __quantum__rt__array_update_alias_count(struct Array *arr, int32_t n)
+void __quantum__rt__array_update_alias_count(int8_t *arr, int32_t n)
 {
   int64_t *a = (int64_t *)((int8_t *)arr + 3 * sizeof(int64_t));
   *a += (int64_t)(n);
 }
 
-void __quantum__rt__array_update_reference_count(struct Array *arr, int32_t n)
+void __quantum__rt__array_update_reference_count(int8_t *arr, int32_t n)
 {
-  int64_t *r = (int64_t *)((int8_t *)arr + 2 * sizeof(int64_t));
+  int64_t *r = (int64_t *)((int8_t *)(arr) + 2 * sizeof(int64_t));
   *r += (int64_t)(n);
-
-  if (*r <= 0)
+  if (n < 0)
   {
-    free(arr);
+    if (*r == 0)
+    {
+      free(arr);
+    }
   }
+}
+
+int64_t __quantum__dev__array_get_element_size(int8_t *ptr)
+{
+  return *(int64_t *)ptr;
+}
+
+int64_t __quantum__dev__array_get_alias_count(int8_t *ptr)
+{
+  int64_t *a = (int64_t *)((int8_t *)(ptr) + 3 * sizeof(int64_t));
+  return *a;
+}
+
+int64_t __quantum__dev__array_get_ref_count(int8_t *ptr)
+{
+  int64_t *r = (int64_t *)((int8_t *)(ptr) + 2 * sizeof(int64_t));
+  return *r;
 }
 
 struct Range
@@ -136,12 +159,12 @@ struct Range
   int64_t c;
 };
 
-struct Array *__quantum__rt__array_concatenate(struct Array *array1, int8_t *array2)
+int8_t *__quantum__rt__array_concatenate(int8_t *array1, int8_t *array2)
 {
   int64_t e  = *(int64_t *)(array1);
-  int64_t s1 = *(int64_t *)((int8_t *)array1 + sizeof(int64_t));
+  int64_t s1 = *(int64_t *)((int8_t *)(array1) + sizeof(int64_t));
 
-  int64_t s2   = *(int64_t *)((int8_t *)array2 + sizeof(int64_t));
+  int64_t s2   = *(int64_t *)((int8_t *)(array2) + sizeof(int64_t));
   int8_t *off1 = (int8_t *)array1 + QUANTUM_ARRRAY_RESERVED;
   int8_t *off2 = (int8_t *)array2 + QUANTUM_ARRRAY_RESERVED;
 
@@ -151,27 +174,30 @@ struct Array *__quantum__rt__array_concatenate(struct Array *array1, int8_t *arr
   memcpy(ret_array, off1, s1 * e);
   memcpy(ret_array + s1 * e, off2, s2 * e);
 
-  return (struct Array *)ret;
+  return (int8_t *)ret;
 }
 
-struct Array *__quantum__rt__array_copy(struct Array *array, int8_t force)
+int8_t *__quantum__rt__array_copy(int8_t *array, bool force)
 {
   if (array == NULL)
   {
     return NULL;
   }
 
-  int64_t *e = (int64_t *)(array);
-  int64_t *s = (int64_t *)((int8_t *)array + sizeof(int64_t));
-
-  int64_t *a = (int64_t *)((int8_t *)array + 3 * sizeof(int64_t));
+  int64_t *a = (int64_t *)((int8_t *)(array) + 3 * sizeof(int64_t));
 
   if (force || *a > 0)
   {
+    int64_t *e = (int64_t *)(array);
+    int64_t *s = (int64_t *)((int8_t *)(array) + sizeof(int64_t));
+
     int8_t *ret = (int8_t *)__quantum__rt__array_create_1d(*e, *s);
-    memcpy(ret, array, (*e) * (*s));
-    return (struct Array *)ret;
+    memcpy(ret + QUANTUM_ARRRAY_RESERVED, array + QUANTUM_ARRRAY_RESERVED, (*e) * (*s));
+    return (int8_t *)ret;
   }
+
+  int64_t *r = (int64_t *)((int8_t *)(array) + 2 * sizeof(int64_t));
+  *r += (int64_t)(1);
 
   return array;
 }

@@ -119,18 +119,26 @@ define void @__quantum__rt__tuple_update_reference_count(i8* %0, i32 %1) #3 {
 declare void @_ZdlPv(i8*) #4
 
 ; Function Attrs: ssp uwtable
-define %class.Array* @__quantum__rt__array_create_1d(i32 %0, i64 %1) #0 {
+define i8* @__quantum__rt__array_create_1d(i32 %0, i64 %1) #0 {
   %3 = alloca i32, align 4
   %4 = alloca i64, align 8
+  %5 = alloca %class.Array*, align 8
   store i32 %0, i32* %3, align 4, !tbaa !9
   store i64 %1, i64* %4, align 8, !tbaa !3
-  %5 = call noalias nonnull i8* @_Znwm(i64 40) #8
-  %6 = bitcast i8* %5 to %class.Array*
-  %7 = load i32, i32* %3, align 4, !tbaa !9
-  %8 = sext i32 %7 to i64
-  %9 = load i64, i64* %4, align 8, !tbaa !3
-  call void @_ZN5ArrayC1Exx(%class.Array* %6, i64 %8, i64 %9) #7
-  ret %class.Array* %6
+  %6 = bitcast %class.Array** %5 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %6) #7
+  %7 = call noalias nonnull i8* @_Znwm(i64 40) #8
+  %8 = bitcast i8* %7 to %class.Array*
+  %9 = load i32, i32* %3, align 4, !tbaa !9
+  %10 = sext i32 %9 to i64
+  %11 = load i64, i64* %4, align 8, !tbaa !3
+  call void @_ZN5ArrayC1Exx(%class.Array* %8, i64 %10, i64 %11) #7
+  store %class.Array* %8, %class.Array** %5, align 8, !tbaa !7
+  %12 = load %class.Array*, %class.Array** %5, align 8, !tbaa !7
+  %13 = bitcast %class.Array* %12 to i8*
+  %14 = bitcast %class.Array** %5 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %14) #7
+  ret i8* %13
 }
 
 ; Function Attrs: nobuiltin allocsize(0)
@@ -152,38 +160,72 @@ define linkonce_odr void @_ZN5ArrayC1Exx(%class.Array* %0, i64 %1, i64 %2) unnam
 }
 
 ; Function Attrs: nounwind ssp uwtable
-define i8* @__quantum__rt__array_get_element_ptr_1d(%class.Array* %0, i64 %1) #3 {
+define i64 @__quantum__rt__array_get_size_1d(i8* %0) #3 {
+  %2 = alloca i8*, align 8
   %3 = alloca %class.Array*, align 8
-  %4 = alloca i64, align 8
-  store %class.Array* %0, %class.Array** %3, align 8, !tbaa !7
-  store i64 %1, i64* %4, align 8, !tbaa !3
-  %5 = load %class.Array*, %class.Array** %3, align 8, !tbaa !7
-  %6 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 2
-  %7 = load i8*, i8** %6, align 8, !tbaa !11
-  %8 = load i64, i64* %4, align 8, !tbaa !3
-  %9 = load %class.Array*, %class.Array** %3, align 8, !tbaa !7
-  %10 = getelementptr inbounds %class.Array, %class.Array* %9, i32 0, i32 0
-  %11 = load i64, i64* %10, align 8, !tbaa !13
-  %12 = mul nsw i64 %8, %11
-  %13 = getelementptr inbounds i8, i8* %7, i64 %12
-  ret i8* %13
+  store i8* %0, i8** %2, align 8, !tbaa !7
+  %4 = bitcast %class.Array** %3 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %4) #7
+  %5 = load i8*, i8** %2, align 8, !tbaa !7
+  %6 = bitcast i8* %5 to %class.Array*
+  store %class.Array* %6, %class.Array** %3, align 8, !tbaa !7
+  %7 = load %class.Array*, %class.Array** %3, align 8, !tbaa !7
+  %8 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 1
+  %9 = load i64, i64* %8, align 8, !tbaa !11
+  %10 = bitcast %class.Array** %3 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %10) #7
+  ret i64 %9
 }
 
 ; Function Attrs: nounwind ssp uwtable
-define void @__quantum__rt__qubit_release_array(%class.Array* %0) #3 {
-  %2 = alloca %class.Array*, align 8
-  store %class.Array* %0, %class.Array** %2, align 8, !tbaa !7
-  %3 = load %class.Array*, %class.Array** %2, align 8, !tbaa !7
-  %4 = icmp eq %class.Array* %3, null
-  br i1 %4, label %7, label %5
+define i8* @__quantum__rt__array_get_element_ptr_1d(i8* %0, i64 %1) #3 {
+  %3 = alloca i8*, align 8
+  %4 = alloca i64, align 8
+  %5 = alloca %class.Array*, align 8
+  store i8* %0, i8** %3, align 8, !tbaa !7
+  store i64 %1, i64* %4, align 8, !tbaa !3
+  %6 = bitcast %class.Array** %5 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %6) #7
+  %7 = load i8*, i8** %3, align 8, !tbaa !7
+  %8 = bitcast i8* %7 to %class.Array*
+  store %class.Array* %8, %class.Array** %5, align 8, !tbaa !7
+  %9 = load %class.Array*, %class.Array** %5, align 8, !tbaa !7
+  %10 = getelementptr inbounds %class.Array, %class.Array* %9, i32 0, i32 2
+  %11 = load i8*, i8** %10, align 8, !tbaa !13
+  %12 = load i64, i64* %4, align 8, !tbaa !3
+  %13 = load %class.Array*, %class.Array** %5, align 8, !tbaa !7
+  %14 = getelementptr inbounds %class.Array, %class.Array* %13, i32 0, i32 0
+  %15 = load i64, i64* %14, align 8, !tbaa !14
+  %16 = mul nsw i64 %12, %15
+  %17 = getelementptr inbounds i8, i8* %11, i64 %16
+  %18 = bitcast %class.Array** %5 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %18) #7
+  ret i8* %17
+}
 
-5:                                                ; preds = %1
-  call void @_ZN5ArrayD1Ev(%class.Array* %3) #7
-  %6 = bitcast %class.Array* %3 to i8*
-  call void @_ZdlPv(i8* %6) #9
-  br label %7
+; Function Attrs: nounwind ssp uwtable
+define void @__quantum__rt__qubit_release_array(i8* %0) #3 {
+  %2 = alloca i8*, align 8
+  %3 = alloca %class.Array*, align 8
+  store i8* %0, i8** %2, align 8, !tbaa !7
+  %4 = bitcast %class.Array** %3 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %4) #7
+  %5 = load i8*, i8** %2, align 8, !tbaa !7
+  %6 = bitcast i8* %5 to %class.Array*
+  store %class.Array* %6, %class.Array** %3, align 8, !tbaa !7
+  %7 = load %class.Array*, %class.Array** %3, align 8, !tbaa !7
+  %8 = icmp eq %class.Array* %7, null
+  br i1 %8, label %11, label %9
 
-7:                                                ; preds = %5, %1
+9:                                                ; preds = %1
+  call void @_ZN5ArrayD1Ev(%class.Array* %7) #7
+  %10 = bitcast %class.Array* %7 to i8*
+  call void @_ZdlPv(i8* %10) #9
+  br label %11
+
+11:                                               ; preds = %9, %1
+  %12 = bitcast %class.Array** %3 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %12) #7
   ret void
 }
 
@@ -197,81 +239,197 @@ define linkonce_odr void @_ZN5ArrayD1Ev(%class.Array* %0) unnamed_addr #3 align 
 }
 
 ; Function Attrs: nounwind ssp uwtable
-define void @__quantum__rt__array_update_alias_count(%class.Array* %0, i32 %1) #3 {
-  %3 = alloca %class.Array*, align 8
+define void @__quantum__rt__array_update_alias_count(i8* %0, i32 %1) #3 {
+  %3 = alloca i8*, align 8
   %4 = alloca i32, align 4
-  store %class.Array* %0, %class.Array** %3, align 8, !tbaa !7
+  %5 = alloca %class.Array*, align 8
+  store i8* %0, i8** %3, align 8, !tbaa !7
   store i32 %1, i32* %4, align 4, !tbaa !9
-  %5 = load i32, i32* %4, align 4, !tbaa !9
-  %6 = sext i32 %5 to i64
-  %7 = load %class.Array*, %class.Array** %3, align 8, !tbaa !7
-  %8 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 3
-  %9 = load i64, i64* %8, align 8, !tbaa !14
-  %10 = add nsw i64 %9, %6
-  store i64 %10, i64* %8, align 8, !tbaa !14
+  %6 = bitcast %class.Array** %5 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %6) #7
+  %7 = load i8*, i8** %3, align 8, !tbaa !7
+  %8 = bitcast i8* %7 to %class.Array*
+  store %class.Array* %8, %class.Array** %5, align 8, !tbaa !7
+  %9 = load i32, i32* %4, align 4, !tbaa !9
+  %10 = sext i32 %9 to i64
+  %11 = load %class.Array*, %class.Array** %5, align 8, !tbaa !7
+  %12 = getelementptr inbounds %class.Array, %class.Array* %11, i32 0, i32 3
+  %13 = load i64, i64* %12, align 8, !tbaa !15
+  %14 = add nsw i64 %13, %10
+  store i64 %14, i64* %12, align 8, !tbaa !15
+  %15 = bitcast %class.Array** %5 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %15) #7
   ret void
 }
 
 ; Function Attrs: nounwind ssp uwtable
-define void @__quantum__rt__array_update_reference_count(%class.Array* %0, i32 %1) #3 {
-  %3 = alloca %class.Array*, align 8
+define void @__quantum__rt__array_update_reference_count(i8* %0, i32 %1) #3 {
+  %3 = alloca i8*, align 8
   %4 = alloca i32, align 4
-  store %class.Array* %0, %class.Array** %3, align 8, !tbaa !7
+  %5 = alloca %class.Array*, align 8
+  store i8* %0, i8** %3, align 8, !tbaa !7
   store i32 %1, i32* %4, align 4, !tbaa !9
-  %5 = load i32, i32* %4, align 4, !tbaa !9
-  %6 = sext i32 %5 to i64
-  %7 = load %class.Array*, %class.Array** %3, align 8, !tbaa !7
-  %8 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 4
-  %9 = load i64, i64* %8, align 8, !tbaa !15
-  %10 = add nsw i64 %9, %6
-  store i64 %10, i64* %8, align 8, !tbaa !15
+  %6 = bitcast %class.Array** %5 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %6) #7
+  %7 = load i8*, i8** %3, align 8, !tbaa !7
+  %8 = bitcast i8* %7 to %class.Array*
+  store %class.Array* %8, %class.Array** %5, align 8, !tbaa !7
+  %9 = load i32, i32* %4, align 4, !tbaa !9
+  %10 = sext i32 %9 to i64
+  %11 = load %class.Array*, %class.Array** %5, align 8, !tbaa !7
+  %12 = getelementptr inbounds %class.Array, %class.Array* %11, i32 0, i32 4
+  %13 = load i64, i64* %12, align 8, !tbaa !16
+  %14 = add nsw i64 %13, %10
+  store i64 %14, i64* %12, align 8, !tbaa !16
+  %15 = load %class.Array*, %class.Array** %5, align 8, !tbaa !7
+  %16 = getelementptr inbounds %class.Array, %class.Array* %15, i32 0, i32 4
+  %17 = load i64, i64* %16, align 8, !tbaa !16
+  %18 = icmp sle i64 %17, 0
+  br i1 %18, label %19, label %25
+
+19:                                               ; preds = %2
+  %20 = load %class.Array*, %class.Array** %5, align 8, !tbaa !7
+  %21 = icmp eq %class.Array* %20, null
+  br i1 %21, label %24, label %22
+
+22:                                               ; preds = %19
+  call void @_ZN5ArrayD1Ev(%class.Array* %20) #7
+  %23 = bitcast %class.Array* %20 to i8*
+  call void @_ZdlPv(i8* %23) #9
+  br label %24
+
+24:                                               ; preds = %22, %19
+  br label %25
+
+25:                                               ; preds = %24, %2
+  %26 = bitcast %class.Array** %5 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %26) #7
   ret void
 }
 
-; Function Attrs: ssp uwtable
-define %class.Array* @__quantum__rt__array_copy(%class.Array* %0, i1 zeroext %1) #0 {
+; Function Attrs: nounwind ssp uwtable
+define i64 @__quantum__dev__array_get_element_size(i8* %0) #3 {
+  %2 = alloca i8*, align 8
   %3 = alloca %class.Array*, align 8
-  %4 = alloca %class.Array*, align 8
+  store i8* %0, i8** %2, align 8, !tbaa !7
+  %4 = bitcast %class.Array** %3 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %4) #7
+  %5 = load i8*, i8** %2, align 8, !tbaa !7
+  %6 = bitcast i8* %5 to %class.Array*
+  store %class.Array* %6, %class.Array** %3, align 8, !tbaa !7
+  %7 = load %class.Array*, %class.Array** %3, align 8, !tbaa !7
+  %8 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 0
+  %9 = load i64, i64* %8, align 8, !tbaa !14
+  %10 = bitcast %class.Array** %3 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %10) #7
+  ret i64 %9
+}
+
+; Function Attrs: nounwind ssp uwtable
+define i64 @__quantum__dev__array_get_alias_count(i8* %0) #3 {
+  %2 = alloca i8*, align 8
+  %3 = alloca %class.Array*, align 8
+  store i8* %0, i8** %2, align 8, !tbaa !7
+  %4 = bitcast %class.Array** %3 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %4) #7
+  %5 = load i8*, i8** %2, align 8, !tbaa !7
+  %6 = bitcast i8* %5 to %class.Array*
+  store %class.Array* %6, %class.Array** %3, align 8, !tbaa !7
+  %7 = load %class.Array*, %class.Array** %3, align 8, !tbaa !7
+  %8 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 3
+  %9 = load i64, i64* %8, align 8, !tbaa !15
+  %10 = bitcast %class.Array** %3 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %10) #7
+  ret i64 %9
+}
+
+; Function Attrs: nounwind ssp uwtable
+define i64 @__quantum__dev__array_get_ref_count(i8* %0) #3 {
+  %2 = alloca i8*, align 8
+  %3 = alloca %class.Array*, align 8
+  store i8* %0, i8** %2, align 8, !tbaa !7
+  %4 = bitcast %class.Array** %3 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %4) #7
+  %5 = load i8*, i8** %2, align 8, !tbaa !7
+  %6 = bitcast i8* %5 to %class.Array*
+  store %class.Array* %6, %class.Array** %3, align 8, !tbaa !7
+  %7 = load %class.Array*, %class.Array** %3, align 8, !tbaa !7
+  %8 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 4
+  %9 = load i64, i64* %8, align 8, !tbaa !16
+  %10 = bitcast %class.Array** %3 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %10) #7
+  ret i64 %9
+}
+
+; Function Attrs: ssp uwtable
+define i8* @__quantum__rt__array_copy(i8* %0, i1 zeroext %1) #0 {
+  %3 = alloca i8*, align 8
+  %4 = alloca i8*, align 8
   %5 = alloca i8, align 1
-  store %class.Array* %0, %class.Array** %4, align 8, !tbaa !7
-  %6 = zext i1 %1 to i8
-  store i8 %6, i8* %5, align 1, !tbaa !16
-  %7 = load %class.Array*, %class.Array** %4, align 8, !tbaa !7
-  %8 = icmp eq %class.Array* %7, null
-  br i1 %8, label %9, label %10
+  %6 = alloca %class.Array*, align 8
+  %7 = alloca i32, align 4
+  %8 = alloca %class.Array*, align 8
+  store i8* %0, i8** %4, align 8, !tbaa !7
+  %9 = zext i1 %1 to i8
+  store i8 %9, i8* %5, align 1, !tbaa !17
+  %10 = bitcast %class.Array** %6 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %10) #7
+  %11 = load i8*, i8** %4, align 8, !tbaa !7
+  %12 = bitcast i8* %11 to %class.Array*
+  store %class.Array* %12, %class.Array** %6, align 8, !tbaa !7
+  %13 = load %class.Array*, %class.Array** %6, align 8, !tbaa !7
+  %14 = icmp eq %class.Array* %13, null
+  br i1 %14, label %15, label %16
 
-9:                                                ; preds = %2
-  store %class.Array* null, %class.Array** %3, align 8
-  br label %24
+15:                                               ; preds = %2
+  store i8* null, i8** %3, align 8
+  store i32 1, i32* %7, align 4
+  br label %38
 
-10:                                               ; preds = %2
-  %11 = load i8, i8* %5, align 1, !tbaa !16, !range !18
-  %12 = trunc i8 %11 to i1
-  br i1 %12, label %18, label %13
+16:                                               ; preds = %2
+  %17 = load i8, i8* %5, align 1, !tbaa !17, !range !19
+  %18 = trunc i8 %17 to i1
+  br i1 %18, label %24, label %19
 
-13:                                               ; preds = %10
-  %14 = load %class.Array*, %class.Array** %4, align 8, !tbaa !7
-  %15 = getelementptr inbounds %class.Array, %class.Array* %14, i32 0, i32 3
-  %16 = load i64, i64* %15, align 8, !tbaa !14
-  %17 = icmp sgt i64 %16, 0
-  br i1 %17, label %18, label %22
+19:                                               ; preds = %16
+  %20 = load %class.Array*, %class.Array** %6, align 8, !tbaa !7
+  %21 = getelementptr inbounds %class.Array, %class.Array* %20, i32 0, i32 3
+  %22 = load i64, i64* %21, align 8, !tbaa !15
+  %23 = icmp sgt i64 %22, 0
+  br i1 %23, label %24, label %32
 
-18:                                               ; preds = %13, %10
-  %19 = call noalias nonnull i8* @_Znwm(i64 40) #8
-  %20 = bitcast i8* %19 to %class.Array*
-  %21 = load %class.Array*, %class.Array** %4, align 8, !tbaa !7
-  call void @_ZN5ArrayC1EPS_(%class.Array* %20, %class.Array* %21) #7
-  store %class.Array* %20, %class.Array** %3, align 8
-  br label %24
+24:                                               ; preds = %19, %16
+  %25 = bitcast %class.Array** %8 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* %25) #7
+  %26 = call noalias nonnull i8* @_Znwm(i64 40) #8
+  %27 = bitcast i8* %26 to %class.Array*
+  %28 = load %class.Array*, %class.Array** %6, align 8, !tbaa !7
+  call void @_ZN5ArrayC1EPS_(%class.Array* %27, %class.Array* %28) #7
+  store %class.Array* %27, %class.Array** %8, align 8, !tbaa !7
+  %29 = load %class.Array*, %class.Array** %8, align 8, !tbaa !7
+  %30 = bitcast %class.Array* %29 to i8*
+  store i8* %30, i8** %3, align 8
+  store i32 1, i32* %7, align 4
+  %31 = bitcast %class.Array** %8 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %31) #7
+  br label %38
 
-22:                                               ; preds = %13
-  %23 = load %class.Array*, %class.Array** %4, align 8, !tbaa !7
-  store %class.Array* %23, %class.Array** %3, align 8
-  br label %24
+32:                                               ; preds = %19
+  %33 = load %class.Array*, %class.Array** %6, align 8, !tbaa !7
+  %34 = getelementptr inbounds %class.Array, %class.Array* %33, i32 0, i32 4
+  %35 = load i64, i64* %34, align 8, !tbaa !16
+  %36 = add nsw i64 %35, 1
+  store i64 %36, i64* %34, align 8, !tbaa !16
+  %37 = load i8*, i8** %4, align 8, !tbaa !7
+  store i8* %37, i8** %3, align 8
+  store i32 1, i32* %7, align 4
+  br label %38
 
-24:                                               ; preds = %22, %18, %9
-  %25 = load %class.Array*, %class.Array** %3, align 8
-  ret %class.Array* %25
+38:                                               ; preds = %32, %24, %15
+  %39 = bitcast %class.Array** %6 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %39) #7
+  %40 = load i8*, i8** %3, align 8
+  ret i8* %40
 }
 
 ; Function Attrs: nounwind ssp uwtable
@@ -298,26 +456,26 @@ define linkonce_odr void @_ZN5ArrayC2Exx(%class.Array* %0, i64 %1, i64 %2) unnam
   %8 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 0
   %9 = call nonnull align 8 dereferenceable(8) i64* @_ZNSt3__14moveIRxEEONS_16remove_referenceIT_E4typeEOS3_(i64* nonnull align 8 dereferenceable(8) %5) #7
   %10 = load i64, i64* %9, align 8, !tbaa !3
-  store i64 %10, i64* %8, align 8, !tbaa !13
+  store i64 %10, i64* %8, align 8, !tbaa !14
   %11 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 1
   %12 = call nonnull align 8 dereferenceable(8) i64* @_ZNSt3__14moveIRxEEONS_16remove_referenceIT_E4typeEOS3_(i64* nonnull align 8 dereferenceable(8) %6) #7
   %13 = load i64, i64* %12, align 8, !tbaa !3
-  store i64 %13, i64* %11, align 8, !tbaa !19
+  store i64 %13, i64* %11, align 8, !tbaa !11
   %14 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 3
-  store i64 0, i64* %14, align 8, !tbaa !14
+  store i64 0, i64* %14, align 8, !tbaa !15
   %15 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 4
-  store i64 1, i64* %15, align 8, !tbaa !15
+  store i64 1, i64* %15, align 8, !tbaa !16
   %16 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 0
-  %17 = load i64, i64* %16, align 8, !tbaa !13
+  %17 = load i64, i64* %16, align 8, !tbaa !14
   %18 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 1
-  %19 = load i64, i64* %18, align 8, !tbaa !19
+  %19 = load i64, i64* %18, align 8, !tbaa !11
   %20 = mul nsw i64 %17, %19
   %21 = invoke noalias nonnull i8* @_Znam(i64 %20) #8
           to label %22 unwind label %24
 
 22:                                               ; preds = %3
   %23 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 2
-  store i8* %21, i8** %23, align 8, !tbaa !11
+  store i8* %21, i8** %23, align 8, !tbaa !13
   ret void
 
 24:                                               ; preds = %3
@@ -355,7 +513,7 @@ define linkonce_odr void @_ZN5ArrayD2Ev(%class.Array* %0) unnamed_addr #3 align 
   store %class.Array* %0, %class.Array** %2, align 8, !tbaa !7
   %3 = load %class.Array*, %class.Array** %2, align 8
   %4 = getelementptr inbounds %class.Array, %class.Array* %3, i32 0, i32 2
-  %5 = load i8*, i8** %4, align 8, !tbaa !11
+  %5 = load i8*, i8** %4, align 8, !tbaa !13
   %6 = icmp eq i8* %5, null
   br i1 %6, label %8, label %7
 
@@ -380,39 +538,39 @@ define linkonce_odr void @_ZN5ArrayC2EPS_(%class.Array* %0, %class.Array* %1) un
   %6 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 0
   %7 = load %class.Array*, %class.Array** %4, align 8, !tbaa !7
   %8 = getelementptr inbounds %class.Array, %class.Array* %7, i32 0, i32 0
-  %9 = load i64, i64* %8, align 8, !tbaa !13
-  store i64 %9, i64* %6, align 8, !tbaa !13
+  %9 = load i64, i64* %8, align 8, !tbaa !14
+  store i64 %9, i64* %6, align 8, !tbaa !14
   %10 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 1
   %11 = load %class.Array*, %class.Array** %4, align 8, !tbaa !7
   %12 = getelementptr inbounds %class.Array, %class.Array* %11, i32 0, i32 1
-  %13 = load i64, i64* %12, align 8, !tbaa !19
-  store i64 %13, i64* %10, align 8, !tbaa !19
+  %13 = load i64, i64* %12, align 8, !tbaa !11
+  store i64 %13, i64* %10, align 8, !tbaa !11
   %14 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 3
-  store i64 0, i64* %14, align 8, !tbaa !14
+  store i64 0, i64* %14, align 8, !tbaa !15
   %15 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 4
-  store i64 1, i64* %15, align 8, !tbaa !15
+  store i64 1, i64* %15, align 8, !tbaa !16
   %16 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 0
-  %17 = load i64, i64* %16, align 8, !tbaa !13
+  %17 = load i64, i64* %16, align 8, !tbaa !14
   %18 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 1
-  %19 = load i64, i64* %18, align 8, !tbaa !19
+  %19 = load i64, i64* %18, align 8, !tbaa !11
   %20 = mul nsw i64 %17, %19
   %21 = invoke noalias nonnull i8* @_Znam(i64 %20) #8
           to label %22 unwind label %34
 
 22:                                               ; preds = %2
   %23 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 2
-  store i8* %21, i8** %23, align 8, !tbaa !11
-  %24 = load %class.Array*, %class.Array** %4, align 8, !tbaa !7
-  %25 = getelementptr inbounds %class.Array, %class.Array* %24, i32 0, i32 2
-  %26 = load i8*, i8** %25, align 8, !tbaa !11
-  %27 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 2
-  %28 = load i8*, i8** %27, align 8, !tbaa !11
+  store i8* %21, i8** %23, align 8, !tbaa !13
+  %24 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 2
+  %25 = load i8*, i8** %24, align 8, !tbaa !13
+  %26 = load %class.Array*, %class.Array** %4, align 8, !tbaa !7
+  %27 = getelementptr inbounds %class.Array, %class.Array* %26, i32 0, i32 2
+  %28 = load i8*, i8** %27, align 8, !tbaa !13
   %29 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 0
-  %30 = load i64, i64* %29, align 8, !tbaa !13
+  %30 = load i64, i64* %29, align 8, !tbaa !14
   %31 = getelementptr inbounds %class.Array, %class.Array* %5, i32 0, i32 1
-  %32 = load i64, i64* %31, align 8, !tbaa !19
+  %32 = load i64, i64* %31, align 8, !tbaa !11
   %33 = mul nsw i64 %30, %32
-  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 1 %26, i8* align 1 %28, i64 %33, i1 false)
+  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 1 %25, i8* align 1 %28, i64 %33, i1 false)
   ret void
 
 34:                                               ; preds = %2
@@ -452,12 +610,12 @@ attributes #10 = { noreturn nounwind }
 !8 = !{!"any pointer", !5, i64 0}
 !9 = !{!10, !10, i64 0}
 !10 = !{!"int", !5, i64 0}
-!11 = !{!12, !8, i64 16}
+!11 = !{!12, !4, i64 8}
 !12 = !{!"_ZTS5Array", !4, i64 0, !4, i64 8, !8, i64 16, !4, i64 24, !4, i64 32}
-!13 = !{!12, !4, i64 0}
-!14 = !{!12, !4, i64 24}
-!15 = !{!12, !4, i64 32}
-!16 = !{!17, !17, i64 0}
-!17 = !{!"bool", !5, i64 0}
-!18 = !{i8 0, i8 2}
-!19 = !{!12, !4, i64 8}
+!13 = !{!12, !8, i64 16}
+!14 = !{!12, !4, i64 0}
+!15 = !{!12, !4, i64 24}
+!16 = !{!12, !4, i64 32}
+!17 = !{!18, !18, i64 0}
+!18 = !{!"bool", !5, i64 0}
+!19 = !{i8 0, i8 2}

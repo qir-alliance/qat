@@ -1,5 +1,6 @@
 #include <cstdint>
-#include <unordered_map>
+#include <cstring>
+#include <utility>
 
 class Array
 {
@@ -16,7 +17,7 @@ public:
     , count{ref->count}
   {
     data = new int8_t[size * count];
-    memcpy(ref->data, data, size * count);
+    memcpy(data, ref->data, size * count);
   }
 
   ~Array() noexcept
@@ -56,37 +57,68 @@ extern "C"
     }
   }
 
-  Array *__quantum__rt__array_create_1d(int32_t size, int64_t n)
+  int8_t *__quantum__rt__array_create_1d(int32_t size, int64_t n)
   {
-    return new Array(size, n);
+    Array *data = new Array(size, n);
+    return reinterpret_cast<int8_t *>(data);
   }
 
-  int8_t *__quantum__rt__array_get_element_ptr_1d(Array *array, int64_t n)
+  int64_t __quantum__rt__array_get_size_1d(int8_t *ptr)
   {
+    auto array = reinterpret_cast<Array *>(ptr);
+    return array->count;
+  }
+
+  int8_t *__quantum__rt__array_get_element_ptr_1d(int8_t *ptr, int64_t n)
+  {
+    auto array = reinterpret_cast<Array *>(ptr);
     return array->data + n * array->size;
   }
 
-  void __quantum__rt__qubit_release_array(Array *array)
+  void __quantum__rt__qubit_release_array(int8_t *ptr)
   {
+    auto array = reinterpret_cast<Array *>(ptr);
     delete array;
   }
 
-  void __quantum__rt__array_update_alias_count(Array *arr, int32_t n)
+  void __quantum__rt__array_update_alias_count(int8_t *ptr, int32_t n)
   {
+    auto arr = reinterpret_cast<Array *>(ptr);
     arr->alias_count += n;
   }
 
-  void __quantum__rt__array_update_reference_count(Array *arr, int32_t n)
+  void __quantum__rt__array_update_reference_count(int8_t *ptr, int32_t n)
   {
+    auto arr = reinterpret_cast<Array *>(ptr);
     arr->ref_count += n;
+
     if (arr->ref_count <= 0)
     {
       delete arr;
     }
   }
 
-  Array *__quantum__rt__array_copy(Array *arr, bool force)
+  int64_t __quantum__dev__array_get_element_size(int8_t *ptr)
   {
+    auto arr = reinterpret_cast<Array *>(ptr);
+    return arr->size;
+  }
+
+  int64_t __quantum__dev__array_get_alias_count(int8_t *ptr)
+  {
+    auto arr = reinterpret_cast<Array *>(ptr);
+    return arr->alias_count;
+  }
+
+  int64_t __quantum__dev__array_get_ref_count(int8_t *ptr)
+  {
+    auto arr = reinterpret_cast<Array *>(ptr);
+    return arr->ref_count;
+  }
+
+  int8_t *__quantum__rt__array_copy(int8_t *ptr, bool force)
+  {
+    auto arr = reinterpret_cast<Array *>(ptr);
     if (arr == nullptr)
     {
       return nullptr;
@@ -94,10 +126,12 @@ extern "C"
 
     if (force || arr->alias_count > 0)
     {
-      //      return arr;
-      return new Array(arr);
+      Array *data = new Array(arr);
+      return reinterpret_cast<int8_t *>(data);
     }
 
-    return arr;
+    arr->ref_count += 1;
+
+    return ptr;
   }
 }
