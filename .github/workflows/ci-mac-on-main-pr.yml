@@ -15,6 +15,7 @@ on:
 jobs:
   build:
     runs-on: macos-11
+    name: "Mac CI"
 
     steps:
       - name: Checkout code
