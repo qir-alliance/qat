@@ -1,6 +1,7 @@
-name: Linux Release
+name: "Linux Release"
 
 on:
+  workflow_dispatch:
   release:
     types:
       - created
@@ -17,16 +18,16 @@ jobs:
       - name: "Installing dependencies"
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y 
+          sudo apt-get install -y
           sudo apt-get remove -y llvm-12
           sudo apt-get install -y curl pkg-config findutils  wget
-          sudo apt install -y clang-11 cmake clang-format-11 clang-tidy-11 
+          sudo apt install -y clang-11 cmake clang-format-11 clang-tidy-11
           sudo apt-get install -y llvm-11 lldb-11 llvm-11-dev libllvm11 llvm-11-runtime
-          sudo apt install -y python3 python3-pip 
+          sudo apt install -y python3 python3-pip
           sudo apt-get remove -y llvm-10
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 0
           git submodule update --init --recursive
-          pip install -r requirements.txt  
+          pip install -r requirements.txt
           chmod +x manage
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -49,21 +50,21 @@ jobs:
         run: |
           mkdir -p Release
           cd Release
-          cmake .. 
+          cmake ..
           make qat
           cd ..
           mv Release/qir/qat/Apps/qat ./
           chmod +x qat
-          tar cf qat-ubuntu-20.zip qat          
+          tar cf qat-ubuntu-20.zip qat
         env:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
-          PYTHON_BIN_PATH: /usr/bin/python3          
+          PYTHON_BIN_PATH: /usr/bin/python3
           CC: clang-11
           CXX: clang++-11
 
       - name: Upload Release Asset
-        id: upload-release-asset 
+        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

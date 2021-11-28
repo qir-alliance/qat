@@ -1,9 +1,10 @@
-name: Mac OS X CI
+name: "Mac OS X CI"
 
 on:
+  workflow_dispatch:
   push:
     branches:
-    - main  
+    - main
   pull_request:
     branches:
     - main
@@ -21,7 +22,7 @@ jobs:
 
       - name: "Installing dependencies"
         run: |
-          rm '/usr/local/bin/2to3'        
+          rm '/usr/local/bin/2to3'
           brew install llvm@11
           brew install cmake
           brew install python@3.9
@@ -29,15 +30,15 @@ jobs:
           brew link python@3.9
           echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
           git submodule update --init --recursive
-          pip3 install --user -r requirements.txt 
-          dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573     
+          pip3 install --user -r requirements.txt
+          dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573
           chmod +x manage
 
           exec -l $SHELL
 
       - name: "Checking format"
         run: |
-          ./manage stylecheck        
+          ./manage stylecheck
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
