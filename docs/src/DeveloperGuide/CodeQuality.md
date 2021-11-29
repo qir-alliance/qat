@@ -2,8 +2,9 @@
 
 ## Using the manage tool
 
-Before making a pull request with changes to this library, please ensure that style checks passes, that the code compiles,
-unit test passes and that there are no erros found by the static analyser.
+Before making a pull request with changes to this library, please ensure that
+style checks passes, that the code compiles, unit test passes and that there are
+no erros found by the static analyser.
 
 To setup the CI environment, run following commands
 
@@ -13,7 +14,8 @@ source develop__venv/bin/activate
 pip install -r requirements.txt
 ```
 
-These adds the necessary environment variables to ensure that you have the `tasks_ci` package and all required dependencies.
+These adds the necessary environment variables to ensure that you have the
+`tasks_ci` package and all required dependencies.
 
 To check the style, run
 
@@ -39,12 +41,16 @@ You can run all processes by running:
 ./manage runci
 ```
 
-As `clang-tidy` and `clang-format` acts slightly different from version to version and on different platforms, it is recommended
-that you use a docker image to perform these steps. TODO(issue-10): The docker image is not added yet and this will be documented in the future.
+As `clang-tidy` and `clang-format` acts slightly different from version to
+version and on different platforms, it is recommended that you use a docker
+image to perform these steps. TODO(issue-10): The docker image is not added yet
+and this will be documented in the future.
 
 ## Running tests
 
-In order to run the tests, you first need to build the library. Assuming that this is already done and the corresponding build is in `Debug/`, run the tests from the `Debug` folder:
+In order to run the tests, you first need to build the library. Assuming that
+this is already done and the corresponding build is in `Debug/`, run the tests
+from the `Debug` folder:
 
 ```
 lit tests/ -v
@@ -77,11 +83,13 @@ TODO(issue-11): Write this section
 
 The continuous integration component includes:
 
-1. Style formatting to ensure that everything looks the same. This includes checking that relevant copyrights are in place.
+1. Style formatting to ensure that everything looks the same. This includes
+   checking that relevant copyrights are in place.
 2. Static analysis
 3. Unit testing
 
-The automatic style enforcement is configurable with the ability to easily add or remove rules. Currently the source pipelines are defined as:
+The automatic style enforcement is configurable with the ability to easily add
+or remove rules. Currently the source pipelines are defined as:
 
 ```python
 SOURCE_PIPELINES = [
@@ -105,9 +113,13 @@ SOURCE_PIPELINES = [
 ]
 ```
 
-This part defines pipelines for `.hpp` files and `.cpp` files allowing the developer to add such requirements as having copyright in the op of the source file and ensure that formatting follows that given by `.clang-format`.
+This part defines pipelines for `.hpp` files and `.cpp` files allowing the
+developer to add such requirements as having copyright in the op of the source
+file and ensure that formatting follows that given by `.clang-format`.
 
-Each of these CI stages can be executed individually using `./manage` or you can run the entire CI process by invoking `./manage runci`. An example of what this may look like is here:
+Each of these CI stages can be executed individually using `./manage` or you can
+run the entire CI process by invoking `./manage runci`. An example of what this
+may look like is here:
 
 ```sh
 ./manage runci
@@ -163,4 +175,6 @@ No test configuration file found!
 *********************************
 ```
 
-The key idea here is to make it extremely easy to be compliant with the style guide, correct any issues that might come as a result of static analysis and at the same time enforce this when a PR is made.
+The key idea here is to make it extremely easy to be compliant with the style
+guide, correct any issues that might come as a result of static analysis and at
+the same time enforce this when a PR is made.

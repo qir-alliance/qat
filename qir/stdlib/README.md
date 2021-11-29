@@ -2,7 +2,10 @@
 
 ## How to link and build an executable
 
-Building the standard library uses the following LLVM tools: `llvm-as`, `llc` and `llvm-link` alongside with `clang`. The test suite consists of two sets of tests: C tests and IR tests. Each of these sets needs a slightly different flow to build them.
+Building the standard library uses the following LLVM tools: `llvm-as`, `llc`
+and `llvm-link` alongside with `clang`. The test suite consists of two sets of
+tests: C tests and IR tests. Each of these sets needs a slightly different flow
+to build them.
 
 To manually build the C test,
 

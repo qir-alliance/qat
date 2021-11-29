@@ -3,13 +3,13 @@ name: Mac OS X CI
 on:
   push:
     branches:
-    - main  
+      - main
   pull_request:
     branches:
-    - main
+      - main
   release:
     types:
-    - created
+      - created
 
 jobs:
   build:
@@ -37,7 +37,7 @@ jobs:
 
       - name: "Checking format"
         run: |
-          ./manage stylecheck        
+          ./manage stylecheck
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
@@ -61,7 +61,6 @@ jobs:
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
           CC: clang
           CXX: clang++
-
 
       - name: "Performing static analysis"
         run: |

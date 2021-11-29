@@ -3,13 +3,13 @@ name: Linux CI
 on:
   push:
     branches:
-    - main  
+      - main
   pull_request:
     branches:
-    - main
+      - main
   release:
     types:
-    - created
+      - created
 
 jobs:
   build:
@@ -46,7 +46,7 @@ jobs:
 
       - name: "Checking format"
         run: |
-          ./manage stylecheck        
+          ./manage stylecheck
         env:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1

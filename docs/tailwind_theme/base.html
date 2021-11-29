@@ -72,7 +72,7 @@
       );
       ga("send", "pageview");
     </script>
-    {%- endif %} {%- endblock %} {%- block extrahead %} {% endblock %} 
+    {%- endif %} {%- endblock %} {%- block extrahead %} {% endblock %}
   </head>
 
   <body>
@@ -109,7 +109,7 @@
             <div class="absolute top-0 right-0 -mr-12 pt-2">
               <button
                 class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                id="sidebarClose"                
+                id="sidebarClose"
               >
                 <span class="sr-only">Close sidebar</span>
                 <!-- Heroicon name: x -->
@@ -133,29 +133,27 @@
             {% include 'logo.html' %}
             <div class="mt-5 flex-1 h-0 overflow-y-auto">
               <nav class="px-2">
-
-              {%- block site_nav_mobile %} {%- for nav_item in nav %} {%- if
-              nav_item.children %}
-              <h3
-                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
-                id="teams-headline"
-              >
-                {{nav_item.title}}
-              </h3>
-              {%- for nav_sub_item in nav_item.children %}
-              <a
-                class="{% if nav_sub_item.active %}bg-gray-900{% else %} hover:bg-gray-700{% endif %} text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="{{ nav_sub_item.url|url }}"
-                >{{ nav_sub_item.title }}</a
-              >
-              {%- endfor %} {% else %}
-              <a
-                class="{% if nav_item.active %}bg-gray-900{% else %} hover:bg-gray-700{% endif %} text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="{{ nav_item.url|url }}"
-                >{{ nav_item.title }}</a
-              >
-              {% endif %} {%- endfor %} {%- endblock %}
-
+                {%- block site_nav_mobile %} {%- for nav_item in nav %} {%- if
+                nav_item.children %}
+                <h3
+                  class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                  id="teams-headline"
+                >
+                  {{nav_item.title}}
+                </h3>
+                {%- for nav_sub_item in nav_item.children %}
+                <a
+                  class="{% if nav_sub_item.active %}bg-gray-900{% else %} hover:bg-gray-700{% endif %} text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="{{ nav_sub_item.url|url }}"
+                  >{{ nav_sub_item.title }}</a
+                >
+                {%- endfor %} {% else %}
+                <a
+                  class="{% if nav_item.active %}bg-gray-900{% else %} hover:bg-gray-700{% endif %} text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="{{ nav_item.url|url }}"
+                  >{{ nav_item.title }}</a
+                >
+                {% endif %} {%- endfor %} {%- endblock %}
               </nav>
             </div>
           </div>
@@ -204,14 +202,13 @@
 
       <!-- Main column -->
       <div class="flex flex-col w-0 flex-1 overflow-hidden">
-
         <!-- Top bar -->
         <div
           class="relative z-20 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 focus:outline-none"
         >
           <button
             class="px-4 border-r border-gray-200 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden"
-            id="sidebarOpen"                            
+            id="sidebarOpen"
           >
             <span class="sr-only">Open sidebar</span>
             <!-- Heroicon name: menu-alt-1 -->
@@ -266,18 +263,20 @@
                     class="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
                     placeholder="Search documentation"
                     type="search"
-                  />       
+                  />
                 </div>
               </form>
-              <div id="searchResults" class="fixed sm:absolute mt-16 z-10 inset-0 overflow-y-auto min-h-screen min-w-screen flex flex-col justify-start sm:pb-16 lg:pb-96 lg:max-w-6xl lg:mx-auto hidden">
-                  <div class="bg-gray-100 text-gray-400 p-2">
-                    Results
-                  </div>
-                  <div class="bg-white min-h-96 z-100 p-4 sm:p-8 rounded-b space-y-4 flex flex-col overflow-y-auto w-full max-h-full">
-                    <div class="prose"  id="mkdocs-search-results">
-                    </div>
-                  </div>
-              </div>                         
+              <div
+                id="searchResults"
+                class="fixed sm:absolute mt-16 z-10 inset-0 overflow-y-auto min-h-screen min-w-screen flex flex-col justify-start sm:pb-16 lg:pb-96 lg:max-w-6xl lg:mx-auto hidden"
+              >
+                <div class="bg-gray-100 text-gray-400 p-2">Results</div>
+                <div
+                  class="bg-white min-h-96 z-100 p-4 sm:p-8 rounded-b space-y-4 flex flex-col overflow-y-auto w-full max-h-full"
+                >
+                  <div class="prose" id="mkdocs-search-results"></div>
+                </div>
+              </div>
             </div>
             {# TODO: Add github link
             <div class="ml-4 flex items-center md:ml-6">
@@ -310,25 +309,24 @@
           class="relative flex flex-col flex-grow h-0 min-h-full justify-between bg-white focus:outline-none overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
           tabindex="0"
         >
-
-        <div class="fixed inset-0 transition-opacity hidden searchOverlayElement" aria-hidden="true" id="searchOverlay">
-          <div class="absolute inset-0 bg-gray-500 opacity-75 searchOverlayElement"></div>
-        </div>
+          <div
+            class="fixed inset-0 transition-opacity hidden searchOverlayElement"
+            aria-hidden="true"
+            id="searchOverlay"
+          >
+            <div
+              class="absolute inset-0 bg-gray-500 opacity-75 searchOverlayElement"
+            ></div>
+          </div>
 
           <div
             class="lg:px-8 flex flex-col space-y-4 p-4 md:px-6 sm:px-8 w-full mb-96"
           >
             {%- block content %} {# TODO:
-            <div class="col-md-3">
-              {% include "toc.html" %}
-            </div>
-            #}
-
-            {% include "content.html" %}
-            {%- endblock %}
+            <div class="col-md-3">{% include "toc.html" %}</div>
+            #} {% include "content.html" %} {%- endblock %}
           </div>
         </main>
-
       </div>
     </div>
 
@@ -344,7 +342,6 @@
     include "search-modal.html" %}{% endif #} {# TODO - include
     "keyboard-modal.html" #}
   </body>
-
 </html>
 {% if page and page.is_homepage %}
 <!--

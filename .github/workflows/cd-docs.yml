@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      
+
 jobs:
   build-and-deploy-docs:
     runs-on: ubuntu-latest
@@ -19,7 +19,7 @@ jobs:
             findutils \
             wget \
             unzip doxygen  texlive-font-utils
-     
+
           pip install mkdocs
           pip install mkdocs-gitbook
           wget https://github.com/matusnovak/doxybook2/releases/download/v1.3.6/doxybook2-linux-amd64-v1.3.6.zip
