@@ -11,6 +11,8 @@ all:
 	cd IsingModel && make all && make clean
 	cd ParallelQRng && make all && make clean
 	cd TeleportChain && make all && make clean
+	cd ReadResult && make all && make clean
+
 
 
 stats:
@@ -29,4 +31,5 @@ clean:
 	cd IsingModel && make clean
 	cd ParallelQRng && make clean
 	cd TeleportChain && make clean
+	cd ReadResult && make clean
 
