@@ -38,17 +38,20 @@ and then make your target:
 make qat
 ```
 
-For full instructions on dependencies and how to build, follow [these instructions](./docs/src/UserGuide/BuildingLibrary.md).
+For full instructions on dependencies and how to build, follow
+[these instructions](./docs/src/UserGuide/BuildingLibrary.md).
 
 ## Getting started
 
-Once the project is built (see next sections), you can transform a QIR according to a profile as follows:
+Once the project is built (see next sections), you can transform a QIR
+according to a profile as follows:
 
 ```sh
 ./qir/qat/Apps/qat --generate --profile base -S path/to/example.ll
 ```
 
-Likewise, you can validate that a QIR follows a specification by running (Note, not implemented yet):
+Likewise, you can validate that a QIR follows a specification by running
+(Note, not implemented yet):
 
 ```sh
 ./qir/qat/Apps/qat --validate --profile base -S path/to/example.ll
@@ -60,8 +63,8 @@ You can access the [documentation here](https://qir-alliance.github.io/qat/).
 
 ## Feedback
 
-If you have feedback about the content in this repository, please let us know by
-filing a [new issue](https://github.com/qir-alliance/qat/issues/new)!
+If you have feedback about the content in this repository, please let us
+know by filing a [new issue](https://github.com/qir-alliance/qat/issues/new)!
 
 ## Contributing
 
