@@ -22,6 +22,7 @@ jobs:
           brew install python@3.9
           brew unlink python@3.9
           brew link python@3.9
+          brew install node@16
           echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt

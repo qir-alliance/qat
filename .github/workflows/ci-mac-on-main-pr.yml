@@ -31,6 +31,8 @@ jobs:
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt 
           dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573     
+          brew install node@16
+          npm install -g prettier@2.2.1
           chmod +x manage
 
           exec -l $SHELL
