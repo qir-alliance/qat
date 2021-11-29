@@ -1,33 +1,29 @@
 {# if page.meta.source %}
-  <div class="source-links">
+<div class="source-links">
   {% for filename in page.meta.source %}
-      <span class="label label-primary">{{ filename }}</span>
+  <span class="label label-primary">{{ filename }}</span>
   {% endfor %}
-  </div>
+</div>
 {% endif #}
 
-
-
 <div class="lg:max-w-6xl w-full lg:mx-auto px-4 sm:px-6 lg:px-8">
-  <div class="text-lg max-w-prose mx-auto  py-10">
+  <div class="text-lg max-w-prose mx-auto py-10">
     <h1>
-      <span class="block text-base text-center text-qauntum-600 font-semibold tracking-wide uppercase">
-        {% if page.parent %}{{ page.parent.title }}{% else %}Documentation for{% endif %}
+      <span
+        class="block text-base text-center text-qauntum-600 font-semibold tracking-wide uppercase"
+      >
+        {% if page.parent %}{{ page.parent.title }}{% else %}Documentation for{%
+        endif %}
       </span>
-      <span class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center">
-        <span class="text-center">
-          {{page.title}}
-        </span>
+      <span
+        class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
+      >
+        <span class="text-center"> {{page.title}} </span>
       </span>
     </h1>
     {% if page.meta.summary %}
-    <p class="mt-8 text-xl text-gray-500 leading-8">
-      {{page.meta.summary}}
-    </p>
+    <p class="mt-8 text-xl text-gray-500 leading-8">{{page.meta.summary}}</p>
     {% endif %}
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog">
-    {{ page.content }}
-  </div>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog">{{ page.content }}</div>
 </div>
-

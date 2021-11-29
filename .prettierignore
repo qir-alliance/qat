@@ -1,0 +1,7 @@
+vendors/**
+Debug/**
+.clang-format
+docs/tailwind_theme/css/styles.css
+docs/tailwind_theme/js/
+docs/tailwind_theme/js/*
+docs/tailwind_theme/js/**
