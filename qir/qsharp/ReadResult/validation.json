@@ -1,0 +1,47 @@
+[
+  {
+    "type": "error",
+    "message": "'add' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'xor' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'insertelement' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'zext' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'llvm.experimental.vector.reduce.add.v8i64' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  }
+]

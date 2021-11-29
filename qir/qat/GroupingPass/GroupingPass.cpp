@@ -89,7 +89,15 @@ namespace quantum
 
         for (auto& instr : *tail_classical)
         {
-            // Leaving all quantum instructions
+
+            // Ignoring terminators
+            // Only the terminator survives in the tail block
+            if (instr.isTerminator())
+            {
+                continue;
+            }
+
+            // Analysing calls
             auto call_instr = llvm::dyn_cast<llvm::CallBase>(&instr);
             if (call_instr != nullptr)
             {
@@ -97,6 +105,7 @@ namespace quantum
                 if (f != nullptr)
                 {
 
+                    // Checking if it is a QIS instruction
                     auto name = static_cast<std::string>(f->getName());
                     bool is_quantum =
                         (name.size() >= GroupingAnalysisPass::QIS_START.size() &&
@@ -110,20 +119,25 @@ namespace quantum
                             if (post_classical_instructions.find(op) != post_classical_instructions.end())
                             {
                                 nextQuantumCycle(module, tail_classical);
+                                depends_on_qc.clear();
+                                post_classical_instructions.clear();
                                 break;
                             }
                         }
 
                         // Marking dependencies as going into post section
                         bool is_readout = false;
-                        if (!instr.users().empty())
-                        {
-                            for (auto user : instr.users())
-                            {
-                                depends_on_qc.insert(user);
-                            }
 
+                        // We expect pure quantum instructions to be void.
+                        if (!instr.getType()->isVoidTy())
+                        {
                             is_readout = true;
+                        }
+
+                        // Marking all instructions that depend on a a read out
+                        for (auto user : instr.users())
+                        {
+                            depends_on_qc.insert(user);
                         }
 
                         // Moving the instruction to
@@ -146,12 +160,7 @@ namespace quantum
                 }
             }
 
-            // Only the terminator survives in the tail block
-            if (instr.isTerminator())
-            {
-                continue;
-            }
-
+            //
             // Check if depends on readout
             if (depends_on_qc.find(&instr) != depends_on_qc.end())
             {
@@ -171,6 +180,7 @@ namespace quantum
                 continue;
             }
 
+            // Post quantum section
             // Moving remaining to pre-section
             auto new_instr = instr.clone();
             new_instr->takeName(&instr);
@@ -187,7 +197,11 @@ namespace quantum
         for (auto it = to_delete.rbegin(); it != to_delete.rend(); ++it)
         {
             auto ptr = *it;
-            if (ptr->use_empty())
+            if (!ptr->use_empty())
+            {
+                llvm::errs() << ";; Error: Could not delete " << *ptr << "\n";
+            }
+            else
             {
                 ptr->eraseFromParent();
             }
