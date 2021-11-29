@@ -1,85 +1,73 @@
 # Contributing
 
-This document sets out some light requirements for contributing to QAT. In case you do not feel like reading this style guide, just run
+Thank you for your interest in contributing to QAT!
 
-```sh
-./manage runci
-```
+There are many ways in which you can contribute to QAT, whether by contributing
+a feature or by engaging in discussions; we value contributions in all shapes
+and sizes! The following sections may give some ideas for how you can get
+involved.
 
-from the `src/Passes` directory before making a pull request. This script enforces all requirements described below programmatically. You can then refer to this guide for an explanation for why and how.
+## Asking and Answering Questions
 
-## Why do we need a style guide?
+Have a question? This repository is great places to ask questions about
+compiling QIR to a target specific profile. Your question will serve as resource
+to others searching for help. Please file an issue to ask your question
+[here](https://github.com/qir-alliance/qat/issues/new).
 
-Consistency and readability such that it is easy to read and understand code that was not written by yourself. For example, if one developer uses `CamelCase` for namespaces and `snake_case` for classes while another uses `snake_case` for namespaces and `CamelCase` you may end up with code sections that looks like this
+Or maybe you have figured out how that hard-to-understand concept works? Share
+your knowledge! If you are interested in contributing to the documentation,
+please follow the standard development process and help us improve the
+materials.
 
-```cpp
-int32_t main()
-{
-  name_space1::Class1 hello;
-  NameSpace2::class_name world;
-}
-```
+## Reporting and Commenting on Issues
 
-which is hard to read.
+Have you identified an issue or modification that would benefit the community?
+We want to hear about it! If you have feedback about the content in this
+repository, please let us know by filing a [new
+issue](https://github.com/qir-alliance/qat/issues/new)!
 
-## What does the style guide apply to?
+As for any active effort, there are always many ways in which we hope to evolve
+and improve the specification and tools. We encourage you to look at the list of
+currently [open issues](https://github.com/qir-alliance/qat/issues) to share
+your ideas and expertise.
 
-The style guide applies to any new code written as well as code that is being refactored added to the `Passes` library. We do not rewrite existing code for the sake just changing the style.
+## Contributing Code
 
-## Style discrepancy
+If you are interested in helping fix issues you or someone else encountered,
+please make sure that the corresponding issue has been filed on the repository.
+Check that nobody is currently working on it and that it has indeed been marked
+as bug. If that's the case, indicate on the issue that you are working on it,
+and link to the corresponding GitHub page where the fix is being developed. If
+someone is already working on a fix, ask if you can help or see what other
+things can be done. If an issue is labeled as feature, please follow the
+guidelines related to contributing features. If an issue has not been labeled
+yet, please indicate that you would like to work on it and be patient - we are a
+small team and are doing our best to be quick with responding to your inquiry!
 
-In case of a discrepancy between this guideline and `clang-tidy` or `clang-format`,
-clang tools rule. In case of discrepancy between this guide and any guides subsequently referenced guides, this guide rules. However, feel free to suggest changes. Changes will be incorporated on the basis
-that updated styles are apply to new code and not existing code.
+If you are interested in contributing a new feature, please first check if a
+similar functionality has already been requested. If so, consider contributing
+to the discussion around it rather than filing a separate issue. If no open or
+closed issue with such a request already exists, please file one following the
+[feature request
+template](https://github.com/qir-alliance/qat/issues/new?assignees=&labels=feature&template=feature_request.md&title=).
+We will respond to feature requests and follow up with a discussion around its
+feasibility, how one might go about implementing it, and whether that is
+something that makes sense to add. There are several reasons why we might not be
+able to eventually merge even a great feature for one reason or another. Perhaps
+most commonly, a contribution is a really good one, but this isn't the right
+place to develop it or we simply aren't ready to maintain and develop it
+further. It can be difficult to do everything, so we are careful to prioritize
+the quality and reliability across the code base over new features. In such
+cases, we strongly encourage you to pursue your passion project in your own
+fork, and welcome sharing and discussing your thoughts and progress on the
+corresponding issue regardless. We'll also ask for changes to a pull request if
+it requires more documentation or unit tests to better make use of it.
 
-## Naming
+Please also take a look at the [style guide](styleguide.md).
 
-Naming is taken from the [Microsoft AirSim](https://github.com/microsoft/AirSim/blob/master/docs/coding_guidelines.md) project.
+And last but not least:
 
-| **Code Element**         | **Style**                        | **Comment**                                                                                                                                   |
-| ------------------------ | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Namespace                | snake_case                       | Differentiates `namespace::ClassName` and `ClassName::SubClass` names                                                                         |
-| Class name               | CamelCase                        | To differentiate from STL types which ISO recommends (do not use "C" or "T" prefixes)                                                         |
-| Type aliases             | CamelCase                        | To differentiate from STL types which ISO recommends                                                                                          |
-| Template type parameters | CamelCase                        | To differentiate from STL types which ISO recommends                                                                                          |
-| Function name            | camelCase                        | Lower case start is almost universal except for .NET world                                                                                    |
-| Parameters/Locals        | snake_case                       | Vast majority of standards recommends this because \_ is more readable to C++ crowd (although not much to Java/.NET crowd)                    |
-| Member variables         | snake_case_with\_                | The prefix \_ is heavily discouraged as ISO has rules around reserving \_identifiers, so we recommend suffix instead                          |
-| Enums and its members    | CamelCase                        | Most except very old standards agree with this one                                                                                            |
-| Globals                  | g_snake_case                     | Avoid using globals whenever possible, but if you have to use `g_`.                                                                           |
-| Constants                | UPPER_CASE                       | Very contentious and we just have to pick one here, unless if is a private constant in class or method, then use naming for Members or Locals |
-| File names               | Match case of class name in file | Lot of pro and cons either way but this removes inconsistency in auto generated code (important for ROS)                                      |
+## Thank You
 
-## Modernise when possible
-
-In general, modernise the code where possible. For instance, prefer `using` over `typedef`.
-
-## Header guards
-
-Prefer `#pragma once` over `#ifdef` protection.
-
-## Code TODOs must contain owner name or Github issue
-
-```sh
-./manage runci
-(...)
-Passes/src/OpsCounter/OpsCounter.cpp:39:21: error: missing username/bug in TODO [google-readability-todo,-warnings-as-errors]
-                    // TODO: Fails to load if this is present
-                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                    // TODO(tfr): Fails to load if this is present
-```
-
-## Always add copyrights
-
-Always add copyrights at the top of the file.
-
-```text
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-```
-
-For header files, prefer to put `#prama once` before the copyright.
-
-## Tabs vs. spaces
-
-We indent with 2 spaces. Nested namespaces are not indented.
+Your contributions to open source, large or small, make great projects like this
+possible. Thank you for taking the time to contribute.
