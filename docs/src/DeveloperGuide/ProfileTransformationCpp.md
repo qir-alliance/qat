@@ -2,7 +2,9 @@
 
 ## Profile transformation as pass
 
-As an example of how one can implement a new profile pass, we here show the implementation details of our example pass which allows mapping the teleportation code to the base profile:
+As an example of how one can implement a new profile pass, we here show the
+implementation details of our example pass which allows mapping the
+teleportation code to the base profile:
 
 ```c++
         pb.registerPipelineParsingCallback([](StringRef name, FunctionPassManager &fpm,
@@ -35,11 +37,15 @@ As an example of how one can implement a new profile pass, we here show the impl
       }};
 ```
 
-Transformations of the IR will happen on the basis of what rules are added to the rule set. The purpose of the factory is to make easy to add rules that serve a single purpose as well as making a basis for making rules unit testable.
+Transformations of the IR will happen on the basis of what rules are added to
+the rule set. The purpose of the factory is to make easy to add rules that serve
+a single purpose as well as making a basis for making rules unit testable.
 
 ## Implementing new rules
 
-Implementing new rules consists of two steps: Defining a pattern that one wish to replace and implementing the corresponding replacement logic. Inside a factory member function, this look as follows:
+Implementing new rules consists of two steps: Defining a pattern that one wish
+to replace and implementing the corresponding replacement logic. Inside a
+factory member function, this look as follows:
 
 ```c++
   auto get_element =
@@ -62,11 +68,18 @@ The pattern defined in this snippet matches IR like:
   %2 = load %Qubit*, %Qubit** %1, align 8
 ```
 
-In the above rule, the first and a second argument of `__quantum__rt__array_get_element_ptr_1d` is captured as `arrayName` and `index`, respectively. Likewise, the bitcast instruction is captured as `cast`. Each of these captures will be available inside the replacement function `access_replacer`.
+In the above rule, the first and a second argument of
+`__quantum__rt__array_get_element_ptr_1d` is captured as `arrayName` and
+`index`, respectively. Likewise, the bitcast instruction is captured as `cast`.
+Each of these captures will be available inside the replacement function
+`access_replacer`.
 
 ## Implementing replacement logic
 
-After a positive match is found, the lead instruction alongside a IRBuilder, a capture table and a replacement table is passed to the replacement function. Here is an example on how one can access the captured variables to perform a transformation of the IR:
+After a positive match is found, the lead instruction alongside a IRBuilder, a
+capture table and a replacement table is passed to the replacement function.
+Here is an example on how one can access the captured variables to perform a
+transformation of the IR:
 
 ```c++
   auto access_replacer = [qubit_alloc_manager](Builder &builder, Value *val, Captures &cap,
