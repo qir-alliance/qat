@@ -5,7 +5,7 @@
 [![Documentation](https://github.com/qir-alliance/qat/actions/workflows/cd-docs.yml/badge.svg?branch=main)](https://qir-alliance.github.io/qat/)
 
 [![](https://badgen.net/github/license/qir-alliance/qat)](https://opensource.org/licenses/MIT)
-[![](https://badgen.net/github/release/qir-alliance/qat)](TODO)
+[![](https://badgen.net/github/release/qir-alliance/qat)](https://github.com/qir-alliance/qat/releases/tag/v0.0.2)
 
 [![](https://img.shields.io/github/contributors/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/graphs/contributors)
 [![](https://img.shields.io/github/issues-pr/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls)
