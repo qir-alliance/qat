@@ -32,7 +32,8 @@ jobs:
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt 
           python3 -c "import autopep8;print(autopep8.__file__)"
-          autopep8 --help
+          which autopep8
+          whereis autopep8
           dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573
           npm install -g prettier@2.2.1
           chmod +x manage
