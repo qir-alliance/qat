@@ -133,7 +133,7 @@ apt install  llvm-11 lldb-11 llvm-11-dev libllvm11 llvm-11-runtime
 By doing this, we will ensure that CMake can find LLVM and that all headers and
 libraries used by the QAT library are available.
 
-# Build instructions for users
+## Build instructions for users
 
 From the root folder in the repository, go to `src/Passes`, then create a build
 folder `Debug` and use CMake to build the executable:
@@ -150,21 +150,21 @@ then
 ./qir/qat/Apps/qat
 ```
 
-# Building the documentation
+## Building the documentation
 
 To build the documentation Docker image, run:
 
-```
+```sh
 make documentation
 ```
 
 To serve the documentation locally, run:
 
-```
+```sh
 make serve-docs
 ```
 
-# Building for developers
+## Building for developers
 
 To build the tool, create a new build directory and switch to that directory:
 

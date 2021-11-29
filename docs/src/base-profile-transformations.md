@@ -1,5 +1,7 @@
 # Proposal: QIR Adaptor Tool Specification
 
+## Considerations
+
 This document discusses a tool that transforms QIR into a restricted version of
 the QIR (known as a profile). We aim to make a specification for a generic tool
 that allows the user to:
@@ -12,7 +14,7 @@ that allows the user to:
 This document sets out to motivate and demonstrate feasibility of building such
 a tool.
 
-## Motivation
+### Motivation
 
 It is anticipated that most usages of the QIR specification will need to only
 use a subset of it. These subsets may further be subject to constraints such as
@@ -58,7 +60,7 @@ We propose that such a reduction could be done using the LLVM passes
 infrastructure to compose a profile which would map the QIR to a subset of the
 available instructions with any required constraints.
 
-## Feasibility Study
+### Feasibility Study
 
 In order to demonstrate feasibility of this proposal, we have built a
 proof-of-concept prototype based on LLVM passes which allows transformation from
@@ -71,7 +73,7 @@ proposal.
 To demonstrate the feasibility of this proposal, we use Q# as a frontend and
 will attempt to map the following code
 
-```
+```qsharp
 namespace Feasibility {
     open Microsoft.Quantum.Intrinsic;
 
@@ -91,7 +93,7 @@ interesting as it is not base profile compliant with regards to two aspects: 1)
 Qubit allocation is not allowed and 2) arithmetic operations are not supported.
 Using the Q# QIR generator, the `Run` functions body becomes:
 
-```
+```llvm
 define internal void @Feasibility__Run__body() {
 entry:
   %qs = call %Array* @__quantum__rt__qubit_allocate_array(i64 3)
@@ -124,7 +126,7 @@ exit__1:                                          ; preds = %header__1
 
 After applying the our demo profile transformation, the QIR is reduced to:
 
-```
+```llvm
 define void @Feasibility__Run__Interop() local_unnamed_addr #0 {
 entry:
   call void @__quantum__qis__x__body(%Qubit* null)
@@ -138,31 +140,31 @@ We note that we successfully have eliminated loops, arithmetic operations,
 dynamic qubit allocation and alias counting - all operations which are not
 supported by the base profile.
 
-## Goal
+### Goal
 
 We envision the tool to work as a stand-alone command line tool which can either
 validate or generate a QIR in accordance with a given profile. To validate, one
 would run:
 
-```language
+```sh
 qat -p profile.yaml --validate unvalidated-qir.ll
 ```
 
 In a similar fashion, generation is performed by adding `--generate` to the
 command line:
 
-```language
+```sh
 qat -p profile.yaml --generate qir.ll > qir-profile.ll
 ```
 
 Default behaviour of the tool is that it always validates the generated profile.
 This behaviour can be disabled by
 
-```language
+```sh
 qat -p profile.yaml --generate --no-validate qir.ll > qir-profile.ll
 ```
 
-# Profile Specification
+## Profile Specification
 
 Every profile is specified through a YAML file which defines an object at the
 top-level. This object must contain the fields `name` and `displayName`:
@@ -179,7 +181,7 @@ and `mode` explains how the profile is defined. The final two top level fields
 are lists named `specification` and `generation`. These contains the
 specification and generation procedure, respectively.
 
-## Specification
+### Specification
 
 The default `mode` of specification is by `feature` which means that
 specification describes the feature set available. Alternatively, one can
@@ -238,7 +240,7 @@ This profile specifies a system that does not allow reference and alias counting
 and neither have support for branching, but otherwise has the full QIR vesion
 1.0 available.
 
-## Generation specification
+### Generation specification
 
 To achieve the QIR generation in the feasibility section we made use of a number
 of different passes in order fold constants, unroll loops and map qubit
@@ -266,7 +268,7 @@ For those passes which are defined specifically for QIR we we allow
 configuration to be passed to them. This will allow the end-user to fine-tune
 the behaviour of profile generator.
 
-# Library outline
+## Library outline
 
 This is a placeholder for describing the outline of the QAT library. The aim is
 to create a dynamic library where we can add new components that allow to extend

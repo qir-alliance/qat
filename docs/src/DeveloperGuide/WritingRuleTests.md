@@ -25,7 +25,7 @@ created as follows:
 
 This profile is intended to transform
 
-```
+```llvm
   %qubit = call %Qubit* @__quantum__rt__qubit_allocate()
   call void @__quantum__qis__h__body(%Qubit* %qubit)
   call void @__quantum__rt__qubit_release(%Qubit* %qubit)
@@ -34,7 +34,7 @@ This profile is intended to transform
 
 by replacing all allocations with integers and stripping all release calls
 
-```
+```llvm
   %qubit = inttoptr i64 0 to %Qubit*
   tail call void @__quantum__qis__h__body(%Qubit* %qubit)
   ret i8 0
@@ -104,7 +104,7 @@ if the changes would not change the semantics of the code. Instead, the
 which allow us to scan for a sequence of instructions in the body of the main
 function. In our case, we expect following two instructions (in order):
 
-```
+```llvm
   %qubit = inttoptr i64 0 to %Qubit*
   tail call void @__quantum__qis__h__body(%Qubit* %qubit)
 ```
@@ -122,7 +122,7 @@ By design, the test would pass as long as these two instructions are found (in
 order) within the full set of instructions of the function body. For instance, a
 valid IR for this test is
 
-```
+```llvm
   call void printHelloWorld()
   %qubit = inttoptr i64 0 to %Qubit*
   %q2 = inttoptr i64 1 to %Qubit*
@@ -134,14 +134,14 @@ valid IR for this test is
 
 but would fail
 
-```
+```llvm
   tail call void @__quantum__qis__h__body(%Qubit* %qubit)
   %qubit = inttoptr i64 0 to %Qubit*
 ```
 
 and
 
-```
+```llvm
   %qubit = inttoptr i64 0 to %Qubit*
 ```
 

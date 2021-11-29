@@ -52,7 +52,7 @@ In order to run the tests, you first need to build the library. Assuming that
 this is already done and the corresponding build is in `Debug/`, run the tests
 from the `Debug` folder:
 
-```
+```sh
 lit tests/ -v
 -- Testing: 2 tests, 2 workers --
 PASS: Quantum-Passes :: QirAllocationAnalysis/case1.ll (1 of 2)

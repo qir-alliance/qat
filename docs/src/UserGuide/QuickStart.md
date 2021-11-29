@@ -47,7 +47,7 @@ giving all the 3316 lines of the original QIR, we instead present the frontend
 code for the QIR. It is always possible to recreate the QIR from the step that
 was previously explained if you are curious:
 
-```
+```qsharp
 namespace SimpleLoop {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Measurement;

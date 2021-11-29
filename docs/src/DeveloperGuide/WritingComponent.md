@@ -148,8 +148,8 @@ For the next part, we assume that you have a QIR located in
 `path/to/example.ll`. To test that the setup function is invoked upon setting
 the profile up, we run
 
-```
- % ./qir/qat/Apps/qat --load ./ComponentExamples/libHelloWorld.dylib path/to/example.ll
+```sh
+./qir/qat/Apps/qat --load ./ComponentExamples/libHelloWorld.dylib path/to/example.ll
 Message: Hello world
 ```
 

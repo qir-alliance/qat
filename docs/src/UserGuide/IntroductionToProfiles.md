@@ -70,7 +70,7 @@ type within the ID for constant integers |
 
 As an example of how these types can be used:
 
-```
+```llvm
 %0 = Qubit* inttoptr 1 to Qubit*
 ```
 
