@@ -15,7 +15,7 @@ This is likely becuase you have forgotten to instantiate static class members.
 For instance, in the case of an instance of `llvm::AnalysisInfoMixin` you are
 required to have a static member `Key`:
 
-```cpp
+```c++
 class COpsCounterPass :  public llvm::AnalysisInfoMixin<COpsCounterPass> {
 private:
   static llvm::AnalysisKey Key; //< REQUIRED by llvm registration
@@ -25,7 +25,7 @@ private:
 
 If you forget to instantiate this variable in your corresponding `.cpp` file,
 
-```cpp
+```c++
 // llvm::AnalysisKey COpsCounterPass::Key; //< Uncomment this line to make everything work
 ```
 

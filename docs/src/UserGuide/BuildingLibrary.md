@@ -70,7 +70,7 @@ subsections provide details on how to install these tools on each platform.
 
 ### On Mac OS X
 
-TODO:
+TODO(issue-45): Create developer prerequisites for Mac OS X in docs.
 
 ### On Ubuntu 20.04
 

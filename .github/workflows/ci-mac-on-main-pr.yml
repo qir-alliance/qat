@@ -21,12 +21,12 @@ jobs:
 
       - name: "Installing dependencies"
         run: |
-          rm '/usr/local/bin/2to3'        
+          rm '/usr/local/bin/2to3'
           brew install llvm@11
           brew install cmake
           brew install python@3.9
           brew unlink python@3.9
-          brew install node@16           
+          brew install node@16
           brew link python@3.9
           echo "/Users/runner/Library/Python/3.9/bin" >> $GITHUB_PATH
           echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
@@ -34,7 +34,7 @@ jobs:
           echo "/Users/runner/Library/Python/3.9/lib/python/bin" >> $GITHUB_PATH
           echo "/usr/local/bin/$HOME/bin" >> $GITHUB_PATH
           git submodule update --init --recursive
-          pip3 install --user -r requirements.txt 
+          pip3 install --user -r requirements.txt
           python3 -c "import autopep8;print(autopep8.__file__)"
           dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573
           npm install -g prettier@2.2.1
