@@ -28,12 +28,10 @@ jobs:
           brew unlink python@3.9
           brew install node@16           
           brew link python@3.9
-          echo "/usr/local/opt/llvm@11/bin;/usr/local/opt/node@16/bin;/Users/runner/Library/Python/3.9/lib/python/bin;/usr/local/bin/$HOME/bin" >> $GITHUB_PATH
+          echo "/Users/runner/Library/Python/3.9/bin;/usr/local/opt/llvm@11/bin;/usr/local/opt/node@16/bin;/Users/runner/Library/Python/3.9/lib/python/bin;/usr/local/bin/$HOME/bin" >> $GITHUB_PATH
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt 
           python3 -c "import autopep8;print(autopep8.__file__)"
-          which autopep8
-          whereis autopep8
           dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573
           npm install -g prettier@2.2.1
           chmod +x manage
