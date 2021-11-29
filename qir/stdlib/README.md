@@ -9,7 +9,7 @@ to build them.
 
 To manually build the C test,
 
-```
+```sh
   mkdir -p target/
 
   # Creating the stdlib LL file
@@ -27,7 +27,7 @@ To manually build the C test,
 
 To build the IR test write following commands:
 
-```
+```sh
   mkdir -p target/
 
   # Creating the stdlib LL file

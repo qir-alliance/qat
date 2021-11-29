@@ -4,12 +4,12 @@
 [![Mac CI](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml/badge.svg?branch=main)](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml)
 [![Documentation](https://github.com/qir-alliance/qat/actions/workflows/cd-docs.yml/badge.svg?branch=main)](https://qir-alliance.github.io/qat/)
 
-[![](https://badgen.net/github/license/qir-alliance/qat)](https://opensource.org/licenses/MIT)
-[![](https://badgen.net/github/release/qir-alliance/qat)](https://github.com/qir-alliance/qat/releases/tag/v0.0.2)
+[![License](https://badgen.net/github/license/qir-alliance/qat)](https://opensource.org/licenses/MIT)
+[![Release](https://badgen.net/github/release/qir-alliance/qat)](https://github.com/qir-alliance/qat/releases/latest)
 
-[![](https://img.shields.io/github/contributors/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/graphs/contributors)
-[![](https://img.shields.io/github/issues-pr/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls)
-[![](https://img.shields.io/github/issues-pr-closed/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls?q=is%3Apr+is%3Aclosed)
+[![Contributors](https://img.shields.io/github/contributors/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/graphs/contributors)
+[![Pulls](https://img.shields.io/github/issues-pr/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls)
+[![QAT](https://img.shields.io/github/issues-pr-closed/qir-alliance/qat.svg)](https://github.com/qir-alliance/qat/pulls?q=is%3Apr+is%3Aclosed)
 
 ## Table of Contents
 
