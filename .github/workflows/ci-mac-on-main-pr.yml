@@ -28,15 +28,13 @@ jobs:
           brew unlink python@3.9
           brew link python@3.9
           brew install node@16 
-
           echo "/usr/local/opt/llvm@11/bin" >> $GITHUB_PATH
           git submodule update --init --recursive
           pip3 install --user -r requirements.txt 
+          pip3 install autopep3
           dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573     
-
           npm install -g prettier@2.2.1
           chmod +x manage
-
           exec -l $SHELL
 
       - name: "Checking format"
