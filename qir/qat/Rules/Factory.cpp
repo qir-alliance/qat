@@ -100,7 +100,6 @@ namespace quantum
 
             return true;
         };
-        llvm::errs() << "Creating pattern\n";
 
         auto create_array = call("__quantum__rt__array_create_1d", "elementSize"_cap = _, "size"_cap = _);
         auto get_size     = call("__quantum__rt__array_get_size_1d", create_array);
@@ -363,13 +362,22 @@ namespace quantum
                  // Getting the name
                  auto name = cap["name"]->getName().str();
 
+                 auto* phi_node = llvm::dyn_cast<llvm::PHINode>(cap["name"]);
+                 if (phi_node != nullptr)
+                 {
+                     llvm::errs() << "Warning: Cannot release qubit arising from phi node:\n";
+                     llvm::errs() << *val << "\n\n";
+
+                     return false;
+                 }
+
                  // Returning in case the name comes out empty
                  if (name.empty())
                  {
 
                      // TODO(issue-15): report error
-                     llvm::outs() << "FAILED due to unnamed non standard allocation:\n";
-                     llvm::outs() << *val << "\n\n";
+                     llvm::errs() << "FAILED due to unnamed non standard allocation:\n";
+                     llvm::errs() << *val << "\n\n";
 
                      // Deleting the instruction in order to proceed
                      // and trying to discover as many other errors as possible
@@ -377,9 +385,9 @@ namespace quantum
                  }
 
                  // TODO(issue-15): report error
-                 llvm::outs() << "FAILED due to non standard allocation:\n";
-                 llvm::outs() << *cap["name"] << "\n";
-                 llvm::outs() << *val << "\n\n";
+                 llvm::errs() << "FAILED due to non standard allocation:\n";
+                 llvm::errs() << *cap["name"] << "\n";
+                 llvm::errs() << *val << "\n\n";
 
                  return deleter(builder, val, cap, rep);
              }
