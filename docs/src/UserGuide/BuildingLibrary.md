@@ -27,9 +27,9 @@ regardless of whether you plan to develop the library itself. The build
 configuration is handled by CMake, which informs you if a compiler needs to be
 installed.
 
-### On Mac OS X
+### On macOS
 
-Those using Mac OS X can install CMake through the use of a command-line tool
+Those using macOS can install CMake through the use of a command-line tool
 called `brew`, as follows:
 
 ```sh
@@ -44,7 +44,7 @@ to modify the core library and can safely jump to the section
 
 ### On Ubuntu 20.04
 
-Additionally to CMake, you will also require Clang in order to build Ubuntu
+Additionally to CMake, you will also require Clang in order to build on Ubuntu
 20.04. You can accomplish this by following the steps below:
 
 ```sh
@@ -60,7 +60,7 @@ Development of the core library requires additional tools. These are used
 formatting, linting and managing code quality. For this purpose, the following
 tools and packages are used:
 
-- Python 3
+- Python 3.6
 - Python packages specified in `requirements.txt`
 - clang-format
 - clang-tidy
@@ -68,13 +68,13 @@ tools and packages are used:
 The installation process varies depending on the platform you use. The following
 subsections provide details on how to install these tools on each platform.
 
-### On Mac OS X
+### On macOS
 
-TODO(issue-45): Create developer prerequisites for Mac OS X in docs.
+TODO(issue-45): Create developer prerequisites for macOS in docs.
 
 ### On Ubuntu 20.04
 
-Installing the clang tools on Ubuntu along with Python can be accomplished by
+Installing the Clang tools on Ubuntu along with Python can be accomplished by
 running these commands:
 
 ```sh
@@ -82,7 +82,7 @@ apt install clang-format-11 clang-tidy-11
 apt install python3 python3-pip
 ```
 
-We recommend that you use version 11 of clang in order to be consistent with the
+We recommend that you use version 11 of Clang in order to be consistent with the
 version of LLVM on which the library depends. In general, the code should work
 with any version of clang. Make sure that the compiler environment variables are
 defined correctly in order to select the correct version:
@@ -117,7 +117,7 @@ submodules run
 git submodule update --init --recursive
 ```
 
-### Installing LLVM on Mac OS X
+### Installing LLVM on macOS
 
 TODO:
 

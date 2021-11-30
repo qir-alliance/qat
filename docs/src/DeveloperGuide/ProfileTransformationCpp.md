@@ -68,7 +68,7 @@ The pattern defined in this snippet matches IR like:
   %2 = load %Qubit*, %Qubit** %1, align 8
 ```
 
-In the above rule, the first and a second argument of
+In the above rule, the first and second argument of
 `__quantum__rt__array_get_element_ptr_1d` is captured as `arrayName` and
 `index`, respectively. Likewise, the bitcast instruction is captured as `cast`.
 Each of these captures will be available inside the replacement function
@@ -76,7 +76,7 @@ Each of these captures will be available inside the replacement function
 
 ## Implementing replacement logic
 
-After a positive match is found, the lead instruction alongside a IRBuilder, a
+After a positive match is found, the lead instruction alongside an `IRBuilder`, a
 capture table and a replacement table is passed to the replacement function.
 Here is an example on how one can access the captured variables to perform a
 transformation of the IR:

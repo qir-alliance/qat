@@ -15,16 +15,16 @@
 #endif
 
 #if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wconversion"
-#pragma clang diagnostic ignored "-Wpedantic"
-#pragma clang diagnostic ignored "-Werror"
-#pragma clang diagnostic ignored "-Wshadow"
-#pragma clang diagnostic ignored "-Wreturn-std-move"
-#pragma clang diagnostic ignored "-Wunknown-warning-option"
-#pragma clang diagnostic ignored "-Wunused-parameter"
-#pragma clang diagnostic ignored "-Wall"
-#pragma clang diagnostic ignored "-Weverything"
+#pragma Clang diagnostic push
+#pragma Clang diagnostic ignored "-Wconversion"
+#pragma Clang diagnostic ignored "-Wpedantic"
+#pragma Clang diagnostic ignored "-Werror"
+#pragma Clang diagnostic ignored "-Wshadow"
+#pragma Clang diagnostic ignored "-Wreturn-std-move"
+#pragma Clang diagnostic ignored "-Wunknown-warning-option"
+#pragma Clang diagnostic ignored "-Wunused-parameter"
+#pragma Clang diagnostic ignored "-Wall"
+#pragma Clang diagnostic ignored "-Weverything"
 #endif
 
 // Passes
@@ -79,7 +79,7 @@
 #include "llvm/Target/TargetMachine.h"
 
 #if defined(__clang__)
-#pragma clang diagnostic pop
+#pragma Clang diagnostic pop
 #endif
 
 #if defined(__GNUC__)

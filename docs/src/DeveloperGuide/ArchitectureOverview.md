@@ -13,7 +13,7 @@ requirements.
 
 The aim of this document is to walk the reader through the vision and
 architecture of the QIR adaptor tool (QAT). To this end, we will be discussing
-how QAT uses both native and custom written LLVM passes to transform generic
+how QAT uses both built-in and custom written LLVM passes to transform generic
 QIRs into ones which are targeted specific platforms and/or capabilities.
 
 We refer to any generic QIR as just "the QIR" or the generic QIR where as those
@@ -24,22 +24,25 @@ process which transform the generic QIR into the specialised one. Likewise, when
 we talk about validating that a specialised QIR fulfils the description of a
 profile.
 
-In building QAT, we note that there are two main challenges to overcome: 1)
-Applying a profile to a generic QIR and 2) validating that a QIR is compliant
-with a profile specification. We may on occasion refer to the former as a
+In building QAT, we note that there are two main challenges to overcome:
+
+1. Applying a profile to a generic QIR, and,
+2. Validating that a QIR is compliant with a profile specification.
+
+We may on occasion refer to the former as a
 transformation and the latter as an analysis to clarify the similarity to LLVM
 passes. The architecture described in this document attempts to address both of
 these challenges in way that we believe to be customisable and scalable in terms
 of profile requirements.
 
-Before digging into the details of the design of QAT, we first note that LLVMs
+Before digging into the details of the design of QAT, we first note that LLVMøs
 `opt` has many of the properties that we desire: Modularised, extendable in a
 non-invasive manner and differentiates between analysis and transformation. The
 downsides to `opt` is that we cannot pass a configuration to the individual
 passes, it is difficult to control which concrete passes are ran and, under the
 assumption that a profile is described by a collection of passes, there is no
 elegant way to bundle these into a single argument. In our design, it will be
-our goal to preserve the good aspects `opt` while adding the capabilities we
+our goal to preserve the good aspects of `opt` while adding the capabilities we
 miss to make profile transformations and validation.
 
 Before spelling the system requirements out, we consider a couple of examples of
@@ -73,15 +76,15 @@ a way to let QAT know that it expects a command line argument
 
 ## Example: Static qubit allocation
 
-To get a better understanding of the problem at hand, lets examine another
+To get a better understanding of the problem at hand, let us examine another
 example: Qubit allocation. As we run our quantum program, we may use a simulator
-or we may deploy it on one of the hardware efforts. Depending on whether we are
+or we may deploy it on one of the hardware providers. Depending on whether we are
 running in one environment or the other, qubits are different entities: In a
 computer simulation they are often objects. They could for instance be allocated
 on the heap in a non-sequential manner. In this context, it makes sense to talk
 about a qubits life time through instructions that allocates and releases them.
 On hardware, on the other hand, qubits are physical entities typically
-sequentially enumerated from 0 to N. Physical qubits may (or may not) have the
+sequentially enumerated from 0 to N - 1. Physical qubits may (or may not) have the
 constraint some qubits are unavailable to the user. Though not always, hardware
 may further have the constraint that user can only perform a single measurement
 at the end of the program execution. This means that qubits cannot be reused
