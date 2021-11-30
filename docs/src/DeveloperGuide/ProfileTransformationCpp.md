@@ -76,8 +76,8 @@ Each of these captures will be available inside the replacement function
 
 ## Implementing replacement logic
 
-After a positive match is found, the lead instruction alongside an `IRBuilder`, a
-capture table and a replacement table is passed to the replacement function.
+After a positive match is found, the lead instruction alongside an `IRBuilder`,
+a capture table and a replacement table is passed to the replacement function.
 Here is an example on how one can access the captured variables to perform a
 transformation of the IR:
 

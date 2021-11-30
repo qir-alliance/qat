@@ -27,7 +27,7 @@ profile, which only allows function calls and branching, but no arithmetic,
 classical memory, or classical registers.
 
 The generation of QIR according to the spec with no constraints would typically
-be performed by the frontend. A couple of examples are Q# or OpenQASM 2.0/3.0.
+be performed by the frontend. A couple of examples are Q# or OpenQASM 3.0.
 However, for the generated QIR to be practical it is necessary to reduce it
 using a profile which is compatible with the target platform:
 

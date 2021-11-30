@@ -2,8 +2,8 @@
 
 This document assumes familiarity with LLVM,
 [LLVM intermediate representation (IR)](https://llvm.org/docs/LangRef.html),
-LLVM passes and the `opt` tool which is used to apply passes to IRs. We also assume
-that the reader is familiar with the
+LLVM passes and the `opt` tool which is used to apply passes to IRs. We also
+assume that the reader is familiar with the
 [QIR specification](https://github.com/microsoft/qsharp-language/tree/main/Specifications/QIR),
 the conventions used for functions and its opaque types. We further assume that
 the reader is familiar with basic C++. This is in particular true later on when
@@ -29,11 +29,10 @@ In building QAT, we note that there are two main challenges to overcome:
 1. Applying a profile to a generic QIR, and,
 2. Validating that a QIR is compliant with a profile specification.
 
-We may on occasion refer to the former as a
-transformation and the latter as an analysis to clarify the similarity to LLVM
-passes. The architecture described in this document attempts to address both of
-these challenges in way that we believe to be customisable and scalable in terms
-of profile requirements.
+We may on occasion refer to the former as a transformation and the latter as an
+analysis to clarify the similarity to LLVM passes. The architecture described in
+this document attempts to address both of these challenges in way that we
+believe to be customisable and scalable in terms of profile requirements.
 
 Before digging into the details of the design of QAT, we first note that LLVMøs
 `opt` has many of the properties that we desire: Modularised, extendable in a
@@ -78,17 +77,17 @@ a way to let QAT know that it expects a command line argument
 
 To get a better understanding of the problem at hand, let us examine another
 example: Qubit allocation. As we run our quantum program, we may use a simulator
-or we may deploy it on one of the hardware providers. Depending on whether we are
-running in one environment or the other, qubits are different entities: In a
+or we may deploy it on one of the hardware providers. Depending on whether we
+are running in one environment or the other, qubits are different entities: In a
 computer simulation they are often objects. They could for instance be allocated
 on the heap in a non-sequential manner. In this context, it makes sense to talk
 about a qubits life time through instructions that allocates and releases them.
 On hardware, on the other hand, qubits are physical entities typically
-sequentially enumerated from 0 to N - 1. Physical qubits may (or may not) have the
-constraint some qubits are unavailable to the user. Though not always, hardware
-may further have the constraint that user can only perform a single measurement
-at the end of the program execution. This means that qubits cannot be reused
-within one program execution.
+sequentially enumerated from 0 to N - 1. Physical qubits may (or may not) have
+the constraint some qubits are unavailable to the user. Though not always,
+hardware may further have the constraint that user can only perform a single
+measurement at the end of the program execution. This means that qubits cannot
+be reused within one program execution.
 
 This puts requirements on what we may need from static qubit allocation. For any
 static allocation, we would need at least following information:

@@ -109,8 +109,9 @@ contribute you will most likely need to complete this step.
 ## Library Dependencies
 
 The QAT library itself is written in C++ and depends on LLVM for compilation and
-Google Test for testing purposes. Google test is checked out as a submodule
-whereas LLVM needs to be installed on the system. To get check out all
+Google Test for testing purposes.
+[Google Test](https://github.com/google/googletest) is checked out as a
+submodule whereas LLVM needs to be installed on the system. To get check out all
 submodules run
 
 ```sh
