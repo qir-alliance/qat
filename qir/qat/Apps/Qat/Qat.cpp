@@ -170,7 +170,7 @@ int main(int argc, char** argv)
 
         if (!config.load().empty())
         {
-            // TODO (tfr): Add support for multiple loads
+            // TODO (issue-47): Add support for multiple loads
             void* handle = dlopen(config.load().c_str(), RTLD_LAZY);
 
             if (handle == nullptr)
@@ -243,7 +243,7 @@ int main(int argc, char** argv)
                 auto& mam = profile.moduleAnalysisManager();
                 mam.registerPass([&] { return GroupingAnalysisPass(cfg); });
                 auto& ret = ptr->modulePassManager();
-                // ret.addPass(GroupingAnalysisPassPrinter());
+
                 ret.addPass(GroupingPass(cfg));
             });
 

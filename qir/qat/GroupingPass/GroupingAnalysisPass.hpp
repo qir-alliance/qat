@@ -43,7 +43,6 @@ namespace quantum
 
         explicit GroupingAnalysisPass(GroupingPassConfiguration const& cfg)
           : config_{cfg}
-        //    , logger_{logger}
         {
         }
 
