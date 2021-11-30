@@ -17,6 +17,8 @@ target_link_libraries(Validator PRIVATE Logging)
 microsoft_add_library_tests(Validator ValidationPass Logging)
 microsoft_add_library(ValidationPass Logging)
 
+microsoft_add_library(GroupingPass Logging)
+
 microsoft_add_library(AllocationManager)
 microsoft_add_library_tests(AllocationManager Logging)
 

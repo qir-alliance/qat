@@ -29,4 +29,3 @@ clean:
 	cd IsingModel && make clean
 	cd ParallelQRng && make clean
 	cd TeleportChain && make clean
-

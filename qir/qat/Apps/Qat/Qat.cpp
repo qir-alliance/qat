@@ -48,6 +48,9 @@
 #include "Commandline/ParameterParser.hpp"
 #include "Generators/DefaultProfileGenerator.hpp"
 #include "Generators/LlvmPassesConfiguration.hpp"
+#include "GroupingPass/GroupingAnalysisPass.hpp"
+#include "GroupingPass/GroupingPass.hpp"
+#include "GroupingPass/GroupingPassConfiguration.hpp"
 #include "ModuleLoader/ModuleLoader.hpp"
 #include "Profile/Profile.hpp"
 #include "Rules/Factory.hpp"
@@ -167,7 +170,7 @@ int main(int argc, char** argv)
 
         if (!config.load().empty())
         {
-            // TODO (tfr): Add support for multiple loads
+            // TODO (issue-47): Add support for multiple loads
             void* handle = dlopen(config.load().c_str(), RTLD_LAZY);
 
             if (handle == nullptr)
@@ -233,6 +236,15 @@ int main(int argc, char** argv)
                     llvm::ModuleInlinerWrapperPass pipeline4    = ModuleInlinerWrapperPass(inline_param);
                     mpm.addPass(std::move(pipeline4));
                 }
+            });
+
+        generator->registerProfileComponent<GroupingPassConfiguration>(
+            "grouping", [](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+                auto& mam = profile.moduleAnalysisManager();
+                mam.registerPass([&] { return GroupingAnalysisPass(cfg); });
+                auto& ret = ptr->modulePassManager();
+
+                ret.addPass(GroupingPass(cfg));
             });
 
         // Reconfiguring to get all the arguments of the passes registered
