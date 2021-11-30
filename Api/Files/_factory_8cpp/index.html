@@ -677,7 +677,6 @@ namespace quantum
 
             return true;
         };
-        llvm::errs() &lt;&lt; &quot;Creating pattern\n&quot;;
 
         auto create_array = call(&quot;__quantum__rt__array_create_1d&quot;, &quot;elementSize&quot;_cap = _, &quot;size&quot;_cap = _);
         auto get_size     = call(&quot;__quantum__rt__array_get_size_1d&quot;, create_array);
@@ -926,13 +925,22 @@ namespace quantum
                  // Getting the name
                  auto name = cap[&quot;name&quot;]-&gt;getName().str();
 
+                 auto* phi_node = llvm::dyn_cast&lt;llvm::PHINode&gt;(cap[&quot;name&quot;]);
+                 if (phi_node != nullptr)
+                 {
+                     llvm::errs() &lt;&lt; &quot;Warning: Cannot release qubit arising from phi node:\n&quot;;
+                     llvm::errs() &lt;&lt; *val &lt;&lt; &quot;\n\n&quot;;
+
+                     return false;
+                 }
+
                  // Returning in case the name comes out empty
                  if (name.empty())
                  {
 
                      // TODO(issue-15): report error
-                     llvm::outs() &lt;&lt; &quot;FAILED due to unnamed non standard allocation:\n&quot;;
-                     llvm::outs() &lt;&lt; *val &lt;&lt; &quot;\n\n&quot;;
+                     llvm::errs() &lt;&lt; &quot;FAILED due to unnamed non standard allocation:\n&quot;;
+                     llvm::errs() &lt;&lt; *val &lt;&lt; &quot;\n\n&quot;;
 
                      // Deleting the instruction in order to proceed
                      // and trying to discover as many other errors as possible
@@ -940,9 +948,9 @@ namespace quantum
                  }
 
                  // TODO(issue-15): report error
-                 llvm::outs() &lt;&lt; &quot;FAILED due to non standard allocation:\n&quot;;
-                 llvm::outs() &lt;&lt; *cap[&quot;name&quot;] &lt;&lt; &quot;\n&quot;;
-                 llvm::outs() &lt;&lt; *val &lt;&lt; &quot;\n\n&quot;;
+                 llvm::errs() &lt;&lt; &quot;FAILED due to non standard allocation:\n&quot;;
+                 llvm::errs() &lt;&lt; *cap[&quot;name&quot;] &lt;&lt; &quot;\n&quot;;
+                 llvm::errs() &lt;&lt; *val &lt;&lt; &quot;\n\n&quot;;
 
                  return deleter(builder, val, cap, rep);
              }
@@ -1234,7 +1242,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 29 November 2021 at 19:27:33 UTC</p></div>
+<p>Updated on 30 November 2021 at 08:26:57 UTC</p></div>
 </div>
           </div>
         </main>

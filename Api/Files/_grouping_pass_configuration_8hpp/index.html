@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d64/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_grouping_pass_configuration_8hpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      microsoft::quantum::@64 - QAT Documentation
+      GroupingPass/GroupingPassConfiguration.hpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -220,7 +220,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../"
+                  href="../../Namespaces/"
                   >Namespaces</a
                 >
                 <a
@@ -230,7 +230,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../../Files/"
+                  href="../"
                   >Files</a
                 >
                 <a
@@ -403,7 +403,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../"
+                href="../../Namespaces/"
                 >Namespaces</a
               >
               <a
@@ -413,7 +413,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../../Files/"
+                href="../"
                 >Files</a
               >
               <a
@@ -553,14 +553,82 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> microsoft::quantum::@64 </span>
+        <span class="text-center"> GroupingPass/GroupingPassConfiguration.hpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantum64">microsoft::quantum::@64</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="groupingpassgroupingpassconfigurationhpp">GroupingPass/GroupingPassConfiguration.hpp</h1>
+<h2 id="namespaces">Namespaces</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="classes">Classes</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/">microsoft::quantum::GroupingPassConfiguration</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="source-code">Source code</h2>
+<pre><code class="language-cpp">#pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include &quot;Commandline/ConfigurationManager.hpp&quot;
+#include &quot;QatTypes/QatTypes.hpp&quot;
+
+namespace microsoft
+{
+namespace quantum
+{
+
+    class GroupingPassConfiguration
+    {
+      public:
+        using Set = std::unordered_set&lt;std::string&gt;;
+        // Setup and construction
+        //
+
+        void setup(ConfigurationManager&amp; config)
+        {
+            config.setSectionName(&quot;Grouping quantum instructions&quot;, &quot;&quot;);
+            config.addParameter(group_allocations_, &quot;group-allocations&quot;, &quot;&quot;);
+            config.addParameter(group_quantum_circuit_, &quot;group-quantum-circuit&quot;, &quot;&quot;);
+            config.addParameter(group_measurement_, &quot;group-measurement&quot;, &quot;&quot;);
+        }
+
+      private:
+        bool group_allocations_{true};
+        bool group_quantum_circuit_{true};
+        bool group_measurement_{true};
+    };
+
+} // namespace quantum
+} // namespace microsoft
+</code></pre>
 <hr />
-<p>Updated on 29 November 2021 at 19:27:33 UTC</p></div>
+<p>Updated on 30 November 2021 at 08:26:57 UTC</p></div>
 </div>
           </div>
         </main>
