@@ -32,13 +32,11 @@ namespace quantum
                 auto                       name = static_cast<std::string>(fnc.getName());
 
                 // Skipping any LLVM function
-                /*
-                if (name.size() >= LLVM_FUNC_NAME.size() &&
-                    name.substr(0, LLVM_FUNC_NAME.size()) == LLVM_FUNC_NAME)
+                if (name.size() >= LLVM_FUNC_NAME.size() && name.substr(0, LLVM_FUNC_NAME.size()) == LLVM_FUNC_NAME)
                 {
-                  continue;
+                    continue;
                 }
-                */
+
                 // Finding all valid attributes
                 for (auto& attrset : fnc.getAttributes())
                 {
@@ -66,17 +64,16 @@ namespace quantum
                 {
                     fnc.addFnAttr(attr);
                 }
-                /*
+
                 // Updating all users attributes
                 for (auto user : fnc.users())
                 {
-                  auto call = llvm::dyn_cast<llvm::CallInst>(user);
-                  if (call != nullptr)
-                  {
-                    call->setAttributes(fnc.getAttributes());
-                  }
+                    auto call = llvm::dyn_cast<llvm::CallInst>(user);
+                    if (call != nullptr)
+                    {
+                        call->setAttributes(fnc.getAttributes());
+                    }
                 }
-                */
             }
 
             return llvm::PreservedAnalyses::none();
