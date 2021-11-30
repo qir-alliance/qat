@@ -1,7 +1,9 @@
-void __quatum__hello_world();
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 int main()
 {
-  __quatum__hello_world();
-  return 0;
+    // This is placeholder file to provide C implemented tests later.
+
+    return 0;
 }

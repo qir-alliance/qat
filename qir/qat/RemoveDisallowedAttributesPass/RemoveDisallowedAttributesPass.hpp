@@ -25,9 +25,17 @@ namespace quantum
 
         llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
         {
+            std::string const LLVM_FUNC_NAME = "@llvm.";
             for (auto& fnc : module)
             {
                 std::unordered_set<String> to_keep;
+                auto                       name = static_cast<std::string>(fnc.getName());
+
+                // Skipping any LLVM function
+                if (name.size() >= LLVM_FUNC_NAME.size() && name.substr(0, LLVM_FUNC_NAME.size()) == LLVM_FUNC_NAME)
+                {
+                    continue;
+                }
 
                 // Finding all valid attributes
                 for (auto& attrset : fnc.getAttributes())
@@ -55,6 +63,16 @@ namespace quantum
                 for (auto& attr : to_keep)
                 {
                     fnc.addFnAttr(attr);
+                }
+
+                // Updating all users attributes
+                for (auto user : fnc.users())
+                {
+                    auto call = llvm::dyn_cast<llvm::CallInst>(user);
+                    if (call != nullptr)
+                    {
+                        call->setAttributes(fnc.getAttributes());
+                    }
                 }
             }
 
