@@ -66,16 +66,6 @@ namespace quantum
 
         String const& name() const;
 
-      protected:
-        // Ensuring that ProfileGenerator has access to following protected functions.
-        friend class ProfileGenerator;
-
-        /// Sets the module pass manager used for the transformation of the IR.
-        void setModulePassManager(llvm::ModulePassManager&& manager);
-
-        /// Sets the validator
-        void setValidator(ValidatorPtr&& validator);
-
         /// Returns a reference to the pass builder.
         llvm::PassBuilder& passBuilder();
 
@@ -90,6 +80,16 @@ namespace quantum
 
         /// Returns a reference to the module analysis manager.
         llvm::ModuleAnalysisManager& moduleAnalysisManager();
+
+      protected:
+        // Ensuring that ProfileGenerator has access to following protected functions.
+        friend class ProfileGenerator;
+
+        /// Sets the module pass manager used for the transformation of the IR.
+        void setModulePassManager(llvm::ModulePassManager&& manager);
+
+        /// Sets the validator
+        void setValidator(ValidatorPtr&& validator);
 
       private:
         using PassInstrumentationCallbacksPtr = std::unique_ptr<llvm::PassInstrumentationCallbacks>;
