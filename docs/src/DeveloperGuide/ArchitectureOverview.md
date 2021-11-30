@@ -2,7 +2,7 @@
 
 This document assumes familiarity with LLVM,
 [LLVM intermediate representation (IR)](https://llvm.org/docs/LangRef.html),
-LLVM passes and the `opt` which is used to apply passes to IRs. We also assume
+LLVM passes and the `opt` tool which is used to apply passes to IRs. We also assume
 that the reader is familiar with the
 [QIR specification](https://github.com/microsoft/qsharp-language/tree/main/Specifications/QIR),
 the conventions used for functions and its opaque types. We further assume that

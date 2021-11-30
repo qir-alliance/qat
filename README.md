@@ -13,9 +13,16 @@
 
 ## Table of Contents
 
+- [Purpose](#purpose)
 - [Building](#building)
 - [Getting started](#getting-started)
 - [Next steps](#next-steps)
+
+## Purpose and terminology
+
+The purpose of the tool contained in this repository is to provide means to manipulate the intermediate representation (IR) of quantum programs. We refer to these IRs as quantum IRs (QIRs). The main tool provided here is QIR adaptor tool (QAT) which allows one to transform one QIR to another QIR that fulfils certain requirements.
+
+When we refer to a QIR in any of the documentation related to this tool, we do so irrespective of whether we represent the QIR though human readable text, the more storage-efficient bitcode format or in-memory representation. We note that all of these representations are semantically identical and for that reason, QAT is designed to work with all of them.
 
 ## Building
 
