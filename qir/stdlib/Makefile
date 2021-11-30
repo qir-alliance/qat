@@ -37,6 +37,7 @@ target/ir-test-suite: lib/stdlib.ll
 testsuite: target/c-test-suite target/cpp-test-suite
 
 test:
+	mkdir -p target/
 	rm -f ./lib/stdlib*
 	rm -f ./target/cpp-test-suite
 	make testsuite
