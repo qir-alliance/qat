@@ -45,8 +45,8 @@ styles are apply to new code and not existing code.
 
 ## Naming
 
-Naming is taken from the [Microsoft
-AirSim](https://github.com/microsoft/AirSim/blob/master/docs/coding_guidelines.md)
+Naming is taken from the
+[Microsoft AirSim](https://github.com/microsoft/AirSim/blob/master/docs/coding_guidelines.md)
 project.
 
 | **Code Element**         | **Style**                        | **Comment**                                                                                                                                   |

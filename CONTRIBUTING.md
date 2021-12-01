@@ -23,8 +23,8 @@ materials.
 
 Have you identified an issue or modification that would benefit the community?
 We want to hear about it! If you have feedback about the content in this
-repository, please let us know by filing a [new
-issue](https://github.com/qir-alliance/qat/issues/new)!
+repository, please let us know by filing a
+[new issue](https://github.com/qir-alliance/qat/issues/new)!
 
 As for any active effort, there are always many ways in which we hope to evolve
 and improve the specification and tools. We encourage you to look at the list of
@@ -48,8 +48,7 @@ If you are interested in contributing a new feature, please first check if a
 similar functionality has already been requested. If so, consider contributing
 to the discussion around it rather than filing a separate issue. If no open or
 closed issue with such a request already exists, please file one following the
-[feature request
-template](https://github.com/qir-alliance/qat/issues/new?assignees=&labels=feature&template=feature_request.md&title=).
+[feature request template](https://github.com/qir-alliance/qat/issues/new?assignees=&labels=feature&template=feature_request.md&title=).
 We will respond to feature requests and follow up with a discussion around its
 feasibility, how one might go about implementing it, and whether that is
 something that makes sense to add. There are several reasons why we might not be
