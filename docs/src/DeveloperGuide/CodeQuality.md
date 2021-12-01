@@ -15,7 +15,8 @@ pip install -r requirements.txt
 ```
 
 These adds the necessary environment variables to ensure that you have the
-`tasks_ci` package and all required dependencies.
+`tasks_ci` package (contained in `site-packages/` inside the repo) and all
+required dependencies.
 
 To check the style, run
 
@@ -42,8 +43,8 @@ You can run all processes by running:
 ```
 
 As `clang-tidy` and `clang-format` acts slightly different from version to
-version and on different platforms, it is recommended that you use a docker
-image to perform these steps. TODO(issue-10): The docker image is not added yet
+version and on different platforms, it is recommended that you use a Docker
+image to perform these steps. TODO(issue-10): The Docker image is not added yet
 and this will be documented in the future.
 
 ## Running tests
@@ -84,7 +85,7 @@ TODO(issue-11): Write this section
 The continuous integration component includes:
 
 1. Style formatting to ensure that everything looks the same. This includes
-   checking that relevant copyrights are in place.
+   checking that relevant copyright notices are in place.
 2. Static analysis
 3. Unit testing
 
