@@ -1,0 +1,180 @@
+# QAT Application: Logic separation
+
+## Architecture considerations
+
+In this section, we will discuss some classical architectures and then make
+considerations regarding quantum architectures.
+
+### Motivation: Classical co-processors
+
+Before diving into quantum architectures, we first make a brief note on
+classical architectures: For decades we have seen classical architectures
+composed of multiple processing units. For instance, in the nineties it was
+common to have a co-processor supporting the main x86 architecture with such
+tasks as floating point operations. Other co-processing architectures were built
+to enhance the computers sound capabilities and in 2001, we saw graphical
+processing units (GPUs) emerge. To this day, GPUs are still an essentially
+co-processor for many computing tasks including gaming, physics simulation and
+graphics to mention a few.
+
+While floating operations co-processors eventually became integrated into the
+CPU, other co-processors such as GPU remains stand-alone units today. On a
+high-level, the use of a GPU for simulation roughly follows this diagram:
+
+```text
+┌─────────────┐     Programming     ┌─────────────┐
+│             │  State preparation  │             │
+│             ├─────────────────────▶             │
+│             │                     │             │
+│   Primary   │                     │  Secondary  │
+│ processing  │                     │ processing  │
+│    unit     │                     │    unit     │
+│             │                     │             │
+│             ◀─────────────────────┤             │
+│             │   Result readout    │             │
+└─────────────┘                     └─────────────┘
+```
+
+First the secondary processing unit (SPU) is programmed and as a part of this
+process the initial state (i.e. registers and memory) is prepared. The SPU then
+executes the program and the results are read out by the primary processing unit
+(PPU).
+
+## Classical-quantum processing architecture
+
+While one could imagine a quantum architecture in which everything is integrated
+into a single processing unit that both can process classical and quantum
+registers, it is unlikely that this kind of architecture will emerge in the near
+future due to the vastly different environments in which the two processes take
+place. Therefore, one feasible architecture is one in which we consider the
+quantum processing unit (QPU) as SPU and the CPU the PPU much like is the case
+for CPUs and GPUs today.
+
+Disregarding the more advanced scenarios where PPUs and SPUs work in parallel,
+the basic flow of a classical-quantum program execution follows a pattern as
+given below:
+
+```text
+      Classical             PPU-SPU             Quantum
+   processing unit  │      interface      │ processing unit
+                    │                     │
+                  │ │                     │
+Classical program │ │                     │
+        execution │ │                     │
+                  │ │  State preparation  │
+                  ▼ │     Programming     │
+                    ├─────────────────────▶
+                    │                     │ │
+                    │                     │ │ Quantum program
+                    │                     │ │ execution
+                    │   Result readout    │ │
+                    ◀─────────────────────┤ ▼
+                  │ │                     │
+Classical program │ │                     │
+        execution │ │  State preparation  │
+                  │ │     Programming     │
+                  ▼ ├─────────────────────▶
+                    │                     │ │
+                    │                     │ │ Quantum program
+                    │                     │ │ execution
+                    │   Result readout    │ │
+                    ◀─────────────────────┤ ▼
+                    │                     │
+                    ▼                     ▼
+                    Time
+```
+
+TODO: Finish this section
+
+### Problem definition
+
+The QIR specification does not put any requirements for a generic QIR to provide
+a separation of instructions intended for the CPU and QPU. However, under the
+assumption that quantum architectures follow the PPU-SPU pattern described in
+the previous section such a separation is necessary to perform the program
+execution. Our aim in this document will be to define how the separation should
+be performed and what qualifies an entity to be a CPU or QPU element.
+
+We will assume that branching is not possible within the QPU since this is a
+classical phenomena. The consequence is that CPU-QPU separation must happen at
+the level of `BasicBlocks` in LLVM rather than at a function or even program
+level. While it may be that some QPUs has basic branching support, we note that
+it will be manageable to identify multi-block segments which are compatible with
+a given QPU target after the separation.
+
+## Definitions
+
+### Registers
+
+For traditional PPU-SPU architectures, registers are limited in scope to the
+processing unit on which they reside. That is, a register on a CPU cannot be
+accessed from the GPU and vice versa. The value of a given register is only
+available through data transport through the two units. For CPU-QPU
+architectures, this limitation is the same. While the CPU may hold a reference
+to a qubit, the physical qubit itself resides on the QPU and can only be
+manipulated through the CPU-QPU interface.
+
+Quantum register types
+
+| LLVM type name | Description                                                         |
+| -------------- | ------------------------------------------------------------------- |
+| `Qubit*`       | Qubit register amounting to a physical qubit or simulation datatype |
+| `Result*`      | Result register                                                     |
+
+Classical register types
+
+| LLVM type name | Description |
+| -------------- | ----------- |
+| `i1`           |             |
+| `i2`           |             |
+| `i8`           |             |
+| `i16`          |             |
+| `i32`          |             |
+| `i64`          |             |
+| `struct`       |             |
+
+On the CPU, `Qubit*` and `Result*` are treated as integers. This means that they
+should never be dereferenced nor nor should the "memory address" be written to.
+
+### Instructions and instruction classification
+
+The QIR specification has two high-level classes of instructions: Those which
+are calls to functions with names starting with `__quantum__` and all other
+instructions. Function calls to functions starting with `__quantum__` are
+expected to follow the QIR specification and these calls are further divided
+into two groups: Intrinsic functions (`__quantum__qis__`) and runtime functions
+(`__quantum__rt__`). The latter is expected to be provided by the runtime
+library given by the frontend and/or the target machine whereas the former are
+intrinsic functions. The intrinsic functions may either run on the CPU, the QPU
+or serve as instruction to transfer data between the two processing units.
+
+We classify `__quantum__qis__` functions into four categories: Purely CPU,
+purely QPU, setup/transport from CPU to QPU and result/transport from QPU to
+CPU. The classification happens on the basis function signature: The function
+arguments together with the return result determines the where the call will be
+executed according to following rules:
+
+- Any `void` function location is purely determined by its arguments:
+  - Void functions that only has quantum register types as arguments are
+    classified as pure QPU instructions
+  - Void functions that only has classical register types as arguments are
+    classified as pure CPU instructions
+  - Void functions that that takes a mixture are classified as CPU to QPU
+    setup/transport instructions
+- Any function that returns a quantum register is:
+  - A pure quantum instruction if all of the function arguments are quantum
+    registers
+  - A CPU to QPU setup/transport instruction in any other case
+- A function that returns a classical register is:
+  - A pure classical instruction if all of the arguments are classical registers
+  - A QPU to CPU result/transport instruction in any other case
+
+### Pass definition
+
+## Pass usage
+
+###
+
+- Client-host: QPU-CPU vs CPU-QPU
+- What are the problems that occur?
+- What are the types of operations that exists?
