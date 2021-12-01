@@ -583,8 +583,8 @@ making a new build from this project:</p>
 regardless of whether you plan to develop the library itself. The build
 configuration is handled by CMake, which informs you if a compiler needs to be
 installed.</p>
-<h3 id="on-mac-os-x">On Mac OS X</h3>
-<p>Those using Mac OS X can install CMake through the use of a command-line tool
+<h3 id="on-macos">On macOS</h3>
+<p>Those using macOS can install CMake through the use of a command-line tool
 called <code>brew</code>, as follows:</p>
 <pre><code class="language-sh">brew install cmake
 </code></pre>
@@ -594,7 +594,7 @@ the compiler comes preinstalled. There is no need to read the next subsection
 to modify the core library and can safely jump to the section
 <a href="#library-dependencies">Library Dependencies</a></p>
 <h3 id="on-ubuntu-2004">On Ubuntu 20.04</h3>
-<p>Additionally to CMake, you will also require Clang in order to build Ubuntu
+<p>Additionally to CMake, you will also require Clang in order to build on Ubuntu
 20.04. You can accomplish this by following the steps below:</p>
 <pre><code class="language-sh">apt install clang-11 cmake
 </code></pre>
@@ -605,22 +605,22 @@ not intend to work on developing the core library.</p>
 formatting, linting and managing code quality. For this purpose, the following
 tools and packages are used:</p>
 <ul>
-<li>Python 3</li>
+<li>Python 3.6</li>
 <li>Python packages specified in <code>requirements.txt</code></li>
 <li>clang-format</li>
 <li>clang-tidy</li>
 </ul>
 <p>The installation process varies depending on the platform you use. The following
 subsections provide details on how to install these tools on each platform.</p>
-<h3 id="on-mac-os-x_1">On Mac OS X</h3>
-<p>TODO(issue-45): Create developer prerequisites for Mac OS X in docs.</p>
+<h3 id="on-macos_1">On macOS</h3>
+<p>TODO(issue-45): Create developer prerequisites for macOS in docs.</p>
 <h3 id="on-ubuntu-2004_1">On Ubuntu 20.04</h3>
-<p>Installing the clang tools on Ubuntu along with Python can be accomplished by
+<p>Installing the Clang tools on Ubuntu along with Python can be accomplished by
 running these commands:</p>
 <pre><code class="language-sh">apt install clang-format-11 clang-tidy-11
 apt install python3 python3-pip
 </code></pre>
-<p>We recommend that you use version 11 of clang in order to be consistent with the
+<p>We recommend that you use version 11 of Clang in order to be consistent with the
 version of LLVM on which the library depends. In general, the code should work
 with any version of clang. Make sure that the compiler environment variables are
 defined correctly in order to select the correct version:</p>
@@ -638,13 +638,14 @@ requires the manage tools CI flow to be successful. Thus, if you plan to
 contribute you will most likely need to complete this step.</p>
 <h2 id="library-dependencies">Library Dependencies</h2>
 <p>The QAT library itself is written in C++ and depends on LLVM for compilation and
-Google Test for testing purposes. Google test is checked out as a submodule
-whereas LLVM needs to be installed on the system. To get check out all
+Google Test for testing purposes.
+<a href="https://github.com/google/googletest">Google Test</a> is checked out as a
+submodule whereas LLVM needs to be installed on the system. To get check out all
 submodules run</p>
 <pre><code class="language-sh">git submodule update --init --recursive
 </code></pre>
-<h3 id="installing-llvm-on-mac-os-x">Installing LLVM on Mac OS X</h3>
-<p>TODO:</p>
+<h3 id="installing-llvm-on-macos">Installing LLVM on macOS</h3>
+<p>TODO(issue-45): Document installation process</p>
 <h3 id="installing-llvm-on-ubuntu-2004">Installing LLVM on Ubuntu 20.04</h3>
 <p>For the installation of LLVM from Ubuntu we use the package manager <code>apt</code>. For
 full run installation, run the following command:</p>

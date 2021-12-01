@@ -569,7 +569,8 @@ source develop__venv/bin/activate
 pip install -r requirements.txt
 </code></pre>
 <p>These adds the necessary environment variables to ensure that you have the
-<code>tasks_ci</code> package and all required dependencies.</p>
+<code>tasks_ci</code> package (contained in <code>site-packages/</code> inside the repo) and all
+required dependencies.</p>
 <p>To check the style, run</p>
 <pre><code class="language-sh">./manage stylecheck
 </code></pre>
@@ -583,8 +584,8 @@ pip install -r requirements.txt
 <pre><code class="language-sh">./manage runci
 </code></pre>
 <p>As <code>clang-tidy</code> and <code>clang-format</code> acts slightly different from version to
-version and on different platforms, it is recommended that you use a docker
-image to perform these steps. TODO(issue-10): The docker image is not added yet
+version and on different platforms, it is recommended that you use a Docker
+image to perform these steps. TODO(issue-10): The Docker image is not added yet
 and this will be documented in the future.</p>
 <h2 id="running-tests">Running tests</h2>
 <p>In order to run the tests, you first need to build the library. Assuming that
@@ -611,7 +612,7 @@ make
 <p>The continuous integration component includes:</p>
 <ol>
 <li>Style formatting to ensure that everything looks the same. This includes
-   checking that relevant copyrights are in place.</li>
+   checking that relevant copyright notices are in place.</li>
 <li>Static analysis</li>
 <li>Unit testing</li>
 </ol>

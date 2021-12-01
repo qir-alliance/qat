@@ -613,14 +613,14 @@ factory member function, this look as follows:</p>
   %1 = bitcast i8* %0 to %Qubit**
   %2 = load %Qubit*, %Qubit** %1, align 8
 </code></pre>
-<p>In the above rule, the first and a second argument of
+<p>In the above rule, the first and second argument of
 <code>__quantum__rt__array_get_element_ptr_1d</code> is captured as <code>arrayName</code> and
 <code>index</code>, respectively. Likewise, the bitcast instruction is captured as <code>cast</code>.
 Each of these captures will be available inside the replacement function
 <code>access_replacer</code>.</p>
 <h2 id="implementing-replacement-logic">Implementing replacement logic</h2>
-<p>After a positive match is found, the lead instruction alongside a IRBuilder, a
-capture table and a replacement table is passed to the replacement function.
+<p>After a positive match is found, the lead instruction alongside an <code>IRBuilder</code>,
+a capture table and a replacement table is passed to the replacement function.
 Here is an example on how one can access the captured variables to perform a
 transformation of the IR:</p>
 <pre><code class="language-c++">  auto access_replacer = [qubit_alloc_manager](Builder &amp;builder, Value *val, Captures &amp;cap,
