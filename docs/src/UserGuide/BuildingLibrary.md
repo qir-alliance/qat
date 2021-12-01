@@ -120,7 +120,7 @@ git submodule update --init --recursive
 
 ### Installing LLVM on macOS
 
-TODO:
+TODO(issue-45): Document installation process
 
 ### Installing LLVM on Ubuntu 20.04
 
