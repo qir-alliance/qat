@@ -13,7 +13,7 @@ function calls and branching, but no arithmetic, classical memory, or classical
 registers.
 
 The generation of QIR according to the spec with no constraints would typically
-be performed by the frontend. A couple of examples are Q# or OpenQASM 2.0/3.0.
+be performed by the frontend. A couple of examples are Q# or OpenQASM 3.0.
 However, for the generated QIR to be practical it is necessary to reduce it
 using a profile which is compatible with the target platform:
 
@@ -64,10 +64,6 @@ quantum system and executed one or more times. Measurements are always performed
 at the end of the execution and all available results. This profile only allows
 for defining a single function that takes no arguments and has no return type.
 
-Available types | Typename | Description | |----------|---| | Result | Used as
-pointer type within the ID for constant integers | | Qubit | Used as pointer
-type within the ID for constant integers |
-
 As an example of how these types can be used:
 
 ```llvm
@@ -79,15 +75,5 @@ which expresses that we store the handle to qubit with ID 1 in the variable
 
 ## Base Profile
 
-The base profile is a slight advancement to the pipeline profile
-
-Available types | Typename | | | |----------|---|---| | Array | | | | Result | |
-| | Qubit | | |
-
-Available quantum intrinsic functions | | | | |---|---|---| | | | | | | | | | |
-| |
-
-Available runtime functions | | | | |---|---|---| | | | | | | | | | | | |
-
-Available IR functionality | | | | |---|---|---| | call | | | | ret | | | | | |
-|
+The base profile is a slight advancement to the pipeline profile.
+TODO(issue-49): Finish this section

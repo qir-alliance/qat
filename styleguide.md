@@ -38,15 +38,15 @@ the sake just changing the style.
 ## Style discrepancy
 
 In case of a discrepancy between this guideline and `clang-tidy` or
-`clang-format`, clang tools rule. In case of discrepancy between this guide and
+`clang-format`, Clang tools rule. In case of discrepancy between this guide and
 any guides subsequently referenced guides, this guide rules. However, feel free
 to suggest changes. Changes will be incorporated on the basis that updated
 styles are apply to new code and not existing code.
 
 ## Naming
 
-Naming is taken from the [Microsoft
-AirSim](https://github.com/microsoft/AirSim/blob/master/docs/coding_guidelines.md)
+Naming is taken from the
+[Microsoft AirSim](https://github.com/microsoft/AirSim/blob/master/docs/coding_guidelines.md)
 project.
 
 | **Code Element**         | **Style**                        | **Comment**                                                                                                                                   |

@@ -601,7 +601,7 @@ attributes #10 = { noreturn nounwind }
 
 !0 = !{i32 1, !"wchar_size", i32 4}
 !1 = !{i32 7, !"PIC Level", i32 2}
-!2 = !{!"Homebrew clang version 11.1.0"}
+!2 = !{!"Homebrew Clang version 11.1.0"}
 !3 = !{!4, !4, i64 0}
 !4 = !{!"long long", !5, i64 0}
 !5 = !{!"omnipotent char", !6, i64 0}

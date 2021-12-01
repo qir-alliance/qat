@@ -1,6 +1,6 @@
 # QIR Adaptor Tool
 
-Welcome to the QIR Adapator Tool, a tool to manipulate QIR into specific
+Welcome to the QIR Adaptor Tool, a tool to manipulate QIR into specific
 profiles. The goal of this framework is to create tools that allow quantum
 hardware vendors to adapt a generic QIR to their specific hardware profile.
 

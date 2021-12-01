@@ -34,7 +34,7 @@ if(${SUPPORTS_FVISIBILITY_INLINES_HIDDEN_FLAG})
 endif()
 
 
-# Helper variable to determine if we are using clang compiler
+# Helper variable to determine if we are using Clang compiler
 set(using_clang_compiler FALSE)
 if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   set(using_clang_compiler TRUE)
@@ -51,7 +51,7 @@ if (MICROSOFT_GENERATE_COVERAGE)
       # Forcing debug build
       set(CMAKE_BUILD_TYPE "Debug")
     else ()
-      message(SEND_ERROR "Coverage flag enabled but clang compiler not found, CMake will exit.")
+      message(SEND_ERROR "Coverage flag enabled but Clang compiler not found, CMake will exit.")
     endif ()
 endif (MICROSOFT_GENERATE_COVERAGE)
 

@@ -79,7 +79,7 @@
 #include "llvm/Target/TargetMachine.h"
 
 #if defined(__clang__)
-#pragma clang diagnostic pop
+#pragma Clang diagnostic pop
 #endif
 
 #if defined(__GNUC__)
