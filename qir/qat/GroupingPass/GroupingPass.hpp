@@ -61,9 +61,20 @@ namespace quantum
         // Construction and destruction configuration.
         //
 
+        enum
+        {
+            PURE_CLASSICAL                = 0,
+            SOURCE_QUANTUM                = 1,
+            DEST_QUANTUM                  = 2,
+            PURE_QUANTUM                  = SOURCE_QUANTUM | DEST_QUANTUM,
+            TRANSFER_CLASSICAL_TO_QUANTUM = DEST_QUANTUM,
+            TRANSFER_QUANTUM_TO_CLASSICAL = SOURCE_QUANTUM,
+
+            INVALID_MIXED_LOCATION = -1
+        };
+
         explicit GroupingPass(GroupingPassConfiguration const& cfg)
           : config_{cfg}
-        //    , logger_{logger}
         {
         }
 
@@ -78,6 +89,9 @@ namespace quantum
         void prepareBlockModification(llvm::Module& module, llvm::BasicBlock* block);
         void nextQuantumCycle(llvm::Module& module, llvm::BasicBlock* block);
         void expandBlockQuantumMeasureClassical(llvm::Module& module, llvm::BasicBlock* block);
+
+        bool    isQuantumRegister(llvm::Type const* type);
+        int64_t classifyInstruction(llvm::Instruction const* instr);
 
         llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
 
@@ -94,18 +108,22 @@ namespace quantum
         llvm::BasicBlock* post_classical_block_{nullptr};
         llvm::BasicBlock* readout_block_{nullptr};
         llvm::BasicBlock* quantum_block_{nullptr};
+        llvm::BasicBlock* load_block_{nullptr};
         llvm::BasicBlock* pre_classical_block_{nullptr};
 
         // Builders
         //
 
         SharedBuilder pre_classical_builder_{};
+        SharedBuilder load_builder_{};
         SharedBuilder quantum_builder_{};
         SharedBuilder readout_builder_{};
         SharedBuilder post_classical_builder_{};
 
         BlockSet   visited_blocks_;
         ILoggerPtr logger_{nullptr};
+
+        std::unordered_set<String> quantum_register_types_ = {"Qubit", "Result"};
     };
 
 } // namespace quantum

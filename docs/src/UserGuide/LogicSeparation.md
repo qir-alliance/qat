@@ -210,18 +210,21 @@ snippet:
 define i64 @LogicGrouping(i64 %z) local_unnamed_addr #0 {
 entry:
   %0 = icmp slt i64 %z, 0
-  %1 = select i1 %0, %Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*) ;; TODO(tfr): This should be moved to a transfer section
-  %2 = select i1 %0, %Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* null ;; TODO(tfr): This should be moved to a transfer section
-  %3 = mul i64 %z, 45
-  %4 = add i64 %3, 13
+  %1 = mul i64 %z, 45
+  %2 = add i64 %1, 13
+  br label %load
+
+load:                                             ; preds = %entry
+  %3 = select i1 %0, %Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*)
+  %4 = select i1 %0, %Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* null
   br label %quantum
-;; load: ;; TODO(tfr): Make this section.
-quantum:                                          ; preds = %entry
-  tail call void @__quantum__qis__x__body(%Qubit* %1)
+
+quantum:                                          ; preds = %load
+  tail call void @__quantum__qis__x__body(%Qubit* %3)
   tail call void @__quantum__qis__z__body(%Qubit* null)
-  tail call void @__quantum__qis__cnot__body(%Qubit* %1, %Qubit* %2)
-  tail call void @__quantum__qis__mz__body(%Qubit* %2, %Result* null)
-  tail call void @__quantum__qis__reset__body(%Qubit* %2)
+  tail call void @__quantum__qis__cnot__body(%Qubit* %3, %Qubit* %4)
+  tail call void @__quantum__qis__mz__body(%Qubit* %4, %Result* null)
+  tail call void @__quantum__qis__reset__body(%Qubit* %4)
   br label %readout
 
 readout:                                          ; preds = %quantum
@@ -229,7 +232,7 @@ readout:                                          ; preds = %quantum
   br label %post-classical
 
 post-classical:                                   ; preds = %readout
-  %6 = select i1 %5, i64 -7, i64 %4
+  %6 = select i1 %5, i64 -7, i64 %2
   br label %exit_quantum_grouping
 
 exit_quantum_grouping:                            ; preds = %post-classical
@@ -237,11 +240,10 @@ exit_quantum_grouping:                            ; preds = %post-classical
 }
 ```
 
-TODO(tfr): add support for load. In the above program, the original instructions
-are rearranged into blocks following the pattern previously discussed with an
-`entry` block, a `load` block, a `quantum` program block, a `readout` block and
-a `post-classical` processing block. Visualised in as above the blocks are
-executed as follows:
+In the above program, the original instructions are rearranged into blocks
+following the pattern previously discussed with an `entry` block, a `load`
+block, a `quantum` program block, a `readout` block and a `post-classical`
+processing block. Visualised in as above the blocks are executed as follows:
 
 ```
     Classical             PPU-SPU             Quantum
