@@ -34,7 +34,6 @@ bool GroupingPass::isQuantumRegister(llvm::Type const *type)
 
 int64_t GroupingPass::classifyInstruction(llvm::Instruction const *instr)
 {
-  llvm::errs() << *instr << " -- \n";
   int64_t ret = PURE_CLASSICAL;
 
   // Checking all operations
@@ -97,33 +96,28 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const *instr)
   return ret;
 }
 
-void GroupingPass::prepareBlockModification(llvm::Module &module, llvm::BasicBlock *tail_classical)
+void GroupingPass::prepareSourceSeparation(llvm::Module &module, llvm::BasicBlock *tail_classical)
 {
   // Creating replacement blocks
   auto &context         = module.getContext();
   post_classical_block_ = llvm::BasicBlock::Create(context, "post-classical",
                                                    tail_classical->getParent(), tail_classical);
+  quantum_block_        = llvm::BasicBlock::Create(context, "quantum", tail_classical->getParent(),
+                                                   post_classical_block_);
+  pre_classical_block_  = llvm::BasicBlock::Create(context, "pre-classical",
+                                                   tail_classical->getParent(), quantum_block_);
 
-  readout_block_ = llvm::BasicBlock::Create(context, "readout", tail_classical->getParent(),
-                                            post_classical_block_);
-
-  quantum_block_ =
-      llvm::BasicBlock::Create(context, "quantum", tail_classical->getParent(), readout_block_);
-
-  load_block_ =
-      llvm::BasicBlock::Create(context, "load", tail_classical->getParent(), quantum_block_);
-
-  pre_classical_block_ =
-      llvm::BasicBlock::Create(context, "pre-classical", tail_classical->getParent(), load_block_);
+  // Storing the blocks for later processing
+  quantum_blocks_.push_back(quantum_block_);
+  classical_blocks_.push_back(pre_classical_block_);
+  classical_blocks_.push_back(post_classical_block_);
 
   // Renaming the block
   pre_classical_block_->takeName(tail_classical);
 
   // Preparing builders
   post_classical_builder_->SetInsertPoint(post_classical_block_);
-  readout_builder_->SetInsertPoint(readout_block_);
   quantum_builder_->SetInsertPoint(quantum_block_);
-  load_builder_->SetInsertPoint(load_block_);
   pre_classical_builder_->SetInsertPoint(pre_classical_block_);
 
   // Replacing entry
@@ -137,11 +131,8 @@ void GroupingPass::prepareBlockModification(llvm::Module &module, llvm::BasicBlo
 void GroupingPass::nextQuantumCycle(llvm::Module &module, llvm::BasicBlock *tail_classical)
 {
   auto &context = module.getContext();
-
-  pre_classical_builder_->CreateBr(load_block_);
-  load_builder_->CreateBr(quantum_block_);
-  quantum_builder_->CreateBr(readout_block_);
-  readout_builder_->CreateBr(post_classical_block_);
+  pre_classical_builder_->CreateBr(quantum_block_);
+  quantum_builder_->CreateBr(post_classical_block_);
 
   //
   pre_classical_block_ = post_classical_block_;
@@ -150,27 +141,22 @@ void GroupingPass::nextQuantumCycle(llvm::Module &module, llvm::BasicBlock *tail
   post_classical_block_ = llvm::BasicBlock::Create(context, "post-classical",
                                                    tail_classical->getParent(), tail_classical);
 
-  readout_block_ = llvm::BasicBlock::Create(context, "readout", tail_classical->getParent(),
+  quantum_block_ = llvm::BasicBlock::Create(context, "quantum", tail_classical->getParent(),
                                             post_classical_block_);
 
-  quantum_block_ =
-      llvm::BasicBlock::Create(context, "quantum", tail_classical->getParent(), readout_block_);
-
-  load_block_ =
-      llvm::BasicBlock::Create(context, "load", tail_classical->getParent(), quantum_block_);
+  // Storing the blocks for later processing
+  quantum_blocks_.push_back(quantum_block_);
+  classical_blocks_.push_back(post_classical_block_);
 
   // Preparing builders
   post_classical_builder_->SetInsertPoint(post_classical_block_);
-  readout_builder_->SetInsertPoint(readout_block_);
   quantum_builder_->SetInsertPoint(quantum_block_);
-  load_builder_->SetInsertPoint(load_block_);
   pre_classical_builder_->SetInsertPoint(pre_classical_block_);
 }
 
-void GroupingPass::expandBlockQuantumMeasureClassical(llvm::Module     &module,
-                                                      llvm::BasicBlock *tail_classical)
+void GroupingPass::expandBasedOnSource(llvm::Module &module, llvm::BasicBlock *tail_classical)
 {
-  prepareBlockModification(module, tail_classical);
+  prepareSourceSeparation(module, tail_classical);
 
   // Variables used for the modifications
   std::vector<llvm::Instruction *>  to_delete;
@@ -188,59 +174,8 @@ void GroupingPass::expandBlockQuantumMeasureClassical(llvm::Module     &module,
     }
 
     auto instr_class = classifyInstruction(&instr);
-    switch (instr_class)
+    if ((instr_class & SOURCE_QUANTUM) != 0)
     {
-    case TRANSFER_CLASSICAL_TO_QUANTUM:
-    case PURE_CLASSICAL: {
-      // Check if depends on readout
-      if (depends_on_qc.find(&instr) != depends_on_qc.end())
-      {
-        for (auto user : instr.users())
-        {
-          depends_on_qc.insert(user);
-        }
-
-        if (instr_class == TRANSFER_CLASSICAL_TO_QUANTUM)
-        {
-          nextQuantumCycle(module, tail_classical);
-          depends_on_qc.clear();
-          post_classical_instructions.clear();
-        }
-        else
-        {
-          // Inserting to post section
-          auto new_instr = instr.clone();
-          new_instr->takeName(&instr);
-          post_classical_builder_->Insert(new_instr);
-          instr.replaceAllUsesWith(new_instr);
-          to_delete.push_back(&instr);
-
-          post_classical_instructions.insert(new_instr);
-          continue;
-        }
-      }
-
-      // Post quantum section
-      // Moving remaining to pre-section
-      auto new_instr = instr.clone();
-
-      new_instr->takeName(&instr);
-      if (instr_class == TRANSFER_CLASSICAL_TO_QUANTUM)
-      {
-        load_builder_->Insert(new_instr);
-      }
-      else
-      {
-        pre_classical_builder_->Insert(new_instr);
-      }
-
-      instr.replaceAllUsesWith(new_instr);
-      to_delete.push_back(&instr);
-    }
-
-    break;
-    case TRANSFER_QUANTUM_TO_CLASSICAL:
-    case PURE_QUANTUM: {
       // Checking if we are starting a new quantum program
       for (auto &op : instr.operands())
       {
@@ -263,30 +198,106 @@ void GroupingPass::expandBlockQuantumMeasureClassical(llvm::Module     &module,
       auto new_instr = instr.clone();
       new_instr->takeName(&instr);
 
-      if (instr_class == TRANSFER_QUANTUM_TO_CLASSICAL)
-      {
-        readout_builder_->Insert(new_instr);
-      }
-      else
-      {
-        quantum_builder_->Insert(new_instr);
-      }
+      quantum_builder_->Insert(new_instr);
 
       instr.replaceAllUsesWith(new_instr);
       to_delete.push_back(&instr);
-      break;
     }
+    else if (instr_class != INVALID_MIXED_LOCATION)
+    {
+      // Check if depends on readout
+      if (depends_on_qc.find(&instr) != depends_on_qc.end())
+      {
+        for (auto user : instr.users())
+        {
+          depends_on_qc.insert(user);
+        }
 
-    default:
-      throw std::runtime_error("Encountered instruction that could not be classified.");
+        // Inserting to post section
+        auto new_instr = instr.clone();
+        new_instr->takeName(&instr);
+        post_classical_builder_->Insert(new_instr);
+        instr.replaceAllUsesWith(new_instr);
+        to_delete.push_back(&instr);
+
+        post_classical_instructions.insert(new_instr);
+        continue;
+      }
+
+      // Post quantum section
+      // Moving remaining to pre-section
+      auto new_instr = instr.clone();
+
+      new_instr->takeName(&instr);
+      pre_classical_builder_->Insert(new_instr);
+
+      instr.replaceAllUsesWith(new_instr);
+      to_delete.push_back(&instr);
+    }
+    else
+    {
+      throw std::runtime_error("Unsupported occurring while grouping instructions");
     }
   }
 
-  pre_classical_builder_->CreateBr(load_block_);
-  load_builder_->CreateBr(quantum_block_);
-  quantum_builder_->CreateBr(readout_block_);
-  readout_builder_->CreateBr(post_classical_block_);
+  pre_classical_builder_->CreateBr(quantum_block_);
+  quantum_builder_->CreateBr(post_classical_block_);
   post_classical_builder_->CreateBr(tail_classical);
+
+  for (auto it = to_delete.rbegin(); it != to_delete.rend(); ++it)
+  {
+    auto ptr = *it;
+    if (!ptr->use_empty())
+    {
+      llvm::errs() << ";; Error: Could not delete " << *ptr << "\n";
+    }
+    else
+    {
+      ptr->eraseFromParent();
+    }
+  }
+}
+
+void GroupingPass::expandBasedOnDest(llvm::Module &module, llvm::BasicBlock *block,
+                                     bool move_quatum, String name)
+{
+  auto                            &context = module.getContext();
+  std::vector<llvm::Instruction *> to_delete;
+  auto extra_block = llvm::BasicBlock::Create(context, "unnamed", block->getParent(), block);
+  extra_block->takeName(block);
+  block->replaceUsesWithIf(extra_block, [](llvm::Use &use) {
+    auto *phi_node = llvm::dyn_cast<llvm::PHINode>(use.getUser());
+    return (phi_node == nullptr);
+  });
+
+  block->setName(name);
+
+  llvm::IRBuilder<> first_bulder{context};
+  first_bulder.SetInsertPoint(extra_block);
+
+  for (auto &instr : *block)
+  {
+    if (instr.isTerminator())
+    {
+      continue;
+    }
+
+    auto instr_class     = classifyInstruction(&instr);
+    bool dest_is_quantum = (instr_class & DEST_QUANTUM) != 0;
+
+    if (dest_is_quantum == move_quatum)
+    {
+      auto new_instr = instr.clone();
+
+      new_instr->takeName(&instr);
+      first_bulder.Insert(new_instr);
+
+      instr.replaceAllUsesWith(new_instr);
+      to_delete.push_back(&instr);
+    }
+  }
+
+  first_bulder.CreateBr(block);
 
   for (auto it = to_delete.rbegin(); it != to_delete.rend(); ++it)
   {
@@ -305,23 +316,33 @@ void GroupingPass::expandBlockQuantumMeasureClassical(llvm::Module     &module,
 llvm::PreservedAnalyses GroupingPass::run(llvm::Module &module, llvm::ModuleAnalysisManager &mam)
 {
   auto &result = mam.getResult<GroupingAnalysisPass>(module);
+  quantum_blocks_.clear();
+  classical_blocks_.clear();
 
   // Preparing builders
   auto &context           = module.getContext();
   pre_classical_builder_  = std::make_shared<llvm::IRBuilder<>>(context);
-  load_builder_           = std::make_shared<llvm::IRBuilder<>>(context);
   quantum_builder_        = std::make_shared<llvm::IRBuilder<>>(context);
-  readout_builder_        = std::make_shared<llvm::IRBuilder<>>(context);
   post_classical_builder_ = std::make_shared<llvm::IRBuilder<>>(context);
 
   for (auto *block : result.qc_cc_blocks)
   {
-    expandBlockQuantumMeasureClassical(module, block);
+    expandBasedOnSource(module, block);
   }
 
   for (auto *block : result.qc_mc_cc_blocks)
   {
-    expandBlockQuantumMeasureClassical(module, block);
+    expandBasedOnSource(module, block);
+  }
+
+  for (auto *block : quantum_blocks_)
+  {
+    expandBasedOnDest(module, block, true, "readout");
+  }
+
+  for (auto *block : classical_blocks_)
+  {
+    expandBasedOnDest(module, block, false, "load");
   }
 
   return llvm::PreservedAnalyses::none();
