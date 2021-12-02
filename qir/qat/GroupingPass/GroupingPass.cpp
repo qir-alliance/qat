@@ -260,7 +260,11 @@ namespace quantum
         }
     }
 
-    void GroupingPass::expandBasedOnDest(llvm::Module& module, llvm::BasicBlock* block, bool move_quatum, String name)
+    void GroupingPass::expandBasedOnDest(
+        llvm::Module&     module,
+        llvm::BasicBlock* block,
+        bool              move_quatum,
+        String const&     name)
     {
         auto&                           context = module.getContext();
         std::vector<llvm::Instruction*> to_delete;

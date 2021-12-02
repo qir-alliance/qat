@@ -92,7 +92,7 @@ namespace quantum
         void nextQuantumCycle(llvm::Module& module, llvm::BasicBlock* block);
         void expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* block);
 
-        void expandBasedOnDest(llvm::Module& module, llvm::BasicBlock* block, bool move_quatum, String name);
+        void expandBasedOnDest(llvm::Module& module, llvm::BasicBlock* block, bool move_quatum, String const& name);
 
         //
         bool    isQuantumRegister(llvm::Type const* type);
