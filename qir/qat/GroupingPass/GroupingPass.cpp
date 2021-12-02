@@ -316,8 +316,6 @@ void GroupingPass::expandBasedOnDest(llvm::Module &module, llvm::BasicBlock *blo
 llvm::PreservedAnalyses GroupingPass::run(llvm::Module &module, llvm::ModuleAnalysisManager &mam)
 {
   auto &result = mam.getResult<GroupingAnalysisPass>(module);
-  quantum_blocks_.clear();
-  classical_blocks_.clear();
 
   // Preparing builders
   auto &context           = module.getContext();
@@ -327,22 +325,43 @@ llvm::PreservedAnalyses GroupingPass::run(llvm::Module &module, llvm::ModuleAnal
 
   for (auto *block : result.qc_cc_blocks)
   {
+
+    quantum_blocks_.clear();
+    classical_blocks_.clear();
+
     expandBasedOnSource(module, block);
+
+    for (auto *block : quantum_blocks_)
+    {
+      expandBasedOnDest(module, block, true, "readout");
+    }
+
+    // Last classical block does not contain any loads
+    classical_blocks_.pop_back();
+    for (auto *block : classical_blocks_)
+    {
+      expandBasedOnDest(module, block, false, "load");
+    }
   }
 
   for (auto *block : result.qc_mc_cc_blocks)
   {
+    quantum_blocks_.clear();
+    classical_blocks_.clear();
+
     expandBasedOnSource(module, block);
-  }
 
-  for (auto *block : quantum_blocks_)
-  {
-    expandBasedOnDest(module, block, true, "readout");
-  }
+    for (auto *block : quantum_blocks_)
+    {
+      expandBasedOnDest(module, block, true, "readout");
+    }
 
-  for (auto *block : classical_blocks_)
-  {
-    expandBasedOnDest(module, block, false, "load");
+    // Last classical block does not contain any loads
+    classical_blocks_.pop_back();
+    for (auto *block : classical_blocks_)
+    {
+      expandBasedOnDest(module, block, false, "load");
+    }
   }
 
   return llvm::PreservedAnalyses::none();

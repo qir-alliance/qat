@@ -245,7 +245,7 @@ following the pattern previously discussed with an `entry` block, a `load`
 block, a `quantum` program block, a `readout` block and a `post-classical`
 processing block. Visualised in as above the blocks are executed as follows:
 
-```
+```text
     Classical             PPU-SPU             Quantum
  processing unit  │      interface      │ processing unit
                   │                     │
@@ -266,6 +266,212 @@ With this separation it becomes straight-forward to execute the program parts in
 accordance with the processing unit which the require as well as to ensure that
 proper setup of the QPU was performed before initiating the quantum calculation.
 
-## Pass usage
+### Block Separation Strategy
 
-###
+Our block separation strategy follows a divide-and-conquer approach: First we sort instructions into new blocks according to the source processing. Each of these blocks are then split into blocks based on the destination processing unit. We illustrate this in the following diagram:
+
+```text
+                                 ┌──────────┐
+                                 │Classical │     entry
+                 ┌──────────┐ ┌─▶│   Dest   │
+                 │          │ │  └──────────┘
+                 │Classical │ │  ┌──────────┐
+              ┌─▶│  Source  ├─┤  │ Quantum  │      load
+              │  │          │ └─▶│   Dest   │
+              │  └──────────┘    └──────────┘
+              │                  ┌──────────┐
+┌──────────┐  │  ┌──────────┐    │ Quantum  │    quantum
+│          │  │  │          │ ┌─▶│   Dest   │
+│ Original │  │  │ Quantum  │ │  └──────────┘
+│  block   │──┼─▶│  Source  ├─┤  ┌──────────┐
+│          │  │  │          │ │  │Classical │    readout
+└──────────┘  │  └──────────┘ └─▶│   Dest   │
+              │                  └──────────┘
+              │  ┌──────────┐    ┌──────────┐
+              │  │          │    │Classical │ post-classical
+              │  │Classical │ ┌─▶│   Dest   │
+              └─▶│  Source  │─┤  └──────────┘
+                 │          │ │  ┌ ─ ─ ─ ─ ─
+                 └──────────┘ │   Empty (QD)│
+                              └─▶│
+                                  ─ ─ ─ ─ ─ ┘
+```
+
+We note the second split is reversed depending type of instructions it contain. That is the destination of same type as the source processing unit comes first and the case where they are opposite follows. We also note that the second split where we divide depending on destination is technically easier to implement than the first since this the blocks processed already have certain guarantees provided:
+
+1. We are guaranteed that we only need to make one split
+2. We are guaranteed that the order of all dependencies is preserved when splitting instructions into the two blocks
+
+The first split is more involved as we here need to identify dependencies between classical and quantum circuits and may end up with a output similar to:
+
+```text
+                 ┌──────────┐
+                 │Classical │
+              ┌─▶│  Source  │
+              │  └──────────┘
+              │  ┌──────────┐
+              │  │ Quantum  │
+              ├─▶│  Source  │
+              │  └──────────┘
+              │  ┌──────────┐
+              │  │Classical │
+              ├─▶│  Source  │
+┌──────────┐  │  └──────────┘
+│          │  │  ┌──────────┐
+│ Original │  │  │ Quantum  │
+│  block   │──┼─▶│  Source  │
+│          │  │  └──────────┘
+└──────────┘  │  ┌──────────┐
+              │  │Classical │
+              ├─▶│  Source  │
+              │  └──────────┘
+              │
+              │       .
+              │       .
+              │       .
+              │
+              │  ┌──────────┐
+              │  │Classical │
+              └─▶│  Source  │
+                 └──────────┘
+```
+
+The main reason for this is that we may make a measurement and then use that measurement to decide what the next quantum circuit looks like. As an example, consider following circuit:
+
+```llvm
+define i64 @LogicGrouping(i64 %z) local_unnamed_addr #0 {
+entry:
+  %0 = icmp slt i64 %z, 0
+  %a1.i.i = select i1 %0, %Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*)
+  %a2.i.i = select i1 %0, %Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* null
+  tail call void @__quantum__qis__x__body(%Qubit* %a1.i.i)
+  tail call void @__quantum__qis__z__body(%Qubit* null)
+  tail call void @__quantum__qis__cnot__body(%Qubit* %a1.i.i, %Qubit* %a2.i.i)
+  tail call void @__quantum__qis__mz__body(%Qubit* %a2.i.i, %Result* null)
+  tail call void @__quantum__qis__reset__body(%Qubit* %a2.i.i)
+  %1 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  %a3.i.i = select i1 %1, %Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* null
+  %2 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  %a4.i.i = select i1 %2, %Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*)
+  tail call void @__quantum__qis__x__body(%Qubit* %a3.i.i)
+  tail call void @__quantum__qis__z__body(%Qubit* null)
+  tail call void @__quantum__qis__cnot__body(%Qubit* %a3.i.i, %Qubit* %a4.i.i)
+  tail call void @__quantum__qis__mz__body(%Qubit* %a4.i.i, %Result* nonnull inttoptr (i64 1 to %Result*))
+  tail call void @__quantum__qis__reset__body(%Qubit* %a4.i.i)
+  %3 = tail call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))
+  %4 = mul i64 %z, 9
+  %5 = shl i64 %z, 1
+  %val.i.i = select i1 %3, i64 %5, i64 %4
+  %6 = mul i64 %val.i.i, 5
+  %7 = add i64 %6, -7
+  ret i64 %7
+}
+```
+
+After grouping according to the source processing unit, we arrive at
+
+```llvm
+define i64 @LogicGrouping(i64 %z) local_unnamed_addr #0 {
+entry:
+  %0 = icmp slt i64 %z, 0
+  %1 = select i1 %0, %Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*)
+  %2 = select i1 %0, %Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* null
+  br label %quantum
+
+quantum:                                          ; preds = %entry
+  tail call void @__quantum__qis__x__body(%Qubit* %1)
+  tail call void @__quantum__qis__z__body(%Qubit* null)
+  tail call void @__quantum__qis__cnot__body(%Qubit* %1, %Qubit* %2)
+  tail call void @__quantum__qis__mz__body(%Qubit* %2, %Result* null)
+  tail call void @__quantum__qis__reset__body(%Qubit* %2)
+  %3 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  %4 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  br label %post-classical
+
+post-classical:                                   ; preds = %quantum
+  %5 = select i1 %3, %Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* null
+  %6 = select i1 %4, %Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*)
+  %7 = mul i64 %z, 9
+  %8 = shl i64 %z, 1
+  br label %quantum2
+
+quantum2:                                         ; preds = %post-classical
+  tail call void @__quantum__qis__x__body(%Qubit* %5)
+  tail call void @__quantum__qis__z__body(%Qubit* null)
+  tail call void @__quantum__qis__cnot__body(%Qubit* %5, %Qubit* %6)
+  tail call void @__quantum__qis__mz__body(%Qubit* %6, %Result* nonnull inttoptr (i64 1 to %Result*))
+  tail call void @__quantum__qis__reset__body(%Qubit* %6)
+  %9 = tail call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))
+  br label %post-classical1
+
+post-classical1:                                  ; preds = %quantum2
+  %10 = select i1 %9, i64 %8, i64 %7
+  %11 = mul i64 %10, 5
+  %12 = add i64 %11, -7
+  br label %exit_quantum_grouping
+
+exit_quantum_grouping:                            ; preds = %post-classical1
+  ret i64 %12
+}
+```
+
+which contains two quantum circuits where the second circuit depends on the first one. That is, in the block `post-classical` we select which qubits to use for the execute and hence, we would not be able to run the second circuit prior to this classical calculation.
+
+Further expanding each of the source blocks, we get the `load` and `readout` blocks:
+
+```llvm
+define i64 @LogicGrouping(i64 %z) local_unnamed_addr #0 {
+entry:
+  %0 = icmp slt i64 %z, 0
+  br label %load
+
+load:                                             ; preds = %entry
+  %1 = select i1 %0, %Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*)
+  %2 = select i1 %0, %Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* null
+  br label %quantum
+
+quantum:                                          ; preds = %load
+  tail call void @__quantum__qis__x__body(%Qubit* %1)
+  tail call void @__quantum__qis__z__body(%Qubit* null)
+  tail call void @__quantum__qis__cnot__body(%Qubit* %1, %Qubit* %2)
+  tail call void @__quantum__qis__mz__body(%Qubit* %2, %Result* null)
+  tail call void @__quantum__qis__reset__body(%Qubit* %2)
+  br label %readout
+
+readout:                                          ; preds = %quantum
+  %3 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  %4 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  br label %post-classical
+
+post-classical:                                   ; preds = %readout
+  %5 = mul i64 %z, 9
+  %6 = shl i64 %z, 1
+  br label %load4
+
+load4:                                            ; preds = %post-classical
+  %7 = select i1 %3, %Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* null
+  %8 = select i1 %4, %Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*)
+  br label %quantum2
+
+quantum2:                                         ; preds = %load4
+  tail call void @__quantum__qis__x__body(%Qubit* %7)
+  tail call void @__quantum__qis__z__body(%Qubit* null)
+  tail call void @__quantum__qis__cnot__body(%Qubit* %7, %Qubit* %8)
+  tail call void @__quantum__qis__mz__body(%Qubit* %8, %Result* nonnull inttoptr (i64 1 to %Result*))
+  tail call void @__quantum__qis__reset__body(%Qubit* %8)
+  br label %readout3
+
+readout3:                                         ; preds = %quantum2
+  %9 = tail call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))
+  br label %post-classical1
+
+post-classical1:                                  ; preds = %readout3
+  %10 = select i1 %9, i64 %6, i64 %5
+  %11 = mul i64 %10, 5
+  %12 = add i64 %11, -7
+  br label %exit_quantum_grouping
+
+exit_quantum_grouping:                            ; preds = %post-classical1
+  ret i64 %12
+}
+```
