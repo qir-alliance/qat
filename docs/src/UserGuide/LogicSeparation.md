@@ -116,10 +116,10 @@ manipulated through the CPU-QPU interface.
 
 Quantum register types
 
-| LLVM type name | Description                                                         |
-| -------------- | ------------------------------------------------------------------- |
-| `Qubit*`       | Qubit register amounting to a physical qubit or simulation datatype |
-| `Result*`      | Result register                                                     |
+| LLVM type name | Description                                                          |
+| -------------- | -------------------------------------------------------------------- |
+| `Qubit*`       | Qubit register amounting to a physical qubit or simulation data type |
+| `Result*`      | Result register                                                      |
 
 Classical register types
 
@@ -171,10 +171,99 @@ executed according to following rules:
 
 ### Pass definition
 
+As an example we will consider following code block:
+
+```llvm
+define i64 @LogicGrouping(i64 %z) local_unnamed_addr #0 {
+entry:
+  %0 = icmp slt i64 %z, 0
+  %a1.i.i = select i1 %0, %Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*)
+  %a2.i.i = select i1 %0, %Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* null
+  tail call void @__quantum__qis__x__body(%Qubit* %a1.i.i)
+  tail call void @__quantum__qis__z__body(%Qubit* null)
+  tail call void @__quantum__qis__cnot__body(%Qubit* %a1.i.i, %Qubit* %a2.i.i)
+  tail call void @__quantum__qis__mz__body(%Qubit* %a2.i.i, %Result* null)
+  tail call void @__quantum__qis__reset__body(%Qubit* %a2.i.i)
+  %1 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  %2 = mul i64 %z, 45
+  %.op.op.i.i = add i64 %2, 13
+  %3 = select i1 %1, i64 -7, i64 %.op.op.i.i
+  ret i64 %3
+}
+```
+
+In the above 2-qubit (`0` and `1`) circuit, we use a classical parameter to
+decide which qubit should be the control qubit (`a1`) and which is the target
+(`a2`). We apply an X gate to the control qubit and then apply a Z gate to the
+qubit with id 0 regardless of whether it is the control or target qubit. This is
+followed by a CNOT gate and finally a measurement. The result from the
+measurement is used to compute a classical result. Our goal is now to separate
+instructions into blocks of pure quantum instructions, pure classical
+instructions and data transfer. The data transfer blocks can be thought of as a
+mix of classical and quantum instructions as these may manipulate registers on
+either the CPU or QPU.
+
+For the above example code, we envision a separation similar to following code
+snippet:
+
+```llvm
+define i64 @LogicGrouping(i64 %z) local_unnamed_addr #0 {
+entry:
+  %0 = icmp slt i64 %z, 0
+  %1 = select i1 %0, %Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*) ;; TODO(tfr): This should be moved to a transfer section
+  %2 = select i1 %0, %Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* null ;; TODO(tfr): This should be moved to a transfer section
+  %3 = mul i64 %z, 45
+  %4 = add i64 %3, 13
+  br label %quantum
+;; load: ;; TODO(tfr): Make this section.
+quantum:                                          ; preds = %entry
+  tail call void @__quantum__qis__x__body(%Qubit* %1)
+  tail call void @__quantum__qis__z__body(%Qubit* null)
+  tail call void @__quantum__qis__cnot__body(%Qubit* %1, %Qubit* %2)
+  tail call void @__quantum__qis__mz__body(%Qubit* %2, %Result* null)
+  tail call void @__quantum__qis__reset__body(%Qubit* %2)
+  br label %readout
+
+readout:                                          ; preds = %quantum
+  %5 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  br label %post-classical
+
+post-classical:                                   ; preds = %readout
+  %6 = select i1 %5, i64 -7, i64 %4
+  br label %exit_quantum_grouping
+
+exit_quantum_grouping:                            ; preds = %post-classical
+  ret i64 %6
+}
+```
+
+TODO(tfr): add support for load. In the above program, the original instructions
+are rearranged into blocks following the pattern previously discussed with an
+`entry` block, a `load` block, a `quantum` program block, a `readout` block and
+a `post-classical` processing block. Visualised in as above the blocks are
+executed as follows:
+
+```
+    Classical             PPU-SPU             Quantum
+ processing unit  │      interface      │ processing unit
+                  │                     │
+           entry│ │                     │
+                ▼ │        load         │
+                  ├─────────────────────▶
+                  │       readout       │ │ quantum
+                  ◀─────────────────────┤ ▼
+ post-classical │ │                     │
+                ▼ │                     │
+  exit-grouping │ │                     │
+                ▼ │                     │
+                  ▼                     ▼
+                  Time
+```
+
+With this separation it becomes straight-forward to execute the program parts in
+accordance with the processing unit which the require as well as to ensure that
+proper setup of the QPU was performed before initiating the quantum calculation.
+
 ## Pass usage
 
 ###
-
-- Client-host: QPU-CPU vs CPU-QPU
-- What are the problems that occur?
-- What are the types of operations that exists?
