@@ -268,7 +268,10 @@ proper setup of the QPU was performed before initiating the quantum calculation.
 
 ### Block Separation Strategy
 
-Our block separation strategy follows a divide-and-conquer approach: First we sort instructions into new blocks according to the source processing. Each of these blocks are then split into blocks based on the destination processing unit. We illustrate this in the following diagram:
+Our block separation strategy follows a divide-and-conquer approach: First we
+sort instructions into new blocks according to the source processing. Each of
+these blocks are then split into blocks based on the destination processing
+unit. We illustrate this in the following diagram:
 
 ```text
                                  ┌──────────┐
@@ -297,12 +300,19 @@ Our block separation strategy follows a divide-and-conquer approach: First we so
                                   ─ ─ ─ ─ ─ ┘
 ```
 
-We note the second split is reversed depending type of instructions it contain. That is the destination of same type as the source processing unit comes first and the case where they are opposite follows. We also note that the second split where we divide depending on destination is technically easier to implement than the first since this the blocks processed already have certain guarantees provided:
+We note the second split is reversed depending type of instructions it contain.
+That is the destination of same type as the source processing unit comes first
+and the case where they are opposite follows. We also note that the second split
+where we divide depending on destination is technically easier to implement than
+the first since this the blocks processed already have certain guarantees
+provided:
 
 1. We are guaranteed that we only need to make one split
-2. We are guaranteed that the order of all dependencies is preserved when splitting instructions into the two blocks
+2. We are guaranteed that the order of all dependencies is preserved when
+   splitting instructions into the two blocks
 
-The first split is more involved as we here need to identify dependencies between classical and quantum circuits and may end up with a output similar to:
+The first split is more involved as we here need to identify dependencies
+between classical and quantum circuits and may end up with a output similar to:
 
 ```text
                  ┌──────────┐
@@ -336,7 +346,9 @@ The first split is more involved as we here need to identify dependencies betwee
                  └──────────┘
 ```
 
-The main reason for this is that we may make a measurement and then use that measurement to decide what the next quantum circuit looks like. As an example, consider following circuit:
+The main reason for this is that we may make a measurement and then use that
+measurement to decide what the next quantum circuit looks like. As an example,
+consider following circuit:
 
 ```llvm
 define i64 @LogicGrouping(i64 %z) local_unnamed_addr #0 {
@@ -415,9 +427,13 @@ exit_quantum_grouping:                            ; preds = %post-classical1
 }
 ```
 
-which contains two quantum circuits where the second circuit depends on the first one. That is, in the block `post-classical` we select which qubits to use for the execute and hence, we would not be able to run the second circuit prior to this classical calculation.
+which contains two quantum circuits where the second circuit depends on the
+first one. That is, in the block `post-classical` we select which qubits to use
+for the execute and hence, we would not be able to run the second circuit prior
+to this classical calculation.
 
-Further expanding each of the source blocks, we get the `load` and `readout` blocks:
+Further expanding each of the source blocks, we get the `load` and `readout`
+blocks:
 
 ```llvm
 define i64 @LogicGrouping(i64 %z) local_unnamed_addr #0 {
