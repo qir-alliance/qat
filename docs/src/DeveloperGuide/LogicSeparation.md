@@ -17,7 +17,7 @@ processing units (GPUs) emerge. To this day, GPUs are still an essentially
 co-processor for many computing tasks including gaming, physics simulation and
 graphics to mention a few.
 
-While floating operations co-processors eventually became integrated into the
+While floating point operation co-processors eventually became integrated into the
 CPU, other co-processors such as GPU remains stand-alone units today. On a
 high-level, the use of a GPU for simulation roughly follows this diagram:
 
