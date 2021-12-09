@@ -155,11 +155,11 @@ arguments together with the return result determine where the call will be
 executed according to following rules:
 
 - Any `void` function location is purely determined by its arguments:
-  - Void functions that only has quantum register types as arguments are
+  - Void functions that only have quantum register types as arguments are
     classified as pure QPU instructions
-  - Void functions that only has classical register types as arguments are
+  - Void functions that only have classical register types as arguments are
     classified as pure CPU instructions
-  - Void functions that that takes a mixture are classified as CPU to QPU
+  - Void functions that takes a mixture are classified as CPU to QPU
     setup/transport instructions
 - Any function that returns a quantum register is:
   - A pure quantum instruction if all of the function arguments are quantum
