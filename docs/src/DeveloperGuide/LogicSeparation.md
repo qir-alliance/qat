@@ -270,7 +270,7 @@ proper setup of the QPU was performed before initiating the quantum calculation.
 
 Our block separation strategy follows a divide-and-conquer approach: First we
 sort instructions into new blocks according to the source processing. Each of
-these blocks are then split into blocks based on the destination processing
+these blocks are then sub-divided based on the destination processing
 unit. We illustrate this in the following diagram:
 
 ```text
