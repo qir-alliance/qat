@@ -144,7 +144,7 @@ instructions. Function calls to functions starting with `__quantum__` are
 expected to follow the QIR specification and these calls are further divided
 into two groups: Intrinsic functions (`__quantum__qis__`) and runtime functions
 (`__quantum__rt__`). The latter are expected to be provided by the runtime
-library given by the frontend and/or the target machine whereas the former are
+library given by the frontend and/or the target machine, whereas the former are
 intrinsic functions. The intrinsic functions may either run on the CPU, the QPU
 or serve as instruction to transfer data between the two processing units.
 
