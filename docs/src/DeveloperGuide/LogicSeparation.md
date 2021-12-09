@@ -262,8 +262,8 @@ processing block. Visualized as above, the blocks are executed as follows:
                   Time
 ```
 
-With this separation it becomes straight-forward to execute the program parts in
-accordance with the processing unit which the require as well as to ensure that
+With this separation, it becomes straight-forward to execute the program parts in
+accordance with the required processing unit as well as to ensure that
 proper setup of the QPU was performed before initiating the quantum calculation.
 
 ### Block Separation Strategy
