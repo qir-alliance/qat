@@ -429,7 +429,7 @@ exit_quantum_grouping:                            ; preds = %post-classical1
 
 which contains two quantum circuits where the second circuit depends on the
 first one. That is, in the block `post-classical` we select which qubits to use
-for the execute and hence, we would not be able to run the second circuit prior
+for the execute, and hence, we would not be able to run the second circuit prior
 to this classical calculation.
 
 Further expanding each of the source blocks, we get the `load` and `readout`
