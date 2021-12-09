@@ -243,7 +243,7 @@ exit_quantum_grouping:                            ; preds = %post-classical
 In the above program, the original instructions are rearranged into blocks
 following the pattern previously discussed with an `entry` block, a `load`
 block, a `quantum` program block, a `readout` block and a `post-classical`
-processing block. Visualised in as above the blocks are executed as follows:
+processing block. Visualized as above, the blocks are executed as follows:
 
 ```text
     Classical             PPU-SPU             Quantum
