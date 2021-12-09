@@ -14,7 +14,7 @@ common to have a co-processor supporting the main x86 architecture with such
 tasks as floating point operations. Other co-processing architectures were built
 to enhance the computers sound capabilities and in 2001, we saw graphical
 processing units (GPUs) emerge. To this day, GPUs are still an essentially
-co-processor for many computing tasks including gaming, physics simulation and
+co-processor for many computing tasks including gaming, physics simulation, and
 graphics to mention a few.
 
 While floating point operation co-processors eventually became integrated into the
