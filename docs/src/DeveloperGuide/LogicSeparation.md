@@ -151,7 +151,7 @@ or serve as instruction to transfer data between the two processing units.
 We classify `__quantum__qis__` functions into four categories: Purely CPU,
 purely QPU, setup/transport from CPU to QPU and result/transport from QPU to
 CPU. The classification happens on the basis of the function signature: The function
-arguments together with the return result determines the where the call will be
+arguments together with the return result determine where the call will be
 executed according to following rules:
 
 - Any `void` function location is purely determined by its arguments:
