@@ -96,7 +96,7 @@ execution. Our aim in this document will be to define how the separation should
 be performed and what qualifies an entity to be a CPU or QPU element.
 
 We will assume that branching is not possible within the QPU since this is a
-classical phenomena. The consequence is that CPU-QPU separation must happen at
+classical phenomenon. The consequence is that CPU-QPU separation must happen at
 the level of `BasicBlocks` in LLVM rather than at a function or even program
 level. While it may be that some QPUs has basic branching support, we note that
 it will be manageable to identify multi-block segments which are compatible with
