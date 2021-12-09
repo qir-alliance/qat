@@ -300,7 +300,7 @@ unit. We illustrate this in the following diagram:
                                   ─ ─ ─ ─ ─ ┘
 ```
 
-We note the second split is reversed depending type of instructions it contain.
+We note the second split is reversed depending type of instructions it contains.
 That is the destination of same type as the source processing unit comes first
 and the case where they are opposite follows. We also note that the second split
 where we divide depending on destination is technically easier to implement than
