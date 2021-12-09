@@ -311,8 +311,8 @@ provided:
 2. We are guaranteed that the order of all dependencies is preserved when
    splitting instructions into the two blocks
 
-The first split is more involved as we here need to identify dependencies
-between classical and quantum circuits and may end up with a output similar to:
+The first split is more involved as we need to identify dependencies
+between classical and quantum circuits and may end up with an output similar to:
 
 ```text
                  ┌──────────┐
