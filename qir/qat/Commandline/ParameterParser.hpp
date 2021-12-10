@@ -9,101 +9,103 @@
 #include <unordered_set>
 #include <vector>
 
-namespace microsoft {
-namespace quantum {
-
-/// Parameter parser class which allows the developer to specify a set of default settings and
-/// update those using the commandline argc and argv.
-class ParameterParser
+namespace microsoft
 {
-public:
-  using Arguments      = std::vector<String>;
-  using Flags          = std::unordered_set<String>;
-  using SettingsMap    = std::unordered_map<String, String>;
-  using UnusedSettings = std::unordered_set<String>;
+namespace quantum
+{
 
-  // Construction and deconstrution configuration
-  //
+    /// Parameter parser class which allows the developer to specify a set of default settings and
+    /// update those using the commandline argc and argv.
+    class ParameterParser
+    {
+      public:
+        using Arguments      = std::vector<String>;
+        using Flags          = std::unordered_set<String>;
+        using SettingsMap    = std::unordered_map<String, String>;
+        using UnusedSettings = std::unordered_set<String>;
 
-  ParameterParser() = default;
+        // Construction and deconstrution configuration
+        //
 
-  // No copy construction.
-  ParameterParser(ParameterParser const &other) = delete;
+        ParameterParser() = default;
 
-  // Allow move semantics.
-  ParameterParser(ParameterParser &&other) = default;
+        // No copy construction.
+        ParameterParser(ParameterParser const& other) = delete;
 
-  // Default destruction.
-  ~ParameterParser() = default;
+        // Allow move semantics.
+        ParameterParser(ParameterParser&& other) = default;
 
-  // Configuration
-  //
+        // Default destruction.
+        ~ParameterParser() = default;
 
-  /// Marks a name as a flag (as opposed to an option).
-  /// This ensures that no parameter is expected after
-  /// the flag is specified. For instance `--debug` is
-  /// a flag as opposed to `--log-level 3` which is an
-  /// option.
-  void addFlag(String const &v);
+        // Configuration
+        //
 
-  // Operation
-  //
+        /// Marks a name as a flag (as opposed to an option).
+        /// This ensures that no parameter is expected after
+        /// the flag is specified. For instance `--debug` is
+        /// a flag as opposed to `--log-level 3` which is an
+        /// option.
+        void addFlag(String const& v);
 
-  /// Parses the command line arguments given the argc and argv
-  /// from the main function.
-  void parseArgs(int argc, char **argv);
+        // Operation
+        //
 
-  /// Returns list of arguments without flags and/or options
-  /// included.
-  Arguments const &arguments() const;
+        /// Parses the command line arguments given the argc and argv
+        /// from the main function.
+        void parseArgs(int argc, char** argv);
 
-  /// Returns the n'th commandline argument.
-  String const &getArg(Arguments::size_type const &n) const;
+        /// Returns list of arguments without flags and/or options
+        /// included.
+        Arguments const& arguments() const;
 
-  /// Gets a named setting, falling back to a default if the key is not found.
-  String const &get(String const &name, String const &default_value) noexcept;
+        /// Returns the n'th commandline argument.
+        String const& getArg(Arguments::size_type const& n) const;
 
-  /// Gets a named setting. This method throws if the setting is not present.
-  String const &get(String const &name);
+        /// Gets a named setting, falling back to a default if the key is not found.
+        String const& get(String const& name, String const& default_value) noexcept;
 
-  /// Marks a flag as used.
-  void markAsUsed(String const &name);
+        /// Gets a named setting. This method throws if the setting is not present.
+        String const& get(String const& name);
 
-  /// Checks whether or not a given parameter is present.
-  bool has(String const &name) const noexcept;
+        /// Marks a flag as used.
+        void markAsUsed(String const& name);
 
-  /// Resets the state of the parser to its construction state
-  void reset();
+        /// Checks whether or not a given parameter is present.
+        bool has(String const& name) const noexcept;
 
-  /// Lists unknown settings
-  UnusedSettings const &unusedSettings() const;
+        /// Resets the state of the parser to its construction state
+        void reset();
 
-private:
-  /// Struct that contains parsed and interpreted values of command line arguments.
-  struct ParsedValue
-  {
-    bool   is_key{false};  ///< Whether or not a parsed value should be considered a key
-    String value;          ///< Value after parsing.
-  };
+        /// Lists unknown settings
+        UnusedSettings const& unusedSettings() const;
 
-  // Helper functions
-  //
+      private:
+        /// Struct that contains parsed and interpreted values of command line arguments.
+        struct ParsedValue
+        {
+            bool   is_key{false}; ///< Whether or not a parsed value should be considered a key
+            String value;         ///< Value after parsing.
+        };
 
-  // Parses a single argument and returns the parsed value. This function
-  // determines if the string was specified to be a key or a value.
-  ParsedValue parseSingleArg(String key);
+        // Helper functions
+        //
 
-  /// Checks whether a key is an option (or a flag). Returns true if it is
-  /// and option and false if it is a flags.
-  bool isOption(String const &key);
+        // Parses a single argument and returns the parsed value. This function
+        // determines if the string was specified to be a key or a value.
+        ParsedValue parseSingleArg(String key);
 
-  // Storage of parsed data
-  //
-  Flags          flags_{};              ///< Set of flags
-  Arguments      arguments_{};          ///< List of remaining arguments
-  SettingsMap    settings_;             ///< Settings map that keeps all specified settings.
-  UnusedSettings unused_properties_{};  ///< List of properties or flags which was not used.
-};
+        /// Checks whether a key is an option (or a flag). Returns true if it is
+        /// and option and false if it is a flags.
+        bool isOption(String const& key);
 
-}  // namespace quantum
-}  // namespace microsoft
+        // Storage of parsed data
+        //
+        Flags          flags_{};             ///< Set of flags
+        Arguments      arguments_{};         ///< List of remaining arguments
+        SettingsMap    settings_;            ///< Settings map that keeps all specified settings.
+        UnusedSettings unused_properties_{}; ///< List of properties or flags which was not used.
+    };
+
+} // namespace quantum
+} // namespace microsoft

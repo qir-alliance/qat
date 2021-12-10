@@ -150,8 +150,8 @@ would run:
 qat -p profile.yaml --validate unvalidated-qir.ll
 ```
 
-In a similar fashion, generation is performed by adding `--apply` to the
-command line:
+In a similar fashion, generation is performed by adding `--apply` to the command
+line:
 
 ```sh
 qat -p profile.yaml --apply qir.ll > qir-profile.ll
