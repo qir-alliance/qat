@@ -582,6 +582,10 @@
 <td>using std::unordered_map&lt; String, String &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#using-settingsmap">SettingsMap</a></strong></td>
 </tr>
+<tr>
+<td>using std::unordered_set&lt; String &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#using-unusedsettings">UnusedSettings</a></strong></td>
+</tr>
 </tbody>
 </table>
 <h2 id="public-functions">Public Functions</h2>
@@ -627,11 +631,15 @@
 </tr>
 <tr>
 <td>String const  &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#function-get">get</a></strong>(String const &amp; name, String const &amp; default_value) const<br>Gets a named setting, falling back to a default if the key is not found.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#function-get">get</a></strong>(String const &amp; name, String const &amp; default_value)<br>Gets a named setting, falling back to a default if the key is not found.</td>
 </tr>
 <tr>
 <td>String const  &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#function-get">get</a></strong>(String const &amp; name) const<br>Gets a named setting. This method throws if the setting is not present.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#function-get">get</a></strong>(String const &amp; name)<br>Gets a named setting. This method throws if the setting is not present.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#function-markasused">markAsUsed</a></strong>(String const &amp; name)<br>Marks a flag as used.</td>
 </tr>
 <tr>
 <td>bool</td>
@@ -640,6 +648,10 @@
 <tr>
 <td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#function-reset">reset</a></strong>()<br>Resets the state of the parser to its construction state.</td>
+</tr>
+<tr>
+<td>UnusedSettings const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#function-unusedsettings">unusedSettings</a></strong>() const<br>Lists unknown settings.</td>
 </tr>
 </tbody>
 </table>
@@ -656,6 +668,9 @@
 </code></pre>
 <h3 id="using-settingsmap">using SettingsMap</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ParameterParser::SettingsMap =  std::unordered_map&lt;String, String&gt;;
+</code></pre>
+<h3 id="using-unusedsettings">using UnusedSettings</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ParameterParser::UnusedSettings =  std::unordered_set&lt;String&gt;;
 </code></pre>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-parameterparser">function ParameterParser</h3>
@@ -701,15 +716,21 @@
 <pre><code class="language-cpp">String const  &amp; get(
     String const &amp; name,
     String const &amp; default_value
-) const
+)
 </code></pre>
 <p>Gets a named setting, falling back to a default if the key is not found. </p>
 <h3 id="function-get_1">function get</h3>
 <pre><code class="language-cpp">String const  &amp; get(
     String const &amp; name
-) const
+)
 </code></pre>
 <p>Gets a named setting. This method throws if the setting is not present. </p>
+<h3 id="function-markasused">function markAsUsed</h3>
+<pre><code class="language-cpp">void markAsUsed(
+    String const &amp; name
+)
+</code></pre>
+<p>Marks a flag as used. </p>
 <h3 id="function-has">function has</h3>
 <pre><code class="language-cpp">bool has(
     String const &amp; name
@@ -720,8 +741,12 @@
 <pre><code class="language-cpp">void reset()
 </code></pre>
 <p>Resets the state of the parser to its construction state. </p>
+<h3 id="function-unusedsettings">function unusedSettings</h3>
+<pre><code class="language-cpp">UnusedSettings const  &amp; unusedSettings() const
+</code></pre>
+<p>Lists unknown settings. </p>
 <hr />
-<p>Updated on  1 December 2021 at 09:05:48 UTC</p></div>
+<p>Updated on 10 December 2021 at 15:18:19 UTC</p></div>
 </div>
           </div>
         </main>

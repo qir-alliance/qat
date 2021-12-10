@@ -613,8 +613,10 @@ namespace quantum
                 continue;
             }
 
+            unused_properties_.insert(v.value);
             if (i &gt;= values.size())
             {
+
                 settings_[v.value] = &quot;true&quot;;
                 continue;
             }
@@ -636,7 +638,7 @@ namespace quantum
         flags_.insert(v);
     }
 
-    String const&amp; ParameterParser::get(String const&amp; name, String const&amp; default_value) const noexcept
+    String const&amp; ParameterParser::get(String const&amp; name, String const&amp; default_value) noexcept
     {
         auto it = settings_.find(name);
         if (it == settings_.end())
@@ -644,10 +646,11 @@ namespace quantum
             return default_value;
         }
 
+        markAsUsed(name);
         return it-&gt;second;
     }
 
-    String const&amp; ParameterParser::get(String const&amp; name) const
+    String const&amp; ParameterParser::get(String const&amp; name)
     {
         auto it = settings_.find(name);
         if (it == settings_.end())
@@ -655,7 +658,23 @@ namespace quantum
             throw std::runtime_error(&quot;Could not find setting '&quot; + name + &quot;'.&quot;);
         }
 
+        markAsUsed(name);
+
         return it-&gt;second;
+    }
+
+    void ParameterParser::markAsUsed(String const&amp; name)
+    {
+        auto it = unused_properties_.find(name);
+        if (it != unused_properties_.end())
+        {
+            unused_properties_.erase(it);
+        }
+    }
+
+    ParameterParser::UnusedSettings const&amp; ParameterParser::unusedSettings() const
+    {
+        return unused_properties_;
     }
 
     bool ParameterParser::has(String const&amp; name) const noexcept
@@ -711,7 +730,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  1 December 2021 at 09:05:49 UTC</p></div>
+<p>Updated on 10 December 2021 at 15:18:19 UTC</p></div>
 </div>
           </div>
         </main>

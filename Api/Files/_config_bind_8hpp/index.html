@@ -636,7 +636,7 @@ namespace quantum
 
         bool setupArguments(ParameterParser&amp; parser) override;
 
-        bool configure(ParameterParser const&amp; parser) override;
+        bool configure(ParameterParser&amp; parser) override;
 
         String value() override;
 
@@ -653,12 +653,11 @@ namespace quantum
 
         template &lt;typename A&gt; String valueAsString(EnableIf&lt;A, bool, A&gt; const&amp;);
 
-        template &lt;typename R&gt; void loadValue(ParameterParser const&amp; parser, R const&amp; default_value);
+        template &lt;typename R&gt; void loadValue(ParameterParser&amp; parser, R const&amp; default_value);
 
-        template &lt;typename A&gt; void loadValue(ParameterParser const&amp; parser, EnableIf&lt;A, bool, A&gt; const&amp; default_value);
+        template &lt;typename A&gt; void loadValue(ParameterParser&amp; parser, EnableIf&lt;A, bool, A&gt; const&amp; default_value);
 
-        template &lt;typename A&gt;
-        void loadValue(ParameterParser const&amp; parser, EnableIf&lt;A, String, A&gt; const&amp; default_value);
+        template &lt;typename A&gt; void loadValue(ParameterParser&amp; parser, EnableIf&lt;A, String, A&gt; const&amp; default_value);
 
         Type&amp; bind_;          
         Type  default_value_; 
@@ -710,7 +709,7 @@ namespace quantum
         return true;
     }
 
-    template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::configure(ParameterParser const&amp; parser)
+    template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::configure(ParameterParser&amp; parser)
     {
         loadValue&lt;Type&gt;(parser, default_value_);
         return true;
@@ -737,7 +736,7 @@ namespace quantum
 
     template &lt;typename T&gt;
     template &lt;typename R&gt;
-    void ConfigBind&lt;T&gt;::loadValue(ParameterParser const&amp; parser, R const&amp; default_value)
+    void ConfigBind&lt;T&gt;::loadValue(ParameterParser&amp; parser, R const&amp; default_value)
     {
         bind_ = default_value;
 
@@ -750,22 +749,24 @@ namespace quantum
 
     template &lt;typename T&gt;
     template &lt;typename A&gt;
-    void ConfigBind&lt;T&gt;::loadValue(ParameterParser const&amp; parser, EnableIf&lt;A, bool, A&gt; const&amp; default_value)
+    void ConfigBind&lt;T&gt;::loadValue(ParameterParser&amp; parser, EnableIf&lt;A, bool, A&gt; const&amp; default_value)
     {
         bind_ = default_value;
         if (parser.has(name()))
         {
+            parser.markAsUsed(name());
             bind_ = true;
         }
         else if (parser.has(&quot;no-&quot; + name()))
         {
+            parser.markAsUsed(&quot;no-&quot; + name());
             bind_ = false;
         }
     }
 
     template &lt;typename T&gt;
     template &lt;typename A&gt;
-    void ConfigBind&lt;T&gt;::loadValue(ParameterParser const&amp; parser, EnableIf&lt;A, String, A&gt; const&amp; default_value)
+    void ConfigBind&lt;T&gt;::loadValue(ParameterParser&amp; parser, EnableIf&lt;A, String, A&gt; const&amp; default_value)
     {
         bind_ = default_value;
 
@@ -779,7 +780,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  1 December 2021 at 09:05:49 UTC</p></div>
+<p>Updated on 10 December 2021 at 15:18:19 UTC</p></div>
 </div>
           </div>
         </main>

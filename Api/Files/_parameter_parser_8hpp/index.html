@@ -610,9 +610,10 @@ namespace quantum
     class ParameterParser
     {
       public:
-        using Arguments   = std::vector&lt;String&gt;;
-        using Flags       = std::unordered_set&lt;String&gt;;
-        using SettingsMap = std::unordered_map&lt;String, String&gt;;
+        using Arguments      = std::vector&lt;String&gt;;
+        using Flags          = std::unordered_set&lt;String&gt;;
+        using SettingsMap    = std::unordered_map&lt;String, String&gt;;
+        using UnusedSettings = std::unordered_set&lt;String&gt;;
 
         // Construction and deconstrution configuration
         //
@@ -642,13 +643,17 @@ namespace quantum
 
         String const&amp; getArg(Arguments::size_type const&amp; n) const;
 
-        String const&amp; get(String const&amp; name, String const&amp; default_value) const noexcept;
+        String const&amp; get(String const&amp; name, String const&amp; default_value) noexcept;
 
-        String const&amp; get(String const&amp; name) const;
+        String const&amp; get(String const&amp; name);
+
+        void markAsUsed(String const&amp; name);
 
         bool has(String const&amp; name) const noexcept;
 
         void reset();
+
+        UnusedSettings const&amp; unusedSettings() const;
 
       private:
         struct ParsedValue
@@ -668,16 +673,17 @@ namespace quantum
 
         // Storage of parsed data
         //
-        Flags       flags_{};     
-        Arguments   arguments_{}; 
-        SettingsMap settings_;    
+        Flags          flags_{};             
+        Arguments      arguments_{};         
+        SettingsMap    settings_;            
+        UnusedSettings unused_properties_{}; 
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  1 December 2021 at 09:05:49 UTC</p></div>
+<p>Updated on 10 December 2021 at 15:18:19 UTC</p></div>
 </div>
           </div>
         </main>

@@ -597,7 +597,7 @@
 </tr>
 <tr>
 <td>virtual bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-configure">configure</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> const &amp; parser) =0</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-configure">configure</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser) =0</td>
 </tr>
 <tr>
 <td>virtual String</td>
@@ -685,7 +685,7 @@
 <p>Interface function to register configuration in the parser. This function register the configuration to the parameter parser. This makes the configuration available in the parameter parsers help function. This method should return true if arguments were successfully setup. </p>
 <h3 id="function-configure">function configure</h3>
 <pre><code class="language-cpp">virtual bool configure(
-    ParameterParser const &amp; parser
+    ParameterParser &amp; parser
 ) =0
 </code></pre>
 <p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-configure">microsoft::quantum::ConfigBind::configure</a></p>
@@ -735,7 +735,7 @@
 </code></pre>
 <p>Sets the default value as a string. </p>
 <hr />
-<p>Updated on  1 December 2021 at 09:05:48 UTC</p></div>
+<p>Updated on 10 December 2021 at 15:18:19 UTC</p></div>
 </div>
           </div>
         </main>
