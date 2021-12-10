@@ -150,18 +150,18 @@ would run:
 qat -p profile.yaml --validate unvalidated-qir.ll
 ```
 
-In a similar fashion, generation is performed by adding `--generate` to the
+In a similar fashion, generation is performed by adding `--apply` to the
 command line:
 
 ```sh
-qat -p profile.yaml --generate qir.ll > qir-profile.ll
+qat -p profile.yaml --apply qir.ll > qir-profile.ll
 ```
 
 Default behaviour of the tool is that it always validates the generated profile.
 This behaviour can be disabled by
 
 ```sh
-qat -p profile.yaml --generate --no-validate qir.ll > qir-profile.ll
+qat -p profile.yaml --apply --no-validate qir.ll > qir-profile.ll
 ```
 
 ## Profile Specification
