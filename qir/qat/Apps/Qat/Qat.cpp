@@ -254,6 +254,19 @@ int main(int argc, char** argv)
         parser.parseArgs(argc, argv);
         configuration_manager.configure(parser);
 
+        // Checking that all command line parameters were used
+        bool incorrect_settings = false;
+        for (auto& prop : parser.unusedSettings())
+        {
+            llvm::errs() << "Unknown option or flag '" << prop << "'\n";
+            incorrect_settings = true;
+        }
+
+        if (incorrect_settings)
+        {
+            return -1;
+        }
+
         // In case we debug, we also print the settings to allow provide a full
         // picture of what is going. This step deliberately comes before validating
         // the input to allow dumping the configuration if something goes wrong.

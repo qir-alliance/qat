@@ -35,8 +35,10 @@ namespace quantum
                 continue;
             }
 
+            unused_properties_.insert(v.value);
             if (i >= values.size())
             {
+
                 settings_[v.value] = "true";
                 continue;
             }
@@ -58,7 +60,7 @@ namespace quantum
         flags_.insert(v);
     }
 
-    String const& ParameterParser::get(String const& name, String const& default_value) const noexcept
+    String const& ParameterParser::get(String const& name, String const& default_value) noexcept
     {
         auto it = settings_.find(name);
         if (it == settings_.end())
@@ -66,10 +68,11 @@ namespace quantum
             return default_value;
         }
 
+        markAsUsed(name);
         return it->second;
     }
 
-    String const& ParameterParser::get(String const& name) const
+    String const& ParameterParser::get(String const& name)
     {
         auto it = settings_.find(name);
         if (it == settings_.end())
@@ -77,7 +80,23 @@ namespace quantum
             throw std::runtime_error("Could not find setting '" + name + "'.");
         }
 
+        markAsUsed(name);
+
         return it->second;
+    }
+
+    void ParameterParser::markAsUsed(String const& name)
+    {
+        auto it = unused_properties_.find(name);
+        if (it != unused_properties_.end())
+        {
+            unused_properties_.erase(it);
+        }
+    }
+
+    ParameterParser::UnusedSettings const& ParameterParser::unusedSettings() const
+    {
+        return unused_properties_;
     }
 
     bool ParameterParser::has(String const& name) const noexcept

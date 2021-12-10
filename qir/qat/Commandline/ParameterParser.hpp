@@ -19,9 +19,10 @@ namespace quantum
     class ParameterParser
     {
       public:
-        using Arguments   = std::vector<String>;
-        using Flags       = std::unordered_set<String>;
-        using SettingsMap = std::unordered_map<String, String>;
+        using Arguments      = std::vector<String>;
+        using Flags          = std::unordered_set<String>;
+        using SettingsMap    = std::unordered_map<String, String>;
+        using UnusedSettings = std::unordered_set<String>;
 
         // Construction and deconstrution configuration
         //
@@ -62,16 +63,22 @@ namespace quantum
         String const& getArg(Arguments::size_type const& n) const;
 
         /// Gets a named setting, falling back to a default if the key is not found.
-        String const& get(String const& name, String const& default_value) const noexcept;
+        String const& get(String const& name, String const& default_value) noexcept;
 
         /// Gets a named setting. This method throws if the setting is not present.
-        String const& get(String const& name) const;
+        String const& get(String const& name);
+
+        /// Marks a flag as used.
+        void markAsUsed(String const& name);
 
         /// Checks whether or not a given parameter is present.
         bool has(String const& name) const noexcept;
 
         /// Resets the state of the parser to its construction state
         void reset();
+
+        /// Lists unknown settings
+        UnusedSettings const& unusedSettings() const;
 
       private:
         /// Struct that contains parsed and interpreted values of command line arguments.
@@ -94,9 +101,10 @@ namespace quantum
 
         // Storage of parsed data
         //
-        Flags       flags_{};     ///< Set of flags
-        Arguments   arguments_{}; ///< List of remaining arguments
-        SettingsMap settings_;    ///< Settings map that keeps all specified settings.
+        Flags          flags_{};             ///< Set of flags
+        Arguments      arguments_{};         ///< List of remaining arguments
+        SettingsMap    settings_;            ///< Settings map that keeps all specified settings.
+        UnusedSettings unused_properties_{}; ///< List of properties or flags which was not used.
     };
 
 } // namespace quantum

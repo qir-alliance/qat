@@ -51,7 +51,7 @@ namespace quantum
         /// of the command line parameter parser, this function is meant to read the command line
         /// arguments, interpret it and set the bound variable value (if present). This method should
         /// return true if configure operation was successful.
-        virtual bool configure(ParameterParser const& parser) = 0;
+        virtual bool configure(ParameterParser& parser) = 0;
 
         /// Interface function to return a string representation of the current value of the
         /// bound variable.

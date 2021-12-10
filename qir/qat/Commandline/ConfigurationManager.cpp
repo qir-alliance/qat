@@ -29,7 +29,7 @@ namespace quantum
         }
     }
 
-    void ConfigurationManager::configure(ParameterParser const& parser)
+    void ConfigurationManager::configure(ParameterParser& parser)
     {
 
         for (auto& section : config_sections_)
