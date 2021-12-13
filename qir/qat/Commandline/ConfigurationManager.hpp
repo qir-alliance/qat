@@ -68,7 +68,7 @@ namespace quantum
         void setupArguments(ParameterParser& parser);
 
         /// Configures the value of each bound variable given a parser instance.
-        void configure(ParameterParser const& parser);
+        void configure(ParameterParser& parser);
 
         // Managing configuration
         //

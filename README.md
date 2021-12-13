@@ -34,25 +34,6 @@ is designed to work with all of them.
 
 ## Building
 
-To build the tool, create a new build directory and switch to that directory:
-
-```sh
-mkdir Debug
-cd Debug/
-```
-
-To build the library, first configure CMake from the build directory
-
-```sh
-cmake ..
-```
-
-and then make your target:
-
-```sh
-make qat
-```
-
 For full instructions on dependencies and how to build, follow
 [these instructions](./docs/src/UserGuide/BuildingLibrary.md).
 
@@ -62,7 +43,7 @@ Once the project is built (see next sections), you can transform a QIR according
 to a profile as follows:
 
 ```sh
-./qir/qat/Apps/qat --generate --profile base -S path/to/example.ll
+./qir/qat/Apps/qat --apply --profile base -S path/to/example.ll
 ```
 
 Likewise, you can validate that a QIR follows a specification by running (Note,
