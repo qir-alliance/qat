@@ -17,8 +17,8 @@ processing units (GPUs) emerge. To this day, GPUs are still an essentially
 co-processor for many computing tasks including gaming, physics simulation, and
 graphics to mention a few.
 
-While floating point operation co-processors eventually became integrated into the
-CPU, other co-processors such as GPU remains stand-alone units today. On a
+While floating point operation co-processors eventually became integrated into
+the CPU, other co-processors such as GPU remains stand-alone units today. On a
 high-level, the use of a GPU for simulation roughly follows this diagram:
 
 ```text
@@ -84,7 +84,10 @@ Classical program │ │                     │
                     Time
 ```
 
-TODO: Finish this section
+We note that in some cases, either the state programming or the readout process
+may be not contain instructions. In these cases, blocks with state programming
+and/or readout will simply be empty and therefore it has no influence on the
+general structure.
 
 ### Problem definition
 
@@ -134,7 +137,7 @@ Classical register types
 | `struct`       |             |
 
 On the CPU, `Qubit*` and `Result*` are treated as integers. This means that they
-should never be dereferenced nor nor should the "memory address" be written to.
+should never be dereferenced nor should the "memory address" be written to.
 
 ### Instructions and instruction classification
 
@@ -150,9 +153,9 @@ or serve as instruction to transfer data between the two processing units.
 
 We classify `__quantum__qis__` functions into four categories: Purely CPU,
 purely QPU, setup/transport from CPU to QPU and result/transport from QPU to
-CPU. The classification happens on the basis of the function signature: The function
-arguments together with the return result determine where the call will be
-executed according to following rules:
+CPU. The classification happens on the basis of the function signature: The
+function arguments together with the return result determine where the call will
+be executed according to following rules:
 
 - Any `void` function location is purely determined by its arguments:
   - Void functions that only have quantum register types as arguments are
@@ -262,18 +265,20 @@ processing block. Visualized as above, the blocks are executed as follows:
                   Time
 ```
 
-With this separation, it becomes straight-forward to execute the program parts in
-accordance with the required processing unit as well as to ensure that
-proper setup of the QPU was performed before initiating the quantum calculation.
+With this separation, it becomes straight-forward to execute the program parts
+in accordance with the required processing unit as well as to ensure that proper
+setup of the QPU was performed before initiating the quantum calculation.
 
 ### Block Separation Strategy
 
 Our block separation strategy follows a divide-and-conquer approach: First we
 sort instructions into new blocks according to the source processing. Each of
-these blocks are then sub-divided based on the destination processing
-unit. We illustrate this in the following diagram:
+these blocks are then sub-divided based on the destination processing unit. We
+illustrate this in the following diagram:
 
 ```text
+            1st split       2nd split
+
                                  ┌──────────┐
                                  │Classical │     entry
                  ┌──────────┐ ┌─▶│   Dest   │
@@ -301,18 +306,19 @@ unit. We illustrate this in the following diagram:
 ```
 
 We note the second split is reversed depending type of instructions it contains.
-That is the destination of same type as the source processing unit comes first
-and the case where they are opposite follows. We also note that the second split
-where we divide depending on destination is technically easier to implement than
-the first since this the blocks processed already have certain guarantees
-provided:
+
+We order instruction blocks (during the second split) such that instructions
+where instructions where source- and destination processing unit are same comes
+first, and those where the differ second. We note that the second split is
+technically easier to make as the blocks processed in the first split already
+have certain guarantees provided:
 
 1. We are guaranteed that we only need to make one split
 2. We are guaranteed that the order of all dependencies is preserved when
    splitting instructions into the two blocks
 
-The first split is more involved as we need to identify dependencies
-between classical and quantum circuits and may end up with an output similar to:
+The first split is more involved as we need to identify dependencies between
+classical and quantum circuits and may end up with an output similar to:
 
 ```text
                  ┌──────────┐
