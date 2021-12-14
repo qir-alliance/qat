@@ -308,10 +308,9 @@ illustrate this in the following diagram:
 We note the second split is reversed depending type of instructions it contains.
 
 We order instruction blocks (during the second split) such that instructions
-whose source and destination processing units are the same come
-first. We note that the second split is
-technically easier to make as the blocks processed in the first split already
-have certain guarantees provided:
+whose source and destination processing units are the same come first. We note
+that the second split is technically easier to make as the blocks processed in
+the first split already have certain guarantees provided:
 
 1. We are guaranteed that we only need to make one split
 2. We are guaranteed that the order of all dependencies is preserved when

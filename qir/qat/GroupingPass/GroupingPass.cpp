@@ -23,10 +23,10 @@ namespace quantum
     {
         if (type->isPointerTy())
         {
-            auto element_type = type->getPointerElementType();
+            auto const element_type = type->getPointerElementType();
             if (element_type->isStructTy())
             {
-                auto type_name = static_cast<String>(element_type->getStructName());
+                auto type_name = static_cast<String const>(element_type->getStructName());
                 return quantum_register_types_.find(type_name) != quantum_register_types_.end();
             }
         }
@@ -277,8 +277,8 @@ namespace quantum
 
         block->setName(name);
 
-        llvm::IRBuilder<> first_bulder{context};
-        first_bulder.SetInsertPoint(extra_block);
+        llvm::IRBuilder<> first_builder{context};
+        first_builder.SetInsertPoint(extra_block);
 
         for (auto& instr : *block)
         {
@@ -295,14 +295,14 @@ namespace quantum
                 auto new_instr = instr.clone();
 
                 new_instr->takeName(&instr);
-                first_bulder.Insert(new_instr);
+                first_builder.Insert(new_instr);
 
                 instr.replaceAllUsesWith(new_instr);
                 to_delete.push_back(&instr);
             }
         }
 
-        first_bulder.CreateBr(block);
+        first_builder.CreateBr(block);
 
         for (auto it = to_delete.rbegin(); it != to_delete.rend(); ++it)
         {
