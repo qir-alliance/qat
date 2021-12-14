@@ -23,7 +23,7 @@ namespace quantum
     {
         if (type->isPointerTy())
         {
-            auto const element_type = type->getPointerElementType();
+            auto element_type = type->getPointerElementType();
             if (element_type->isStructTy())
             {
                 auto type_name = static_cast<String const>(element_type->getStructName());
