@@ -341,11 +341,9 @@ classical and quantum circuits and may end up with an output similar to:
               │  │Classical │
               ├─▶│  Source  │
               │  └──────────┘
-              │
               │       .
               │       .
               │       .
-              │
               │  ┌──────────┐
               │  │Classical │
               └─▶│  Source  │
