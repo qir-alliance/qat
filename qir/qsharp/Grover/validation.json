@@ -1,0 +1,407 @@
+[
+  {
+    "type": "error",
+    "message": "'sext' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'inttoptr' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fdiv' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'or' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'add' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'insertvalue' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'store' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fneg' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fcmp' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fadd' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'sdiv' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fsub' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fptosi' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'and' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'getelementptr' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'load' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'sitofp' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'bitcast' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'icmp' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'shl' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'ptrtoint' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__memory_allocate' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_copy' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'llvm.assume' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_copy' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__qubit_release_array' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_concatenate' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_make_adjoint' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__result_get_zero' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_make_controlled' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__capture_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_create' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_get_element_ptr_1d' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_invoke' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_slice_1d' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__qubit_allocate_array' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_get_size_1d' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__capture_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_create_1d' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__tuple_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__tuple_create' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  }
+]

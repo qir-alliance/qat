@@ -1,0 +1,173 @@
+[
+  {
+    "type": "error",
+    "message": "'zext' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'icmp' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'store' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'add' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'load' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'bitcast' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__capture_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__tuple_create' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_get_size_1d' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_create_1d' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__capture_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_create' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__tuple_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_invoke' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_get_element_ptr_1d' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  }
+]

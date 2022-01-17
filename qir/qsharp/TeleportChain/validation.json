@@ -1,0 +1,11 @@
+[
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  }
+]
