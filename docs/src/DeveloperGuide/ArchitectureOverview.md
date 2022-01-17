@@ -4,12 +4,11 @@ This document assumes familiarity with LLVM,
 [LLVM intermediate representation (IR)](https://llvm.org/docs/LangRef.html),
 LLVM passes and the `opt` tool which is used to apply passes to IRs. We also
 assume that the reader is familiar with the
-[QIR specification](https://github.com/qir-alliance/qir-spec),
-the conventions used for functions and its opaque types. We further assume that
-the reader is familiar with basic C++. This is in particular true later on when
-we dig into the details of building pass components. Throughout this document we
-will assume that any reference to a QIR, is a valid within the specification
-requirements.
+[QIR specification](https://github.com/qir-alliance/qir-spec), the conventions
+used for functions and its opaque types. We further assume that the reader is
+familiar with basic C++. This is in particular true later on when we dig into
+the details of building pass components. Throughout this document we will assume
+that any reference to a QIR, is a valid within the specification requirements.
 
 The aim of this document is to walk the reader through the vision and
 architecture of the QIR adaptor tool (QAT). To this end, we will be discussing
