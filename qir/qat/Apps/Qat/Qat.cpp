@@ -203,21 +203,11 @@ int main(int argc, char** argv)
                             "', error: " + toString(std::move(err)));
                     }
                 }
-                else if (cfg.alwaysInline())
-                {
-                    auto& ret          = ptr->modulePassManager();
-                    auto& pass_builder = ptr->passBuilder();
-                    ret.addPass(llvm::AlwaysInlinerPass());
-
-                    auto inliner_pass = pass_builder.buildInlinerPipeline(
-                        ptr->optimisationLevel(), llvm::PassBuilder::ThinLTOPhase::None, ptr->isDebugMode());
-                    ret.addPass(std::move(inliner_pass));
-                }
                 else if (!cfg.disableDefaultPipeline())
                 {
                     auto& mpm = ptr->modulePassManager();
 
-                    llvm::PassBuilder::OptimizationLevel opt = llvm::PassBuilder::OptimizationLevel::O3;
+                    llvm::PassBuilder::OptimizationLevel opt = ptr->optimisationLevel();
 
                     // If not explicitly disabled, we fall back to the default LLVM pipeline
                     auto&                   pass_builder = ptr->passBuilder();
@@ -232,9 +222,24 @@ int main(int argc, char** argv)
                         pass_builder.buildModuleOptimizationPipeline(opt, ptr->isDebugMode());
                     mpm.addPass(std::move(pipeline3));
 
+                    // Adding always inline pass depending on parameters
+                    if (cfg.alwaysInline() || opt == llvm::PassBuilder::OptimizationLevel::O3 ||
+                        opt == llvm::PassBuilder::OptimizationLevel::O2)
+                    {
+                        auto                           inline_param = getInlineParams(cfg.inlineParameter());
+                        llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
+                        mpm.addPass(std::move(inliner_pass));
+                    }
+                }
+                else if (cfg.alwaysInline())
+                {
+                    auto& mpm          = ptr->modulePassManager();
+                    auto& pass_builder = ptr->passBuilder();
+                    mpm.addPass(llvm::AlwaysInlinerPass());
+
                     auto                           inline_param = getInlineParams(cfg.inlineParameter());
-                    llvm::ModuleInlinerWrapperPass pipeline4    = ModuleInlinerWrapperPass(inline_param);
-                    mpm.addPass(std::move(pipeline4));
+                    llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
+                    mpm.addPass(std::move(inliner_pass));
                 }
             });
 

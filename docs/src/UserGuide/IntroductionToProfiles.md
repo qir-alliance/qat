@@ -44,7 +44,7 @@ restrictions which are absent in the generic QIR.
 ## Generic QIR specification
 
 See
-[Quantum Intermediate Representation (QIR)](https://github.com/microsoft/qsharp-language/tree/main/Specifications/QIR)
+[Quantum Intermediate Representation (QIR)](https://github.com/qir-alliance/qir-spec)
 
 ## Pipeline profile
 
@@ -56,7 +56,7 @@ The pipeline profile is the profile with the least classical logic available. It
 only supports [`call`](https://llvm.org/docs/LangRef.html#call-instruction),
 [`inttoptr`](https://llvm.org/docs/LangRef.html#inttoptr-to-instruction), 64-bit
 integers [`i64`](https://llvm.org/docs/LangRef.html#integer-type), qubit ids
-[`Qubit*`](https://github.com/microsoft/qsharp-language/blob/main/Specifications/QIR/Data-Types.md#opaque-types)
+[`Qubit*`](https://github.com/qir-alliance/qir-spec/blob/main/specification/v0.1/1_Data_Types.md)
 and result ids `Result*`. It does not provide a runtime and only intrinsic
 quantum instructions are available to this profile. This profile is intended for
 client-host type infrastructure where a gate pipeline is uploaded to the client
