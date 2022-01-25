@@ -597,7 +597,7 @@ the pipeline of quantum gates. Profiles suppose to express these nuances and
 restrictions which are absent in the generic QIR.</p>
 <h2 id="generic-qir-specification">Generic QIR specification</h2>
 <p>See
-<a href="https://github.com/microsoft/qsharp-language/tree/main/Specifications/QIR">Quantum Intermediate Representation (QIR)</a></p>
+<a href="https://github.com/qir-alliance/qir-spec">Quantum Intermediate Representation (QIR)</a></p>
 <h2 id="pipeline-profile">Pipeline profile</h2>
 <p>This profile assumes a quantum system where qubits and result registers fixed in
 availability. That is to say, that one target may have 25 qubits and 10 result
@@ -606,7 +606,7 @@ registers.</p>
 only supports <a href="https://llvm.org/docs/LangRef.html#call-instruction"><code>call</code></a>,
 <a href="https://llvm.org/docs/LangRef.html#inttoptr-to-instruction"><code>inttoptr</code></a>, 64-bit
 integers <a href="https://llvm.org/docs/LangRef.html#integer-type"><code>i64</code></a>, qubit ids
-<a href="https://github.com/microsoft/qsharp-language/blob/main/Specifications/QIR/Data-Types.md#opaque-types"><code>Qubit*</code></a>
+<a href="https://github.com/qir-alliance/qir-spec/blob/main/specification/v0.1/1_Data_Types.md"><code>Qubit*</code></a>
 and result ids <code>Result*</code>. It does not provide a runtime and only intrinsic
 quantum instructions are available to this profile. This profile is intended for
 client-host type infrastructure where a gate pipeline is uploaded to the client

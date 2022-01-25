@@ -572,6 +572,10 @@
 </thead>
 <tbody>
 <tr>
+<td>enum</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#enum-@0">@0</a></strong> { PURE_CLASSICAL = 0, SOURCE_QUANTUM = 1, DEST_QUANTUM = 2, PURE_QUANTUM = SOURCE_QUANTUM</td>
+</tr>
+<tr>
 <td>using llvm::Instruction</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#using-instruction">Instruction</a></strong></td>
 </tr>
@@ -620,7 +624,7 @@
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#function-prepareblockmodification">prepareBlockModification</a></strong>(llvm::Module &amp; module, llvm::BasicBlock * block)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#function-preparesourceseparation">prepareSourceSeparation</a></strong>(llvm::Module &amp; module, llvm::BasicBlock * block)</td>
 </tr>
 <tr>
 <td>void</td>
@@ -628,7 +632,19 @@
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#function-expandblockquantummeasureclassical">expandBlockQuantumMeasureClassical</a></strong>(llvm::Module &amp; module, llvm::BasicBlock * block)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#function-expandbasedonsource">expandBasedOnSource</a></strong>(llvm::Module &amp; module, llvm::BasicBlock * block)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#function-expandbasedondest">expandBasedOnDest</a></strong>(llvm::Module &amp; module, llvm::BasicBlock * block, bool move_quatum, String const &amp; name)</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#function-isquantumregister">isQuantumRegister</a></strong>(llvm::Type const * type)</td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#function-classifyinstruction">classifyInstruction</a></strong>(llvm::Instruction const * instr)</td>
 </tr>
 <tr>
 <td>llvm::PreservedAnalyses</td>
@@ -675,6 +691,53 @@
                                    │
 </code></pre>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
+<h3 id="enum-0">enum @0</h3>
+<table>
+<thead>
+<tr>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PURE_CLASSICAL</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>SOURCE_QUANTUM</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>DEST_QUANTUM</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>PURE_QUANTUM</td>
+<td>SOURCE_QUANTUM</td>
+<td>DEST_QUANTUM</td>
+</tr>
+<tr>
+<td>TRANSFER_CLASSICAL_TO_QUANTUM</td>
+<td>DEST_QUANTUM</td>
+<td></td>
+</tr>
+<tr>
+<td>TRANSFER_QUANTUM_TO_CLASSICAL</td>
+<td>SOURCE_QUANTUM</td>
+<td></td>
+</tr>
+<tr>
+<td>INVALID_MIXED_LOCATION</td>
+<td>-1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h3 id="using-instruction">using Instruction</h3>
 <pre><code class="language-cpp">using microsoft::quantum::GroupingPass::Instruction =  llvm::Instruction;
 </code></pre>
@@ -712,8 +775,8 @@
 <pre><code class="language-cpp">~GroupingPass() =default
 </code></pre>
 <p>Default destruction. </p>
-<h3 id="function-prepareblockmodification">function prepareBlockModification</h3>
-<pre><code class="language-cpp">void prepareBlockModification(
+<h3 id="function-preparesourceseparation">function prepareSourceSeparation</h3>
+<pre><code class="language-cpp">void prepareSourceSeparation(
     llvm::Module &amp; module,
     llvm::BasicBlock * block
 )
@@ -724,10 +787,28 @@
     llvm::BasicBlock * block
 )
 </code></pre>
-<h3 id="function-expandblockquantummeasureclassical">function expandBlockQuantumMeasureClassical</h3>
-<pre><code class="language-cpp">void expandBlockQuantumMeasureClassical(
+<h3 id="function-expandbasedonsource">function expandBasedOnSource</h3>
+<pre><code class="language-cpp">void expandBasedOnSource(
     llvm::Module &amp; module,
     llvm::BasicBlock * block
+)
+</code></pre>
+<h3 id="function-expandbasedondest">function expandBasedOnDest</h3>
+<pre><code class="language-cpp">void expandBasedOnDest(
+    llvm::Module &amp; module,
+    llvm::BasicBlock * block,
+    bool move_quatum,
+    String const &amp; name
+)
+</code></pre>
+<h3 id="function-isquantumregister">function isQuantumRegister</h3>
+<pre><code class="language-cpp">bool isQuantumRegister(
+    llvm::Type const * type
+)
+</code></pre>
+<h3 id="function-classifyinstruction">function classifyInstruction</h3>
+<pre><code class="language-cpp">int64_t classifyInstruction(
+    llvm::Instruction const * instr
 )
 </code></pre>
 <h3 id="function-run">function run</h3>
@@ -746,7 +827,7 @@
 </code></pre>
 <p>Whether or not this pass is required to run. </p>
 <hr />
-<p>Updated on 10 December 2021 at 15:18:19 UTC</p></div>
+<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
 </div>
           </div>
         </main>
