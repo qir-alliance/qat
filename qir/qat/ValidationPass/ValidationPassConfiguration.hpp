@@ -54,7 +54,9 @@ namespace quantum
                     "__quantum__qis__crz__body",    "__quantum__qis__rz__body",
                     "__quantum__qis__arcsin__body", "__quantum__qis__drawrandomint__body",
                     "__quantum__qis__rx__body",     "__quantum__qis__m__body",
-                    "__quantum__qis__t__adj",
+                    "__quantum__qis__t__adj",       "__quantum__qis__z__ctl",
+                    "__quantum__qis__r__body",      "__quantum__qis__measure__body",
+                    "__quantum__qis__x__ctl",
 
                 };
             }
