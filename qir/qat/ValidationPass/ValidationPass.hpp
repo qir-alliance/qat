@@ -2,60 +2,70 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "Llvm/Llvm.hpp"
 #include "Logging/ILogger.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
 #include "ValidationPass/ValidationPassConfiguration.hpp"
 
-#include "Llvm/Llvm.hpp"
-
 #include <functional>
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft
+namespace microsoft {
+namespace quantum {
+
+class ValidationPass : public llvm::PassInfoMixin<ValidationPass>
 {
-namespace quantum
-{
+public:
+  using Instruction = llvm::Instruction;
+  using Value       = llvm::Value;
+  using ILoggerPtr  = std::shared_ptr<ILogger>;
 
-    class ValidationPass : public llvm::PassInfoMixin<ValidationPass>
-    {
-      public:
-        using Instruction = llvm::Instruction;
-        using Value       = llvm::Value;
-        using ILoggerPtr  = std::shared_ptr<ILogger>;
+  // Construction and destruction configuration.
+  //
 
-        // Construction and destruction configuration.
-        //
+  explicit ValidationPass(ValidationPassConfiguration const &cfg,
+                          ILoggerPtr const                  &logger = nullptr)
+    : config_{cfg}
+    , logger_{logger}
+  {}
 
-        explicit ValidationPass(ValidationPassConfiguration const& cfg, ILoggerPtr const& logger = nullptr)
-          : config_{cfg}
-          , logger_{logger}
-        {
-        }
+  /// Copy construction is banned.
+  ValidationPass(ValidationPass const &) = delete;
 
-        /// Copy construction is banned.
-        ValidationPass(ValidationPass const&) = delete;
+  /// We allow move semantics.
+  ValidationPass(ValidationPass &&) = default;
 
-        /// We allow move semantics.
-        ValidationPass(ValidationPass&&) = default;
+  /// Default destruction.
+  ~ValidationPass() = default;
 
-        /// Default destruction.
-        ~ValidationPass() = default;
+  llvm::PreservedAnalyses run(llvm::Module &module, llvm::ModuleAnalysisManager &mam);
+  /// Whether or not this pass is required to run.
+  static bool isRequired();
 
-        llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
-        /// Whether or not this pass is required to run.
-        static bool isRequired();
+private:
+  struct Location
+  {
+    String   filename{""};
+    uint64_t row{0};
+    uint64_t col{0};
+  };
+  using Locations = std::vector<Location>;
 
-      private:
-        ValidationPassConfiguration config_{};
+  ValidationPassConfiguration config_{};
 
-        std::unordered_map<std::string, uint64_t> opcodes_;
-        std::unordered_map<std::string, uint64_t> external_calls_;
-        std::unordered_map<std::string, uint64_t> internal_calls_;
+  std::unordered_map<std::string, uint64_t>  opcodes_;
+  std::unordered_map<std::string, Locations> opcode_location_;
 
-        ILoggerPtr logger_{nullptr};
-    };
+  std::unordered_map<std::string, uint64_t>  external_calls_;
+  std::unordered_map<std::string, Locations> external_call_location_;
 
-} // namespace quantum
-} // namespace microsoft
+  std::unordered_map<std::string, uint64_t>  internal_calls_;
+  std::unordered_map<std::string, Locations> internal_call_location_;
+
+  ILoggerPtr logger_{nullptr};
+};
+
+}  // namespace quantum
+}  // namespace microsoft
