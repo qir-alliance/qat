@@ -28,20 +28,20 @@ public:
 
   static ValidationPassConfiguration fromProfileName(String const &name)
   {
-    auto ret = ValidationPassConfiguration();
+    auto profile = ValidationPassConfiguration();
     if (name == "generic")
     {
-      ret.allow_internal_calls_     = true;
-      ret.allowlist_external_calls_ = false;
-      ret.allowlist_opcodes_        = false;
+      profile.allow_internal_calls_     = true;
+      profile.allowlist_external_calls_ = false;
+      profile.allowlist_opcodes_        = false;
     }
     else if (name == "base")
     {
-      ret.allow_internal_calls_     = false;
-      ret.allowlist_external_calls_ = true;
-      ret.allowlist_opcodes_        = true;
-      ret.opcodes_                  = Set{"br", "call", "unreachable", "ret", "phi", "select"};
-      ret.external_calls_           = Set{
+      profile.allow_internal_calls_     = false;
+      profile.allowlist_external_calls_ = true;
+      profile.allowlist_opcodes_        = true;
+      profile.opcodes_                  = Set{"br", "call", "unreachable", "ret", "phi", "select"};
+      profile.external_calls_           = Set{
           "__quantum__qis__mz__body",     "__quantum__qis__read_result__body",
           "__quantum__qis__reset__body",  "__quantum__qis__z__body",
           "__quantum__qis__s__adj",       "__quantum__qis__dumpregister__body",
@@ -53,35 +53,17 @@ public:
           "__quantum__qis__arcsin__body", "__quantum__qis__drawrandomint__body",
           "__quantum__qis__rx__body",     "__quantum__qis__m__body",
           "__quantum__qis__t__adj",
-
       };
-    }
-    else if (name == "cirq")
-    {
-      ret.allow_internal_calls_     = false;
-      ret.allowlist_external_calls_ = true;
-      ret.allowlist_opcodes_        = true;
-      ret.opcodes_                  = Set{"br", "call", "unreachable", "ret", "phi", "select"};
-      ret.external_calls_           = Set{
-          "__quantum__qis__mz__body",     "__quantum__qis__read_result__body",
-          "__quantum__qis__reset__body",  "__quantum__qis__z__body",
-          "__quantum__qis__s__adj",       "__quantum__qis__dumpregister__body",
-          "__quantum__qis__y__body",      "__quantum__qis__x__body",
-          "__quantum__qis__t__body",      "__quantum__qis__cz__body",
-          "__quantum__qis__s__body",      "__quantum__qis__h__body",
-          "__quantum__qis__cnot__body",   "__quantum__qis__sqrt__body",
-          "__quantum__qis__crz__body",    "__quantum__qis__rz__body",
-          "__quantum__qis__arcsin__body", "__quantum__qis__drawrandomint__body",
-          "__quantum__qis__rx__body",     "__quantum__qis__m__body",
-          "__quantum__qis__t__adj",
-
-      };
+      profile.allowlist_pointer_types_ = true;
+      profile.allowed_pointer_types_   = {"i8*",    "i16*",    "i32*",    "i64*",
+                                        "Qubit*", "Qubit**", "Result*", "Result**"};
     }
     else
     {
       throw std::runtime_error("Invalid profile " + name);
     }
-    return ret;
+
+    return profile;
   }
 
   Set const &allowedOpcodes() const
@@ -114,14 +96,31 @@ public:
     return save_report_to_;
   }
 
+  bool allowlistPointerTypes() const
+  {
+    return allowlist_pointer_types_;
+  }
+
+  Set const &allowedPointerTypes() const
+  {
+    return allowed_pointer_types_;
+  }
+
 private:
-  Set    opcodes_{};
-  Set    external_calls_{};
+  Set opcodes_{};
+  Set external_calls_{};
+  Set allowed_pointer_types_{};
+
   String save_report_to_{""};
 
   bool allowlist_opcodes_{true};
   bool allowlist_external_calls_{true};
   bool allow_internal_calls_{false};
+  bool allowlist_pointer_types_{false};
+
+  bool allow_primitive_return_{true};
+  bool allow_struct_return_{true};
+  bool allow_pointer_return_{true};
 };
 
 }  // namespace quantum

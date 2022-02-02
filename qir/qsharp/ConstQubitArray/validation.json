@@ -1,0 +1,57 @@
+[
+  {
+    "type": "error",
+    "message": "'add' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %24 = add i64 %i, 1",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__message' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  call void @__quantum__rt__message(%String* %1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Calls to custom defined functions not allowed.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'String*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  call void @__quantum__rt__message(%String* %1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Fatal error: QIR is not valid within the defined profile",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  call void @__quantum__rt__message(%String* %1)",
+      "frontend_hint": ""
+    }
+  }
+]
