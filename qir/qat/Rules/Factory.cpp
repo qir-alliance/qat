@@ -626,14 +626,14 @@ namespace quantum
 
     void RuleFactory::disableReferenceCounting()
     {
-        //  removeFunctionCall("__quantum__rt__array_update_reference_count");
+        removeFunctionCall("__quantum__rt__array_update_reference_count");
         removeFunctionCall("__quantum__rt__string_update_reference_count");
         removeFunctionCall("__quantum__rt__result_update_reference_count");
     }
 
     void RuleFactory::disableAliasCounting()
     {
-        //  removeFunctionCall("__quantum__rt__array_update_alias_count");
+        removeFunctionCall("__quantum__rt__array_update_alias_count");
         removeFunctionCall("__quantum__rt__string_update_alias_count");
         removeFunctionCall("__quantum__rt__result_update_alias_count");
     }
