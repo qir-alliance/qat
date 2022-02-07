@@ -1,7 +1,7 @@
 all: QSharpVersion/qir/Example.ll
-#	${QAT_BINARY}  QSharpVersion/qir/Example.ll ${QIR_STDLIB} -O3 -S --apply > combined.ll 
-#	opt -O3 -S combined.ll > optimised.ll
-	${QAT_BINARY} -S --validate --save-validation-report validation.json --profile base QSharpVersion/qir/Example.ll > /dev/null
+	${QAT_BINARY}  QSharpVersion/qir/Example.ll ${QIR_STDLIB} -O3 -S --apply > combined.ll 
+	opt -O3 -S combined.ll > optimised.ll
+#	${QAT_BINARY} -S --validate --save-validation-report validation.json --profile base QSharpVersion/qir/Example.ll > /dev/null
 	@echo "Validation for ConstQubitArray finished"
 	
 

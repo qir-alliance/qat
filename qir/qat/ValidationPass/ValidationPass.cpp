@@ -129,6 +129,7 @@ void ValidationPass::pointerChecks(Instruction &instr)
 
 bool ValidationPass::enforceOpcodeRequirements()
 {
+  auto ret = true;
   if (config_.allowlistOpcodes())
   {
     auto const &allowed_ops = config_.allowedOpcodes();
@@ -153,12 +154,12 @@ bool ValidationPass::enforceOpcodeRequirements()
         // Emitting error
         logger_->error("'" + k.first + "' is not allowed for this profile.");
 
-        return false;
+        ret = false;
       }
     }
   }
 
-  return true;
+  return ret;
 }
 
 bool ValidationPass::enforceInternalCallRequirements()
@@ -179,6 +180,8 @@ bool ValidationPass::enforceInternalCallRequirements()
 
 bool ValidationPass::enforceExternalCallRequirements()
 {
+  auto ret = true;
+
   if (config_.allowlistExternalCalls())
   {
     auto const &allowed_functions = config_.allowedExternalCallNames();
@@ -203,15 +206,18 @@ bool ValidationPass::enforceExternalCallRequirements()
 
         // Emitting error
         logger_->error("'" + k.first + "' is not allowed for this profile.");
-        return false;
+        ret = false;
       }
     }
   }
-  return true;
+
+  return ret;
 }
 
 bool ValidationPass::enforcePointerRequirements()
 {
+  auto ret = true;
+
   if (config_.allowlistPointerTypes())
   {
     auto const &allowed = config_.allowedPointerTypes();
@@ -235,11 +241,12 @@ bool ValidationPass::enforcePointerRequirements()
 
         // Emitting error
         logger_->error("Type '" + k.first + "' is not allowed for this profile.");
-        return false;
+        ret = false;
       }
     }
   }
-  return true;
+
+  return ret;
 }
 
 llvm::PreservedAnalyses ValidationPass::run(llvm::Module &module,
