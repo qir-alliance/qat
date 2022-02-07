@@ -1,14 +1,11 @@
 ; ModuleID = 'qat-link'
 source_filename = "qat-link"
 
-%Array = type opaque
 %Qubit = type opaque
 %Result = type opaque
 
 define void @TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__Interop() local_unnamed_addr #0 {
 entry:
-  tail call void @__quantum__rt__array_update_alias_count(%Array* nonnull inttoptr (i64 2 to %Array*), i32 1)
-  tail call void @__quantum__rt__array_update_alias_count(%Array* nonnull inttoptr (i64 4 to %Array*), i32 1)
   br label %load25
 
 load25:                                           ; preds = %entry
@@ -179,8 +176,6 @@ exit_quantum_grouping13:                          ; preds = %post-classical11
   br label %TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit
 
 TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit: ; preds = %exit_quantum_grouping38, %exit_quantum_grouping13
-  tail call void @__quantum__rt__array_update_alias_count(%Array* nonnull inttoptr (i64 2 to %Array*), i32 -1)
-  tail call void @__quantum__rt__array_update_alias_count(%Array* nonnull inttoptr (i64 4 to %Array*), i32 -1)
   br label %load20
 
 load20:                                           ; preds = %TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit
@@ -202,8 +197,6 @@ post-classical16:                                 ; preds = %readout19
 exit_quantum_grouping18:                          ; preds = %post-classical16
   ret void
 }
-
-declare void @__quantum__rt__array_update_alias_count(%Array*, i32) local_unnamed_addr
 
 declare void @__quantum__qis__reset__body(%Qubit*) local_unnamed_addr
 

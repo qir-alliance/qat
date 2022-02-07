@@ -57,6 +57,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
         "__quantum__qis__rx__body",   "__quantum__qis__ry__body",
         "__quantum__qis__rz__body",   "__quantum__qis__reset__body",
         "__quantum__qis__mz__body",   "__quantum__qis__read_result__body",
+        "__quantum__qis__m__body",
 
     };
     profile.allowlist_pointer_types_ = true;

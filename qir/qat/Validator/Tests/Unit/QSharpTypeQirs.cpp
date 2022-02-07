@@ -31,8 +31,12 @@ IrManipulationTestHelperPtr newIrManip(std::string const &script)
   ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
   ir_manip->declareFunction("void @__quantum__qis__rz__body(double, %Qubit*)");
   ir_manip->declareFunction("void @__quantum__qis__t__body(%Qubit*)");
+  ir_manip->declareFunction("void @__quantum__qis__z__body(%Qubit*)");
 
-  ir_manip->declareFunction("i64 @TeleportChain__Calculate__body(i64, %Qubit*)");
+  ir_manip->declareFunction("void @__quantum__qis__mz__body(%Qubit*, %Result*)");
+  ir_manip->declareFunction("void @__quantum__qis__reset__body(%Qubit*)");
+  ir_manip->declareFunction("i1 @__quantum__qis__read_result__body(%Result*)");
+  ir_manip->declareFunction("void @__quantum__qis__cnot__body(%Qubit*, %Qubit*)");
 
   if (!ir_manip->fromBodyString(script))
   {
@@ -42,8 +46,6 @@ IrManipulationTestHelperPtr newIrManip(std::string const &script)
   }
   return ir_manip;
 }
-
-}  // namespace
 
 void expectSuccess(String const &profile_name, String const &script)
 {
@@ -59,65 +61,65 @@ void expectSuccess(String const &profile_name, String const &script)
   EXPECT_TRUE(ir_manip->validateProfile(profile_generator, profile_name));
 }
 
-TEST(CirqPositive, BscMeanField)
+}  // namespace
+
+TEST(QSharpPositive, TeleportChain)
 {
   expectSuccess("base", R"script(
-  %0 = inttoptr i64 0 to %Qubit*
-  %1 = inttoptr i64 1 to %Qubit*
-  %2 = inttoptr i64 2 to %Qubit*
-  %3 = inttoptr i64 3 to %Qubit*
-  %4 = inttoptr i64 4 to %Qubit*
-  %5 = inttoptr i64 5 to %Qubit*
-  %6 = inttoptr i64 6 to %Qubit*
-  %7 = inttoptr i64 7 to %Qubit*
-  call void @__quantum__qis__x__body(%Qubit* %2)
-  call void @__quantum__qis__x__body(%Qubit* %6)
-  call void @__quantum__qis__x__body(%Qubit* %5)
-  call void @__quantum__qis__x__body(%Qubit* %0)
-  call void @__quantum__qis__s__body(%Qubit* %2)
-  call void @__quantum__qis__s__body(%Qubit* %6)
-  call void @__quantum__qis__s__body(%Qubit* %5)
-  call void @__quantum__qis__s__body(%Qubit* %0)
-  call void @__quantum__qis__cx__body(%Qubit* %2, %Qubit* %4)
-  call void @__quantum__qis__h__body(%Qubit* %2)
-  call void @__quantum__qis__cx__body(%Qubit* %4, %Qubit* %2)
-  call void @__quantum__qis__rz__body(double 0x3FD190467F77F61E, %Qubit* %2)
-  call void @__quantum__qis__cx__body(%Qubit* %4, %Qubit* %2)
-  call void @__quantum__qis__rz__body(double 0xBFD190467F77F61E, %Qubit* %2)
-  call void @__quantum__qis__h__body(%Qubit* %2)
-  call void @__quantum__qis__cx__body(%Qubit* %2, %Qubit* %4)
-  call void @__quantum__qis__cx__body(%Qubit* %6, %Qubit* %7)
-  call void @__quantum__qis__h__body(%Qubit* %6)
-  call void @__quantum__qis__cx__body(%Qubit* %7, %Qubit* %6)
-  call void @__quantum__qis__rz__body(double 0x3FE069081E98A77B, %Qubit* %6)
-  call void @__quantum__qis__cx__body(%Qubit* %7, %Qubit* %6)
-  call void @__quantum__qis__rz__body(double 0xBFE069081E98A77B, %Qubit* %6)
-  call void @__quantum__qis__h__body(%Qubit* %6)
-  call void @__quantum__qis__cx__body(%Qubit* %6, %Qubit* %7)
-  call void @__quantum__qis__cx__body(%Qubit* %5, %Qubit* %3)
-  call void @__quantum__qis__s__body(%Qubit* %3)
-  call void @__quantum__qis__cx__body(%Qubit* %3, %Qubit* %5)
-  call void @__quantum__qis__cx__body(%Qubit* %5, %Qubit* %3)
-  call void @__quantum__qis__cx__body(%Qubit* %0, %Qubit* %1)
-  call void @__quantum__qis__h__body(%Qubit* %0)
-  call void @__quantum__qis__cx__body(%Qubit* %1, %Qubit* %0)
-  call void @__quantum__qis__rz__body(double 0x3FE069081E98A785, %Qubit* %0)
-  call void @__quantum__qis__cx__body(%Qubit* %1, %Qubit* %0)
-  call void @__quantum__qis__rz__body(double 0xBFE069081E98A785, %Qubit* %0)
-  call void @__quantum__qis__h__body(%Qubit* %0)
-  call void @__quantum__qis__cx__body(%Qubit* %0, %Qubit* %1)
-  call void @__quantum__qis__t__body(%Qubit* %2)
-  call void @__quantum__qis__s__body(%Qubit* %2)
-  call void @__quantum__qis__t__body(%Qubit* %6)
-  call void @__quantum__qis__s__body(%Qubit* %6)
-  call void @__quantum__qis__t__body(%Qubit* %5)
-  call void @__quantum__qis__s__body(%Qubit* %5)
-  call void @__quantum__qis__t__body(%Qubit* %0)
-  call void @__quantum__qis__s__body(%Qubit* %0)
-  call void @__quantum__qis__x__body(%Qubit* %2)
-  call void @__quantum__qis__x__body(%Qubit* %6)
-  call void @__quantum__qis__x__body(%Qubit* %5)
-  call void @__quantum__qis__x__body(%Qubit* %0)
+  tail call void @__quantum__qis__h__body(%Qubit* null)
+  tail call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))
+  tail call void @__quantum__qis__cnot__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Qubit* nonnull inttoptr (i64 4 to %Qubit*))
+  tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 3 to %Qubit*))
+  tail call void @__quantum__qis__cnot__body(%Qubit* nonnull inttoptr (i64 3 to %Qubit*), %Qubit* nonnull inttoptr (i64 5 to %Qubit*))
+  tail call void @__quantum__qis__cnot__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Qubit* nonnull inttoptr (i64 2 to %Qubit*))
+  tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  tail call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* null)
+  tail call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  %0 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  br i1 %0, label %quantum, label %quantum27
+
+quantum:                                          ; preds = %entry
+  tail call void @__quantum__qis__z__body(%Qubit* nonnull inttoptr (i64 4 to %Qubit*))
+  br label %quantum27
+
+quantum27:                                        ; preds = %quantum, %entry
+  tail call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* nonnull inttoptr (i64 1 to %Result*))
+  tail call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))
+  %1 = tail call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))
+  br i1 %1, label %quantum2, label %quantum32
+
+quantum2:                                         ; preds = %quantum27
+  tail call void @__quantum__qis__x__body(%Qubit* nonnull inttoptr (i64 4 to %Qubit*))
+  br label %quantum32
+
+quantum32:                                        ; preds = %quantum2, %quantum27
+  tail call void @__quantum__qis__cnot__body(%Qubit* nonnull inttoptr (i64 4 to %Qubit*), %Qubit* nonnull inttoptr (i64 3 to %Qubit*))
+  tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 4 to %Qubit*))
+  tail call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 4 to %Qubit*), %Result* nonnull inttoptr (i64 2 to %Result*))
+  tail call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 4 to %Qubit*))
+  %2 = tail call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to %Result*))
+  br i1 %2, label %quantum7, label %quantum37
+
+quantum7:                                         ; preds = %quantum32
+  tail call void @__quantum__qis__z__body(%Qubit* nonnull inttoptr (i64 5 to %Qubit*))
+  br label %quantum37
+
+quantum37:                                        ; preds = %quantum7, %quantum32
+  tail call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 3 to %Qubit*), %Result* nonnull inttoptr (i64 3 to %Result*))
+  tail call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 3 to %Qubit*))
+  %3 = tail call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 3 to %Result*))
+  br i1 %3, label %quantum12, label %quantum17
+
+quantum12:                                        ; preds = %quantum37
+  tail call void @__quantum__qis__x__body(%Qubit* nonnull inttoptr (i64 5 to %Qubit*))
+  br label %quantum17
+
+quantum17:                                        ; preds = %quantum12, %quantum37
+  tail call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 4 to %Result*))
+  tail call void @__quantum__qis__reset__body(%Qubit* null)
+  tail call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 5 to %Qubit*), %Result* nonnull inttoptr (i64 5 to %Result*))
+  tail call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 5 to %Qubit*))
 
   )script");
 }

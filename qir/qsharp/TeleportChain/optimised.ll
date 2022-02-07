@@ -1,14 +1,11 @@
 ; ModuleID = 'combined.ll'
 source_filename = "qat-link"
 
-%Array = type opaque
 %Qubit = type opaque
 %Result = type opaque
 
 define void @TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__Interop() local_unnamed_addr #0 {
 entry:
-  tail call void @__quantum__rt__array_update_alias_count(%Array* nonnull inttoptr (i64 2 to %Array*), i32 1)
-  tail call void @__quantum__rt__array_update_alias_count(%Array* nonnull inttoptr (i64 4 to %Array*), i32 1)
   tail call void @__quantum__qis__h__body(%Qubit* null)
   tail call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
   tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))
@@ -52,23 +49,19 @@ quantum37:                                        ; preds = %quantum7, %quantum3
   tail call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 3 to %Qubit*), %Result* nonnull inttoptr (i64 3 to %Result*))
   tail call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 3 to %Qubit*))
   %3 = tail call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 3 to %Result*))
-  br i1 %3, label %quantum12, label %TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit
+  br i1 %3, label %quantum12, label %quantum17
 
 quantum12:                                        ; preds = %quantum37
   tail call void @__quantum__qis__x__body(%Qubit* nonnull inttoptr (i64 5 to %Qubit*))
-  br label %TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit
+  br label %quantum17
 
-TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit: ; preds = %quantum12, %quantum37
-  tail call void @__quantum__rt__array_update_alias_count(%Array* nonnull inttoptr (i64 2 to %Array*), i32 -1)
-  tail call void @__quantum__rt__array_update_alias_count(%Array* nonnull inttoptr (i64 4 to %Array*), i32 -1)
+quantum17:                                        ; preds = %quantum12, %quantum37
   tail call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 4 to %Result*))
   tail call void @__quantum__qis__reset__body(%Qubit* null)
   tail call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 5 to %Qubit*), %Result* nonnull inttoptr (i64 5 to %Result*))
   tail call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 5 to %Qubit*))
   ret void
 }
-
-declare void @__quantum__rt__array_update_alias_count(%Array*, i32) local_unnamed_addr
 
 declare void @__quantum__qis__reset__body(%Qubit*) local_unnamed_addr
 
