@@ -1,10 +1,10 @@
 
 %Range = type { i64, i64, i64 }
 %Tuple = type opaque
-%Qubit = type opaque
-%Result = type opaque
 %Array = type opaque
 %Callable = type opaque
+%Result = type opaque
+%Qubit = type opaque
 %String = type opaque
 
 @PauliI = internal constant i2 0
@@ -12,9 +12,11 @@
 @PauliY = internal constant i2 -1
 @PauliZ = internal constant i2 -2
 @EmptyRange = internal constant %Range { i64 0, i64 1, i64 -1 }
+@Microsoft__Quantum__Intrinsic__H__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__H__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__H__adj__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__H__ctl__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__H__ctladj__wrapper]
+@Microsoft__Quantum__Samples__T__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Samples__T__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* null, void (%Tuple*, %Tuple*, %Tuple*)* null, void (%Tuple*, %Tuple*, %Tuple*)* null]
+@Microsoft__Quantum__Measurement__MResetZ__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Measurement__MResetZ__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* null, void (%Tuple*, %Tuple*, %Tuple*)* null, void (%Tuple*, %Tuple*, %Tuple*)* null]
 @0 = internal constant [18 x i8] c"Unsupported input\00"
 @Microsoft__Quantum__Intrinsic__CNOT__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__CNOT__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__CNOT__adj__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__CNOT__ctl__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__CNOT__ctladj__wrapper]
-@Microsoft__Quantum__Intrinsic__H__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__H__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__H__adj__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__H__ctl__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__H__ctladj__wrapper]
 @Microsoft__Quantum__Intrinsic__Rx__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Rx__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Rx__adj__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Rx__ctl__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Rx__ctladj__wrapper]
 @Microsoft__Quantum__Intrinsic__Ry__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Ry__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Ry__adj__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Ry__ctl__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Ry__ctladj__wrapper]
 @Microsoft__Quantum__Intrinsic__Rz__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Rz__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Rz__adj__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Rz__ctl__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Rz__ctladj__wrapper]
@@ -22,165 +24,368 @@
 @Microsoft__Quantum__Intrinsic__T__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__T__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__T__adj__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__T__ctl__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__T__ctladj__wrapper]
 @Microsoft__Quantum__Intrinsic__X__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__X__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__X__adj__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__X__ctl__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__X__ctladj__wrapper]
 @Microsoft__Quantum__Intrinsic__Z__FunctionTable = internal constant [4 x void (%Tuple*, %Tuple*, %Tuple*)*] [void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Z__body__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Z__adj__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Z__ctl__wrapper, void (%Tuple*, %Tuple*, %Tuple*)* @Microsoft__Quantum__Intrinsic__Z__ctladj__wrapper]
-@1 = internal constant [3 x i8] c"()\00"
+@1 = internal constant [3 x i8] c", \00"
+@2 = internal constant [2 x i8] c"[\00"
+@3 = internal constant [2 x i8] c"]\00"
 
-define internal void @TeleportChain__ApplyCorrection__body(%Qubit* %src, %Qubit* %intermediary, %Qubit* %dest) {
+define internal %Array* @Microsoft__Quantum__Samples__SampleRandomNumber__body() {
 entry:
-  %0 = call %Result* @Microsoft__Quantum__Measurement__MResetZ__body(%Qubit* %src)
-  %1 = call %Result* @__quantum__rt__result_get_one()
-  %2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
-  call void @__quantum__rt__result_update_reference_count(%Result* %0, i32 -1)
-  br i1 %2, label %then0__1, label %continue__1
-
-then0__1:                                         ; preds = %entry
-  call void @Microsoft__Quantum__Intrinsic__Z__body(%Qubit* %dest)
-  br label %continue__1
-
-continue__1:                                      ; preds = %then0__1, %entry
-  %3 = call %Result* @Microsoft__Quantum__Measurement__MResetZ__body(%Qubit* %intermediary)
-  %4 = call %Result* @__quantum__rt__result_get_one()
-  %5 = call i1 @__quantum__rt__result_equal(%Result* %3, %Result* %4)
-  call void @__quantum__rt__result_update_reference_count(%Result* %3, i32 -1)
-  br i1 %5, label %then0__2, label %continue__2
-
-then0__2:                                         ; preds = %continue__1
-  call void @Microsoft__Quantum__Intrinsic__X__body(%Qubit* %dest)
-  br label %continue__2
-
-continue__2:                                      ; preds = %then0__2, %continue__1
-  ret void
-}
-
-define internal %Result* @Microsoft__Quantum__Measurement__MResetZ__body(%Qubit* %target) {
-entry:
-  %result = call %Result* @__quantum__qis__m__body(%Qubit* %target)
-  call void @__quantum__qis__reset__body(%Qubit* %target)
-  ret %Result* %result
-}
-
-declare %Result* @__quantum__rt__result_get_one()
-
-declare i1 @__quantum__rt__result_equal(%Result*, %Result*)
-
-declare void @__quantum__rt__result_update_reference_count(%Result*, i32)
-
-define internal void @Microsoft__Quantum__Intrinsic__Z__body(%Qubit* %qubit) {
-entry:
-  call void @__quantum__qis__z__body(%Qubit* %qubit)
-  ret void
-}
-
-define internal void @Microsoft__Quantum__Intrinsic__X__body(%Qubit* %qubit) {
-entry:
-  call void @__quantum__qis__x__body(%Qubit* %qubit)
-  ret void
-}
-
-define internal void @TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body() {
-entry:
-  %leftMessage = call %Qubit* @__quantum__rt__qubit_allocate()
-  %rightMessage = call %Qubit* @__quantum__rt__qubit_allocate()
-  %leftPreshared = call %Array* @__quantum__rt__qubit_allocate_array(i64 2)
-  call void @__quantum__rt__array_update_alias_count(%Array* %leftPreshared, i32 1)
-  %rightPreshared = call %Array* @__quantum__rt__qubit_allocate_array(i64 2)
-  call void @__quantum__rt__array_update_alias_count(%Array* %rightPreshared, i32 1)
-  call void @TeleportChain__PrepareEntangledPair__body(%Qubit* %leftMessage, %Qubit* %rightMessage)
+  %register = call %Array* @__quantum__rt__qubit_allocate_array(i64 5)
+  call void @__quantum__rt__array_update_alias_count(%Array* %register, i32 1)
+  %0 = call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Intrinsic__H__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)
+  call void @Microsoft__Quantum__Canon___9ab6574cc947415c85233726e97899a8_ApplyToEachA__body(%Callable* %0, %Array* %register)
+  %1 = call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Samples__T__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)
+  %y = call %Array* @Microsoft__Quantum__Arrays___8aa921325fee4d6c90d1f2e862e57a2c_ForEach__body(%Callable* %1, %Array* %register)
+  call void @__quantum__rt__array_update_alias_count(%Array* %y, i32 1)
+  %2 = call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Measurement__MResetZ__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)
+  %x = call %Array* @Microsoft__Quantum__Arrays___df78952fb02542debc194e912a864bed_ForEach__body(%Callable* %2, %Array* %register)
+  call void @__quantum__rt__array_update_alias_count(%Array* %x, i32 1)
+  %3 = call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Measurement__MResetZ__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)
+  %4 = call %Array* @Microsoft__Quantum__Arrays___df78952fb02542debc194e912a864bed_ForEach__body(%Callable* %3, %Array* %register)
+  call void @__quantum__rt__array_update_alias_count(%Array* %register, i32 -1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %y, i32 -1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %x, i32 -1)
+  call void @__quantum__rt__capture_update_reference_count(%Callable* %0, i32 -1)
+  call void @__quantum__rt__callable_update_reference_count(%Callable* %0, i32 -1)
+  call void @__quantum__rt__capture_update_reference_count(%Callable* %1, i32 -1)
+  call void @__quantum__rt__callable_update_reference_count(%Callable* %1, i32 -1)
+  call void @__quantum__rt__array_update_reference_count(%Array* %y, i32 -1)
+  call void @__quantum__rt__capture_update_reference_count(%Callable* %2, i32 -1)
+  call void @__quantum__rt__callable_update_reference_count(%Callable* %2, i32 -1)
+  %5 = call i64 @__quantum__rt__array_get_size_1d(%Array* %x)
+  %6 = sub i64 %5, 1
   br label %header__1
 
 header__1:                                        ; preds = %exiting__1, %entry
-  %i = phi i64 [ 0, %entry ], [ %7, %exiting__1 ]
-  %0 = icmp sle i64 %i, 1
-  br i1 %0, label %body__1, label %exit__1
+  %7 = phi i64 [ 0, %entry ], [ %12, %exiting__1 ]
+  %8 = icmp sle i64 %7, %6
+  br i1 %8, label %body__1, label %exit__1
 
 body__1:                                          ; preds = %header__1
-  %1 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %leftPreshared, i64 %i)
-  %2 = bitcast i8* %1 to %Qubit**
-  %3 = load %Qubit*, %Qubit** %2, align 8
-  %4 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %rightPreshared, i64 %i)
-  %5 = bitcast i8* %4 to %Qubit**
-  %6 = load %Qubit*, %Qubit** %5, align 8
-  call void @TeleportChain__PrepareEntangledPair__body(%Qubit* %3, %Qubit* %6)
+  %9 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %x, i64 %7)
+  %10 = bitcast i8* %9 to %Result**
+  %11 = load %Result*, %Result** %10, align 8
+  call void @__quantum__rt__result_update_reference_count(%Result* %11, i32 -1)
   br label %exiting__1
 
 exiting__1:                                       ; preds = %body__1
-  %7 = add i64 %i, 1
+  %12 = add i64 %7, 1
   br label %header__1
 
 exit__1:                                          ; preds = %header__1
-  %8 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %leftPreshared, i64 0)
-  %9 = bitcast i8* %8 to %Qubit**
-  %10 = load %Qubit*, %Qubit** %9, align 8
-  %11 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %rightPreshared, i64 0)
-  %12 = bitcast i8* %11 to %Qubit**
-  %13 = load %Qubit*, %Qubit** %12, align 8
-  call void @TeleportChain__TeleportQubitUsingPresharedEntanglement__body(%Qubit* %rightMessage, %Qubit* %10, %Qubit* %13)
-  br label %header__2
-
-header__2:                                        ; preds = %exiting__2, %exit__1
-  %i__1 = phi i64 [ 1, %exit__1 ], [ %25, %exiting__2 ]
-  %14 = icmp sle i64 %i__1, 1
-  br i1 %14, label %body__2, label %exit__2
-
-body__2:                                          ; preds = %header__2
-  %15 = sub i64 %i__1, 1
-  %16 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %rightPreshared, i64 %15)
-  %17 = bitcast i8* %16 to %Qubit**
-  %18 = load %Qubit*, %Qubit** %17, align 8
-  %19 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %leftPreshared, i64 %i__1)
-  %20 = bitcast i8* %19 to %Qubit**
-  %21 = load %Qubit*, %Qubit** %20, align 8
-  %22 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %rightPreshared, i64 %i__1)
-  %23 = bitcast i8* %22 to %Qubit**
-  %24 = load %Qubit*, %Qubit** %23, align 8
-  call void @TeleportChain__TeleportQubitUsingPresharedEntanglement__body(%Qubit* %18, %Qubit* %21, %Qubit* %24)
-  br label %exiting__2
-
-exiting__2:                                       ; preds = %body__2
-  %25 = add i64 %i__1, 1
-  br label %header__2
-
-exit__2:                                          ; preds = %header__2
-  %26 = call %Result* @Microsoft__Quantum__Measurement__MResetZ__body(%Qubit* %leftMessage)
-  %27 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %rightPreshared, i64 1)
-  %28 = bitcast i8* %27 to %Qubit**
-  %29 = load %Qubit*, %Qubit** %28, align 8
-  %30 = call %Result* @Microsoft__Quantum__Measurement__MResetZ__body(%Qubit* %29)
-  call void @__quantum__rt__array_update_alias_count(%Array* %leftPreshared, i32 -1)
-  call void @__quantum__rt__array_update_alias_count(%Array* %rightPreshared, i32 -1)
-  call void @__quantum__rt__result_update_reference_count(%Result* %26, i32 -1)
-  call void @__quantum__rt__result_update_reference_count(%Result* %30, i32 -1)
-  call void @__quantum__rt__qubit_release(%Qubit* %leftMessage)
-  call void @__quantum__rt__qubit_release(%Qubit* %rightMessage)
-  call void @__quantum__rt__qubit_release_array(%Array* %leftPreshared)
-  call void @__quantum__rt__qubit_release_array(%Array* %rightPreshared)
-  ret void
+  call void @__quantum__rt__array_update_reference_count(%Array* %x, i32 -1)
+  call void @__quantum__rt__capture_update_reference_count(%Callable* %3, i32 -1)
+  call void @__quantum__rt__callable_update_reference_count(%Callable* %3, i32 -1)
+  call void @__quantum__rt__qubit_release_array(%Array* %register)
+  ret %Array* %4
 }
 
 declare %Qubit* @__quantum__rt__qubit_allocate()
 
 declare %Array* @__quantum__rt__qubit_allocate_array(i64)
 
-declare void @__quantum__rt__qubit_release(%Qubit*)
-
 declare void @__quantum__rt__qubit_release_array(%Array*)
 
 declare void @__quantum__rt__array_update_alias_count(%Array*, i32)
 
-define internal void @TeleportChain__PrepareEntangledPair__body(%Qubit* %left, %Qubit* %right) {
+define internal void @Microsoft__Quantum__Canon___9ab6574cc947415c85233726e97899a8_ApplyToEachA__body(%Callable* %singleElementOperation, %Array* %register) {
 entry:
-  call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %left)
-  call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* %left, %Qubit* %right)
+  call void @__quantum__rt__capture_update_alias_count(%Callable* %singleElementOperation, i32 1)
+  call void @__quantum__rt__callable_update_alias_count(%Callable* %singleElementOperation, i32 1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %register, i32 1)
+  %0 = call %Range @Microsoft__Quantum__Arrays___14066c0e5d784857a97cd1f746840562_IndexRange__body(%Array* %register)
+  %1 = extractvalue %Range %0, 0
+  %2 = extractvalue %Range %0, 1
+  %3 = extractvalue %Range %0, 2
+  br label %preheader__1
+
+preheader__1:                                     ; preds = %entry
+  %4 = icmp sgt i64 %2, 0
+  br label %header__1
+
+header__1:                                        ; preds = %exiting__1, %preheader__1
+  %idxQubit = phi i64 [ %1, %preheader__1 ], [ %14, %exiting__1 ]
+  %5 = icmp sle i64 %idxQubit, %3
+  %6 = icmp sge i64 %idxQubit, %3
+  %7 = select i1 %4, i1 %5, i1 %6
+  br i1 %7, label %body__1, label %exit__1
+
+body__1:                                          ; preds = %header__1
+  %8 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %register, i64 %idxQubit)
+  %9 = bitcast i8* %8 to %Qubit**
+  %10 = load %Qubit*, %Qubit** %9, align 8
+  %11 = call %Tuple* @__quantum__rt__tuple_create(i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64))
+  %12 = bitcast %Tuple* %11 to { %Qubit* }*
+  %13 = getelementptr inbounds { %Qubit* }, { %Qubit* }* %12, i32 0, i32 0
+  store %Qubit* %10, %Qubit** %13, align 8
+  call void @__quantum__rt__callable_invoke(%Callable* %singleElementOperation, %Tuple* %11, %Tuple* null)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %11, i32 -1)
+  br label %exiting__1
+
+exiting__1:                                       ; preds = %body__1
+  %14 = add i64 %idxQubit, %2
+  br label %header__1
+
+exit__1:                                          ; preds = %header__1
+  call void @__quantum__rt__capture_update_alias_count(%Callable* %singleElementOperation, i32 -1)
+  call void @__quantum__rt__callable_update_alias_count(%Callable* %singleElementOperation, i32 -1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %register, i32 -1)
   ret void
 }
+
+define internal void @Microsoft__Quantum__Intrinsic__H__body__wrapper(%Tuple* %capture-tuple, %Tuple* %arg-tuple, %Tuple* %result-tuple) {
+entry:
+  %0 = bitcast %Tuple* %arg-tuple to { %Qubit* }*
+  %1 = getelementptr inbounds { %Qubit* }, { %Qubit* }* %0, i32 0, i32 0
+  %2 = load %Qubit*, %Qubit** %1, align 8
+  call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %2)
+  ret void
+}
+
+define internal void @Microsoft__Quantum__Intrinsic__H__adj__wrapper(%Tuple* %capture-tuple, %Tuple* %arg-tuple, %Tuple* %result-tuple) {
+entry:
+  %0 = bitcast %Tuple* %arg-tuple to { %Qubit* }*
+  %1 = getelementptr inbounds { %Qubit* }, { %Qubit* }* %0, i32 0, i32 0
+  %2 = load %Qubit*, %Qubit** %1, align 8
+  call void @Microsoft__Quantum__Intrinsic__H__adj(%Qubit* %2)
+  ret void
+}
+
+define internal void @Microsoft__Quantum__Intrinsic__H__ctl__wrapper(%Tuple* %capture-tuple, %Tuple* %arg-tuple, %Tuple* %result-tuple) {
+entry:
+  %0 = bitcast %Tuple* %arg-tuple to { %Array*, %Qubit* }*
+  %1 = getelementptr inbounds { %Array*, %Qubit* }, { %Array*, %Qubit* }* %0, i32 0, i32 0
+  %2 = getelementptr inbounds { %Array*, %Qubit* }, { %Array*, %Qubit* }* %0, i32 0, i32 1
+  %3 = load %Array*, %Array** %1, align 8
+  %4 = load %Qubit*, %Qubit** %2, align 8
+  call void @Microsoft__Quantum__Intrinsic__H__ctl(%Array* %3, %Qubit* %4)
+  ret void
+}
+
+define internal void @Microsoft__Quantum__Intrinsic__H__ctladj__wrapper(%Tuple* %capture-tuple, %Tuple* %arg-tuple, %Tuple* %result-tuple) {
+entry:
+  %0 = bitcast %Tuple* %arg-tuple to { %Array*, %Qubit* }*
+  %1 = getelementptr inbounds { %Array*, %Qubit* }, { %Array*, %Qubit* }* %0, i32 0, i32 0
+  %2 = getelementptr inbounds { %Array*, %Qubit* }, { %Array*, %Qubit* }* %0, i32 0, i32 1
+  %3 = load %Array*, %Array** %1, align 8
+  %4 = load %Qubit*, %Qubit** %2, align 8
+  call void @Microsoft__Quantum__Intrinsic__H__ctladj(%Array* %3, %Qubit* %4)
+  ret void
+}
+
+declare %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]*, [2 x void (%Tuple*, i32)*]*, %Tuple*)
+
+define internal %Array* @Microsoft__Quantum__Arrays___8aa921325fee4d6c90d1f2e862e57a2c_ForEach__body(%Callable* %action, %Array* %array) {
+entry:
+  call void @__quantum__rt__capture_update_alias_count(%Callable* %action, i32 1)
+  call void @__quantum__rt__callable_update_alias_count(%Callable* %action, i32 1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %array, i32 1)
+  %0 = call i64 @__quantum__rt__array_get_size_1d(%Array* %array)
+  %1 = call %Array* @__quantum__rt__array_create_1d(i32 8, i64 %0)
+  %2 = sub i64 %0, 1
+  br label %header__1
+
+header__1:                                        ; preds = %exiting__1, %entry
+  %3 = phi i64 [ 0, %entry ], [ %7, %exiting__1 ]
+  %4 = icmp sle i64 %3, %2
+  br i1 %4, label %body__1, label %exit__1
+
+body__1:                                          ; preds = %header__1
+  %5 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %1, i64 %3)
+  %6 = bitcast i8* %5 to i64*
+  store i64 0, i64* %6, align 4
+  br label %exiting__1
+
+exiting__1:                                       ; preds = %body__1
+  %7 = add i64 %3, 1
+  br label %header__1
+
+exit__1:                                          ; preds = %header__1
+  %resultArray = alloca %Array*, align 8
+  store %Array* %1, %Array** %resultArray, align 8
+  call void @__quantum__rt__array_update_alias_count(%Array* %1, i32 1)
+  %8 = call %Range @Microsoft__Quantum__Arrays___14066c0e5d784857a97cd1f746840562_IndexRange__body(%Array* %array)
+  %9 = extractvalue %Range %8, 0
+  %10 = extractvalue %Range %8, 1
+  %11 = extractvalue %Range %8, 2
+  br label %preheader__1
+
+preheader__1:                                     ; preds = %exit__1
+  %12 = icmp sgt i64 %10, 0
+  br label %header__2
+
+header__2:                                        ; preds = %exiting__2, %preheader__1
+  %idxElement = phi i64 [ %9, %preheader__1 ], [ %30, %exiting__2 ]
+  %13 = icmp sle i64 %idxElement, %11
+  %14 = icmp sge i64 %idxElement, %11
+  %15 = select i1 %12, i1 %13, i1 %14
+  br i1 %15, label %body__2, label %exit__2
+
+body__2:                                          ; preds = %header__2
+  %16 = load %Array*, %Array** %resultArray, align 8
+  call void @__quantum__rt__array_update_alias_count(%Array* %16, i32 -1)
+  %17 = call %Array* @__quantum__rt__array_copy(%Array* %16, i1 false)
+  %18 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %array, i64 %idxElement)
+  %19 = bitcast i8* %18 to %Qubit**
+  %20 = load %Qubit*, %Qubit** %19, align 8
+  %21 = call %Tuple* @__quantum__rt__tuple_create(i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64))
+  %22 = bitcast %Tuple* %21 to { %Qubit* }*
+  %23 = getelementptr inbounds { %Qubit* }, { %Qubit* }* %22, i32 0, i32 0
+  store %Qubit* %20, %Qubit** %23, align 8
+  %24 = call %Tuple* @__quantum__rt__tuple_create(i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
+  call void @__quantum__rt__callable_invoke(%Callable* %action, %Tuple* %21, %Tuple* %24)
+  %25 = bitcast %Tuple* %24 to { i64 }*
+  %26 = getelementptr inbounds { i64 }, { i64 }* %25, i32 0, i32 0
+  %27 = load i64, i64* %26, align 4
+  %28 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %17, i64 %idxElement)
+  %29 = bitcast i8* %28 to i64*
+  store i64 %27, i64* %29, align 4
+  call void @__quantum__rt__array_update_alias_count(%Array* %17, i32 1)
+  store %Array* %17, %Array** %resultArray, align 8
+  call void @__quantum__rt__array_update_reference_count(%Array* %16, i32 -1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %21, i32 -1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %24, i32 -1)
+  br label %exiting__2
+
+exiting__2:                                       ; preds = %body__2
+  %30 = add i64 %idxElement, %10
+  br label %header__2
+
+exit__2:                                          ; preds = %header__2
+  %31 = load %Array*, %Array** %resultArray, align 8
+  call void @__quantum__rt__capture_update_alias_count(%Callable* %action, i32 -1)
+  call void @__quantum__rt__callable_update_alias_count(%Callable* %action, i32 -1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %array, i32 -1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %31, i32 -1)
+  ret %Array* %31
+}
+
+define internal void @Microsoft__Quantum__Samples__T__body__wrapper(%Tuple* %capture-tuple, %Tuple* %arg-tuple, %Tuple* %result-tuple) {
+entry:
+  %0 = bitcast %Tuple* %arg-tuple to { %Qubit* }*
+  %1 = getelementptr inbounds { %Qubit* }, { %Qubit* }* %0, i32 0, i32 0
+  %2 = load %Qubit*, %Qubit** %1, align 8
+  %3 = call i64 @Microsoft__Quantum__Samples__T__body(%Qubit* %2)
+  %4 = bitcast %Tuple* %result-tuple to { i64 }*
+  %5 = getelementptr inbounds { i64 }, { i64 }* %4, i32 0, i32 0
+  store i64 %3, i64* %5, align 4
+  ret void
+}
+
+define internal %Array* @Microsoft__Quantum__Arrays___df78952fb02542debc194e912a864bed_ForEach__body(%Callable* %action, %Array* %array) {
+entry:
+  call void @__quantum__rt__capture_update_alias_count(%Callable* %action, i32 1)
+  call void @__quantum__rt__callable_update_alias_count(%Callable* %action, i32 1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %array, i32 1)
+  %0 = call %Result* @__quantum__rt__result_get_zero()
+  %1 = call i64 @__quantum__rt__array_get_size_1d(%Array* %array)
+  %2 = call %Array* @__quantum__rt__array_create_1d(i32 8, i64 %1)
+  %3 = sub i64 %1, 1
+  br label %header__1
+
+header__1:                                        ; preds = %exiting__1, %entry
+  %4 = phi i64 [ 0, %entry ], [ %8, %exiting__1 ]
+  %5 = icmp sle i64 %4, %3
+  br i1 %5, label %body__1, label %exit__1
+
+body__1:                                          ; preds = %header__1
+  %6 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %2, i64 %4)
+  %7 = bitcast i8* %6 to %Result**
+  store %Result* %0, %Result** %7, align 8
+  call void @__quantum__rt__result_update_reference_count(%Result* %0, i32 1)
+  br label %exiting__1
+
+exiting__1:                                       ; preds = %body__1
+  %8 = add i64 %4, 1
+  br label %header__1
+
+exit__1:                                          ; preds = %header__1
+  %resultArray = alloca %Array*, align 8
+  store %Array* %2, %Array** %resultArray, align 8
+  call void @__quantum__rt__array_update_alias_count(%Array* %2, i32 1)
+  %9 = call %Range @Microsoft__Quantum__Arrays___14066c0e5d784857a97cd1f746840562_IndexRange__body(%Array* %array)
+  %10 = extractvalue %Range %9, 0
+  %11 = extractvalue %Range %9, 1
+  %12 = extractvalue %Range %9, 2
+  br label %preheader__1
+
+preheader__1:                                     ; preds = %exit__1
+  %13 = icmp sgt i64 %11, 0
+  br label %header__2
+
+header__2:                                        ; preds = %exiting__2, %preheader__1
+  %idxElement = phi i64 [ %10, %preheader__1 ], [ %32, %exiting__2 ]
+  %14 = icmp sle i64 %idxElement, %12
+  %15 = icmp sge i64 %idxElement, %12
+  %16 = select i1 %13, i1 %14, i1 %15
+  br i1 %16, label %body__2, label %exit__2
+
+body__2:                                          ; preds = %header__2
+  %17 = load %Array*, %Array** %resultArray, align 8
+  call void @__quantum__rt__array_update_alias_count(%Array* %17, i32 -1)
+  %18 = call %Array* @__quantum__rt__array_copy(%Array* %17, i1 false)
+  %19 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %array, i64 %idxElement)
+  %20 = bitcast i8* %19 to %Qubit**
+  %21 = load %Qubit*, %Qubit** %20, align 8
+  %22 = call %Tuple* @__quantum__rt__tuple_create(i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64))
+  %23 = bitcast %Tuple* %22 to { %Qubit* }*
+  %24 = getelementptr inbounds { %Qubit* }, { %Qubit* }* %23, i32 0, i32 0
+  store %Qubit* %21, %Qubit** %24, align 8
+  %25 = call %Tuple* @__quantum__rt__tuple_create(i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64))
+  call void @__quantum__rt__callable_invoke(%Callable* %action, %Tuple* %22, %Tuple* %25)
+  %26 = bitcast %Tuple* %25 to { %Result* }*
+  %27 = getelementptr inbounds { %Result* }, { %Result* }* %26, i32 0, i32 0
+  %28 = load %Result*, %Result** %27, align 8
+  %29 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %18, i64 %idxElement)
+  %30 = bitcast i8* %29 to %Result**
+  call void @__quantum__rt__result_update_reference_count(%Result* %28, i32 1)
+  %31 = load %Result*, %Result** %30, align 8
+  call void @__quantum__rt__result_update_reference_count(%Result* %31, i32 -1)
+  store %Result* %28, %Result** %30, align 8
+  call void @__quantum__rt__array_update_alias_count(%Array* %18, i32 1)
+  store %Array* %18, %Array** %resultArray, align 8
+  call void @__quantum__rt__array_update_reference_count(%Array* %17, i32 -1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %22, i32 -1)
+  call void @__quantum__rt__result_update_reference_count(%Result* %28, i32 -1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %25, i32 -1)
+  br label %exiting__2
+
+exiting__2:                                       ; preds = %body__2
+  %32 = add i64 %idxElement, %11
+  br label %header__2
+
+exit__2:                                          ; preds = %header__2
+  %33 = load %Array*, %Array** %resultArray, align 8
+  call void @__quantum__rt__capture_update_alias_count(%Callable* %action, i32 -1)
+  call void @__quantum__rt__callable_update_alias_count(%Callable* %action, i32 -1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %array, i32 -1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %33, i32 -1)
+  ret %Array* %33
+}
+
+define internal void @Microsoft__Quantum__Measurement__MResetZ__body__wrapper(%Tuple* %capture-tuple, %Tuple* %arg-tuple, %Tuple* %result-tuple) {
+entry:
+  %0 = bitcast %Tuple* %arg-tuple to { %Qubit* }*
+  %1 = getelementptr inbounds { %Qubit* }, { %Qubit* }* %0, i32 0, i32 0
+  %2 = load %Qubit*, %Qubit** %1, align 8
+  %3 = call %Result* @Microsoft__Quantum__Measurement__MResetZ__body(%Qubit* %2)
+  %4 = bitcast %Tuple* %result-tuple to { %Result* }*
+  %5 = getelementptr inbounds { %Result* }, { %Result* }* %4, i32 0, i32 0
+  store %Result* %3, %Result** %5, align 8
+  ret void
+}
+
+declare void @__quantum__rt__capture_update_reference_count(%Callable*, i32)
+
+declare void @__quantum__rt__callable_update_reference_count(%Callable*, i32)
+
+declare void @__quantum__rt__array_update_reference_count(%Array*, i32)
+
+declare i64 @__quantum__rt__array_get_size_1d(%Array*)
 
 declare i8* @__quantum__rt__array_get_element_ptr_1d(%Array*, i64)
 
-define internal void @TeleportChain__TeleportQubitUsingPresharedEntanglement__body(%Qubit* %src, %Qubit* %intermediary, %Qubit* %dest) {
-entry:
-  call void @TeleportChain__PrepareEntangledPair__adj(%Qubit* %src, %Qubit* %intermediary)
-  call void @TeleportChain__ApplyCorrection__body(%Qubit* %src, %Qubit* %intermediary, %Qubit* %dest)
-  ret void
-}
+declare void @__quantum__rt__result_update_reference_count(%Result*, i32)
 
 define internal void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %qubit) {
 entry:
@@ -188,48 +393,9 @@ entry:
   ret void
 }
 
-define internal void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* %control, %Qubit* %target) {
-entry:
-  call void @__quantum__qis__cnot__body(%Qubit* %control, %Qubit* %target)
-  ret void
-}
-
-define internal void @TeleportChain__PrepareEntangledPair__adj(%Qubit* %left, %Qubit* %right) {
-entry:
-  call void @Microsoft__Quantum__Intrinsic__CNOT__adj(%Qubit* %left, %Qubit* %right)
-  call void @Microsoft__Quantum__Intrinsic__H__adj(%Qubit* %left)
-  ret void
-}
-
-define internal void @Microsoft__Quantum__Intrinsic__CNOT__adj(%Qubit* %control, %Qubit* %target) {
-entry:
-  call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* %control, %Qubit* %target)
-  ret void
-}
-
 define internal void @Microsoft__Quantum__Intrinsic__H__adj(%Qubit* %qubit) {
 entry:
   call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %qubit)
-  ret void
-}
-
-define internal void @TeleportChain__PrepareEntangledPair__ctl(%Array* %__controlQubits__, { %Qubit*, %Qubit* }* %0) {
-entry:
-  call void @__quantum__rt__array_update_alias_count(%Array* %__controlQubits__, i32 1)
-  %1 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 0
-  %left = load %Qubit*, %Qubit** %1, align 8
-  %2 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 1
-  %right = load %Qubit*, %Qubit** %2, align 8
-  call void @Microsoft__Quantum__Intrinsic__H__ctl(%Array* %__controlQubits__, %Qubit* %left)
-  %3 = call %Tuple* @__quantum__rt__tuple_create(i64 mul nuw (i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i64 2))
-  %4 = bitcast %Tuple* %3 to { %Qubit*, %Qubit* }*
-  %5 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %4, i32 0, i32 0
-  %6 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %4, i32 0, i32 1
-  store %Qubit* %left, %Qubit** %5, align 8
-  store %Qubit* %right, %Qubit** %6, align 8
-  call void @Microsoft__Quantum__Intrinsic__CNOT__ctl(%Array* %__controlQubits__, { %Qubit*, %Qubit* }* %4)
-  call void @__quantum__rt__array_update_alias_count(%Array* %__controlQubits__, i32 -1)
-  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %3, i32 -1)
   ret void
 }
 
@@ -272,7 +438,7 @@ else__1:                                          ; preds = %test1__1
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)
   store %Array* %ctls, %Array** %10, align 8
   store %Qubit* %qubit, %Qubit** %11, align 8
-  call void @Microsoft__Quantum__Intrinsic___95a4bb2073304f2797f25356791349f7___QsRef23__ApplyWithLessControlsA____body(%Callable* %7, { %Array*, %Qubit* }* %9)
+  call void @Microsoft__Quantum__Intrinsic___39c4c69246f74f58bd1ae3f69e5948c0___QsRef23__ApplyWithLessControlsA____body(%Callable* %7, { %Array*, %Qubit* }* %9)
   call void @__quantum__rt__capture_update_reference_count(%Callable* %7, i32 -1)
   call void @__quantum__rt__callable_update_reference_count(%Callable* %7, i32 -1)
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
@@ -284,105 +450,6 @@ continue__1:                                      ; preds = %else__1, %then1__1,
   ret void
 }
 
-define internal void @Microsoft__Quantum__Intrinsic__CNOT__ctl(%Array* %ctls, { %Qubit*, %Qubit* }* %0) {
-entry:
-  call void @__quantum__rt__array_update_alias_count(%Array* %ctls, i32 1)
-  %1 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 0
-  %control = load %Qubit*, %Qubit** %1, align 8
-  %2 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 1
-  %target = load %Qubit*, %Qubit** %2, align 8
-  %3 = call i64 @__quantum__rt__array_get_size_1d(%Array* %ctls)
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %then0__1, label %test1__1
-
-then0__1:                                         ; preds = %entry
-  call void @__quantum__qis__cnot__body(%Qubit* %control, %Qubit* %target)
-  br label %continue__1
-
-test1__1:                                         ; preds = %entry
-  %5 = call i64 @__quantum__rt__array_get_size_1d(%Array* %ctls)
-  %6 = icmp eq i64 %5, 1
-  br i1 %6, label %then1__1, label %else__1
-
-then1__1:                                         ; preds = %test1__1
-  %7 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %ctls, i64 0)
-  %8 = bitcast i8* %7 to %Qubit**
-  %9 = load %Qubit*, %Qubit** %8, align 8
-  call void @Microsoft__Quantum__Intrinsic__CCNOT__body(%Qubit* %9, %Qubit* %control, %Qubit* %target)
-  br label %continue__1
-
-else__1:                                          ; preds = %test1__1
-  %10 = call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Intrinsic__CNOT__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)
-  call void @__quantum__rt__callable_make_controlled(%Callable* %10)
-  %11 = call %Tuple* @__quantum__rt__tuple_create(i64 mul nuw (i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i64 2))
-  %12 = bitcast %Tuple* %11 to { %Array*, { %Qubit*, %Qubit* }* }*
-  %13 = getelementptr inbounds { %Array*, { %Qubit*, %Qubit* }* }, { %Array*, { %Qubit*, %Qubit* }* }* %12, i32 0, i32 0
-  %14 = getelementptr inbounds { %Array*, { %Qubit*, %Qubit* }* }, { %Array*, { %Qubit*, %Qubit* }* }* %12, i32 0, i32 1
-  call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)
-  %15 = call %Tuple* @__quantum__rt__tuple_create(i64 mul nuw (i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i64 2))
-  %16 = bitcast %Tuple* %15 to { %Qubit*, %Qubit* }*
-  %17 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %16, i32 0, i32 0
-  %18 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %16, i32 0, i32 1
-  store %Qubit* %control, %Qubit** %17, align 8
-  store %Qubit* %target, %Qubit** %18, align 8
-  store %Array* %ctls, %Array** %13, align 8
-  store { %Qubit*, %Qubit* }* %16, { %Qubit*, %Qubit* }** %14, align 8
-  call void @Microsoft__Quantum__Intrinsic___0219aea1334f4b8899a4dee7f78b68c0___QsRef23__ApplyWithLessControlsA____body(%Callable* %10, { %Array*, { %Qubit*, %Qubit* }* }* %12)
-  call void @__quantum__rt__capture_update_reference_count(%Callable* %10, i32 -1)
-  call void @__quantum__rt__callable_update_reference_count(%Callable* %10, i32 -1)
-  call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
-  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %15, i32 -1)
-  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %11, i32 -1)
-  br label %continue__1
-
-continue__1:                                      ; preds = %else__1, %then1__1, %then0__1
-  call void @__quantum__rt__array_update_alias_count(%Array* %ctls, i32 -1)
-  ret void
-}
-
-declare %Tuple* @__quantum__rt__tuple_create(i64)
-
-declare void @__quantum__rt__tuple_update_reference_count(%Tuple*, i32)
-
-define internal void @TeleportChain__PrepareEntangledPair__ctladj(%Array* %__controlQubits__, { %Qubit*, %Qubit* }* %0) {
-entry:
-  call void @__quantum__rt__array_update_alias_count(%Array* %__controlQubits__, i32 1)
-  %1 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 0
-  %left = load %Qubit*, %Qubit** %1, align 8
-  %2 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 1
-  %right = load %Qubit*, %Qubit** %2, align 8
-  %3 = call %Tuple* @__quantum__rt__tuple_create(i64 mul nuw (i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i64 2))
-  %4 = bitcast %Tuple* %3 to { %Qubit*, %Qubit* }*
-  %5 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %4, i32 0, i32 0
-  %6 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %4, i32 0, i32 1
-  store %Qubit* %left, %Qubit** %5, align 8
-  store %Qubit* %right, %Qubit** %6, align 8
-  call void @Microsoft__Quantum__Intrinsic__CNOT__ctladj(%Array* %__controlQubits__, { %Qubit*, %Qubit* }* %4)
-  call void @Microsoft__Quantum__Intrinsic__H__ctladj(%Array* %__controlQubits__, %Qubit* %left)
-  call void @__quantum__rt__array_update_alias_count(%Array* %__controlQubits__, i32 -1)
-  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %3, i32 -1)
-  ret void
-}
-
-define internal void @Microsoft__Quantum__Intrinsic__CNOT__ctladj(%Array* %__controlQubits__, { %Qubit*, %Qubit* }* %0) {
-entry:
-  call void @__quantum__rt__array_update_alias_count(%Array* %__controlQubits__, i32 1)
-  %1 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 0
-  %control = load %Qubit*, %Qubit** %1, align 8
-  %2 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 1
-  %target = load %Qubit*, %Qubit** %2, align 8
-  %3 = call %Tuple* @__quantum__rt__tuple_create(i64 mul nuw (i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i64 2))
-  %4 = bitcast %Tuple* %3 to { %Qubit*, %Qubit* }*
-  %5 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %4, i32 0, i32 0
-  %6 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %4, i32 0, i32 1
-  store %Qubit* %control, %Qubit** %5, align 8
-  store %Qubit* %target, %Qubit** %6, align 8
-  call void @Microsoft__Quantum__Intrinsic__CNOT__ctl(%Array* %__controlQubits__, { %Qubit*, %Qubit* }* %4)
-  call void @__quantum__rt__array_update_alias_count(%Array* %__controlQubits__, i32 -1)
-  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %3, i32 -1)
-  ret void
-}
-
 define internal void @Microsoft__Quantum__Intrinsic__H__ctladj(%Array* %__controlQubits__, %Qubit* %qubit) {
 entry:
   call void @__quantum__rt__array_update_alias_count(%Array* %__controlQubits__, i32 1)
@@ -391,10 +458,117 @@ entry:
   ret void
 }
 
+define internal i64 @Microsoft__Quantum__Samples__T__body(%Qubit* %q) {
+entry:
+  ret i64 0
+}
+
+define internal %Result* @Microsoft__Quantum__Measurement__MResetZ__body(%Qubit* %target) {
+entry:
+  %result = call %Result* @__quantum__qis__m__body(%Qubit* %target)
+  call void @__quantum__qis__reset__body(%Qubit* %target)
+  ret %Result* %result
+}
+
+declare void @__quantum__rt__capture_update_alias_count(%Callable*, i32)
+
+declare void @__quantum__rt__callable_update_alias_count(%Callable*, i32)
+
+define internal %Range @Microsoft__Quantum__Arrays___14066c0e5d784857a97cd1f746840562_IndexRange__body(%Array* %array) {
+entry:
+  call void @__quantum__rt__array_update_alias_count(%Array* %array, i32 1)
+  %0 = call i64 @__quantum__rt__array_get_size_1d(%Array* %array)
+  %1 = sub i64 %0, 1
+  %2 = load %Range, %Range* @EmptyRange, align 4
+  %3 = insertvalue %Range %2, i64 0, 0
+  %4 = insertvalue %Range %3, i64 1, 1
+  %5 = insertvalue %Range %4, i64 %1, 2
+  call void @__quantum__rt__array_update_alias_count(%Array* %array, i32 -1)
+  ret %Range %5
+}
+
+declare void @__quantum__rt__callable_invoke(%Callable*, %Tuple*, %Tuple*)
+
+declare %Tuple* @__quantum__rt__tuple_create(i64)
+
+declare void @__quantum__rt__tuple_update_reference_count(%Tuple*, i32)
+
+define internal void @Microsoft__Quantum__Canon___9ab6574cc947415c85233726e97899a8_ApplyToEachA__adj(%Callable* %singleElementOperation, %Array* %register) {
+entry:
+  call void @__quantum__rt__capture_update_alias_count(%Callable* %singleElementOperation, i32 1)
+  call void @__quantum__rt__callable_update_alias_count(%Callable* %singleElementOperation, i32 1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %register, i32 1)
+  %0 = call %Range @Microsoft__Quantum__Arrays___14066c0e5d784857a97cd1f746840562_IndexRange__body(%Array* %register)
+  %1 = extractvalue %Range %0, 0
+  %2 = extractvalue %Range %0, 1
+  %3 = extractvalue %Range %0, 2
+  %4 = sub i64 %3, %1
+  %5 = sdiv i64 %4, %2
+  %6 = mul i64 %2, %5
+  %7 = add i64 %1, %6
+  %8 = sub i64 0, %2
+  %9 = load %Range, %Range* @EmptyRange, align 4
+  %10 = insertvalue %Range %9, i64 %7, 0
+  %11 = insertvalue %Range %10, i64 %8, 1
+  %12 = insertvalue %Range %11, i64 %1, 2
+  %13 = extractvalue %Range %12, 0
+  %14 = extractvalue %Range %12, 1
+  %15 = extractvalue %Range %12, 2
+  br label %preheader__1
+
+preheader__1:                                     ; preds = %entry
+  %16 = icmp sgt i64 %14, 0
+  br label %header__1
+
+header__1:                                        ; preds = %exiting__1, %preheader__1
+  %__qsVar0__idxQubit__ = phi i64 [ %13, %preheader__1 ], [ %27, %exiting__1 ]
+  %17 = icmp sle i64 %__qsVar0__idxQubit__, %15
+  %18 = icmp sge i64 %__qsVar0__idxQubit__, %15
+  %19 = select i1 %16, i1 %17, i1 %18
+  br i1 %19, label %body__1, label %exit__1
+
+body__1:                                          ; preds = %header__1
+  %20 = call %Callable* @__quantum__rt__callable_copy(%Callable* %singleElementOperation, i1 false)
+  call void @__quantum__rt__capture_update_reference_count(%Callable* %20, i32 1)
+  call void @__quantum__rt__callable_make_adjoint(%Callable* %20)
+  %21 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %register, i64 %__qsVar0__idxQubit__)
+  %22 = bitcast i8* %21 to %Qubit**
+  %23 = load %Qubit*, %Qubit** %22, align 8
+  %24 = call %Tuple* @__quantum__rt__tuple_create(i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64))
+  %25 = bitcast %Tuple* %24 to { %Qubit* }*
+  %26 = getelementptr inbounds { %Qubit* }, { %Qubit* }* %25, i32 0, i32 0
+  store %Qubit* %23, %Qubit** %26, align 8
+  call void @__quantum__rt__callable_invoke(%Callable* %20, %Tuple* %24, %Tuple* null)
+  call void @__quantum__rt__capture_update_reference_count(%Callable* %20, i32 -1)
+  call void @__quantum__rt__callable_update_reference_count(%Callable* %20, i32 -1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %24, i32 -1)
+  br label %exiting__1
+
+exiting__1:                                       ; preds = %body__1
+  %27 = add i64 %__qsVar0__idxQubit__, %14
+  br label %header__1
+
+exit__1:                                          ; preds = %header__1
+  call void @__quantum__rt__capture_update_alias_count(%Callable* %singleElementOperation, i32 -1)
+  call void @__quantum__rt__callable_update_alias_count(%Callable* %singleElementOperation, i32 -1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %register, i32 -1)
+  ret void
+}
+
+declare %Callable* @__quantum__rt__callable_copy(%Callable*, i1)
+
+declare void @__quantum__rt__callable_make_adjoint(%Callable*)
+
 define internal double @Microsoft__Quantum__Math__PI__body() {
 entry:
   ret double 0x400921FB54442D18
 }
+
+declare %Array* @__quantum__rt__array_create_1d(i32, i64)
+
+declare %Array* @__quantum__rt__array_copy(%Array*, i1)
+
+declare %Result* @__quantum__rt__result_get_zero()
 
 declare %Result* @__quantum__qis__m__body(%Qubit*)
 
@@ -473,8 +647,6 @@ continue__1:                                      ; preds = %then0__1, %entry
   ret void
 }
 
-declare i64 @__quantum__rt__array_get_size_1d(%Array*)
-
 declare %Array* @__quantum__rt__array_slice_1d(%Array*, %Range, i1)
 
 define internal void @Microsoft__Quantum__Intrinsic__R1__ctl(%Array* %__controlQubits__, { double, %Qubit* }* %0) {
@@ -510,8 +682,6 @@ entry:
   call void @__quantum__rt__tuple_update_reference_count(%Tuple* %9, i32 -1)
   ret void
 }
-
-declare void @__quantum__rt__array_update_reference_count(%Array*, i32)
 
 define internal void @Microsoft__Quantum__Intrinsic____QsRef23__ApplyGlobalPhase____ctladj(%Array* %controls, double %theta) {
 entry:
@@ -916,6 +1086,12 @@ entry:
   ret void
 }
 
+define internal void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* %control, %Qubit* %target) {
+entry:
+  call void @__quantum__qis__cnot__body(%Qubit* %control, %Qubit* %target)
+  ret void
+}
+
 define internal void @Microsoft__Quantum__Intrinsic__T__body(%Qubit* %qubit) {
 entry:
   call void @__quantum__qis__t__body(%Qubit* %qubit)
@@ -941,6 +1117,12 @@ entry:
   call void @Microsoft__Quantum__Intrinsic__CNOT__adj(%Qubit* %control1, %Qubit* %control2)
   call void @Microsoft__Quantum__Intrinsic__CNOT__adj(%Qubit* %target, %Qubit* %control1)
   call void @Microsoft__Quantum__Intrinsic__H__adj(%Qubit* %target)
+  ret void
+}
+
+define internal void @Microsoft__Quantum__Intrinsic__CNOT__adj(%Qubit* %control, %Qubit* %target) {
+entry:
+  call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* %control, %Qubit* %target)
   ret void
 }
 
@@ -1053,7 +1235,7 @@ else__1:                                          ; preds = %test2__1
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)
   store %Array* %ctls, %Array** %50, align 8
   store %Qubit* %qubit, %Qubit** %51, align 8
-  call void @Microsoft__Quantum__Intrinsic___95a4bb2073304f2797f25356791349f7___QsRef23__ApplyWithLessControlsA____body(%Callable* %47, { %Array*, %Qubit* }* %49)
+  call void @Microsoft__Quantum__Intrinsic___39c4c69246f74f58bd1ae3f69e5948c0___QsRef23__ApplyWithLessControlsA____body(%Callable* %47, { %Array*, %Qubit* }* %49)
   call void @__quantum__rt__capture_update_reference_count(%Callable* %47, i32 -1)
   call void @__quantum__rt__callable_update_reference_count(%Callable* %47, i32 -1)
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
@@ -1064,8 +1246,6 @@ continue__1:                                      ; preds = %else__1, %then2__1,
   call void @__quantum__rt__array_update_alias_count(%Array* %ctls, i32 -1)
   ret void
 }
-
-declare %Array* @__quantum__rt__array_create_1d(i32, i64)
 
 define internal void @Microsoft__Quantum__Intrinsic__CCNOT__adj(%Qubit* %control1, %Qubit* %control2, %Qubit* %target) {
 entry:
@@ -1145,7 +1325,7 @@ else__1:                                          ; preds = %test2__1
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)
   store %Array* %ctls, %Array** %17, align 8
   store %Qubit* %qubit, %Qubit** %18, align 8
-  call void @Microsoft__Quantum__Intrinsic___95a4bb2073304f2797f25356791349f7___QsRef23__ApplyWithLessControlsA____body(%Callable* %14, { %Array*, %Qubit* }* %16)
+  call void @Microsoft__Quantum__Intrinsic___39c4c69246f74f58bd1ae3f69e5948c0___QsRef23__ApplyWithLessControlsA____body(%Callable* %14, { %Array*, %Qubit* }* %16)
   call void @__quantum__rt__capture_update_reference_count(%Callable* %14, i32 -1)
   call void @__quantum__rt__callable_update_reference_count(%Callable* %14, i32 -1)
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
@@ -1182,7 +1362,63 @@ entry:
   ret void
 }
 
-define internal void @Microsoft__Quantum__Intrinsic___0219aea1334f4b8899a4dee7f78b68c0___QsRef23__ApplyWithLessControlsA____body(%Callable* %op, { %Array*, { %Qubit*, %Qubit* }* }* %0) {
+define internal void @Microsoft__Quantum__Intrinsic__CNOT__ctl(%Array* %ctls, { %Qubit*, %Qubit* }* %0) {
+entry:
+  call void @__quantum__rt__array_update_alias_count(%Array* %ctls, i32 1)
+  %1 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 0
+  %control = load %Qubit*, %Qubit** %1, align 8
+  %2 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 1
+  %target = load %Qubit*, %Qubit** %2, align 8
+  %3 = call i64 @__quantum__rt__array_get_size_1d(%Array* %ctls)
+  %4 = icmp eq i64 %3, 0
+  br i1 %4, label %then0__1, label %test1__1
+
+then0__1:                                         ; preds = %entry
+  call void @__quantum__qis__cnot__body(%Qubit* %control, %Qubit* %target)
+  br label %continue__1
+
+test1__1:                                         ; preds = %entry
+  %5 = call i64 @__quantum__rt__array_get_size_1d(%Array* %ctls)
+  %6 = icmp eq i64 %5, 1
+  br i1 %6, label %then1__1, label %else__1
+
+then1__1:                                         ; preds = %test1__1
+  %7 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %ctls, i64 0)
+  %8 = bitcast i8* %7 to %Qubit**
+  %9 = load %Qubit*, %Qubit** %8, align 8
+  call void @Microsoft__Quantum__Intrinsic__CCNOT__body(%Qubit* %9, %Qubit* %control, %Qubit* %target)
+  br label %continue__1
+
+else__1:                                          ; preds = %test1__1
+  %10 = call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Intrinsic__CNOT__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)
+  call void @__quantum__rt__callable_make_controlled(%Callable* %10)
+  %11 = call %Tuple* @__quantum__rt__tuple_create(i64 mul nuw (i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i64 2))
+  %12 = bitcast %Tuple* %11 to { %Array*, { %Qubit*, %Qubit* }* }*
+  %13 = getelementptr inbounds { %Array*, { %Qubit*, %Qubit* }* }, { %Array*, { %Qubit*, %Qubit* }* }* %12, i32 0, i32 0
+  %14 = getelementptr inbounds { %Array*, { %Qubit*, %Qubit* }* }, { %Array*, { %Qubit*, %Qubit* }* }* %12, i32 0, i32 1
+  call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)
+  %15 = call %Tuple* @__quantum__rt__tuple_create(i64 mul nuw (i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i64 2))
+  %16 = bitcast %Tuple* %15 to { %Qubit*, %Qubit* }*
+  %17 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %16, i32 0, i32 0
+  %18 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %16, i32 0, i32 1
+  store %Qubit* %control, %Qubit** %17, align 8
+  store %Qubit* %target, %Qubit** %18, align 8
+  store %Array* %ctls, %Array** %13, align 8
+  store { %Qubit*, %Qubit* }* %16, { %Qubit*, %Qubit* }** %14, align 8
+  call void @Microsoft__Quantum__Intrinsic___f03f61c20078437d840e3070ba2ab789___QsRef23__ApplyWithLessControlsA____body(%Callable* %10, { %Array*, { %Qubit*, %Qubit* }* }* %12)
+  call void @__quantum__rt__capture_update_reference_count(%Callable* %10, i32 -1)
+  call void @__quantum__rt__callable_update_reference_count(%Callable* %10, i32 -1)
+  call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %15, i32 -1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %11, i32 -1)
+  br label %continue__1
+
+continue__1:                                      ; preds = %else__1, %then1__1, %then0__1
+  call void @__quantum__rt__array_update_alias_count(%Array* %ctls, i32 -1)
+  ret void
+}
+
+define internal void @Microsoft__Quantum__Intrinsic___f03f61c20078437d840e3070ba2ab789___QsRef23__ApplyWithLessControlsA____body(%Callable* %op, { %Array*, { %Qubit*, %Qubit* }* }* %0) {
 entry:
   call void @__quantum__rt__capture_update_alias_count(%Callable* %op, i32 1)
   call void @__quantum__rt__callable_update_alias_count(%Callable* %op, i32 1)
@@ -1365,15 +1601,28 @@ entry:
   ret void
 }
 
-declare %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]*, [2 x void (%Tuple*, i32)*]*, %Tuple*)
-
 declare void @__quantum__rt__callable_make_controlled(%Callable*)
 
-declare void @__quantum__rt__capture_update_reference_count(%Callable*, i32)
+define internal void @Microsoft__Quantum__Intrinsic__CNOT__ctladj(%Array* %__controlQubits__, { %Qubit*, %Qubit* }* %0) {
+entry:
+  call void @__quantum__rt__array_update_alias_count(%Array* %__controlQubits__, i32 1)
+  %1 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 0
+  %control = load %Qubit*, %Qubit** %1, align 8
+  %2 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %0, i32 0, i32 1
+  %target = load %Qubit*, %Qubit** %2, align 8
+  %3 = call %Tuple* @__quantum__rt__tuple_create(i64 mul nuw (i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i64 2))
+  %4 = bitcast %Tuple* %3 to { %Qubit*, %Qubit* }*
+  %5 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %4, i32 0, i32 0
+  %6 = getelementptr inbounds { %Qubit*, %Qubit* }, { %Qubit*, %Qubit* }* %4, i32 0, i32 1
+  store %Qubit* %control, %Qubit** %5, align 8
+  store %Qubit* %target, %Qubit** %6, align 8
+  call void @Microsoft__Quantum__Intrinsic__CNOT__ctl(%Array* %__controlQubits__, { %Qubit*, %Qubit* }* %4)
+  call void @__quantum__rt__array_update_alias_count(%Array* %__controlQubits__, i32 -1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %3, i32 -1)
+  ret void
+}
 
-declare void @__quantum__rt__callable_update_reference_count(%Callable*, i32)
-
-define internal void @Microsoft__Quantum__Intrinsic___95a4bb2073304f2797f25356791349f7___QsRef23__ApplyWithLessControlsA____body(%Callable* %op, { %Array*, %Qubit* }* %0) {
+define internal void @Microsoft__Quantum__Intrinsic___39c4c69246f74f58bd1ae3f69e5948c0___QsRef23__ApplyWithLessControlsA____body(%Callable* %op, { %Array*, %Qubit* }* %0) {
 entry:
   call void @__quantum__rt__capture_update_alias_count(%Callable* %op, i32 1)
   call void @__quantum__rt__callable_update_alias_count(%Callable* %op, i32 1)
@@ -1504,46 +1753,6 @@ exit__2:                                          ; preds = %header__2
   call void @__quantum__rt__capture_update_alias_count(%Callable* %op, i32 -1)
   call void @__quantum__rt__callable_update_alias_count(%Callable* %op, i32 -1)
   call void @__quantum__rt__array_update_alias_count(%Array* %controls, i32 -1)
-  ret void
-}
-
-define internal void @Microsoft__Quantum__Intrinsic__H__body__wrapper(%Tuple* %capture-tuple, %Tuple* %arg-tuple, %Tuple* %result-tuple) {
-entry:
-  %0 = bitcast %Tuple* %arg-tuple to { %Qubit* }*
-  %1 = getelementptr inbounds { %Qubit* }, { %Qubit* }* %0, i32 0, i32 0
-  %2 = load %Qubit*, %Qubit** %1, align 8
-  call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %2)
-  ret void
-}
-
-define internal void @Microsoft__Quantum__Intrinsic__H__adj__wrapper(%Tuple* %capture-tuple, %Tuple* %arg-tuple, %Tuple* %result-tuple) {
-entry:
-  %0 = bitcast %Tuple* %arg-tuple to { %Qubit* }*
-  %1 = getelementptr inbounds { %Qubit* }, { %Qubit* }* %0, i32 0, i32 0
-  %2 = load %Qubit*, %Qubit** %1, align 8
-  call void @Microsoft__Quantum__Intrinsic__H__adj(%Qubit* %2)
-  ret void
-}
-
-define internal void @Microsoft__Quantum__Intrinsic__H__ctl__wrapper(%Tuple* %capture-tuple, %Tuple* %arg-tuple, %Tuple* %result-tuple) {
-entry:
-  %0 = bitcast %Tuple* %arg-tuple to { %Array*, %Qubit* }*
-  %1 = getelementptr inbounds { %Array*, %Qubit* }, { %Array*, %Qubit* }* %0, i32 0, i32 0
-  %2 = getelementptr inbounds { %Array*, %Qubit* }, { %Array*, %Qubit* }* %0, i32 0, i32 1
-  %3 = load %Array*, %Array** %1, align 8
-  %4 = load %Qubit*, %Qubit** %2, align 8
-  call void @Microsoft__Quantum__Intrinsic__H__ctl(%Array* %3, %Qubit* %4)
-  ret void
-}
-
-define internal void @Microsoft__Quantum__Intrinsic__H__ctladj__wrapper(%Tuple* %capture-tuple, %Tuple* %arg-tuple, %Tuple* %result-tuple) {
-entry:
-  %0 = bitcast %Tuple* %arg-tuple to { %Array*, %Qubit* }*
-  %1 = getelementptr inbounds { %Array*, %Qubit* }, { %Array*, %Qubit* }* %0, i32 0, i32 0
-  %2 = getelementptr inbounds { %Array*, %Qubit* }, { %Array*, %Qubit* }* %0, i32 0, i32 1
-  %3 = load %Array*, %Array** %1, align 8
-  %4 = load %Qubit*, %Qubit** %2, align 8
-  call void @Microsoft__Quantum__Intrinsic__H__ctladj(%Array* %3, %Qubit* %4)
   ret void
 }
 
@@ -1782,7 +1991,7 @@ else__1:                                          ; preds = %test1__1
   store %Qubit* %qubit, %Qubit** %23, align 8
   store %Array* %ctls, %Array** %18, align 8
   store { double, %Qubit* }* %21, { double, %Qubit* }** %19, align 8
-  call void @Microsoft__Quantum__Intrinsic___a419e8607f4347689bb2ba8848375975___QsRef23__ApplyWithLessControlsA____body(%Callable* %15, { %Array*, { double, %Qubit* }* }* %17)
+  call void @Microsoft__Quantum__Intrinsic___0a4d1f15a11a47ffb95fe79daf4d0299___QsRef23__ApplyWithLessControlsA____body(%Callable* %15, { %Array*, { double, %Qubit* }* }* %17)
   call void @__quantum__rt__capture_update_reference_count(%Callable* %15, i32 -1)
   call void @__quantum__rt__callable_update_reference_count(%Callable* %15, i32 -1)
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
@@ -1848,7 +2057,7 @@ else__1:                                          ; preds = %test1__1
   store %Qubit* %qubit, %Qubit** %23, align 8
   store %Array* %ctls, %Array** %18, align 8
   store { double, %Qubit* }* %21, { double, %Qubit* }** %19, align 8
-  call void @Microsoft__Quantum__Intrinsic___a419e8607f4347689bb2ba8848375975___QsRef23__ApplyWithLessControlsA____body(%Callable* %15, { %Array*, { double, %Qubit* }* }* %17)
+  call void @Microsoft__Quantum__Intrinsic___0a4d1f15a11a47ffb95fe79daf4d0299___QsRef23__ApplyWithLessControlsA____body(%Callable* %15, { %Array*, { double, %Qubit* }* }* %17)
   call void @__quantum__rt__capture_update_reference_count(%Callable* %15, i32 -1)
   call void @__quantum__rt__callable_update_reference_count(%Callable* %15, i32 -1)
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
@@ -1913,7 +2122,7 @@ else__1:                                          ; preds = %test1__1
   store %Qubit* %qubit, %Qubit** %24, align 8
   store %Array* %ctls, %Array** %19, align 8
   store { double, %Qubit* }* %22, { double, %Qubit* }** %20, align 8
-  call void @Microsoft__Quantum__Intrinsic___a419e8607f4347689bb2ba8848375975___QsRef23__ApplyWithLessControlsA____body(%Callable* %16, { %Array*, { double, %Qubit* }* }* %18)
+  call void @Microsoft__Quantum__Intrinsic___0a4d1f15a11a47ffb95fe79daf4d0299___QsRef23__ApplyWithLessControlsA____body(%Callable* %16, { %Array*, { double, %Qubit* }* }* %18)
   call void @__quantum__rt__capture_update_reference_count(%Callable* %16, i32 -1)
   call void @__quantum__rt__callable_update_reference_count(%Callable* %16, i32 -1)
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
@@ -2282,7 +2491,7 @@ declare double @llvm.pow.f64(double, double) #0
 
 declare void @__quantum__qis__rx__body(double, %Qubit*)
 
-define internal void @Microsoft__Quantum__Intrinsic___a419e8607f4347689bb2ba8848375975___QsRef23__ApplyWithLessControlsA____body(%Callable* %op, { %Array*, { double, %Qubit* }* }* %0) {
+define internal void @Microsoft__Quantum__Intrinsic___0a4d1f15a11a47ffb95fe79daf4d0299___QsRef23__ApplyWithLessControlsA____body(%Callable* %op, { %Array*, { double, %Qubit* }* }* %0) {
 entry:
   call void @__quantum__rt__capture_update_alias_count(%Callable* %op, i32 1)
   call void @__quantum__rt__callable_update_alias_count(%Callable* %op, i32 1)
@@ -2604,7 +2813,7 @@ else__1:                                          ; preds = %test1__1
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)
   store %Array* %ctls, %Array** %16, align 8
   store %Qubit* %qubit, %Qubit** %17, align 8
-  call void @Microsoft__Quantum__Intrinsic___95a4bb2073304f2797f25356791349f7___QsRef23__ApplyWithLessControlsA____body(%Callable* %13, { %Array*, %Qubit* }* %15)
+  call void @Microsoft__Quantum__Intrinsic___39c4c69246f74f58bd1ae3f69e5948c0___QsRef23__ApplyWithLessControlsA____body(%Callable* %13, { %Array*, %Qubit* }* %15)
   call void @__quantum__rt__capture_update_reference_count(%Callable* %13, i32 -1)
   call void @__quantum__rt__callable_update_reference_count(%Callable* %13, i32 -1)
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
@@ -2700,7 +2909,7 @@ else__1:                                          ; preds = %test1__1
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)
   store %Array* %ctls, %Array** %16, align 8
   store %Qubit* %qubit, %Qubit** %17, align 8
-  call void @Microsoft__Quantum__Intrinsic___95a4bb2073304f2797f25356791349f7___QsRef23__ApplyWithLessControlsA____body(%Callable* %13, { %Array*, %Qubit* }* %15)
+  call void @Microsoft__Quantum__Intrinsic___39c4c69246f74f58bd1ae3f69e5948c0___QsRef23__ApplyWithLessControlsA____body(%Callable* %13, { %Array*, %Qubit* }* %15)
   call void @__quantum__rt__capture_update_reference_count(%Callable* %13, i32 -1)
   call void @__quantum__rt__callable_update_reference_count(%Callable* %13, i32 -1)
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
@@ -2711,8 +2920,6 @@ continue__1:                                      ; preds = %else__1, %then1__1,
   call void @__quantum__rt__array_update_alias_count(%Array* %ctls, i32 -1)
   ret void
 }
-
-declare void @__quantum__rt__callable_make_adjoint(%Callable*)
 
 declare void @__quantum__qis__t__body(%Qubit*)
 
@@ -2761,7 +2968,7 @@ else__1:                                          ; preds = %test1__1
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)
   store %Array* %ctls, %Array** %16, align 8
   store %Qubit* %qubit, %Qubit** %17, align 8
-  call void @Microsoft__Quantum__Intrinsic___95a4bb2073304f2797f25356791349f7___QsRef23__ApplyWithLessControlsA____body(%Callable* %13, { %Array*, %Qubit* }* %15)
+  call void @Microsoft__Quantum__Intrinsic___39c4c69246f74f58bd1ae3f69e5948c0___QsRef23__ApplyWithLessControlsA____body(%Callable* %13, { %Array*, %Qubit* }* %15)
   call void @__quantum__rt__capture_update_reference_count(%Callable* %13, i32 -1)
   call void @__quantum__rt__callable_update_reference_count(%Callable* %13, i32 -1)
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
@@ -2857,7 +3064,7 @@ else__1:                                          ; preds = %test1__1
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)
   store %Array* %ctls, %Array** %16, align 8
   store %Qubit* %qubit, %Qubit** %17, align 8
-  call void @Microsoft__Quantum__Intrinsic___95a4bb2073304f2797f25356791349f7___QsRef23__ApplyWithLessControlsA____body(%Callable* %13, { %Array*, %Qubit* }* %15)
+  call void @Microsoft__Quantum__Intrinsic___39c4c69246f74f58bd1ae3f69e5948c0___QsRef23__ApplyWithLessControlsA____body(%Callable* %13, { %Array*, %Qubit* }* %15)
   call void @__quantum__rt__capture_update_reference_count(%Callable* %13, i32 -1)
   call void @__quantum__rt__callable_update_reference_count(%Callable* %13, i32 -1)
   call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 -1)
@@ -2866,6 +3073,12 @@ else__1:                                          ; preds = %test1__1
 
 continue__1:                                      ; preds = %else__1, %then1__1, %then0__1
   call void @__quantum__rt__array_update_alias_count(%Array* %ctls, i32 -1)
+  ret void
+}
+
+define internal void @Microsoft__Quantum__Intrinsic__X__body(%Qubit* %qubit) {
+entry:
+  call void @__quantum__qis__x__body(%Qubit* %qubit)
   ret void
 }
 
@@ -2923,6 +3136,12 @@ entry:
   ret void
 }
 
+define internal void @Microsoft__Quantum__Intrinsic__Z__body(%Qubit* %qubit) {
+entry:
+  call void @__quantum__qis__z__body(%Qubit* %qubit)
+  ret void
+}
+
 define internal void @Microsoft__Quantum__Intrinsic__Z__adj(%Qubit* %qubit) {
 entry:
   call void @Microsoft__Quantum__Intrinsic__Z__body(%Qubit* %qubit)
@@ -2977,13 +3196,7 @@ entry:
   ret void
 }
 
-declare void @__quantum__rt__capture_update_alias_count(%Callable*, i32)
-
-declare void @__quantum__rt__callable_update_alias_count(%Callable*, i32)
-
-declare void @__quantum__rt__callable_invoke(%Callable*, %Tuple*, %Tuple*)
-
-define internal void @Microsoft__Quantum__Intrinsic___95a4bb2073304f2797f25356791349f7___QsRef23__ApplyWithLessControlsA____adj(%Callable* %op, { %Array*, %Qubit* }* %0) {
+define internal void @Microsoft__Quantum__Intrinsic___39c4c69246f74f58bd1ae3f69e5948c0___QsRef23__ApplyWithLessControlsA____adj(%Callable* %op, { %Array*, %Qubit* }* %0) {
 entry:
   call void @__quantum__rt__capture_update_alias_count(%Callable* %op, i32 1)
   call void @__quantum__rt__callable_update_alias_count(%Callable* %op, i32 1)
@@ -3122,155 +3335,9 @@ exit__2:                                          ; preds = %header__2
   ret void
 }
 
-declare %Callable* @__quantum__rt__callable_copy(%Callable*, i1)
-
 declare void @__quantum__rt__tuple_update_alias_count(%Tuple*, i32)
 
-define internal void @Microsoft__Quantum__Intrinsic___a419e8607f4347689bb2ba8848375975___QsRef23__ApplyWithLessControlsA____adj(%Callable* %op, { %Array*, { double, %Qubit* }* }* %0) {
-entry:
-  call void @__quantum__rt__capture_update_alias_count(%Callable* %op, i32 1)
-  call void @__quantum__rt__callable_update_alias_count(%Callable* %op, i32 1)
-  %1 = getelementptr inbounds { %Array*, { double, %Qubit* }* }, { %Array*, { double, %Qubit* }* }* %0, i32 0, i32 0
-  %controls = load %Array*, %Array** %1, align 8
-  call void @__quantum__rt__array_update_alias_count(%Array* %controls, i32 1)
-  %2 = getelementptr inbounds { %Array*, { double, %Qubit* }* }, { %Array*, { double, %Qubit* }* }* %0, i32 0, i32 1
-  %arg = load { double, %Qubit* }*, { double, %Qubit* }** %2, align 8
-  %3 = bitcast { double, %Qubit* }* %arg to %Tuple*
-  call void @__quantum__rt__tuple_update_alias_count(%Tuple* %3, i32 1)
-  %__qsVar0__numControls__ = call i64 @__quantum__rt__array_get_size_1d(%Array* %controls)
-  %__qsVar1__numControlPairs__ = sdiv i64 %__qsVar0__numControls__, 2
-  %__qsVar2__temps__ = call %Array* @__quantum__rt__qubit_allocate_array(i64 %__qsVar1__numControlPairs__)
-  call void @__quantum__rt__array_update_alias_count(%Array* %__qsVar2__temps__, i32 1)
-  %4 = sub i64 %__qsVar1__numControlPairs__, 1
-  br label %header__1
-
-header__1:                                        ; preds = %exiting__1, %entry
-  %__qsVar0____qsVar3__numPair____ = phi i64 [ 0, %entry ], [ %18, %exiting__1 ]
-  %5 = icmp sle i64 %__qsVar0____qsVar3__numPair____, %4
-  br i1 %5, label %body__1, label %exit__1
-
-body__1:                                          ; preds = %header__1
-  %6 = mul i64 2, %__qsVar0____qsVar3__numPair____
-  %7 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %controls, i64 %6)
-  %8 = bitcast i8* %7 to %Qubit**
-  %9 = load %Qubit*, %Qubit** %8, align 8
-  %10 = mul i64 2, %__qsVar0____qsVar3__numPair____
-  %11 = add i64 %10, 1
-  %12 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %controls, i64 %11)
-  %13 = bitcast i8* %12 to %Qubit**
-  %14 = load %Qubit*, %Qubit** %13, align 8
-  %15 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %__qsVar2__temps__, i64 %__qsVar0____qsVar3__numPair____)
-  %16 = bitcast i8* %15 to %Qubit**
-  %17 = load %Qubit*, %Qubit** %16, align 8
-  call void @Microsoft__Quantum__Intrinsic____QsRef23__PhaseCCX____body(%Qubit* %9, %Qubit* %14, %Qubit* %17)
-  br label %exiting__1
-
-exiting__1:                                       ; preds = %body__1
-  %18 = add i64 %__qsVar0____qsVar3__numPair____, 1
-  br label %header__1
-
-exit__1:                                          ; preds = %header__1
-  %19 = srem i64 %__qsVar0__numControls__, 2
-  %20 = icmp eq i64 %19, 0
-  br i1 %20, label %condTrue__1, label %condFalse__1
-
-condTrue__1:                                      ; preds = %exit__1
-  call void @__quantum__rt__array_update_reference_count(%Array* %__qsVar2__temps__, i32 1)
-  br label %condContinue__1
-
-condFalse__1:                                     ; preds = %exit__1
-  %21 = call %Array* @__quantum__rt__array_create_1d(i32 8, i64 1)
-  %22 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %21, i64 0)
-  %23 = bitcast i8* %22 to %Qubit**
-  %24 = sub i64 %__qsVar0__numControls__, 1
-  %25 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %controls, i64 %24)
-  %26 = bitcast i8* %25 to %Qubit**
-  %27 = load %Qubit*, %Qubit** %26, align 8
-  store %Qubit* %27, %Qubit** %23, align 8
-  %28 = call %Array* @__quantum__rt__array_concatenate(%Array* %__qsVar2__temps__, %Array* %21)
-  call void @__quantum__rt__array_update_reference_count(%Array* %28, i32 1)
-  call void @__quantum__rt__array_update_reference_count(%Array* %21, i32 -1)
-  call void @__quantum__rt__array_update_reference_count(%Array* %28, i32 -1)
-  br label %condContinue__1
-
-condContinue__1:                                  ; preds = %condFalse__1, %condTrue__1
-  %__qsVar1____qsVar4__newControls____ = phi %Array* [ %__qsVar2__temps__, %condTrue__1 ], [ %28, %condFalse__1 ]
-  call void @__quantum__rt__array_update_alias_count(%Array* %__qsVar1____qsVar4__newControls____, i32 1)
-  %29 = call %Callable* @__quantum__rt__callable_copy(%Callable* %op, i1 false)
-  call void @__quantum__rt__capture_update_reference_count(%Callable* %29, i32 1)
-  call void @__quantum__rt__callable_make_adjoint(%Callable* %29)
-  %30 = call %Tuple* @__quantum__rt__tuple_create(i64 mul nuw (i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i64 2))
-  %31 = bitcast %Tuple* %30 to { %Array*, { double, %Qubit* }* }*
-  %32 = getelementptr inbounds { %Array*, { double, %Qubit* }* }, { %Array*, { double, %Qubit* }* }* %31, i32 0, i32 0
-  %33 = getelementptr inbounds { %Array*, { double, %Qubit* }* }, { %Array*, { double, %Qubit* }* }* %31, i32 0, i32 1
-  call void @__quantum__rt__array_update_reference_count(%Array* %__qsVar1____qsVar4__newControls____, i32 1)
-  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %3, i32 1)
-  store %Array* %__qsVar1____qsVar4__newControls____, %Array** %32, align 8
-  store { double, %Qubit* }* %arg, { double, %Qubit* }** %33, align 8
-  call void @__quantum__rt__callable_invoke(%Callable* %29, %Tuple* %30, %Tuple* null)
-  %34 = sub i64 %__qsVar1__numControlPairs__, 1
-  %35 = sub i64 %34, 0
-  %36 = sdiv i64 %35, 1
-  %37 = mul i64 1, %36
-  %38 = add i64 0, %37
-  %39 = load %Range, %Range* @EmptyRange, align 4
-  %40 = insertvalue %Range %39, i64 %38, 0
-  %41 = insertvalue %Range %40, i64 -1, 1
-  %42 = insertvalue %Range %41, i64 0, 2
-  %43 = extractvalue %Range %42, 0
-  %44 = extractvalue %Range %42, 1
-  %45 = extractvalue %Range %42, 2
-  br label %preheader__1
-
-preheader__1:                                     ; preds = %condContinue__1
-  %46 = icmp sgt i64 %44, 0
-  br label %header__2
-
-header__2:                                        ; preds = %exiting__2, %preheader__1
-  %__qsVar0____qsVar0____qsVar3__numPair______ = phi i64 [ %43, %preheader__1 ], [ %62, %exiting__2 ]
-  %47 = icmp sle i64 %__qsVar0____qsVar0____qsVar3__numPair______, %45
-  %48 = icmp sge i64 %__qsVar0____qsVar0____qsVar3__numPair______, %45
-  %49 = select i1 %46, i1 %47, i1 %48
-  br i1 %49, label %body__2, label %exit__2
-
-body__2:                                          ; preds = %header__2
-  %50 = mul i64 2, %__qsVar0____qsVar0____qsVar3__numPair______
-  %51 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %controls, i64 %50)
-  %52 = bitcast i8* %51 to %Qubit**
-  %53 = load %Qubit*, %Qubit** %52, align 8
-  %54 = mul i64 2, %__qsVar0____qsVar0____qsVar3__numPair______
-  %55 = add i64 %54, 1
-  %56 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %controls, i64 %55)
-  %57 = bitcast i8* %56 to %Qubit**
-  %58 = load %Qubit*, %Qubit** %57, align 8
-  %59 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %__qsVar2__temps__, i64 %__qsVar0____qsVar0____qsVar3__numPair______)
-  %60 = bitcast i8* %59 to %Qubit**
-  %61 = load %Qubit*, %Qubit** %60, align 8
-  call void @Microsoft__Quantum__Intrinsic____QsRef23__PhaseCCX____adj(%Qubit* %53, %Qubit* %58, %Qubit* %61)
-  br label %exiting__2
-
-exiting__2:                                       ; preds = %body__2
-  %62 = add i64 %__qsVar0____qsVar0____qsVar3__numPair______, %44
-  br label %header__2
-
-exit__2:                                          ; preds = %header__2
-  call void @__quantum__rt__array_update_alias_count(%Array* %__qsVar2__temps__, i32 -1)
-  call void @__quantum__rt__array_update_alias_count(%Array* %__qsVar1____qsVar4__newControls____, i32 -1)
-  call void @__quantum__rt__array_update_reference_count(%Array* %__qsVar1____qsVar4__newControls____, i32 -1)
-  call void @__quantum__rt__capture_update_reference_count(%Callable* %29, i32 -1)
-  call void @__quantum__rt__callable_update_reference_count(%Callable* %29, i32 -1)
-  call void @__quantum__rt__array_update_reference_count(%Array* %__qsVar1____qsVar4__newControls____, i32 -1)
-  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %3, i32 -1)
-  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %30, i32 -1)
-  call void @__quantum__rt__qubit_release_array(%Array* %__qsVar2__temps__)
-  call void @__quantum__rt__capture_update_alias_count(%Callable* %op, i32 -1)
-  call void @__quantum__rt__callable_update_alias_count(%Callable* %op, i32 -1)
-  call void @__quantum__rt__array_update_alias_count(%Array* %controls, i32 -1)
-  call void @__quantum__rt__tuple_update_alias_count(%Tuple* %3, i32 -1)
-  ret void
-}
-
-define internal void @Microsoft__Quantum__Intrinsic___0219aea1334f4b8899a4dee7f78b68c0___QsRef23__ApplyWithLessControlsA____adj(%Callable* %op, { %Array*, { %Qubit*, %Qubit* }* }* %0) {
+define internal void @Microsoft__Quantum__Intrinsic___f03f61c20078437d840e3070ba2ab789___QsRef23__ApplyWithLessControlsA____adj(%Callable* %op, { %Array*, { %Qubit*, %Qubit* }* }* %0) {
 entry:
   call void @__quantum__rt__capture_update_alias_count(%Callable* %op, i32 1)
   call void @__quantum__rt__callable_update_alias_count(%Callable* %op, i32 1)
@@ -3414,24 +3481,297 @@ exit__2:                                          ; preds = %header__2
   ret void
 }
 
-define void @TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__Interop() #1 {
+define internal void @Microsoft__Quantum__Intrinsic___0a4d1f15a11a47ffb95fe79daf4d0299___QsRef23__ApplyWithLessControlsA____adj(%Callable* %op, { %Array*, { double, %Qubit* }* }* %0) {
 entry:
-  call void @TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body()
+  call void @__quantum__rt__capture_update_alias_count(%Callable* %op, i32 1)
+  call void @__quantum__rt__callable_update_alias_count(%Callable* %op, i32 1)
+  %1 = getelementptr inbounds { %Array*, { double, %Qubit* }* }, { %Array*, { double, %Qubit* }* }* %0, i32 0, i32 0
+  %controls = load %Array*, %Array** %1, align 8
+  call void @__quantum__rt__array_update_alias_count(%Array* %controls, i32 1)
+  %2 = getelementptr inbounds { %Array*, { double, %Qubit* }* }, { %Array*, { double, %Qubit* }* }* %0, i32 0, i32 1
+  %arg = load { double, %Qubit* }*, { double, %Qubit* }** %2, align 8
+  %3 = bitcast { double, %Qubit* }* %arg to %Tuple*
+  call void @__quantum__rt__tuple_update_alias_count(%Tuple* %3, i32 1)
+  %__qsVar0__numControls__ = call i64 @__quantum__rt__array_get_size_1d(%Array* %controls)
+  %__qsVar1__numControlPairs__ = sdiv i64 %__qsVar0__numControls__, 2
+  %__qsVar2__temps__ = call %Array* @__quantum__rt__qubit_allocate_array(i64 %__qsVar1__numControlPairs__)
+  call void @__quantum__rt__array_update_alias_count(%Array* %__qsVar2__temps__, i32 1)
+  %4 = sub i64 %__qsVar1__numControlPairs__, 1
+  br label %header__1
+
+header__1:                                        ; preds = %exiting__1, %entry
+  %__qsVar0____qsVar3__numPair____ = phi i64 [ 0, %entry ], [ %18, %exiting__1 ]
+  %5 = icmp sle i64 %__qsVar0____qsVar3__numPair____, %4
+  br i1 %5, label %body__1, label %exit__1
+
+body__1:                                          ; preds = %header__1
+  %6 = mul i64 2, %__qsVar0____qsVar3__numPair____
+  %7 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %controls, i64 %6)
+  %8 = bitcast i8* %7 to %Qubit**
+  %9 = load %Qubit*, %Qubit** %8, align 8
+  %10 = mul i64 2, %__qsVar0____qsVar3__numPair____
+  %11 = add i64 %10, 1
+  %12 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %controls, i64 %11)
+  %13 = bitcast i8* %12 to %Qubit**
+  %14 = load %Qubit*, %Qubit** %13, align 8
+  %15 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %__qsVar2__temps__, i64 %__qsVar0____qsVar3__numPair____)
+  %16 = bitcast i8* %15 to %Qubit**
+  %17 = load %Qubit*, %Qubit** %16, align 8
+  call void @Microsoft__Quantum__Intrinsic____QsRef23__PhaseCCX____body(%Qubit* %9, %Qubit* %14, %Qubit* %17)
+  br label %exiting__1
+
+exiting__1:                                       ; preds = %body__1
+  %18 = add i64 %__qsVar0____qsVar3__numPair____, 1
+  br label %header__1
+
+exit__1:                                          ; preds = %header__1
+  %19 = srem i64 %__qsVar0__numControls__, 2
+  %20 = icmp eq i64 %19, 0
+  br i1 %20, label %condTrue__1, label %condFalse__1
+
+condTrue__1:                                      ; preds = %exit__1
+  call void @__quantum__rt__array_update_reference_count(%Array* %__qsVar2__temps__, i32 1)
+  br label %condContinue__1
+
+condFalse__1:                                     ; preds = %exit__1
+  %21 = call %Array* @__quantum__rt__array_create_1d(i32 8, i64 1)
+  %22 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %21, i64 0)
+  %23 = bitcast i8* %22 to %Qubit**
+  %24 = sub i64 %__qsVar0__numControls__, 1
+  %25 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %controls, i64 %24)
+  %26 = bitcast i8* %25 to %Qubit**
+  %27 = load %Qubit*, %Qubit** %26, align 8
+  store %Qubit* %27, %Qubit** %23, align 8
+  %28 = call %Array* @__quantum__rt__array_concatenate(%Array* %__qsVar2__temps__, %Array* %21)
+  call void @__quantum__rt__array_update_reference_count(%Array* %28, i32 1)
+  call void @__quantum__rt__array_update_reference_count(%Array* %21, i32 -1)
+  call void @__quantum__rt__array_update_reference_count(%Array* %28, i32 -1)
+  br label %condContinue__1
+
+condContinue__1:                                  ; preds = %condFalse__1, %condTrue__1
+  %__qsVar1____qsVar4__newControls____ = phi %Array* [ %__qsVar2__temps__, %condTrue__1 ], [ %28, %condFalse__1 ]
+  call void @__quantum__rt__array_update_alias_count(%Array* %__qsVar1____qsVar4__newControls____, i32 1)
+  %29 = call %Callable* @__quantum__rt__callable_copy(%Callable* %op, i1 false)
+  call void @__quantum__rt__capture_update_reference_count(%Callable* %29, i32 1)
+  call void @__quantum__rt__callable_make_adjoint(%Callable* %29)
+  %30 = call %Tuple* @__quantum__rt__tuple_create(i64 mul nuw (i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i64 2))
+  %31 = bitcast %Tuple* %30 to { %Array*, { double, %Qubit* }* }*
+  %32 = getelementptr inbounds { %Array*, { double, %Qubit* }* }, { %Array*, { double, %Qubit* }* }* %31, i32 0, i32 0
+  %33 = getelementptr inbounds { %Array*, { double, %Qubit* }* }, { %Array*, { double, %Qubit* }* }* %31, i32 0, i32 1
+  call void @__quantum__rt__array_update_reference_count(%Array* %__qsVar1____qsVar4__newControls____, i32 1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %3, i32 1)
+  store %Array* %__qsVar1____qsVar4__newControls____, %Array** %32, align 8
+  store { double, %Qubit* }* %arg, { double, %Qubit* }** %33, align 8
+  call void @__quantum__rt__callable_invoke(%Callable* %29, %Tuple* %30, %Tuple* null)
+  %34 = sub i64 %__qsVar1__numControlPairs__, 1
+  %35 = sub i64 %34, 0
+  %36 = sdiv i64 %35, 1
+  %37 = mul i64 1, %36
+  %38 = add i64 0, %37
+  %39 = load %Range, %Range* @EmptyRange, align 4
+  %40 = insertvalue %Range %39, i64 %38, 0
+  %41 = insertvalue %Range %40, i64 -1, 1
+  %42 = insertvalue %Range %41, i64 0, 2
+  %43 = extractvalue %Range %42, 0
+  %44 = extractvalue %Range %42, 1
+  %45 = extractvalue %Range %42, 2
+  br label %preheader__1
+
+preheader__1:                                     ; preds = %condContinue__1
+  %46 = icmp sgt i64 %44, 0
+  br label %header__2
+
+header__2:                                        ; preds = %exiting__2, %preheader__1
+  %__qsVar0____qsVar0____qsVar3__numPair______ = phi i64 [ %43, %preheader__1 ], [ %62, %exiting__2 ]
+  %47 = icmp sle i64 %__qsVar0____qsVar0____qsVar3__numPair______, %45
+  %48 = icmp sge i64 %__qsVar0____qsVar0____qsVar3__numPair______, %45
+  %49 = select i1 %46, i1 %47, i1 %48
+  br i1 %49, label %body__2, label %exit__2
+
+body__2:                                          ; preds = %header__2
+  %50 = mul i64 2, %__qsVar0____qsVar0____qsVar3__numPair______
+  %51 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %controls, i64 %50)
+  %52 = bitcast i8* %51 to %Qubit**
+  %53 = load %Qubit*, %Qubit** %52, align 8
+  %54 = mul i64 2, %__qsVar0____qsVar0____qsVar3__numPair______
+  %55 = add i64 %54, 1
+  %56 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %controls, i64 %55)
+  %57 = bitcast i8* %56 to %Qubit**
+  %58 = load %Qubit*, %Qubit** %57, align 8
+  %59 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %__qsVar2__temps__, i64 %__qsVar0____qsVar0____qsVar3__numPair______)
+  %60 = bitcast i8* %59 to %Qubit**
+  %61 = load %Qubit*, %Qubit** %60, align 8
+  call void @Microsoft__Quantum__Intrinsic____QsRef23__PhaseCCX____adj(%Qubit* %53, %Qubit* %58, %Qubit* %61)
+  br label %exiting__2
+
+exiting__2:                                       ; preds = %body__2
+  %62 = add i64 %__qsVar0____qsVar0____qsVar3__numPair______, %44
+  br label %header__2
+
+exit__2:                                          ; preds = %header__2
+  call void @__quantum__rt__array_update_alias_count(%Array* %__qsVar2__temps__, i32 -1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %__qsVar1____qsVar4__newControls____, i32 -1)
+  call void @__quantum__rt__array_update_reference_count(%Array* %__qsVar1____qsVar4__newControls____, i32 -1)
+  call void @__quantum__rt__capture_update_reference_count(%Callable* %29, i32 -1)
+  call void @__quantum__rt__callable_update_reference_count(%Callable* %29, i32 -1)
+  call void @__quantum__rt__array_update_reference_count(%Array* %__qsVar1____qsVar4__newControls____, i32 -1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %3, i32 -1)
+  call void @__quantum__rt__tuple_update_reference_count(%Tuple* %30, i32 -1)
+  call void @__quantum__rt__qubit_release_array(%Array* %__qsVar2__temps__)
+  call void @__quantum__rt__capture_update_alias_count(%Callable* %op, i32 -1)
+  call void @__quantum__rt__callable_update_alias_count(%Callable* %op, i32 -1)
+  call void @__quantum__rt__array_update_alias_count(%Array* %controls, i32 -1)
+  call void @__quantum__rt__tuple_update_alias_count(%Tuple* %3, i32 -1)
   ret void
 }
 
-define void @TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement() #2 {
+define { i64, i8* }* @Microsoft__Quantum__Samples__SampleRandomNumber__Interop() #1 {
 entry:
-  call void @TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body()
-  %0 = call %String* @__quantum__rt__string_create(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @1, i32 0, i32 0))
-  call void @__quantum__rt__message(%String* %0)
-  call void @__quantum__rt__string_update_reference_count(%String* %0, i32 -1)
+  %0 = call %Array* @Microsoft__Quantum__Samples__SampleRandomNumber__body()
+  %1 = call i64 @__quantum__rt__array_get_size_1d(%Array* %0)
+  %2 = mul i64 %1, 1
+  %3 = call i8* @__quantum__rt__memory_allocate(i64 %2)
+  %4 = ptrtoint i8* %3 to i64
+  %5 = sub i64 %1, 1
+  br label %header__1
+
+header__1:                                        ; preds = %exiting__1, %entry
+  %6 = phi i64 [ 0, %entry ], [ %17, %exiting__1 ]
+  %7 = icmp sle i64 %6, %5
+  br i1 %7, label %body__1, label %exit__1
+
+body__1:                                          ; preds = %header__1
+  %8 = mul i64 %6, 1
+  %9 = add i64 %4, %8
+  %10 = inttoptr i64 %9 to i8*
+  %11 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 %6)
+  %12 = bitcast i8* %11 to %Result**
+  %13 = load %Result*, %Result** %12, align 8
+  %14 = call %Result* @__quantum__rt__result_get_zero()
+  %15 = call i1 @__quantum__rt__result_equal(%Result* %13, %Result* %14)
+  %16 = select i1 %15, i8 0, i8 -1
+  store i8 %16, i8* %10, align 1
+  br label %exiting__1
+
+exiting__1:                                       ; preds = %body__1
+  %17 = add i64 %6, 1
+  br label %header__1
+
+exit__1:                                          ; preds = %header__1
+  %18 = call i8* @__quantum__rt__memory_allocate(i64 ptrtoint ({ i64, i8* }* getelementptr ({ i64, i8* }, { i64, i8* }* null, i32 1) to i64))
+  %19 = bitcast i8* %18 to { i64, i8* }*
+  %20 = getelementptr { i64, i8* }, { i64, i8* }* %19, i64 0, i32 0
+  store i64 %1, i64* %20, align 4
+  %21 = getelementptr { i64, i8* }, { i64, i8* }* %19, i64 0, i32 1
+  store i8* %3, i8** %21, align 8
+  %22 = sub i64 %1, 1
+  br label %header__2
+
+header__2:                                        ; preds = %exiting__2, %exit__1
+  %23 = phi i64 [ 0, %exit__1 ], [ %28, %exiting__2 ]
+  %24 = icmp sle i64 %23, %22
+  br i1 %24, label %body__2, label %exit__2
+
+body__2:                                          ; preds = %header__2
+  %25 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 %23)
+  %26 = bitcast i8* %25 to %Result**
+  %27 = load %Result*, %Result** %26, align 8
+  call void @__quantum__rt__result_update_reference_count(%Result* %27, i32 -1)
+  br label %exiting__2
+
+exiting__2:                                       ; preds = %body__2
+  %28 = add i64 %23, 1
+  br label %header__2
+
+exit__2:                                          ; preds = %header__2
+  call void @__quantum__rt__array_update_reference_count(%Array* %0, i32 -1)
+  ret { i64, i8* }* %19
+}
+
+declare i8* @__quantum__rt__memory_allocate(i64)
+
+declare i1 @__quantum__rt__result_equal(%Result*, %Result*)
+
+define void @Microsoft__Quantum__Samples__SampleRandomNumber() #2 {
+entry:
+  %0 = call %Array* @Microsoft__Quantum__Samples__SampleRandomNumber__body()
+  %1 = call %String* @__quantum__rt__string_create(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @1, i32 0, i32 0))
+  %2 = call %String* @__quantum__rt__string_create(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @2, i32 0, i32 0))
+  call void @__quantum__rt__string_update_reference_count(%String* %2, i32 1)
+  %3 = call i64 @__quantum__rt__array_get_size_1d(%Array* %0)
+  %4 = sub i64 %3, 1
+  br label %header__1
+
+header__1:                                        ; preds = %exiting__1, %entry
+  %5 = phi %String* [ %2, %entry ], [ %15, %exiting__1 ]
+  %6 = phi i64 [ 0, %entry ], [ %16, %exiting__1 ]
+  %7 = icmp sle i64 %6, %4
+  br i1 %7, label %body__1, label %exit__1
+
+body__1:                                          ; preds = %header__1
+  %8 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 %6)
+  %9 = bitcast i8* %8 to %Result**
+  %10 = load %Result*, %Result** %9, align 8
+  %11 = icmp ne %String* %5, %2
+  br i1 %11, label %condTrue__1, label %condContinue__1
+
+condTrue__1:                                      ; preds = %body__1
+  %12 = call %String* @__quantum__rt__string_concatenate(%String* %5, %String* %1)
+  call void @__quantum__rt__string_update_reference_count(%String* %5, i32 -1)
+  br label %condContinue__1
+
+condContinue__1:                                  ; preds = %condTrue__1, %body__1
+  %13 = phi %String* [ %12, %condTrue__1 ], [ %5, %body__1 ]
+  %14 = call %String* @__quantum__rt__result_to_string(%Result* %10)
+  %15 = call %String* @__quantum__rt__string_concatenate(%String* %13, %String* %14)
+  call void @__quantum__rt__string_update_reference_count(%String* %13, i32 -1)
+  call void @__quantum__rt__string_update_reference_count(%String* %14, i32 -1)
+  br label %exiting__1
+
+exiting__1:                                       ; preds = %condContinue__1
+  %16 = add i64 %6, 1
+  br label %header__1
+
+exit__1:                                          ; preds = %header__1
+  %17 = call %String* @__quantum__rt__string_create(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @3, i32 0, i32 0))
+  %18 = call %String* @__quantum__rt__string_concatenate(%String* %5, %String* %17)
+  call void @__quantum__rt__string_update_reference_count(%String* %5, i32 -1)
+  call void @__quantum__rt__string_update_reference_count(%String* %17, i32 -1)
+  call void @__quantum__rt__string_update_reference_count(%String* %1, i32 -1)
+  call void @__quantum__rt__string_update_reference_count(%String* %2, i32 -1)
+  call void @__quantum__rt__message(%String* %18)
+  %19 = sub i64 %3, 1
+  br label %header__2
+
+header__2:                                        ; preds = %exiting__2, %exit__1
+  %20 = phi i64 [ 0, %exit__1 ], [ %25, %exiting__2 ]
+  %21 = icmp sle i64 %20, %19
+  br i1 %21, label %body__2, label %exit__2
+
+body__2:                                          ; preds = %header__2
+  %22 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 %20)
+  %23 = bitcast i8* %22 to %Result**
+  %24 = load %Result*, %Result** %23, align 8
+  call void @__quantum__rt__result_update_reference_count(%Result* %24, i32 -1)
+  br label %exiting__2
+
+exiting__2:                                       ; preds = %body__2
+  %25 = add i64 %20, 1
+  br label %header__2
+
+exit__2:                                          ; preds = %header__2
+  call void @__quantum__rt__array_update_reference_count(%Array* %0, i32 -1)
+  call void @__quantum__rt__string_update_reference_count(%String* %18, i32 -1)
   ret void
 }
 
 declare void @__quantum__rt__message(%String*)
 
 declare void @__quantum__rt__string_update_reference_count(%String*, i32)
+
+declare %String* @__quantum__rt__string_concatenate(%String*, %String*)
+
+declare %String* @__quantum__rt__result_to_string(%Result*)
 
 attributes #0 = { nounwind readnone speculatable willreturn }
 attributes #1 = { "InteropFriendly" }

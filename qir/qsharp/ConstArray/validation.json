@@ -1,0 +1,90 @@
+[
+  {
+    "type": "error",
+    "message": "'load' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %27 = load i64, i64* %26, align 4",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'store' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  store i64 1, i64* %2, align 4",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'bitcast' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %2 = bitcast i8* %1 to i64*",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_copy' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %21 = tail call %Array* @__quantum__rt__array_copy(%Array* %0, i1 false)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_get_element_ptr_1d' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %1 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 0)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_create_1d' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %0 = tail call %Array* @__quantum__rt__array_create_1d(i32 8, i64 10)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'Array*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %1 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 0)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Fatal error: QIR is not valid within the defined profile",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %1 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 0)",
+      "frontend_hint": ""
+    }
+  }
+]

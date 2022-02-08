@@ -1,0 +1,640 @@
+[
+  {
+    "type": "error",
+    "message": "'shl' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %26 = shl nuw i64 %__qsVar0__numPair__2.i, 1",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'sdiv' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %numControlPairs.i = sdiv i64 %numControls.i, 2",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'sext' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %22 = sext i1 %narrow.i to i64",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'xor' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %not.isPositive.i.i = xor i1 %17, true",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'store' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  store %Qubit* %5, %Qubit** %7, align 8",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fneg' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %19 = fneg double %16",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fcmp' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %17 = fcmp oge double %9, 0.000000e+00",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fsub' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %16 = fsub double %15, %9",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'and' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %narrow.i = and i1 %21, %not.isPositive.i.i",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'getelementptr' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %13 = getelementptr inbounds { i64, double, i1 }, { i64, double, i1 }* %11, i64 0, i32 1",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'load' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %5 = load %Qubit*, %Qubit** %4, align 8",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'sitofp' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %15 = sitofp i64 %truncated.i.i.i to double",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'bitcast' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %4 = bitcast i8* %3 to %Qubit**",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fmul' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %28 = fmul double %27, -2.000000e+00",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'or' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %30 = or i64 %26, 1",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fdiv' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %9 = fdiv double %time, %dt",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'fptosi' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %truncated.i.i.i = fptosi double %9 to i64",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'icmp' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %.not1.i.i = icmp slt i64 %2, 0",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'ptrtoint' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %96 = ptrtoint i8* %95 to i64",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'add' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %2 = add i64 %1, -1",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__array_update_alias_count(%Array* %3, i32 1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_make_controlled' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__callable_make_controlled(%Callable* %19)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_concatenate' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %47 = tail call %Array* @__quantum__rt__array_concatenate(%Array* %temps.i, %Array* %40)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__qubit_release_array' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__qubit_release_array(%Array* %qs.i)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__callable_update_reference_count(%Callable* %90, i32 -1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__capture_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__capture_update_reference_count(%Callable* %90, i32 1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_copy' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %90 = tail call %Callable* @__quantum__rt__callable_copy(%Callable* %79, i1 false)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__memory_allocate' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %95 = tail call i8* @__quantum__rt__memory_allocate(i64 %94)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_make_adjoint' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__callable_make_adjoint(%Callable* %90)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_copy' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %47 = tail call %Array* @__quantum__rt__array_copy(%Array* %46, i1 false)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__callable_update_alias_count(%Callable* %0, i32 1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__capture_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__capture_update_alias_count(%Callable* %0, i32 1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_create_1d' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %38 = tail call %Array* @__quantum__rt__array_create_1d(i32 8, i64 %37)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__result_get_zero' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %36 = tail call %Result* @__quantum__rt__result_get_zero()",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__tuple_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__tuple_update_reference_count(%Tuple* %6, i32 -1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__tuple_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__tuple_update_alias_count(%Tuple* %capture-tuple, i32 %count-change)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_invoke' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__callable_invoke(%Callable* %0, %Tuple* %6, %Tuple* null)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_create' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %0 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Intrinsic__H__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_get_element_ptr_1d' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %3 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %qs.i, i64 %idxQubit2.i.i)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__tuple_create' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %6 = tail call %Tuple* @__quantum__rt__tuple_create(i64 8)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__qubit_allocate_array' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %qs.i = tail call %Array* @__quantum__rt__qubit_allocate_array(i64 %nSites)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_get_size_1d' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %1 = tail call i64 @__quantum__rt__array_get_size_1d(%Array* %qs.i)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Calls to custom defined functions not allowed.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type '**' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %16 = bitcast { double, %Qubit* }** %15 to %Tuple**",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'Array**' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %3 = load %Array*, %Array** %1, align 8",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'i8**' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  store i8* %95, i8** %111, align 8",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'i1*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  store i1 %17, i1* %14, align 1",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'Array*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %1 = tail call i64 @__quantum__rt__array_get_size_1d(%Array* %qs.i)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'double*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  store double %16, double* %13, align 8",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'Callable**' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  store %Callable* %78, %Callable** %76, align 8",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type '*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %13 = getelementptr inbounds { i64, double, i1 }, { i64, double, i1 }* %11, i64 0, i32 1",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'Callable*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__capture_update_alias_count(%Callable* %0, i32 1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'Tuple**' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  store %Tuple* %8, %Tuple** %16, align 8",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'Tuple*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %0 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Intrinsic__H__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type '[2 x void (%Tuple*, i32)*]*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %0 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Intrinsic__H__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type '[4 x void (%Tuple*, %Tuple*, %Tuple*)*]*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %0 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Intrinsic__H__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Fatal error: QIR is not valid within the defined profile",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %0 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Intrinsic__H__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
+      "frontend_hint": ""
+    }
+  }
+]

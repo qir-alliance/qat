@@ -1,6 +1,17 @@
 [
   {
     "type": "error",
+    "message": "'insertvalue' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %33 = insertvalue %Range { i64 0, i64 1, i64 -1 }, i64 %32, 0",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
     "message": "'or' is not allowed for this profile.",
     "location": {
       "filename": "",
@@ -12,45 +23,23 @@
   },
   {
     "type": "error",
-    "message": "'shl' is not allowed for this profile.",
-    "location": {
-      "filename": "",
-      "row": 0,
-      "col": 0,
-      "llvm_hint": "  %4 = shl nuw i64 %3, 1",
-      "frontend_hint": ""
-    }
-  },
-  {
-    "type": "error",
     "message": "'sext' is not allowed for this profile.",
     "location": {
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %90 = sext i1 %89 to i8",
+      "llvm_hint": "  %102 = sext i1 %101 to i8",
       "frontend_hint": ""
     }
   },
   {
     "type": "error",
-    "message": "'ptrtoint' is not allowed for this profile.",
+    "message": "'sdiv' is not allowed for this profile.",
     "location": {
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %79 = ptrtoint i8* %78 to i64",
-      "frontend_hint": ""
-    }
-  },
-  {
-    "type": "error",
-    "message": "'add' is not allowed for this profile.",
-    "location": {
-      "filename": "",
-      "row": 0,
-      "col": 0,
-      "llvm_hint": "  %10 = add nuw nsw i64 %7, 1",
+      "llvm_hint": "  %18 = sdiv i64 %11, 2",
       "frontend_hint": ""
     }
   },
@@ -61,7 +50,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %34 = load %Qubit*, %Qubit** %33, align 8",
+      "llvm_hint": "  %38 = load %Qubit*, %Qubit** %37, align 8",
       "frontend_hint": ""
     }
   },
@@ -72,7 +61,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %24 = getelementptr inbounds { %Callable*, %Array* }, { %Callable*, %Array* }* %22, i64 0, i32 1",
+      "llvm_hint": "  %23 = getelementptr inbounds { %Callable*, i64 }, { %Callable*, i64 }* %21, i64 0, i32 1",
       "frontend_hint": ""
     }
   },
@@ -111,23 +100,12 @@
   },
   {
     "type": "error",
-    "message": "'sdiv' is not allowed for this profile.",
-    "location": {
-      "filename": "",
-      "row": 0,
-      "col": 0,
-      "llvm_hint": "  %18 = sdiv i64 %11, 2",
-      "frontend_hint": ""
-    }
-  },
-  {
-    "type": "error",
     "message": "'icmp' is not allowed for this profile.",
     "location": {
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %0 = icmp ult i64 %nQubits, 64",
+      "llvm_hint": "  %0 = icmp ult i64 %nQubits.i, 64",
       "frontend_hint": ""
     }
   },
@@ -149,7 +127,62 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %1 = trunc i64 %nQubits to i32",
+      "llvm_hint": "  %1 = trunc i64 %nQubits.i to i32",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'ptrtoint' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %91 = ptrtoint i8* %90 to i64",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'add' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %10 = add nuw nsw i64 %7, 1",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'shl' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %nQubits.i = shl i64 %registerSize, 1",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__fail' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__fail(%String* %9)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__string_create' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %9 = tail call %String* @__quantum__rt__string_create(i8* getelementptr inbounds ([52 x i8], [52 x i8]* @0, i64 0, i64 0))",
       "frontend_hint": ""
     }
   },
@@ -161,6 +194,17 @@
       "row": 0,
       "col": 0,
       "llvm_hint": "  tail call void @__quantum__rt__callable_make_controlled(%Callable* %7)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_update_alias_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__array_update_alias_count(%Array* %3, i32 1)",
       "frontend_hint": ""
     }
   },
@@ -182,7 +226,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  tail call void @__quantum__rt__qubit_release_array(%Array* %27)",
+      "llvm_hint": "  tail call void @__quantum__rt__qubit_release_array(%Array* %qubits.i.i)",
       "frontend_hint": ""
     }
   },
@@ -193,51 +237,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %54 = tail call %Result* @__quantum__rt__result_get_zero()",
-      "frontend_hint": ""
-    }
-  },
-  {
-    "type": "error",
-    "message": "'__quantum__rt__memory_allocate' is not allowed for this profile.",
-    "location": {
-      "filename": "",
-      "row": 0,
-      "col": 0,
-      "llvm_hint": "  %78 = tail call i8* @__quantum__rt__memory_allocate(i64 %77)",
-      "frontend_hint": ""
-    }
-  },
-  {
-    "type": "error",
-    "message": "'__quantum__rt__callable_make_adjoint' is not allowed for this profile.",
-    "location": {
-      "filename": "",
-      "row": 0,
-      "col": 0,
-      "llvm_hint": "  tail call void @__quantum__rt__callable_make_adjoint(%Callable* %46)",
-      "frontend_hint": ""
-    }
-  },
-  {
-    "type": "error",
-    "message": "'__quantum__rt__capture_update_reference_count' is not allowed for this profile.",
-    "location": {
-      "filename": "",
-      "row": 0,
-      "col": 0,
-      "llvm_hint": "  tail call void @__quantum__rt__capture_update_reference_count(%Callable* %46, i32 1)",
-      "frontend_hint": ""
-    }
-  },
-  {
-    "type": "error",
-    "message": "'__quantum__rt__callable_copy' is not allowed for this profile.",
-    "location": {
-      "filename": "",
-      "row": 0,
-      "col": 0,
-      "llvm_hint": "  %46 = tail call %Callable* @__quantum__rt__callable_copy(%Callable* %42, i1 false)",
+      "llvm_hint": "  %66 = tail call %Result* @__quantum__rt__result_get_zero()",
       "frontend_hint": ""
     }
   },
@@ -248,7 +248,62 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  tail call void @__quantum__rt__callable_update_reference_count(%Callable* %46, i32 -1)",
+      "llvm_hint": "  tail call void @__quantum__rt__callable_update_reference_count(%Callable* %58, i32 -1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__memory_allocate' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %90 = tail call i8* @__quantum__rt__memory_allocate(i64 %89)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__array_update_reference_count(%Array* %ctls, i32 1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_make_adjoint' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__callable_make_adjoint(%Callable* %58)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__capture_update_reference_count' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__capture_update_reference_count(%Callable* %58, i32 1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__callable_copy' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %58 = tail call %Callable* @__quantum__rt__callable_copy(%Callable* %55, i1 false)",
       "frontend_hint": ""
     }
   },
@@ -259,7 +314,18 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  tail call void @__quantum__rt__tuple_update_reference_count(%Tuple* %35, i32 -1)",
+      "llvm_hint": "  tail call void @__quantum__rt__tuple_update_reference_count(%Tuple* %39, i32 -1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "'__quantum__rt__array_slice_1d' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  %36 = tail call %Array* @__quantum__rt__array_slice_1d(%Array* %29, %Range %35, i1 true)",
       "frontend_hint": ""
     }
   },
@@ -270,7 +336,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  tail call void @__quantum__rt__callable_invoke(%Callable* %28, %Tuple* %35, %Tuple* null)",
+      "llvm_hint": "  tail call void @__quantum__rt__callable_invoke(%Callable* %33, %Tuple* %39, %Tuple* null)",
       "frontend_hint": ""
     }
   },
@@ -281,7 +347,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %21 = tail call %Tuple* @__quantum__rt__tuple_create(i64 16)",
+      "llvm_hint": "  %20 = tail call %Tuple* @__quantum__rt__tuple_create(i64 16)",
       "frontend_hint": ""
     }
   },
@@ -292,7 +358,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %27 = tail call %Array* @__quantum__rt__qubit_allocate_array(i64 %nQubits)",
+      "llvm_hint": "  %qubits.i.i = tail call %Array* @__quantum__rt__qubit_allocate_array(i64 %nQubits.i)",
       "frontend_hint": ""
     }
   },
@@ -303,7 +369,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %29 = tail call i64 @__quantum__rt__array_get_size_1d(%Array* %27)",
+      "llvm_hint": "  %34 = tail call i64 @__quantum__rt__array_get_size_1d(%Array* %qubits.i.i)",
       "frontend_hint": ""
     }
   },
@@ -314,7 +380,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  tail call void @__quantum__rt__capture_update_alias_count(%Callable* %26, i32 1)",
+      "llvm_hint": "  tail call void @__quantum__rt__capture_update_alias_count(%Callable* %25, i32 1)",
       "frontend_hint": ""
     }
   },
@@ -325,7 +391,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %6 = tail call %Array* @__quantum__rt__array_create_1d(i32 1, i64 %nQubits)",
+      "llvm_hint": "  %6 = tail call %Array* @__quantum__rt__array_create_1d(i32 1, i64 %nQubits.i)",
       "frontend_hint": ""
     }
   },
@@ -336,7 +402,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  tail call void @__quantum__rt__callable_update_alias_count(%Callable* %26, i32 1)",
+      "llvm_hint": "  tail call void @__quantum__rt__callable_update_alias_count(%Callable* %25, i32 1)",
       "frontend_hint": ""
     }
   },
@@ -391,7 +457,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %25 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Tets__Samples__BernVaz__ParityOperationImpl__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
+      "llvm_hint": "  %24 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Samples__ApplyInnerProductBentFunction__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
       "frontend_hint": ""
     }
   },
@@ -424,7 +490,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %55 = load { i1, %Qubit* }*, { i1, %Qubit* }** %54, align 8",
+      "llvm_hint": "  %16 = load { i1, %Qubit* }*, { i1, %Qubit* }** %15, align 8",
       "frontend_hint": ""
     }
   },
@@ -435,7 +501,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  store %Array* %20, %Array** %24, align 8",
+      "llvm_hint": "  store %Array* %.lcssa.i.i, %Array** %29, align 8",
       "frontend_hint": ""
     }
   },
@@ -446,7 +512,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %25 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Tets__Samples__BernVaz__ParityOperationImpl__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
+      "llvm_hint": "  %24 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Samples__ApplyInnerProductBentFunction__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
       "frontend_hint": ""
     }
   },
@@ -457,7 +523,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  store %Callable* %25, %Callable** %23, align 8",
+      "llvm_hint": "  store %Callable* %24, %Callable** %22, align 8",
       "frontend_hint": ""
     }
   },
@@ -468,7 +534,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %24 = getelementptr inbounds { %Callable*, %Array* }, { %Callable*, %Array* }* %22, i64 0, i32 1",
+      "llvm_hint": "  %23 = getelementptr inbounds { %Callable*, i64 }, { %Callable*, i64 }* %21, i64 0, i32 1",
       "frontend_hint": ""
     }
   },
@@ -479,7 +545,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %25 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Tets__Samples__BernVaz__ParityOperationImpl__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
+      "llvm_hint": "  %24 = tail call %Callable* @__quantum__rt__callable_create([4 x void (%Tuple*, %Tuple*, %Tuple*)*]* @Microsoft__Quantum__Samples__ApplyInnerProductBentFunction__FunctionTable, [2 x void (%Tuple*, i32)*]* null, %Tuple* null)",
       "frontend_hint": ""
     }
   },
@@ -490,7 +556,18 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  store %Tuple* %12, %Tuple** %20, align 8",
+      "llvm_hint": "  %50 = load %Tuple*, %Tuple** %49, align 8",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'String*' is not allowed for this profile.",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "  tail call void @__quantum__rt__fail(%String* %9)",
       "frontend_hint": ""
     }
   },
@@ -501,7 +578,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  %22 = bitcast %Tuple* %21 to { %Callable*, %Array* }*",
+      "llvm_hint": "  %21 = bitcast %Tuple* %20 to { %Callable*, i64 }*",
       "frontend_hint": ""
     }
   },
@@ -512,7 +589,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  store i8* %78, i8** %94, align 8",
+      "llvm_hint": "  store i8* %90, i8** %106, align 8",
       "frontend_hint": ""
     }
   },
@@ -534,7 +611,7 @@
       "filename": "",
       "row": 0,
       "col": 0,
-      "llvm_hint": "  store %Callable* %25, %Callable** %23, align 8",
+      "llvm_hint": "  store %Callable* %24, %Callable** %22, align 8",
       "frontend_hint": ""
     }
   },
