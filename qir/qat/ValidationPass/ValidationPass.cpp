@@ -28,7 +28,6 @@ namespace quantum
 
     void ValidationPass::callChecks(Instruction& instr)
     {
-        auto opname     = instr.getOpcodeName();
         auto call_instr = llvm::dyn_cast<llvm::CallBase>(&instr);
         if (call_instr != nullptr)
         {
@@ -170,7 +169,7 @@ namespace quantum
         if (!config_.allowInternalCalls() && !internal_calls_.empty())
         {
             logger_->setLlvmHint("");
-            // TODO: Add location
+            // TODO(tfr): Add location
 
             // Emitting error
             logger_->error("Calls to custom defined functions not allowed.");
