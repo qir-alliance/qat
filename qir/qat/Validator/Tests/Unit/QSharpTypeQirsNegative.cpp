@@ -32,6 +32,9 @@ IrManipulationTestHelperPtr newIrManip(std::string const &script)
   ir_manip->declareFunction("void @__quantum__qis__rz__body(double, %Qubit*)");
   ir_manip->declareFunction("void @__quantum__qis__t__body(%Qubit*)");
   ir_manip->declareFunction("void @__quantum__qis__z__body(%Qubit*)");
+  ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
+  ir_manip->declareFunction("void @__quantum__qis__mz__body(%Qubit*, %Result*)");
+  ir_manip->declareFunction("void @__quantum__qis__reset__body(%Qubit*)");
   ir_manip->declareFunction("%Array* @__quantum__rt__array_copy(%Array*, i1)");
   ir_manip->declareFunction("%Array* @__quantum__rt__array_create_1d(i32, i64)");
   ir_manip->declareFunction("i8* @__quantum__rt__array_get_element_ptr_1d(%Array*, i64)");
@@ -39,6 +42,10 @@ IrManipulationTestHelperPtr newIrManip(std::string const &script)
   ir_manip->declareFunction("void @__quantum__qis__reset__body(%Qubit*)");
   ir_manip->declareFunction("i1 @__quantum__qis__read_result__body(%Result*)");
   ir_manip->declareFunction("void @__quantum__qis__cnot__body(%Qubit*, %Qubit*)");
+  ir_manip->declareFunction("%Result* @__quantum__qis__m__body(%Qubit*)");
+  ir_manip->declareFunction("%Qubit* @__quantum__rt__qubit_allocate()");
+  ir_manip->declareFunction("void @__quantum__rt__result_update_reference_count(%Result*, i32)");
+  ir_manip->declareFunction("void @__quantum__rt__qubit_release(%Qubit*)");
 
   if (!ir_manip->fromBodyString(script))
   {
@@ -49,7 +56,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const &script)
   return ir_manip;
 }
 
-void expectFail(String const &profile_name, String const &script)
+void expectFail(String const &profile_name, String const &script, std::vector<String> const &errors)
 {
   auto ir_manip = newIrManip(script);
 
@@ -60,58 +67,92 @@ void expectFail(String const &profile_name, String const &script)
   configuration_manager.addConfig<ValidationPassConfiguration>(
       "validation-configuration", ValidationPassConfiguration::fromProfileName(profile_name));
 
-  EXPECT_FALSE(ir_manip->hasValidationErrors(profile_generator, profile_name, {}));
+  EXPECT_TRUE(ir_manip->hasExactValidationErrors(profile_generator, profile_name, errors, true));
 }
 
 }  // namespace
 
-TEST(QSharpNegative, ConstArray)
+TEST(QSharpNegative, IfWithPhi)
 {
   expectFail("base", R"script(
-  %0 = tail call %Array* @__quantum__rt__array_create_1d(i32 8, i64 10)
-  %1 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 0)
-  %2 = bitcast i8* %1 to i64*
-  %3 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 1)
-  %4 = bitcast i8* %3 to i64*
-  %5 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 2)
-  %6 = bitcast i8* %5 to i64*
-  %7 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 3)
-  %8 = bitcast i8* %7 to i64*
-  %9 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 4)
-  %10 = bitcast i8* %9 to i64*
-  %11 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 5)
-  %12 = bitcast i8* %11 to i64*
-  %13 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 6)
-  %14 = bitcast i8* %13 to i64*
-  %15 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 7)
-  %16 = bitcast i8* %15 to i64*
-  %17 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 8)
-  %18 = bitcast i8* %17 to i64*
-  %19 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %0, i64 9)
-  %20 = bitcast i8* %19 to i64*
-  store i64 1, i64* %2, align 4
-  store i64 2, i64* %4, align 4
-  store i64 3, i64* %6, align 4
-  store i64 4, i64* %8, align 4
-  store i64 5, i64* %10, align 4
-  store i64 6, i64* %12, align 4
-  store i64 7, i64* %14, align 4
-  store i64 8, i64* %16, align 4
-  store i64 9, i64* %18, align 4
-  store i64 10, i64* %20, align 4
-  %21 = tail call %Array* @__quantum__rt__array_copy(%Array* %0, i1 false)
-  %22 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %21, i64 7)
-  %23 = bitcast i8* %22 to i64*
-  store i64 1337, i64* %23, align 4
-  %24 = tail call %Array* @__quantum__rt__array_copy(%Array* %21, i1 false)
-  %25 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %21, i64 7)
-  %26 = bitcast i8* %25 to i64*
-  %27 = load i64, i64* %26, align 4
-  %28 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %24, i64 3)
-  %29 = bitcast i8* %28 to i64*
-  store i64 %27, i64* %29, align 4
-  %30 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %24, i64 3)
-  %31 = bitcast i8* %30 to i64*
-  %32 = load i64, i64* %31, align 4
-  )script");
+  %0 = icmp eq i64 9, 1
+  br i1 %0, label %quantum, label %LoopCase__Main__body.exit
+
+quantum:                                          ; preds = %entry
+  tail call void @__quantum__qis__h__body(%Qubit* null)
+  br label %LoopCase__Main__body.exit
+
+LoopCase__Main__body.exit:                        ; preds = %quantum, %entry
+  %ret.0.i = phi i64 [ 9, %quantum ], [ 1, %entry ]
+  )script",
+             {
+                 "%ret.0.i = phi i64 [ 9, %quantum ], [ 1, %entry ]",
+                 "%0 = icmp eq i64 9, 1",
+             });
+}
+
+TEST(QSharpNegative, SelectStmt)
+{
+  expectFail("base", R"script(
+  tail call void @__quantum__qis__h__body(%Qubit* null)
+  tail call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 1 to %Qubit*))
+  tail call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*))
+  tail call void @__quantum__qis__mz__body(%Qubit* inttoptr (i64 1 to %Qubit*), %Result* null)
+  tail call void @__quantum__qis__reset__body(%Qubit* inttoptr (i64 1 to %Qubit*))
+  %0 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  %1 = select i1 %0, i64 1337, i64 122
+  )script",
+             {
+                 "%1 = select i1 %0, i64 1337, i64 122",
+             });
+}
+
+TEST(QSharpNegative, ExternalFunctions)
+{
+  expectFail("base", R"script(
+  %q.i = tail call %Qubit* @__quantum__rt__qubit_allocate()
+  tail call void @__quantum__qis__h__body(%Qubit* %q.i)
+  %result.i.i = tail call %Result* @__quantum__qis__m__body(%Qubit* %q.i)
+  tail call void @__quantum__qis__reset__body(%Qubit* %q.i)
+  tail call void @__quantum__rt__result_update_reference_count(%Result* %result.i.i, i32 -1)
+  tail call void @__quantum__rt__qubit_release(%Qubit* %q.i)
+)script",
+             {
+                 "tail call void @__quantum__rt__qubit_release(%Qubit* %q.i)",
+                 "tail call void @__quantum__rt__result_update_reference_count(%Result* "
+                 "%result.i.i, i32 -1)",
+                 "%result.i.i = tail call %Result* @__quantum__qis__m__body(%Qubit* %q.i)",
+                 "%q.i = tail call %Qubit* @__quantum__rt__qubit_allocate()",
+             });
+}
+
+TEST(QSharpNegative, LoopWithPhiAndSelect)
+{
+  expectFail("base", R"script(
+  %.not1.i = icmp slt i64 5, 1
+  br i1 %.not1.i, label %LoopCase__Main__body.1.exit, label %body__1.i
+
+body__1.i:                                        ; preds = %body__1.i, %entry
+  %0 = phi i64 [ %2, %body__1.i ], [ 2, %entry ]
+  %1 = icmp sgt i64 %0, 5
+  %2 = add i64 %0, 1
+  tail call void @__quantum__qis__h__body(%Qubit* null)
+  tail call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)
+  tail call void @__quantum__qis__reset__body(%Qubit* null)
+  %3 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
+  br i1 %1, label %header__1.exit__1_crit_edge.i, label %body__1.i
+
+header__1.exit__1_crit_edge.i:                    ; preds = %body__1.i
+  %4 = select i1 %3, i64 1337, i64 122
+  br label %LoopCase__Main__body.1.exit
+
+LoopCase__Main__body.1.exit:                      ; preds = %header__1.exit__1_crit_edge.i, %entry
+  %ret.0.lcssa.i = phi i64 [ %4, %header__1.exit__1_crit_edge.i ], [ 1, %entry ]
+  )script",
+             {
+                 "%2 = add i64 %0, 1",
+                 "%0 = phi i64 [ %2, %body__1.i ], [ 2, %entry ]",
+                 "%4 = select i1 %3, i64 1337, i64 122",
+                 "%.not1.i = icmp slt i64 5, 1",
+             });
 }

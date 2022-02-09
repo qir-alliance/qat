@@ -152,7 +152,8 @@ bool ValidationPass::enforceOpcodeRequirements()
         }
 
         // Emitting error
-        logger_->error("'" + k.first + "' is not allowed for this profile.");
+        logger_->error("Opcode '" + k.first + "' is not allowed for this profile (" +
+                       config_.profileName() + ").");
 
         ret = false;
       }
@@ -205,7 +206,8 @@ bool ValidationPass::enforceExternalCallRequirements()
         }
 
         // Emitting error
-        logger_->error("'" + k.first + "' is not allowed for this profile.");
+        logger_->error("External call '" + k.first + "' is not allowed for this profile (" +
+                       config_.profileName() + ").");
         ret = false;
       }
     }
@@ -240,7 +242,8 @@ bool ValidationPass::enforcePointerRequirements()
         }
 
         // Emitting error
-        logger_->error("Type '" + k.first + "' is not allowed for this profile.");
+        logger_->error("Type '" + k.first + "' is not allowed for this profile (" +
+                       config_.profileName() + ").");
         ret = false;
       }
     }

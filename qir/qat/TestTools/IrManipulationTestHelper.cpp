@@ -135,8 +135,11 @@ bool IrManipulationTestHelper::hasValidationErrors(GeneratorPtr const &generator
                                                    String const       &profile_name,
                                                    Strings const &errors, bool debug) const
 {
-  auto profile   = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
-  auto validator = std::make_unique<Validator>(ValidationPassConfiguration(), true, debug);
+
+  auto  profile               = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
+  auto &configuration_manager = generator->configurationManager();
+  auto  validator             = std::make_unique<Validator>(
+      configuration_manager.get<ValidationPassConfiguration>(), true, debug);
   validator->validate(*module_);
 
   auto logger = validator->logger();
@@ -146,12 +149,109 @@ bool IrManipulationTestHelper::hasValidationErrors(GeneratorPtr const &generator
         "Logger not present. Cannot test the presence of errors without a logger.");
   }
 
+  std::unordered_set<String> hints;
+
   for (auto &message : logger->messages())
   {
-    llvm::errs() << "llvm_hint: " << message.location.llvm_hint << "\n";
+    hints.insert(message.location.llvm_hint);
   }
 
-  return true;
+  auto ret = true;
+  for (auto error : errors)
+  {
+    if (hints.find(error) == hints.end())
+    {
+      ret = false;
+      if (debug)
+      {
+        llvm::errs() << "Missing '" << error << "' in LLVM output.\n";
+      }
+    }
+  }
+
+  if (!ret && debug)
+  {
+    llvm::errs() << "\nExpected errors: \n";
+    for (auto error : errors)
+    {
+      llvm::errs() << error << "\n";
+    }
+    llvm::errs() << "\nActual errors: \n";
+    for (auto &message : logger->messages())
+    {
+      llvm::errs() << message.location.llvm_hint << "\n";
+      llvm::errs() << "  - " << message.message << "\n";
+    }
+    llvm::errs() << "\n";
+  }
+
+  return ret;
+}
+
+bool IrManipulationTestHelper::hasExactValidationErrors(GeneratorPtr const &generator,
+                                                        String const       &profile_name,
+                                                        Strings const &errors, bool debug) const
+{
+  auto  profile               = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
+  auto &configuration_manager = generator->configurationManager();
+  auto  validator             = std::make_unique<Validator>(
+      configuration_manager.get<ValidationPassConfiguration>(), true, debug);
+  validator->validate(*module_);
+
+  auto logger = validator->logger();
+  if (!logger)
+  {
+    throw std::runtime_error(
+        "Logger not present. Cannot test the presence of errors without a logger.");
+  }
+
+  auto                       ret = true;
+  std::unordered_set<String> hints;
+  std::unordered_set<String> error_set{errors.begin(), errors.end()};
+
+  for (auto &message : logger->messages())
+  {
+    hints.insert(message.location.llvm_hint);
+
+    if (error_set.find(message.location.llvm_hint) == error_set.end())
+    {
+      ret = false;
+      if (debug)
+      {
+        llvm::errs() << "Missing '" << message.location.llvm_hint << "' in expected errors.\n";
+      }
+    }
+  }
+
+  for (auto error : errors)
+  {
+    if (hints.find(error) == hints.end())
+    {
+      ret = false;
+      if (debug)
+      {
+        llvm::errs() << "Missing '" << error << "' in LLVM output.\n";
+      }
+    }
+  }
+
+  if (!ret && debug)
+  {
+    llvm::errs() << "\nExpected errors: \n";
+    for (auto error : errors)
+    {
+      llvm::errs() << error << "\n";
+    }
+    llvm::errs() << "\nActual errors: \n";
+    for (auto &message : logger->messages())
+    {
+      llvm::errs() << message.location.llvm_hint << "\n";
+      llvm::errs() << "  - " << message.message << "\n";
+    }
+    llvm::errs() << "\n";
+  }
+
+  return ret;
 }
 
 void IrManipulationTestHelper::declareOpaque(String const &name)

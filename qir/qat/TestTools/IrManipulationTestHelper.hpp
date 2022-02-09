@@ -61,9 +61,16 @@ public:
                        bool debug = false);
 
   /// Tests whether a given set of errors (LLVM hints) are present in the validation errors
-  /// for a specific profile.
+  /// for a specific profile. This method only checks if errors are present but does not fail if
+  /// there are more errors than requested through the API.
   bool hasValidationErrors(GeneratorPtr const &generator, String const &profile_name,
                            Strings const &errors, bool debug = false) const;
+
+  /// Tests whether a given set of errors (LLVM hints) are present in the validation errors
+  /// for a specific profile. In contrast to hasValidationErrors, this function expect an exact
+  /// match in the actual and expected errors.
+  bool hasExactValidationErrors(GeneratorPtr const &generator, String const &profile_name,
+                                Strings const &errors, bool debug = false) const;
 
   // Declaration of partial or full IR
   //

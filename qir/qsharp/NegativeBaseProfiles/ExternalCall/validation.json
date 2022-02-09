@@ -1,0 +1,101 @@
+[
+  {
+    "type": "error",
+    "message": "External call '__quantum__rt__message' is not allowed for this profile (base).",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "tail call void @__quantum__rt__message(%String* %0)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "External call '__quantum__rt__qubit_release' is not allowed for this profile (base).",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "tail call void @__quantum__rt__qubit_release(%Qubit* %q.i)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "External call '__quantum__rt__result_update_reference_count' is not allowed for this profile (base).",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "tail call void @__quantum__rt__result_update_reference_count(%Result* %result.i.i, i32 -1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "External call '__quantum__qis__m__body' is not allowed for this profile (base).",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "%result.i.i = tail call %Result* @__quantum__qis__m__body(%Qubit* %q.i)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "External call '__quantum__rt__int_to_string' is not allowed for this profile (base).",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "%0 = tail call %String* @__quantum__rt__int_to_string(i64 9)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "External call '__quantum__rt__string_update_reference_count' is not allowed for this profile (base).",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "tail call void @__quantum__rt__string_update_reference_count(%String* %0, i32 -1)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "External call '__quantum__rt__qubit_allocate' is not allowed for this profile (base).",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "%q.i = tail call %Qubit* @__quantum__rt__qubit_allocate()",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Type 'String*' is not allowed for this profile (base).",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "tail call void @__quantum__rt__message(%String* %0)",
+      "frontend_hint": ""
+    }
+  },
+  {
+    "type": "error",
+    "message": "Fatal error: QIR is not valid within the defined profile",
+    "location": {
+      "filename": "",
+      "row": 0,
+      "col": 0,
+      "llvm_hint": "tail call void @__quantum__rt__message(%String* %0)",
+      "frontend_hint": ""
+    }
+  }
+]
