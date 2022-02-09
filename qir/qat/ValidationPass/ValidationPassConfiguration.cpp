@@ -61,17 +61,7 @@ namespace quantum
             profile.allowed_pointer_types_   = {"i8*",    "i16*",    "i32*",    "i64*",
                                               "Qubit*", "Qubit**", "Result*", "Result**"};
         }
-        else if (name == "quantinuum")
-        {
-            profile = ValidationPassConfiguration::fromProfileName("base");
-            // profile.addAllowedExternalCall("__quantum__qis__[name]")
-        }
-        else if (name == "rigetti")
-        {
-            profile = ValidationPassConfiguration::fromProfileName("base");
-            // profile.addAllowedExternalCall("__quantum__qis__[name]")
-        }
-        else if (name == "qci")
+        else if (name == "quantinuum" || name == "rigetti" || name == "qci")
         {
             profile = ValidationPassConfiguration::fromProfileName("base");
             // profile.addAllowedExternalCall("__quantum__qis__[name]")
