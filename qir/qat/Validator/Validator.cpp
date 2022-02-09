@@ -14,7 +14,7 @@
 namespace microsoft {
 namespace quantum {
 
-Validator::Validator(ValidationPassConfiguration const &cfg, bool debug,
+Validator::Validator(ValidationPassConfiguration const &cfg, bool force_log_collection, bool debug,
                      llvm::TargetMachine *target_machine)
   : loop_analysis_manager_{debug}
   , function_analysis_manager_{debug}
@@ -33,12 +33,19 @@ Validator::Validator(ValidationPassConfiguration const &cfg, bool debug,
   pass_builder_->crossRegisterProxies(loop_analysis_manager_, function_analysis_manager_,
                                       gscc_analysis_manager_, module_analysis_manager_);
 
-  // Checking if we need to save the log to a file
+  if (force_log_collection || !cfg.saveReportTo().empty())
+  {
+    logger_ = std::make_shared<LogCollection>();
+  }
+
   if (!cfg.saveReportTo().empty())
   {
-    logger_           = std::make_shared<LogCollection>();
     save_to_filename_ = cfg.saveReportTo();
+  }
 
+  // Checking if we need to save the log to a file
+  if (logger_)
+  {
     module_pass_manager_.addPass(ValidationPass(cfg, logger_));
   }
   else
@@ -106,6 +113,11 @@ llvm::CGSCCAnalysisManager &Validator::gsccAnalysisManager()
 llvm::ModuleAnalysisManager &Validator::moduleAnalysisManager()
 {
   return module_analysis_manager_;
+}
+
+Validator::LogColloectionPtr Validator::logger() const
+{
+  return logger_;
 }
 
 void Validator::saveReportToFileIfNeeded()

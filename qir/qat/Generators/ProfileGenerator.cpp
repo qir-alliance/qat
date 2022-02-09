@@ -30,8 +30,8 @@ Profile ProfileGenerator::newProfile(String const            &name,
   ret.setModulePassManager(std::move(module_pass_manager));
 
   // Creating validator
-  auto validator =
-      std::make_unique<Validator>(configuration_manager_.get<ValidationPassConfiguration>(), debug);
+  auto validator = std::make_unique<Validator>(
+      configuration_manager_.get<ValidationPassConfiguration>(), false, debug);
 
   ret.setValidator(std::move(validator));
 

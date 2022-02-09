@@ -46,7 +46,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
     profile.allow_internal_calls_     = false;
     profile.allowlist_external_calls_ = true;
     profile.allowlist_opcodes_        = true;
-    profile.opcodes_        = Set{"br", "call", "unreachable", "ret", "phi", "select", "inttoptr"};
+    profile.opcodes_ = Set{"br", "call", "unreachable", "ret", "inttoptr"};  //  "phi", "select",
     profile.external_calls_ = Set{
         "__quantum__qis__cnot__body", "__quantum__qis__cz__body",
         "__quantum__qis__cx__body",   "__quantum__qis__cy__body",
@@ -57,7 +57,6 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
         "__quantum__qis__rx__body",   "__quantum__qis__ry__body",
         "__quantum__qis__rz__body",   "__quantum__qis__reset__body",
         "__quantum__qis__mz__body",   "__quantum__qis__read_result__body",
-        "__quantum__qis__m__body",
 
     };
     profile.allowlist_pointer_types_ = true;

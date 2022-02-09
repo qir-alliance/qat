@@ -15,11 +15,11 @@ class IrManipulationTestHelper
 {
 public:
   using String            = std::string;
+  using Strings           = std::vector<String>;
   using LLVMContext       = llvm::LLVMContext;
   using SMDiagnostic      = llvm::SMDiagnostic;
   using Module            = llvm::Module;
   using ModulePtr         = std::unique_ptr<Module>;
-  using Strings           = std::vector<String>;
   using OptimizationLevel = llvm::PassBuilder::OptimizationLevel;
   using GeneratorPtr      = std::shared_ptr<ProfileGenerator>;
 
@@ -59,6 +59,11 @@ public:
   /// allow us to write small profiles to test a single piece of transformation.
   bool validateProfile(GeneratorPtr const &generator, String const &profile_name = "generic",
                        bool debug = false);
+
+  /// Tests whether a given set of errors (LLVM hints) are present in the validation errors
+  /// for a specific profile.
+  bool hasValidationErrors(GeneratorPtr const &generator, String const &profile_name,
+                           Strings const &errors, bool debug = false) const;
 
   // Declaration of partial or full IR
   //

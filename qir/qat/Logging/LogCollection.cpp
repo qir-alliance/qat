@@ -3,6 +3,8 @@
 
 #include "Logging/LogCollection.hpp"
 
+#include "Utils/Trim.hpp"
+
 #include <vector>
 
 namespace microsoft {
@@ -48,11 +50,13 @@ LogCollection::Messages const &LogCollection::messages() const
 void LogCollection::setLlvmHint(String const &value)
 {
   current_location_.llvm_hint = value;
+  trim(current_location_.llvm_hint);
 }
 
 void LogCollection::setFrontendHint(String const &value)
 {
   current_location_.frontend_hint = value;
+  trim(current_location_.frontend_hint);
 }
 
 }  // namespace quantum

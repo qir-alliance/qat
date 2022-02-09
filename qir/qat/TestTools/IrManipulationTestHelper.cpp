@@ -4,31 +4,10 @@
 #include "TestTools/IrManipulationTestHelper.hpp"
 
 #include "Llvm/Llvm.hpp"
+#include "Utils/Trim.hpp"
 
 namespace microsoft {
 namespace quantum {
-
-namespace {
-inline void ltrim(std::string &str)
-{
-  str.erase(str.begin(),
-            std::find_if(str.begin(), str.end(), [](uint8_t ch) { return !std::isspace(ch); }));
-}
-
-inline void rtrim(std::string &str)
-{
-  str.erase(
-      std::find_if(str.rbegin(), str.rend(), [](uint8_t ch) { return !std::isspace(ch); }).base(),
-      str.end());
-}
-
-inline void trim(std::string &s)
-{
-  ltrim(s);
-  rtrim(s);
-}
-
-}  // namespace
 
 IrManipulationTestHelper::IrManipulationTestHelper()
 {
@@ -150,6 +129,29 @@ bool IrManipulationTestHelper::validateProfile(GeneratorPtr const &generator,
   auto profile = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
 
   return profile.validate(*module_);
+}
+
+bool IrManipulationTestHelper::hasValidationErrors(GeneratorPtr const &generator,
+                                                   String const       &profile_name,
+                                                   Strings const &errors, bool debug) const
+{
+  auto profile   = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
+  auto validator = std::make_unique<Validator>(ValidationPassConfiguration(), true, debug);
+  validator->validate(*module_);
+
+  auto logger = validator->logger();
+  if (!logger)
+  {
+    throw std::runtime_error(
+        "Logger not present. Cannot test the presence of errors without a logger.");
+  }
+
+  for (auto &message : logger->messages())
+  {
+    llvm::errs() << "llvm_hint: " << message.location.llvm_hint << "\n";
+  }
+
+  return true;
 }
 
 void IrManipulationTestHelper::declareOpaque(String const &name)
