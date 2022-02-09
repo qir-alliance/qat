@@ -163,7 +163,7 @@ namespace quantum
         }
 
         auto ret = true;
-        for (auto error : errors)
+        for (auto const& error : errors)
         {
             if (hints.find(error) == hints.end())
             {
@@ -178,12 +178,12 @@ namespace quantum
         if (!ret && debug)
         {
             llvm::errs() << "\nExpected errors: \n";
-            for (auto error : errors)
+            for (auto const& error : errors)
             {
                 llvm::errs() << error << "\n";
             }
             llvm::errs() << "\nActual errors: \n";
-            for (auto& message : logger->messages())
+            for (auto const& message : logger->messages())
             {
                 llvm::errs() << message.location.llvm_hint << "\n";
                 llvm::errs() << "  - " << message.message << "\n";
@@ -216,7 +216,7 @@ namespace quantum
         std::unordered_set<String> hints;
         std::unordered_set<String> error_set{errors.begin(), errors.end()};
 
-        for (auto& message : logger->messages())
+        for (auto const& message : logger->messages())
         {
             hints.insert(message.location.llvm_hint);
 
@@ -230,7 +230,7 @@ namespace quantum
             }
         }
 
-        for (auto error : errors)
+        for (auto const& error : errors)
         {
             if (hints.find(error) == hints.end())
             {
