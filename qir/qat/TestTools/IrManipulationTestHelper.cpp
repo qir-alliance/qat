@@ -245,12 +245,12 @@ namespace quantum
         if (!ret && debug)
         {
             llvm::errs() << "\nExpected errors: \n";
-            for (auto error : errors)
+            for (auto const& error : errors)
             {
                 llvm::errs() << error << "\n";
             }
             llvm::errs() << "\nActual errors: \n";
-            for (auto& message : logger->messages())
+            for (auto const& message : logger->messages())
             {
                 llvm::errs() << message.location.llvm_hint << "\n";
                 llvm::errs() << "  - " << message.message << "\n";
