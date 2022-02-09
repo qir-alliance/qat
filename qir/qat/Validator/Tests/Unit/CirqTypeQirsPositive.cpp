@@ -2,66 +2,68 @@
 // Licensed under the MIT License.
 
 #include "Generators/DefaultProfileGenerator.hpp"
-#include "Llvm/Llvm.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
 
+#include "Llvm/Llvm.hpp"
+
 #include <functional>
 using namespace microsoft::quantum;
 
-namespace {
+namespace
+{
 using IrManipulationTestHelperPtr = std::shared_ptr<IrManipulationTestHelper>;
-IrManipulationTestHelperPtr newIrManip(std::string const &script)
+IrManipulationTestHelperPtr newIrManip(std::string const& script)
 {
-  IrManipulationTestHelperPtr ir_manip = std::make_shared<IrManipulationTestHelper>();
+    IrManipulationTestHelperPtr ir_manip = std::make_shared<IrManipulationTestHelper>();
 
-  ir_manip->declareOpaque("Qubit");
-  ir_manip->declareOpaque("Result");
-  ir_manip->declareOpaque("Array");
-  ir_manip->declareOpaque("Tuple");
-  ir_manip->declareOpaque("Range");
-  ir_manip->declareOpaque("Callable");
-  ir_manip->declareOpaque("String");
+    ir_manip->declareOpaque("Qubit");
+    ir_manip->declareOpaque("Result");
+    ir_manip->declareOpaque("Array");
+    ir_manip->declareOpaque("Tuple");
+    ir_manip->declareOpaque("Range");
+    ir_manip->declareOpaque("Callable");
+    ir_manip->declareOpaque("String");
 
-  ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__x__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__s__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__cx__body(%Qubit*, %Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__rz__body(double, %Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__t__body(%Qubit*)");
-  //  ir_manip->declareFunction("void @__quantum__qis__m__body(%Qubit*,%Result*)");
+    ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__x__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__s__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__cx__body(%Qubit*, %Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__rz__body(double, %Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__t__body(%Qubit*)");
+    //  ir_manip->declareFunction("void @__quantum__qis__m__body(%Qubit*,%Result*)");
 
-  ir_manip->declareFunction("i64 @TeleportChain__Calculate__body(i64, %Qubit*)");
+    ir_manip->declareFunction("i64 @TeleportChain__Calculate__body(i64, %Qubit*)");
 
-  if (!ir_manip->fromBodyString(script))
-  {
-    llvm::outs() << ir_manip->generateScript(script) << "\n\n";
-    llvm::outs() << ir_manip->getErrorMessage() << "\n";
-    exit(-1);
-  }
-  return ir_manip;
+    if (!ir_manip->fromBodyString(script))
+    {
+        llvm::outs() << ir_manip->generateScript(script) << "\n\n";
+        llvm::outs() << ir_manip->getErrorMessage() << "\n";
+        exit(-1);
+    }
+    return ir_manip;
 }
 
-void expectSuccess(String const &profile_name, String const &script)
+void expectSuccess(String const& profile_name, String const& script)
 {
-  auto ir_manip = newIrManip(script);
+    auto ir_manip = newIrManip(script);
 
-  auto profile_generator = std::make_shared<DefaultProfileGenerator>();
+    auto profile_generator = std::make_shared<DefaultProfileGenerator>();
 
-  ConfigurationManager &configuration_manager = profile_generator->configurationManager();
-  configuration_manager.addConfig<FactoryConfiguration>();
-  configuration_manager.addConfig<ValidationPassConfiguration>(
-      "validation-configuration", ValidationPassConfiguration::fromProfileName(profile_name));
+    ConfigurationManager& configuration_manager = profile_generator->configurationManager();
+    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.addConfig<ValidationPassConfiguration>(
+        "validation-configuration", ValidationPassConfiguration::fromProfileName(profile_name));
 
-  EXPECT_TRUE(ir_manip->validateProfile(profile_generator, profile_name));
+    EXPECT_TRUE(ir_manip->validateProfile(profile_generator, profile_name));
 }
-}  // namespace
+} // namespace
 
 TEST(CirqPositive, BscMeanField)
 {
-  expectSuccess("base", R"script(
+    expectSuccess("base", R"script(
   %0 = inttoptr i64 0 to %Qubit*
   %1 = inttoptr i64 1 to %Qubit*
   %2 = inttoptr i64 2 to %Qubit*
@@ -124,8 +126,8 @@ TEST(CirqPositive, BscMeanField)
 
 TEST(CirqPositive, DISABLED_BernsteinVazirani)
 {
-  // m operations is having the wrong signature
-  expectSuccess("base", R"script(
+    // m operations is having the wrong signature
+    expectSuccess("base", R"script(
   %0 = inttoptr i64 0 to %Qubit*
   %1 = inttoptr i64 1 to %Qubit*
   %2 = inttoptr i64 2 to %Qubit*

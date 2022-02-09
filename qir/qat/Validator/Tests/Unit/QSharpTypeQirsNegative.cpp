@@ -2,79 +2,82 @@
 // Licensed under the MIT License.
 
 #include "Generators/DefaultProfileGenerator.hpp"
-#include "Llvm/Llvm.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
 
+#include "Llvm/Llvm.hpp"
+
 #include <functional>
 using namespace microsoft::quantum;
 
-namespace {
+namespace
+{
 using IrManipulationTestHelperPtr = std::shared_ptr<IrManipulationTestHelper>;
-IrManipulationTestHelperPtr newIrManip(std::string const &script)
+IrManipulationTestHelperPtr newIrManip(std::string const& script)
 {
-  IrManipulationTestHelperPtr ir_manip = std::make_shared<IrManipulationTestHelper>();
+    IrManipulationTestHelperPtr ir_manip = std::make_shared<IrManipulationTestHelper>();
 
-  ir_manip->declareOpaque("Qubit");
-  ir_manip->declareOpaque("Result");
-  ir_manip->declareOpaque("Array");
-  ir_manip->declareOpaque("Tuple");
-  ir_manip->declareOpaque("Range");
-  ir_manip->declareOpaque("Callable");
-  ir_manip->declareOpaque("String");
+    ir_manip->declareOpaque("Qubit");
+    ir_manip->declareOpaque("Result");
+    ir_manip->declareOpaque("Array");
+    ir_manip->declareOpaque("Tuple");
+    ir_manip->declareOpaque("Range");
+    ir_manip->declareOpaque("Callable");
+    ir_manip->declareOpaque("String");
 
-  ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__x__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__s__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__cx__body(%Qubit*, %Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__rz__body(double, %Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__t__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__z__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__mz__body(%Qubit*, %Result*)");
-  ir_manip->declareFunction("void @__quantum__qis__reset__body(%Qubit*)");
-  ir_manip->declareFunction("%Array* @__quantum__rt__array_copy(%Array*, i1)");
-  ir_manip->declareFunction("%Array* @__quantum__rt__array_create_1d(i32, i64)");
-  ir_manip->declareFunction("i8* @__quantum__rt__array_get_element_ptr_1d(%Array*, i64)");
-  ir_manip->declareFunction("void @__quantum__qis__mz__body(%Qubit*, %Result*)");
-  ir_manip->declareFunction("void @__quantum__qis__reset__body(%Qubit*)");
-  ir_manip->declareFunction("i1 @__quantum__qis__read_result__body(%Result*)");
-  ir_manip->declareFunction("void @__quantum__qis__cnot__body(%Qubit*, %Qubit*)");
-  ir_manip->declareFunction("%Result* @__quantum__qis__m__body(%Qubit*)");
-  ir_manip->declareFunction("%Qubit* @__quantum__rt__qubit_allocate()");
-  ir_manip->declareFunction("void @__quantum__rt__result_update_reference_count(%Result*, i32)");
-  ir_manip->declareFunction("void @__quantum__rt__qubit_release(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__x__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__s__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__cx__body(%Qubit*, %Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__rz__body(double, %Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__t__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__z__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__mz__body(%Qubit*, %Result*)");
+    ir_manip->declareFunction("void @__quantum__qis__reset__body(%Qubit*)");
+    ir_manip->declareFunction("%Array* @__quantum__rt__array_copy(%Array*, i1)");
+    ir_manip->declareFunction("%Array* @__quantum__rt__array_create_1d(i32, i64)");
+    ir_manip->declareFunction("i8* @__quantum__rt__array_get_element_ptr_1d(%Array*, i64)");
+    ir_manip->declareFunction("void @__quantum__qis__mz__body(%Qubit*, %Result*)");
+    ir_manip->declareFunction("void @__quantum__qis__reset__body(%Qubit*)");
+    ir_manip->declareFunction("i1 @__quantum__qis__read_result__body(%Result*)");
+    ir_manip->declareFunction("void @__quantum__qis__cnot__body(%Qubit*, %Qubit*)");
+    ir_manip->declareFunction("%Result* @__quantum__qis__m__body(%Qubit*)");
+    ir_manip->declareFunction("%Qubit* @__quantum__rt__qubit_allocate()");
+    ir_manip->declareFunction("void @__quantum__rt__result_update_reference_count(%Result*, i32)");
+    ir_manip->declareFunction("void @__quantum__rt__qubit_release(%Qubit*)");
 
-  if (!ir_manip->fromBodyString(script))
-  {
-    llvm::outs() << ir_manip->generateScript(script) << "\n\n";
-    llvm::outs() << ir_manip->getErrorMessage() << "\n";
-    exit(-1);
-  }
-  return ir_manip;
+    if (!ir_manip->fromBodyString(script))
+    {
+        llvm::outs() << ir_manip->generateScript(script) << "\n\n";
+        llvm::outs() << ir_manip->getErrorMessage() << "\n";
+        exit(-1);
+    }
+    return ir_manip;
 }
 
-void expectFail(String const &profile_name, String const &script, std::vector<String> const &errors)
+void expectFail(String const& profile_name, String const& script, std::vector<String> const& errors)
 {
-  auto ir_manip = newIrManip(script);
+    auto ir_manip = newIrManip(script);
 
-  auto profile_generator = std::make_shared<DefaultProfileGenerator>();
+    auto profile_generator = std::make_shared<DefaultProfileGenerator>();
 
-  ConfigurationManager &configuration_manager = profile_generator->configurationManager();
-  configuration_manager.addConfig<FactoryConfiguration>();
-  configuration_manager.addConfig<ValidationPassConfiguration>(
-      "validation-configuration", ValidationPassConfiguration::fromProfileName(profile_name));
+    ConfigurationManager& configuration_manager = profile_generator->configurationManager();
+    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.addConfig<ValidationPassConfiguration>(
+        "validation-configuration", ValidationPassConfiguration::fromProfileName(profile_name));
 
-  EXPECT_TRUE(ir_manip->hasExactValidationErrors(profile_generator, profile_name, errors, true));
+    EXPECT_TRUE(ir_manip->hasExactValidationErrors(profile_generator, profile_name, errors, true));
 }
 
-}  // namespace
+} // namespace
 
 TEST(QSharpNegative, IfWithPhi)
 {
-  expectFail("base", R"script(
+    expectFail(
+        "base", R"script(
   %0 = icmp eq i64 9, 1
   br i1 %0, label %quantum, label %LoopCase__Main__body.exit
 
@@ -85,15 +88,16 @@ quantum:                                          ; preds = %entry
 LoopCase__Main__body.exit:                        ; preds = %quantum, %entry
   %ret.0.i = phi i64 [ 9, %quantum ], [ 1, %entry ]
   )script",
-             {
-                 "%ret.0.i = phi i64 [ 9, %quantum ], [ 1, %entry ]",
-                 "%0 = icmp eq i64 9, 1",
-             });
+        {
+            "%ret.0.i = phi i64 [ 9, %quantum ], [ 1, %entry ]",
+            "%0 = icmp eq i64 9, 1",
+        });
 }
 
 TEST(QSharpNegative, SelectStmt)
 {
-  expectFail("base", R"script(
+    expectFail(
+        "base", R"script(
   tail call void @__quantum__qis__h__body(%Qubit* null)
   tail call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 1 to %Qubit*))
   tail call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*))
@@ -102,14 +106,15 @@ TEST(QSharpNegative, SelectStmt)
   %0 = tail call i1 @__quantum__qis__read_result__body(%Result* null)
   %1 = select i1 %0, i64 1337, i64 122
   )script",
-             {
-                 "%1 = select i1 %0, i64 1337, i64 122",
-             });
+        {
+            "%1 = select i1 %0, i64 1337, i64 122",
+        });
 }
 
 TEST(QSharpNegative, ExternalFunctions)
 {
-  expectFail("base", R"script(
+    expectFail(
+        "base", R"script(
   %q.i = tail call %Qubit* @__quantum__rt__qubit_allocate()
   tail call void @__quantum__qis__h__body(%Qubit* %q.i)
   %result.i.i = tail call %Result* @__quantum__qis__m__body(%Qubit* %q.i)
@@ -117,18 +122,19 @@ TEST(QSharpNegative, ExternalFunctions)
   tail call void @__quantum__rt__result_update_reference_count(%Result* %result.i.i, i32 -1)
   tail call void @__quantum__rt__qubit_release(%Qubit* %q.i)
 )script",
-             {
-                 "tail call void @__quantum__rt__qubit_release(%Qubit* %q.i)",
-                 "tail call void @__quantum__rt__result_update_reference_count(%Result* "
-                 "%result.i.i, i32 -1)",
-                 "%result.i.i = tail call %Result* @__quantum__qis__m__body(%Qubit* %q.i)",
-                 "%q.i = tail call %Qubit* @__quantum__rt__qubit_allocate()",
-             });
+        {
+            "tail call void @__quantum__rt__qubit_release(%Qubit* %q.i)",
+            "tail call void @__quantum__rt__result_update_reference_count(%Result* "
+            "%result.i.i, i32 -1)",
+            "%result.i.i = tail call %Result* @__quantum__qis__m__body(%Qubit* %q.i)",
+            "%q.i = tail call %Qubit* @__quantum__rt__qubit_allocate()",
+        });
 }
 
 TEST(QSharpNegative, LoopWithPhiAndSelect)
 {
-  expectFail("base", R"script(
+    expectFail(
+        "base", R"script(
   %.not1.i = icmp slt i64 5, 1
   br i1 %.not1.i, label %LoopCase__Main__body.1.exit, label %body__1.i
 
@@ -149,10 +155,10 @@ header__1.exit__1_crit_edge.i:                    ; preds = %body__1.i
 LoopCase__Main__body.1.exit:                      ; preds = %header__1.exit__1_crit_edge.i, %entry
   %ret.0.lcssa.i = phi i64 [ %4, %header__1.exit__1_crit_edge.i ], [ 1, %entry ]
   )script",
-             {
-                 "%2 = add i64 %0, 1",
-                 "%0 = phi i64 [ %2, %body__1.i ], [ 2, %entry ]",
-                 "%4 = select i1 %3, i64 1337, i64 122",
-                 "%.not1.i = icmp slt i64 5, 1",
-             });
+        {
+            "%2 = add i64 %0, 1",
+            "%0 = phi i64 [ %2, %body__1.i ], [ 2, %entry ]",
+            "%4 = select i1 %3, i64 1337, i64 122",
+            "%.not1.i = icmp slt i64 5, 1",
+        });
 }

@@ -5,58 +5,60 @@
 #include "Commandline/ConfigurationManager.hpp"
 #include "QatTypes/QatTypes.hpp"
 
-namespace microsoft {
-namespace quantum {
-
-class ValidationPassConfiguration
+namespace microsoft
 {
-public:
-  using Set = std::unordered_set<std::string>;
-  // Setup and construction
-  //
+namespace quantum
+{
 
-  ValidationPassConfiguration() = default;
+    class ValidationPassConfiguration
+    {
+      public:
+        using Set = std::unordered_set<std::string>;
+        // Setup and construction
+        //
 
-  /// Setup function that adds the configuration flags to the ConfigurationManager. See the
-  /// ConfigurationManager documentation for more details on how the setup process is implemented.
-  void setup(ConfigurationManager &config);
+        ValidationPassConfiguration() = default;
 
-  static ValidationPassConfiguration fromProfileName(String const &name);
-  Set const                         &allowedOpcodes() const;
-  Set const                         &allowedExternalCallNames() const;
+        /// Setup function that adds the configuration flags to the ConfigurationManager. See the
+        /// ConfigurationManager documentation for more details on how the setup process is implemented.
+        void setup(ConfigurationManager& config);
 
-  bool allowInternalCalls() const;
-  bool allowlistOpcodes() const;
-  bool allowlistExternalCalls() const;
+        static ValidationPassConfiguration fromProfileName(String const& name);
+        Set const&                         allowedOpcodes() const;
+        Set const&                         allowedExternalCallNames() const;
 
-  String const &saveReportTo() const;
-  bool          allowlistPointerTypes() const;
-  Set const    &allowedPointerTypes() const;
+        bool allowInternalCalls() const;
+        bool allowlistOpcodes() const;
+        bool allowlistExternalCalls() const;
 
-  String profileName() const;
+        String const& saveReportTo() const;
+        bool          allowlistPointerTypes() const;
+        Set const&    allowedPointerTypes() const;
 
-private:
-  void addAllowedExternalCall(String const &name);
-  void addAllowedOpcode(String const &name);
-  void addAllowedPointerType(String const &name);
+        String profileName() const;
 
-  String profile_name_{"null"};
+      private:
+        void addAllowedExternalCall(String const& name);
+        void addAllowedOpcode(String const& name);
+        void addAllowedPointerType(String const& name);
 
-  Set opcodes_{};
-  Set external_calls_{};
-  Set allowed_pointer_types_{};
+        String profile_name_{"null"};
 
-  String save_report_to_{""};
+        Set opcodes_{};
+        Set external_calls_{};
+        Set allowed_pointer_types_{};
 
-  bool allowlist_opcodes_{true};
-  bool allowlist_external_calls_{true};
-  bool allow_internal_calls_{false};
-  bool allowlist_pointer_types_{false};
+        String save_report_to_{""};
 
-  bool allow_primitive_return_{true};
-  bool allow_struct_return_{true};
-  bool allow_pointer_return_{true};
-};
+        bool allowlist_opcodes_{true};
+        bool allowlist_external_calls_{true};
+        bool allow_internal_calls_{false};
+        bool allowlist_pointer_types_{false};
 
-}  // namespace quantum
-}  // namespace microsoft
+        bool allow_primitive_return_{true};
+        bool allow_struct_return_{true};
+        bool allow_pointer_return_{true};
+    };
+
+} // namespace quantum
+} // namespace microsoft
