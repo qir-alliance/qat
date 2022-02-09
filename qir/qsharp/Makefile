@@ -1,16 +1,16 @@
 all:
-	cd ConstArray && make all # && make clean
-	cd ConstQubitArray && make all # && make clean
-	cd LoopRecursion && make all # && make clean
-	cd OptimisationIssue && make all # && make clean
-	cd SimpleCallable && make all # && make clean
-	cd SimpleLoop && make all # && make clean
-	cd Bernstein–Vazirani && make all # && make clean
-	cd Grover && make all # && make clean
-	cd HiddenShift && make all # && make clean
-	cd IsingModel && make all # && make clean
-	cd ParallelQRng && make all # && make clean
-	cd TeleportChain && make all # && make clean
+	cd ConstArray && make all && make clean
+	cd ConstQubitArray && make all && make clean
+	cd LoopRecursion && make all && make clean
+	cd OptimisationIssue && make all && make clean
+	cd SimpleCallable && make all && make clean
+	cd SimpleLoop && make all && make clean
+	cd Bernstein–Vazirani && make all && make clean
+	cd Grover && make all && make clean
+	cd HiddenShift && make all && make clean
+	cd IsingModel && make all && make clean
+	cd ParallelQRng && make all && make clean
+	cd TeleportChain && make all && make clean
 
 
 stats:
