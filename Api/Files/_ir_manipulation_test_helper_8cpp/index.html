@@ -580,6 +580,7 @@
 // Licensed under the MIT License.
 
 #include &quot;TestTools/IrManipulationTestHelper.hpp&quot;
+#include &quot;Utils/Trim.hpp&quot;
 
 #include &quot;Llvm/Llvm.hpp&quot;
 
@@ -587,27 +588,6 @@ namespace microsoft
 {
 namespace quantum
 {
-
-    namespace
-    {
-        inline void ltrim(std::string&amp; str)
-        {
-            str.erase(str.begin(), std::find_if(str.begin(), str.end(), [](uint8_t ch) { return !std::isspace(ch); }));
-        }
-
-        inline void rtrim(std::string&amp; str)
-        {
-            str.erase(
-                std::find_if(str.rbegin(), str.rend(), [](uint8_t ch) { return !std::isspace(ch); }).base(), str.end());
-        }
-
-        inline void trim(std::string&amp; s)
-        {
-            ltrim(s);
-            rtrim(s);
-        }
-
-    } // namespace
 
     IrManipulationTestHelper::IrManipulationTestHelper()
     {
@@ -724,6 +704,141 @@ namespace quantum
         }
     }
 
+    bool IrManipulationTestHelper::validateProfile(
+        GeneratorPtr const&amp; generator,
+        String const&amp;       profile_name,
+        bool                debug)
+    {
+        auto profile = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
+
+        return profile.validate(*module_);
+    }
+
+    bool IrManipulationTestHelper::containsValidationErrors(
+        GeneratorPtr const&amp; generator,
+        String const&amp;       profile_name,
+        Strings const&amp;      errors,
+        bool                debug) const
+    {
+
+        auto  profile               = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
+        auto&amp; configuration_manager = generator-&gt;configurationManager();
+        auto  validator =
+            std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), true, debug);
+        validator-&gt;validate(*module_);
+
+        auto logger = validator-&gt;logger();
+        if (!logger)
+        {
+            throw std::runtime_error(&quot;Logger not present. Cannot test the presence of errors without a logger.&quot;);
+        }
+
+        std::unordered_set&lt;String&gt; hints;
+
+        for (auto&amp; message : logger-&gt;messages())
+        {
+            hints.insert(message.location.llvm_hint);
+        }
+
+        auto ret = true;
+        for (auto const&amp; error : errors)
+        {
+            if (hints.find(error) == hints.end())
+            {
+                ret = false;
+                if (debug)
+                {
+                    llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; error &lt;&lt; &quot;' in LLVM output.\n&quot;;
+                }
+            }
+        }
+
+        if (!ret &amp;&amp; debug)
+        {
+            llvm::errs() &lt;&lt; &quot;\nExpected errors: \n&quot;;
+            for (auto const&amp; error : errors)
+            {
+                llvm::errs() &lt;&lt; error &lt;&lt; &quot;\n&quot;;
+            }
+            llvm::errs() &lt;&lt; &quot;\nActual errors: \n&quot;;
+            for (auto const&amp; message : logger-&gt;messages())
+            {
+                llvm::errs() &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\n&quot;;
+                llvm::errs() &lt;&lt; &quot;  - &quot; &lt;&lt; message.message &lt;&lt; &quot;\n&quot;;
+            }
+            llvm::errs() &lt;&lt; &quot;\n&quot;;
+        }
+
+        return ret;
+    }
+
+    bool IrManipulationTestHelper::containsExactValidationErrors(
+        GeneratorPtr const&amp; generator,
+        String const&amp;       profile_name,
+        Strings const&amp;      errors,
+        bool                debug) const
+    {
+        auto  profile               = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
+        auto&amp; configuration_manager = generator-&gt;configurationManager();
+        auto  validator =
+            std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), true, debug);
+        validator-&gt;validate(*module_);
+
+        auto logger = validator-&gt;logger();
+        if (!logger)
+        {
+            throw std::runtime_error(&quot;Logger not present. Cannot test the presence of errors without a logger.&quot;);
+        }
+
+        auto                       ret = true;
+        std::unordered_set&lt;String&gt; hints;
+        std::unordered_set&lt;String&gt; error_set{errors.begin(), errors.end()};
+
+        for (auto const&amp; message : logger-&gt;messages())
+        {
+            hints.insert(message.location.llvm_hint);
+
+            if (error_set.find(message.location.llvm_hint) == error_set.end())
+            {
+                ret = false;
+                if (debug)
+                {
+                    llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;' in expected errors.\n&quot;;
+                }
+            }
+        }
+
+        for (auto const&amp; error : errors)
+        {
+            if (hints.find(error) == hints.end())
+            {
+                ret = false;
+                if (debug)
+                {
+                    llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; error &lt;&lt; &quot;' in LLVM output.\n&quot;;
+                }
+            }
+        }
+
+        if (!ret &amp;&amp; debug)
+        {
+            llvm::errs() &lt;&lt; &quot;\nExpected errors: \n&quot;;
+            for (auto const&amp; error : errors)
+            {
+                llvm::errs() &lt;&lt; error &lt;&lt; &quot;\n&quot;;
+            }
+            llvm::errs() &lt;&lt; &quot;\nActual errors: \n&quot;;
+            for (auto const&amp; message : logger-&gt;messages())
+            {
+                llvm::errs() &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\n&quot;;
+                llvm::errs() &lt;&lt; &quot;  - &quot; &lt;&lt; message.message &lt;&lt; &quot;\n&quot;;
+            }
+            llvm::errs() &lt;&lt; &quot;\n&quot;;
+        }
+
+        return ret;
+    }
+
     void IrManipulationTestHelper::declareOpaque(String const&amp; name)
     {
         opaque_declarations_.insert(name);
@@ -816,7 +931,7 @@ source_filename = &quot;IrManipulationTestHelper.ll&quot;
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

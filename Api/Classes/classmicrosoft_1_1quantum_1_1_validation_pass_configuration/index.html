@@ -584,6 +584,10 @@
 </thead>
 <tbody>
 <tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#function-validationpassconfiguration">ValidationPassConfiguration</a></strong>() =default</td>
+</tr>
+<tr>
 <td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#function-setup">setup</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> &amp; config)</td>
 </tr>
@@ -612,6 +616,18 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#function-savereportto">saveReportTo</a></strong>() const</td>
 </tr>
 <tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#function-allowlistpointertypes">allowlistPointerTypes</a></strong>() const</td>
+</tr>
+<tr>
+<td>Set const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#function-allowedpointertypes">allowedPointerTypes</a></strong>() const</td>
+</tr>
+<tr>
+<td>String</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#function-profilename">profileName</a></strong>() const</td>
+</tr>
+<tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">ValidationPassConfiguration</a></td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#function-fromprofilename">fromProfileName</a></strong>(String const &amp; name)</td>
 </tr>
@@ -622,37 +638,49 @@
 <pre><code class="language-cpp">using microsoft::quantum::ValidationPassConfiguration::Set =  std::unordered_set&lt;std::string&gt;;
 </code></pre>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
+<h3 id="function-validationpassconfiguration">function ValidationPassConfiguration</h3>
+<pre><code class="language-cpp">ValidationPassConfiguration() =default
+</code></pre>
 <h3 id="function-setup">function setup</h3>
-<pre><code class="language-cpp">inline void setup(
+<pre><code class="language-cpp">void setup(
     ConfigurationManager &amp; config
 )
 </code></pre>
 <p>Setup function that adds the configuration flags to the <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a>. See the <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> documentation for more details on how the setup process is implemented. </p>
 <h3 id="function-allowedopcodes">function allowedOpcodes</h3>
-<pre><code class="language-cpp">inline Set const  &amp; allowedOpcodes() const
+<pre><code class="language-cpp">Set const  &amp; allowedOpcodes() const
 </code></pre>
 <h3 id="function-allowedexternalcallnames">function allowedExternalCallNames</h3>
-<pre><code class="language-cpp">inline Set const  &amp; allowedExternalCallNames() const
+<pre><code class="language-cpp">Set const  &amp; allowedExternalCallNames() const
 </code></pre>
 <h3 id="function-allowinternalcalls">function allowInternalCalls</h3>
-<pre><code class="language-cpp">inline bool allowInternalCalls() const
+<pre><code class="language-cpp">bool allowInternalCalls() const
 </code></pre>
 <h3 id="function-allowlistopcodes">function allowlistOpcodes</h3>
-<pre><code class="language-cpp">inline bool allowlistOpcodes() const
+<pre><code class="language-cpp">bool allowlistOpcodes() const
 </code></pre>
 <h3 id="function-allowlistexternalcalls">function allowlistExternalCalls</h3>
-<pre><code class="language-cpp">inline bool allowlistExternalCalls() const
+<pre><code class="language-cpp">bool allowlistExternalCalls() const
 </code></pre>
 <h3 id="function-savereportto">function saveReportTo</h3>
-<pre><code class="language-cpp">inline String const  &amp; saveReportTo() const
+<pre><code class="language-cpp">String const  &amp; saveReportTo() const
+</code></pre>
+<h3 id="function-allowlistpointertypes">function allowlistPointerTypes</h3>
+<pre><code class="language-cpp">bool allowlistPointerTypes() const
+</code></pre>
+<h3 id="function-allowedpointertypes">function allowedPointerTypes</h3>
+<pre><code class="language-cpp">Set const  &amp; allowedPointerTypes() const
+</code></pre>
+<h3 id="function-profilename">function profileName</h3>
+<pre><code class="language-cpp">String profileName() const
 </code></pre>
 <h3 id="function-fromprofilename">function fromProfileName</h3>
-<pre><code class="language-cpp">static inline ValidationPassConfiguration fromProfileName(
+<pre><code class="language-cpp">static ValidationPassConfiguration fromProfileName(
     String const &amp; name
 )
 </code></pre>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

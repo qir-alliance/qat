@@ -597,6 +597,14 @@
 <td>virtual void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setlocation">setLocation</a></strong>(String const &amp; name, uint64_t row, uint64_t col) override<br>Function that allows to set the current location.</td>
 </tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setllvmhint">setLlvmHint</a></strong>(String const &amp; value) override<br>Sets the value of the LLVM instruction causing the issue.</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setfrontendhint">setFrontendHint</a></strong>(String const &amp; value) override<br>Sets the value of the frontend instruction causing the issue.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="additional-inherited-members">Additional inherited members</h2>
@@ -680,8 +688,22 @@
 </code></pre>
 <p>Function that allows to set the current location. </p>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocation">microsoft::quantum::ILogger::setLocation</a></p>
+<h3 id="function-setllvmhint">function setLlvmHint</h3>
+<pre><code class="language-cpp">virtual void setLlvmHint(
+    String const &amp; value
+) override
+</code></pre>
+<p>Sets the value of the LLVM instruction causing the issue. </p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setllvmhint">microsoft::quantum::ILogger::setLlvmHint</a></p>
+<h3 id="function-setfrontendhint">function setFrontendHint</h3>
+<pre><code class="language-cpp">virtual void setFrontendHint(
+    String const &amp; value
+) override
+</code></pre>
+<p>Sets the value of the frontend instruction causing the issue. </p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setfrontendhint">microsoft::quantum::ILogger::setFrontendHint</a></p>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

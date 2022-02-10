@@ -610,99 +610,52 @@ namespace quantum
         // Setup and construction
         //
 
-        void setup(ConfigurationManager&amp; config)
-        {
-            config.setSectionName(&quot;Validation configuration&quot;, &quot;&quot;);
-            config.addParameter(
-                allow_internal_calls_, &quot;allow-internal-calls&quot;, &quot;Whether or not internal calls are allowed.&quot;);
-            config.addParameter(
-                save_report_to_, &quot;save-validation-report&quot;, &quot;Saves the validation report to specified filename.&quot;);
-        }
+        ValidationPassConfiguration() = default;
 
-        static ValidationPassConfiguration fromProfileName(String const&amp; name)
-        {
-            auto ret = ValidationPassConfiguration();
-            if (name == &quot;generic&quot;)
-            {
-                ret.allow_internal_calls_     = true;
-                ret.allowlist_external_calls_ = false;
-                ret.allowlist_opcodes_        = false;
-            }
-            else if (name == &quot;base&quot;)
-            {
-                ret.allow_internal_calls_     = false;
-                ret.allowlist_external_calls_ = true;
-                ret.allowlist_opcodes_        = true;
-                ret.opcodes_                  = Set{&quot;br&quot;, &quot;call&quot;, &quot;unreachable&quot;, &quot;ret&quot;, &quot;phi&quot;, &quot;select&quot;};
-                ret.external_calls_           = Set{
-                    &quot;__quantum__qis__mz__body&quot;,     &quot;__quantum__qis__read_result__body&quot;,
-                    &quot;__quantum__qis__reset__body&quot;,  &quot;__quantum__qis__z__body&quot;,
-                    &quot;__quantum__qis__s__adj&quot;,       &quot;__quantum__qis__dumpregister__body&quot;,
-                    &quot;__quantum__qis__y__body&quot;,      &quot;__quantum__qis__x__body&quot;,
-                    &quot;__quantum__qis__t__body&quot;,      &quot;__quantum__qis__cz__body&quot;,
-                    &quot;__quantum__qis__s__body&quot;,      &quot;__quantum__qis__h__body&quot;,
-                    &quot;__quantum__qis__cnot__body&quot;,   &quot;__quantum__qis__sqrt__body&quot;,
-                    &quot;__quantum__qis__crz__body&quot;,    &quot;__quantum__qis__rz__body&quot;,
-                    &quot;__quantum__qis__arcsin__body&quot;, &quot;__quantum__qis__drawrandomint__body&quot;,
-                    &quot;__quantum__qis__rx__body&quot;,     &quot;__quantum__qis__m__body&quot;,
-                    &quot;__quantum__qis__t__adj&quot;,       &quot;__quantum__qis__z__ctl&quot;,
-                    &quot;__quantum__qis__r__body&quot;,      &quot;__quantum__qis__measure__body&quot;,
-                    &quot;__quantum__qis__x__ctl&quot;,
+        void setup(ConfigurationManager&amp; config);
 
-                };
-            }
-            else
-            {
-                throw std::runtime_error(&quot;Invalid profile &quot; + name);
-            }
-            return ret;
-        }
+        static ValidationPassConfiguration fromProfileName(String const&amp; name);
+        Set const&amp;                         allowedOpcodes() const;
+        Set const&amp;                         allowedExternalCallNames() const;
 
-        Set const&amp; allowedOpcodes() const
-        {
-            return opcodes_;
-        }
+        bool allowInternalCalls() const;
+        bool allowlistOpcodes() const;
+        bool allowlistExternalCalls() const;
 
-        Set const&amp; allowedExternalCallNames() const
-        {
-            return external_calls_;
-        }
+        String const&amp; saveReportTo() const;
+        bool          allowlistPointerTypes() const;
+        Set const&amp;    allowedPointerTypes() const;
 
-        bool allowInternalCalls() const
-        {
-            return allow_internal_calls_;
-        }
-
-        bool allowlistOpcodes() const
-        {
-            return allowlist_opcodes_;
-        }
-
-        bool allowlistExternalCalls() const
-        {
-            return allowlist_external_calls_;
-        }
-
-        String const&amp; saveReportTo() const
-        {
-            return save_report_to_;
-        }
+        String profileName() const;
 
       private:
-        Set    opcodes_{};
-        Set    external_calls_{};
+        void addAllowedExternalCall(String const&amp; name);
+        void addAllowedOpcode(String const&amp; name);
+        void addAllowedPointerType(String const&amp; name);
+
+        String profile_name_{&quot;null&quot;};
+
+        Set opcodes_{};
+        Set external_calls_{};
+        Set allowed_pointer_types_{};
+
         String save_report_to_{&quot;&quot;};
 
         bool allowlist_opcodes_{true};
         bool allowlist_external_calls_{true};
         bool allow_internal_calls_{false};
+        bool allowlist_pointer_types_{false};
+
+        bool allow_primitive_return_{true};
+        bool allow_struct_return_{true};
+        bool allow_pointer_return_{true};
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

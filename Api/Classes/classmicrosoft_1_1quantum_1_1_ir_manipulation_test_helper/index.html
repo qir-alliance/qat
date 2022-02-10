@@ -573,6 +573,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-string">String</a></strong></td>
 </tr>
 <tr>
+<td>using std::vector&lt; String &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-strings">Strings</a></strong></td>
+</tr>
+<tr>
 <td>using llvm::LLVMContext</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-llvmcontext">LLVMContext</a></strong></td>
 </tr>
@@ -587,10 +591,6 @@
 <tr>
 <td>using std::unique_ptr&lt; Module &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-moduleptr">ModulePtr</a></strong></td>
-</tr>
-<tr>
-<td>using std::vector&lt; String &gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-strings">Strings</a></strong></td>
 </tr>
 <tr>
 <td>using llvm::PassBuilder::OptimizationLevel</td>
@@ -645,7 +645,19 @@
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-applyprofile">applyProfile</a></strong>(GeneratorPtr const &amp; profile, OptimizationLevel const &amp; optimisation_level =OptimizationLevel::O0, bool debug =false)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-applyprofile">applyProfile</a></strong>(GeneratorPtr const &amp; generator, OptimizationLevel const &amp; optimisation_level =OptimizationLevel::O0, bool debug =false)</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-validateprofile">validateProfile</a></strong>(GeneratorPtr const &amp; generator, String const &amp; profile_name ="generic", bool debug =false)</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-containsvalidationerrors">containsValidationErrors</a></strong>(GeneratorPtr const &amp; generator, String const &amp; profile_name, Strings const &amp; errors, bool debug =false) const</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-containsexactvalidationerrors">containsExactValidationErrors</a></strong>(GeneratorPtr const &amp; generator, String const &amp; profile_name, Strings const &amp; errors, bool debug =false) const</td>
 </tr>
 <tr>
 <td>void</td>
@@ -685,6 +697,9 @@
 <h3 id="using-string">using String</h3>
 <pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::String =  std::string;
 </code></pre>
+<h3 id="using-strings">using Strings</h3>
+<pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::Strings =  std::vector&lt;String&gt;;
+</code></pre>
 <h3 id="using-llvmcontext">using LLVMContext</h3>
 <pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::LLVMContext =  llvm::LLVMContext;
 </code></pre>
@@ -696,9 +711,6 @@
 </code></pre>
 <h3 id="using-moduleptr">using ModulePtr</h3>
 <pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::ModulePtr =  std::unique_ptr&lt;Module&gt;;
-</code></pre>
-<h3 id="using-strings">using Strings</h3>
-<pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::Strings =  std::vector&lt;String&gt;;
 </code></pre>
 <h3 id="using-optimizationlevel">using OptimizationLevel</h3>
 <pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::OptimizationLevel =  llvm::PassBuilder::OptimizationLevel;
@@ -746,12 +758,38 @@
 <p>Tests whether the main body contains a sequence of instructions. This function ignores instructions in-between the instruction set given. </p>
 <h3 id="function-applyprofile">function applyProfile</h3>
 <pre><code class="language-cpp">void applyProfile(
-    GeneratorPtr const &amp; profile,
+    GeneratorPtr const &amp; generator,
     OptimizationLevel const &amp; optimisation_level =OptimizationLevel::O0,
     bool debug =false
 )
 </code></pre>
 <p>Applies a profile to the module to allow which transforms the IR. This allow us to write small profiles to test a single piece of transformation. </p>
+<h3 id="function-validateprofile">function validateProfile</h3>
+<pre><code class="language-cpp">bool validateProfile(
+    GeneratorPtr const &amp; generator,
+    String const &amp; profile_name =&quot;generic&quot;,
+    bool debug =false
+)
+</code></pre>
+<p>Validates a profile to the module to allow which transforms the IR. This allow us to write small profiles to test a single piece of transformation. </p>
+<h3 id="function-containsvalidationerrors">function containsValidationErrors</h3>
+<pre><code class="language-cpp">bool containsValidationErrors(
+    GeneratorPtr const &amp; generator,
+    String const &amp; profile_name,
+    Strings const &amp; errors,
+    bool debug =false
+) const
+</code></pre>
+<p>Tests whether a given set of errors (LLVM hints) are present in the validation errors for a specific profile. This method only checks if errors are present but does not fail if there are more errors than requested through the API. </p>
+<h3 id="function-containsexactvalidationerrors">function containsExactValidationErrors</h3>
+<pre><code class="language-cpp">bool containsExactValidationErrors(
+    GeneratorPtr const &amp; generator,
+    String const &amp; profile_name,
+    Strings const &amp; errors,
+    bool debug =false
+) const
+</code></pre>
+<p>Tests whether a given set of errors (LLVM hints) are present in the validation errors for a specific profile. In contrast to containsValidationErrors, this function expect an exact match in the actual and expected errors. </p>
 <h3 id="function-declareopaque">function declareOpaque</h3>
 <pre><code class="language-cpp">void declareOpaque(
     String const &amp; name
@@ -808,7 +846,7 @@ call void @__quantum__qis__h__body(%Qubit* %leftMessage)
 </code></pre>
 <p>Returns a reference to the module. </p>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

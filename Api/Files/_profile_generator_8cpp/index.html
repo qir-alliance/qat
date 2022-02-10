@@ -592,6 +592,7 @@ namespace quantum
 
     Profile ProfileGenerator::newProfile(String const&amp; name, OptimizationLevel const&amp; optimisation_level, bool debug)
     {
+
         auto qubit_allocation_manager  = BasicAllocationManager::createNew();
         auto result_allocation_manager = BasicAllocationManager::createNew();
 
@@ -608,7 +609,9 @@ namespace quantum
         ret.setModulePassManager(std::move(module_pass_manager));
 
         // Creating validator
-        auto validator = std::make_unique&lt;Validator&gt;(configuration_manager_.get&lt;ValidationPassConfiguration&gt;(), debug);
+        auto validator =
+            std::make_unique&lt;Validator&gt;(configuration_manager_.get&lt;ValidationPassConfiguration&gt;(), false, debug);
+
         ret.setValidator(std::move(validator));
 
         return ret;
@@ -679,7 +682,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

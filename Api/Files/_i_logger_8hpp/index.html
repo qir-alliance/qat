@@ -633,13 +633,17 @@ namespace quantum
         virtual void internalError(String const&amp; message) = 0;
 
         virtual void setLocation(String const&amp; name, uint64_t row, uint64_t col) = 0;
+
+        virtual void setLlvmHint(String const&amp; value) = 0;
+
+        virtual void setFrontendHint(String const&amp; value) = 0;
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

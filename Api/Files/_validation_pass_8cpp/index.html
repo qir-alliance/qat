@@ -590,63 +590,125 @@ namespace microsoft
 {
 namespace quantum
 {
-    llvm::PreservedAnalyses ValidationPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+    void ValidationPass::opcodeChecks(Instruction&amp; instr)
     {
-
-        for (auto&amp; function : module)
+        auto opname = instr.getOpcodeName();
+        opcode_location_[opname].push_back(current_location_);
+        if (opcodes_.find(opname) != opcodes_.end())
         {
-            for (auto&amp; block : function)
+            ++opcodes_[opname];
+        }
+        else
+        {
+            opcodes_[opname] = 1;
+        }
+    }
+
+    void ValidationPass::callChecks(Instruction&amp; instr)
+    {
+        auto call_instr = llvm::dyn_cast&lt;llvm::CallBase&gt;(&amp;instr);
+        if (call_instr != nullptr)
+        {
+            auto f = call_instr-&gt;getCalledFunction();
+
+            if (f == nullptr)
             {
-                for (auto&amp; instr : block)
+                return;
+            }
+
+            auto name = static_cast&lt;std::string&gt;(f-&gt;getName());
+
+            if (f-&gt;isDeclaration())
+            {
+                if (external_calls_.find(name) != external_calls_.end())
                 {
-                    auto opname = instr.getOpcodeName();
-                    if (opcodes_.find(opname) != opcodes_.end())
-                    {
-                        ++opcodes_[opname];
-                    }
-                    else
-                    {
-                        opcodes_[opname] = 1;
-                    }
-
-                    auto call_instr = llvm::dyn_cast&lt;llvm::CallBase&gt;(&amp;instr);
-                    if (call_instr != nullptr)
-                    {
-                        auto f = call_instr-&gt;getCalledFunction();
-                        if (f == nullptr)
-                        {
-                            continue;
-                        }
-
-                        auto name = static_cast&lt;std::string&gt;(f-&gt;getName());
-                        if (f-&gt;isDeclaration())
-                        {
-                            if (external_calls_.find(name) != external_calls_.end())
-                            {
-                                ++external_calls_[name];
-                            }
-                            else
-                            {
-                                external_calls_[name] = 1;
-                            }
-                        }
-                        else
-                        {
-                            if (internal_calls_.find(name) != internal_calls_.end())
-                            {
-                                ++internal_calls_[name];
-                            }
-                            else
-                            {
-                                internal_calls_[name] = 1;
-                            }
-                        }
-                    }
+                    ++external_calls_[name];
                 }
+                else
+                {
+                    external_calls_[name] = 1;
+                }
+
+                external_call_location_[name].push_back(current_location_);
+            }
+            else
+            {
+                if (internal_calls_.find(name) != internal_calls_.end())
+                {
+                    ++internal_calls_[name];
+                }
+                else
+                {
+                    internal_calls_[name] = 1;
+                }
+
+                internal_call_location_[name].push_back(current_location_);
             }
         }
+    }
 
-        bool raise_exception = false;
+    void ValidationPass::pointerChecks(Instruction&amp; instr)
+    {
+        for (auto&amp; op : instr.operands())
+        {
+            // Skipping function pointers
+            auto function_pointer = llvm::dyn_cast&lt;llvm::Function&gt;(op);
+            if (function_pointer)
+            {
+                continue;
+            }
+
+            // Skipping non-pointer types
+            auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(op-&gt;getType());
+            if (!pointer_type)
+            {
+                continue;
+            }
+
+            uint64_t    n            = 1;
+            llvm::Type* element_type = pointer_type-&gt;getElementType();
+            while (pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(element_type))
+            {
+                element_type = pointer_type-&gt;getElementType();
+                ++n;
+            }
+
+            String name{};
+
+            if (element_type-&gt;isStructTy())
+            {
+                name = static_cast&lt;String&gt;(element_type-&gt;getStructName());
+            }
+            else
+            {
+                llvm::raw_string_ostream rso(name);
+                element_type-&gt;print(rso);
+            }
+
+            // Adding indirection to the name
+            while (n != 0)
+            {
+                name += &quot;*&quot;;
+                --n;
+            }
+
+            auto it = pointers_.find(name);
+            if (it == pointers_.end())
+            {
+                pointers_[name] = 1;
+            }
+            else
+            {
+                ++it-&gt;second;
+            }
+
+            pointer_location_[name].push_back(current_location_);
+        }
+    }
+
+    bool ValidationPass::satisfyingOpcodeRequirements()
+    {
+        auto ret = true;
         if (config_.allowlistOpcodes())
         {
             auto const&amp; allowed_ops = config_.allowedOpcodes();
@@ -654,28 +716,153 @@ namespace quantum
             {
                 if (allowed_ops.find(k.first) == allowed_ops.end())
                 {
-                    logger_-&gt;error(&quot;'&quot; + k.first + &quot;' is not allowed for this profile.&quot;);
+                    logger_-&gt;setLlvmHint(&quot;&quot;);
+
+                    // Adding debug location
+                    if (opcode_location_.find(k.first) != opcode_location_.end())
+                    {
+                        auto const&amp; locs = opcode_location_[k.first];
+                        if (!locs.empty())
+                        {
+                            auto const&amp; loc = locs.front();
+                            logger_-&gt;setLocation(loc.filename, loc.row, loc.col);
+                            logger_-&gt;setLlvmHint(loc.llvm_hint);
+                        }
+                    }
+
+                    // Emitting error
+                    logger_-&gt;error(
+                        &quot;Opcode '&quot; + k.first + &quot;' is not allowed for this profile (&quot; + config_.profileName() + &quot;).&quot;);
+
+                    ret = false;
                 }
             }
         }
 
-        if (config_.allowlistOpcodes())
+        return ret;
+    }
+
+    bool ValidationPass::satisfyingInternalCallRequirements()
+    {
+        if (!config_.allowInternalCalls() &amp;&amp; !internal_calls_.empty())
+        {
+            logger_-&gt;setLlvmHint(&quot;&quot;);
+            // TODO(tfr): Add location
+
+            // Emitting error
+            logger_-&gt;error(&quot;Calls to custom defined functions not allowed.&quot;);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    bool ValidationPass::satisfyingExternalCallRequirements()
+    {
+        auto ret = true;
+
+        if (config_.allowlistExternalCalls())
         {
             auto const&amp; allowed_functions = config_.allowedExternalCallNames();
             for (auto const&amp; k : external_calls_)
             {
                 if (allowed_functions.find(k.first) == allowed_functions.end())
                 {
-                    logger_-&gt;error(&quot;'&quot; + k.first + &quot;' is not allowed for this profile.&quot;);
+                    logger_-&gt;setLlvmHint(&quot;&quot;);
+
+                    // Adding debug location
+                    if (external_call_location_.find(k.first) != external_call_location_.end())
+                    {
+                        auto const&amp; locs = external_call_location_[k.first];
+
+                        if (!locs.empty())
+                        {
+                            auto const&amp; loc = locs.front();
+                            logger_-&gt;setLocation(loc.filename, loc.row, loc.col);
+                            logger_-&gt;setLlvmHint(loc.llvm_hint);
+                        }
+                    }
+
+                    // Emitting error
+                    logger_-&gt;error(
+                        &quot;External call '&quot; + k.first + &quot;' is not allowed for this profile (&quot; + config_.profileName() +
+                        &quot;).&quot;);
+                    ret = false;
                 }
             }
         }
 
-        if (!config_.allowInternalCalls() &amp;&amp; !internal_calls_.empty())
+        return ret;
+    }
+
+    bool ValidationPass::satisfyingPointerRequirements()
+    {
+        auto ret = true;
+
+        if (config_.allowlistPointerTypes())
         {
-            logger_-&gt;error(&quot;Calls to custom defined functions not allowed.&quot;);
-            raise_exception = true;
+            auto const&amp; allowed = config_.allowedPointerTypes();
+            for (auto const&amp; k : pointers_)
+            {
+                if (allowed.find(k.first) == allowed.end())
+                {
+                    logger_-&gt;setLlvmHint(&quot;&quot;);
+
+                    // Adding debug location
+                    if (pointer_location_.find(k.first) != pointer_location_.end())
+                    {
+                        auto const&amp; locs = pointer_location_[k.first];
+                        if (!locs.empty())
+                        {
+                            auto const&amp; loc = locs.front();
+                            logger_-&gt;setLocation(loc.filename, loc.row, loc.col);
+                            logger_-&gt;setLlvmHint(loc.llvm_hint);
+                        }
+                    }
+
+                    // Emitting error
+                    logger_-&gt;error(
+                        &quot;Type '&quot; + k.first + &quot;' is not allowed for this profile (&quot; + config_.profileName() + &quot;).&quot;);
+                    ret = false;
+                }
+            }
         }
+
+        return ret;
+    }
+
+    llvm::PreservedAnalyses ValidationPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+    {
+        for (auto&amp; function : module)
+        {
+            for (auto&amp; block : function)
+            {
+                for (auto&amp; instr : block)
+                {
+                    current_location_ = Location{};
+                    llvm::DebugLoc dl = instr.getDebugLoc();
+                    if (dl)
+                    {
+                        current_location_ =
+                            Location{static_cast&lt;String&gt;(dl-&gt;getFilename()), dl-&gt;getLine(), dl-&gt;getColumn(), &quot;&quot;};
+                    }
+                    llvm::raw_string_ostream rso(current_location_.llvm_hint);
+                    instr.print(rso);
+
+                    opcodeChecks(instr);
+                    callChecks(instr);
+                    pointerChecks(instr);
+                }
+            }
+        }
+
+        bool raise_exception = false;
+
+        raise_exception |= !satisfyingOpcodeRequirements();
+        raise_exception |= !satisfyingExternalCallRequirements();
+        raise_exception |= !satisfyingInternalCallRequirements();
+        raise_exception |= !satisfyingPointerRequirements();
 
         if (raise_exception)
         {
@@ -694,7 +881,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

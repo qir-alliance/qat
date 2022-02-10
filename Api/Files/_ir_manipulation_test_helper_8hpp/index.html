@@ -611,11 +611,11 @@ namespace quantum
     {
       public:
         using String            = std::string;
+        using Strings           = std::vector&lt;String&gt;;
         using LLVMContext       = llvm::LLVMContext;
         using SMDiagnostic      = llvm::SMDiagnostic;
         using Module            = llvm::Module;
         using ModulePtr         = std::unique_ptr&lt;Module&gt;;
-        using Strings           = std::vector&lt;String&gt;;
         using OptimizationLevel = llvm::PassBuilder::OptimizationLevel;
         using GeneratorPtr      = std::shared_ptr&lt;ProfileGenerator&gt;;
 
@@ -642,9 +642,23 @@ namespace quantum
         bool hasInstructionSequence(Strings const&amp; instructions);
 
         void applyProfile(
-            GeneratorPtr const&amp;      profile,
+            GeneratorPtr const&amp;      generator,
             OptimizationLevel const&amp; optimisation_level = OptimizationLevel::O0,
             bool                     debug              = false);
+
+        bool validateProfile(GeneratorPtr const&amp; generator, String const&amp; profile_name = &quot;generic&quot;, bool debug = false);
+
+        bool containsValidationErrors(
+            GeneratorPtr const&amp; generator,
+            String const&amp;       profile_name,
+            Strings const&amp;      errors,
+            bool                debug = false) const;
+
+        bool containsExactValidationErrors(
+            GeneratorPtr const&amp; generator,
+            String const&amp;       profile_name,
+            Strings const&amp;      errors,
+            bool                debug = false) const;
 
         // Declaration of partial or full IR
         //
@@ -700,7 +714,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

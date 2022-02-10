@@ -594,7 +594,11 @@ namespace microsoft
 namespace quantum
 {
 
-    Validator::Validator(ValidationPassConfiguration const&amp; cfg, bool debug, llvm::TargetMachine* target_machine)
+    Validator::Validator(
+        ValidationPassConfiguration const&amp; cfg,
+        bool                               force_log_collection,
+        bool                               debug,
+        llvm::TargetMachine*               target_machine)
       : loop_analysis_manager_{debug}
       , function_analysis_manager_{debug}
       , gscc_analysis_manager_{debug}
@@ -612,12 +616,19 @@ namespace quantum
         pass_builder_-&gt;crossRegisterProxies(
             loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
 
-        // Checking if we need to save the log to a file
+        if (force_log_collection || !cfg.saveReportTo().empty())
+        {
+            logger_ = std::make_shared&lt;LogCollection&gt;();
+        }
+
         if (!cfg.saveReportTo().empty())
         {
-            logger_           = std::make_shared&lt;LogCollection&gt;();
             save_to_filename_ = cfg.saveReportTo();
+        }
 
+        // Checking if we need to save the log to a file
+        if (logger_)
+        {
             module_pass_manager_.addPass(ValidationPass(cfg, logger_));
         }
         else
@@ -687,6 +698,11 @@ namespace quantum
         return module_analysis_manager_;
     }
 
+    Validator::LogColloectionPtr Validator::logger() const
+    {
+        return logger_;
+    }
+
     void Validator::saveReportToFileIfNeeded()
     {
         if (!save_to_filename_.empty() &amp;&amp; logger_)
@@ -725,9 +741,11 @@ namespace quantum
 
                 fout &lt;&lt; &quot;    \&quot;message\&quot;: \&quot;&quot; &lt;&lt; message.message &lt;&lt; &quot;\&quot;,\n&quot;;
                 fout &lt;&lt; &quot;    \&quot;location\&quot;: {\n&quot;;
-                fout &lt;&lt; &quot;      \&quot;name\&quot;: \&quot;&quot; &lt;&lt; message.location.name &lt;&lt; &quot;\&quot;,\n&quot;;
+                fout &lt;&lt; &quot;      \&quot;filename\&quot;: \&quot;&quot; &lt;&lt; message.location.name &lt;&lt; &quot;\&quot;,\n&quot;;
                 fout &lt;&lt; &quot;      \&quot;row\&quot;: &quot; &lt;&lt; message.location.row &lt;&lt; &quot;,\n&quot;;
-                fout &lt;&lt; &quot;      \&quot;col\&quot;: &quot; &lt;&lt; message.location.col &lt;&lt; &quot;\n&quot;;
+                fout &lt;&lt; &quot;      \&quot;col\&quot;: &quot; &lt;&lt; message.location.col &lt;&lt; &quot;,\n&quot;;
+                fout &lt;&lt; &quot;      \&quot;llvm_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\&quot;,\n&quot;;
+                fout &lt;&lt; &quot;      \&quot;frontend_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.frontend_hint &lt;&lt; &quot;\&quot;\n&quot;;
                 fout &lt;&lt; &quot;    }\n&quot;;
                 fout &lt;&lt; &quot;  }&quot;;
                 not_first = true;
@@ -742,7 +760,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

@@ -580,6 +580,7 @@
 // Licensed under the MIT License.
 
 #include &quot;Logging/LogCollection.hpp&quot;
+#include &quot;Utils/Trim.hpp&quot;
 
 #include &lt;vector&gt;
 
@@ -625,11 +626,23 @@ namespace quantum
         return messages_;
     }
 
+    void LogCollection::setLlvmHint(String const&amp; value)
+    {
+        current_location_.llvm_hint = value;
+        trim(current_location_.llvm_hint);
+    }
+
+    void LogCollection::setFrontendHint(String const&amp; value)
+    {
+        current_location_.frontend_hint = value;
+        trim(current_location_.frontend_hint);
+    }
+
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

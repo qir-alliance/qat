@@ -619,6 +619,14 @@
 <td>virtual void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocation">setLocation</a></strong>(String const &amp; name, uint64_t row, uint64_t col) =0</td>
 </tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setllvmhint">setLlvmHint</a></strong>(String const &amp; value) =0<br>Sets the value of the LLVM instruction causing the issue.</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setfrontendhint">setFrontendHint</a></strong>(String const &amp; value) =0<br>Sets the value of the frontend instruction causing the issue.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="detailed-description">Detailed Description</h2>
@@ -696,8 +704,22 @@
 </code></pre>
 <p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setlocation">microsoft::quantum::CommentLogger::setLocation</a>, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-setlocation">microsoft::quantum::LogCollection::setLocation</a></p>
 <p>Sets the current location. Importantly, the location can be set independently of the reported messages. This allows one to update the location upon updating the cursor position without having to worry about keeping a copy of the location to pass when reporting messages. The most obvious case of this is file path (name) with a line and character (row, col). </p>
+<h3 id="function-setllvmhint">function setLlvmHint</h3>
+<pre><code class="language-cpp">virtual void setLlvmHint(
+    String const &amp; value
+) =0
+</code></pre>
+<p>Sets the value of the LLVM instruction causing the issue. </p>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setllvmhint">microsoft::quantum::CommentLogger::setLlvmHint</a>, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-setllvmhint">microsoft::quantum::LogCollection::setLlvmHint</a></p>
+<h3 id="function-setfrontendhint">function setFrontendHint</h3>
+<pre><code class="language-cpp">virtual void setFrontendHint(
+    String const &amp; value
+) =0
+</code></pre>
+<p>Sets the value of the frontend instruction causing the issue. </p>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setfrontendhint">microsoft::quantum::CommentLogger::setFrontendHint</a>, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-setfrontendhint">microsoft::quantum::LogCollection::setFrontendHint</a></p>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>

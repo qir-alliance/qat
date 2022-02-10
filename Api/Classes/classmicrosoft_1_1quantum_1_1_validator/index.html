@@ -606,7 +606,7 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#function-validator">Validator</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">ValidationPassConfiguration</a> const &amp; cfg, bool debug, llvm::TargetMachine * target_machine =nullptr)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#function-validator">Validator</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">ValidationPassConfiguration</a> const &amp; cfg, bool force_log_collection, bool debug, llvm::TargetMachine * target_machine =nullptr)</td>
 </tr>
 <tr>
 <td></td>
@@ -635,6 +635,10 @@
 <tr>
 <td>bool</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#function-validate">validate</a></strong>(llvm::Module &amp; module)</td>
+</tr>
+<tr>
+<td>LogColloectionPtr</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#function-logger">logger</a></strong>() const<br>Returns the logger. This value may be null if no logger was set.</td>
 </tr>
 </tbody>
 </table>
@@ -688,6 +692,7 @@
 <h3 id="function-validator">function Validator</h3>
 <pre><code class="language-cpp">explicit Validator(
     ValidationPassConfiguration const &amp; cfg,
+    bool force_log_collection,
     bool debug,
     llvm::TargetMachine * target_machine =nullptr
 )
@@ -724,6 +729,10 @@
 )
 </code></pre>
 <p>Validates that a module complies with the specified QIR profile. Returns true if the module is valid and false otherwise. </p>
+<h3 id="function-logger">function logger</h3>
+<pre><code class="language-cpp">LogColloectionPtr logger() const
+</code></pre>
+<p>Returns the logger. This value may be null if no logger was set. </p>
 <h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
 <h3 id="function-passbuilder">function passBuilder</h3>
 <pre><code class="language-cpp">llvm::PassBuilder &amp; passBuilder()
@@ -746,7 +755,7 @@
 </code></pre>
 <p>Returns a reference to the module analysis manager. </p>
 <hr />
-<p>Updated on 25 January 2022 at 06:16:58 UTC</p></div>
+<p>Updated on 10 February 2022 at 09:22:01 UTC</p></div>
 </div>
           </div>
         </main>
