@@ -1,11 +1,10 @@
-namespace LoopCase {
+namespace ExternalFunctions {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Measurement;
 
     @EntryPoint()
-    operation Main(nrIter: Int): Int
+    operation Main(): Int
     {
-        mutable ret = 1;
         use q = Qubit();
         H(q);
         let _ = MResetZ(q);

@@ -52,10 +52,10 @@ namespace quantum
         void callChecks(Instruction& instr);
         void pointerChecks(Instruction& instr);
 
-        bool enforceOpcodeRequirements();
-        bool enforceInternalCallRequirements();
-        bool enforceExternalCallRequirements();
-        bool enforcePointerRequirements();
+        bool satisfyingOpcodeRequirements();
+        bool satisfyingInternalCallRequirements();
+        bool satisfyingExternalCallRequirements();
+        bool satisfyingPointerRequirements();
 
         struct Location
         {

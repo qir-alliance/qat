@@ -1,4 +1,4 @@
-namespace IfCase {
+namespace IfWithPhi {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Measurement;
 

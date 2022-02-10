@@ -136,7 +136,7 @@ namespace quantum
         return profile.validate(*module_);
     }
 
-    bool IrManipulationTestHelper::hasValidationErrors(
+    bool IrManipulationTestHelper::containsValidationErrors(
         GeneratorPtr const& generator,
         String const&       profile_name,
         Strings const&      errors,
@@ -194,7 +194,7 @@ namespace quantum
         return ret;
     }
 
-    bool IrManipulationTestHelper::hasExactValidationErrors(
+    bool IrManipulationTestHelper::containsExactValidationErrors(
         GeneratorPtr const& generator,
         String const&       profile_name,
         Strings const&      errors,

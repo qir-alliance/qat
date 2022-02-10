@@ -128,7 +128,7 @@ namespace quantum
         }
     }
 
-    bool ValidationPass::enforceOpcodeRequirements()
+    bool ValidationPass::satisfyingOpcodeRequirements()
     {
         auto ret = true;
         if (config_.allowlistOpcodes())
@@ -164,7 +164,7 @@ namespace quantum
         return ret;
     }
 
-    bool ValidationPass::enforceInternalCallRequirements()
+    bool ValidationPass::satisfyingInternalCallRequirements()
     {
         if (!config_.allowInternalCalls() && !internal_calls_.empty())
         {
@@ -180,7 +180,7 @@ namespace quantum
         return true;
     }
 
-    bool ValidationPass::enforceExternalCallRequirements()
+    bool ValidationPass::satisfyingExternalCallRequirements()
     {
         auto ret = true;
 
@@ -218,7 +218,7 @@ namespace quantum
         return ret;
     }
 
-    bool ValidationPass::enforcePointerRequirements()
+    bool ValidationPass::satisfyingPointerRequirements()
     {
         auto ret = true;
 
@@ -281,10 +281,10 @@ namespace quantum
 
         bool raise_exception = false;
 
-        raise_exception |= !enforceOpcodeRequirements();
-        raise_exception |= !enforceExternalCallRequirements();
-        raise_exception |= !enforceInternalCallRequirements();
-        raise_exception |= !enforcePointerRequirements();
+        raise_exception |= !satisfyingOpcodeRequirements();
+        raise_exception |= !satisfyingExternalCallRequirements();
+        raise_exception |= !satisfyingInternalCallRequirements();
+        raise_exception |= !satisfyingPointerRequirements();
 
         if (raise_exception)
         {

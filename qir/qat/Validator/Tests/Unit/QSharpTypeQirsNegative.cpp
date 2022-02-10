@@ -69,7 +69,7 @@ void expectFail(String const& profile_name, String const& script, std::vector<St
     configuration_manager.addConfig<ValidationPassConfiguration>(
         "validation-configuration", ValidationPassConfiguration::fromProfileName(profile_name));
 
-    EXPECT_TRUE(ir_manip->hasExactValidationErrors(profile_generator, profile_name, errors, true));
+    EXPECT_TRUE(ir_manip->containsExactValidationErrors(profile_generator, profile_name, errors, true));
 }
 
 } // namespace
@@ -83,9 +83,9 @@ TEST(QSharpNegative, IfWithPhi)
 
 quantum:                                          ; preds = %entry
   tail call void @__quantum__qis__h__body(%Qubit* null)
-  br label %LoopCase__Main__body.exit
+  br label %IfWithPhi__Main__body.exit
 
-LoopCase__Main__body.exit:                        ; preds = %quantum, %entry
+IfWithPhi__Main__body.exit:                        ; preds = %quantum, %entry
   %ret.0.i = phi i64 [ 9, %quantum ], [ 1, %entry ]
   )script",
         {
