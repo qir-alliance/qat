@@ -79,7 +79,7 @@ TEST(QSharpNegative, IfWithPhi)
     expectFail(
         "base", R"script(
   %0 = icmp eq i64 9, 1
-  br i1 %0, label %quantum, label %LoopCase__Main__body.exit
+  br i1 %0, label %quantum, label %IfWithPhi__Main__body.exit
 
 quantum:                                          ; preds = %entry
   tail call void @__quantum__qis__h__body(%Qubit* null)
