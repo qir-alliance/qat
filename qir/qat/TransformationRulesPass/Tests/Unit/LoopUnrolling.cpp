@@ -78,7 +78,7 @@ exit__1:                                          ; preds = %header__1
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
-
+    configuration_manager.addConfig<ValidationPassConfiguration>();
     ir_manip->applyProfile(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(

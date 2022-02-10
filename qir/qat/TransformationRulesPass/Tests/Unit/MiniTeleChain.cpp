@@ -177,6 +177,7 @@ TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit: 
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.addConfig<ValidationPassConfiguration>();
 
     ir_manip->applyProfile(profile);
     llvm::outs() << *ir_manip->module() << "\n";

@@ -18,11 +18,11 @@ namespace quantum
     {
       public:
         using String            = std::string;
+        using Strings           = std::vector<String>;
         using LLVMContext       = llvm::LLVMContext;
         using SMDiagnostic      = llvm::SMDiagnostic;
         using Module            = llvm::Module;
         using ModulePtr         = std::unique_ptr<Module>;
-        using Strings           = std::vector<String>;
         using OptimizationLevel = llvm::PassBuilder::OptimizationLevel;
         using GeneratorPtr      = std::shared_ptr<ProfileGenerator>;
 
@@ -55,9 +55,31 @@ namespace quantum
         /// Applies a profile to the module to allow which transforms the IR. This
         /// allow us to write small profiles to test a single piece of transformation.
         void applyProfile(
-            GeneratorPtr const&      profile,
+            GeneratorPtr const&      generator,
             OptimizationLevel const& optimisation_level = OptimizationLevel::O0,
             bool                     debug              = false);
+
+        /// Validates a profile to the module to allow which transforms the IR. This
+        /// allow us to write small profiles to test a single piece of transformation.
+        bool validateProfile(GeneratorPtr const& generator, String const& profile_name = "generic", bool debug = false);
+
+        /// Tests whether a given set of errors (LLVM hints) are present in the validation errors
+        /// for a specific profile. This method only checks if errors are present but does not fail if
+        /// there are more errors than requested through the API.
+        bool containsValidationErrors(
+            GeneratorPtr const& generator,
+            String const&       profile_name,
+            Strings const&      errors,
+            bool                debug = false) const;
+
+        /// Tests whether a given set of errors (LLVM hints) are present in the validation errors
+        /// for a specific profile. In contrast to containsValidationErrors, this function expect an exact
+        /// match in the actual and expected errors.
+        bool containsExactValidationErrors(
+            GeneratorPtr const& generator,
+            String const&       profile_name,
+            Strings const&      errors,
+            bool                debug = false) const;
 
         // Declaration of partial or full IR
         //

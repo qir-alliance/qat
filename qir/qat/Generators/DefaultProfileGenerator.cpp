@@ -18,8 +18,6 @@ namespace quantum
 
     DefaultProfileGenerator::DefaultProfileGenerator()
     {
-        configurationManager().addConfig<ValidationPassConfiguration>();
-
         registerProfileComponent<TransformationRulesPassConfiguration>(
             "transformation-rules",
             [](TransformationRulesPassConfiguration const& config, ProfileGenerator* ptr, Profile& profile) {

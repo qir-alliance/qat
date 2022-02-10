@@ -49,5 +49,9 @@ namespace quantum
         location_col_  = col;
     }
 
+    void CommentLogger::setLlvmHint(String const&) {}
+
+    void CommentLogger::setFrontendHint(String const&) {}
+
 } // namespace quantum
 } // namespace microsoft

@@ -51,6 +51,12 @@ namespace quantum
         /// having to worry about keeping a copy of the location to pass when reporting messages.
         /// The most obvious case of this is file path (name) with a line and character (row, col).
         virtual void setLocation(String const& name, uint64_t row, uint64_t col) = 0;
+
+        /// Sets the value of the LLVM instruction causing the issue.
+        virtual void setLlvmHint(String const& value) = 0;
+
+        /// Sets the value of the frontend instruction causing the issue.
+        virtual void setFrontendHint(String const& value) = 0;
     };
 
 } // namespace quantum

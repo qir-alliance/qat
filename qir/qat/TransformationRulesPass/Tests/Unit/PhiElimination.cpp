@@ -95,6 +95,7 @@ continue__1:                                      ; preds = %then0__1, %entry
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.addConfig<ValidationPassConfiguration>();
 
     ir_manip->applyProfile(profile);
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
@@ -133,6 +134,7 @@ continue__1:                                      ; preds = %then0__1, %entry
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.addConfig<ValidationPassConfiguration>();
 
     ir_manip->applyProfile(profile);
 
