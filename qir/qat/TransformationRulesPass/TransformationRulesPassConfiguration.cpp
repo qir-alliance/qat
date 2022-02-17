@@ -12,35 +12,38 @@ void TransformationRulesPassConfiguration::setup(ConfigurationManager &config)
 {
   config.setSectionName("Pass configuration",
                         "Configuration of the pass and its corresponding optimisations.");
-  config.addExperimentalParameter(delete_dead_code_, "delete-dead-code", "Deleted dead code.");
-  config.addExperimentalParameter(clone_functions_, "clone-functions",
+
+  // Experimental settings
+  config.addExperimentalParameter(delete_dead_code_, true, false, "delete-dead-code",
+                                  "Deleted dead code.");
+  config.addExperimentalParameter(clone_functions_, true, false, "clone-functions",
                                   "Clone functions to ensure correct qubit allocation.");
-  config.addExperimentalParameter(transform_execution_path_only_, "transform-execution-path-only",
+  config.addExperimentalParameter(transform_execution_path_only_, true, false,
+                                  "transform-execution-path-only",
                                   "Transform execution paths only.");
 
   config.addExperimentalParameter(
       max_recursion_, max_recursion_, uint64_t(0), "max-recursion",
       "Defines the maximum recursion when unrolling the execution path");
 
-  config.addExperimentalParameter(assume_no_exceptions_, "assume-no-except",
+  config.addExperimentalParameter(assume_no_exceptions_, false, false, "assume-no-except",
                                   "Assumes that no exception will occur during runtime.");
 
-  config.addExperimentalParameter(reuse_qubits_, "reuse-qubits",
+  config.addExperimentalParameter(reuse_qubits_, true, false, "reuse-qubits",
                                   "Use to define whether or not to reuse qubits.");
-  config.addExperimentalParameter(annotate_qubit_use_, "annotate-qubit-use",
-                                  "Annotate the number of qubits used");
-
-  config.addExperimentalParameter(reuse_results_, "reuse-results",
+  config.addExperimentalParameter(reuse_results_, true, false, "reuse-results",
                                   "Use to define whether or not to reuse results.");
-  config.addExperimentalParameter(annotate_result_use_, "annotate-result-use",
-                                  "Annotate the number of results used");
 
-  config.addExperimentalParameter(entry_point_attr_, "entry-point-attr",
-                                  "Specifies the attribute indicating the entry point.");
+  // Ready settings
 
-  config.addExperimentalParameter(
-      simplify_prior_transformation_, "simplify-prior-transform",
-      "When active, the IR is simplified using LLVM passes before transformation.");
+  config.addParameter(entry_point_attr_, "entry-point-attr",
+                      "Specifies the attribute indicating the entry point.");
+
+  config.addParameter(annotate_qubit_use_, "annotate-qubit-use",
+                      "Annotate the number of qubits used");
+
+  config.addParameter(annotate_result_use_, "annotate-result-use",
+                      "Annotate the number of results used");
 }
 
 TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createDisabled()
@@ -50,15 +53,10 @@ TransformationRulesPassConfiguration TransformationRulesPassConfiguration::creat
   ret.clone_functions_               = false;
   ret.transform_execution_path_only_ = false;
   ret.max_recursion_                 = 512;
-  ret.simplify_prior_transformation_ = false;
   ret.reuse_qubits_                  = false;
   ret.annotate_qubit_use_            = false;
-  return ret;
-}
 
-bool TransformationRulesPassConfiguration::shouldSimplifyPriorTransform() const
-{
-  return simplify_prior_transformation_;
+  return ret;
 }
 
 bool TransformationRulesPassConfiguration::shouldDeleteDeadCode() const
@@ -114,8 +112,7 @@ bool TransformationRulesPassConfiguration::assumeNoExceptions() const
 bool TransformationRulesPassConfiguration::isDisabled() const
 {
   return (delete_dead_code_ == false && clone_functions_ == false &&
-          simplify_prior_transformation_ == false && transform_execution_path_only_ == false &&
-          reuse_qubits_ == false);
+          transform_execution_path_only_ == false && reuse_qubits_ == false);
 }
 
 bool TransformationRulesPassConfiguration::operator==(

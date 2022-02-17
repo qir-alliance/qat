@@ -20,10 +20,10 @@ public:
   void setup(ConfigurationManager &config)
   {
     config.setSectionName("Validation configuration", "");
-    config.addExperimentalParameter(allow_internal_calls_, "allow-internal-calls",
-                                    "Whether or not internal calls are allowed.");
-    config.addExperimentalParameter(save_report_to_, "save-validation-report",
-                                    "Saves the validation report to specified filename.");
+    config.addParameter(allow_internal_calls_, "allow-internal-calls",
+                        "Whether or not internal calls are allowed.");
+    config.addParameter(save_report_to_, "save-validation-report",
+                        "Saves the validation report to specified filename.");
   }
 
   static ValidationPassConfiguration fromProfileName(String const &name)

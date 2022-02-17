@@ -14,30 +14,32 @@ public:
   {
     config.setSectionName("Transformation rules",
                           "Rules used to transform instruction sequences in the QIR.");
-    config.addExperimentalParameter(disable_reference_counting_, "disable-reference-counting",
+    config.addExperimentalParameter(disable_reference_counting_, false, true,
+                                    "disable-reference-counting",
                                     "Disables reference counting by instruction removal.");
 
-    config.addExperimentalParameter(disable_reference_counting_, "disable-reference-counting",
+    config.addExperimentalParameter(disable_reference_counting_, false, true,
+                                    "disable-reference-counting",
                                     "Disables reference counting by instruction removal.");
-    config.addExperimentalParameter(disable_alias_counting_, "disable-alias-counting",
+    config.addExperimentalParameter(disable_alias_counting_, false, true, "disable-alias-counting",
                                     "Disables alias counting by instruction removal.");
-    config.addExperimentalParameter(disable_string_support_, "disable-string-support",
+    config.addExperimentalParameter(disable_string_support_, false, true, "disable-string-support",
                                     "Disables string support by instruction removal.");
     config.addExperimentalParameter(
-        optimise_result_one_, "optimise-result-one",
+        optimise_result_one_, true, false, "optimise-result-one",
         "Maps branching based on quantum measurements compared to one to base profile "
         "type measurement.");
     config.addExperimentalParameter(
-        optimise_result_zero_, "optimise-result-zero",
+        optimise_result_zero_, true, false, "optimise-result-zero",
         "Maps branching based on quantum measurements compared to zero to base profile "
         "type measurement.");
-    config.addExperimentalParameter(use_static_qubit_array_allocation_,
-                                    "use-static-qubit-array-allocation",
-                                    "Maps allocation of qubit arrays to static array allocation.");
-    config.addExperimentalParameter(use_static_qubit_allocation_, "use-static-qubit-allocation",
-                                    "Maps qubit allocation to static allocation.");
-    config.addExperimentalParameter(use_static_result_allocation_, "use-static-result-allocation",
-                                    "Maps result allocation to static allocation.");
+
+    config.addParameter(use_static_qubit_array_allocation_, "use-static-qubit-array-allocation",
+                        "Maps allocation of qubit arrays to static array allocation.");
+    config.addParameter(use_static_qubit_allocation_, "use-static-qubit-allocation",
+                        "Maps qubit allocation to static allocation.");
+    config.addParameter(use_static_result_allocation_, "use-static-result-allocation",
+                        "Maps result allocation to static allocation.");
   }
 
   static FactoryConfiguration createDisabled()

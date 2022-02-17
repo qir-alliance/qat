@@ -12,7 +12,14 @@ void ConfigurationManager::setupArguments(ParameterParser &parser)
 {
   for (auto &section : config_sections_)
   {
-    parser.addFlag("disable-" + section.id);
+    if (section.enabled_by_default)
+    {
+      parser.addFlag("disable-" + section.id);
+    }
+    else
+    {
+      parser.addFlag("enable-" + section.id);
+    }
   }
 
   for (auto &section : config_sections_)
@@ -32,7 +39,14 @@ void ConfigurationManager::configure(ParameterParser &parser, bool experimental_
 
   for (auto &section : config_sections_)
   {
-    *section.active = (parser.get("disable-" + section.id, "false") != "true");
+    if (section.enabled_by_default)
+    {
+      *section.active = (parser.get("disable-" + section.id, "false") != "true");
+    }
+    else
+    {
+      *section.active = (parser.get("enable-" + section.id, "false") == "true");
+    }
   }
 
   for (auto &section : config_sections_)
@@ -61,9 +75,18 @@ void ConfigurationManager::printHelp() const
   {
     if (!section.id.empty())
     {
-      std::cout << std::setw(50) << std::left << ("--disable-" + section.id) << "Disables "
-                << section.name << ". ";
-      std::cout << "Default: true" << std::endl;
+      if (section.enabled_by_default)
+      {
+        std::cout << std::setw(50) << std::left << ("--disable-" + section.id) << "Disables "
+                  << section.name << ". ";
+        std::cout << "Default: false" << std::endl;
+      }
+      else
+      {
+        std::cout << std::setw(50) << std::left << ("--enable-" + section.id) << "Enables "
+                  << section.name << ". ";
+        std::cout << "Default: false" << std::endl;
+      }
     }
   }
 
@@ -138,6 +161,11 @@ void ConfigurationManager::setSectionName(String const &name, String const &desc
 {
   config_sections_.back().name        = name;
   config_sections_.back().description = description;
+}
+
+void ConfigurationManager::disableSectionByDefault()
+{
+  config_sections_.back().enabled_by_default = false;
 }
 
 }  // namespace quantum

@@ -42,6 +42,7 @@ public:
     TypeId     type{TypeId(typeid(std::nullptr_t))};  ///< Type of the configuration.
     String     name{};                                ///< Name of the section.
     String     description{};                         ///< Description of the section.
+    bool       enabled_by_default{true};              ///< Whether or not
     VoidPtr    configuration{};                       ///< Configuration class instance.
     ConfigList settings{};                            ///< List of parameter bindings.
     BoolPtr    active{nullptr};                       ///< Whether or not this component is active;
@@ -104,6 +105,9 @@ public:
   /// Sets the section name. This method is used by the configuration class to set a section
   /// name.
   void setSectionName(String const &name, String const &description);
+
+  ///
+  void disableSectionByDefault();
 
   /// Adds a new parameter with a default value to the configuration section. This function should
   /// be used by the configuration class.

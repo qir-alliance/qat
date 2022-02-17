@@ -15,9 +15,9 @@ public:
   void setup(ConfigurationManager &config)
   {
     config.setSectionName("Base configuration", "");
-    config.addExperimentalParameter(param1_, "param1", "");
-    config.addExperimentalParameter(param2_, "param2", "");
-    config.addExperimentalParameter(param3_, "param3", "");
+    config.addParameter(param1_, "param1", "");
+    config.addParameter(param2_, "param2", "");
+    config.addParameter(param3_, "param3", "");
   }
 
   bool param1() const
@@ -47,9 +47,9 @@ public:
   void setup(ConfigurationManager &config)
   {
     config.setSectionName("Base configuration", "");
-    config.addExperimentalParameter(param1_, "param1", "");
-    config.addExperimentalParameter(param2_, "param2", "");
-    config.addExperimentalParameter(param3_, "param3", "");
+    config.addParameter(param1_, "param1", "");
+    config.addParameter(param2_, "param2", "");
+    config.addParameter(param3_, "param3", "");
   }
 
   bool param1() const
