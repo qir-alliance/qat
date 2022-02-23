@@ -1,0 +1,20 @@
+[
+  {
+    "type": "error",
+    "message": "Calls to custom defined functions not allowed.",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  },
+  {
+    "type": "error",
+    "message": "Fatal error: QIR is not valid within the defined profile",
+    "location": {
+      "name": "",
+      "row": 0,
+      "col": 0
+    }
+  }
+]

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
 #include "Llvm/Llvm.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/Notation/Notation.hpp"
@@ -62,7 +62,7 @@ TEST(RuleSetTestSuite, IntToPtr)
     rule_set.addRule(ret);
   };
 
-  auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+  auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
   ir_manip->applyProfile(profile);
 
   EXPECT_TRUE(matched);
@@ -71,7 +71,7 @@ TEST(RuleSetTestSuite, IntToPtr)
 TEST(RuleSetTestSuite, EmbeddedIntToPtr)
 {
   auto ir_manip = newIrManip(R"script(
-  %0 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* nonnull inttoptr (i64 2 to %Array*), i64 0)
+  %0 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* nonnull inttoptr (i64 2 to %Array*), i64 0)
   )script");
   bool matched  = false;
 
@@ -88,7 +88,7 @@ TEST(RuleSetTestSuite, EmbeddedIntToPtr)
     rule_set.addRule(ret);
   };
 
-  auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+  auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
   ir_manip->applyProfile(profile);
 
   EXPECT_TRUE(matched);
@@ -115,7 +115,7 @@ TEST(RuleSetTestSuite, ExpandedIntToPtr)
     rule_set.addRule(ret);
   };
 
-  auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+  auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
   ir_manip->applyProfile(profile);
 
   EXPECT_TRUE(matched);

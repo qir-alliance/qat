@@ -13,6 +13,7 @@
 #include <sstream>
 #include <type_traits>
 #include <typeindex>
+#include <typeinfo>
 
 namespace microsoft {
 namespace quantum {
@@ -59,6 +60,14 @@ public:
   ConfigurationManager(ConfigurationManager &&)      = delete;
   ConfigurationManager &operator=(ConfigurationManager const &) = delete;
   ConfigurationManager &operator=(ConfigurationManager &&) = delete;
+
+  ~ConfigurationManager()
+  {
+    for (auto &s : config_sections_)
+    {
+      s.configuration.reset();
+    }
+  }
 
   // Configuration setup
   //
@@ -144,12 +153,27 @@ inline void ConfigurationManager::addConfig(String const &id, T const &default_v
 {
   Section new_section{std::type_index(typeid(T))};
 
-  auto ptr                  = std::make_shared<T>(default_value);
+  // Checking whether the section exists
+  auto type = std::type_index(typeid(T));
+  for (auto &section : config_sections_)
+  {
+    if (section.type == type)
+    {
+      throw std::runtime_error("Configuration section for type '" +
+                               static_cast<std::string>(typeid(T).name()) + "' already exists");
+    }
+  }
+
+  // If not we create it.
+  auto ptr = std::make_shared<T>(default_value);
+
   new_section.configuration = ptr;
   new_section.active        = std::make_shared<bool>(true);
   new_section.id            = id;
 
   config_sections_.emplace_back(std::move(new_section));
+
+  // TODO:
   ptr->setup(*this);
 }
 
@@ -170,7 +194,8 @@ inline T &ConfigurationManager::getInternal() const
 
   if (ptr == nullptr)
   {
-    throw std::runtime_error("Could not find configuration class.");
+    throw std::runtime_error("Could not find configuration class '" +
+                             static_cast<std::string>(typeid(T).name()) + "'.");
   }
 
   return *static_cast<T *>(ptr.get());
@@ -206,7 +231,8 @@ inline bool ConfigurationManager::isActive()
 
   if (ptr == nullptr)
   {
-    throw std::runtime_error("Could not find configuration class.");
+    throw std::runtime_error("Could not find configuration class '" +
+                             static_cast<std::string>(typeid(T).name()) + "'.");
   }
 
   return *ptr;

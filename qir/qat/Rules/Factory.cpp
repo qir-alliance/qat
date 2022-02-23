@@ -166,16 +166,19 @@ void RuleFactory::useStaticQubitArrayAllocation()
       return false;
     }
 
-    builder.SetInsertPoint(old_instr->getNextNode());
+    // builder.SetInsertPoint(old_instr->getNextNode());
 
-    auto instr = builder.CreateIntToPtr(new_index, ptr_type);
-    instr->takeName(val);
+    auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
+    // builder.CreateIntToPtr(new_index, ptr_type);
+    llvm::errs() << "Replacing " << *old_instr << " with ";
+    instr->takeName(old_instr);
+    llvm::errs() << *instr << "\n";
 
     // Ensuring that we have replaced the instruction before
     // identifying release
     old_instr->replaceAllUsesWith(instr);
 
-    replacements.push_back({old_instr, nullptr});
+    replacements.push_back({old_instr, instr});
     return true;
   };
 
@@ -237,7 +240,7 @@ void RuleFactory::useStaticQubitArrayAllocation()
     builder.SetInsertPoint(old_instr->getNextNode());
 
     auto instr = builder.CreateIntToPtr(new_index, ptr_type);
-    instr->takeName(val);
+    instr->takeName(old_instr);
     old_instr->replaceAllUsesWith(instr);
 
     // Replacing the instruction with new instruction
@@ -306,7 +309,6 @@ void RuleFactory::useStaticQubitAllocation()
     auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
 
     auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
-    instr->takeName(val);
 
     // Replacing the instruction with new instruction
     auto old_instr = llvm::dyn_cast<Instruction>(val);
@@ -316,6 +318,10 @@ void RuleFactory::useStaticQubitAllocation()
     {
       return false;
     }
+
+    llvm::errs() << "Replacing " << *old_instr << " with ";
+    instr->takeName(old_instr);
+    llvm::errs() << *instr << "\n";
 
     // Ensuring that we have replaced the instruction before
     // identifying release

@@ -19,6 +19,9 @@ public:
   /// Creates a configuration where all functionality is disabled.
   static TransformationRulesPassConfiguration createDisabled();
 
+  /// Creates a configuration where only reuse qubits is enabled.
+  static TransformationRulesPassConfiguration createReuseQubitsOnly();
+
   // Configuration classes
   //
 

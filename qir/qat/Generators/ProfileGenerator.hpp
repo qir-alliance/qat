@@ -57,13 +57,17 @@ public:
   Profile newProfile(String const &name, OptimizationLevel const &optimisation_level, bool debug);
 
   // Defining the generator
+
   //
 
-  /// Registers a new profile component with a given configuration R. The profile component is given
-  /// a name and a setup function which is responsible for configuring the profile in accordance
-  /// with the configuration.
+  /// Registers a new profile component with a given configuration R. The profile component is
+  /// given a name and a setup function which is responsible for configuring the profile in
+  /// accordance with the configuration.
   template <typename R>
   void registerProfileComponent(String const &id, SetupFunction<R> setup);
+
+  template <typename R>
+  void replaceProfileComponent(String const &id, SetupFunction<R> setup);
 
   template <typename R>
   void registerAnonymousProfileComponent(SetupFunction<R> setup);
@@ -84,6 +88,9 @@ public:
 
   /// Flag indicating whether we are operating in debug mode or not.
   bool isDebugMode() const;
+
+  /// Sets the default pipeline up.
+  void setupDefaultComponentPipeline();
 
 protected:
   /// Internal function that creates a module pass for QIR transformation. The module pass is
@@ -130,6 +137,30 @@ void ProfileGenerator::registerProfileComponent(String const &id, SetupFunction<
   };
 
   components_.push_back({id, std::move(setup_wrapper)});
+}
+
+template <typename R>
+void ProfileGenerator::replaceProfileComponent(String const &id, SetupFunction<R> setup)
+{
+  auto setup_wrapper = [setup](ProfileGenerator *ptr, Profile &profile) {
+    if (ptr->configuration_manager_.isActive<R>())
+    {
+      auto &config = ptr->configuration_manager_.get<R>();
+
+      setup(config, ptr, profile);
+    }
+  };
+
+  for (auto &component : components_)
+  {
+    if (component.first == id)
+    {
+      component.second = std::move(setup_wrapper);
+      return;
+    }
+  }
+
+  throw std::runtime_error("Could not find component " + id);
 }
 
 template <typename R>

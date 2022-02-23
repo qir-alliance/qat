@@ -20,15 +20,26 @@ public:
   void setup(ConfigurationManager &config)
   {
     config.setSectionName("Grouping quantum instructions", "");
-    config.addExperimentalParameter(group_allocations_, "group-allocations", "");
-    config.addExperimentalParameter(group_quantum_circuit_, "group-quantum-circuit", "");
-    config.addExperimentalParameter(group_measurement_, "group-measurement", "");
+    config.addExperimentalParameter(circuit_separation_, "separate-circuits",
+                                    "Whether or not to separate quantum and classical circuits");
+  }
+
+  static GroupingPassConfiguration createDisabled()
+  {
+    GroupingPassConfiguration ret;
+
+    ret.circuit_separation_ = false;
+
+    return ret;
+  }
+
+  bool circuitSeparation() const
+  {
+    return circuit_separation_;
   }
 
 private:
-  bool group_allocations_{true};
-  bool group_quantum_circuit_{true};
-  bool group_measurement_{true};
+  bool circuit_separation_{true};
 };
 
 }  // namespace quantum

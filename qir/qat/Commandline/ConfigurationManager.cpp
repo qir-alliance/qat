@@ -159,12 +159,21 @@ void ConfigurationManager::printConfiguration() const
 
 void ConfigurationManager::setSectionName(String const &name, String const &description)
 {
+  if (config_sections_.empty())
+  {
+    throw std::runtime_error("No section created yet.");
+  }
   config_sections_.back().name        = name;
   config_sections_.back().description = description;
 }
 
 void ConfigurationManager::disableSectionByDefault()
 {
+  if (config_sections_.empty())
+  {
+    throw std::runtime_error("No section created yet.");
+  }
+
   config_sections_.back().enabled_by_default = false;
 }
 

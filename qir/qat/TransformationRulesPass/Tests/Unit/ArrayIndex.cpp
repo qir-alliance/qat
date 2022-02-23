@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
 #include "Llvm/Llvm.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
@@ -68,14 +68,14 @@ quantum:                                          ; preds = %load
     factory.useStaticQubitArrayAllocation();
   };
 
-  auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+  auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
   ConfigurationManager &configuration_manager = profile->configurationManager();
 
   configuration_manager.addConfig<FactoryConfiguration>();
 
   ir_manip->applyProfile(profile);
-  llvm::outs() << *ir_manip->module() << "\n\n";
+
   // TODO: Add test criteria
 }
 
@@ -84,24 +84,23 @@ TEST(TransformationRulesPass, ArrayIndexReplacement2)
 {
   auto ir_manip = newIrManip(R"script(
   %leftPreshared = inttoptr i64 2 to %Array*
-  %0 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %leftPreshared, i64 %i)
+  %0 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %leftPreshared, i64 0)
   )script");
 
   auto configure_profile = [](RuleSet &rule_set) {
     auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(),
                                BasicAllocationManager::createNew());
 
-    llvm::errs() << "Configuring\n";
     factory.useStaticQubitArrayAllocation();
   };
 
-  auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+  auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
   ConfigurationManager &configuration_manager = profile->configurationManager();
 
   configuration_manager.addConfig<FactoryConfiguration>();
 
   ir_manip->applyProfile(profile);
-  llvm::outs() << *ir_manip->module() << "\n\n";
+
   // TODO: Add test criteria
 }

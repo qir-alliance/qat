@@ -32,7 +32,7 @@
 ///  Provide config │                      │                         │   Rules for
 ///                 ▼                                                ▼ transformation
 /// ┌───────────────────────────────┐─ ─ ─ ┘       ┌──────────────────────────────────┐
-/// │       ProfileGenerator        │─ ─ ─ ─ ─ ─ ─▶│      TransformationRulesPass      │
+/// │       ProfileGenerator        │─ ─ ─ ─ ─ ─ ─▶│      TransformationRulesPass     │
 /// └───────────────────────────────┘              └──────────────────────────────────┘
 ///                                                                  │  LLVM module
 ///                                                                  ▼      pass
@@ -46,7 +46,7 @@
 #include "Apps/Qat/QatConfig.hpp"
 #include "Commandline/ConfigurationManager.hpp"
 #include "Commandline/ParameterParser.hpp"
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
 #include "Generators/LlvmPassesConfiguration.hpp"
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
@@ -112,144 +112,6 @@ void init()
   initializeTypePromotionPass(registry);
 }
 
-class PrePostLlvmPasses
-{
-public:
-  void setup(ConfigurationManager &config)
-  {
-    config.setSectionName("LLVM optimisations",
-                          "Enables specific LLVM optimisations before and after transformation.");
-
-    // LLVM transformations
-    config.addParameter(unroll_loops_, "unroll-loops", "Aggressively unroll loops.");
-    config.addParameter(
-        unroll_allow_partial_, "allow-partial",
-        "Enables or disables partial unrolling. When disabled only full unrolling is allowed.");
-    config.addParameter(unroll_allow_peeling_, "allow-peeling",
-                        "Enables or disables loop peeling.");
-    config.addParameter(unroll_allow_runtime_, "allow-runtime",
-                        "Enables or disables unrolling of loops with runtime trip count.");
-    config.addParameter(unroll_allow_upper_bound_, "allow-upper-bound",
-                        "Enables or disables the use of trip count upper bound in loop unrolling.");
-    config.addParameter(unroll_allow_profile_based_peeling_, "allow-profile-based-peeling",
-                        "Enables or disables loop peeling basing on profile.");
-    config.addParameter(unroll_full_unroll_count_, "full-unroll-count",
-                        "Sets the max full unroll count.");
-    config.addParameter(unroll_opt_level_, "unroll-opt-level",
-                        "Sets the optimisation level for loop unrolling.");
-    config.addParameter(
-        unroll_only_when_forced_, "only-when-forced",
-        "If true, only loops that explicitly request unrolling via metadata are considered.");
-    config.addParameter(
-        unroll_forget_scev_, "forget-scev",
-        "If true, forget all loops when unrolling. If false, forget top-most loop of "
-        "the currently processed loops.");
-
-    config.addParameter(always_inline_, "always-inline", "Aggressively inline function calls.");
-
-    config.addParameter(inline_parameter_, "inlining-parameter",
-                        "Number of code lines acceptable when inlining.");
-
-    config.addExperimentalParameter(use_llvm_opt_pipeline_, false, false, "use-llvm-opt-pipeline",
-                                    "Disables the the default pipeline.");
-
-    config.addExperimentalParameter(opt_pipeline_config_, static_cast<String>(""),
-                                    static_cast<String>(""), "opt-pipeline-config",
-                                    "LLVM passes pipeline to use upon applying this component.");
-  }
-
-  /// Whether or not the LLVM AlwaysInline pass should be added to the profile.
-  bool alwaysInline() const
-  {
-    return always_inline_;
-  }
-
-  /// Whether or not the LLVM LoopUnroll pass should be added to the profile
-  bool unrollLoops() const
-  {
-    return unroll_loops_;
-  }
-
-  /// Parameter that defines the maximum number of lines of code allowed for inlining.
-  int32_t inlineParameter() const
-  {
-    return inline_parameter_;
-  }
-
-  bool unrollAllowPartial() const
-  {
-    return unroll_allow_partial_;
-  }
-
-  bool unrollAllowPeeling() const
-  {
-    return unroll_allow_peeling_;
-  }
-
-  bool unrollAllowRuntime() const
-  {
-    return unroll_allow_runtime_;
-  }
-
-  bool unrollAllowUpperBound() const
-  {
-    return unroll_allow_upper_bound_;
-  }
-
-  bool unrollAllowProfilBasedPeeling() const
-  {
-    return unroll_allow_profile_based_peeling_;
-  }
-
-  uint64_t unrolFullUnrollCount() const
-  {
-    return unroll_full_unroll_count_;
-  }
-
-  int32_t unrollOptLevel() const
-  {
-    return unroll_opt_level_;
-  }
-
-  bool unrollOnlyWhenForced() const
-  {
-    return unroll_only_when_forced_;
-  }
-
-  bool unrollForgeScev() const
-  {
-    return unroll_forget_scev_;
-  }
-
-  bool useLlvmOptPipeline() const
-  {
-    return use_llvm_opt_pipeline_;
-  }
-
-  String optPipelineConfig() const
-  {
-    return opt_pipeline_config_;
-  }
-
-private:
-  bool    always_inline_{false};  ///< Whether or not LLVM component should inline.
-  int32_t inline_parameter_{std::numeric_limits<int32_t>::max()};
-
-  bool     unroll_loops_{false};  ///< Whether or not LLVM should unroll loops
-  bool     unroll_allow_partial_{true};
-  bool     unroll_allow_peeling_{true};
-  bool     unroll_allow_runtime_{true};
-  bool     unroll_allow_upper_bound_{true};
-  bool     unroll_allow_profile_based_peeling_{true};
-  uint64_t unroll_full_unroll_count_{1024};
-  int32_t  unroll_opt_level_{3};
-  bool     unroll_only_when_forced_{false};
-  bool     unroll_forget_scev_{false};
-
-  bool   use_llvm_opt_pipeline_{false};
-  String opt_pipeline_config_{""};
-};
-
 int main(int argc, char **argv)
 {
 
@@ -278,99 +140,11 @@ int main(int argc, char **argv)
     configuration_manager.addConfig<ValidationPassConfiguration>(
         "validation-configuration", ValidationPassConfiguration::fromProfileName(config.profile()));
 
+    // Setting default component pipelines up
+    generator->setupDefaultComponentPipeline();
+
     // Loading components
     //
-
-    generator->registerProfileComponent<PrePostLlvmPasses>(
-        "llvm-optimisation",
-        [](PrePostLlvmPasses const &cfg, ProfileGenerator *ptr, Profile &profile) {
-          // Always inline
-          if (cfg.alwaysInline())
-          {
-            auto &mpm          = ptr->modulePassManager();
-            auto &pass_builder = ptr->passBuilder();
-            mpm.addPass(llvm::AlwaysInlinerPass());
-            auto                           inline_param = getInlineParams(cfg.inlineParameter());
-            llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
-            mpm.addPass(std::move(inliner_pass));
-          }
-
-          // Unroll loop
-          if (cfg.unrollLoops())
-          {
-            auto &mpm          = ptr->modulePassManager();
-            auto &pass_builder = ptr->passBuilder();
-
-            /// More unroll parameters
-            /// https://llvm.org/doxygen/LoopUnrollPass_8cpp.html
-
-            /// Header
-            /// https://llvm.org/doxygen/LoopUnrollPass_8h.html
-
-            llvm::LoopUnrollOptions loop_config(cfg.unrollOptLevel(), cfg.unrollOnlyWhenForced(),
-                                                cfg.unrollForgeScev());
-
-            loop_config.setPartial(cfg.unrollAllowPartial())
-                .setPeeling(cfg.unrollAllowPeeling())
-                .setRuntime(cfg.unrollAllowRuntime())
-                .setUpperBound(cfg.unrollAllowUpperBound())
-                .setProfileBasedPeeling(cfg.unrollAllowProfilBasedPeeling())
-                .setFullUnrollMaxCount(cfg.unrolFullUnrollCount());
-
-            mpm.addPass(createModuleToFunctionPassAdaptor(llvm::LoopUnrollPass(loop_config)));
-          }
-
-          if (cfg.useLlvmOptPipeline())
-          {
-            auto                                 pass_pipeline = cfg.optPipelineConfig();
-            llvm::PassBuilder::OptimizationLevel opt           = ptr->optimisationLevel();
-            if (!pass_pipeline.empty())
-            {
-              auto &pass_builder = ptr->passBuilder();
-              auto &npm          = ptr->modulePassManager();
-
-              if (auto err = pass_builder.parsePassPipeline(npm, pass_pipeline, false, false))
-              {
-                throw std::runtime_error("Failed to set pass pipeline up. Value: '" +
-                                         pass_pipeline + "', error: " + toString(std::move(err)));
-              }
-            }
-            else
-            {
-              auto &mpm = ptr->modulePassManager();
-
-              // If not explicitly disabled, we fall back to the default LLVM pipeline
-              auto                   &pass_builder = ptr->passBuilder();
-              llvm::ModulePassManager pipeline1 = pass_builder.buildPerModuleDefaultPipeline(opt);
-              mpm.addPass(std::move(pipeline1));
-
-              llvm::ModulePassManager pipeline2 = pass_builder.buildModuleSimplificationPipeline(
-                  opt, llvm::PassBuilder::ThinLTOPhase::None);
-              mpm.addPass(std::move(pipeline2));
-
-              llvm::ModulePassManager pipeline3 =
-                  pass_builder.buildModuleOptimizationPipeline(opt, ptr->isDebugMode());
-              mpm.addPass(std::move(pipeline3));
-            }
-          }
-        });
-
-    generator->registerProfileComponent<TransformationRulesPassConfiguration>(
-        "transformation-rules", [](TransformationRulesPassConfiguration const &cfg,
-                                   ProfileGenerator *ptr, Profile &profile) {
-          auto &ret = ptr->modulePassManager();
-
-          // Defining the mapping
-          RuleSet rule_set;
-          auto    factory = RuleFactory(rule_set, profile.getQubitAllocationManager(),
-                                        profile.getResultAllocationManager());
-          factory.usingConfiguration(ptr->configurationManager().get<FactoryConfiguration>());
-
-          // Creating profile pass
-          ret.addPass(TransformationRulesPass(std::move(rule_set), cfg, &profile));
-        });
-
-    generator->replicateProfileComponent("llvm-optimisation");
 
     if (!config.load().empty())
     {
@@ -390,16 +164,6 @@ int main(int argc, char **argv)
         load_component(generator.get());
       }
     }
-
-    generator->registerProfileComponent<GroupingPassConfiguration>(
-        "grouping",
-        [](GroupingPassConfiguration const &cfg, ProfileGenerator *ptr, Profile &profile) {
-          auto &mam = profile.moduleAnalysisManager();
-          mam.registerPass([&] { return GroupingAnalysisPass(cfg); });
-          auto &ret = ptr->modulePassManager();
-
-          ret.addPass(GroupingPass(cfg));
-        });
 
     // Reconfiguring to get all the arguments of the passes registered
     parser.reset();

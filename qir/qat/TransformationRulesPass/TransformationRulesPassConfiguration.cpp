@@ -29,9 +29,9 @@ void TransformationRulesPassConfiguration::setup(ConfigurationManager &config)
   config.addExperimentalParameter(assume_no_exceptions_, false, false, "assume-no-except",
                                   "Assumes that no exception will occur during runtime.");
 
-  config.addExperimentalParameter(reuse_qubits_, true, false, "reuse-qubits",
+  config.addExperimentalParameter(reuse_qubits_, false, false, "reuse-qubits",
                                   "Use to define whether or not to reuse qubits.");
-  config.addExperimentalParameter(reuse_results_, true, false, "reuse-results",
+  config.addExperimentalParameter(reuse_results_, false, false, "reuse-results",
                                   "Use to define whether or not to reuse results.");
 
   // Ready settings
@@ -54,6 +54,19 @@ TransformationRulesPassConfiguration TransformationRulesPassConfiguration::creat
   ret.transform_execution_path_only_ = false;
   ret.max_recursion_                 = 512;
   ret.reuse_qubits_                  = false;
+  ret.annotate_qubit_use_            = false;
+
+  return ret;
+}
+
+TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createReuseQubitsOnly()
+{
+  TransformationRulesPassConfiguration ret;
+  ret.delete_dead_code_              = false;
+  ret.clone_functions_               = false;
+  ret.transform_execution_path_only_ = false;
+  ret.max_recursion_                 = 512;
+  ret.reuse_qubits_                  = true;
   ret.annotate_qubit_use_            = false;
 
   return ret;
