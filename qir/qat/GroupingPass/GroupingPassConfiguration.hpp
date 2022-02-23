@@ -5,42 +5,44 @@
 #include "Commandline/ConfigurationManager.hpp"
 #include "QatTypes/QatTypes.hpp"
 
-namespace microsoft {
-namespace quantum {
-
-class GroupingPassConfiguration
+namespace microsoft
 {
-public:
-  using Set = std::unordered_set<std::string>;
-  // Setup and construction
-  //
+namespace quantum
+{
 
-  /// Setup function that adds the configuration flags to the ConfigurationManager. See the
-  /// ConfigurationManager documentation for more details on how the setup process is implemented.
-  void setup(ConfigurationManager &config)
-  {
-    config.setSectionName("Grouping quantum instructions", "");
-    config.addExperimentalParameter(circuit_separation_, "separate-circuits",
-                                    "Whether or not to separate quantum and classical circuits");
-  }
+    class GroupingPassConfiguration
+    {
+      public:
+        using Set = std::unordered_set<std::string>;
+        // Setup and construction
+        //
 
-  static GroupingPassConfiguration createDisabled()
-  {
-    GroupingPassConfiguration ret;
+        /// Setup function that adds the configuration flags to the ConfigurationManager. See the
+        /// ConfigurationManager documentation for more details on how the setup process is implemented.
+        void setup(ConfigurationManager& config)
+        {
+            config.setSectionName("Grouping quantum instructions", "");
+            config.addExperimentalParameter(
+                circuit_separation_, "separate-circuits", "Whether or not to separate quantum and classical circuits");
+        }
 
-    ret.circuit_separation_ = false;
+        static GroupingPassConfiguration createDisabled()
+        {
+            GroupingPassConfiguration ret;
 
-    return ret;
-  }
+            ret.circuit_separation_ = false;
 
-  bool circuitSeparation() const
-  {
-    return circuit_separation_;
-  }
+            return ret;
+        }
 
-private:
-  bool circuit_separation_{true};
-};
+        bool circuitSeparation() const
+        {
+            return circuit_separation_;
+        }
 
-}  // namespace quantum
-}  // namespace microsoft
+      private:
+        bool circuit_separation_{true};
+    };
+
+} // namespace quantum
+} // namespace microsoft
