@@ -1,8 +1,5 @@
 all: QSharpVersion/qir/Example.ll
-	${QAT_BINARY}  QSharpVersion/qir/Example.ll ${QIR_STDLIB} -O3 -S --apply > combined.ll 
-	opt -O3 -S combined.ll > optimised.ll
-	${QAT_BINARY} -S --validate --save-validation-report validation.json  --profile base optimised.ll || echo "failed!"
-	@echo "Validation for ConstQubitArray finished"
+	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --profile base QSharpVersion/qir/Example.ll  || echo "failed!"
 	
 
 stdlib: QSharpVersion/qir/Example.ll

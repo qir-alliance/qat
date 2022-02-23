@@ -1,10 +1,7 @@
 all: qat-qsharp
 
 qat-qsharp: QSharpVersion/qir/Example.ll
-	${QAT_BINARY} -O3 --apply -S --verify-module --profile base QSharpVersion/qir/Example.ll  ${QIR_STDLIB}  > combined.ll
-	opt -O3 -S combined.ll > optimised.ll
-	${QAT_BINARY} -S --validate --save-validation-report validation.json  --profile base optimised.ll || echo "failed!"
-	@echo "Validation for OptimisationIssue finished"
+	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --profile base QSharpVersion/qir/Example.ll  || echo "failed!"
 	
 QSharpVersion/qir/Example.ll:
 	cd QSharpVersion && make qir/Example.ll
