@@ -36,6 +36,12 @@ namespace quantum
         /// Function that allows to set the current location.
         void setLocation(String const& name, uint64_t row, uint64_t col) override;
 
+        /// Sets the value of the LLVM instruction causing the issue.
+        void setLlvmHint(String const& value) override;
+
+        /// Sets the value of the frontend instruction causing the issue.
+        void setFrontendHint(String const& value) override;
+
       private:
         String   location_name_{""};
         uint64_t location_row_{0};

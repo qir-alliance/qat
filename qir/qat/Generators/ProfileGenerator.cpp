@@ -21,6 +21,7 @@ namespace quantum
 
     Profile ProfileGenerator::newProfile(String const& name, OptimizationLevel const& optimisation_level, bool debug)
     {
+
         auto qubit_allocation_manager  = BasicAllocationManager::createNew();
         auto result_allocation_manager = BasicAllocationManager::createNew();
 
@@ -37,7 +38,9 @@ namespace quantum
         ret.setModulePassManager(std::move(module_pass_manager));
 
         // Creating validator
-        auto validator = std::make_unique<Validator>(configuration_manager_.get<ValidationPassConfiguration>(), debug);
+        auto validator =
+            std::make_unique<Validator>(configuration_manager_.get<ValidationPassConfiguration>(), false, debug);
+
         ret.setValidator(std::move(validator));
 
         return ret;

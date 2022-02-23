@@ -16,7 +16,11 @@ namespace microsoft
 namespace quantum
 {
 
-    Validator::Validator(ValidationPassConfiguration const& cfg, bool debug, llvm::TargetMachine* target_machine)
+    Validator::Validator(
+        ValidationPassConfiguration const& cfg,
+        bool                               force_log_collection,
+        bool                               debug,
+        llvm::TargetMachine*               target_machine)
       : loop_analysis_manager_{debug}
       , function_analysis_manager_{debug}
       , gscc_analysis_manager_{debug}
@@ -34,12 +38,19 @@ namespace quantum
         pass_builder_->crossRegisterProxies(
             loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
 
-        // Checking if we need to save the log to a file
+        if (force_log_collection || !cfg.saveReportTo().empty())
+        {
+            logger_ = std::make_shared<LogCollection>();
+        }
+
         if (!cfg.saveReportTo().empty())
         {
-            logger_           = std::make_shared<LogCollection>();
             save_to_filename_ = cfg.saveReportTo();
+        }
 
+        // Checking if we need to save the log to a file
+        if (logger_)
+        {
             module_pass_manager_.addPass(ValidationPass(cfg, logger_));
         }
         else
@@ -109,6 +120,11 @@ namespace quantum
         return module_analysis_manager_;
     }
 
+    Validator::LogColloectionPtr Validator::logger() const
+    {
+        return logger_;
+    }
+
     void Validator::saveReportToFileIfNeeded()
     {
         if (!save_to_filename_.empty() && logger_)
@@ -147,9 +163,11 @@ namespace quantum
 
                 fout << "    \"message\": \"" << message.message << "\",\n";
                 fout << "    \"location\": {\n";
-                fout << "      \"name\": \"" << message.location.name << "\",\n";
+                fout << "      \"filename\": \"" << message.location.name << "\",\n";
                 fout << "      \"row\": " << message.location.row << ",\n";
-                fout << "      \"col\": " << message.location.col << "\n";
+                fout << "      \"col\": " << message.location.col << ",\n";
+                fout << "      \"llvm_hint\": \"" << message.location.llvm_hint << "\",\n";
+                fout << "      \"frontend_hint\": \"" << message.location.frontend_hint << "\"\n";
                 fout << "    }\n";
                 fout << "  }";
                 not_first = true;

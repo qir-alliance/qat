@@ -48,11 +48,39 @@ namespace quantum
         static bool isRequired();
 
       private:
+        void opcodeChecks(Instruction& instr);
+        void callChecks(Instruction& instr);
+        void pointerChecks(Instruction& instr);
+
+        bool satisfyingOpcodeRequirements();
+        bool satisfyingInternalCallRequirements();
+        bool satisfyingExternalCallRequirements();
+        bool satisfyingPointerRequirements();
+
+        struct Location
+        {
+            String   filename{""};
+            uint64_t row{0};
+            uint64_t col{0};
+            String   llvm_hint{""};
+        };
+        using Locations = std::vector<Location>;
+
         ValidationPassConfiguration config_{};
 
-        std::unordered_map<std::string, uint64_t> opcodes_;
-        std::unordered_map<std::string, uint64_t> external_calls_;
-        std::unordered_map<std::string, uint64_t> internal_calls_;
+        Location current_location_{};
+
+        std::unordered_map<std::string, uint64_t>  opcodes_;
+        std::unordered_map<std::string, Locations> opcode_location_;
+
+        std::unordered_map<std::string, uint64_t>  external_calls_;
+        std::unordered_map<std::string, Locations> external_call_location_;
+
+        std::unordered_map<std::string, uint64_t>  internal_calls_;
+        std::unordered_map<std::string, Locations> internal_call_location_;
+
+        std::unordered_map<std::string, uint64_t>  pointers_;
+        std::unordered_map<std::string, Locations> pointer_location_;
 
         ILoggerPtr logger_{nullptr};
     };

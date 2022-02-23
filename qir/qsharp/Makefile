@@ -29,3 +29,7 @@ clean:
 	cd IsingModel && make clean
 	cd ParallelQRng && make clean
 	cd TeleportChain && make clean
+	cd NegativeBaseProfiles/ExternalCall && make clean
+	cd NegativeBaseProfiles/InternalCall && make clean
+	cd NegativeBaseProfiles/IfStatement && make clean
+	cd NegativeBaseProfiles/Loop && make clean			

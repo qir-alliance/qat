@@ -22,6 +22,8 @@ namespace quantum
             String   name{};
             uint64_t row{0};
             uint64_t col{0};
+            String   llvm_hint;
+            String   frontend_hint;
         };
 
         /// Enum description what type of information we are conveying.
@@ -65,6 +67,12 @@ namespace quantum
 
         /// Function that allows to set the current location.
         void setLocation(String const& name, uint64_t row, uint64_t col) override;
+
+        /// Sets the value of the LLVM instruction causing the issue.
+        void setLlvmHint(String const& value) override;
+
+        /// Sets the value of the frontend instruction causing the issue.
+        void setFrontendHint(String const& value) override;
 
         /// Accessor to the messages
         Messages const& messages() const;

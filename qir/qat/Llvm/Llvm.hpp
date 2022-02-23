@@ -82,6 +82,9 @@
 #include "llvm/Support/TargetSelect.h"
 #include "llvm/Target/TargetMachine.h"
 
+// Debugging
+#include "llvm/IR/DebugInfoMetadata.h"
+
 #if defined(__clang__)
 #pragma Clang diagnostic pop
 #endif

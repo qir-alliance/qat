@@ -31,6 +31,7 @@ namespace quantum
 
         explicit Validator(
             ValidationPassConfiguration const& cfg,
+            bool                               force_log_collection,
             bool                               debug,
             llvm::TargetMachine*               target_machine = nullptr);
 
@@ -50,6 +51,9 @@ namespace quantum
         /// Validates that a module complies with the specified QIR profile. Returns true if the module is
         /// valid and false otherwise.
         bool validate(llvm::Module& module);
+
+        /// Returns the logger. This value may be null if no logger was set.
+        LogColloectionPtr logger() const;
 
       protected:
         using PassBuilderPtr = std::unique_ptr<llvm::PassBuilder>;
