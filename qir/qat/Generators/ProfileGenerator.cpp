@@ -127,7 +127,7 @@ namespace quantum
         using namespace llvm;
 
         registerProfileComponent<LlvmPassesConfiguration>(
-            "llvm-optimisation", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            "llvm-optimisation", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
                 auto& mpm = ptr->modulePassManager();
 
                 // Always inline
@@ -236,7 +236,7 @@ namespace quantum
                 ret.addPass(createModuleToFunctionPassAdaptor(llvm::SimplifyCFGPass()));
             });
 
-        // TODO: Causes memory error
+        // TODO(tfr): Causes memory error
         // replicateProfileComponent("llvm-optimisation");
 
         registerProfileComponent<GroupingPassConfiguration>(

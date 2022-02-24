@@ -164,7 +164,7 @@ namespace quantum
 
     template <typename R> void ProfileGenerator::registerAnonymousProfileComponent(SetupFunction<R> setup)
     {
-        // TODO: Check that R exists in config
+        // TODO(tfr): Check that R exists in config
         auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile) {
             if (ptr->configuration_manager_.isActive<R>())
             {

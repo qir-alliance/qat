@@ -77,7 +77,7 @@ quantum:                                          ; preds = %load
 
     ir_manip->applyProfile(profile);
 
-    // TODO: Add test criteria
+    // TODO(tfr): Add test criteria
 }
 
 // Single allocation with action and then release
@@ -102,5 +102,5 @@ TEST(TransformationRulesPass, ArrayIndexReplacement2)
 
     ir_manip->applyProfile(profile);
 
-    // TODO: Add test criteria
+    // TODO(tfr): Add test criteria
 }

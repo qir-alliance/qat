@@ -172,7 +172,7 @@ namespace quantum
 
         config_sections_.emplace_back(std::move(new_section));
 
-        // TODO:
+        // TODO(tfr):
         ptr->setup(*this);
     }
 
