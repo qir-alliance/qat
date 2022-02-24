@@ -163,7 +163,7 @@ namespace quantum
                         .setProfileBasedPeeling(cfg.unrollAllowProfilBasedPeeling())
                         .setFullUnrollMaxCount(cfg.unrolFullUnrollCount());
 
-                    mpm.addPass(createModuleToFunctionPassAdaptor(llvm::LoopUnrollPass(std::move(loop_config))));
+                    mpm.addPass(createModuleToFunctionPassAdaptor(llvm::LoopUnrollPass(loop_config)));
                 }
 
                 if (cfg.useLlvmOptPipeline())
