@@ -144,7 +144,6 @@ namespace quantum
                 // Unroll loop
                 if (cfg.unrollLoops())
                 {
-                    llvm::errs() << "Adding unrolling loop\n";
                     auto& pass_builder = ptr->passBuilder();
 
                     /// More unroll parameters

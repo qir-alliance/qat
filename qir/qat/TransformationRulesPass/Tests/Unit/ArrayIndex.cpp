@@ -65,7 +65,6 @@ quantum:                                          ; preds = %load
     auto configure_profile = [](RuleSet& rule_set) {
         auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
 
-        llvm::errs() << "Configuring\n";
         factory.useStaticQubitArrayAllocation();
     };
 

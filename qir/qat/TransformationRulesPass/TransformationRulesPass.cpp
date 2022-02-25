@@ -791,9 +791,6 @@ namespace quantum
             processReplacements();
         }
 
-        llvm::errs() << "-----------\n";
-        llvm::errs() << module << "\n\n";
-        llvm::errs() << "----------- ----------- -----------\n";
         return llvm::PreservedAnalyses::none();
     }
 

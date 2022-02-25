@@ -91,7 +91,6 @@ continue__1:
     //
     // will be mapped to using this pattern.
 
-    llvm::errs() << *ir_manip->module() << "\n";
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence(
             {"%0 = call i1 @__quantum__qis__read_result__body(%Result* null)",

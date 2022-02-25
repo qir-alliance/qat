@@ -320,9 +320,7 @@ namespace quantum
                     return false;
                 }
 
-                llvm::errs() << "Replacing " << *old_instr << " with ";
                 instr->takeName(old_instr);
-                llvm::errs() << *instr << "\n";
 
                 // Ensuring that we have replaced the instruction before
                 // identifying release
