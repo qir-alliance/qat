@@ -106,6 +106,9 @@ namespace quantum
         /// Adds a new configuration of type T.
         template <typename T> inline void addConfig(String const& id = "", T const& default_value = T());
 
+        /// Whether or not a configuration of type previously registered
+        template <typename T> inline bool configWasRegistered();
+
         /// Whether or not the component associated with T is active.
         template <typename T> inline bool isActive();
 
@@ -181,6 +184,20 @@ namespace quantum
         config_sections_.emplace_back(std::move(new_section));
 
         ptr->setup(*this);
+    }
+
+    template <typename T> inline bool ConfigurationManager::configWasRegistered()
+    {
+        auto type = std::type_index(typeid(T));
+        for (auto& section : config_sections_)
+        {
+            if (section.type == type)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     template <typename T> inline T& ConfigurationManager::getInternal() const

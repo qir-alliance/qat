@@ -229,13 +229,14 @@ namespace quantum
                 // Creating profile pass
                 ret.addPass(TransformationRulesPass(std::move(rule_set), cfg, &profile));
 
+                // TODO(issue-59): Move to a separate pass.
                 ret.addPass(createModuleToFunctionPassAdaptor(llvm::InstCombinePass(1000)));
                 ret.addPass(createModuleToFunctionPassAdaptor(llvm::AggressiveInstCombinePass()));
                 ret.addPass(createModuleToFunctionPassAdaptor(llvm::SCCPPass()));
                 ret.addPass(createModuleToFunctionPassAdaptor(llvm::SimplifyCFGPass()));
             });
 
-        // TODO(tfr): Causes memory error
+        // TODO(issue-59): Causes memory sanitation issue
         // replicateProfileComponent("llvm-optimisation");
 
         registerProfileComponent<GroupingPassConfiguration>(

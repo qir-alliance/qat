@@ -75,9 +75,6 @@ namespace quantum
         /// Indicates whether or not this is an experimental config
         bool isExperimental() const;
 
-        /// Returns the experiment off value for the flag.
-        String experimentalOffValue() const;
-
       protected:
         // Constructor
         //
@@ -95,9 +92,8 @@ namespace quantum
         /// Sets the default value as a string.
         void setDefault(String const& v);
 
-        /// Marks the config as experimental and provides an "off" value which is used
-        /// whenever the config is inactive.
-        void setAsExperimental(String const& v);
+        /// Marks the config as experimental
+        void makeSettingExperimental();
 
       private:
         String name_;                  ///< Name that which sets the value.
@@ -105,8 +101,7 @@ namespace quantum
         bool   is_flag_{false};        ///< Whether or not the variable is a flag.
         String str_default_value_{""}; ///< Default value represented as a string.
 
-        bool   is_experimental_{false};         ///< Whether or not this config is experimental
-        String str_experimental_off_value_{""}; ///< Default value represented as a string.
+        bool is_experimental_{false}; ///< Whether or not this config is experimental
     };
 
 } // namespace quantum

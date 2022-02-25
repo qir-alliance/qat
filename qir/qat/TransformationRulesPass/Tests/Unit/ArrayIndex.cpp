@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
+#include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
@@ -73,33 +74,11 @@ quantum:                                          ; preds = %load
     ConfigurationManager& configuration_manager = profile->configurationManager();
 
     configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 
-    // TODO(tfr): Add test criteria
-}
-
-// Single allocation with action and then release
-TEST(TransformationRulesPass, ArrayIndexReplacement2)
-{
-    auto ir_manip = newIrManip(R"script(
-  %leftPreshared = inttoptr i64 2 to %Array*
-  %0 = call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %leftPreshared, i64 0)
-  )script");
-
-    auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
-
-        factory.useStaticQubitArrayAllocation();
-    };
-
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
-
-    ConfigurationManager& configuration_manager = profile->configurationManager();
-
-    configuration_manager.addConfig<FactoryConfiguration>();
-
-    ir_manip->applyProfile(profile);
-
-    // TODO(tfr): Add test criteria
+    EXPECT_TRUE(ir_manip->hasInstructionSequence(
+        {"tail call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 2 to %Qubit*))"}));
 }

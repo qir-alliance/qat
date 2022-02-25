@@ -167,8 +167,7 @@ namespace quantum
     {
         experimental_off_value_ = off_value;
 
-        // TODO(tfr): Possibly not needed
-        setAsExperimental(valueAsString<Type>(off_value));
+        makeSettingExperimental();
     }
 
     template <typename T> String ConfigBind<T>::value()

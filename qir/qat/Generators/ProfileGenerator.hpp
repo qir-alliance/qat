@@ -172,7 +172,11 @@ namespace quantum
 
     template <typename R> void ProfileGenerator::registerAnonymousProfileComponent(SetupFunction<R> setup)
     {
-        // TODO(tfr): Check that R exists in config
+        if (!configuration_manager_.configWasRegistered<R>())
+        {
+            throw std::runtime_error("Configuration '" + static_cast<String>(typeid(R).name()) + "' does not exist.");
+        }
+
         auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile) {
             if (ptr->configuration_manager_.isActive<R>())
             {

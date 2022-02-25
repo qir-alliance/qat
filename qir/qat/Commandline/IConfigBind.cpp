@@ -54,20 +54,14 @@ namespace quantum
         str_default_value_ = v;
     }
 
-    void IConfigBind::setAsExperimental(String const& v)
+    void IConfigBind::makeSettingExperimental()
     {
-        is_experimental_            = true;
-        str_experimental_off_value_ = v;
+        is_experimental_ = true;
     }
 
     bool IConfigBind::isExperimental() const
     {
         return is_experimental_;
-    }
-
-    String IConfigBind::experimentalOffValue() const
-    {
-        return str_experimental_off_value_;
     }
 
 } // namespace quantum
