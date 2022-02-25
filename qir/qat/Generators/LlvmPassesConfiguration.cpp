@@ -55,19 +55,16 @@ namespace quantum
             "LLVM passes pipeline to use upon applying this component.");
     }
 
-    /// Whether or not the LLVM AlwaysInline pass should be added to the profile.
     bool LlvmPassesConfiguration::alwaysInline() const
     {
         return always_inline_;
     }
 
-    /// Whether or not the LLVM LoopUnroll pass should be added to the profile
     bool LlvmPassesConfiguration::unrollLoops() const
     {
         return unroll_loops_;
     }
 
-    /// Parameter that defines the maximum number of lines of code allowed for inlining.
     int32_t LlvmPassesConfiguration::inlineParameter() const
     {
         return inline_parameter_;

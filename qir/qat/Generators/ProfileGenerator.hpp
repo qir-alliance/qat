@@ -67,10 +67,18 @@ namespace quantum
         /// accordance with the configuration.
         template <typename R> void registerProfileComponent(String const& id, SetupFunction<R> setup);
 
+        /// Replaces a profile component. This function is useful for testing purposes and alteration to
+        /// the default set of components. For instance, one can setup a production set of components and
+        /// then replace a single component to test the effects of this single replacement while keeping
+        /// all other components actually as they are in production.
         template <typename R> void replaceProfileComponent(String const& id, SetupFunction<R> setup);
 
+        /// Registers a new profile component with a given configuration R. Unlike
+        /// `registerProfileComponent` this component will not have an ID.
         template <typename R> void registerAnonymousProfileComponent(SetupFunction<R> setup);
 
+        /// Replicates an existing component as an anonymous component. The original component is found by
+        /// its id and then copied as an anonymous component which is appended to the list of components.
         void replicateProfileComponent(String const& id);
 
         // Support properties for generators

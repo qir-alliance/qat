@@ -121,9 +121,10 @@ namespace quantum
         template <typename T>
         inline void addParameter(T& bind, T default_value, String const& name, String const& description);
 
-        /// Adds an experimental parameter with a default value to the configuration section. This
-        /// function should be used by the configuration class. The difference to `addParameter` is that
-        /// this function marks the parameter as experimental and has a default "off" value
+        /// Adds an experimental parameter with a default value and an experimental "off" value to the
+        /// configuration section. This function should be used by the configuration class. The difference
+        /// to `addParameter` is that this function marks the parameter as experimental and has a default
+        /// "off" value
         template <typename T>
         inline void addExperimentalParameter(
             T&            bind,
@@ -131,8 +132,15 @@ namespace quantum
             T             off_value,
             String const& name,
             String const& description);
+
+        /// Adds an experimental parameter with a default value to the
+        /// configuration section. The experimental off value will be set to the default value of
+        /// parameter. This function should be used by the configuration class.
         template <typename T>
         inline void addExperimentalParameter(T& bind, T default_value, String const& name, String const& description);
+
+        /// Adds an experimental parameter. The default value and the experimental off value will be the
+        /// value of the parameter added. This function should be used by the configuration class.
         template <typename T>
         inline void addExperimentalParameter(T& bind, String const& name, String const& description);
 

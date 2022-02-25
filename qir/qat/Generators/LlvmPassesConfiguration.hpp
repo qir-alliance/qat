@@ -25,45 +25,67 @@ namespace quantum
         /// Parameter that defines the maximum number of lines of code allowed for inlining.
         int32_t inlineParameter() const;
 
+        /// Whether or not to allow partial unrolling. When disable only full unrolling will be used.
         bool unrollAllowPartial() const;
 
+        /// Whether or not to allow peeling.
         bool unrollAllowPeeling() const;
 
+        /// Whether or not to allow unrolling of loops with runtime trip counts. See
+        /// [implementation](https://llvm.org/doxygen/LoopUnrollRuntime_8cpp_source.html) for details.
         bool unrollAllowRuntime() const;
 
+        /// Enables or disables the usage of trip counting in loop unrolling.
         bool unrollAllowUpperBound() const;
 
         bool unrollAllowProfilBasedPeeling() const;
 
+        /// The max count full unroll count.
         uint64_t unrolFullUnrollCount() const;
 
+        /// The optimisation level for the loop unrolling pass.
         int32_t unrollOptLevel() const;
 
+        /// Whether or not to limit unrolling to which are requested to be unrolled via meta data is
+        /// consider. When false, a cost model is used to determine whether or not to unroll a loop.
         bool unrollOnlyWhenForced() const;
 
         bool unrollForgeScev() const;
 
+        /// Whether or not to use a full opt pipeline.
         bool useLlvmOptPipeline() const;
 
+        /// Opt pipeline configuration string.
         String optPipelineConfig() const;
 
+        /// Whether or not to add a pass to eliminate constants.
         bool eliminateConstants() const;
+
+        /// Whether or not to add a pass to eliminate dead code.
         bool eliminateDeadCode() const;
 
+        /// Whether or not memory allocations should be attempted to be mapped into registers.
         bool eliminateMemory() const;
 
         // Configuration classification
+
+        /// Checking if the configuration amounts to being disabled.
         bool isDisabled() const;
+
+        /// Checking whether two configurations are identical.
         bool operator==(LlvmPassesConfiguration const& o) const = default;
 
+        /// Creating a configuration that disables all passes and/or their effect on the IR.
         static LlvmPassesConfiguration createDisabled();
+
+        /// Creates a configuration that unrolls and inlines code.
         static LlvmPassesConfiguration createUnrollInline();
 
       private:
-        bool    always_inline_{false}; ///< Whether or not LLVM component should inline.
+        bool    always_inline_{false};
         int32_t inline_parameter_{std::numeric_limits<int32_t>::max()};
 
-        bool     unroll_loops_{false}; ///< Whether or not LLVM should unroll loops
+        bool     unroll_loops_{false};
         bool     unroll_allow_partial_{true};
         bool     unroll_allow_peeling_{true};
         bool     unroll_allow_runtime_{true};
