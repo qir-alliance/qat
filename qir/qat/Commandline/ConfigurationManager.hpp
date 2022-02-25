@@ -45,7 +45,7 @@ namespace quantum
             TypeId     type{TypeId(typeid(std::nullptr_t))}; ///< Type of the configuration.
             String     name{};                               ///< Name of the section.
             String     description{};                        ///< Description of the section.
-            bool       enabled_by_default{true};             ///< Whether or not
+            bool       enabled_by_default{true};             ///< Whether or not this section is enabled by default
             VoidPtr    configuration{};                      ///< Configuration class instance.
             ConfigList settings{};                           ///< List of parameter bindings.
             BoolPtr    active{nullptr};                      ///< Whether or not this component is active;
@@ -172,7 +172,6 @@ namespace quantum
 
         config_sections_.emplace_back(std::move(new_section));
 
-        // TODO(tfr):
         ptr->setup(*this);
     }
 

@@ -169,10 +169,7 @@ namespace quantum
                     return false;
                 }
 
-                // builder.SetInsertPoint(old_instr->getNextNode());
-
                 auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
-                // builder.CreateIntToPtr(new_index, ptr_type);
                 instr->takeName(old_instr);
 
                 // Ensuring that we have replaced the instruction before

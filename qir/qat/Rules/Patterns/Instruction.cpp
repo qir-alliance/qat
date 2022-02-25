@@ -63,14 +63,6 @@ namespace quantum
         return std::move(ret);
     }
 
-    /*
-    namespace {
-    String nameInstructionCalls(Value *instr)
-    {
-
-    }
-    }
-    */
     bool IntToPtrPattern::match(Value* instr, Captures& captures) const
     {
         auto* a = llvm::dyn_cast<llvm::IntToPtrInst>(instr);
