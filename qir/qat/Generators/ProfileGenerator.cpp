@@ -19,7 +19,7 @@ namespace microsoft
 namespace quantum
 {
 
-    Profile ProfileGenerator::newProfile(String const& name, OptimizationLevel const& optimisation_level, bool debug)
+    Profile ProfileGenerator::newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug)
     {
 
         auto qubit_allocation_manager  = BasicAllocationManager::createNew();
@@ -33,7 +33,7 @@ namespace quantum
         // TODO(issue-12): Set target machine
         Profile ret{name, debug, nullptr, qubit_allocation_manager, result_allocation_manager};
 
-        auto module_pass_manager = createGenerationModulePassManager(ret, optimisation_level, debug);
+        auto module_pass_manager = createGenerationModulePassManager(ret, optimization_level, debug);
 
         ret.setModulePassManager(std::move(module_pass_manager));
 
@@ -48,7 +48,7 @@ namespace quantum
 
     llvm::ModulePassManager ProfileGenerator::createGenerationModulePassManager(
         Profile&                 profile,
-        OptimizationLevel const& optimisation_level,
+        OptimizationLevel const& optimization_level,
         bool                     debug)
     {
         auto&                   pass_builder = profile.passBuilder();
@@ -56,7 +56,7 @@ namespace quantum
 
         module_pass_manager_ = &ret;
         pass_builder_        = &pass_builder;
-        optimisation_level_  = optimisation_level;
+        optimization_level_  = optimization_level;
         debug_               = debug;
 
         for (auto& c : components_)
@@ -97,9 +97,9 @@ namespace quantum
         return configuration_manager_;
     }
 
-    ProfileGenerator::OptimizationLevel ProfileGenerator::optimisationLevel() const
+    ProfileGenerator::OptimizationLevel ProfileGenerator::optimizationLevel() const
     {
-        return optimisation_level_;
+        return optimization_level_;
     }
 
     bool ProfileGenerator::isDebugMode() const
@@ -127,7 +127,7 @@ namespace quantum
         using namespace llvm;
 
         registerProfileComponent<LlvmPassesConfiguration>(
-            "llvm-optimisation", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+            "llvm-optimization", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
                 auto& mpm = ptr->modulePassManager();
 
                 // Always inline
@@ -168,7 +168,7 @@ namespace quantum
                 if (cfg.useLlvmOptPipeline())
                 {
                     auto                                 pass_pipeline = cfg.optPipelineConfig();
-                    llvm::PassBuilder::OptimizationLevel opt           = ptr->optimisationLevel();
+                    llvm::PassBuilder::OptimizationLevel opt           = ptr->optimizationLevel();
                     if (!pass_pipeline.empty())
                     {
                         auto& pass_builder = ptr->passBuilder();
@@ -237,7 +237,7 @@ namespace quantum
             });
 
         // TODO(issue-59): Causes memory sanitation issue
-        // replicateProfileComponent("llvm-optimisation");
+        // replicateProfileComponent("llvm-optimization");
 
         registerProfileComponent<GroupingPassConfiguration>(
             "grouping", [](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {

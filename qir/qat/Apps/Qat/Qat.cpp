@@ -231,31 +231,31 @@ int main(int argc, char** argv)
             exit(-1);
         }
 
-        // Getting the optimisation level
+        // Getting the optimization level
         //
-        auto optimisation_level = llvm::PassBuilder::OptimizationLevel::O0;
+        auto optimization_level = llvm::PassBuilder::OptimizationLevel::O0;
 
-        // Setting the optimisation level
+        // Setting the optimization level
         if (config.isOpt1Enabled())
         {
-            optimisation_level = llvm::PassBuilder::OptimizationLevel::O1;
+            optimization_level = llvm::PassBuilder::OptimizationLevel::O1;
         }
 
         if (config.isOpt2Enabled())
         {
-            optimisation_level = llvm::PassBuilder::OptimizationLevel::O2;
+            optimization_level = llvm::PassBuilder::OptimizationLevel::O2;
         }
 
         if (config.isOpt3Enabled())
         {
-            optimisation_level = llvm::PassBuilder::OptimizationLevel::O3;
+            optimization_level = llvm::PassBuilder::OptimizationLevel::O3;
         }
 
         // Profile manipulation
         //
 
         // Creating the profile that will be used for generation and validation
-        auto profile = generator->newProfile(config.profile(), optimisation_level, config.isDebugMode());
+        auto profile = generator->newProfile(config.profile(), optimization_level, config.isDebugMode());
 
         if (config.shouldGenerate())
         {

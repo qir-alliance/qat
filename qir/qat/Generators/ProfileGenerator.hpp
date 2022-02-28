@@ -53,10 +53,10 @@ namespace quantum
         /// configuration manager and is intended for profile generation.
         ConfigurationManager const& configurationManager() const;
 
-        /// Creates a new profile based on the registered components, optimisation level and debug
+        /// Creates a new profile based on the registered components, optimization level and debug
         /// requirements. The returned profile can be applied to an IR to transform it in accordance with
         /// the configurations given.
-        Profile newProfile(String const& name, OptimizationLevel const& optimisation_level, bool debug);
+        Profile newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug);
 
         // Defining the generator
 
@@ -90,8 +90,8 @@ namespace quantum
         /// Returns the pass builder.
         llvm::PassBuilder& passBuilder();
 
-        /// Returns the optimisation level.
-        OptimizationLevel optimisationLevel() const;
+        /// Returns the optimization level.
+        OptimizationLevel optimizationLevel() const;
 
         /// Flag indicating whether we are operating in debug mode or not.
         bool isDebugMode() const;
@@ -101,17 +101,17 @@ namespace quantum
 
       protected:
         /// Internal function that creates a module pass for QIR transformation. The module pass is
-        /// defined through the profile, the optimisation level and whether or not we are in debug mode.
+        /// defined through the profile, the optimization level and whether or not we are in debug mode.
         llvm::ModulePassManager createGenerationModulePassManager(
             Profile&                 profile,
-            OptimizationLevel const& optimisation_level,
+            OptimizationLevel const& optimization_level,
             bool                     debug);
 
         /// Internal function that creates a module pass for QIR validation. At the moment, this function
         /// is a placeholder for future functionality.
         llvm::ModulePassManager createValidationModulePass(
             PassBuilder&             pass_builder,
-            OptimizationLevel const& optimisation_level,
+            OptimizationLevel const& optimization_level,
             bool                     debug);
 
       private:
@@ -124,8 +124,8 @@ namespace quantum
         /// Pointer to the pass builder the profile is based on
         llvm::PassBuilder* pass_builder_{nullptr};
 
-        /// Optimisation level used by LLVM
-        OptimizationLevel optimisation_level_{OptimizationLevel::O0};
+        /// Optimization level used by LLVM
+        OptimizationLevel optimization_level_{OptimizationLevel::O0};
 
         /// Whether or not we are in debug mode
         bool debug_{false};

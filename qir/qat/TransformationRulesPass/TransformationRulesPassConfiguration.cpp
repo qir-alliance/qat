@@ -11,7 +11,7 @@ namespace quantum
 
     void TransformationRulesPassConfiguration::setup(ConfigurationManager& config)
     {
-        config.setSectionName("Pass configuration", "Configuration of the pass and its corresponding optimisations.");
+        config.setSectionName("Pass configuration", "Configuration of the pass and its corresponding optimizations.");
 
         // Experimental settings
         config.addExperimentalParameter(delete_dead_code_, true, false, "delete-dead-code", "Deleted dead code.");

@@ -54,13 +54,13 @@ TEST(RuleSetTestSuite, SelectOnOne)
     auto configure_profile = [](RuleSet& rule_set) {
         auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
 
-        factory.optimiseResultOne();
+        factory.optimizeResultOne();
     };
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
     ir_manip->applyProfile(profile);
 
-    // This optimisation is specific to the the __quantum__qis__read_result__body which
+    // This optimization is specific to the the __quantum__qis__read_result__body which
     // returns 1 or 0 depending on the result. We expect that
     //
     // %1 = call %Result* @__quantum__rt__result_get_one()

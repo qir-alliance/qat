@@ -43,7 +43,7 @@ namespace quantum
         /// The max count full unroll count.
         uint64_t unrolFullUnrollCount() const;
 
-        /// The optimisation level for the loop unrolling pass.
+        /// The optimization level for the loop unrolling pass.
         int32_t unrollOptLevel() const;
 
         /// Whether or not to limit unrolling to which are requested to be unrolled via meta data is

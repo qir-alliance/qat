@@ -8,5 +8,5 @@ QSharpVersion/qir/Example.ll:
 
 clean:
 	cd QSharpVersion && make clean
-	rm -f combined.ll optimised.ll
+	rm -f combined.ll optimized.ll
 	rm -f validation.json

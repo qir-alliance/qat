@@ -20,10 +20,10 @@ namespace quantum
         config.addParameter(validate_, false, "validate", "Executes the validation procedure.");
         config.addParameter(profile_, static_cast<String>("generic"), "profile", "Sets the profile.");
         config.addParameter(emit_llvm_, false, "S", "Emits LLVM IR to the standard output.");
-        config.addParameter(opt0_, false, "O0", "Optimisation level 0.");
-        config.addParameter(opt1_, false, "O1", "Optimisation level 1.");
-        config.addParameter(opt2_, false, "O2", "Optimisation level 2.");
-        config.addParameter(opt3_, false, "O3", "Optimisation level 3.");
+        config.addParameter(opt0_, false, "O0", "Optimization level 0.");
+        config.addParameter(opt1_, false, "O1", "Optimization level 1.");
+        config.addParameter(opt2_, false, "O2", "Optimization level 2.");
+        config.addParameter(opt3_, false, "O3", "Optimization level 3.");
 
         config.addParameter(verify_module_, "verify-module", "Verifies the module after transformation.");
 

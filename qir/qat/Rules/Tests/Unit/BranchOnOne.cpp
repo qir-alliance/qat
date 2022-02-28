@@ -69,7 +69,7 @@ continue__1:
         auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
         // factory.useStaticResultAllocation();
 
-        factory.optimiseResultOne();
+        factory.optimizeResultOne();
     };
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));

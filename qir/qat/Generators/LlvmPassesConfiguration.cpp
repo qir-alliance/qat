@@ -12,7 +12,7 @@ namespace quantum
     void LlvmPassesConfiguration::setup(ConfigurationManager& config)
     {
         config.setSectionName(
-            "LLVM optimisations", "Enables specific LLVM optimisations before and after transformation.");
+            "LLVM optimizations", "Enables specific LLVM optimizations before and after transformation.");
 
         // LLVM transformations
         config.addParameter(unroll_loops_, "unroll-loops", "Aggressively unroll loops.");
@@ -29,7 +29,7 @@ namespace quantum
             unroll_allow_profile_based_peeling_, "allow-profile-based-peeling",
             "Enables or disables loop peeling basing on profile.");
         config.addParameter(unroll_full_unroll_count_, "full-unroll-count", "Sets the max full unroll count.");
-        config.addParameter(unroll_opt_level_, "unroll-opt-level", "Sets the optimisation level for loop unrolling.");
+        config.addParameter(unroll_opt_level_, "unroll-opt-level", "Sets the optimization level for loop unrolling.");
         config.addParameter(
             unroll_only_when_forced_, "only-when-forced",
             "If true, only loops that explicitly request unrolling via metadata are considered.");

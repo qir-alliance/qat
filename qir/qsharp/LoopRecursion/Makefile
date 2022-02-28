@@ -1,7 +1,7 @@
 all: qat-qsharp
 
 qat-qsharp: QSharpVersion/qir/Example.ll
-	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --profile base QSharpVersion/qir/Example.ll  || echo "failed!"
+	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --full-unroll-count 900000000000 --profile base QSharpVersion/qir/Example.ll  || echo "failed!"
 	
 	
 
@@ -10,5 +10,5 @@ QSharpVersion/qir/Example.ll:
 
 clean:
 	cd QSharpVersion && make clean
-	rm -f combined.ll optimised.ll
+	rm -f combined.ll optimized.ll
 	rm -f validation.json

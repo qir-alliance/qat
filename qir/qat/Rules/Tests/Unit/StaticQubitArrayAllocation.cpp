@@ -98,7 +98,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)
     // %qubit = load %Qubit*, %Qubit** %1, align 8
     // ;;; call @__quantum__qis__h__body(%Qubit* %qubit)  < Note this instruction is missing
     //
-    // LLVM will optimise the two last instructions away even at O0 as they are not used.
+    // LLVM will optimize the two last instructions away even at O0 as they are not used.
     // Consequently the pattern fails.
 
     auto configure_profile = [](RuleSet& rule_set) {

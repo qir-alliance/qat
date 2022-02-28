@@ -20,7 +20,7 @@ namespace quantum
 
     /// Generic implementation of the bind interface for different types. This class holds the name of
     /// the command line parameter and a reference variable corresponding to it. It implements
-    /// serialisers and deserialisers to allow transforming strings to native values and vice versa.
+    /// serializers and deserializers to allow transforming strings to native values and vice versa.
     template <typename T> class ConfigBind : public IConfigBind
     {
       public:
@@ -64,28 +64,28 @@ namespace quantum
         /// Generic function to setup arguments of any type.
         template <typename R> bool setupArguments(ParameterParser&, R const&);
 
-        /// Specialised function setting arguments up for booleans.
+        /// Specialized function setting arguments up for booleans.
         bool setupArguments(ParameterParser& parser, bool const&);
 
         /// Generic function that changes the parameter name based on the value type and default value.
         template <typename R> void alterNameBasedOnType(R const& default_value);
 
-        /// Specialised function that changes the parameter name based on default value for booleans.
+        /// Specialized function that changes the parameter name based on default value for booleans.
         void alterNameBasedOnType(bool const& default_value);
 
         /// Generic string serialization.
         template <typename A> String valueAsString(A const&);
 
-        /// Specialised serialization for booleans.
+        /// Specialized serialization for booleans.
         template <typename A> String valueAsString(EnableIf<A, bool, A> const&);
 
         /// Generic deserialization of string values from parser.
         template <typename R> void loadValue(ParameterParser& parser, R const& default_value);
 
-        /// Specialised deserialization of string values from parser for booleans.
+        /// Specialized deserialization of string values from parser for booleans.
         template <typename A> void loadValue(ParameterParser& parser, EnableIf<A, bool, A> const& default_value);
 
-        /// Specialised deserialization of string values from parser for strings.
+        /// Specialized deserialization of string values from parser for strings.
         template <typename A> void loadValue(ParameterParser& parser, EnableIf<A, String, A> const& default_value);
 
         Type& bind_;                   ///< Bound variable to be updated.
