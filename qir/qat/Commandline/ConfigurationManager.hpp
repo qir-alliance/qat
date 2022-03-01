@@ -93,7 +93,7 @@ namespace quantum
         //
 
         /// Prints options for configurability to the terminal.
-        void printHelp() const;
+        void printHelp(bool experimental_mode) const;
 
         /// Prints the configuration to the terminal. The configuration print is LLVM IR compatible
         /// meaning that every line starts with a semicolon ; to ensure that it is interpreted as a

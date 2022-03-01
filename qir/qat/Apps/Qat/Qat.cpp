@@ -202,7 +202,7 @@ int main(int argc, char** argv)
         if (parser.arguments().empty())
         {
             std::cerr << "Usage: " << argv[0] << " [options] filename" << std::endl;
-            configuration_manager.printHelp();
+            configuration_manager.printHelp(config.isExperimental());
             std::cerr << "\n";
             exit(-1);
         }

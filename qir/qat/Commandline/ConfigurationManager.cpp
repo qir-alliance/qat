@@ -63,7 +63,7 @@ namespace quantum
         }
     }
 
-    void ConfigurationManager::printHelp() const
+    void ConfigurationManager::printHelp(bool experimental_mode) const
     {
         std::cout << std::setfill(' ');
 
@@ -102,6 +102,10 @@ namespace quantum
 
             for (auto& c : section.settings)
             {
+                if (c->isExperimental() && !experimental_mode)
+                {
+                    continue;
+                }
 
                 if (c->isFlag())
                 {
