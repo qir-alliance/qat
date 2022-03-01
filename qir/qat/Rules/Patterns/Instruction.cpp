@@ -65,13 +65,16 @@ namespace quantum
 
     bool IntToPtrPattern::match(Value* instr, Captures& captures) const
     {
-        auto* load_instr = llvm::dyn_cast<llvm::IntToPtrInst>(instr);
-        if (load_instr == nullptr)
+        auto* a = llvm::dyn_cast<llvm::IntToPtrInst>(instr);
+        auto* b = llvm::dyn_cast<llvm::ConcreteOperator<llvm::Operator, llvm::Instruction::IntToPtr>>(instr);
+
+        if (a == nullptr && b == nullptr)
         {
             return fail(instr, captures);
         }
 
-        return success(instr, captures);
+        auto ret = success(instr, captures);
+        return ret;
     }
 
     IntToPtrPattern::Child IntToPtrPattern::copy() const

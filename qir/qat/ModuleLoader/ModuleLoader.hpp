@@ -77,13 +77,13 @@ namespace quantum
             using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
 
             explicit SingleModuleTransformation(
-                OptimizationLevel const& optimisation_level = OptimizationLevel::O0,
+                OptimizationLevel const& optimization_level = OptimizationLevel::O0,
                 bool                     debug              = false)
               : loop_analysis_manager_{debug}
               , function_analysis_manager_{debug}
               , gscc_analysis_manager_{debug}
               , module_analysis_manager_{debug}
-              , optimisation_level_{optimisation_level}
+              , optimization_level_{optimization_level}
               , debug_{debug}
             {
 
@@ -124,7 +124,7 @@ namespace quantum
             llvm::ModuleAnalysisManager   module_analysis_manager_;
 
             llvm::ModulePassManager module_pass_manager_{};
-            OptimizationLevel       optimisation_level_{};
+            OptimizationLevel       optimization_level_{};
             bool                    debug_{false};
         };
     };

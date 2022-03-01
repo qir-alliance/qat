@@ -32,7 +32,7 @@
 ///  Provide config │                      │                         │   Rules for
 ///                 ▼                                                ▼ transformation
 /// ┌───────────────────────────────┐─ ─ ─ ┘       ┌──────────────────────────────────┐
-/// │       ProfileGenerator        │─ ─ ─ ─ ─ ─ ─▶│      TransformationRulesPass      │
+/// │       ProfileGenerator        │─ ─ ─ ─ ─ ─ ─▶│      TransformationRulesPass     │
 /// └───────────────────────────────┘              └──────────────────────────────────┘
 ///                                                                  │  LLVM module
 ///                                                                  ▼      pass
@@ -46,7 +46,7 @@
 #include "Apps/Qat/QatConfig.hpp"
 #include "Commandline/ConfigurationManager.hpp"
 #include "Commandline/ParameterParser.hpp"
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
 #include "Generators/LlvmPassesConfiguration.hpp"
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
@@ -142,31 +142,11 @@ int main(int argc, char** argv)
         configuration_manager.addConfig<ValidationPassConfiguration>(
             "validation-configuration", ValidationPassConfiguration::fromProfileName(config.profile()));
 
+        // Setting default component pipelines up
+        generator->setupDefaultComponentPipeline();
+
         // Loading components
         //
-        generator->registerProfileComponent<TransformationRulesPassConfiguration>(
-            "transformation-rules",
-            [](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
-                auto& ret = ptr->modulePassManager();
-
-                // Default optimisation pipeline
-                if (cfg.shouldSimplifyPriorTransform())
-                {
-                    auto&                   pass_builder = ptr->passBuilder();
-                    llvm::ModulePassManager pipeline =
-                        pass_builder.buildPerModuleDefaultPipeline(ptr->optimisationLevel());
-                    ret.addPass(std::move(pipeline));
-                }
-
-                // Defining the mapping
-                RuleSet rule_set;
-                auto    factory =
-                    RuleFactory(rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager());
-                factory.usingConfiguration(ptr->configurationManager().get<FactoryConfiguration>());
-
-                // Creating profile pass
-                ret.addPass(TransformationRulesPass(std::move(rule_set), cfg, &profile));
-            });
 
         if (!config.load().empty())
         {
@@ -187,83 +167,20 @@ int main(int argc, char** argv)
             }
         }
 
-        generator->registerProfileComponent<LlvmPassesConfiguration>(
-            "llvm-passes", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile&) {
-                auto pass_pipeline = cfg.passPipeline();
-                if (!pass_pipeline.empty())
-                {
-
-                    auto& pass_builder = ptr->passBuilder();
-                    auto& npm          = ptr->modulePassManager();
-
-                    if (auto err = pass_builder.parsePassPipeline(npm, pass_pipeline, false, false))
-                    {
-                        throw std::runtime_error(
-                            "Failed to set pass pipeline up. Value: '" + pass_pipeline +
-                            "', error: " + toString(std::move(err)));
-                    }
-                }
-                else if (!cfg.disableDefaultPipeline())
-                {
-                    auto& mpm = ptr->modulePassManager();
-
-                    llvm::PassBuilder::OptimizationLevel opt = ptr->optimisationLevel();
-
-                    // If not explicitly disabled, we fall back to the default LLVM pipeline
-                    auto&                   pass_builder = ptr->passBuilder();
-                    llvm::ModulePassManager pipeline1    = pass_builder.buildPerModuleDefaultPipeline(opt);
-                    mpm.addPass(std::move(pipeline1));
-
-                    llvm::ModulePassManager pipeline2 =
-                        pass_builder.buildModuleSimplificationPipeline(opt, llvm::PassBuilder::ThinLTOPhase::None);
-                    mpm.addPass(std::move(pipeline2));
-
-                    llvm::ModulePassManager pipeline3 =
-                        pass_builder.buildModuleOptimizationPipeline(opt, ptr->isDebugMode());
-                    mpm.addPass(std::move(pipeline3));
-
-                    // Adding always inline pass depending on parameters
-                    if (cfg.alwaysInline() || opt == llvm::PassBuilder::OptimizationLevel::O3 ||
-                        opt == llvm::PassBuilder::OptimizationLevel::O2)
-                    {
-                        auto                           inline_param = getInlineParams(cfg.inlineParameter());
-                        llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
-                        mpm.addPass(std::move(inliner_pass));
-                    }
-                }
-                else if (cfg.alwaysInline())
-                {
-                    auto& mpm          = ptr->modulePassManager();
-                    auto& pass_builder = ptr->passBuilder();
-                    mpm.addPass(llvm::AlwaysInlinerPass());
-
-                    auto                           inline_param = getInlineParams(cfg.inlineParameter());
-                    llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
-                    mpm.addPass(std::move(inliner_pass));
-                }
-            });
-
-        generator->registerProfileComponent<GroupingPassConfiguration>(
-            "grouping", [](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
-                auto& mam = profile.moduleAnalysisManager();
-                mam.registerPass([&] { return GroupingAnalysisPass(cfg); });
-                auto& ret = ptr->modulePassManager();
-
-                ret.addPass(GroupingPass(cfg));
-            });
-
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
 
         configuration_manager.setupArguments(parser);
         parser.parseArgs(argc, argv);
-        configuration_manager.configure(parser);
+        configuration_manager.configure(parser, config.isExperimental());
 
         // Checking that all command line parameters were used
         bool incorrect_settings = false;
         for (auto& prop : parser.unusedSettings())
         {
-            llvm::errs() << "Unknown option or flag '" << prop << "'\n";
+            llvm::errs() << "Unknown option or flag '" << prop
+                         << "'. If this is an experimental feature remember to add `--experimental` to enable it."
+                            "\n";
             incorrect_settings = true;
         }
 
@@ -285,7 +202,7 @@ int main(int argc, char** argv)
         if (parser.arguments().empty())
         {
             std::cerr << "Usage: " << argv[0] << " [options] filename" << std::endl;
-            configuration_manager.printHelp();
+            configuration_manager.printHelp(config.isExperimental());
             std::cerr << "\n";
             exit(-1);
         }
@@ -314,31 +231,31 @@ int main(int argc, char** argv)
             exit(-1);
         }
 
-        // Getting the optimisation level
+        // Getting the optimization level
         //
-        auto optimisation_level = llvm::PassBuilder::OptimizationLevel::O0;
+        auto optimization_level = llvm::PassBuilder::OptimizationLevel::O0;
 
-        // Setting the optimisation level
+        // Setting the optimization level
         if (config.isOpt1Enabled())
         {
-            optimisation_level = llvm::PassBuilder::OptimizationLevel::O1;
+            optimization_level = llvm::PassBuilder::OptimizationLevel::O1;
         }
 
         if (config.isOpt2Enabled())
         {
-            optimisation_level = llvm::PassBuilder::OptimizationLevel::O2;
+            optimization_level = llvm::PassBuilder::OptimizationLevel::O2;
         }
 
         if (config.isOpt3Enabled())
         {
-            optimisation_level = llvm::PassBuilder::OptimizationLevel::O3;
+            optimization_level = llvm::PassBuilder::OptimizationLevel::O3;
         }
 
         // Profile manipulation
         //
 
         // Creating the profile that will be used for generation and validation
-        auto profile = generator->newProfile(config.profile(), optimisation_level, config.isDebugMode());
+        auto profile = generator->newProfile(config.profile(), optimization_level, config.isDebugMode());
 
         if (config.shouldGenerate())
         {

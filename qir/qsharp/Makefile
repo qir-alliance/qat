@@ -2,7 +2,7 @@ all:
 	cd ConstArray && make all && make clean
 	cd ConstQubitArray && make all && make clean
 	cd LoopRecursion && make all && make clean
-	cd OptimisationIssue && make all && make clean
+	cd OptimizationIssue && make all && make clean
 	cd SimpleCallable && make all && make clean
 	cd SimpleLoop && make all && make clean
 	cd Bernstein–Vazirani && make all && make clean
@@ -20,7 +20,7 @@ clean:
 	cd ConstArray  && make clean
 	cd ConstQubitArray  && make clean
 	cd LoopRecursion  && make clean
-	cd OptimisationIssue  && make clean
+	cd OptimizationIssue  && make clean
 	cd SimpleCallable  && make clean
 	cd SimpleLoop  && make clean
 	cd Bernstein–Vazirani && make clean

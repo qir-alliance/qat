@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
 #include "Generators/LlvmPassesConfiguration.hpp"
 #include "Rules/FactoryConfig.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
@@ -9,15 +9,15 @@
 #include "gtest/gtest.h"
 
 using namespace microsoft::quantum;
-using GeneratorPtr = std::shared_ptr<DefaultProfileGenerator>;
+using GeneratorPtr = std::shared_ptr<ConfigurableProfileGenerator>;
 namespace
 {
-class ExposedDefaultProfileGenerator : public DefaultProfileGenerator
+class ExposedConfigurableProfileGenerator : public ConfigurableProfileGenerator
 {
   public:
-    using DefaultProfileGenerator::createGenerationModulePassManager;
-    using DefaultProfileGenerator::createValidationModulePass;
-    using DefaultProfileGenerator::DefaultProfileGenerator;
+    using ConfigurableProfileGenerator::ConfigurableProfileGenerator;
+    using ConfigurableProfileGenerator::createGenerationModulePassManager;
+    using ConfigurableProfileGenerator::createValidationModulePass;
 };
 
 class TestAnalysis
@@ -86,7 +86,7 @@ TEST(GeneratorsTestSuite, ConfigureFunction)
     Profile  profile{"test", false};
     uint64_t call_count{0};
     auto     configure = [&call_count](RuleSet&) { ++call_count; };
-    auto     generator = std::make_shared<ExposedDefaultProfileGenerator>(configure);
+    auto     generator = std::make_shared<ExposedConfigurableProfileGenerator>(configure);
 
     TestAnalysis test;
 
@@ -101,7 +101,7 @@ TEST(GeneratorsTestSuite, ConfigureFunction)
 TEST(GeneratorsTestSuite, ConfigurationManager)
 {
     Profile               profile{"test", false};
-    auto                  generator             = std::make_shared<ExposedDefaultProfileGenerator>();
+    auto                  generator             = std::make_shared<ExposedConfigurableProfileGenerator>();
     ConfigurationManager& configuration_manager = generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 

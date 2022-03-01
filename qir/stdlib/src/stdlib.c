@@ -49,9 +49,9 @@ void __quantum__rt__tuple_update_reference_count(int8_t* tuple, int32_t n)
     int64_t* ref_count = (int64_t*)(ptr + QUANTUM_TUPLE_REF_POS);
     *ref_count += (int64_t)(n);
 
-    // Here we check if the number n is negative because LLVM will optimise
+    // Here we check if the number n is negative because LLVM will optimize
     // this block away automatically if it is positive. This prevents "complicated"
-    // logic to enter the IR and makes easier for LLVM to optimise the all expressions
+    // logic to enter the IR and makes easier for LLVM to optimize the all expressions
     // later on.
     if (n < 0)
     {
@@ -138,9 +138,9 @@ void __quantum__rt__array_update_reference_count(int8_t* arr, int32_t n)
     int64_t* ref_count = (int64_t*)((int8_t*)(arr) + QUANTUM_ARRAY_REF_POS);
     *ref_count += (int64_t)(n);
 
-    // Here we check if the number n is negative because LLVM will optimise
+    // Here we check if the number n is negative because LLVM will optimize
     // this block away automatically if it is positive. This prevents "complicated"
-    // logic to enter the IR and makes easier for LLVM to optimise the all expressions
+    // logic to enter the IR and makes easier for LLVM to optimize the all expressions
     // later on.
     if (n < 0)
     {

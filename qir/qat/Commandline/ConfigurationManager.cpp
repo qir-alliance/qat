@@ -14,7 +14,14 @@ namespace quantum
     {
         for (auto& section : config_sections_)
         {
-            parser.addFlag("disable-" + section.id);
+            if (section.enabled_by_default)
+            {
+                parser.addFlag("disable-" + section.id);
+            }
+            else
+            {
+                parser.addFlag("enable-" + section.id);
+            }
         }
 
         for (auto& section : config_sections_)
@@ -29,19 +36,26 @@ namespace quantum
         }
     }
 
-    void ConfigurationManager::configure(ParameterParser& parser)
+    void ConfigurationManager::configure(ParameterParser& parser, bool experimental_mode)
     {
 
         for (auto& section : config_sections_)
         {
-            *section.active = (parser.get("disable-" + section.id, "false") != "true");
+            if (section.enabled_by_default)
+            {
+                *section.active = (parser.get("disable-" + section.id, "false") != "true");
+            }
+            else
+            {
+                *section.active = (parser.get("enable-" + section.id, "false") == "true");
+            }
         }
 
         for (auto& section : config_sections_)
         {
             for (auto& c : section.settings)
             {
-                if (!c->configure(parser))
+                if (!c->configure(parser, experimental_mode))
                 {
                     throw std::runtime_error("Failed configure the section.");
                 }
@@ -49,7 +63,7 @@ namespace quantum
         }
     }
 
-    void ConfigurationManager::printHelp() const
+    void ConfigurationManager::printHelp(bool experimental_mode) const
     {
         std::cout << std::setfill(' ');
 
@@ -63,9 +77,18 @@ namespace quantum
         {
             if (!section.id.empty())
             {
-                std::cout << std::setw(50) << std::left << ("--disable-" + section.id) << "Disables " << section.name
-                          << ". ";
-                std::cout << "Default: true" << std::endl;
+                if (section.enabled_by_default)
+                {
+                    std::cout << std::setw(50) << std::left << ("--disable-" + section.id) << "Disables "
+                              << section.name << ". ";
+                    std::cout << "Default: false" << std::endl;
+                }
+                else
+                {
+                    std::cout << std::setw(50) << std::left << ("--enable-" + section.id) << "Enables " << section.name
+                              << ". ";
+                    std::cout << "Default: false" << std::endl;
+                }
             }
         }
 
@@ -79,21 +102,34 @@ namespace quantum
 
             for (auto& c : section.settings)
             {
+                if (c->isExperimental() && !experimental_mode)
+                {
+                    continue;
+                }
+
                 if (c->isFlag())
                 {
                     if (c->defaultValue() == "false")
                     {
-                        std::cout << std::setw(50) << std::left << ("--" + c->name()) << c->description() << " ";
+                        std::cout << std::setw(50) << std::left << ("--" + c->name());
                     }
                     else
                     {
-                        std::cout << std::setw(50) << std::left << ("--[no-]" + c->name()) << c->description() << " ";
+                        std::cout << std::setw(50) << std::left << ("--[no-]" + c->name());
                     }
                 }
                 else
                 {
-                    std::cout << std::setw(50) << std::left << ("--" + c->name()) << c->description() << " ";
+                    std::cout << std::setw(50) << std::left << ("--" + c->name());
                 }
+
+                if (c->isExperimental())
+                {
+                    std::cout << "EXPERIMENTAL. ";
+                }
+
+                std::cout << c->description() << " ";
+
                 std::cout << "Default: " << c->defaultValue() << std::endl;
             }
         }
@@ -129,8 +165,22 @@ namespace quantum
 
     void ConfigurationManager::setSectionName(String const& name, String const& description)
     {
+        if (config_sections_.empty())
+        {
+            throw std::runtime_error("No section created yet.");
+        }
         config_sections_.back().name        = name;
         config_sections_.back().description = description;
+    }
+
+    void ConfigurationManager::disableSectionByDefault()
+    {
+        if (config_sections_.empty())
+        {
+            throw std::runtime_error("No section created yet.");
+        }
+
+        config_sections_.back().enabled_by_default = false;
     }
 
 } // namespace quantum

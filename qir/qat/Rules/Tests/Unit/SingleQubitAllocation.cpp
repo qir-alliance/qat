@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
+#include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
@@ -52,9 +53,13 @@ TEST(RuleSetTestSuite, AllocationActionRelease)
         factory.useStaticQubitAllocation();
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(
         std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 
@@ -73,7 +78,7 @@ TEST(RuleSetTestSuite, MultipleAllocationsNoRelease)
   %qubit5 = call %Qubit* @__quantum__rt__qubit_allocate()
   )script");
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(
         [](RuleSet& rule_set) {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
@@ -81,6 +86,10 @@ TEST(RuleSetTestSuite, MultipleAllocationsNoRelease)
             factory.useStaticQubitAllocation();
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 
@@ -127,14 +136,23 @@ TEST(RuleSetTestSuite, AllocateReleaseMultipleTimes)
   call void @__quantum__rt__qubit_release(%Qubit* %qubit4)  
   )script");
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(
         [](RuleSet& rule_set) {
-            auto factory =
-                RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+            auto a = BasicAllocationManager::createNew();
+            auto b = BasicAllocationManager::createNew();
+            a->setReuseRegisters(true);
+            b->setReuseRegisters(true);
+
+            auto factory = RuleFactory(rule_set, std::move(a), std::move(b));
 
             factory.useStaticQubitAllocation();
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.addConfig<FactoryConfiguration>();
+
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 
@@ -172,7 +190,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByName)
   call void @__quantum__rt__qubit_release(%Qubit* %leftMessage)  
   )script");
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(
         [](RuleSet& rule_set) {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
@@ -180,6 +198,9 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByName)
             factory.useStaticQubitAllocation();
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 
@@ -194,7 +215,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByNameWithNoName)
   call void @__quantum__rt__qubit_release(%Qubit* %0)  
   )script");
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(
         [](RuleSet& rule_set) {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
@@ -202,6 +223,11 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByNameWithNoName)
             factory.useStaticQubitAllocation();
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.addConfig<FactoryConfiguration>();
+
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 
@@ -217,7 +243,7 @@ TEST(RuleSetTestSuite, ErrorReleaseWithTypeErasedAllocation)
   call void @__quantum__rt__qubit_release(%Qubit* %1)  
   )script");
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(
         [](RuleSet& rule_set) {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
@@ -225,6 +251,11 @@ TEST(RuleSetTestSuite, ErrorReleaseWithTypeErasedAllocation)
             factory.useStaticQubitAllocation();
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.addConfig<FactoryConfiguration>();
+
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 

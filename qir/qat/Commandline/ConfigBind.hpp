@@ -20,7 +20,7 @@ namespace quantum
 
     /// Generic implementation of the bind interface for different types. This class holds the name of
     /// the command line parameter and a reference variable corresponding to it. It implements
-    /// serialisers and deserialisers to allow transforming strings to native values and vice versa.
+    /// serializers and deserializers to allow transforming strings to native values and vice versa.
     template <typename T> class ConfigBind : public IConfigBind
     {
       public:
@@ -44,6 +44,9 @@ namespace quantum
         /// with the name it is expected to have when passed through the parameter parser.
         ConfigBind(Type& bind, T default_value, String const& name, String const& description);
 
+        // Marks the configuration as being experimental.
+        void markAsExperimental(Type const& off_value);
+
         // Interface implementation
         //
 
@@ -52,7 +55,7 @@ namespace quantum
 
         /// Configures the bound value. This method examines the parsed input
         /// and use updates the bound value accordingly.
-        bool configure(ParameterParser& parser) override;
+        bool configure(ParameterParser& parser, bool experimental_mode) override;
 
         /// String representation of the bound value.
         String value() override;
@@ -61,32 +64,33 @@ namespace quantum
         /// Generic function to setup arguments of any type.
         template <typename R> bool setupArguments(ParameterParser&, R const&);
 
-        /// Specialised function setting arguments up for booleans.
+        /// Specialized function setting arguments up for booleans.
         bool setupArguments(ParameterParser& parser, bool const&);
 
         /// Generic function that changes the parameter name based on the value type and default value.
         template <typename R> void alterNameBasedOnType(R const& default_value);
 
-        /// Specialised function that changes the parameter name based on default value for booleans.
+        /// Specialized function that changes the parameter name based on default value for booleans.
         void alterNameBasedOnType(bool const& default_value);
 
         /// Generic string serialization.
         template <typename A> String valueAsString(A const&);
 
-        /// Specialised serialization for booleans.
+        /// Specialized serialization for booleans.
         template <typename A> String valueAsString(EnableIf<A, bool, A> const&);
 
         /// Generic deserialization of string values from parser.
         template <typename R> void loadValue(ParameterParser& parser, R const& default_value);
 
-        /// Specialised deserialization of string values from parser for booleans.
+        /// Specialized deserialization of string values from parser for booleans.
         template <typename A> void loadValue(ParameterParser& parser, EnableIf<A, bool, A> const& default_value);
 
-        /// Specialised deserialization of string values from parser for strings.
+        /// Specialized deserialization of string values from parser for strings.
         template <typename A> void loadValue(ParameterParser& parser, EnableIf<A, String, A> const& default_value);
 
-        Type& bind_;          ///< Bound variable to be updated.
-        Type  default_value_; ///< Default value.
+        Type& bind_;                   ///< Bound variable to be updated.
+        Type  default_value_;          ///< Default value.
+        Type  experimental_off_value_; ///< Value when experimental is not enabled.
     };
 
     template <typename T>
@@ -135,10 +139,35 @@ namespace quantum
         return true;
     }
 
-    template <typename T> bool ConfigBind<T>::configure(ParameterParser& parser)
+    template <typename T> bool ConfigBind<T>::configure(ParameterParser& parser, bool experimental_mode)
     {
-        loadValue<Type>(parser, default_value_);
+        if (!isExperimental())
+        {
+            // For non-experimental parameters we load the default value
+            loadValue<Type>(parser, default_value_);
+        }
+        else
+        {
+            // If the parameter is experimental and we are in experimental mode
+            if (experimental_mode)
+            {
+                // ... we load the default value
+                loadValue<Type>(parser, default_value_);
+            }
+            else
+            {
+                // ... and else we load the experimental off value
+                bind_ = experimental_off_value_;
+            }
+        }
         return true;
+    }
+
+    template <typename T> void ConfigBind<T>::markAsExperimental(Type const& off_value)
+    {
+        experimental_off_value_ = off_value;
+
+        makeSettingExperimental();
     }
 
     template <typename T> String ConfigBind<T>::value()

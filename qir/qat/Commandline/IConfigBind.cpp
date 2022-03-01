@@ -54,5 +54,15 @@ namespace quantum
         str_default_value_ = v;
     }
 
+    void IConfigBind::makeSettingExperimental()
+    {
+        is_experimental_ = true;
+    }
+
+    bool IConfigBind::isExperimental() const
+    {
+        return is_experimental_;
+    }
+
 } // namespace quantum
 } // namespace microsoft

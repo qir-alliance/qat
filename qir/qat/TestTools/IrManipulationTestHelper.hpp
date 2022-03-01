@@ -56,7 +56,7 @@ namespace quantum
         /// allow us to write small profiles to test a single piece of transformation.
         void applyProfile(
             GeneratorPtr const&      generator,
-            OptimizationLevel const& optimisation_level = OptimizationLevel::O0,
+            OptimizationLevel const& optimization_level = OptimizationLevel::O0,
             bool                     debug              = false);
 
         /// Validates a profile to the module to allow which transforms the IR. This

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
@@ -57,32 +57,27 @@ TEST(RuleSetTestSuite, DISABLED_DisablingArrayhAliasCounting)
         factory.disableAliasCounting();
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 1)"}));
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)"}));
 
     ir_manip->applyProfile(profile);
 
-    EXPECT_TRUE(
-        ir_manip->hasInstructionSequence({"%0 = tail call %Array* @__quantum__rt__array_create_1d(i32 8, i64 2)"}));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %Array* @__quantum__rt__array_create_1d(i32 8, i64 2)"}));
 
     // We expect that the call was removed
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 1)"}));
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)"}));
 }
 
 TEST(RuleSetTestSuite, DisablingStringAliasCounting)
@@ -99,33 +94,29 @@ TEST(RuleSetTestSuite, DisablingStringAliasCounting)
         factory.disableAliasCounting();
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__string_update_alias_count(%String* %0, i32 1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__string_update_alias_count(%String* %0, i32 1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__string_update_alias_count(%String* %0, i32 1)"}));
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence(
             {"call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)"}));
 
     ir_manip->applyProfile(profile);
 
-    EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = tail call %String* @__quantum__rt__string_create(i8* null)"}));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %String* @__quantum__rt__string_create(i8* null)"}));
 
     // We expect that the call was removed
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__string_update_alias_count(%String* %0, i32 1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__string_update_alias_count(%String* %0, i32 1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__string_update_alias_count(%String* %0, i32 1)"}));
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence(
             {"call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)"}));
 }
 
 TEST(RuleSetTestSuite, DisablingResultAliasCounting)
@@ -142,31 +133,27 @@ TEST(RuleSetTestSuite, DisablingResultAliasCounting)
         factory.disableAliasCounting();
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 1)"}));
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence(
             {"call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)"}));
 
     ir_manip->applyProfile(profile);
 
-    EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = tail call %Result* @__quantum__qis__m__body(%Qubit* null)"}));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %Result* @__quantum__qis__m__body(%Qubit* null)"}));
 
     // We expect that the call was removed
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 1)"}));
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence(
             {"call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)"}) ||
-        ir_manip->hasInstructionSequence(
-            {"tail call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)"}));
 }

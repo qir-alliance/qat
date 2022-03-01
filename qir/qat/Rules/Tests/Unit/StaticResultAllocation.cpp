@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
+#include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
@@ -52,9 +53,13 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
         factory.useStaticResultAllocation();
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(
         std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+
     ir_manip->applyProfile(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
@@ -68,7 +73,6 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
         "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result4)",
         "%result5 = inttoptr i64 4 to %Result*",
         "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result5)",
-
     }));
 
     EXPECT_FALSE(
@@ -76,7 +80,7 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
             "%result1 = call %Result* @__quantum__qis__m__body(%Qubit* null)",
         }) ||
         ir_manip->hasInstructionSequence({
-            "%result1 = tail call %Result* @__quantum__qis__m__body(%Qubit* null)",
+            "%result1 = call %Result* @__quantum__qis__m__body(%Qubit* null)",
         }));
 
     EXPECT_FALSE(
@@ -84,7 +88,7 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
             "%result2 = call %Result* @__quantum__qis__m__body(%Qubit* null)",
         }) ||
         ir_manip->hasInstructionSequence({
-            "%result2 = tail call %Result* @__quantum__qis__m__body(%Qubit* null)",
+            "%result2 = call %Result* @__quantum__qis__m__body(%Qubit* null)",
         }));
 
     EXPECT_FALSE(
@@ -92,7 +96,7 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
             "%result3 = call %Result* @__quantum__qis__m__body(%Qubit* null)",
         }) ||
         ir_manip->hasInstructionSequence({
-            "%result3 = tail call %Result* @__quantum__qis__m__body(%Qubit* null)",
+            "%result3 = call %Result* @__quantum__qis__m__body(%Qubit* null)",
         }));
 
     EXPECT_FALSE(
@@ -100,7 +104,7 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
             "%result4 = call %Result* @__quantum__qis__m__body(%Qubit* null)",
         }) ||
         ir_manip->hasInstructionSequence({
-            "%result4 = tail call %Result* @__quantum__qis__m__body(%Qubit* null)",
+            "%result4 = call %Result* @__quantum__qis__m__body(%Qubit* null)",
         }));
 
     EXPECT_FALSE(
@@ -108,6 +112,6 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
             "%result5 = call %Result* @__quantum__qis__m__body(%Qubit* null)",
         }) ||
         ir_manip->hasInstructionSequence({
-            "%result5 = tail call %Result* @__quantum__qis__m__body(%Qubit* null)",
+            "%result5 = call %Result* @__quantum__qis__m__body(%Qubit* null)",
         }));
 }

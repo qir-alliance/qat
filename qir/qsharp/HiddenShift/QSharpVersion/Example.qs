@@ -97,7 +97,7 @@ namespace Microsoft.Quantum.Samples {
     // These are functions for which the Walsh-Hadamard transform is perfectly
     // flat (in absolute value). Because of this flatness, the Walsh-Hadamard
     // spectrum of any bent function defines a +1/-1 function, i.e., gives
-    // rise to another Boolean function, called the 'dual bent function'.
+    // rize to another Boolean function, called the 'dual bent function'.
     // What is more, for the case of the IP function it can be shown that IP
     // is equal to its own dual bent function, a fact that is exploited in
     // the present test case.
@@ -133,7 +133,7 @@ namespace Microsoft.Quantum.Samples {
     // To instantiate the hidden shift problem we need another function g which is
     // related to IP via g(x) = IP(x + s), i.e., we have to shift the argument of
     // the IP function by a given shift. Notice that the '+' operation here is the
-    // Boolean addition, i.e., a bit-wise operation. Notice further, that in
+    // Boolean addition, i.e., a bit-wize operation. Notice further, that in
     // general a diagonal operation |x〉 -> (-1)^{f(x)} can be turned into a shifted
     // version by applying a bit flip to the |x〉 register first, then applying the
     // diagonal operation, and then undoing the bit flips to the |x〉 register. We

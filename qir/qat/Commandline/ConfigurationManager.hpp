@@ -14,6 +14,7 @@
 #include <sstream>
 #include <type_traits>
 #include <typeindex>
+#include <typeinfo>
 
 namespace microsoft
 {
@@ -44,6 +45,7 @@ namespace quantum
             TypeId     type{TypeId(typeid(std::nullptr_t))}; ///< Type of the configuration.
             String     name{};                               ///< Name of the section.
             String     description{};                        ///< Description of the section.
+            bool       enabled_by_default{true};             ///< Whether or not this section is enabled by default
             VoidPtr    configuration{};                      ///< Configuration class instance.
             ConfigList settings{};                           ///< List of parameter bindings.
             BoolPtr    active{nullptr};                      ///< Whether or not this component is active;
@@ -61,6 +63,14 @@ namespace quantum
         ConfigurationManager& operator=(ConfigurationManager const&) = delete;
         ConfigurationManager& operator=(ConfigurationManager&&) = delete;
 
+        ~ConfigurationManager()
+        {
+            for (auto& s : config_sections_)
+            {
+                s.configuration.reset();
+            }
+        }
+
         // Configuration setup
         //
 
@@ -68,7 +78,7 @@ namespace quantum
         void setupArguments(ParameterParser& parser);
 
         /// Configures the value of each bound variable given a parser instance.
-        void configure(ParameterParser& parser);
+        void configure(ParameterParser& parser, bool experimental_mode = false);
 
         // Managing configuration
         //
@@ -83,7 +93,7 @@ namespace quantum
         //
 
         /// Prints options for configurability to the terminal.
-        void printHelp() const;
+        void printHelp(bool experimental_mode) const;
 
         /// Prints the configuration to the terminal. The configuration print is LLVM IR compatible
         /// meaning that every line starts with a semicolon ; to ensure that it is interpreted as a
@@ -96,6 +106,9 @@ namespace quantum
         /// Adds a new configuration of type T.
         template <typename T> inline void addConfig(String const& id = "", T const& default_value = T());
 
+        /// Whether or not a configuration of type previously registered
+        template <typename T> inline bool configWasRegistered();
+
         /// Whether or not the component associated with T is active.
         template <typename T> inline bool isActive();
 
@@ -103,10 +116,36 @@ namespace quantum
         /// name.
         void setSectionName(String const& name, String const& description);
 
+        ///
+        void disableSectionByDefault();
+
         /// Adds a new parameter with a default value to the configuration section. This function should
         /// be used by the configuration class.
         template <typename T>
         inline void addParameter(T& bind, T default_value, String const& name, String const& description);
+
+        /// Adds an experimental parameter with a default value and an experimental "off" value to the
+        /// configuration section. This function should be used by the configuration class. The difference
+        /// to `addParameter` is that this function marks the parameter as experimental and has a default
+        /// "off" value
+        template <typename T>
+        inline void addExperimentalParameter(
+            T&            bind,
+            T             default_value,
+            T             off_value,
+            String const& name,
+            String const& description);
+
+        /// Adds an experimental parameter with a default value to the
+        /// configuration section. The experimental off value will be set to the default value of
+        /// parameter. This function should be used by the configuration class.
+        template <typename T>
+        inline void addExperimentalParameter(T& bind, T default_value, String const& name, String const& description);
+
+        /// Adds an experimental parameter. The default value and the experimental off value will be the
+        /// value of the parameter added. This function should be used by the configuration class.
+        template <typename T>
+        inline void addExperimentalParameter(T& bind, String const& name, String const& description);
 
         /// Adds a new parameter to the configuration section. This method uses the bound variable value
         /// as default value. This function should be used by the configuration class.
@@ -123,13 +162,42 @@ namespace quantum
     {
         Section new_section{std::type_index(typeid(T))};
 
-        auto ptr                  = std::make_shared<T>(default_value);
+        // Checking whether the section exists
+        auto type = std::type_index(typeid(T));
+        for (auto& section : config_sections_)
+        {
+            if (section.type == type)
+            {
+                throw std::runtime_error(
+                    "Configuration section for type '" + static_cast<std::string>(typeid(T).name()) +
+                    "' already exists");
+            }
+        }
+
+        // If not we create it.
+        auto ptr = std::make_shared<T>(default_value);
+
         new_section.configuration = ptr;
         new_section.active        = std::make_shared<bool>(true);
         new_section.id            = id;
 
         config_sections_.emplace_back(std::move(new_section));
+
         ptr->setup(*this);
+    }
+
+    template <typename T> inline bool ConfigurationManager::configWasRegistered()
+    {
+        auto type = std::type_index(typeid(T));
+        for (auto& section : config_sections_)
+        {
+            if (section.type == type)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     template <typename T> inline T& ConfigurationManager::getInternal() const
@@ -148,7 +216,8 @@ namespace quantum
 
         if (ptr == nullptr)
         {
-            throw std::runtime_error("Could not find configuration class.");
+            throw std::runtime_error(
+                "Could not find configuration class '" + static_cast<std::string>(typeid(T).name()) + "'.");
         }
 
         return *static_cast<T*>(ptr.get());
@@ -181,7 +250,8 @@ namespace quantum
 
         if (ptr == nullptr)
         {
-            throw std::runtime_error("Could not find configuration class.");
+            throw std::runtime_error(
+                "Could not find configuration class '" + static_cast<std::string>(typeid(T).name()) + "'.");
         }
 
         return *ptr;
@@ -199,9 +269,44 @@ namespace quantum
     }
 
     template <typename T>
+    inline void ConfigurationManager::addExperimentalParameter(
+        T&            bind,
+        T             default_value,
+        T             off_value,
+        String const& name,
+        String const& description)
+    {
+        auto ptr = std::make_shared<ConfigBind<T>>(bind, default_value, name, description);
+        ptr->markAsExperimental(off_value);
+        config_sections_.back().settings.push_back(ptr);
+    }
+
+    template <typename T>
     inline void ConfigurationManager::addParameter(T& bind, String const& name, String const& description)
     {
         auto ptr = std::make_shared<ConfigBind<T>>(bind, T(bind), name, description);
+        config_sections_.back().settings.push_back(ptr);
+    }
+
+    template <typename T>
+    inline void ConfigurationManager::addExperimentalParameter(
+        T&            bind,
+        T             default_value,
+        String const& name,
+        String const& description)
+    {
+
+        auto ptr = std::make_shared<ConfigBind<T>>(bind, T(default_value), name, description);
+        ptr->markAsExperimental(T(bind));
+        config_sections_.back().settings.push_back(ptr);
+    }
+
+    template <typename T>
+    inline void ConfigurationManager::addExperimentalParameter(T& bind, String const& name, String const& description)
+    {
+
+        auto ptr = std::make_shared<ConfigBind<T>>(bind, T(bind), name, description);
+        ptr->markAsExperimental(T(bind));
         config_sections_.back().settings.push_back(ptr);
     }
 } // namespace quantum

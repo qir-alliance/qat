@@ -51,7 +51,7 @@ namespace quantum
         /// of the command line parameter parser, this function is meant to read the command line
         /// arguments, interpret it and set the bound variable value (if present). This method should
         /// return true if configure operation was successful.
-        virtual bool configure(ParameterParser& parser) = 0;
+        virtual bool configure(ParameterParser& parser, bool experimental_mode) = 0;
 
         /// Interface function to return a string representation of the current value of the
         /// bound variable.
@@ -72,6 +72,9 @@ namespace quantum
         /// Returns the default value for the flag.
         String defaultValue() const;
 
+        /// Indicates whether or not this is an experimental config
+        bool isExperimental() const;
+
       protected:
         // Constructor
         //
@@ -89,11 +92,16 @@ namespace quantum
         /// Sets the default value as a string.
         void setDefault(String const& v);
 
+        /// Marks the config as experimental
+        void makeSettingExperimental();
+
       private:
-        String name_;              ///< Name that which sets the value.
-        String description_;       ///< Description of the option or flag.
-        bool   is_flag_{false};    ///< Whether or not the variable is a flag.
-        String str_default_value_; ///< Default value represented as a string.
+        String name_;                  ///< Name that which sets the value.
+        String description_;           ///< Description of the option or flag.
+        bool   is_flag_{false};        ///< Whether or not the variable is a flag.
+        String str_default_value_{""}; ///< Default value represented as a string.
+
+        bool is_experimental_{false}; ///< Whether or not this config is experimental
     };
 
 } // namespace quantum

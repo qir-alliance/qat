@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
 #include "Rules/Notation/Notation.hpp"
 #include "Rules/ReplacementRule.hpp"
 #include "Rules/RuleSet.hpp"
@@ -73,14 +73,14 @@ TEST(RuleSetTestSuite, SetReplacerAndPattern)
         rule_set.addRule(ret);
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
     EXPECT_TRUE(
-        ir_manip->hasInstructionSequence({"tail call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
     ir_manip->applyProfile(profile);
     EXPECT_FALSE(
-        ir_manip->hasInstructionSequence({"tail call void @__quantum__rt__qubit_release(%Qubit* null)"}) ||
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* null)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
 }
 
@@ -99,15 +99,15 @@ TEST(RuleSetTestSuite, NullPattern)
         rule_set.addRule(ret);
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
     EXPECT_TRUE(
-        ir_manip->hasInstructionSequence({"tail call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
     ir_manip->applyProfile(profile);
 
     EXPECT_TRUE(
-        ir_manip->hasInstructionSequence({"tail call void @__quantum__rt__qubit_release(%Qubit* null)"}) ||
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* null)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
 }
 
@@ -126,14 +126,14 @@ TEST(RuleSetTestSuite, NullReplacer)
         rule_set.addRule(ret);
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
     EXPECT_TRUE(
-        ir_manip->hasInstructionSequence({"tail call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
     ir_manip->applyProfile(profile);
 
     EXPECT_TRUE(
-        ir_manip->hasInstructionSequence({"tail call void @__quantum__rt__qubit_release(%Qubit* null)"}) ||
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* null)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
 }

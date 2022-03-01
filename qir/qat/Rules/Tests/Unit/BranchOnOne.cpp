@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
+#include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/ReplacementRule.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
@@ -49,18 +50,18 @@ TEST(RuleSetTestSuite, BranchOnOne)
     auto ir_manip = newIrManip(R"script(
   %0 = inttoptr i64 0 to %Result*
   call void @__quantum__qis__mz__body(%Qubit* null, %Result* %0)
-  tail call void @__quantum__qis__reset__body(%Qubit* null)
-  %1 = tail call %Result* @__quantum__rt__result_get_one()
-  %2 = tail call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
-  tail call void @__quantum__rt__result_update_reference_count(%Result* %0, i32 -1)
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  %1 = call %Result* @__quantum__rt__result_get_one()
+  %2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
+  call void @__quantum__rt__result_update_reference_count(%Result* %0, i32 -1)
   br i1 %2, label %then0__1, label %continue__1
 
 then0__1:
-  tail call void @send_message()
+  call void @send_message()
   br label %continue__1
 
 continue__1:
-  tail call void @bye_message()
+  call void @bye_message()
   ret i8 0
   )script");
 
@@ -68,29 +69,36 @@ continue__1:
         auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
         // factory.useStaticResultAllocation();
 
-        factory.optimiseResultOne();
+        factory.optimizeResultOne();
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.addConfig<FactoryConfiguration>();
+
+    configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+
     ir_manip->applyProfile(profile);
 
     // This optimistation is specific to the the __quantum__qis__read_result__body which
     // returns 1 or 0 depending on the result. We expect that
     //
-    // %1 = tail call %Result* @__quantum__rt__result_get_one()
-    // %2 = tail call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
+    // %1 = call %Result* @__quantum__rt__result_get_one()
+    // %2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
     // br i1 %2, label %then0__1, label %continue__1
     //
     // will be mapped to using this instruction.
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
-        {"%0 = tail call i1 @__quantum__qis__read_result__body(%Result* null)",
+        {"%0 = call i1 @__quantum__qis__read_result__body(%Result* null)",
          "br i1 %0, label %then0__1, label %continue__1"}));
 
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"%2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)"}) ||
-        ir_manip->hasInstructionSequence({"%2 = tail call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)"}));
+        ir_manip->hasInstructionSequence({"%2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)"}));
 
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"%2 = call i1 @__quantum__rt__result_get_one()"}) ||
-        ir_manip->hasInstructionSequence({"%2 = tail call i1 @__quantum__rt__result_get_one()"}));
+        ir_manip->hasInstructionSequence({"%2 = call i1 @__quantum__rt__result_get_one()"}));
 }

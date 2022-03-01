@@ -52,14 +52,14 @@ namespace quantum
             disableStringSupport();
         }
 
-        if (config.optimiseResultOne())
+        if (config.optimizeResultOne())
         {
-            optimiseResultOne();
+            optimizeResultOne();
         }
 
-        if (config.optimiseResultZero())
+        if (config.optimizeResultZero())
         {
-            optimiseResultZero();
+            optimizeResultZero();
         }
 
         if (config.useStaticQubitArrayAllocation())
@@ -160,9 +160,6 @@ namespace quantum
                 // Computing offset
                 auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
 
-                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
-                instr->takeName(val);
-
                 // Replacing the instruction with new instruction
                 auto old_instr = llvm::dyn_cast<Instruction>(val);
 
@@ -171,6 +168,9 @@ namespace quantum
                 {
                     return false;
                 }
+
+                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
+                instr->takeName(old_instr);
 
                 // Ensuring that we have replaced the instruction before
                 // identifying release
@@ -227,12 +227,22 @@ namespace quantum
                 // Computing offset
                 auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
 
+                auto old_instr = llvm::dyn_cast<Instruction>(val);
+
+                if (old_instr == nullptr)
+                {
+                    return false;
+                }
+
                 // Converting pointer
-                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
-                instr->takeName(val);
+                builder.SetInsertPoint(old_instr->getNextNode());
+
+                auto instr = builder.CreateIntToPtr(new_index, ptr_type);
+                instr->takeName(old_instr);
+                old_instr->replaceAllUsesWith(instr);
 
                 // Replacing the instruction with new instruction
-                replacements.push_back({llvm::dyn_cast<Instruction>(val), instr});
+                replacements.push_back({old_instr, nullptr});
 
                 // Deleting the getelement and cast operations
                 replacements.push_back({llvm::dyn_cast<Instruction>(cap["getElement"]), nullptr});
@@ -247,7 +257,7 @@ namespace quantum
         auto cast_pattern = bitCast("getElement"_cap = get_element);
         auto load_pattern = load("cast"_cap = cast_pattern);
 
-        addRule({std::move(load_pattern), access_replacer});
+        addRule({"Array Load Pattern", std::move(load_pattern), access_replacer});
 
         /// Release replacement
         auto deleter = deleteInstruction();
@@ -297,7 +307,6 @@ namespace quantum
                 auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
 
                 auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
-                instr->takeName(val);
 
                 // Replacing the instruction with new instruction
                 auto old_instr = llvm::dyn_cast<Instruction>(val);
@@ -307,6 +316,8 @@ namespace quantum
                 {
                     return false;
                 }
+
+                instr->takeName(old_instr);
 
                 // Ensuring that we have replaced the instruction before
                 // identifying release
@@ -480,7 +491,7 @@ namespace quantum
         addRule({call("__quantum__qis__m__body", "qubit"_cap = _), std::move(replace_measurement)});
     }
 
-    void RuleFactory::optimiseResultZero()
+    void RuleFactory::optimizeResultZero()
     {
         auto replace_branch_negative = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
             auto cond = llvm::dyn_cast<llvm::Instruction>(val);
@@ -553,7 +564,7 @@ namespace quantum
             {call("__quantum__rt__result_equal", "zero"_cap = get_zero, "result"_cap = _), replace_branch_negative});
     }
 
-    void RuleFactory::optimiseResultOne()
+    void RuleFactory::optimizeResultOne()
     {
         auto replace_branch_positive = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
             auto cond = llvm::dyn_cast<llvm::Instruction>(val);

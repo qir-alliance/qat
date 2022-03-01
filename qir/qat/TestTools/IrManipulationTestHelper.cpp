@@ -113,10 +113,10 @@ namespace quantum
 
     void IrManipulationTestHelper::applyProfile(
         GeneratorPtr const&      generator,
-        OptimizationLevel const& optimisation_level,
+        OptimizationLevel const& optimization_level,
         bool                     debug)
     {
-        auto profile = generator->newProfile("generic", optimisation_level, debug);
+        auto profile = generator->newProfile("generic", optimization_level, debug);
         profile.apply(*module_);
 
         // Verifying that the module is valid
