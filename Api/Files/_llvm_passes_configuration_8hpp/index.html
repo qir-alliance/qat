@@ -607,48 +607,80 @@ namespace quantum
     class LlvmPassesConfiguration
     {
       public:
-        // Default constructor which sets the standard pipeline.
-        LlvmPassesConfiguration();
-
-        // Setup and pre-fabricated configurations
-
         void setup(ConfigurationManager&amp; config);
-
-        static LlvmPassesConfiguration createDisabled();
-
-        // Configuration interpretation
-        //
-
-        bool isDisabled() const;
-
-        bool operator==(LlvmPassesConfiguration const&amp; ref) const;
-
-        // Flags and options
-        //
 
         bool alwaysInline() const;
 
-        bool disableDefaultPipeline() const;
-
-        std::string passPipeline() const;
+        bool unrollLoops() const;
 
         int32_t inlineParameter() const;
 
-      private:
-        // Variables that enables or disables the adding of specific passes
-        //
+        bool unrollAllowPartial() const;
 
-        bool        always_inline_{false};                
-        bool        default_pipeline_is_disabled_{false}; 
-        std::string pass_pipeline_{&quot;&quot;};                   
-        int32_t     inline_parameter_{std::numeric_limits&lt;int32_t&gt;::max()};
+        bool unrollAllowPeeling() const;
+
+        bool unrollAllowRuntime() const;
+
+        bool unrollAllowUpperBound() const;
+
+        bool unrollAllowProfilBasedPeeling() const;
+
+        uint64_t unrolFullUnrollCount() const;
+
+        int32_t unrollOptLevel() const;
+
+        bool unrollOnlyWhenForced() const;
+
+        bool unrollForgeScev() const;
+
+        bool useLlvmOptPipeline() const;
+
+        String optPipelineConfig() const;
+
+        bool eliminateConstants() const;
+
+        bool eliminateDeadCode() const;
+
+        bool eliminateMemory() const;
+
+        // Configuration classification
+
+        bool isDisabled() const;
+
+        bool operator==(LlvmPassesConfiguration const&amp; o) const = default;
+
+        static LlvmPassesConfiguration createDisabled();
+
+        static LlvmPassesConfiguration createUnrollInline();
+
+      private:
+        bool    always_inline_{false};
+        int32_t inline_parameter_{std::numeric_limits&lt;int32_t&gt;::max()};
+
+        bool     unroll_loops_{false};
+        bool     unroll_allow_partial_{true};
+        bool     unroll_allow_peeling_{true};
+        bool     unroll_allow_runtime_{true};
+        bool     unroll_allow_upper_bound_{true};
+        bool     unroll_allow_profile_based_peeling_{true};
+        uint64_t unroll_full_unroll_count_{1024};
+        int32_t  unroll_opt_level_{3};
+        bool     unroll_only_when_forced_{false};
+        bool     unroll_forget_scev_{false};
+
+        bool eliminate_constants_{true};
+        bool eliminate_dead_code_{true};
+        bool eliminate_memory_{true};
+
+        bool   use_llvm_opt_pipeline_{false};
+        String opt_pipeline_config_{&quot;&quot;};
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

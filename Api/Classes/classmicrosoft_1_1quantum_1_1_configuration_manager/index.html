@@ -641,12 +641,16 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> &amp;&amp; )</td>
 </tr>
 <tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-~configurationmanager">~ConfigurationManager</a></strong>()</td>
+</tr>
+<tr>
 <td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-setuparguments">setupArguments</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser)<br>Adds all bound variables as parser arguments.</td>
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-configure">configure</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser)<br>Configures the value of each bound variable given a parser instance.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-configure">configure</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, bool experimental_mode =false)<br>Configures the value of each bound variable given a parser instance.</td>
 </tr>
 <tr>
 <td>template &lt;typename T > <br>void</td>
@@ -658,7 +662,7 @@
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-printhelp">printHelp</a></strong>() const<br>Prints options for configurability to the terminal.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-printhelp">printHelp</a></strong>(bool experimental_mode) const<br>Prints options for configurability to the terminal.</td>
 </tr>
 <tr>
 <td>void</td>
@@ -670,6 +674,10 @@
 </tr>
 <tr>
 <td>template &lt;typename T > <br>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-configwasregistered">configWasRegistered</a></strong>()<br>Whether or not a configuration of type previously registered.</td>
+</tr>
+<tr>
+<td>template &lt;typename T > <br>bool</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-isactive">isActive</a></strong>()<br>Whether or not the component associated with T is active.</td>
 </tr>
 <tr>
@@ -677,8 +685,24 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-setsectionname">setSectionName</a></strong>(String const &amp; name, String const &amp; description)</td>
 </tr>
 <tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-disablesectionbydefault">disableSectionByDefault</a></strong>()</td>
+</tr>
+<tr>
 <td>template &lt;typename T > <br>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addparameter">addParameter</a></strong>(T &amp; bind, T default_value, String const &amp; name, String const &amp; description)</td>
+</tr>
+<tr>
+<td>template &lt;typename T > <br>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addexperimentalparameter">addExperimentalParameter</a></strong>(T &amp; bind, T default_value, T off_value, String const &amp; name, String const &amp; description)</td>
+</tr>
+<tr>
+<td>template &lt;typename T > <br>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addexperimentalparameter">addExperimentalParameter</a></strong>(T &amp; bind, T default_value, String const &amp; name, String const &amp; description)</td>
+</tr>
+<tr>
+<td>template &lt;typename T > <br>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addexperimentalparameter">addExperimentalParameter</a></strong>(T &amp; bind, String const &amp; name, String const &amp; description)</td>
 </tr>
 <tr>
 <td>template &lt;typename T > <br>void</td>
@@ -739,6 +763,9 @@
     ConfigurationManager &amp;&amp; 
 )
 </code></pre>
+<h3 id="function-configurationmanager_3">function ~ConfigurationManager</h3>
+<pre><code class="language-cpp">inline ~ConfigurationManager()
+</code></pre>
 <h3 id="function-setuparguments">function setupArguments</h3>
 <pre><code class="language-cpp">void setupArguments(
     ParameterParser &amp; parser
@@ -747,7 +774,8 @@
 <p>Adds all bound variables as parser arguments. </p>
 <h3 id="function-configure">function configure</h3>
 <pre><code class="language-cpp">void configure(
-    ParameterParser &amp; parser
+    ParameterParser &amp; parser,
+    bool experimental_mode =false
 )
 </code></pre>
 <p>Configures the value of each bound variable given a parser instance. </p>
@@ -764,7 +792,9 @@ inline T const  &amp; get() const
 </code></pre>
 <p>Gets the configuration instance of type T. </p>
 <h3 id="function-printhelp">function printHelp</h3>
-<pre><code class="language-cpp">void printHelp() const
+<pre><code class="language-cpp">void printHelp(
+    bool experimental_mode
+) const
 </code></pre>
 <p>Prints options for configurability to the terminal. </p>
 <h3 id="function-printconfiguration">function printConfiguration</h3>
@@ -779,6 +809,11 @@ inline void addConfig(
 )
 </code></pre>
 <p>Adds a new configuration of type T. </p>
+<h3 id="function-configwasregistered">function configWasRegistered</h3>
+<pre><code class="language-cpp">template &lt;typename T &gt;
+inline bool configWasRegistered()
+</code></pre>
+<p>Whether or not a configuration of type previously registered. </p>
 <h3 id="function-isactive">function isActive</h3>
 <pre><code class="language-cpp">template &lt;typename T &gt;
 inline bool isActive()
@@ -791,6 +826,9 @@ inline bool isActive()
 )
 </code></pre>
 <p>Sets the section name. This method is used by the configuration class to set a section name. </p>
+<h3 id="function-disablesectionbydefault">function disableSectionByDefault</h3>
+<pre><code class="language-cpp">void disableSectionByDefault()
+</code></pre>
 <h3 id="function-addparameter">function addParameter</h3>
 <pre><code class="language-cpp">template &lt;typename T &gt;
 inline void addParameter(
@@ -801,6 +839,36 @@ inline void addParameter(
 )
 </code></pre>
 <p>Adds a new parameter with a default value to the configuration section. This function should be used by the configuration class. </p>
+<h3 id="function-addexperimentalparameter">function addExperimentalParameter</h3>
+<pre><code class="language-cpp">template &lt;typename T &gt;
+inline void addExperimentalParameter(
+    T &amp; bind,
+    T default_value,
+    T off_value,
+    String const &amp; name,
+    String const &amp; description
+)
+</code></pre>
+<p>Adds an experimental parameter with a default value and an experimental "off" value to the configuration section. This function should be used by the configuration class. The difference to <code>addParameter</code> is that this function marks the parameter as experimental and has a default "off" value </p>
+<h3 id="function-addexperimentalparameter_1">function addExperimentalParameter</h3>
+<pre><code class="language-cpp">template &lt;typename T &gt;
+inline void addExperimentalParameter(
+    T &amp; bind,
+    T default_value,
+    String const &amp; name,
+    String const &amp; description
+)
+</code></pre>
+<p>Adds an experimental parameter with a default value to the configuration section. The experimental off value will be set to the default value of parameter. This function should be used by the configuration class. </p>
+<h3 id="function-addexperimentalparameter_2">function addExperimentalParameter</h3>
+<pre><code class="language-cpp">template &lt;typename T &gt;
+inline void addExperimentalParameter(
+    T &amp; bind,
+    String const &amp; name,
+    String const &amp; description
+)
+</code></pre>
+<p>Adds an experimental parameter. The default value and the experimental off value will be the value of the parameter added. This function should be used by the configuration class. </p>
 <h3 id="function-addparameter_1">function addParameter</h3>
 <pre><code class="language-cpp">template &lt;typename T &gt;
 inline void addParameter(
@@ -811,7 +879,7 @@ inline void addParameter(
 </code></pre>
 <p>Adds a new parameter to the configuration section. This method uses the bound variable value as default value. This function should be used by the configuration class. </p>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:32 UTC</p></div>
 </div>
           </div>
         </main>

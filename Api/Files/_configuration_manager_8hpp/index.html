@@ -611,6 +611,7 @@
 #include &lt;sstream&gt;
 #include &lt;type_traits&gt;
 #include &lt;typeindex&gt;
+#include &lt;typeinfo&gt;
 
 namespace microsoft
 {
@@ -631,6 +632,7 @@ namespace quantum
             TypeId     type{TypeId(typeid(std::nullptr_t))}; 
             String     name{};                               
             String     description{};                        
+            bool       enabled_by_default{true};             
             VoidPtr    configuration{};                      
             ConfigList settings{};                           
             BoolPtr    active{nullptr};                      
@@ -647,12 +649,20 @@ namespace quantum
         ConfigurationManager&amp; operator=(ConfigurationManager const&amp;) = delete;
         ConfigurationManager&amp; operator=(ConfigurationManager&amp;&amp;) = delete;
 
+        ~ConfigurationManager()
+        {
+            for (auto&amp; s : config_sections_)
+            {
+                s.configuration.reset();
+            }
+        }
+
         // Configuration setup
         //
 
         void setupArguments(ParameterParser&amp; parser);
 
-        void configure(ParameterParser&amp; parser);
+        void configure(ParameterParser&amp; parser, bool experimental_mode = false);
 
         // Managing configuration
         //
@@ -664,7 +674,7 @@ namespace quantum
         // Support functions
         //
 
-        void printHelp() const;
+        void printHelp(bool experimental_mode) const;
 
         void printConfiguration() const;
 
@@ -673,12 +683,30 @@ namespace quantum
 
         template &lt;typename T&gt; inline void addConfig(String const&amp; id = &quot;&quot;, T const&amp; default_value = T());
 
+        template &lt;typename T&gt; inline bool configWasRegistered();
+
         template &lt;typename T&gt; inline bool isActive();
 
         void setSectionName(String const&amp; name, String const&amp; description);
 
+        void disableSectionByDefault();
+
         template &lt;typename T&gt;
         inline void addParameter(T&amp; bind, T default_value, String const&amp; name, String const&amp; description);
+
+        template &lt;typename T&gt;
+        inline void addExperimentalParameter(
+            T&amp;            bind,
+            T             default_value,
+            T             off_value,
+            String const&amp; name,
+            String const&amp; description);
+
+        template &lt;typename T&gt;
+        inline void addExperimentalParameter(T&amp; bind, T default_value, String const&amp; name, String const&amp; description);
+
+        template &lt;typename T&gt;
+        inline void addExperimentalParameter(T&amp; bind, String const&amp; name, String const&amp; description);
 
         template &lt;typename T&gt; inline void addParameter(T&amp; bind, String const&amp; name, String const&amp; description);
 
@@ -692,13 +720,42 @@ namespace quantum
     {
         Section new_section{std::type_index(typeid(T))};
 
-        auto ptr                  = std::make_shared&lt;T&gt;(default_value);
+        // Checking whether the section exists
+        auto type = std::type_index(typeid(T));
+        for (auto&amp; section : config_sections_)
+        {
+            if (section.type == type)
+            {
+                throw std::runtime_error(
+                    &quot;Configuration section for type '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) +
+                    &quot;' already exists&quot;);
+            }
+        }
+
+        // If not we create it.
+        auto ptr = std::make_shared&lt;T&gt;(default_value);
+
         new_section.configuration = ptr;
         new_section.active        = std::make_shared&lt;bool&gt;(true);
         new_section.id            = id;
 
         config_sections_.emplace_back(std::move(new_section));
+
         ptr-&gt;setup(*this);
+    }
+
+    template &lt;typename T&gt; inline bool ConfigurationManager::configWasRegistered()
+    {
+        auto type = std::type_index(typeid(T));
+        for (auto&amp; section : config_sections_)
+        {
+            if (section.type == type)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     template &lt;typename T&gt; inline T&amp; ConfigurationManager::getInternal() const
@@ -717,7 +774,8 @@ namespace quantum
 
         if (ptr == nullptr)
         {
-            throw std::runtime_error(&quot;Could not find configuration class.&quot;);
+            throw std::runtime_error(
+                &quot;Could not find configuration class '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;'.&quot;);
         }
 
         return *static_cast&lt;T*&gt;(ptr.get());
@@ -750,7 +808,8 @@ namespace quantum
 
         if (ptr == nullptr)
         {
-            throw std::runtime_error(&quot;Could not find configuration class.&quot;);
+            throw std::runtime_error(
+                &quot;Could not find configuration class '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;'.&quot;);
         }
 
         return *ptr;
@@ -768,16 +827,51 @@ namespace quantum
     }
 
     template &lt;typename T&gt;
+    inline void ConfigurationManager::addExperimentalParameter(
+        T&amp;            bind,
+        T             default_value,
+        T             off_value,
+        String const&amp; name,
+        String const&amp; description)
+    {
+        auto ptr = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, default_value, name, description);
+        ptr-&gt;markAsExperimental(off_value);
+        config_sections_.back().settings.push_back(ptr);
+    }
+
+    template &lt;typename T&gt;
     inline void ConfigurationManager::addParameter(T&amp; bind, String const&amp; name, String const&amp; description)
     {
         auto ptr = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, T(bind), name, description);
+        config_sections_.back().settings.push_back(ptr);
+    }
+
+    template &lt;typename T&gt;
+    inline void ConfigurationManager::addExperimentalParameter(
+        T&amp;            bind,
+        T             default_value,
+        String const&amp; name,
+        String const&amp; description)
+    {
+
+        auto ptr = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, T(default_value), name, description);
+        ptr-&gt;markAsExperimental(T(bind));
+        config_sections_.back().settings.push_back(ptr);
+    }
+
+    template &lt;typename T&gt;
+    inline void ConfigurationManager::addExperimentalParameter(T&amp; bind, String const&amp; name, String const&amp; description)
+    {
+
+        auto ptr = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, T(bind), name, description);
+        ptr-&gt;markAsExperimental(T(bind));
         config_sections_.back().settings.push_back(ptr);
     }
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

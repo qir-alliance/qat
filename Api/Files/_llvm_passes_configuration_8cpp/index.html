@@ -587,27 +587,50 @@ namespace microsoft
 namespace quantum
 {
 
-    LlvmPassesConfiguration::LlvmPassesConfiguration() = default;
-
     void LlvmPassesConfiguration::setup(ConfigurationManager&amp; config)
     {
-        config.setSectionName(&quot;LLVM Passes&quot;, &quot;Configuration of LLVM passes.&quot;);
-        config.addParameter(always_inline_, &quot;always-inline&quot;, &quot;Aggressively inline function calls.&quot;);
-        config.addParameter(
-            default_pipeline_is_disabled_, &quot;disable-default-pipeline&quot;, &quot;Disables the the default pipeline.&quot;);
+        config.setSectionName(
+            &quot;LLVM optimizations&quot;, &quot;Enables specific LLVM optimizations before and after transformation.&quot;);
 
-        config.addParameter(pass_pipeline_, &quot;passes&quot;, &quot;LLVM passes pipeline to use upon applying this component.&quot;);
+        // LLVM transformations
+        config.addParameter(unroll_loops_, &quot;unroll-loops&quot;, &quot;Aggressively unroll loops.&quot;);
+        config.addParameter(
+            unroll_allow_partial_, &quot;allow-partial&quot;,
+            &quot;Enables or disables partial unrolling. When disabled only full unrolling is allowed.&quot;);
+        config.addParameter(unroll_allow_peeling_, &quot;allow-peeling&quot;, &quot;Enables or disables loop peeling.&quot;);
+        config.addParameter(
+            unroll_allow_runtime_, &quot;allow-runtime&quot;, &quot;Enables or disables unrolling of loops with runtime trip count.&quot;);
+        config.addParameter(
+            unroll_allow_upper_bound_, &quot;allow-upper-bound&quot;,
+            &quot;Enables or disables the use of trip count upper bound in loop unrolling.&quot;);
+        config.addParameter(
+            unroll_allow_profile_based_peeling_, &quot;allow-profile-based-peeling&quot;,
+            &quot;Enables or disables loop peeling basing on profile.&quot;);
+        config.addParameter(unroll_full_unroll_count_, &quot;full-unroll-count&quot;, &quot;Sets the max full unroll count.&quot;);
+        config.addParameter(unroll_opt_level_, &quot;unroll-opt-level&quot;, &quot;Sets the optimization level for loop unrolling.&quot;);
+        config.addParameter(
+            unroll_only_when_forced_, &quot;only-when-forced&quot;,
+            &quot;If true, only loops that explicitly request unrolling via metadata are considered.&quot;);
+        config.addParameter(
+            unroll_forget_scev_, &quot;forget-scev&quot;,
+            &quot;If true, forget all loops when unrolling. If false, forget top-most loop of &quot;
+            &quot;the currently processed loops.&quot;);
+
+        config.addParameter(always_inline_, &quot;always-inline&quot;, &quot;Aggressively inline function calls.&quot;);
 
         config.addParameter(inline_parameter_, &quot;inlining-parameter&quot;, &quot;Number of code lines acceptable when inlining.&quot;);
-    }
 
-    LlvmPassesConfiguration LlvmPassesConfiguration::createDisabled()
-    {
-        LlvmPassesConfiguration ret;
-        ret.always_inline_                = false;
-        ret.pass_pipeline_                = &quot;&quot;;
-        ret.default_pipeline_is_disabled_ = true;
-        return ret;
+        config.addParameter(eliminate_constants_, &quot;eliminate-constants&quot;, &quot;Uses LLVM pass to eliminate constants.&quot;);
+        config.addParameter(
+            eliminate_dead_code_, &quot;eliminate-dead-code&quot;, &quot;Uses LLVMs aggressive dead code elimination.&quot;);
+        config.addParameter(eliminate_memory_, &quot;eliminate-memory&quot;, &quot;Maps memory into registers where feasible.&quot;);
+
+        config.addExperimentalParameter(
+            use_llvm_opt_pipeline_, false, false, &quot;use-llvm-opt-pipeline&quot;, &quot;Disables the the default pipeline.&quot;);
+
+        config.addExperimentalParameter(
+            opt_pipeline_config_, static_cast&lt;String&gt;(&quot;&quot;), static_cast&lt;String&gt;(&quot;&quot;), &quot;opt-pipeline-config&quot;,
+            &quot;LLVM passes pipeline to use upon applying this component.&quot;);
     }
 
     bool LlvmPassesConfiguration::alwaysInline() const
@@ -615,24 +638,9 @@ namespace quantum
         return always_inline_;
     }
 
-    bool LlvmPassesConfiguration::disableDefaultPipeline() const
+    bool LlvmPassesConfiguration::unrollLoops() const
     {
-        return default_pipeline_is_disabled_;
-    }
-
-    std::string LlvmPassesConfiguration::passPipeline() const
-    {
-        return pass_pipeline_;
-    }
-
-    bool LlvmPassesConfiguration::isDisabled() const
-    {
-        return always_inline_ == false &amp;&amp; pass_pipeline_ == &quot;&quot;;
-    }
-
-    bool LlvmPassesConfiguration::operator==(LlvmPassesConfiguration const&amp; ref) const
-    {
-        return always_inline_ == ref.always_inline_;
+        return unroll_loops_;
     }
 
     int32_t LlvmPassesConfiguration::inlineParameter() const
@@ -640,11 +648,143 @@ namespace quantum
         return inline_parameter_;
     }
 
+    bool LlvmPassesConfiguration::unrollAllowPartial() const
+    {
+        return unroll_allow_partial_;
+    }
+
+    bool LlvmPassesConfiguration::unrollAllowPeeling() const
+    {
+        return unroll_allow_peeling_;
+    }
+
+    bool LlvmPassesConfiguration::unrollAllowRuntime() const
+    {
+        return unroll_allow_runtime_;
+    }
+
+    bool LlvmPassesConfiguration::unrollAllowUpperBound() const
+    {
+        return unroll_allow_upper_bound_;
+    }
+
+    bool LlvmPassesConfiguration::unrollAllowProfilBasedPeeling() const
+    {
+        return unroll_allow_profile_based_peeling_;
+    }
+
+    uint64_t LlvmPassesConfiguration::unrolFullUnrollCount() const
+    {
+        return unroll_full_unroll_count_;
+    }
+
+    int32_t LlvmPassesConfiguration::unrollOptLevel() const
+    {
+        return unroll_opt_level_;
+    }
+
+    bool LlvmPassesConfiguration::unrollOnlyWhenForced() const
+    {
+        return unroll_only_when_forced_;
+    }
+
+    bool LlvmPassesConfiguration::unrollForgeScev() const
+    {
+        return unroll_forget_scev_;
+    }
+
+    bool LlvmPassesConfiguration::useLlvmOptPipeline() const
+    {
+        return use_llvm_opt_pipeline_;
+    }
+
+    String LlvmPassesConfiguration::optPipelineConfig() const
+    {
+        return opt_pipeline_config_;
+    }
+
+    bool LlvmPassesConfiguration::eliminateConstants() const
+    {
+        return eliminate_constants_;
+    }
+
+    bool LlvmPassesConfiguration::eliminateDeadCode() const
+    {
+        return eliminate_dead_code_;
+    }
+
+    bool LlvmPassesConfiguration::eliminateMemory() const
+    {
+        return eliminate_memory_;
+    }
+
+    LlvmPassesConfiguration LlvmPassesConfiguration::createDisabled()
+    {
+
+        LlvmPassesConfiguration ret;
+
+        ret.always_inline_                      = false;
+        ret.inline_parameter_                   = 0;
+        ret.unroll_loops_                       = false;
+        ret.unroll_allow_partial_               = false;
+        ret.unroll_allow_peeling_               = false;
+        ret.unroll_allow_runtime_               = false;
+        ret.unroll_allow_upper_bound_           = false;
+        ret.unroll_allow_profile_based_peeling_ = false;
+        ret.unroll_full_unroll_count_           = 0;
+        ret.unroll_opt_level_                   = 0;
+        ret.unroll_only_when_forced_            = false;
+        ret.unroll_forget_scev_                 = false;
+        ret.eliminate_constants_                = false;
+        ret.eliminate_dead_code_                = false;
+        ret.eliminate_memory_                   = false;
+        ret.use_llvm_opt_pipeline_              = false;
+        ret.opt_pipeline_config_                = &quot;&quot;;
+
+        return ret;
+    }
+
+    LlvmPassesConfiguration LlvmPassesConfiguration::createUnrollInline()
+    {
+
+        LlvmPassesConfiguration ret;
+
+        ret.always_inline_                      = true;
+        ret.inline_parameter_                   = std::numeric_limits&lt;int32_t&gt;::max();
+        ret.unroll_loops_                       = true;
+        ret.unroll_allow_partial_               = true;
+        ret.unroll_allow_peeling_               = true;
+        ret.unroll_allow_runtime_               = true;
+        ret.unroll_allow_upper_bound_           = true;
+        ret.unroll_allow_profile_based_peeling_ = true;
+        ret.unroll_full_unroll_count_           = 1024;
+        ret.unroll_opt_level_                   = 3;
+        ret.unroll_only_when_forced_            = false;
+        ret.unroll_forget_scev_                 = false;
+        ret.eliminate_constants_                = true;
+        ret.eliminate_dead_code_                = true;
+        ret.eliminate_memory_                   = true;
+        ret.use_llvm_opt_pipeline_              = false;
+        ret.opt_pipeline_config_                = &quot;&quot;;
+
+        return ret;
+    }
+
+    bool LlvmPassesConfiguration::isDisabled() const
+    {
+        return always_inline_ == false &amp;&amp; inline_parameter_ == 0 &amp;&amp; unroll_loops_ == false &amp;&amp;
+               unroll_allow_partial_ == false &amp;&amp; unroll_allow_peeling_ == false &amp;&amp; unroll_allow_runtime_ == false &amp;&amp;
+               unroll_allow_upper_bound_ == false &amp;&amp; unroll_allow_profile_based_peeling_ == false &amp;&amp;
+               unroll_full_unroll_count_ == 0 &amp;&amp; unroll_opt_level_ == 0 &amp;&amp; unroll_only_when_forced_ == false &amp;&amp;
+               unroll_forget_scev_ == false &amp;&amp; eliminate_constants_ == false &amp;&amp; eliminate_dead_code_ == false &amp;&amp;
+               eliminate_memory_ == false &amp;&amp; use_llvm_opt_pipeline_ == false &amp;&amp; opt_pipeline_config_ == &quot;&quot;;
+    }
+
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_default_profile_generator_8hpp/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_configurable_profile_generator_8cpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      Generators/DefaultProfileGenerator.hpp - QAT Documentation
+      Generators/ConfigurableProfileGenerator.cpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,12 +553,12 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> Generators/DefaultProfileGenerator.hpp </span>
+        <span class="text-center"> Generators/ConfigurableProfileGenerator.cpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="generatorsdefaultprofilegeneratorhpp">Generators/DefaultProfileGenerator.hpp</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="generatorsconfigurableprofilegeneratorcpp">Generators/ConfigurableProfileGenerator.cpp</h1>
 <h2 id="namespaces">Namespaces</h2>
 <table>
 <thead>
@@ -575,66 +575,75 @@
 </tr>
 </tbody>
 </table>
-<h2 id="classes">Classes</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>class</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_default_profile_generator/">microsoft::quantum::DefaultProfileGenerator</a></strong></td>
-</tr>
-</tbody>
-</table>
 <h2 id="source-code">Source code</h2>
-<pre><code class="language-cpp">#pragma once
-// Copyright (c) Microsoft Corporation.
+<pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Commandline/ConfigurationManager.hpp&quot;
-#include &quot;Generators/LlvmPassesConfiguration.hpp&quot;
-#include &quot;Generators/ProfileGenerator.hpp&quot;
+#include &quot;Generators/ConfigurableProfileGenerator.hpp&quot;
+#include &quot;Rules/Factory.hpp&quot;
 #include &quot;Rules/FactoryConfig.hpp&quot;
 #include &quot;Rules/RuleSet.hpp&quot;
-#include &quot;TransformationRulesPass/TransformationRulesPassConfiguration.hpp&quot;
+#include &quot;TransformationRulesPass/TransformationRulesPass.hpp&quot;
 
 #include &quot;Llvm/Llvm.hpp&quot;
+
+#include &lt;iostream&gt;
 
 namespace microsoft
 {
 namespace quantum
 {
 
-    class DefaultProfileGenerator : public ProfileGenerator
+    ConfigurableProfileGenerator::ConfigurableProfileGenerator()
     {
-      public:
-        using ConfigureFunction = std::function&lt;void(RuleSet&amp;)&gt;; 
+        configurationManager().addConfig&lt;ValidationPassConfiguration&gt;();
 
-        DefaultProfileGenerator();
+        setupDefaultComponentPipeline();
+    }
 
-        explicit DefaultProfileGenerator(
-            ConfigureFunction const&amp;                    configure,
-            TransformationRulesPassConfiguration const&amp; profile_pass_config =
-                TransformationRulesPassConfiguration::createDisabled(),
-            LlvmPassesConfiguration const&amp; llvm_config = LlvmPassesConfiguration());
+    ConfigurableProfileGenerator::ConfigurableProfileGenerator(
+        ConfigureFunction const&amp;                    configure,
+        TransformationRulesPassConfiguration const&amp; profile_pass_config,
+        LlvmPassesConfiguration const&amp;              llvm_config)
+    {
+        configurationManager().addConfig&lt;ValidationPassConfiguration&gt;();
 
-        // Shorthand notation to access configurations
-        //
+        setupDefaultComponentPipeline();
 
-        TransformationRulesPassConfiguration const&amp; ruleTransformationConfig() const;
+        replaceProfileComponent&lt;TransformationRulesPassConfiguration&gt;(
+            &quot;transformation-rules&quot;,
+            [configure](TransformationRulesPassConfiguration const&amp; config, ProfileGenerator* ptr, Profile&amp; profile) {
+                auto&amp; ret = ptr-&gt;modulePassManager();
 
-        LlvmPassesConfiguration const&amp; llvmPassesConfig() const;
-    };
+                // Defining the mapping
+                RuleSet rule_set;
+                auto    factory =
+                    RuleFactory(rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager());
+                configure(rule_set);
+
+                // Creating profile pass
+                ret.addPass(TransformationRulesPass(std::move(rule_set), config, &amp;profile));
+            });
+
+        configurationManager().setConfig(profile_pass_config);
+        configurationManager().setConfig(llvm_config);
+    }
+
+    TransformationRulesPassConfiguration const&amp; ConfigurableProfileGenerator::ruleTransformationConfig() const
+    {
+        return configurationManager().get&lt;TransformationRulesPassConfiguration&gt;();
+    }
+
+    LlvmPassesConfiguration const&amp; ConfigurableProfileGenerator::llvmPassesConfig() const
+    {
+        return configurationManager().get&lt;LlvmPassesConfiguration&gt;();
+    }
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

@@ -611,6 +611,8 @@ namespace quantum
 
         static TransformationRulesPassConfiguration createDisabled();
 
+        static TransformationRulesPassConfiguration createReuseQubitsOnly();
+
         // Configuration classes
         //
 
@@ -643,8 +645,6 @@ namespace quantum
 
         bool oneShotMeasurement() const;
 
-        bool shouldSimplifyPriorTransform() const;
-
         std::string entryPointAttr() const;
 
       private:
@@ -657,8 +657,6 @@ namespace quantum
         uint64_t    max_recursion_{512};
         std::string entry_point_attr_{&quot;InteropFriendly&quot;};
 
-        bool simplify_prior_transformation_{true};
-
         // Branching
         bool assume_no_exceptions_{false};
 
@@ -668,18 +666,13 @@ namespace quantum
         bool annotate_qubit_use_{true};
         bool reuse_results_{true};
         bool annotate_result_use_{true};
-
-        // Measurement
-        //
-        bool group_measurements_{false};
-        bool one_shot_measurement_{true};
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

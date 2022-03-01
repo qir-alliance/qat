@@ -589,34 +589,37 @@ namespace quantum
 
     void TransformationRulesPassConfiguration::setup(ConfigurationManager&amp; config)
     {
-        config.setSectionName(&quot;Pass configuration&quot;, &quot;Configuration of the pass and its corresponding optimisations.&quot;);
-        config.addParameter(delete_dead_code_, &quot;delete-dead-code&quot;, &quot;Deleted dead code.&quot;);
-        config.addParameter(clone_functions_, &quot;clone-functions&quot;, &quot;Clone functions to ensure correct qubit allocation.&quot;);
-        config.addParameter(
-            transform_execution_path_only_, &quot;transform-execution-path-only&quot;, &quot;Transform execution paths only.&quot;);
+        config.setSectionName(&quot;Pass configuration&quot;, &quot;Configuration of the pass and its corresponding optimizations.&quot;);
 
-        config.addParameter(
-            max_recursion_, &quot;max-recursion&quot;, &quot;Defines the maximum recursion when unrolling the execution path&quot;);
+        // Experimental settings
+        config.addExperimentalParameter(delete_dead_code_, true, false, &quot;delete-dead-code&quot;, &quot;Deleted dead code.&quot;);
+        config.addExperimentalParameter(
+            clone_functions_, true, false, &quot;clone-functions&quot;, &quot;Clone functions to ensure correct qubit allocation.&quot;);
+        config.addExperimentalParameter(
+            transform_execution_path_only_, true, false, &quot;transform-execution-path-only&quot;,
+            &quot;Transform execution paths only.&quot;);
 
-        config.addParameter(
-            assume_no_exceptions_, &quot;assume-no-except&quot;, &quot;Assumes that no exception will occur during runtime.&quot;);
+        config.addExperimentalParameter(
+            max_recursion_, max_recursion_, uint64_t(0), &quot;max-recursion&quot;,
+            &quot;Defines the maximum recursion when unrolling the execution path&quot;);
 
-        config.addParameter(reuse_qubits_, &quot;reuse-qubits&quot;, &quot;Use to define whether or not to reuse qubits.&quot;);
-        config.addParameter(annotate_qubit_use_, &quot;annotate-qubit-use&quot;, &quot;Annotate the number of qubits used&quot;);
+        config.addExperimentalParameter(
+            assume_no_exceptions_, false, false, &quot;assume-no-except&quot;,
+            &quot;Assumes that no exception will occur during runtime.&quot;);
 
-        config.addParameter(reuse_results_, &quot;reuse-results&quot;, &quot;Use to define whether or not to reuse results.&quot;);
-        config.addParameter(annotate_result_use_, &quot;annotate-result-use&quot;, &quot;Annotate the number of results used&quot;);
+        config.addExperimentalParameter(
+            reuse_qubits_, false, false, &quot;reuse-qubits&quot;, &quot;Use to define whether or not to reuse qubits.&quot;);
+        config.addExperimentalParameter(
+            reuse_results_, false, false, &quot;reuse-results&quot;, &quot;Use to define whether or not to reuse results.&quot;);
+
+        // Ready settings
 
         config.addParameter(
             entry_point_attr_, &quot;entry-point-attr&quot;, &quot;Specifies the attribute indicating the entry point.&quot;);
 
-        config.addParameter(
-            simplify_prior_transformation_, &quot;simplify-prior-transform&quot;,
-            &quot;When active, the IR is simplified using LLVM passes before transformation.&quot;);
+        config.addParameter(annotate_qubit_use_, &quot;annotate-qubit-use&quot;, &quot;Annotate the number of qubits used&quot;);
 
-        // Not implemented yet
-        config.addParameter(group_measurements_, &quot;group-measurements&quot;, &quot;NOT IMPLEMENTED - group-measurements&quot;);
-        config.addParameter(one_shot_measurement_, &quot;one-shot-measurement&quot;, &quot;NOT IMPLEMENTED - one-shot-measurement&quot;);
+        config.addParameter(annotate_result_use_, &quot;annotate-result-use&quot;, &quot;Annotate the number of results used&quot;);
     }
 
     TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createDisabled()
@@ -626,17 +629,23 @@ namespace quantum
         ret.clone_functions_               = false;
         ret.transform_execution_path_only_ = false;
         ret.max_recursion_                 = 512;
-        ret.simplify_prior_transformation_ = false;
         ret.reuse_qubits_                  = false;
         ret.annotate_qubit_use_            = false;
-        ret.group_measurements_            = false;
-        ret.one_shot_measurement_          = false;
+
         return ret;
     }
 
-    bool TransformationRulesPassConfiguration::shouldSimplifyPriorTransform() const
+    TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createReuseQubitsOnly()
     {
-        return simplify_prior_transformation_;
+        TransformationRulesPassConfiguration ret;
+        ret.delete_dead_code_              = false;
+        ret.clone_functions_               = false;
+        ret.transform_execution_path_only_ = false;
+        ret.max_recursion_                 = 512;
+        ret.reuse_qubits_                  = true;
+        ret.annotate_qubit_use_            = false;
+
+        return ret;
     }
 
     bool TransformationRulesPassConfiguration::shouldDeleteDeadCode() const
@@ -679,16 +688,6 @@ namespace quantum
         return annotate_result_use_;
     }
 
-    bool TransformationRulesPassConfiguration::shouldGroupMeasurements() const
-    {
-        return group_measurements_;
-    }
-
-    bool TransformationRulesPassConfiguration::oneShotMeasurement() const
-    {
-        return one_shot_measurement_;
-    }
-
     std::string TransformationRulesPassConfiguration::entryPointAttr() const
     {
         return entry_point_attr_;
@@ -702,9 +701,8 @@ namespace quantum
     bool TransformationRulesPassConfiguration::isDisabled() const
     {
         return (
-            delete_dead_code_ == false &amp;&amp; clone_functions_ == false &amp;&amp; simplify_prior_transformation_ == false &amp;&amp;
-            transform_execution_path_only_ == false &amp;&amp; reuse_qubits_ == false &amp;&amp; group_measurements_ == false &amp;&amp;
-            one_shot_measurement_ == false);
+            delete_dead_code_ == false &amp;&amp; clone_functions_ == false &amp;&amp; transform_execution_path_only_ == false &amp;&amp;
+            reuse_qubits_ == false);
     }
 
     bool TransformationRulesPassConfiguration::operator==(TransformationRulesPassConfiguration const&amp; ref) const
@@ -712,16 +710,14 @@ namespace quantum
 
         return (
             delete_dead_code_ == ref.delete_dead_code_ &amp;&amp; clone_functions_ == ref.clone_functions_ &amp;&amp;
-            transform_execution_path_only_ == ref.transform_execution_path_only_ &amp;&amp;
-            reuse_qubits_ == ref.reuse_qubits_ &amp;&amp; group_measurements_ == ref.group_measurements_ &amp;&amp;
-            one_shot_measurement_ == ref.one_shot_measurement_);
+            transform_execution_path_only_ == ref.transform_execution_path_only_ &amp;&amp; reuse_qubits_ == ref.reuse_qubits_);
     }
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

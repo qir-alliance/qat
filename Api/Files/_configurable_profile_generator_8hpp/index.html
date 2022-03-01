@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_default_profile_generator/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_configurable_profile_generator_8hpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      microsoft::quantum::DefaultProfileGenerator - QAT Documentation
+      Generators/ConfigurableProfileGenerator.hpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -215,7 +215,7 @@
                 </h3>
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../"
+                  href="../../Classes/"
                   >Classes</a
                 >
                 <a
@@ -230,7 +230,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../../Files/"
+                  href="../"
                   >Files</a
                 >
                 <a
@@ -398,7 +398,7 @@
               </h3>
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../"
+                href="../../Classes/"
                 >Classes</a
               >
               <a
@@ -413,7 +413,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../../Files/"
+                href="../"
                 >Files</a
               >
               <a
@@ -553,16 +553,29 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> microsoft::quantum::DefaultProfileGenerator </span>
+        <span class="text-center"> Generators/ConfigurableProfileGenerator.hpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumdefaultprofilegenerator">microsoft::quantum::DefaultProfileGenerator</h1>
-<p><a href="#detailed-description">More...</a></p>
-<p><code>#include &lt;Generators/DefaultProfileGenerator.hpp&gt;</code></p>
-<p>Inherits from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">microsoft::quantum::ProfileGenerator</a></p>
-<h2 id="public-types">Public Types</h2>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="generatorsconfigurableprofilegeneratorhpp">Generators/ConfigurableProfileGenerator.hpp</h1>
+<h2 id="namespaces">Namespaces</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="classes">Classes</h2>
 <table>
 <thead>
 <tr>
@@ -572,192 +585,56 @@
 </thead>
 <tbody>
 <tr>
-<td>using std::function&lt; void(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/">RuleSet</a> &amp;)&gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_default_profile_generator/#using-configurefunction">ConfigureFunction</a></strong> <br>Function type that configures a rule set.</td>
+<td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configurable_profile_generator/">microsoft::quantum::ConfigurableProfileGenerator</a></strong></td>
 </tr>
 </tbody>
 </table>
-<h2 id="public-functions">Public Functions</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_default_profile_generator/#function-defaultprofilegenerator">DefaultProfileGenerator</a></strong>()</td>
-</tr>
-<tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_default_profile_generator/#function-defaultprofilegenerator">DefaultProfileGenerator</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_default_profile_generator/#using-configurefunction">ConfigureFunction</a> const &amp; configure, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/">TransformationRulesPassConfiguration</a> const &amp; profile_pass_config =<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/#function-createdisabled">TransformationRulesPassConfiguration::createDisabled</a>(), <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/">LlvmPassesConfiguration</a> const &amp; llvm_config =<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/">LlvmPassesConfiguration</a>())</td>
-</tr>
-<tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/">TransformationRulesPassConfiguration</a> const  &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_default_profile_generator/#function-ruletransformationconfig">ruleTransformationConfig</a></strong>() const<br>Returns a constant reference to the rule transformation configuration.</td>
-</tr>
-<tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/">LlvmPassesConfiguration</a> const  &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_default_profile_generator/#function-llvmpassesconfig">llvmPassesConfig</a></strong>() const<br>Returns a constant reference to the LLVM passes configuration.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="additional-inherited-members">Additional inherited members</h2>
-<p><strong>Public Types inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">microsoft::quantum::ProfileGenerator</a></strong></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>using llvm::PassBuilder</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-passbuilder">PassBuilder</a></strong></td>
-</tr>
-<tr>
-<td>using PassBuilder::OptimizationLevel</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-optimizationlevel">OptimizationLevel</a></strong></td>
-</tr>
-<tr>
-<td>using llvm::FunctionAnalysisManager</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-functionanalysismanager">FunctionAnalysisManager</a></strong></td>
-</tr>
-<tr>
-<td>template &lt;typename R > <br>using std::function&lt; void(R const  &amp;, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> *, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;)&gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunction">SetupFunction</a></strong></td>
-</tr>
-<tr>
-<td>using std::function&lt; void(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> *, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;)&gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunctionwrapper">SetupFunctionWrapper</a></strong> <br>Wrapper function type for invoking the profile setup function.</td>
-</tr>
-<tr>
-<td>using std::vector&lt; std::pair&lt; String, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunctionwrapper">SetupFunctionWrapper</a> &gt; &gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-components">Components</a></strong> <br>List of components to be configured.</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Public Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">microsoft::quantum::ProfileGenerator</a></strong></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-profilegenerator">ProfileGenerator</a></strong>() =default</td>
-</tr>
-<tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-~profilegenerator">~ProfileGenerator</a></strong>() =default</td>
-</tr>
-<tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-profilegenerator">ProfileGenerator</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> const &amp; )</td>
-</tr>
-<tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-profilegenerator">ProfileGenerator</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> &amp;&amp; )</td>
-</tr>
-<tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> const &amp; )</td>
-</tr>
-<tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> &amp;&amp; )</td>
-</tr>
-<tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-configurationmanager">configurationManager</a></strong>()</td>
-</tr>
-<tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> const  &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-configurationmanager">configurationManager</a></strong>() const</td>
-</tr>
-<tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-newprofile">newProfile</a></strong>(String const &amp; name, OptimizationLevel const &amp; optimisation_level, bool debug)</td>
-</tr>
-<tr>
-<td>template &lt;typename R > <br>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-registerprofilecomponent">registerProfileComponent</a></strong>(String const &amp; id, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunction">SetupFunction</a>&lt; R &gt; setup)</td>
-</tr>
-<tr>
-<td>llvm::ModulePassManager &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-modulepassmanager">modulePassManager</a></strong>()<br>Returns the module pass manager.</td>
-</tr>
-<tr>
-<td>llvm::PassBuilder &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-passbuilder">passBuilder</a></strong>()<br>Returns the pass builder.</td>
-</tr>
-<tr>
-<td>OptimizationLevel</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-optimisationlevel">optimisationLevel</a></strong>() const<br>Returns the optimisation level.</td>
-</tr>
-<tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-isdebugmode">isDebugMode</a></strong>() const<br>Flag indicating whether we are operating in debug mode or not.</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Protected Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">microsoft::quantum::ProfileGenerator</a></strong></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>llvm::ModulePassManager</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-creategenerationmodulepassmanager">createGenerationModulePassManager</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp; profile, OptimizationLevel const &amp; optimisation_level, bool debug)</td>
-</tr>
-<tr>
-<td>llvm::ModulePassManager</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-createvalidationmodulepass">createValidationModulePass</a></strong>(PassBuilder &amp; pass_builder, OptimizationLevel const &amp; optimisation_level, bool debug)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="detailed-description">Detailed Description</h2>
-<pre><code class="language-cpp">class microsoft::quantum::DefaultProfileGenerator;
+<h2 id="source-code">Source code</h2>
+<pre><code class="language-cpp">#pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include &quot;Commandline/ConfigurationManager.hpp&quot;
+#include &quot;Generators/LlvmPassesConfiguration.hpp&quot;
+#include &quot;Generators/ProfileGenerator.hpp&quot;
+#include &quot;Rules/FactoryConfig.hpp&quot;
+#include &quot;Rules/RuleSet.hpp&quot;
+#include &quot;TransformationRulesPass/TransformationRulesPassConfiguration.hpp&quot;
+
+#include &quot;Llvm/Llvm.hpp&quot;
+
+namespace microsoft
+{
+namespace quantum
+{
+
+    class ConfigurableProfileGenerator : public ProfileGenerator
+    {
+      public:
+        using ConfigureFunction = std::function&lt;void(RuleSet&amp;)&gt;; 
+
+        ConfigurableProfileGenerator();
+
+        explicit ConfigurableProfileGenerator(
+            ConfigureFunction const&amp;                    configure,
+            TransformationRulesPassConfiguration const&amp; profile_pass_config =
+                TransformationRulesPassConfiguration::createDisabled(),
+            LlvmPassesConfiguration const&amp; llvm_config = LlvmPassesConfiguration::createDisabled());
+
+        // Shorthand notation to access configurations
+        //
+
+        TransformationRulesPassConfiguration const&amp; ruleTransformationConfig() const;
+
+        LlvmPassesConfiguration const&amp; llvmPassesConfig() const;
+    };
+
+} // namespace quantum
+} // namespace microsoft
 </code></pre>
-<p><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_default_profile_generator/">DefaultProfileGenerator</a> defines a profile that configures the rule set used by the <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> pass. This profile is useful for generating dynamic profiles and is well suited for testing purposes or YAML configured transformation of the IR. </p>
-<h2 id="public-types-documentation">Public Types Documentation</h2>
-<h3 id="using-configurefunction">using ConfigureFunction</h3>
-<pre><code class="language-cpp">using microsoft::quantum::DefaultProfileGenerator::ConfigureFunction =  std::function&lt;void(RuleSet&amp;)&gt;;
-</code></pre>
-<p>Function type that configures a rule set. </p>
-<h2 id="public-functions-documentation">Public Functions Documentation</h2>
-<h3 id="function-defaultprofilegenerator">function DefaultProfileGenerator</h3>
-<pre><code class="language-cpp">DefaultProfileGenerator()
-</code></pre>
-<p>Default constructor. This constructor adds components for rule transformation and LLVM passes. These are configurable through the corresponding configuration classes which can be access through the configuration manager. </p>
-<h3 id="function-defaultprofilegenerator_1">function DefaultProfileGenerator</h3>
-<pre><code class="language-cpp">explicit DefaultProfileGenerator(
-    ConfigureFunction const &amp; configure,
-    TransformationRulesPassConfiguration const &amp; profile_pass_config =TransformationRulesPassConfiguration::createDisabled(),
-    LlvmPassesConfiguration const &amp; llvm_config =LlvmPassesConfiguration()
-)
-</code></pre>
-<p>The constructor takes a lambda function which configures the rule set. This function is invoked during the creation of the generation module. This constructor further overrides the default configuration </p>
-<h3 id="function-ruletransformationconfig">function ruleTransformationConfig</h3>
-<pre><code class="language-cpp">TransformationRulesPassConfiguration const  &amp; ruleTransformationConfig() const
-</code></pre>
-<p>Returns a constant reference to the rule transformation configuration. </p>
-<h3 id="function-llvmpassesconfig">function llvmPassesConfig</h3>
-<pre><code class="language-cpp">LlvmPassesConfiguration const  &amp; llvmPassesConfig() const
-</code></pre>
-<p>Returns a constant reference to the LLVM passes configuration. </p>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

@@ -589,7 +589,7 @@ private:
 };
 </code></pre>
 <p>We note the default value of our configuration is captured through the
-initialisation of the class member. That is, if not overridden by the command
+initialization of the class member. That is, if not overridden by the command
 line arguments, the message will be <code>"Hello world"</code>.</p>
 <p>To fulfil the concept of being a configuration, a configuration must implement a
 <code>setup</code> function taking a reference to a <code>ConfigurationManager</code> as its only
@@ -719,7 +719,7 @@ private:
           // Adds the inline pipeline
           auto &amp;pass_builder = ptr-&gt;passBuilder();
           auto  inliner_pass = pass_builder.buildInlinerPipeline(
-              ptr-&gt;optimisationLevel(), llvm::PassBuilder::ThinLTOPhase::None, ptr-&gt;debug());
+              ptr-&gt;optimizationLevel(), llvm::PassBuilder::ThinLTOPhase::None, ptr-&gt;debug());
           module_pass_manager.addPass(std::move(inliner_pass));
         }
       });

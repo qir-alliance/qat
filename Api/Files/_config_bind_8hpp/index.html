@@ -631,12 +631,15 @@ namespace quantum
 
         ConfigBind(Type&amp; bind, T default_value, String const&amp; name, String const&amp; description);
 
+        // Marks the configuration as being experimental.
+        void markAsExperimental(Type const&amp; off_value);
+
         // Interface implementation
         //
 
         bool setupArguments(ParameterParser&amp; parser) override;
 
-        bool configure(ParameterParser&amp; parser) override;
+        bool configure(ParameterParser&amp; parser, bool experimental_mode) override;
 
         String value() override;
 
@@ -659,8 +662,9 @@ namespace quantum
 
         template &lt;typename A&gt; void loadValue(ParameterParser&amp; parser, EnableIf&lt;A, String, A&gt; const&amp; default_value);
 
-        Type&amp; bind_;          
-        Type  default_value_; 
+        Type&amp; bind_;                   
+        Type  default_value_;          
+        Type  experimental_off_value_; 
     };
 
     template &lt;typename T&gt;
@@ -709,10 +713,35 @@ namespace quantum
         return true;
     }
 
-    template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::configure(ParameterParser&amp; parser)
+    template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::configure(ParameterParser&amp; parser, bool experimental_mode)
     {
-        loadValue&lt;Type&gt;(parser, default_value_);
+        if (!isExperimental())
+        {
+            // For non-experimental parameters we load the default value
+            loadValue&lt;Type&gt;(parser, default_value_);
+        }
+        else
+        {
+            // If the parameter is experimental and we are in experimental mode
+            if (experimental_mode)
+            {
+                // ... we load the default value
+                loadValue&lt;Type&gt;(parser, default_value_);
+            }
+            else
+            {
+                // ... and else we load the experimental off value
+                bind_ = experimental_off_value_;
+            }
+        }
         return true;
+    }
+
+    template &lt;typename T&gt; void ConfigBind&lt;T&gt;::markAsExperimental(Type const&amp; off_value)
+    {
+        experimental_off_value_ = off_value;
+
+        makeSettingExperimental();
     }
 
     template &lt;typename T&gt; String ConfigBind&lt;T&gt;::value()
@@ -780,7 +809,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

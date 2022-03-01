@@ -592,7 +592,14 @@ namespace quantum
     {
         for (auto&amp; section : config_sections_)
         {
-            parser.addFlag(&quot;disable-&quot; + section.id);
+            if (section.enabled_by_default)
+            {
+                parser.addFlag(&quot;disable-&quot; + section.id);
+            }
+            else
+            {
+                parser.addFlag(&quot;enable-&quot; + section.id);
+            }
         }
 
         for (auto&amp; section : config_sections_)
@@ -607,19 +614,26 @@ namespace quantum
         }
     }
 
-    void ConfigurationManager::configure(ParameterParser&amp; parser)
+    void ConfigurationManager::configure(ParameterParser&amp; parser, bool experimental_mode)
     {
 
         for (auto&amp; section : config_sections_)
         {
-            *section.active = (parser.get(&quot;disable-&quot; + section.id, &quot;false&quot;) != &quot;true&quot;);
+            if (section.enabled_by_default)
+            {
+                *section.active = (parser.get(&quot;disable-&quot; + section.id, &quot;false&quot;) != &quot;true&quot;);
+            }
+            else
+            {
+                *section.active = (parser.get(&quot;enable-&quot; + section.id, &quot;false&quot;) == &quot;true&quot;);
+            }
         }
 
         for (auto&amp; section : config_sections_)
         {
             for (auto&amp; c : section.settings)
             {
-                if (!c-&gt;configure(parser))
+                if (!c-&gt;configure(parser, experimental_mode))
                 {
                     throw std::runtime_error(&quot;Failed configure the section.&quot;);
                 }
@@ -627,7 +641,7 @@ namespace quantum
         }
     }
 
-    void ConfigurationManager::printHelp() const
+    void ConfigurationManager::printHelp(bool experimental_mode) const
     {
         std::cout &lt;&lt; std::setfill(' ');
 
@@ -641,9 +655,18 @@ namespace quantum
         {
             if (!section.id.empty())
             {
-                std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--disable-&quot; + section.id) &lt;&lt; &quot;Disables &quot; &lt;&lt; section.name
-                          &lt;&lt; &quot;. &quot;;
-                std::cout &lt;&lt; &quot;Default: true&quot; &lt;&lt; std::endl;
+                if (section.enabled_by_default)
+                {
+                    std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--disable-&quot; + section.id) &lt;&lt; &quot;Disables &quot;
+                              &lt;&lt; section.name &lt;&lt; &quot;. &quot;;
+                    std::cout &lt;&lt; &quot;Default: false&quot; &lt;&lt; std::endl;
+                }
+                else
+                {
+                    std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--enable-&quot; + section.id) &lt;&lt; &quot;Enables &quot; &lt;&lt; section.name
+                              &lt;&lt; &quot;. &quot;;
+                    std::cout &lt;&lt; &quot;Default: false&quot; &lt;&lt; std::endl;
+                }
             }
         }
 
@@ -657,21 +680,34 @@ namespace quantum
 
             for (auto&amp; c : section.settings)
             {
+                if (c-&gt;isExperimental() &amp;&amp; !experimental_mode)
+                {
+                    continue;
+                }
+
                 if (c-&gt;isFlag())
                 {
                     if (c-&gt;defaultValue() == &quot;false&quot;)
                     {
-                        std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name()) &lt;&lt; c-&gt;description() &lt;&lt; &quot; &quot;;
+                        std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name());
                     }
                     else
                     {
-                        std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--[no-]&quot; + c-&gt;name()) &lt;&lt; c-&gt;description() &lt;&lt; &quot; &quot;;
+                        std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--[no-]&quot; + c-&gt;name());
                     }
                 }
                 else
                 {
-                    std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name()) &lt;&lt; c-&gt;description() &lt;&lt; &quot; &quot;;
+                    std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name());
                 }
+
+                if (c-&gt;isExperimental())
+                {
+                    std::cout &lt;&lt; &quot;EXPERIMENTAL. &quot;;
+                }
+
+                std::cout &lt;&lt; c-&gt;description() &lt;&lt; &quot; &quot;;
+
                 std::cout &lt;&lt; &quot;Default: &quot; &lt;&lt; c-&gt;defaultValue() &lt;&lt; std::endl;
             }
         }
@@ -707,15 +743,29 @@ namespace quantum
 
     void ConfigurationManager::setSectionName(String const&amp; name, String const&amp; description)
     {
+        if (config_sections_.empty())
+        {
+            throw std::runtime_error(&quot;No section created yet.&quot;);
+        }
         config_sections_.back().name        = name;
         config_sections_.back().description = description;
+    }
+
+    void ConfigurationManager::disableSectionByDefault()
+    {
+        if (config_sections_.empty())
+        {
+            throw std::runtime_error(&quot;No section created yet.&quot;);
+        }
+
+        config_sections_.back().enabled_by_default = false;
     }
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

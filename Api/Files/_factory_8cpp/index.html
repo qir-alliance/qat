@@ -630,14 +630,14 @@ namespace quantum
             disableStringSupport();
         }
 
-        if (config.optimiseResultOne())
+        if (config.optimizeResultOne())
         {
-            optimiseResultOne();
+            optimizeResultOne();
         }
 
-        if (config.optimiseResultZero())
+        if (config.optimizeResultZero())
         {
-            optimiseResultZero();
+            optimizeResultZero();
         }
 
         if (config.useStaticQubitArrayAllocation())
@@ -735,9 +735,6 @@ namespace quantum
                 // Computing offset
                 auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
 
-                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
-                instr-&gt;takeName(val);
-
                 // Replacing the instruction with new instruction
                 auto old_instr = llvm::dyn_cast&lt;Instruction&gt;(val);
 
@@ -746,6 +743,9 @@ namespace quantum
                 {
                     return false;
                 }
+
+                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
+                instr-&gt;takeName(old_instr);
 
                 // Ensuring that we have replaced the instruction before
                 // identifying release
@@ -792,12 +792,22 @@ namespace quantum
                 // Computing offset
                 auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
 
+                auto old_instr = llvm::dyn_cast&lt;Instruction&gt;(val);
+
+                if (old_instr == nullptr)
+                {
+                    return false;
+                }
+
                 // Converting pointer
-                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
-                instr-&gt;takeName(val);
+                builder.SetInsertPoint(old_instr-&gt;getNextNode());
+
+                auto instr = builder.CreateIntToPtr(new_index, ptr_type);
+                instr-&gt;takeName(old_instr);
+                old_instr-&gt;replaceAllUsesWith(instr);
 
                 // Replacing the instruction with new instruction
-                replacements.push_back({llvm::dyn_cast&lt;Instruction&gt;(val), instr});
+                replacements.push_back({old_instr, nullptr});
 
                 // Deleting the getelement and cast operations
                 replacements.push_back({llvm::dyn_cast&lt;Instruction&gt;(cap[&quot;getElement&quot;]), nullptr});
@@ -812,7 +822,7 @@ namespace quantum
         auto cast_pattern = bitCast(&quot;getElement&quot;_cap = get_element);
         auto load_pattern = load(&quot;cast&quot;_cap = cast_pattern);
 
-        addRule({std::move(load_pattern), access_replacer});
+        addRule({&quot;Array Load Pattern&quot;, std::move(load_pattern), access_replacer});
 
         auto deleter = deleteInstruction();
 
@@ -861,7 +871,6 @@ namespace quantum
                 auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
 
                 auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
-                instr-&gt;takeName(val);
 
                 // Replacing the instruction with new instruction
                 auto old_instr = llvm::dyn_cast&lt;Instruction&gt;(val);
@@ -871,6 +880,8 @@ namespace quantum
                 {
                     return false;
                 }
+
+                instr-&gt;takeName(old_instr);
 
                 // Ensuring that we have replaced the instruction before
                 // identifying release
@@ -1043,7 +1054,7 @@ namespace quantum
         addRule({call(&quot;__quantum__qis__m__body&quot;, &quot;qubit&quot;_cap = _), std::move(replace_measurement)});
     }
 
-    void RuleFactory::optimiseResultZero()
+    void RuleFactory::optimizeResultZero()
     {
         auto replace_branch_negative = [](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; replacements) {
             auto cond = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
@@ -1116,7 +1127,7 @@ namespace quantum
             {call(&quot;__quantum__rt__result_equal&quot;, &quot;zero&quot;_cap = get_zero, &quot;result&quot;_cap = _), replace_branch_negative});
     }
 
-    void RuleFactory::optimiseResultOne()
+    void RuleFactory::optimizeResultOne()
     {
         auto replace_branch_positive = [](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; replacements) {
             auto cond = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
@@ -1242,7 +1253,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

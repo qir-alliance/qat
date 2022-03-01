@@ -643,13 +643,16 @@ namespace quantum
 
     bool IntToPtrPattern::match(Value* instr, Captures&amp; captures) const
     {
-        auto* load_instr = llvm::dyn_cast&lt;llvm::IntToPtrInst&gt;(instr);
-        if (load_instr == nullptr)
+        auto* a = llvm::dyn_cast&lt;llvm::IntToPtrInst&gt;(instr);
+        auto* b = llvm::dyn_cast&lt;llvm::ConcreteOperator&lt;llvm::Operator, llvm::Instruction::IntToPtr&gt;&gt;(instr);
+
+        if (a == nullptr &amp;&amp; b == nullptr)
         {
             return fail(instr, captures);
         }
 
-        return success(instr, captures);
+        auto ret = success(instr, captures);
+        return ret;
     }
 
     IntToPtrPattern::Child IntToPtrPattern::copy() const
@@ -753,7 +756,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

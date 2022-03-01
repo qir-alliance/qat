@@ -597,7 +597,7 @@
 </tr>
 <tr>
 <td>virtual bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-configure">configure</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser) =0</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-configure">configure</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, bool experimental_mode) =0</td>
 </tr>
 <tr>
 <td>virtual String</td>
@@ -618,6 +618,10 @@
 <tr>
 <td>String</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-defaultvalue">defaultValue</a></strong>() const<br>Returns the default value for the flag.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-isexperimental">isExperimental</a></strong>() const<br>Indicates whether or not this is an experimental config.</td>
 </tr>
 </tbody>
 </table>
@@ -645,6 +649,10 @@
 <tr>
 <td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-setdefault">setDefault</a></strong>(String const &amp; v)<br>Sets the default value as a string.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-makesettingexperimental">makeSettingExperimental</a></strong>()<br>Marks the config as experimental.</td>
 </tr>
 </tbody>
 </table>
@@ -685,7 +693,8 @@
 <p>Interface function to register configuration in the parser. This function register the configuration to the parameter parser. This makes the configuration available in the parameter parsers help function. This method should return true if arguments were successfully setup. </p>
 <h3 id="function-configure">function configure</h3>
 <pre><code class="language-cpp">virtual bool configure(
-    ParameterParser &amp; parser
+    ParameterParser &amp; parser,
+    bool experimental_mode
 ) =0
 </code></pre>
 <p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-configure">microsoft::quantum::ConfigBind::configure</a></p>
@@ -711,6 +720,10 @@
 <pre><code class="language-cpp">String defaultValue() const
 </code></pre>
 <p>Returns the default value for the flag. </p>
+<h3 id="function-isexperimental">function isExperimental</h3>
+<pre><code class="language-cpp">bool isExperimental() const
+</code></pre>
+<p>Indicates whether or not this is an experimental config. </p>
 <h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
 <h3 id="function-iconfigbind_3">function IConfigBind</h3>
 <pre><code class="language-cpp">IConfigBind(
@@ -734,8 +747,12 @@
 )
 </code></pre>
 <p>Sets the default value as a string. </p>
+<h3 id="function-makesettingexperimental">function makeSettingExperimental</h3>
+<pre><code class="language-cpp">void makeSettingExperimental()
+</code></pre>
+<p>Marks the config as experimental. </p>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:32 UTC</p></div>
 </div>
           </div>
         </main>

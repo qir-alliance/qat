@@ -633,7 +633,7 @@ namespace quantum
 
         virtual bool setupArguments(ParameterParser&amp; parser) = 0;
 
-        virtual bool configure(ParameterParser&amp; parser) = 0;
+        virtual bool configure(ParameterParser&amp; parser, bool experimental_mode) = 0;
 
         virtual String value() = 0;
 
@@ -647,6 +647,8 @@ namespace quantum
         bool isFlag() const;
 
         String defaultValue() const;
+
+        bool isExperimental() const;
 
       protected:
         // Constructor
@@ -662,18 +664,22 @@ namespace quantum
 
         void setDefault(String const&amp; v);
 
+        void makeSettingExperimental();
+
       private:
-        String name_;              
-        String description_;       
-        bool   is_flag_{false};    
-        String str_default_value_; 
+        String name_;                  
+        String description_;           
+        bool   is_flag_{false};        
+        String str_default_value_{&quot;&quot;}; 
+
+        bool is_experimental_{false}; 
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

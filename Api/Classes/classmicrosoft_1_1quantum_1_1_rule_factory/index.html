@@ -639,11 +639,11 @@
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-optimiseresultone">optimiseResultOne</a></strong>()</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-optimizeresultone">optimizeResultOne</a></strong>()</td>
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-optimiseresultzero">optimiseResultZero</a></strong>()<br>Replaces branching of quantum results compared to zero. This method is not implemented yet.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-optimizeresultzero">optimizeResultZero</a></strong>()<br>Replaces branching of quantum results compared to zero. This method is not implemented yet.</td>
 </tr>
 <tr>
 <td>void</td>
@@ -715,7 +715,7 @@
 <h3 id="function-usestaticqubitarrayallocation">function useStaticQubitArrayAllocation</h3>
 <pre><code class="language-cpp">void useStaticQubitArrayAllocation()
 </code></pre>
-<p>Static qubit array allocation identifies allocations, array access and releases. Each of these are replaced with static values. Patterns recognised include</p>
+<p>Static qubit array allocation identifies allocations, array access and releases. Each of these are replaced with static values. Patterns recognized include</p>
 <pre><code class="language-cpp">%array = call %Array* @__quantum__rt__qubit_allocate_array(i64 10)
 </code></pre>
 <p>which is replaced by a constant pointer</p>
@@ -729,7 +729,7 @@
 <p>is replaced by off-setting the array value by 7 to get</p>
 <pre><code class="language-cpp">%qubit = inttoptr i64 7 to %Qubit*
 </code></pre>
-<p>Finally, release is recognised and the allocation manager is invoked accordingly. </p>
+<p>Finally, release is recognized and the allocation manager is invoked accordingly. </p>
 <p>Allocation</p>
 <p>This rule is replacing the allocate qubit array instruction</p>
 <p>leftPreshared = call Array* @__quantum__rt__qubit_allocate_array(i64 2)</p>
@@ -769,8 +769,8 @@
 <pre><code class="language-cpp">void inlineCallables()
 </code></pre>
 <p>Array access replacement</p>
-<h3 id="function-optimiseresultone">function optimiseResultOne</h3>
-<pre><code class="language-cpp">void optimiseResultOne()
+<h3 id="function-optimizeresultone">function optimizeResultOne</h3>
+<pre><code class="language-cpp">void optimizeResultOne()
 </code></pre>
 <p>Replaces branching of quantum results compared to one. This is a relatively advanced pattern, intended for base profile-like constructs where</p>
 <pre><code class="language-cpp">%1 = tail call %Result* @__quantum__rt__result_get_one()
@@ -782,8 +782,8 @@ br i1 %2, label %then0__1, label %continue__1
 br i1 %1, label %then0__1, label %continue__1
 </code></pre>
 <p>which removes the need for constant one. </p>
-<h3 id="function-optimiseresultzero">function optimiseResultZero</h3>
-<pre><code class="language-cpp">void optimiseResultZero()
+<h3 id="function-optimizeresultzero">function optimizeResultZero</h3>
+<pre><code class="language-cpp">void optimizeResultZero()
 </code></pre>
 <p>Replaces branching of quantum results compared to zero. This method is not implemented yet. </p>
 <h3 id="function-disablereferencecounting">function disableReferenceCounting</h3>
@@ -805,7 +805,7 @@ br i1 %1, label %then0__1, label %continue__1
 </code></pre>
 <p>Sets the integer width used when it cannot be deducted from the context of the transformation. </p>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

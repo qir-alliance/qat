@@ -595,6 +595,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include &quot;QatTypes/QatTypes.hpp&quot;
 #include &quot;Rules/Patterns/AnyPattern.hpp&quot;
 #include &quot;Rules/Patterns/CallPattern.hpp&quot;
 #include &quot;Rules/Patterns/Instruction.hpp&quot;
@@ -628,6 +629,7 @@ namespace quantum
         //
 
         ReplacementRule() = default;
+        ReplacementRule(String const&amp; name, IOperandPrototypePtr&amp;&amp; pattern, ReplaceFunction&amp;&amp; replacer);
         ReplacementRule(IOperandPrototypePtr&amp;&amp; pattern, ReplaceFunction&amp;&amp; replacer);
 
         // Rule configuration
@@ -644,16 +646,19 @@ namespace quantum
 
         bool replace(Builder&amp; builder, Value* value, Captures&amp; captures, Replacements&amp; replacements) const;
 
+        String name() const;
+
       private:
         IOperandPrototypePtr pattern_{nullptr};  
         ReplaceFunction      replacer_{nullptr}; 
+        String               name_{&quot;unnamed&quot;};   
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

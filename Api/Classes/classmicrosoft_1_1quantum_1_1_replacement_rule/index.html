@@ -611,6 +611,10 @@
 </tr>
 <tr>
 <td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#function-replacementrule">ReplacementRule</a></strong>(String const &amp; name, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#using-ioperandprototypeptr">IOperandPrototypePtr</a> &amp;&amp; pattern, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#using-replacefunction">ReplaceFunction</a> &amp;&amp; replacer)</td>
+</tr>
+<tr>
+<td></td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#function-replacementrule">ReplacementRule</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#using-ioperandprototypeptr">IOperandPrototypePtr</a> &amp;&amp; pattern, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#using-replacefunction">ReplaceFunction</a> &amp;&amp; replacer)</td>
 </tr>
 <tr>
@@ -628,6 +632,10 @@
 <tr>
 <td>bool</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#function-replace">replace</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#using-builder">Builder</a> &amp; builder, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#using-value">Value</a> * value, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#using-captures">Captures</a> &amp; captures, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#using-replacements">Replacements</a> &amp; replacements) const<br>Invokes the replacer given a matched value and its corresponding captures.</td>
+</tr>
+<tr>
+<td>String</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/#function-name">name</a></strong>() const</td>
 </tr>
 </tbody>
 </table>
@@ -666,6 +674,13 @@
 </code></pre>
 <h3 id="function-replacementrule_1">function ReplacementRule</h3>
 <pre><code class="language-cpp">ReplacementRule(
+    String const &amp; name,
+    IOperandPrototypePtr &amp;&amp; pattern,
+    ReplaceFunction &amp;&amp; replacer
+)
+</code></pre>
+<h3 id="function-replacementrule_2">function ReplacementRule</h3>
+<pre><code class="language-cpp">ReplacementRule(
     IOperandPrototypePtr &amp;&amp; pattern,
     ReplaceFunction &amp;&amp; replacer
 )
@@ -698,8 +713,11 @@
 ) const
 </code></pre>
 <p>Invokes the replacer given a matched value and its corresponding captures. </p>
+<h3 id="function-name">function name</h3>
+<pre><code class="language-cpp">String name() const
+</code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

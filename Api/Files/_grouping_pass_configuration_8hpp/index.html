@@ -613,22 +613,33 @@ namespace quantum
         void setup(ConfigurationManager&amp; config)
         {
             config.setSectionName(&quot;Grouping quantum instructions&quot;, &quot;&quot;);
-            config.addParameter(group_allocations_, &quot;group-allocations&quot;, &quot;&quot;);
-            config.addParameter(group_quantum_circuit_, &quot;group-quantum-circuit&quot;, &quot;&quot;);
-            config.addParameter(group_measurement_, &quot;group-measurement&quot;, &quot;&quot;);
+            config.addExperimentalParameter(
+                circuit_separation_, &quot;separate-circuits&quot;, &quot;Whether or not to separate quantum and classical circuits&quot;);
+        }
+
+        static GroupingPassConfiguration createDisabled()
+        {
+            GroupingPassConfiguration ret;
+
+            ret.circuit_separation_ = false;
+
+            return ret;
+        }
+
+        bool circuitSeparation() const
+        {
+            return circuit_separation_;
         }
 
       private:
-        bool group_allocations_{true};
-        bool group_quantum_circuit_{true};
-        bool group_measurement_{true};
+        bool circuit_separation_{true};
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

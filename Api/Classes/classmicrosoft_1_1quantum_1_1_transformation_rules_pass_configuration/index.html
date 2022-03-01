@@ -629,16 +629,16 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/#function-oneshotmeasurement">oneShotMeasurement</a></strong>() const</td>
 </tr>
 <tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/#function-shouldsimplifypriortransform">shouldSimplifyPriorTransform</a></strong>() const<br>Whether or not simplify the IR using LLVM passes prior to transforming the IR.</td>
-</tr>
-<tr>
 <td>std::string</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/#function-entrypointattr">entryPointAttr</a></strong>() const<br>Attribute which indicate that a function is the entry point.</td>
 </tr>
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/">TransformationRulesPassConfiguration</a></td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/#function-createdisabled">createDisabled</a></strong>()<br>Creates a configuration where all functionality is disabled.</td>
+</tr>
+<tr>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/">TransformationRulesPassConfiguration</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/#function-createreusequbitsonly">createReuseQubitsOnly</a></strong>()<br>Creates a configuration where only reuse qubits is enabled.</td>
 </tr>
 </tbody>
 </table>
@@ -703,10 +703,6 @@
 <pre><code class="language-cpp">bool oneShotMeasurement() const
 </code></pre>
 <p>Whether or not the target supports measurement (and result interpretation) during the circuit execution. </p>
-<h3 id="function-shouldsimplifypriortransform">function shouldSimplifyPriorTransform</h3>
-<pre><code class="language-cpp">bool shouldSimplifyPriorTransform() const
-</code></pre>
-<p>Whether or not simplify the IR using LLVM passes prior to transforming the IR. </p>
 <h3 id="function-entrypointattr">function entryPointAttr</h3>
 <pre><code class="language-cpp">std::string entryPointAttr() const
 </code></pre>
@@ -715,8 +711,12 @@
 <pre><code class="language-cpp">static TransformationRulesPassConfiguration createDisabled()
 </code></pre>
 <p>Creates a configuration where all functionality is disabled. </p>
+<h3 id="function-createreusequbitsonly">function createReuseQubitsOnly</h3>
+<pre><code class="language-cpp">static TransformationRulesPassConfiguration createReuseQubitsOnly()
+</code></pre>
+<p>Creates a configuration where only reuse qubits is enabled. </p>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

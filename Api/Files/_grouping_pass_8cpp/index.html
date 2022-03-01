@@ -898,6 +898,11 @@ namespace quantum
 
     llvm::PreservedAnalyses GroupingPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam)
     {
+        if (!config_.circuitSeparation())
+        {
+            return llvm::PreservedAnalyses::all();
+        }
+
         auto&amp; result = mam.getResult&lt;GroupingAnalysisPass&gt;(module);
 
         // Preparing builders
@@ -954,7 +959,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

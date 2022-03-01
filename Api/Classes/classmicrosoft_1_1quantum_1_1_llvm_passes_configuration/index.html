@@ -569,20 +569,8 @@
 </thead>
 <tbody>
 <tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-llvmpassesconfiguration">LlvmPassesConfiguration</a></strong>()</td>
-</tr>
-<tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-setup">setup</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> &amp; config)<br>Setup function that registers the different LLVM passes available via LLVM component.</td>
-</tr>
-<tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-isdisabled">isDisabled</a></strong>() const</td>
-</tr>
-<tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-operator==">operator==</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/">LlvmPassesConfiguration</a> const &amp; ref) const<br>Compares equality of two configurations.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-setup">setup</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> &amp; config)</td>
 </tr>
 <tr>
 <td>bool</td>
@@ -590,63 +578,178 @@
 </tr>
 <tr>
 <td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-disabledefaultpipeline">disableDefaultPipeline</a></strong>() const<br>Whether or not the default LLVM pipeline is disabled.</td>
-</tr>
-<tr>
-<td>std::string</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-passpipeline">passPipeline</a></strong>() const</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-unrollloops">unrollLoops</a></strong>() const<br>Whether or not the LLVM LoopUnroll pass should be added to the profile.</td>
 </tr>
 <tr>
 <td>int32_t</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-inlineparameter">inlineParameter</a></strong>() const<br>Parameter that defines the maximum number of lines of code allowed for inlining.</td>
 </tr>
 <tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-unrollallowpartial">unrollAllowPartial</a></strong>() const<br>Whether or not to allow partial unrolling. When disable only full unrolling will be used.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-unrollallowpeeling">unrollAllowPeeling</a></strong>() const<br>Whether or not to allow peeling.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-unrollallowruntime">unrollAllowRuntime</a></strong>() const</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-unrollallowupperbound">unrollAllowUpperBound</a></strong>() const<br>Enables or disables the usage of trip counting in loop unrolling.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-unrollallowprofilbasedpeeling">unrollAllowProfilBasedPeeling</a></strong>() const</td>
+</tr>
+<tr>
+<td>uint64_t</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-unrolfullunrollcount">unrolFullUnrollCount</a></strong>() const<br>The max count full unroll count.</td>
+</tr>
+<tr>
+<td>int32_t</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-unrolloptlevel">unrollOptLevel</a></strong>() const<br>The optimization level for the loop unrolling pass.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-unrollonlywhenforced">unrollOnlyWhenForced</a></strong>() const</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-unrollforgescev">unrollForgeScev</a></strong>() const</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-usellvmoptpipeline">useLlvmOptPipeline</a></strong>() const<br>Whether or not to use a full opt pipeline.</td>
+</tr>
+<tr>
+<td>String</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-optpipelineconfig">optPipelineConfig</a></strong>() const<br>Opt pipeline configuration string.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-eliminateconstants">eliminateConstants</a></strong>() const<br>Whether or not to add a pass to eliminate constants.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-eliminatedeadcode">eliminateDeadCode</a></strong>() const<br>Whether or not to add a pass to eliminate dead code.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-eliminatememory">eliminateMemory</a></strong>() const<br>Whether or not memory allocations should be attempted to be mapped into registers.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-isdisabled">isDisabled</a></strong>() const<br>Checking if the configuration amounts to being disabled.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-operator==">operator==</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/">LlvmPassesConfiguration</a> const &amp; o) const =default<br>Checking whether two configurations are identical.</td>
+</tr>
+<tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/">LlvmPassesConfiguration</a></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-createdisabled">createDisabled</a></strong>()</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-createdisabled">createDisabled</a></strong>()<br>Creating a configuration that disables all passes and/or their effect on the IR.</td>
+</tr>
+<tr>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/">LlvmPassesConfiguration</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/#function-createunrollinline">createUnrollInline</a></strong>()<br>Creates a configuration that unrolls and inlines code.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
-<h3 id="function-llvmpassesconfiguration">function LlvmPassesConfiguration</h3>
-<pre><code class="language-cpp">LlvmPassesConfiguration()
-</code></pre>
 <h3 id="function-setup">function setup</h3>
 <pre><code class="language-cpp">void setup(
     ConfigurationManager &amp; config
 )
 </code></pre>
-<p>Setup function that registers the different LLVM passes available via LLVM component. </p>
-<h3 id="function-isdisabled">function isDisabled</h3>
-<pre><code class="language-cpp">bool isDisabled() const
-</code></pre>
-<p>Returns true if the configuration disables all effects of this component. The effect of this function being true is that registered component should have no effect on transformation and/or validation of the QIR. </p>
-<h3 id="function-operator">function operator==</h3>
-<pre><code class="language-cpp">bool operator==(
-    LlvmPassesConfiguration const &amp; ref
-) const
-</code></pre>
-<p>Compares equality of two configurations. </p>
 <h3 id="function-alwaysinline">function alwaysInline</h3>
 <pre><code class="language-cpp">bool alwaysInline() const
 </code></pre>
 <p>Whether or not the LLVM AlwaysInline pass should be added to the profile. </p>
-<h3 id="function-disabledefaultpipeline">function disableDefaultPipeline</h3>
-<pre><code class="language-cpp">bool disableDefaultPipeline() const
+<h3 id="function-unrollloops">function unrollLoops</h3>
+<pre><code class="language-cpp">bool unrollLoops() const
 </code></pre>
-<p>Whether or not the default LLVM pipeline is disabled. </p>
-<h3 id="function-passpipeline">function passPipeline</h3>
-<pre><code class="language-cpp">std::string passPipeline() const
-</code></pre>
+<p>Whether or not the LLVM LoopUnroll pass should be added to the profile. </p>
 <h3 id="function-inlineparameter">function inlineParameter</h3>
 <pre><code class="language-cpp">int32_t inlineParameter() const
 </code></pre>
 <p>Parameter that defines the maximum number of lines of code allowed for inlining. </p>
+<h3 id="function-unrollallowpartial">function unrollAllowPartial</h3>
+<pre><code class="language-cpp">bool unrollAllowPartial() const
+</code></pre>
+<p>Whether or not to allow partial unrolling. When disable only full unrolling will be used. </p>
+<h3 id="function-unrollallowpeeling">function unrollAllowPeeling</h3>
+<pre><code class="language-cpp">bool unrollAllowPeeling() const
+</code></pre>
+<p>Whether or not to allow peeling. </p>
+<h3 id="function-unrollallowruntime">function unrollAllowRuntime</h3>
+<pre><code class="language-cpp">bool unrollAllowRuntime() const
+</code></pre>
+<p>Whether or not to allow unrolling of loops with runtime trip counts. See <a href="https://llvm.org/doxygen/LoopUnrollRuntime_8cpp_source.html">implementation</a> for details. </p>
+<h3 id="function-unrollallowupperbound">function unrollAllowUpperBound</h3>
+<pre><code class="language-cpp">bool unrollAllowUpperBound() const
+</code></pre>
+<p>Enables or disables the usage of trip counting in loop unrolling. </p>
+<h3 id="function-unrollallowprofilbasedpeeling">function unrollAllowProfilBasedPeeling</h3>
+<pre><code class="language-cpp">bool unrollAllowProfilBasedPeeling() const
+</code></pre>
+<h3 id="function-unrolfullunrollcount">function unrolFullUnrollCount</h3>
+<pre><code class="language-cpp">uint64_t unrolFullUnrollCount() const
+</code></pre>
+<p>The max count full unroll count. </p>
+<h3 id="function-unrolloptlevel">function unrollOptLevel</h3>
+<pre><code class="language-cpp">int32_t unrollOptLevel() const
+</code></pre>
+<p>The optimization level for the loop unrolling pass. </p>
+<h3 id="function-unrollonlywhenforced">function unrollOnlyWhenForced</h3>
+<pre><code class="language-cpp">bool unrollOnlyWhenForced() const
+</code></pre>
+<p>Whether or not to limit unrolling to which are requested to be unrolled via meta data is consider. When false, a cost model is used to determine whether or not to unroll a loop. </p>
+<h3 id="function-unrollforgescev">function unrollForgeScev</h3>
+<pre><code class="language-cpp">bool unrollForgeScev() const
+</code></pre>
+<h3 id="function-usellvmoptpipeline">function useLlvmOptPipeline</h3>
+<pre><code class="language-cpp">bool useLlvmOptPipeline() const
+</code></pre>
+<p>Whether or not to use a full opt pipeline. </p>
+<h3 id="function-optpipelineconfig">function optPipelineConfig</h3>
+<pre><code class="language-cpp">String optPipelineConfig() const
+</code></pre>
+<p>Opt pipeline configuration string. </p>
+<h3 id="function-eliminateconstants">function eliminateConstants</h3>
+<pre><code class="language-cpp">bool eliminateConstants() const
+</code></pre>
+<p>Whether or not to add a pass to eliminate constants. </p>
+<h3 id="function-eliminatedeadcode">function eliminateDeadCode</h3>
+<pre><code class="language-cpp">bool eliminateDeadCode() const
+</code></pre>
+<p>Whether or not to add a pass to eliminate dead code. </p>
+<h3 id="function-eliminatememory">function eliminateMemory</h3>
+<pre><code class="language-cpp">bool eliminateMemory() const
+</code></pre>
+<p>Whether or not memory allocations should be attempted to be mapped into registers. </p>
+<h3 id="function-isdisabled">function isDisabled</h3>
+<pre><code class="language-cpp">bool isDisabled() const
+</code></pre>
+<p>Checking if the configuration amounts to being disabled. </p>
+<h3 id="function-operator">function operator==</h3>
+<pre><code class="language-cpp">bool operator==(
+    LlvmPassesConfiguration const &amp; o
+) const =default
+</code></pre>
+<p>Checking whether two configurations are identical. </p>
 <h3 id="function-createdisabled">function createDisabled</h3>
 <pre><code class="language-cpp">static LlvmPassesConfiguration createDisabled()
 </code></pre>
-<p>Static function creates a new configuration where all transformations/validation requirements are disabled. </p>
+<p>Creating a configuration that disables all passes and/or their effect on the IR. </p>
+<h3 id="function-createunrollinline">function createUnrollInline</h3>
+<pre><code class="language-cpp">static LlvmPassesConfiguration createUnrollInline()
+</code></pre>
+<p>Creates a configuration that unrolls and inlines code. </p>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>

@@ -619,12 +619,16 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-configbind">ConfigBind</a></strong>(Type &amp; bind, T default_value, String const &amp; name, String const &amp; description)</td>
 </tr>
 <tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-markasexperimental">markAsExperimental</a></strong>(Type const &amp; off_value)</td>
+</tr>
+<tr>
 <td>virtual bool</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-setuparguments">setupArguments</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser) override<br>Adds the argument to the parser.</td>
 </tr>
 <tr>
 <td>virtual bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-configure">configure</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser) override</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-configure">configure</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, bool experimental_mode) override</td>
 </tr>
 <tr>
 <td>virtual String</td>
@@ -670,6 +674,10 @@
 <td>String</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-defaultvalue">defaultValue</a></strong>() const<br>Returns the default value for the flag.</td>
 </tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-isexperimental">isExperimental</a></strong>() const<br>Indicates whether or not this is an experimental config.</td>
+</tr>
 </tbody>
 </table>
 <p><strong>Protected Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/">microsoft::quantum::IConfigBind</a></strong></p>
@@ -697,13 +705,17 @@
 <td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-setdefault">setDefault</a></strong>(String const &amp; v)<br>Sets the default value as a string.</td>
 </tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-makesettingexperimental">makeSettingExperimental</a></strong>()<br>Marks the config as experimental.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="detailed-description">Detailed Description</h2>
 <pre><code class="language-cpp">template &lt;typename T &gt;
 class microsoft::quantum::ConfigBind;
 </code></pre>
-<p>Generic implementation of the bind interface for different types. This class holds the name of the command line parameter and a reference variable corresponding to it. It implements serialisers and deserialisers to allow transforming strings to native values and vice versa. </p>
+<p>Generic implementation of the bind interface for different types. This class holds the name of the command line parameter and a reference variable corresponding to it. It implements serializers and deserializers to allow transforming strings to native values and vice versa. </p>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
 <h3 id="using-type">using Type</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ConfigBind&lt; T &gt;::Type =  T;
@@ -751,6 +763,11 @@ using microsoft::quantum::ConfigBind&lt; T &gt;::EnableIf =  typename std::enabl
 )
 </code></pre>
 <p>Constructor to bind value to parameter. This class holds a reference to a variable together with the name it is expected to have when passed through the parameter parser. </p>
+<h3 id="function-markasexperimental">function markAsExperimental</h3>
+<pre><code class="language-cpp">void markAsExperimental(
+    Type const &amp; off_value
+)
+</code></pre>
 <h3 id="function-setuparguments">function setupArguments</h3>
 <pre><code class="language-cpp">virtual bool setupArguments(
     ParameterParser &amp; parser
@@ -760,7 +777,8 @@ using microsoft::quantum::ConfigBind&lt; T &gt;::EnableIf =  typename std::enabl
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-setuparguments">microsoft::quantum::IConfigBind::setupArguments</a></p>
 <h3 id="function-configure">function configure</h3>
 <pre><code class="language-cpp">virtual bool configure(
-    ParameterParser &amp; parser
+    ParameterParser &amp; parser,
+    bool experimental_mode
 ) override
 </code></pre>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-configure">microsoft::quantum::IConfigBind::configure</a></p>
@@ -771,7 +789,7 @@ using microsoft::quantum::ConfigBind&lt; T &gt;::EnableIf =  typename std::enabl
 <p>String representation of the bound value. </p>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-value">microsoft::quantum::IConfigBind::value</a></p>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:32 UTC</p></div>
 </div>
           </div>
         </main>

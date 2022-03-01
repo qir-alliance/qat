@@ -559,7 +559,7 @@
     
   </div>
   <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumprofilegenerator">microsoft::quantum::ProfileGenerator</h1>
-<p>Inherited by <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_default_profile_generator/">microsoft::quantum::DefaultProfileGenerator</a></p>
+<p>Inherited by <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configurable_profile_generator/">microsoft::quantum::ConfigurableProfileGenerator</a></p>
 <h2 id="public-types">Public Types</h2>
 <table>
 <thead>
@@ -638,11 +638,23 @@
 </tr>
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-newprofile">newProfile</a></strong>(String const &amp; name, OptimizationLevel const &amp; optimisation_level, bool debug)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-newprofile">newProfile</a></strong>(String const &amp; name, OptimizationLevel const &amp; optimization_level, bool debug)</td>
 </tr>
 <tr>
 <td>template &lt;typename R > <br>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-registerprofilecomponent">registerProfileComponent</a></strong>(String const &amp; id, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunction">SetupFunction</a>&lt; R &gt; setup)</td>
+</tr>
+<tr>
+<td>template &lt;typename R > <br>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-replaceprofilecomponent">replaceProfileComponent</a></strong>(String const &amp; id, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunction">SetupFunction</a>&lt; R &gt; setup)</td>
+</tr>
+<tr>
+<td>template &lt;typename R > <br>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-registeranonymousprofilecomponent">registerAnonymousProfileComponent</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunction">SetupFunction</a>&lt; R &gt; setup)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-replicateprofilecomponent">replicateProfileComponent</a></strong>(String const &amp; id)</td>
 </tr>
 <tr>
 <td>llvm::ModulePassManager &amp;</td>
@@ -654,11 +666,15 @@
 </tr>
 <tr>
 <td>OptimizationLevel</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-optimisationlevel">optimisationLevel</a></strong>() const<br>Returns the optimisation level.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-optimizationlevel">optimizationLevel</a></strong>() const<br>Returns the optimization level.</td>
 </tr>
 <tr>
 <td>bool</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-isdebugmode">isDebugMode</a></strong>() const<br>Flag indicating whether we are operating in debug mode or not.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-setupdefaultcomponentpipeline">setupDefaultComponentPipeline</a></strong>()<br>Sets the default pipeline up.</td>
 </tr>
 </tbody>
 </table>
@@ -673,11 +689,11 @@
 <tbody>
 <tr>
 <td>llvm::ModulePassManager</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-creategenerationmodulepassmanager">createGenerationModulePassManager</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp; profile, OptimizationLevel const &amp; optimisation_level, bool debug)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-creategenerationmodulepassmanager">createGenerationModulePassManager</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp; profile, OptimizationLevel const &amp; optimization_level, bool debug)</td>
 </tr>
 <tr>
 <td>llvm::ModulePassManager</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-createvalidationmodulepass">createValidationModulePass</a></strong>(PassBuilder &amp; pass_builder, OptimizationLevel const &amp; optimisation_level, bool debug)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-createvalidationmodulepass">createValidationModulePass</a></strong>(PassBuilder &amp; pass_builder, OptimizationLevel const &amp; optimization_level, bool debug)</td>
 </tr>
 </tbody>
 </table>
@@ -742,11 +758,11 @@ using microsoft::quantum::ProfileGenerator::SetupFunction =  std::function&lt;vo
 <h3 id="function-newprofile">function newProfile</h3>
 <pre><code class="language-cpp">Profile newProfile(
     String const &amp; name,
-    OptimizationLevel const &amp; optimisation_level,
+    OptimizationLevel const &amp; optimization_level,
     bool debug
 )
 </code></pre>
-<p>Creates a new profile based on the registered components, optimisation level and debug requirements. The returned profile can be applied to an IR to transform it in accordance with the configurations given. </p>
+<p>Creates a new profile based on the registered components, optimization level and debug requirements. The returned profile can be applied to an IR to transform it in accordance with the configurations given. </p>
 <h3 id="function-registerprofilecomponent">function registerProfileComponent</h3>
 <pre><code class="language-cpp">template &lt;typename R &gt;
 void registerProfileComponent(
@@ -755,6 +771,27 @@ void registerProfileComponent(
 )
 </code></pre>
 <p>Registers a new profile component with a given configuration R. The profile component is given a name and a setup function which is responsible for configuring the profile in accordance with the configuration. </p>
+<h3 id="function-replaceprofilecomponent">function replaceProfileComponent</h3>
+<pre><code class="language-cpp">template &lt;typename R &gt;
+void replaceProfileComponent(
+    String const &amp; id,
+    SetupFunction&lt; R &gt; setup
+)
+</code></pre>
+<p>Replaces a profile component. This function is useful for testing purposes and alteration to the default set of components. For instance, one can setup a production set of components and then replace a single component to test the effects of this single replacement while keeping all other components actually as they are in production. </p>
+<h3 id="function-registeranonymousprofilecomponent">function registerAnonymousProfileComponent</h3>
+<pre><code class="language-cpp">template &lt;typename R &gt;
+void registerAnonymousProfileComponent(
+    SetupFunction&lt; R &gt; setup
+)
+</code></pre>
+<p>Registers a new profile component with a given configuration R. Unlike <code>registerProfileComponent</code> this component will not have an ID. </p>
+<h3 id="function-replicateprofilecomponent">function replicateProfileComponent</h3>
+<pre><code class="language-cpp">void replicateProfileComponent(
+    String const &amp; id
+)
+</code></pre>
+<p>Replicates an existing component as an anonymous component. The original component is found by its id and then copied as an anonymous component which is appended to the list of components. </p>
 <h3 id="function-modulepassmanager">function modulePassManager</h3>
 <pre><code class="language-cpp">llvm::ModulePassManager &amp; modulePassManager()
 </code></pre>
@@ -763,33 +800,39 @@ void registerProfileComponent(
 <pre><code class="language-cpp">llvm::PassBuilder &amp; passBuilder()
 </code></pre>
 <p>Returns the pass builder. </p>
-<h3 id="function-optimisationlevel">function optimisationLevel</h3>
-<pre><code class="language-cpp">OptimizationLevel optimisationLevel() const
+<h3 id="function-optimizationlevel">function optimizationLevel</h3>
+<pre><code class="language-cpp">OptimizationLevel optimizationLevel() const
 </code></pre>
-<p>Returns the optimisation level. </p>
+<p>Returns the optimization level. </p>
 <h3 id="function-isdebugmode">function isDebugMode</h3>
 <pre><code class="language-cpp">bool isDebugMode() const
 </code></pre>
 <p>Flag indicating whether we are operating in debug mode or not. </p>
+<h3 id="function-setupdefaultcomponentpipeline">function setupDefaultComponentPipeline</h3>
+<pre><code class="language-cpp">void setupDefaultComponentPipeline()
+</code></pre>
+<p>Sets the default pipeline up. </p>
+<p>More unroll parameters <a href="https://llvm.org/doxygen/LoopUnrollPass_8cpp.html">https://llvm.org/doxygen/LoopUnrollPass_8cpp.html</a></p>
+<p>Header <a href="https://llvm.org/doxygen/LoopUnrollPass_8h.html">https://llvm.org/doxygen/LoopUnrollPass_8h.html</a></p>
 <h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
 <h3 id="function-creategenerationmodulepassmanager">function createGenerationModulePassManager</h3>
 <pre><code class="language-cpp">llvm::ModulePassManager createGenerationModulePassManager(
     Profile &amp; profile,
-    OptimizationLevel const &amp; optimisation_level,
+    OptimizationLevel const &amp; optimization_level,
     bool debug
 )
 </code></pre>
-<p>Internal function that creates a module pass for QIR transformation. The module pass is defined through the profile, the optimisation level and whether or not we are in debug mode. </p>
+<p>Internal function that creates a module pass for QIR transformation. The module pass is defined through the profile, the optimization level and whether or not we are in debug mode. </p>
 <h3 id="function-createvalidationmodulepass">function createValidationModulePass</h3>
 <pre><code class="language-cpp">llvm::ModulePassManager createValidationModulePass(
     PassBuilder &amp; pass_builder,
-    OptimizationLevel const &amp; optimisation_level,
+    OptimizationLevel const &amp; optimization_level,
     bool debug
 )
 </code></pre>
 <p>Internal function that creates a module pass for QIR validation. At the moment, this function is a placeholder for future functionality. </p>
 <hr />
-<p>Updated on 28 February 2022 at 10:19:28 UTC</p></div>
+<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
 </div>
           </div>
         </main>
