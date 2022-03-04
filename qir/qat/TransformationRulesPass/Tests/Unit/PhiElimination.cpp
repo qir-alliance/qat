@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
+#include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
@@ -91,17 +92,20 @@ continue__1:                                      ; preds = %then0__1, %entry
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
 
-    auto profile = std::make_shared<DefaultProfileGenerator>();
+    auto profile = std::make_shared<ConfigurableProfileGenerator>();
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
-    configuration_manager.addConfig<ValidationPassConfiguration>();
+
+    configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
+
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
-        "tail call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* null)",
-        "tail call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* null, %Qubit* null)",
-        "%0 = tail call i64 @TeleportChain__Calculate__body(i64 0, %Qubit* null)",
+        "call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* null)",
+        "call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* null, %Qubit* null)",
+        "%0 = call i64 @TeleportChain__Calculate__body(i64 0, %Qubit* null)",
     }));
 }
 
@@ -130,20 +134,22 @@ continue__1:                                      ; preds = %then0__1, %entry
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
 
-    auto profile = std::make_shared<DefaultProfileGenerator>();
+    auto profile = std::make_shared<ConfigurableProfileGenerator>();
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
-    configuration_manager.addConfig<ValidationPassConfiguration>();
+
+    configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
-        "tail call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* null)",
-        "tail call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* null, %Qubit* null)",
+        "call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* null)",
+        "call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* null, %Qubit* null)",
     }));
 
     EXPECT_FALSE(ir_manip->hasInstructionSequence({
-        "%0 = tail call i64 @TeleportChain__Calculate__body(i64 0, %Qubit* %q)",
+        "%0 = call i64 @TeleportChain__Calculate__body(i64 0, %Qubit* %q)",
     }));
 }

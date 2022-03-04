@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "QatTypes/QatTypes.hpp"
 #include "Rules/Patterns/AnyPattern.hpp"
 #include "Rules/Patterns/CallPattern.hpp"
 #include "Rules/Patterns/Instruction.hpp"
@@ -45,6 +46,7 @@ namespace quantum
         //
 
         ReplacementRule() = default;
+        ReplacementRule(String const& name, IOperandPrototypePtr&& pattern, ReplaceFunction&& replacer);
         ReplacementRule(IOperandPrototypePtr&& pattern, ReplaceFunction&& replacer);
 
         // Rule configuration
@@ -68,9 +70,12 @@ namespace quantum
         /// Invokes the replacer given a matched value and its corresponding captures
         bool replace(Builder& builder, Value* value, Captures& captures, Replacements& replacements) const;
 
+        String name() const;
+
       private:
         IOperandPrototypePtr pattern_{nullptr};  ///< Pattern to be matched against
         ReplaceFunction      replacer_{nullptr}; ///< Function to perform replacement upon match.
+        String               name_{"unnamed"};   ///< Name of the pattern
     };
 
 } // namespace quantum

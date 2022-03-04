@@ -37,7 +37,8 @@ namespace quantum
             return fail(instr, captures);
         }
 
-        return success(instr, captures);
+        auto ret = success(instr, captures);
+        return ret;
     }
 
     CallPattern::Child CallPattern::copy() const

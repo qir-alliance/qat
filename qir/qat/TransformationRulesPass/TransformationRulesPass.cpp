@@ -340,7 +340,7 @@ namespace quantum
                     {
                         // TODO(issue-19): This may not work on multi path branches (conditional)
                         // as we may accidentally add the final path (contains qubit release)
-                        // and we cannot make assumptions since optimisation may have rearranged
+                        // and we cannot make assumptions since optimization may have rearranged
                         // everything. In this case, we should revert to the order they appear in the
                         // function
                         auto bb = llvm::dyn_cast<llvm::BasicBlock>(br_instr->getOperand(i));
@@ -499,13 +499,14 @@ namespace quantum
                 if (instr2 == nullptr)
                 {
                     llvm::outs() << "; WARNING: cannot replace instruction with non-instruction\n";
+                    llvm::outs() << "; " << *it->second << "\n";
                     continue;
                 }
                 llvm::ReplaceInstWithInst(instr1, instr2);
             }
             else
             {
-                // ... otherwise we delete the the instruction
+                // ... otherwize we delete the the instruction
                 // Removing all uses
                 if (!instr1->use_empty())
                 {
@@ -774,7 +775,7 @@ namespace quantum
         else
         {
 
-            // Otherwise we apply to all sections of the code.
+            // Otherwize we apply to all sections of the code.
             replacements_.clear();
             for (auto& function : module)
             {

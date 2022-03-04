@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
+#include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
@@ -50,12 +51,14 @@ void expectSuccess(String const& profile_name, String const& script)
 {
     auto ir_manip = newIrManip(script);
 
-    auto profile_generator = std::make_shared<DefaultProfileGenerator>();
+    auto profile_generator = std::make_shared<ConfigurableProfileGenerator>();
 
     ConfigurationManager& configuration_manager = profile_generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
-    configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation-configuration", ValidationPassConfiguration::fromProfileName(profile_name));
+
+    configuration_manager.setConfig(ValidationPassConfiguration::fromProfileName(profile_name));
+    configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     EXPECT_TRUE(ir_manip->validateProfile(profile_generator, profile_name));
 }

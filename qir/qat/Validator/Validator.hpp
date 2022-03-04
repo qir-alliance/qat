@@ -49,7 +49,7 @@ namespace quantum
         //
 
         /// Validates that a module complies with the specified QIR profile. Returns true if the module is
-        /// valid and false otherwise.
+        /// valid and false otherwize.
         bool validate(llvm::Module& module);
 
         /// Returns the logger. This value may be null if no logger was set.

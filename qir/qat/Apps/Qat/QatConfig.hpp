@@ -42,16 +42,16 @@ namespace quantum
         /// Indicates whether or not the QIR adaptor tool should emit LLVM IR to the standard output.
         bool shouldEmitLlvm() const;
 
-        /// Tells if the optimisation level 0 is enabled. Note higher OX override lower ones.
+        /// Tells if the optimization level 0 is enabled. Note higher OX override lower ones.
         bool isOpt0Enabled() const;
 
-        /// Tells if the optimisation level 1 is enabled. Note higher OX override lower ones.
+        /// Tells if the optimization level 1 is enabled. Note higher OX override lower ones.
         bool isOpt1Enabled() const;
 
-        /// Tells if the optimisation level 2 is enabled. Note higher OX override lower ones.
+        /// Tells if the optimization level 2 is enabled. Note higher OX override lower ones.
         bool isOpt2Enabled() const;
 
-        /// Tells if the optimisation level 3 is enabled. Note higher OX override lower ones.
+        /// Tells if the optimization level 3 is enabled. Note higher OX override lower ones.
         bool isOpt3Enabled() const;
 
         /// Enables debug output.
@@ -59,6 +59,9 @@ namespace quantum
 
         /// Request the full configuration to be dumped to the screen.
         bool shouldDumpConfig() const;
+
+        /// Whether or not experimental features are enabled.
+        bool isExperimental() const;
 
       private:
         // Variables to be bound to the configuration manager
@@ -75,6 +78,7 @@ namespace quantum
         bool   verify_module_{false};
 
         bool debug_{false};
+        bool experimental_{false};
         bool dump_config_{false};
     };
 } // namespace quantum

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
@@ -56,7 +56,7 @@ TEST(RuleSetTestSuite, DisablingStrings)
         factory.disableStringSupport();
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
     ir_manip->applyProfile(profile);
 

@@ -79,7 +79,7 @@ If we wish to verify the IR, we can print it by using the member function
 The `IrManipulationTestHelper` contains a member function to run the profile on
 the IR to transform the module. The default behaviour of this helper function is
 to run without debug output at a `O0` level to ensure that LLVM does not
-interfere with the intended test. The optimisation level and debug mode can be
+interfere with the intended test. The optimization level and debug mode can be
 changed through the function calls second and third argument, but for the sake
 of simplicity, we will assume we are using `O0` here:
 

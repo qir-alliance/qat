@@ -14,6 +14,13 @@ namespace quantum
     {
     }
 
+    ReplacementRule::ReplacementRule(String const& name, IOperandPrototypePtr&& pattern, ReplaceFunction&& replacer)
+      : pattern_{std::move(pattern)}
+      , replacer_{std::move(replacer)}
+      , name_{name}
+    {
+    }
+
     void ReplacementRule::setPattern(IOperandPrototypePtr&& pattern)
     {
         pattern_ = std::move(pattern);
@@ -50,6 +57,11 @@ namespace quantum
         }
 
         return false;
+    }
+
+    String ReplacementRule::name() const
+    {
+        return name_;
     }
 
 } // namespace quantum

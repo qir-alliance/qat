@@ -2,24 +2,21 @@ namespace SimpleLoop {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Measurement;
 
-    function Value(r: Result): Int
+    operation MiniCircuit(q1: Qubit,q2: Qubit): Unit
     {
-         return r == Zero ? 122 | 1337;
+        H(q1);
+        H(q2);
+        CNOT(q1, q2);
     }
 
     @EntryPoint()
-    operation Main(): Int
+    operation Main(): Unit
     {
-        let nrIter = 5;
-        mutable ret = 1;
-        for _ in 1 .. nrIter {
-            use q = Qubit();
-            H(q);
-            let r = MResetZ(q);
-            set ret = Value(r);
-        }
+        use q1 = Qubit();
+        use q2 = Qubit();
 
-        return ret;
+        MiniCircuit(q1, q2);
+        MiniCircuit(q1, q2);
     }
 
 }

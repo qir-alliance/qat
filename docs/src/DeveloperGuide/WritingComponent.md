@@ -37,7 +37,7 @@ private:
 ```
 
 We note the default value of our configuration is captured through the
-initialisation of the class member. That is, if not overridden by the command
+initialization of the class member. That is, if not overridden by the command
 line arguments, the message will be `"Hello world"`.
 
 To fulfil the concept of being a configuration, a configuration must implement a
@@ -196,7 +196,7 @@ extern "C" void loadComponent(IProfileGenerator *generator)
           // Adds the inline pipeline
           auto &pass_builder = ptr->passBuilder();
           auto  inliner_pass = pass_builder.buildInlinerPipeline(
-              ptr->optimisationLevel(), llvm::PassBuilder::ThinLTOPhase::None, ptr->debug());
+              ptr->optimizationLevel(), llvm::PassBuilder::ThinLTOPhase::None, ptr->debug());
           module_pass_manager.addPass(std::move(inliner_pass));
         }
       });

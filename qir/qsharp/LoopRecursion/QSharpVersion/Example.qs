@@ -11,7 +11,7 @@ namespace TeleportChain {
         use q = Qubit();    
 
         mutable ret = 1;
-        for i in 0..5
+        for i in 0..500
         {
             set ret = ret + Calculate(4, q);
         }

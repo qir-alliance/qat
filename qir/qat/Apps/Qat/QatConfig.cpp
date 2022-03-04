@@ -14,19 +14,20 @@ namespace quantum
 
         config.setSectionName(
             "Base configuration", "Configuration of the quantum adoption tool to execute a specific behaviour.");
-        config.addParameter(load_, "load", "Load component.");
+        config.addExperimentalParameter(load_, static_cast<String>(""), "load", "Load component.");
         config.addParameter(
             generate_, "apply", "Applies a profile to transform the IR in correspondence with the profile.");
-        config.addParameter(validate_, "validate", "Executes the validation procedure.");
-        config.addParameter(profile_, "profile", "Sets the profile.");
-        config.addParameter(emit_llvm_, "S", "Emits LLVM IR to the standard output.");
-        config.addParameter(opt0_, "O0", "Optimisation level 0.");
-        config.addParameter(opt1_, "O1", "Optimisation level 1.");
-        config.addParameter(opt2_, "O2", "Optimisation level 2.");
-        config.addParameter(opt3_, "O3", "Optimisation level 3.");
+        config.addParameter(validate_, false, "validate", "Executes the validation procedure.");
+        config.addParameter(profile_, static_cast<String>("generic"), "profile", "Sets the profile.");
+        config.addParameter(emit_llvm_, false, "S", "Emits LLVM IR to the standard output.");
+        config.addParameter(opt0_, false, "O0", "Optimization level 0.");
+        config.addParameter(opt1_, false, "O1", "Optimization level 1.");
+        config.addParameter(opt2_, false, "O2", "Optimization level 2.");
+        config.addParameter(opt3_, false, "O3", "Optimization level 3.");
 
         config.addParameter(verify_module_, "verify-module", "Verifies the module after transformation.");
 
+        config.addParameter(experimental_, "experimental", "Enables experimental features.");
         config.addParameter(dump_config_, "dump-config", "Prints the configuration to the standard output.");
     }
 
@@ -88,6 +89,11 @@ namespace quantum
     String QatConfig::load() const
     {
         return load_;
+    }
+
+    bool QatConfig::isExperimental() const
+    {
+        return experimental_;
     }
 
 } // namespace quantum

@@ -34,7 +34,7 @@ namespace quantum
         /// Destructor implementation.
         ~PhiPattern() override;
 
-        // Phi implmenetation of the member functions in IOperandPrototype.
+        // Phi implementation of the member functions in IOperandPrototype.
         //
 
         /// Matches the phi node.

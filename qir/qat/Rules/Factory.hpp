@@ -61,7 +61,7 @@ namespace quantum
         //
 
         /// Static qubit array allocation identifies allocations, array access and releases. Each of these
-        /// are replaced with static values. Patterns recognised include
+        /// are replaced with static values. Patterns recognized include
         ///
         /// ```
         /// %array = call %Array* @__quantum__rt__qubit_allocate_array(i64 10)
@@ -87,7 +87,7 @@ namespace quantum
         /// %qubit = inttoptr i64 7 to %Qubit*
         /// ```
         ///
-        /// Finally, release is recognised and the allocation manager is invoked accordingly.
+        /// Finally, release is recognized and the allocation manager is invoked accordingly.
         void useStaticQubitArrayAllocation();
 
         /// Static qubit allocation identifies allocation and release of single qubits. It uses the qubit
@@ -121,7 +121,7 @@ namespace quantum
 
         void inlineCallables();
 
-        // Optimisations
+        // Optimizations
         //
 
         /// Replaces branching of quantum results compared to one. This is a relatively advanced pattern,
@@ -141,10 +141,10 @@ namespace quantum
         /// ```
         ///
         /// which removes the need for constant one.
-        void optimiseResultOne();
+        void optimizeResultOne();
 
         /// Replaces branching of quantum results compared to zero. This method is not implemented yet.
-        void optimiseResultZero();
+        void optimizeResultZero();
 
         // Disabling by feature
         //

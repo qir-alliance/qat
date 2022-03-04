@@ -320,6 +320,11 @@ namespace quantum
 
     llvm::PreservedAnalyses GroupingPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& mam)
     {
+        if (!config_.circuitSeparation())
+        {
+            return llvm::PreservedAnalyses::all();
+        }
+
         auto& result = mam.getResult<GroupingAnalysisPass>(module);
 
         // Preparing builders

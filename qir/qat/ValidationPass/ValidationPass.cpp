@@ -169,7 +169,7 @@ namespace quantum
         if (!config_.allowInternalCalls() && !internal_calls_.empty())
         {
             logger_->setLlvmHint("");
-            // TODO(tfr): Add location
+            // TODO(issue-60): Add location
 
             // Emitting error
             logger_->error("Calls to custom defined functions not allowed.");

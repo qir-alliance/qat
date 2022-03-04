@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
+#include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
@@ -74,18 +75,22 @@ exit__1:                                          ; preds = %header__1
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
 
-    auto profile = std::make_shared<DefaultProfileGenerator>();
+    auto profile = std::make_shared<ConfigurableProfileGenerator>();
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
-    configuration_manager.addConfig<ValidationPassConfiguration>();
+
+    configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+
     ir_manip->applyProfile(profile);
 
-    EXPECT_TRUE(ir_manip->hasInstructionSequence(
-        {"%0 = tail call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-         "%1 = tail call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-         "%2 = tail call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-         "%3 = tail call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-         "%4 = tail call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-         "%5 = tail call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)"}));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence({
+        "%0 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
+        "%1 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
+        "%2 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
+        "%3 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
+        "%4 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
+        "%5 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
+    }));
 }

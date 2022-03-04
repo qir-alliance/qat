@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
+#include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
@@ -61,9 +62,13 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationOffsets)
         factory.useStaticQubitArrayAllocation();
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(
         std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+
     ir_manip->applyProfile(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
@@ -93,7 +98,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)
     // %qubit = load %Qubit*, %Qubit** %1, align 8
     // ;;; call @__quantum__qis__h__body(%Qubit* %qubit)  < Note this instruction is missing
     //
-    // LLVM will optimise the two last instructions away even at O0 as they are not used.
+    // LLVM will optimize the two last instructions away even at O0 as they are not used.
     // Consequently the pattern fails.
 
     auto configure_profile = [](RuleSet& rule_set) {
@@ -101,28 +106,33 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)
         factory.useStaticQubitArrayAllocation();
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(
         std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+
     ir_manip->applyProfile(profile);
 
-    EXPECT_TRUE(ir_manip->hasInstructionSequence(
-        {"%array1 = inttoptr i64 0 to %Array*", "%qubit = inttoptr i64 7 to %Qubit*"}));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence({
+        "%array1 = inttoptr i64 0 to %Array*",
+        "call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 7 to %Qubit*))",
+    }));
 
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release_array(%Array* %array1)"}) ||
-        ir_manip->hasInstructionSequence({"tail call void @__quantum__rt__qubit_release_array(%Array* %array1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release_array(%Array* %array1)"}));
 
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"call %Array* @__quantum__rt__qubit_allocate_array(i64 10)"}) ||
-        ir_manip->hasInstructionSequence({"tail call %Array* @__quantum__rt__qubit_allocate_array(i64 10)"}));
+        ir_manip->hasInstructionSequence({"call %Array* @__quantum__rt__qubit_allocate_array(i64 10)"}));
 
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence(
             {"call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %array1, i64 7)"}) ||
         ir_manip->hasInstructionSequence(
-            {"tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %array1, i64 7)"}));
+            {"call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* %array1, i64 7)"}));
 }
 
 TEST(RuleSetTestSuite, StaticQubitArrayAllocationAdvanced)
@@ -147,23 +157,30 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationAdvanced)
         factory.useStaticQubitArrayAllocation();
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(
         std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+
     ir_manip->applyProfile(profile);
 
-    EXPECT_TRUE(ir_manip->hasInstructionSequence(
-        {"%array1 = inttoptr i64 0 to %Array*", "%qubit1 = inttoptr i64 7 to %Qubit*"}));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence({
+        "%array1 = inttoptr i64 0 to %Array*",
+        "call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 7 to %Qubit*))",
+    }));
 
-    EXPECT_TRUE(ir_manip->hasInstructionSequence(
-        {"%array2 = inttoptr i64 10 to %Array*", "%qubit2 = inttoptr i64 13 to %Qubit*"}));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence({
+        "%array2 = inttoptr i64 10 to %Array*",
+        "call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 13 to %Qubit*))",
+    }));
 
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release_array(%Array* %array1)"}) ||
-        ir_manip->hasInstructionSequence({"tail call void @__quantum__rt__qubit_release_array(%Array* %array1)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release_array(%Array* %array1)"}));
 
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release_array(%Array* %array2)"}) ||
-        ir_manip->hasInstructionSequence({"tail call void @__quantum__rt__qubit_release_array(%Array* %array2)"}));
+        ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release_array(%Array* %array2)"}));
 }

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/DefaultProfileGenerator.hpp"
+#include "Generators/ConfigurableProfileGenerator.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
@@ -51,15 +51,15 @@ TEST(RuleSetTestSuite, RemovingFunctionCall)
         factory.removeFunctionCall("__quantum__qis__h__body");
     };
 
-    auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
     ir_manip->applyProfile(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
-        {"%qubit = tail call %Qubit* @__quantum__rt__qubit_allocate()",
-         "tail call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
+        {"%qubit = call %Qubit* @__quantum__rt__qubit_allocate()",
+         "call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
 
     // We expect that the call was removed
     EXPECT_FALSE(ir_manip->hasInstructionSequence({"call void @__quantum__qis__h__body(%Qubit* %qubit)"}));
-    EXPECT_FALSE(ir_manip->hasInstructionSequence({"tail call void @__quantum__qis__h__body(%Qubit* %qubit)"}));
+    EXPECT_FALSE(ir_manip->hasInstructionSequence({"call void @__quantum__qis__h__body(%Qubit* %qubit)"}));
 }

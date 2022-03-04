@@ -21,6 +21,9 @@ namespace quantum
         /// Creates a configuration where all functionality is disabled.
         static TransformationRulesPassConfiguration createDisabled();
 
+        /// Creates a configuration where only reuse qubits is enabled.
+        static TransformationRulesPassConfiguration createReuseQubitsOnly();
+
         // Configuration classes
         //
 
@@ -71,9 +74,6 @@ namespace quantum
         /// execution.
         bool oneShotMeasurement() const;
 
-        /// Whether or not simplify the IR using LLVM passes prior to transforming the IR.
-        bool shouldSimplifyPriorTransform() const;
-
         /// Attribute which indicate that a function is the entry point.
         std::string entryPointAttr() const;
 
@@ -87,8 +87,6 @@ namespace quantum
         uint64_t    max_recursion_{512};
         std::string entry_point_attr_{"InteropFriendly"};
 
-        bool simplify_prior_transformation_{true};
-
         // Branching
         bool assume_no_exceptions_{false};
 
@@ -98,11 +96,6 @@ namespace quantum
         bool annotate_qubit_use_{true};
         bool reuse_results_{true};
         bool annotate_result_use_{true};
-
-        // Measurement
-        //
-        bool group_measurements_{false};
-        bool one_shot_measurement_{true};
     };
 
 } // namespace quantum
