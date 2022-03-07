@@ -3,200 +3,197 @@
 // Licensed under the MIT License.
 
 #include "Commandline/ConfigurationManager.hpp"
-#include "Llvm/Llvm.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
 
-namespace microsoft {
-namespace quantum {
+#include "Llvm/Llvm.hpp"
 
-class ProfileGenerator
+namespace microsoft
 {
-public:
-  // LLVM types
-  //
-  using PassBuilder             = llvm::PassBuilder;
-  using OptimizationLevel       = PassBuilder::OptimizationLevel;
-  using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
-
-  /// Setup function that uses a configuration type R to
-  /// configure the profile and/or generator.
-  template <typename R>
-  using SetupFunction = std::function<void(R const &, ProfileGenerator *, Profile &)>;
-
-  /// Wrapper function type for invoking the profile setup function
-  using SetupFunctionWrapper = std::function<void(ProfileGenerator *, Profile &)>;
-
-  /// List of components to be configured.
-  using Components = std::vector<std::pair<String, SetupFunctionWrapper>>;
-
-  // Construction, moves and copies
-  //
-
-  ProfileGenerator()                         = default;
-  ~ProfileGenerator()                        = default;
-  ProfileGenerator(ProfileGenerator const &) = delete;
-  ProfileGenerator(ProfileGenerator &&)      = delete;
-  ProfileGenerator &operator=(ProfileGenerator const &) = delete;
-  ProfileGenerator &operator=(ProfileGenerator &&) = delete;
-
-  // Profile generation interface
-  //
-
-  /// Reference to configuration manager. This property allows to access and modify configurations
-  /// of the generator. This property is intended for managing the configuration.
-  ConfigurationManager &configurationManager();
-
-  /// Constant reference to the configuration manager. This property allows read access to the
-  /// configuration manager and is intended for profile generation.
-  ConfigurationManager const &configurationManager() const;
-
-  /// Creates a new profile based on the registered components, optimization level and debug
-  /// requirements. The returned profile can be applied to an IR to transform it in accordance with
-  /// the configurations given.
-  Profile newProfile(String const &name, OptimizationLevel const &optimization_level, bool debug);
-
-  // Defining the generator
-
-  //
-
-  /// Registers a new profile component with a given configuration R. The profile component is
-  /// given a name and a setup function which is responsible for configuring the profile in
-  /// accordance with the configuration.
-  template <typename R>
-  void registerProfileComponent(String const &id, SetupFunction<R> setup);
-
-  /// Replaces a profile component. This function is useful for testing purposes and alteration to
-  /// the default set of components. For instance, one can setup a production set of components and
-  /// then replace a single component to test the effects of this single replacement while keeping
-  /// all other components actually as they are in production.
-  template <typename R>
-  void replaceProfileComponent(String const &id, SetupFunction<R> setup);
-
-  /// Registers a new profile component with a given configuration R. Unlike
-  /// `registerProfileComponent` this component will not have an ID.
-  template <typename R>
-  void registerAnonymousProfileComponent(SetupFunction<R> setup);
-
-  /// Replicates an existing component as an anonymous component. The original component is found by
-  /// its id and then copied as an anonymous component which is appended to the list of components.
-  void replicateProfileComponent(String const &id);
-
-  // Support properties for generators
-  //
-
-  /// Returns the module pass manager.
-  llvm::ModulePassManager &modulePassManager();
-
-  /// Returns the module pass manager.
-  llvm::FunctionPassManager &functionPassManager();
-
-  /// Returns the pass builder.
-  llvm::PassBuilder &passBuilder();
-
-  /// Returns the optimization level.
-  OptimizationLevel optimizationLevel() const;
-
-  /// Flag indicating whether we are operating in debug mode or not.
-  bool isDebugMode() const;
-
-  /// Sets the default pipeline up.
-  void setupDefaultComponentPipeline();
-
-protected:
-  /// Internal function that creates a module pass for QIR transformation. The module pass is
-  /// defined through the profile, the optimization level and whether or not we are in debug mode.
-  llvm::ModulePassManager createGenerationModulePassManager(
-      Profile &profile, OptimizationLevel const &optimization_level, bool debug);
-
-  /// Internal function that creates a module pass for QIR validation. At the moment, this function
-  /// is a placeholder for future functionality.
-  llvm::ModulePassManager createValidationModulePass(PassBuilder             &pass_builder,
-                                                     OptimizationLevel const &optimization_level,
-                                                     bool                     debug);
-
-private:
-  ConfigurationManager
-             configuration_manager_;  ///< Holds the configuration that defines the profile
-  Components components_;             ///< List of registered components that configures the profile
-
-  /// Pointer to the module pass manager the profile will use
-  llvm::ModulePassManager *module_pass_manager_{nullptr};
-
-  /// Pointer to the module pass manager the profile will use
-  llvm::FunctionPassManager *function_pass_manager_{nullptr};
-
-  /// Pointer to the pass builder the profile is based on
-  llvm::PassBuilder *pass_builder_{nullptr};
-
-  /// Optimization level used by LLVM
-  OptimizationLevel optimization_level_{OptimizationLevel::O0};
-
-  /// Whether or not we are in debug mode
-  bool debug_{false};
-};
-
-template <typename R>
-void ProfileGenerator::registerProfileComponent(String const &id, SetupFunction<R> setup)
+namespace quantum
 {
-  configuration_manager_.addConfig<R>(id);
 
-  auto setup_wrapper = [setup](ProfileGenerator *ptr, Profile &profile) {
-    if (ptr->configuration_manager_.isActive<R>())
+    class ProfileGenerator
     {
-      auto &config = ptr->configuration_manager_.get<R>();
+      public:
+        // LLVM types
+        //
+        using PassBuilder             = llvm::PassBuilder;
+        using OptimizationLevel       = PassBuilder::OptimizationLevel;
+        using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
 
-      setup(config, ptr, profile);
-    }
-  };
+        /// Setup function that uses a configuration type R to
+        /// configure the profile and/or generator.
+        template <typename R> using SetupFunction = std::function<void(R const&, ProfileGenerator*, Profile&)>;
 
-  components_.push_back({id, std::move(setup_wrapper)});
-}
+        /// Wrapper function type for invoking the profile setup function
+        using SetupFunctionWrapper = std::function<void(ProfileGenerator*, Profile&)>;
 
-template <typename R>
-void ProfileGenerator::replaceProfileComponent(String const &id, SetupFunction<R> setup)
-{
-  auto setup_wrapper = [setup](ProfileGenerator *ptr, Profile &profile) {
-    if (ptr->configuration_manager_.isActive<R>())
+        /// List of components to be configured.
+        using Components = std::vector<std::pair<String, SetupFunctionWrapper>>;
+
+        // Construction, moves and copies
+        //
+
+        ProfileGenerator()                        = default;
+        ~ProfileGenerator()                       = default;
+        ProfileGenerator(ProfileGenerator const&) = delete;
+        ProfileGenerator(ProfileGenerator&&)      = delete;
+        ProfileGenerator& operator=(ProfileGenerator const&) = delete;
+        ProfileGenerator& operator=(ProfileGenerator&&) = delete;
+
+        // Profile generation interface
+        //
+
+        /// Reference to configuration manager. This property allows to access and modify configurations
+        /// of the generator. This property is intended for managing the configuration.
+        ConfigurationManager& configurationManager();
+
+        /// Constant reference to the configuration manager. This property allows read access to the
+        /// configuration manager and is intended for profile generation.
+        ConfigurationManager const& configurationManager() const;
+
+        /// Creates a new profile based on the registered components, optimization level and debug
+        /// requirements. The returned profile can be applied to an IR to transform it in accordance with
+        /// the configurations given.
+        Profile newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug);
+
+        // Defining the generator
+
+        //
+
+        /// Registers a new profile component with a given configuration R. The profile component is
+        /// given a name and a setup function which is responsible for configuring the profile in
+        /// accordance with the configuration.
+        template <typename R> void registerProfileComponent(String const& id, SetupFunction<R> setup);
+
+        /// Replaces a profile component. This function is useful for testing purposes and alteration to
+        /// the default set of components. For instance, one can setup a production set of components and
+        /// then replace a single component to test the effects of this single replacement while keeping
+        /// all other components actually as they are in production.
+        template <typename R> void replaceProfileComponent(String const& id, SetupFunction<R> setup);
+
+        /// Registers a new profile component with a given configuration R. Unlike
+        /// `registerProfileComponent` this component will not have an ID.
+        template <typename R> void registerAnonymousProfileComponent(SetupFunction<R> setup);
+
+        /// Replicates an existing component as an anonymous component. The original component is found by
+        /// its id and then copied as an anonymous component which is appended to the list of components.
+        void replicateProfileComponent(String const& id);
+
+        // Support properties for generators
+        //
+
+        /// Returns the module pass manager.
+        llvm::ModulePassManager& modulePassManager();
+
+        /// Returns the module pass manager.
+        llvm::FunctionPassManager& functionPassManager();
+
+        /// Returns the pass builder.
+        llvm::PassBuilder& passBuilder();
+
+        /// Returns the optimization level.
+        OptimizationLevel optimizationLevel() const;
+
+        /// Flag indicating whether we are operating in debug mode or not.
+        bool isDebugMode() const;
+
+        /// Sets the default pipeline up.
+        void setupDefaultComponentPipeline();
+
+      protected:
+        /// Internal function that creates a module pass for QIR transformation. The module pass is
+        /// defined through the profile, the optimization level and whether or not we are in debug mode.
+        llvm::ModulePassManager createGenerationModulePassManager(
+            Profile&                 profile,
+            OptimizationLevel const& optimization_level,
+            bool                     debug);
+
+        /// Internal function that creates a module pass for QIR validation. At the moment, this function
+        /// is a placeholder for future functionality.
+        llvm::ModulePassManager createValidationModulePass(
+            PassBuilder&             pass_builder,
+            OptimizationLevel const& optimization_level,
+            bool                     debug);
+
+      private:
+        ConfigurationManager configuration_manager_; ///< Holds the configuration that defines the profile
+        Components           components_;            ///< List of registered components that configures the profile
+
+        /// Pointer to the module pass manager the profile will use
+        llvm::ModulePassManager* module_pass_manager_{nullptr};
+
+        /// Pointer to the module pass manager the profile will use
+        llvm::FunctionPassManager* function_pass_manager_{nullptr};
+
+        /// Pointer to the pass builder the profile is based on
+        llvm::PassBuilder* pass_builder_{nullptr};
+
+        /// Optimization level used by LLVM
+        OptimizationLevel optimization_level_{OptimizationLevel::O0};
+
+        /// Whether or not we are in debug mode
+        bool debug_{false};
+    };
+
+    template <typename R> void ProfileGenerator::registerProfileComponent(String const& id, SetupFunction<R> setup)
     {
-      auto &config = ptr->configuration_manager_.get<R>();
+        configuration_manager_.addConfig<R>(id);
 
-      setup(config, ptr, profile);
+        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile) {
+            if (ptr->configuration_manager_.isActive<R>())
+            {
+                auto& config = ptr->configuration_manager_.get<R>();
+
+                setup(config, ptr, profile);
+            }
+        };
+
+        components_.push_back({id, std::move(setup_wrapper)});
     }
-  };
 
-  for (auto &component : components_)
-  {
-    if (component.first == id)
+    template <typename R> void ProfileGenerator::replaceProfileComponent(String const& id, SetupFunction<R> setup)
     {
-      component.second = std::move(setup_wrapper);
-      return;
+        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile) {
+            if (ptr->configuration_manager_.isActive<R>())
+            {
+                auto& config = ptr->configuration_manager_.get<R>();
+
+                setup(config, ptr, profile);
+            }
+        };
+
+        for (auto& component : components_)
+        {
+            if (component.first == id)
+            {
+                component.second = std::move(setup_wrapper);
+                return;
+            }
+        }
+
+        throw std::runtime_error("Could not find component " + id);
     }
-  }
 
-  throw std::runtime_error("Could not find component " + id);
-}
-
-template <typename R>
-void ProfileGenerator::registerAnonymousProfileComponent(SetupFunction<R> setup)
-{
-  if (!configuration_manager_.configWasRegistered<R>())
-  {
-    throw std::runtime_error("Configuration '" + static_cast<String>(typeid(R).name()) +
-                             "' does not exist.");
-  }
-
-  auto setup_wrapper = [setup](ProfileGenerator *ptr, Profile &profile) {
-    if (ptr->configuration_manager_.isActive<R>())
+    template <typename R> void ProfileGenerator::registerAnonymousProfileComponent(SetupFunction<R> setup)
     {
-      auto &config = ptr->configuration_manager_.get<R>();
+        if (!configuration_manager_.configWasRegistered<R>())
+        {
+            throw std::runtime_error("Configuration '" + static_cast<String>(typeid(R).name()) + "' does not exist.");
+        }
 
-      setup(config, ptr, profile);
+        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile) {
+            if (ptr->configuration_manager_.isActive<R>())
+            {
+                auto& config = ptr->configuration_manager_.get<R>();
+
+                setup(config, ptr, profile);
+            }
+        };
+
+        components_.push_back({"__unnamed__", std::move(setup_wrapper)});
     }
-  };
 
-  components_.push_back({"__unnamed__", std::move(setup_wrapper)});
-}
-
-}  // namespace quantum
-}  // namespace microsoft
+} // namespace quantum
+} // namespace microsoft

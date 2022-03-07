@@ -1,268 +1,267 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ProfileGenerator.hpp"
-
 #include "Generators/LlvmPassesConfiguration.hpp"
+#include "Generators/ProfileGenerator.hpp"
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "GroupingPass/GroupingPassConfiguration.hpp"
-#include "Llvm/Llvm.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/RuleSet.hpp"
 #include "TransformationRulesPass/TransformationRulesPass.hpp"
 #include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "ValidationPass/ValidationPassConfiguration.hpp"
 
-namespace microsoft {
-namespace quantum {
+#include "Llvm/Llvm.hpp"
 
-Profile ProfileGenerator::newProfile(String const            &name,
-                                     OptimizationLevel const &optimization_level, bool debug)
+namespace microsoft
 {
-  auto qubit_allocation_manager  = BasicAllocationManager::createNew();
-  auto result_allocation_manager = BasicAllocationManager::createNew();
+namespace quantum
+{
 
-  auto cfg = configuration_manager_.get<TransformationRulesPassConfiguration>();
-  qubit_allocation_manager->setReuseRegisters(cfg.shouldReuseQubits());
-  result_allocation_manager->setReuseRegisters(cfg.shouldReuseResults());
-
-  // Creating profile
-  // TODO(issue-12): Set target machine
-  Profile ret{name, debug, nullptr, qubit_allocation_manager, result_allocation_manager};
-
-  auto module_pass_manager = createGenerationModulePassManager(ret, optimization_level, debug);
-
-  for (auto &c : components_)
-  {
-    llvm::FunctionPassManager function_pass_manager;
-    function_pass_manager_ = &function_pass_manager;
-    if (debug)
+    Profile ProfileGenerator::newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug)
     {
-      llvm::outs() << "Setting " << c.first << " up\n";
-    }
+        auto qubit_allocation_manager  = BasicAllocationManager::createNew();
+        auto result_allocation_manager = BasicAllocationManager::createNew();
 
-    c.second(this, ret);
-    module_pass_manager.addPass(
-        createModuleToFunctionPassAdaptor(std::move(function_pass_manager)));
-  }
+        auto cfg = configuration_manager_.get<TransformationRulesPassConfiguration>();
+        qubit_allocation_manager->setReuseRegisters(cfg.shouldReuseQubits());
+        result_allocation_manager->setReuseRegisters(cfg.shouldReuseResults());
 
-  ret.setModulePassManager(std::move(module_pass_manager));
+        // Creating profile
+        // TODO(issue-12): Set target machine
+        Profile ret{name, debug, nullptr, qubit_allocation_manager, result_allocation_manager};
 
-  // Creating validator
-  auto validator = std::make_unique<Validator>(
-      configuration_manager_.get<ValidationPassConfiguration>(), false, debug);
+        auto module_pass_manager = createGenerationModulePassManager(ret, optimization_level, debug);
 
-  ret.setValidator(std::move(validator));
-
-  return ret;
-}
-
-llvm::ModulePassManager ProfileGenerator::createGenerationModulePassManager(
-    Profile &profile, OptimizationLevel const &optimization_level, bool debug)
-{
-  auto                   &pass_builder = profile.passBuilder();
-  llvm::ModulePassManager ret{};
-
-  module_pass_manager_ = &ret;
-  pass_builder_        = &pass_builder;
-  optimization_level_  = optimization_level;
-  debug_               = debug;
-
-  return ret;
-}
-
-llvm::ModulePassManager ProfileGenerator::createValidationModulePass(PassBuilder &,
-                                                                     OptimizationLevel const &,
-                                                                     bool)
-{
-  throw std::runtime_error("Validation is not supported yet.");
-}
-
-llvm::ModulePassManager &ProfileGenerator::modulePassManager()
-{
-  assert(module_pass_manager_ != nullptr);
-  return *module_pass_manager_;
-}
-
-llvm::FunctionPassManager &ProfileGenerator::functionPassManager()
-{
-  assert(function_pass_manager_ != nullptr);
-  return *function_pass_manager_;
-}
-
-llvm::PassBuilder &ProfileGenerator::passBuilder()
-{
-  return *pass_builder_;
-}
-
-ConfigurationManager &ProfileGenerator::configurationManager()
-{
-  return configuration_manager_;
-}
-
-ConfigurationManager const &ProfileGenerator::configurationManager() const
-{
-  return configuration_manager_;
-}
-
-ProfileGenerator::OptimizationLevel ProfileGenerator::optimizationLevel() const
-{
-  return optimization_level_;
-}
-
-bool ProfileGenerator::isDebugMode() const
-{
-  return debug_;
-}
-
-void ProfileGenerator::replicateProfileComponent(String const &id)
-{
-  for (auto &c : components_)
-  {
-    if (c.first == id)
-    {
-      auto setup_wrapper = c.second;
-      components_.push_back({"__unnamed__", std::move(setup_wrapper)});
-      return;
-    }
-  }
-
-  throw std::runtime_error("Component " + id + " not found.");
-}
-
-void ProfileGenerator::setupDefaultComponentPipeline()
-{
-  using namespace llvm;
-
-  registerProfileComponent<LlvmPassesConfiguration>(
-      "llvm-optimization",
-      [](LlvmPassesConfiguration const &cfg, ProfileGenerator *ptr, Profile & /*profile*/) {
-        assert(ptr != nullptr);
-        auto &mpm = ptr->modulePassManager();
-        auto &fpm = ptr->functionPassManager();
-
-        // Always inline
-        if (cfg.alwaysInline())
+        for (auto& c : components_)
         {
-
-          auto &pass_builder = ptr->passBuilder();
-          mpm.addPass(llvm::AlwaysInlinerPass());
-          auto                           inline_param = getInlineParams(cfg.inlineParameter());
-          llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
-          mpm.addPass(std::move(inliner_pass));
-        }
-
-        // Unroll loop
-        if (cfg.unrollLoops())
-        {
-          auto &pass_builder = ptr->passBuilder();
-
-          /// More unroll parameters
-          /// https://llvm.org/doxygen/LoopUnrollPass_8cpp.html
-
-          /// Header
-          /// https://llvm.org/doxygen/LoopUnrollPass_8h.html
-
-          llvm::LoopUnrollOptions loop_config(cfg.unrollOptLevel(), cfg.unrollOnlyWhenForced(),
-                                              cfg.unrollForgeScev());
-
-          loop_config.setPartial(cfg.unrollAllowPartial())
-              .setPeeling(cfg.unrollAllowPeeling())
-              .setRuntime(cfg.unrollAllowRuntime())
-              .setUpperBound(cfg.unrollAllowUpperBound())
-              .setProfileBasedPeeling(cfg.unrollAllowProfilBasedPeeling())
-              .setFullUnrollMaxCount(cfg.unrolFullUnrollCount());
-
-          fpm.addPass(llvm::LoopUnrollPass(loop_config));
-        }
-
-        if (cfg.useLlvmOptPipeline())
-        {
-          auto                                 pass_pipeline = cfg.optPipelineConfig();
-          llvm::PassBuilder::OptimizationLevel opt           = ptr->optimizationLevel();
-          if (!pass_pipeline.empty())
-          {
-            auto &pass_builder = ptr->passBuilder();
-
-            if (auto err = pass_builder.parsePassPipeline(mpm, pass_pipeline, false, false))
+            llvm::FunctionPassManager function_pass_manager;
+            function_pass_manager_ = &function_pass_manager;
+            if (debug)
             {
-              throw std::runtime_error("Failed to set pass pipeline up. Value: '" + pass_pipeline +
-                                       "', error: " + toString(std::move(err)));
+                llvm::outs() << "Setting " << c.first << " up\n";
             }
-          }
-          else
-          {
-            // If not explicitly disabled, we fall back to the default LLVM pipeline
-            auto                   &pass_builder = ptr->passBuilder();
-            llvm::ModulePassManager pipeline1    = pass_builder.buildPerModuleDefaultPipeline(opt);
-            mpm.addPass(std::move(pipeline1));
 
-            llvm::ModulePassManager pipeline2 = pass_builder.buildModuleSimplificationPipeline(
-                opt, llvm::PassBuilder::ThinLTOPhase::None);
-            mpm.addPass(std::move(pipeline2));
-
-            llvm::ModulePassManager pipeline3 =
-                pass_builder.buildModuleOptimizationPipeline(opt, ptr->isDebugMode());
-            mpm.addPass(std::move(pipeline3));
-          }
+            c.second(this, ret);
+            module_pass_manager.addPass(createModuleToFunctionPassAdaptor(std::move(function_pass_manager)));
         }
 
-        fpm.addPass(llvm::SimplifyCFGPass());
+        ret.setModulePassManager(std::move(module_pass_manager));
 
-        if (cfg.eliminateMemory())
+        // Creating validator
+        auto validator =
+            std::make_unique<Validator>(configuration_manager_.get<ValidationPassConfiguration>(), false, debug);
+
+        ret.setValidator(std::move(validator));
+
+        return ret;
+    }
+
+    llvm::ModulePassManager ProfileGenerator::createGenerationModulePassManager(
+        Profile&                 profile,
+        OptimizationLevel const& optimization_level,
+        bool                     debug)
+    {
+        auto&                   pass_builder = profile.passBuilder();
+        llvm::ModulePassManager ret{};
+
+        module_pass_manager_ = &ret;
+        pass_builder_        = &pass_builder;
+        optimization_level_  = optimization_level;
+        debug_               = debug;
+
+        return ret;
+    }
+
+    llvm::ModulePassManager ProfileGenerator::createValidationModulePass(PassBuilder&, OptimizationLevel const&, bool)
+    {
+        throw std::runtime_error("Validation is not supported yet.");
+    }
+
+    llvm::ModulePassManager& ProfileGenerator::modulePassManager()
+    {
+        assert(module_pass_manager_ != nullptr);
+        return *module_pass_manager_;
+    }
+
+    llvm::FunctionPassManager& ProfileGenerator::functionPassManager()
+    {
+        assert(function_pass_manager_ != nullptr);
+        return *function_pass_manager_;
+    }
+
+    llvm::PassBuilder& ProfileGenerator::passBuilder()
+    {
+        return *pass_builder_;
+    }
+
+    ConfigurationManager& ProfileGenerator::configurationManager()
+    {
+        return configuration_manager_;
+    }
+
+    ConfigurationManager const& ProfileGenerator::configurationManager() const
+    {
+        return configuration_manager_;
+    }
+
+    ProfileGenerator::OptimizationLevel ProfileGenerator::optimizationLevel() const
+    {
+        return optimization_level_;
+    }
+
+    bool ProfileGenerator::isDebugMode() const
+    {
+        return debug_;
+    }
+
+    void ProfileGenerator::replicateProfileComponent(String const& id)
+    {
+        for (auto& c : components_)
         {
-          fpm.addPass(llvm::PromotePass());
+            if (c.first == id)
+            {
+                auto setup_wrapper = c.second;
+                components_.push_back({"__unnamed__", std::move(setup_wrapper)});
+                return;
+            }
         }
 
-        if (cfg.eliminateConstants())
-        {
-          fpm.addPass(llvm::SCCPPass());
-        }
+        throw std::runtime_error("Component " + id + " not found.");
+    }
 
-        if (cfg.eliminateDeadCode())
-        {
-          fpm.addPass(llvm::ADCEPass());
-        }
-      });
+    void ProfileGenerator::setupDefaultComponentPipeline()
+    {
+        using namespace llvm;
 
-  registerProfileComponent<TransformationRulesPassConfiguration>(
-      "transformation-rules",
-      [](TransformationRulesPassConfiguration const &cfg, ProfileGenerator *ptr, Profile &profile) {
-        auto &ret = ptr->modulePassManager();
+        registerProfileComponent<LlvmPassesConfiguration>(
+            "llvm-optimization", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+                assert(ptr != nullptr);
+                auto& mpm = ptr->modulePassManager();
+                auto& fpm = ptr->functionPassManager();
 
-        // Defining the mapping
-        RuleSet rule_set;
-        auto    factory = RuleFactory(rule_set, profile.getQubitAllocationManager(),
-                                      profile.getResultAllocationManager());
-        factory.usingConfiguration(ptr->configurationManager().get<FactoryConfiguration>());
+                // Always inline
+                if (cfg.alwaysInline())
+                {
 
-        // Creating profile pass
-        ret.addPass(TransformationRulesPass(std::move(rule_set), cfg, &profile));
+                    auto& pass_builder = ptr->passBuilder();
+                    mpm.addPass(llvm::AlwaysInlinerPass());
+                    auto                           inline_param = getInlineParams(cfg.inlineParameter());
+                    llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
+                    mpm.addPass(std::move(inliner_pass));
+                }
 
-        // TODO(issue-59): Move to a separate pass.
-        ret.addPass(createModuleToFunctionPassAdaptor(llvm::InstCombinePass(1000)));
-        ret.addPass(createModuleToFunctionPassAdaptor(llvm::AggressiveInstCombinePass()));
-        ret.addPass(createModuleToFunctionPassAdaptor(llvm::SCCPPass()));
-        ret.addPass(createModuleToFunctionPassAdaptor(llvm::SimplifyCFGPass()));
-      });
+                // Unroll loop
+                if (cfg.unrollLoops())
+                {
+                    auto& pass_builder = ptr->passBuilder();
 
-  // TODO(issue-59): Causes memory sanitation issue
-  // replicateProfileComponent("llvm-optimization");
+                    /// More unroll parameters
+                    /// https://llvm.org/doxygen/LoopUnrollPass_8cpp.html
 
-  registerProfileComponent<GroupingPassConfiguration>(
-      "grouping",
-      [](GroupingPassConfiguration const &cfg, ProfileGenerator *ptr, Profile &profile) {
-        if (cfg.circuitSeparation())
-        {
-          auto &mam = profile.moduleAnalysisManager();
-          mam.registerPass([&] { return GroupingAnalysisPass(cfg); });
-          auto &ret = ptr->modulePassManager();
+                    /// Header
+                    /// https://llvm.org/doxygen/LoopUnrollPass_8h.html
 
-          ret.addPass(GroupingPass(cfg));
-        }
-      });
-}
+                    llvm::LoopUnrollOptions loop_config(
+                        cfg.unrollOptLevel(), cfg.unrollOnlyWhenForced(), cfg.unrollForgeScev());
 
-}  // namespace quantum
-}  // namespace microsoft
+                    loop_config.setPartial(cfg.unrollAllowPartial())
+                        .setPeeling(cfg.unrollAllowPeeling())
+                        .setRuntime(cfg.unrollAllowRuntime())
+                        .setUpperBound(cfg.unrollAllowUpperBound())
+                        .setProfileBasedPeeling(cfg.unrollAllowProfilBasedPeeling())
+                        .setFullUnrollMaxCount(cfg.unrolFullUnrollCount());
+
+                    fpm.addPass(llvm::LoopUnrollPass(loop_config));
+                }
+
+                if (cfg.useLlvmOptPipeline())
+                {
+                    auto                                 pass_pipeline = cfg.optPipelineConfig();
+                    llvm::PassBuilder::OptimizationLevel opt           = ptr->optimizationLevel();
+                    if (!pass_pipeline.empty())
+                    {
+                        auto& pass_builder = ptr->passBuilder();
+
+                        if (auto err = pass_builder.parsePassPipeline(mpm, pass_pipeline, false, false))
+                        {
+                            throw std::runtime_error(
+                                "Failed to set pass pipeline up. Value: '" + pass_pipeline +
+                                "', error: " + toString(std::move(err)));
+                        }
+                    }
+                    else
+                    {
+                        // If not explicitly disabled, we fall back to the default LLVM pipeline
+                        auto&                   pass_builder = ptr->passBuilder();
+                        llvm::ModulePassManager pipeline1    = pass_builder.buildPerModuleDefaultPipeline(opt);
+                        mpm.addPass(std::move(pipeline1));
+
+                        llvm::ModulePassManager pipeline2 =
+                            pass_builder.buildModuleSimplificationPipeline(opt, llvm::PassBuilder::ThinLTOPhase::None);
+                        mpm.addPass(std::move(pipeline2));
+
+                        llvm::ModulePassManager pipeline3 =
+                            pass_builder.buildModuleOptimizationPipeline(opt, ptr->isDebugMode());
+                        mpm.addPass(std::move(pipeline3));
+                    }
+                }
+
+                fpm.addPass(llvm::SimplifyCFGPass());
+
+                if (cfg.eliminateMemory())
+                {
+                    fpm.addPass(llvm::PromotePass());
+                }
+
+                if (cfg.eliminateConstants())
+                {
+                    fpm.addPass(llvm::SCCPPass());
+                }
+
+                if (cfg.eliminateDeadCode())
+                {
+                    fpm.addPass(llvm::ADCEPass());
+                }
+            });
+
+        registerProfileComponent<TransformationRulesPassConfiguration>(
+            "transformation-rules",
+            [](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+                auto& ret = ptr->modulePassManager();
+
+                // Defining the mapping
+                RuleSet rule_set;
+                auto    factory =
+                    RuleFactory(rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager());
+                factory.usingConfiguration(ptr->configurationManager().get<FactoryConfiguration>());
+
+                // Creating profile pass
+                ret.addPass(TransformationRulesPass(std::move(rule_set), cfg, &profile));
+
+                // TODO(issue-59): Move to a separate pass.
+                ret.addPass(createModuleToFunctionPassAdaptor(llvm::InstCombinePass(1000)));
+                ret.addPass(createModuleToFunctionPassAdaptor(llvm::AggressiveInstCombinePass()));
+                ret.addPass(createModuleToFunctionPassAdaptor(llvm::SCCPPass()));
+                ret.addPass(createModuleToFunctionPassAdaptor(llvm::SimplifyCFGPass()));
+            });
+
+        // TODO(issue-59): Causes memory sanitation issue
+        // replicateProfileComponent("llvm-optimization");
+
+        registerProfileComponent<GroupingPassConfiguration>(
+            "grouping", [](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+                if (cfg.circuitSeparation())
+                {
+                    auto& mam = profile.moduleAnalysisManager();
+                    mam.registerPass([&] { return GroupingAnalysisPass(cfg); });
+                    auto& ret = ptr->modulePassManager();
+
+                    ret.addPass(GroupingPass(cfg));
+                }
+            });
+    }
+
+} // namespace quantum
+} // namespace microsoft
