@@ -661,6 +661,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-modulepassmanager">modulePassManager</a></strong>()<br>Returns the module pass manager.</td>
 </tr>
 <tr>
+<td>llvm::FunctionPassManager &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-functionpassmanager">functionPassManager</a></strong>()<br>Returns the module pass manager.</td>
+</tr>
+<tr>
 <td>llvm::PassBuilder &amp;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-passbuilder">passBuilder</a></strong>()<br>Returns the pass builder.</td>
 </tr>
@@ -796,6 +800,10 @@ void registerAnonymousProfileComponent(
 <pre><code class="language-cpp">llvm::ModulePassManager &amp; modulePassManager()
 </code></pre>
 <p>Returns the module pass manager. </p>
+<h3 id="function-functionpassmanager">function functionPassManager</h3>
+<pre><code class="language-cpp">llvm::FunctionPassManager &amp; functionPassManager()
+</code></pre>
+<p>Returns the module pass manager. </p>
 <h3 id="function-passbuilder">function passBuilder</h3>
 <pre><code class="language-cpp">llvm::PassBuilder &amp; passBuilder()
 </code></pre>
@@ -832,7 +840,7 @@ void registerAnonymousProfileComponent(
 </code></pre>
 <p>Internal function that creates a module pass for QIR validation. At the moment, this function is a placeholder for future functionality. </p>
 <hr />
-<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
+<p>Updated on  7 March 2022 at 15:55:29 UTC</p></div>
 </div>
           </div>
         </main>

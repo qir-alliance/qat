@@ -607,10 +607,8 @@ namespace quantum
             assume_no_exceptions_, false, false, &quot;assume-no-except&quot;,
             &quot;Assumes that no exception will occur during runtime.&quot;);
 
-        config.addExperimentalParameter(
-            reuse_qubits_, false, false, &quot;reuse-qubits&quot;, &quot;Use to define whether or not to reuse qubits.&quot;);
-        config.addExperimentalParameter(
-            reuse_results_, false, false, &quot;reuse-results&quot;, &quot;Use to define whether or not to reuse results.&quot;);
+        config.addParameter(reuse_qubits_, false, &quot;reuse-qubits&quot;, &quot;Use to define whether or not to reuse qubits.&quot;);
+        config.addParameter(reuse_results_, false, &quot;reuse-results&quot;, &quot;Use to define whether or not to reuse results.&quot;);
 
         // Ready settings
 
@@ -717,7 +715,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
+<p>Updated on  7 March 2022 at 15:55:29 UTC</p></div>
 </div>
           </div>
         </main>

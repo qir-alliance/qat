@@ -599,7 +599,6 @@ namespace quantum
 
     Profile ProfileGenerator::newProfile(String const&amp; name, OptimizationLevel const&amp; optimization_level, bool debug)
     {
-
         auto qubit_allocation_manager  = BasicAllocationManager::createNew();
         auto result_allocation_manager = BasicAllocationManager::createNew();
 
@@ -612,6 +611,19 @@ namespace quantum
         Profile ret{name, debug, nullptr, qubit_allocation_manager, result_allocation_manager};
 
         auto module_pass_manager = createGenerationModulePassManager(ret, optimization_level, debug);
+
+        for (auto&amp; c : components_)
+        {
+            llvm::FunctionPassManager function_pass_manager;
+            function_pass_manager_ = &amp;function_pass_manager;
+            if (debug)
+            {
+                llvm::outs() &lt;&lt; &quot;Setting &quot; &lt;&lt; c.first &lt;&lt; &quot; up\n&quot;;
+            }
+
+            c.second(this, ret);
+            module_pass_manager.addPass(createModuleToFunctionPassAdaptor(std::move(function_pass_manager)));
+        }
 
         ret.setModulePassManager(std::move(module_pass_manager));
 
@@ -637,16 +649,6 @@ namespace quantum
         optimization_level_  = optimization_level;
         debug_               = debug;
 
-        for (auto&amp; c : components_)
-        {
-            if (debug)
-            {
-                llvm::outs() &lt;&lt; &quot;Setting &quot; &lt;&lt; c.first &lt;&lt; &quot; up\n&quot;;
-            }
-
-            c.second(this, profile);
-        }
-
         return ret;
     }
 
@@ -657,7 +659,14 @@ namespace quantum
 
     llvm::ModulePassManager&amp; ProfileGenerator::modulePassManager()
     {
+        assert(module_pass_manager_ != nullptr);
         return *module_pass_manager_;
+    }
+
+    llvm::FunctionPassManager&amp; ProfileGenerator::functionPassManager()
+    {
+        assert(function_pass_manager_ != nullptr);
+        return *function_pass_manager_;
     }
 
     llvm::PassBuilder&amp; ProfileGenerator::passBuilder()
@@ -706,7 +715,9 @@ namespace quantum
 
         registerProfileComponent&lt;LlvmPassesConfiguration&gt;(
             &quot;llvm-optimization&quot;, [](LlvmPassesConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
+                assert(ptr != nullptr);
                 auto&amp; mpm = ptr-&gt;modulePassManager();
+                auto&amp; fpm = ptr-&gt;functionPassManager();
 
                 // Always inline
                 if (cfg.alwaysInline())
@@ -736,7 +747,7 @@ namespace quantum
                         .setProfileBasedPeeling(cfg.unrollAllowProfilBasedPeeling())
                         .setFullUnrollMaxCount(cfg.unrolFullUnrollCount());
 
-                    mpm.addPass(createModuleToFunctionPassAdaptor(llvm::LoopUnrollPass(loop_config)));
+                    fpm.addPass(llvm::LoopUnrollPass(loop_config));
                 }
 
                 if (cfg.useLlvmOptPipeline())
@@ -771,21 +782,21 @@ namespace quantum
                     }
                 }
 
-                mpm.addPass(createModuleToFunctionPassAdaptor(llvm::SimplifyCFGPass()));
+                fpm.addPass(llvm::SimplifyCFGPass());
 
                 if (cfg.eliminateMemory())
                 {
-                    mpm.addPass(createModuleToFunctionPassAdaptor(llvm::PromotePass()));
+                    fpm.addPass(llvm::PromotePass());
                 }
 
                 if (cfg.eliminateConstants())
                 {
-                    mpm.addPass(createModuleToFunctionPassAdaptor(llvm::SCCPPass()));
+                    fpm.addPass(llvm::SCCPPass());
                 }
 
                 if (cfg.eliminateDeadCode())
                 {
-                    mpm.addPass(createModuleToFunctionPassAdaptor(llvm::ADCEPass()));
+                    fpm.addPass(llvm::ADCEPass());
                 }
             });
 
@@ -830,7 +841,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
+<p>Updated on  7 March 2022 at 15:55:29 UTC</p></div>
 </div>
           </div>
         </main>

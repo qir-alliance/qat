@@ -657,6 +657,8 @@ namespace quantum
 
         llvm::ModulePassManager&amp; modulePassManager();
 
+        llvm::FunctionPassManager&amp; functionPassManager();
+
         llvm::PassBuilder&amp; passBuilder();
 
         OptimizationLevel optimizationLevel() const;
@@ -681,6 +683,8 @@ namespace quantum
         Components           components_;            
 
         llvm::ModulePassManager* module_pass_manager_{nullptr};
+
+        llvm::FunctionPassManager* function_pass_manager_{nullptr};
 
         llvm::PassBuilder* pass_builder_{nullptr};
 
@@ -751,7 +755,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  1 March 2022 at 20:02:33 UTC</p></div>
+<p>Updated on  7 March 2022 at 15:55:29 UTC</p></div>
 </div>
           </div>
         </main>
