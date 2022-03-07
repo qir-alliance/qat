@@ -29,10 +29,8 @@ namespace quantum
             assume_no_exceptions_, false, false, "assume-no-except",
             "Assumes that no exception will occur during runtime.");
 
-        config.addExperimentalParameter(
-            reuse_qubits_, false, false, "reuse-qubits", "Use to define whether or not to reuse qubits.");
-        config.addExperimentalParameter(
-            reuse_results_, false, false, "reuse-results", "Use to define whether or not to reuse results.");
+        config.addParameter(reuse_qubits_, false, "reuse-qubits", "Use to define whether or not to reuse qubits.");
+        config.addParameter(reuse_results_, false, "reuse-results", "Use to define whether or not to reuse results.");
 
         // Ready settings
 
