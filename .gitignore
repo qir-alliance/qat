@@ -27,6 +27,7 @@ drops/
 
 # Python environments
 *_env/
+.pytest_*/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
