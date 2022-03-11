@@ -6,7 +6,7 @@ except:  # noqa: E722
 from qiskit_qir import to_qir
 import subprocess
 import os
-import sys
+import tempfile
 
 import pytest
 import logging
@@ -17,32 +17,33 @@ logger = logging.getLogger(__name__)
 
 def validate_circuit(name, profile, circuit):
     qir = to_qir(circuit)
-    filename = "test.ll"
-    with open(filename, "w") as fb:
-        fb.write(qir)
 
-    qat_binary = os.environ.get("QAT_BINARY")
+    with tempfile.NamedTemporaryFile() as tmp:
+        filename = tmp.name
+        tmp.write(qir.encode())
 
-    p = subprocess.Popen(
-        [qat_binary, "-S", "--validate", "--apply", "--profile",
-         profile, filename],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE)
+        qat_binary = os.environ.get("QAT_BINARY")
 
-    out, errs = p.communicate()
-    ret = p.returncode == 0
+        p = subprocess.Popen(
+            [qat_binary, "-S", "--validate", "--apply", "--profile",
+             profile, filename],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
 
-    if not ret:
-        print("QAT error output:")
-        errs = errs.decode()
-        for line in errs.strip().split("\n"):
-            print("    | {}".format(line))
+        out, errs = p.communicate()
+        ret = p.returncode == 0
 
-        print("")
-        print("QAT std output:")
-        out = out.decode()
-        for line in out.strip().split("\n"):
-            print("    | {}".format(line))
+        if not ret:
+            print("QAT error output:")
+            errs = errs.decode()
+            for line in errs.strip().split("\n"):
+                print("    | {}".format(line))
+
+            print("")
+            print("QAT std output:")
+            out = out.decode()
+            for line in out.strip().split("\n"):
+                print("    | {}".format(line))
 
     return ret
 
