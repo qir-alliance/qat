@@ -80,7 +80,8 @@ jobs:
           gh auth login
           git clone https://github.com/qir-alliance/pyqir.git
           pushd pyqir
-          gh release download v0.2.0a1 -D wheelhouse -R qir-alliance/pyqir --pattern "*-manylinux*_x86_64.whl"
+          wget https://github.com/qir-alliance/pyqir/archive/refs/tags/v0.2.0a1.tar.gz
+          tar xvf v0.2.0a1.tar.gz
           chmod +x install.sh
           ./install.sh
           popd
