@@ -78,8 +78,16 @@ jobs:
         run: |
           git clone https://github.com/qir-alliance/pyqir.git
           pushd pyqir
-          wget https://github.com/qir-alliance/pyqir/archive/refs/tags/v0.2.0a1.tar.gz
-          tar xvf v0.2.0a1.tar.gz
+          mkdir wheelhouse
+          pushd wheelhouse
+          wget https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_generator-0.2.0a1-cp36-abi3-linux_x86_64.whl
+          wget https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_generator-0.2.0a1-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+          wget https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_jit-0.2.0a1-cp36-abi3-linux_x86_64.whl
+          wget https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_jit-0.2.0a1-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+          wget https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_parser-0.2.0a1-cp36-abi3-win_amd64.whl
+          wget https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_parser-0.2.0a1-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+          popd
+
           chmod +x install.sh
           ./install.sh
           popd
