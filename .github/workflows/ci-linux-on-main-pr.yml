@@ -77,6 +77,7 @@ jobs:
       - name: "Running Qiskit tests"
         run: |
           conda install -c conda-forge gh
+          gh auth login
           git clone https://github.com/qir-alliance/pyqir.git
           pushd pyqir
           gh release download v0.2.0a1 -D wheelhouse -R qir-alliance/pyqir --pattern "*-manylinux*_x86_64.whl"
