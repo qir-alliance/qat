@@ -608,12 +608,12 @@ namespace quantum
         void setup(ConfigurationManager&amp; config)
         {
             config.setSectionName(&quot;Transformation rules&quot;, &quot;Rules used to transform instruction sequences in the QIR.&quot;);
-            config.addExperimentalParameter(
-                optimize_result_one_, true, false, &quot;optimize-result-one&quot;,
+            config.addParameter(
+                optimize_result_one_, true, &quot;optimize-result-one&quot;,
                 &quot;Maps branching based on quantum measurements compared to one to base profile &quot;
                 &quot;type measurement.&quot;);
-            config.addExperimentalParameter(
-                optimize_result_zero_, true, false, &quot;optimize-result-zero&quot;,
+            config.addParameter(
+                optimize_result_zero_, true, &quot;optimize-result-zero&quot;,
                 &quot;Maps branching based on quantum measurements compared to zero to base profile &quot;
                 &quot;type measurement.&quot;);
 
@@ -740,7 +740,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 11 March 2022 at 09:00:58 UTC</p></div>
+<p>Updated on 14 March 2022 at 08:26:02 UTC</p></div>
 </div>
           </div>
         </main>
