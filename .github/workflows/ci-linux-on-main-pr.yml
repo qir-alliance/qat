@@ -76,8 +76,6 @@ jobs:
 
       - name: "Running Qiskit tests"
         run: |
-          conda install -c conda-forge gh
-          gh auth login
           git clone https://github.com/qir-alliance/pyqir.git
           pushd pyqir
           wget https://github.com/qir-alliance/pyqir/archive/refs/tags/v0.2.0a1.tar.gz
