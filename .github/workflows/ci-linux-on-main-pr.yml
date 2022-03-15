@@ -64,6 +64,19 @@ jobs:
           CC: clang-11
           CXX: clang++-11
 
+      - name: "Running QIR tests"
+        run: |
+          pip install pytest
+          pip install -r requirements.txt
+          cd qir/qir-tests/
+          pytest
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
       - name: "Running examples"
         run: |
           make test-examples
