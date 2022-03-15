@@ -137,7 +137,6 @@ namespace quantum
 
         registerProfileComponent<LlvmPassesConfiguration>(
             "llvm-optimization", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
-                assert(ptr != nullptr);
                 auto& mpm = ptr->modulePassManager();
                 auto& fpm = ptr->functionPassManager();
 
