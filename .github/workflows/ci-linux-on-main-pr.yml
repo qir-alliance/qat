@@ -66,6 +66,13 @@ jobs:
 
       - name: "Running QIR tests"
         run: |
+          mkdir Debug
+          pushd Debug
+          cmake ..
+          make -j qat
+          popd
+
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat        
           pip install pytest
           pip install -r requirements.txt
           cd qir/qir-tests/
