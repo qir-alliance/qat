@@ -715,7 +715,6 @@ namespace quantum
 
         registerProfileComponent&lt;LlvmPassesConfiguration&gt;(
             &quot;llvm-optimization&quot;, [](LlvmPassesConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
-                assert(ptr != nullptr);
                 auto&amp; mpm = ptr-&gt;modulePassManager();
                 auto&amp; fpm = ptr-&gt;functionPassManager();
 
@@ -841,7 +840,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 15 March 2022 at 12:45:21 UTC</p></div>
+<p>Updated on 15 March 2022 at 13:54:54 UTC</p></div>
 </div>
           </div>
         </main>
