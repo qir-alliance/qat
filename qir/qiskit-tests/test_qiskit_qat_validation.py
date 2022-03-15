@@ -1,3 +1,7 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+#
+
 try:
     from test_circuits import __all__ as CIRCUITS
 except:  # noqa: E722
