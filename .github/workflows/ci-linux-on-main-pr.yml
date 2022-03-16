@@ -95,7 +95,7 @@ jobs:
           CXX: clang++-11
 
       - name: Install SSH Client 🔑
-        uses: webfactory/ssh-agent@v0.4.0
+        uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.QISKIT_KEY }}
 
