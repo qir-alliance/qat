@@ -94,18 +94,23 @@ jobs:
           CC: clang-11
           CXX: clang++-11
 
+
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.4.0
+        with:
+          ssh-private-key: ${{ secrets.QISKIT_KEY }}
+
       - name: "Running Qiskit tests"
         run: |
           pip install https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_generator-0.2.0a1-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
           pip install https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_jit-0.2.0a1-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
           pip install https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_parser-0.2.0a1-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
 
-          git clone git@github.com:microsoft/qdk-python.git
-          git checkout feature/qir-submission          
-          pushd qdk-python/qiskit-qir
+          git clone git@github.com:msr-quarc/qiskit-qir.git
+          pushd qiskit-qir
           pip install -e .
           popd
-          export PYTHONPATH=$PWD/qdk-python/qiskit-qir/tests:$PYTHONPATH
+          export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
 
           pushd qir/qiskit-tests/
           pip install pytest
@@ -114,6 +119,7 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CC: clang-11
           CXX: clang++-11
 
