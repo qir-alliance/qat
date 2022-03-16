@@ -77,12 +77,12 @@ jobs:
         run: |
           git clone git@github.com:msr-quarc/qiskit-qir.git
           pushd qiskit-qir
-          pip3 install -e .
+          pip3 install --user -e .
           popd
           export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
 
           pushd qir/qiskit-tests/
-          pip3 install pytest
+          pip3 install --user pytest
           pytest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
