@@ -101,9 +101,7 @@ jobs:
 
       - name: "Running Qiskit tests"
         run: |
-          pip install https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_generator-0.2.0a1-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-          pip install https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_jit-0.2.0a1-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-          pip install https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_parser-0.2.0a1-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+          pip install https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_generator-0.2.0a1-cp36-abi3-linux_x86_64.whl
 
           git clone git@github.com:msr-quarc/qiskit-qir.git
           pushd qiskit-qir
