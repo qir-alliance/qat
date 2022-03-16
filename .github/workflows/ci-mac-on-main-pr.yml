@@ -80,6 +80,7 @@ jobs:
           pip3 install --user -e .
           popd
           export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
 
           pushd qir/qiskit-tests/
           pip3 install --user pytest
