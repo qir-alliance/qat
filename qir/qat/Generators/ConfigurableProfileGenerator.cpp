@@ -29,7 +29,6 @@ namespace quantum
         LlvmPassesConfiguration const&              llvm_config)
     {
         configurationManager().addConfig<ValidationPassConfiguration>();
-
         setupDefaultComponentPipeline();
 
         replaceProfileComponent<TransformationRulesPassConfiguration>(

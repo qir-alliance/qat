@@ -134,7 +134,8 @@ namespace quantum
 
         PassBuilderPtr pass_builder_;
 
-        llvm::ModulePassManager module_pass_manager_{};
+        llvm::ModulePassManager   module_pass_manager_{};
+        llvm::FunctionPassManager function_pass_manager_{};
 
         // Allocation management
         //

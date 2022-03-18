@@ -15,12 +15,12 @@ namespace quantum
         void setup(ConfigurationManager& config)
         {
             config.setSectionName("Transformation rules", "Rules used to transform instruction sequences in the QIR.");
-            config.addExperimentalParameter(
-                optimize_result_one_, true, false, "optimize-result-one",
+            config.addParameter(
+                optimize_result_one_, true, "optimize-result-one",
                 "Maps branching based on quantum measurements compared to one to base profile "
                 "type measurement.");
-            config.addExperimentalParameter(
-                optimize_result_zero_, true, false, "optimize-result-zero",
+            config.addParameter(
+                optimize_result_zero_, true, "optimize-result-zero",
                 "Maps branching based on quantum measurements compared to zero to base profile "
                 "type measurement.");
 

@@ -255,6 +255,7 @@ int main(int argc, char** argv)
         //
 
         // Creating the profile that will be used for generation and validation
+
         auto profile = generator->newProfile(config.profile(), optimization_level, config.isDebugMode());
 
         if (config.shouldGenerate())

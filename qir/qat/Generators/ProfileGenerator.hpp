@@ -87,6 +87,9 @@ namespace quantum
         /// Returns the module pass manager.
         llvm::ModulePassManager& modulePassManager();
 
+        /// Returns the module pass manager.
+        llvm::FunctionPassManager& functionPassManager();
+
         /// Returns the pass builder.
         llvm::PassBuilder& passBuilder();
 
@@ -120,6 +123,9 @@ namespace quantum
 
         /// Pointer to the module pass manager the profile will use
         llvm::ModulePassManager* module_pass_manager_{nullptr};
+
+        /// Pointer to the module pass manager the profile will use
+        llvm::FunctionPassManager* function_pass_manager_{nullptr};
 
         /// Pointer to the pass builder the profile is based on
         llvm::PassBuilder* pass_builder_{nullptr};
