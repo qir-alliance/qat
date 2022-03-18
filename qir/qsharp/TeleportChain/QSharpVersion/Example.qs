@@ -1,4 +1,6 @@
-namespace TeleportChain {
+// Licensed under the MIT License.
+
+namespace QATSample {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Arrays;

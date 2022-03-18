@@ -1,4 +1,6 @@
-namespace SimpleLoop {
+// Licensed under the MIT License.
+
+namespace QATSample {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Measurement;
 

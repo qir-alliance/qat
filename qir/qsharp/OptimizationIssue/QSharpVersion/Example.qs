@@ -1,3 +1,5 @@
+// Licensed under the MIT License.
+
 namespace Microsoft.Quantum.Samples {
     open Microsoft.Quantum.Arrays;
     open Microsoft.Quantum.Canon;

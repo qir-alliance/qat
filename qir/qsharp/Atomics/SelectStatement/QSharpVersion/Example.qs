@@ -1,6 +1,6 @@
-namespace SimpleLoop {
-    open Microsoft.Quantum.Intrinsic;
-    open Microsoft.Quantum.Measurement;
+// Licensed under the MIT License.
+
+namespace QATSample {
 
     @EntryPoint()
     operation Main(x: Int): Int

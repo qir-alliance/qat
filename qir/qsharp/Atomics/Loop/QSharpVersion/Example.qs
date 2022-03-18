@@ -1,22 +1,27 @@
-namespace SimpleLoop {
-    open Microsoft.Quantum.Intrinsic;
+// Licensed under the MIT License.
+
+namespace QATSample {
+open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Measurement;
 
-    operation MiniCircuit(q1: Qubit,q2: Qubit): Unit
+    function Value(r: Result): Int
     {
-        H(q1);
-        H(q2);
-        CNOT(q1, q2);
+         return r == Zero ? 122 | 1337;
     }
 
     @EntryPoint()
-    operation Main(): Unit
+    operation Main(): Int
     {
-        use q1 = Qubit();
-        use q2 = Qubit();
+        let nrIter = 5;
+        mutable ret = 1;
+        for _ in 1 .. nrIter {
+            use q = Qubit();
+            H(q);
+            let r = MResetZ(q);
+            set ret = Value(r);
+        }
 
-        MiniCircuit(q1, q2);
-        MiniCircuit(q1, q2);
+        return ret;
     }
 
 }

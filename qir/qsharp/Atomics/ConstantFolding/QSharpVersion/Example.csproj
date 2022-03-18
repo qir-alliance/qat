@@ -6,8 +6,4 @@
     <QirGeneration>true</QirGeneration>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Quantum.Type1.Core" Version="0.23.195983" IsTargetPackage="true" />
-  </ItemGroup>
-
 </Project>
