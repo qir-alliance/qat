@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: "Installing dependencies"
         run: |
           rm '/usr/local/bin/2to3'
