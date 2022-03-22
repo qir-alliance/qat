@@ -1,4 +1,6 @@
-namespace Tets.Samples.BernVaz {
+// Licensed under the MIT License.
+
+namespace QATSample {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Measurement;

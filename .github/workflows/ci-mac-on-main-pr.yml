@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-  pull_request:
+  pull_request_target:
+    types: [opened, reopened]
     branches:
       - main
   release:
@@ -67,6 +68,28 @@ jobs:
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
           CC: clang
           CXX: clang++
+
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.QISKIT_KEY }}
+
+      - name: "Running Qiskit tests"
+        run: |
+          git clone git@github.com:msr-quarc/qiskit-qir.git
+          pushd qiskit-qir
+          pip3 install --user -e .
+          popd
+          export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
+
+          pushd qir/qiskit-tests/
+          pip3 install --user pytest
+          pytest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CC: clang-11
+          CXX: clang++-11
 
       - name: "Performing static analysis"
         run: |

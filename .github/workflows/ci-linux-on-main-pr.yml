@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  pull_request:
+  pull_request_target:
     branches:
       - main
   release:
@@ -64,6 +64,26 @@ jobs:
           CC: clang-11
           CXX: clang++-11
 
+      - name: "Running QIR tests"
+        run: |
+          mkdir -p Debug
+          pushd Debug
+          cmake ..
+          make -j qat
+          popd
+
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat        
+          pip install pytest
+          pip install -r requirements.txt
+          cd qir/qir-tests/
+          pytest
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-11
+          CXX: clang++-11
+
       - name: "Running examples"
         run: |
           make test-examples
@@ -73,6 +93,11 @@ jobs:
           PYTHON_BIN_PATH: /usr/bin/python3
           CC: clang-11
           CXX: clang++-11
+
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.QISKIT_KEY }}
 
       - name: "Performing static analysis"
         run: |

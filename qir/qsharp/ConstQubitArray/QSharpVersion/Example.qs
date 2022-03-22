@@ -1,4 +1,6 @@
-namespace ConstArrayReduction {
+// Licensed under the MIT License.
+
+namespace QATSample {
     open Microsoft.Quantum.Arrays;
     open Microsoft.Quantum.Intrinsic;
 

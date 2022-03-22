@@ -27,6 +27,7 @@ namespace quantum
       , result_allocation_manager_{std::move(result_allocation_manager)}
       , validator_{std::make_unique<Validator>(ValidationPassConfiguration(), false, debug)}
     {
+
         bool verify_each_pass = false;
         standard_instrumentations_->registerCallbacks(*pass_instrumentation_callbacks_);
 

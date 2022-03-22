@@ -1,4 +1,6 @@
-namespace InternalFunctions {
+// Licensed under the MIT License.
+
+namespace QATSample {
     operation Value(q: Int): Int
     {
        return q == 0 ? 1337 | q*q;

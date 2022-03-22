@@ -59,3 +59,28 @@ jobs:
       #   with:
       #     name: sarif-file
       #     path: ${{ steps.run-analysis.outputs.sarif }}
+
+
+
+### ADDITIONAL DISABLED CODE - SAVE FOR LATER: Linux Qiskit tests
+      - name: "Running Qiskit tests"
+        run: |
+          pip install https://github.com/qir-alliance/pyqir/releases/download/v0.2.0a1/pyqir_generator-0.2.0a1-cp36-abi3-linux_x86_64.whl
+
+          git clone git@github.com:msr-quarc/qiskit-qir.git
+          pushd qiskit-qir
+          pip install -e .
+          popd
+          export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
+
+          pushd qir/qiskit-tests/
+          pip install pytest
+          pytest
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          PYTHONUNBUFFERED: 1
+          PYTHON_BIN_PATH: /usr/bin/python3
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CC: clang-11
+          CXX: clang++-11
+

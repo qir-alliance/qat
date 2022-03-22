@@ -21,7 +21,6 @@ namespace quantum
 
     Profile ProfileGenerator::newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug)
     {
-
         auto qubit_allocation_manager  = BasicAllocationManager::createNew();
         auto result_allocation_manager = BasicAllocationManager::createNew();
 
@@ -34,6 +33,19 @@ namespace quantum
         Profile ret{name, debug, nullptr, qubit_allocation_manager, result_allocation_manager};
 
         auto module_pass_manager = createGenerationModulePassManager(ret, optimization_level, debug);
+
+        for (auto& c : components_)
+        {
+            llvm::FunctionPassManager function_pass_manager;
+            function_pass_manager_ = &function_pass_manager;
+            if (debug)
+            {
+                llvm::outs() << "Setting " << c.first << " up\n";
+            }
+
+            c.second(this, ret);
+            module_pass_manager.addPass(createModuleToFunctionPassAdaptor(std::move(function_pass_manager)));
+        }
 
         ret.setModulePassManager(std::move(module_pass_manager));
 
@@ -59,16 +71,6 @@ namespace quantum
         optimization_level_  = optimization_level;
         debug_               = debug;
 
-        for (auto& c : components_)
-        {
-            if (debug)
-            {
-                llvm::outs() << "Setting " << c.first << " up\n";
-            }
-
-            c.second(this, profile);
-        }
-
         return ret;
     }
 
@@ -79,7 +81,14 @@ namespace quantum
 
     llvm::ModulePassManager& ProfileGenerator::modulePassManager()
     {
+        assert(module_pass_manager_ != nullptr);
         return *module_pass_manager_;
+    }
+
+    llvm::FunctionPassManager& ProfileGenerator::functionPassManager()
+    {
+        assert(function_pass_manager_ != nullptr);
+        return *function_pass_manager_;
     }
 
     llvm::PassBuilder& ProfileGenerator::passBuilder()
@@ -129,6 +138,7 @@ namespace quantum
         registerProfileComponent<LlvmPassesConfiguration>(
             "llvm-optimization", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
                 auto& mpm = ptr->modulePassManager();
+                auto& fpm = ptr->functionPassManager();
 
                 // Always inline
                 if (cfg.alwaysInline())
@@ -162,7 +172,7 @@ namespace quantum
                         .setProfileBasedPeeling(cfg.unrollAllowProfilBasedPeeling())
                         .setFullUnrollMaxCount(cfg.unrolFullUnrollCount());
 
-                    mpm.addPass(createModuleToFunctionPassAdaptor(llvm::LoopUnrollPass(loop_config)));
+                    fpm.addPass(llvm::LoopUnrollPass(loop_config));
                 }
 
                 if (cfg.useLlvmOptPipeline())
@@ -197,21 +207,21 @@ namespace quantum
                     }
                 }
 
-                mpm.addPass(createModuleToFunctionPassAdaptor(llvm::SimplifyCFGPass()));
+                fpm.addPass(llvm::SimplifyCFGPass());
 
                 if (cfg.eliminateMemory())
                 {
-                    mpm.addPass(createModuleToFunctionPassAdaptor(llvm::PromotePass()));
+                    fpm.addPass(llvm::PromotePass());
                 }
 
                 if (cfg.eliminateConstants())
                 {
-                    mpm.addPass(createModuleToFunctionPassAdaptor(llvm::SCCPPass()));
+                    fpm.addPass(llvm::SCCPPass());
                 }
 
                 if (cfg.eliminateDeadCode())
                 {
-                    mpm.addPass(createModuleToFunctionPassAdaptor(llvm::ADCEPass()));
+                    fpm.addPass(llvm::ADCEPass());
                 }
             });
 

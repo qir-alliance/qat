@@ -33,3 +33,11 @@ clean:
 	cd NegativeBaseProfiles/InternalCall && make clean
 	cd NegativeBaseProfiles/IfStatement && make clean
 	cd NegativeBaseProfiles/Loop && make clean			
+	cd Atomics/AdvancedConstantFolding && make clean
+	cd Atomics/BlockFolding && make clean
+	cd Atomics/ConstantFolding && make clean
+	cd Atomics/Inlining && make clean
+	cd Atomics/Loop && make clean
+	cd Atomics/QubitAllocation && make clean
+	cd Atomics/SelectStatement && make clean
+

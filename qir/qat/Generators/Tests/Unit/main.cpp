@@ -83,15 +83,13 @@ class TestAnalysis
 
 TEST(GeneratorsTestSuite, ConfigureFunction)
 {
-    Profile  profile{"test", false};
     uint64_t call_count{0};
     auto     configure = [&call_count](RuleSet&) { ++call_count; };
     auto     generator = std::make_shared<ExposedConfigurableProfileGenerator>(configure);
 
     TestAnalysis test;
 
-    auto module_pass_manager =
-        generator->createGenerationModulePassManager(profile, llvm::PassBuilder::OptimizationLevel::O0, false);
+    generator->newProfile("test", llvm::PassBuilder::OptimizationLevel::O0, false);
 
     EXPECT_EQ(call_count, 1);
     EXPECT_TRUE(generator->ruleTransformationConfig().isDisabled());
@@ -100,15 +98,13 @@ TEST(GeneratorsTestSuite, ConfigureFunction)
 
 TEST(GeneratorsTestSuite, ConfigurationManager)
 {
-    Profile               profile{"test", false};
     auto                  generator             = std::make_shared<ExposedConfigurableProfileGenerator>();
     ConfigurationManager& configuration_manager = generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     TestAnalysis test;
 
-    auto module_pass_manager =
-        generator->createGenerationModulePassManager(profile, llvm::PassBuilder::OptimizationLevel::O0, false);
+    generator->newProfile("test", llvm::PassBuilder::OptimizationLevel::O0, false);
 
     EXPECT_EQ(generator->ruleTransformationConfig(), TransformationRulesPassConfiguration());
     EXPECT_EQ(generator->llvmPassesConfig(), LlvmPassesConfiguration());
