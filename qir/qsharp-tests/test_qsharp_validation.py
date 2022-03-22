@@ -60,6 +60,9 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
 @pytest.mark.parametrize("test_name", CIRCUITS)
 def test_qsharp_reduction(test_name, request):
     with request.getfixturevalue(test_name) as project:
+        if project.has_relative_dependencies:
+            return
+
         if not project.compile():
             raise BaseException("Could not compile Q# program: {}".format(project.filename))
 

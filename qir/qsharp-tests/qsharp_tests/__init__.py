@@ -15,6 +15,8 @@ class QsharpProject(object):
     def __init__(self, project_dir, filename):
         self.original_project_dir = project_dir
         self.filename = filename
+        self.has_relative_dependencies = False
+        self.skip = False
 
     def __enter__(self):
         self.project_dir = tempfile.mkdtemp()
@@ -22,6 +24,9 @@ class QsharpProject(object):
         # Copying project
         shutil.copytree(self.original_project_dir, self.project_dir, dirs_exist_ok=True)
         self.project_file = os.path.join(self.project_dir, self.filename)
+
+        if not os.path.isfile(self.project_file):
+            raise BaseException("{} does not exist".format(self.project_file))
 
         # Updating project to emitting QIR
         tree = ET.parse(self.project_file)
@@ -37,6 +42,14 @@ class QsharpProject(object):
             library_type = group.find("OutputType")
             if library_type is not None:
                 library_type.text = "Exe"
+
+        for group in root.iter('ItemGroup'):
+            if group.find("ProjectReference") is not None:
+                self.has_relative_dependencies = True
+                self.skip = True
+
+            if group.find("Compile") is not None:
+                self.skip = True
 
         # Dumping tree
         tree.write(self.project_file)
@@ -103,10 +116,18 @@ all_qsharp = [
 
 for project_file in glob.glob(os.path.join(QSHARP_SAMPLES, "**", "*.csproj"), recursive=True):
     project_dir, name = project_file.rsplit("/", 1)
-    print("Adding", name, project_dir, project_file)
+    filename = name
+
     if not os.path.isfile(project_file):
         continue
 
+    with QsharpProject(project_dir, filename) as project:
+        print(project.filename, project.has_relative_dependencies)
+        if project.skip:
+            continue
+
     name = "qsharp_"+name.replace("-", "_").replace(".", "_")
     locals()[name] = generate_test(project_file)
+
     all_qsharp.append(name)
+all_qsharp.reverse()
