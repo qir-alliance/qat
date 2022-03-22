@@ -18,11 +18,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
-      - name: Install SSH Client 🔑
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.QISKIT_KEY }}
 
       - name: "Installing dependencies"
         run: |
@@ -73,7 +68,10 @@ jobs:
           CC: clang
           CXX: clang++
 
-
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.QISKIT_KEY }}
 
       - name: "Running Qiskit tests"
         run: |
