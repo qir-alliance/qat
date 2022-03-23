@@ -2,57 +2,63 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Llvm/Llvm.hpp"
 #include "ModuleLoader/DebugTable.hpp"
 
-namespace microsoft {
-namespace quantum {
+#include "Llvm/Llvm.hpp"
 
-class DebugInfoUpdater : public llvm::InstVisitor<DebugInfoUpdater>
+namespace microsoft
 {
-public:
-  using DIBuilder   = llvm::DIBuilder;
-  using DataLayout  = llvm::DataLayout;
-  using Module      = llvm::Module;
-  using Function    = llvm::Function;
-  using Instruction = llvm::Instruction;
-  using DIType      = llvm::DIType;
-  using StringRef   = llvm::StringRef;
+namespace quantum
+{
 
-  DebugInfoUpdater(DebugTablePtr const &debug_info, Module &module, StringRef const &directory,
-                   StringRef const &filename);
+    class DebugInfoUpdater : public llvm::InstVisitor<DebugInfoUpdater>
+    {
+      public:
+        using DIBuilder   = llvm::DIBuilder;
+        using DataLayout  = llvm::DataLayout;
+        using Module      = llvm::Module;
+        using Function    = llvm::Function;
+        using Instruction = llvm::Instruction;
+        using DIType      = llvm::DIType;
+        using StringRef   = llvm::StringRef;
 
-  void update();
+        DebugInfoUpdater(
+            DebugTablePtr const& debug_info,
+            Module&              module,
+            StringRef const&     directory,
+            StringRef const&     filename);
 
-  // Visitor implementation
-  //
+        void update();
 
-  void visitFunction(Function &function);
-  void visitInstruction(Instruction &instr);
+        // Visitor implementation
+        //
 
-protected:
-  // Creating and getting types
-  //
+        void visitFunction(Function& function);
+        void visitInstruction(Instruction& instr);
 
-  llvm::DISubroutineType *createFunctionType(Function const *function);
-  DIType                 *createVoidType(llvm::Type *type);
-  DIType                 *createPointerType(llvm::Type *type);
-  DIType                 *createOpaqueType(llvm::Type *type);
-  DIType                 *getOrCreateType(llvm::Type *type);
-  DIType                 *getType(llvm::Type *type);
+      protected:
+        // Creating and getting types
+        //
 
-public:
-  DebugTablePtr         debug_info_{nullptr};
-  llvm::Module         &module_;
-  llvm::DIBuilder       builder_;
-  llvm::DebugInfoFinder finder_{};
+        llvm::DISubroutineType* createFunctionType(Function const* function);
+        DIType*                 createVoidType(llvm::Type* type);
+        DIType*                 createPointerType(llvm::Type* type);
+        DIType*                 createOpaqueType(llvm::Type* type);
+        DIType*                 getOrCreateType(llvm::Type* type);
+        DIType*                 getType(llvm::Type* type);
 
-  llvm::DICompileUnit *compile_unit_;
-  llvm::DIFile        *file_unit_;
+      public:
+        DebugTablePtr         debug_info_{nullptr};
+        llvm::Module&         module_;
+        llvm::DIBuilder       builder_;
+        llvm::DebugInfoFinder finder_{};
 
-  llvm::ValueMap<llvm::Function const *, llvm::DISubprogram *> function_debug_info_{};
-  llvm::DenseMap<llvm::Type const *, llvm::DIType *>           type_debug_info_{};
-};
+        llvm::DICompileUnit* compile_unit_;
+        llvm::DIFile*        file_unit_;
 
-}  // namespace quantum
-}  // namespace microsoft
+        llvm::ValueMap<llvm::Function const*, llvm::DISubprogram*> function_debug_info_{};
+        llvm::DenseMap<llvm::Type const*, llvm::DIType*>           type_debug_info_{};
+    };
+
+} // namespace quantum
+} // namespace microsoft

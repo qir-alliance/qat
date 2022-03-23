@@ -7,49 +7,50 @@
 
 #include <memory>
 
-namespace microsoft {
-namespace quantum {
-
-DebugTable::DebugTablePtr DebugTable::create()
+namespace microsoft
 {
-  DebugTablePtr ret;
-  ret.reset(new DebugTable());
-  return ret;
-}
-
-void DebugTable::printInfoComment(Value const &value, llvm::formatted_raw_ostream &outstream)
+namespace quantum
 {
-  registerValuePosition(&value, outstream);
-}
 
-void DebugTable::emitBasicBlockStartAnnot(BasicBlock const            *block,
-                                          llvm::formatted_raw_ostream &outstream)
-{
-  registerValuePosition(block, outstream);
-}
+    DebugTable::DebugTablePtr DebugTable::create()
+    {
+        DebugTablePtr ret;
+        ret.reset(new DebugTable());
+        return ret;
+    }
 
-void DebugTable::emitFunctionAnnot(Function const *function, llvm::formatted_raw_ostream &outstream)
-{
-  registerValuePosition(function, outstream);
-}
+    void DebugTable::printInfoComment(Value const& value, llvm::formatted_raw_ostream& outstream)
+    {
+        registerValuePosition(&value, outstream);
+    }
 
-DebugTable::Position DebugTable::getPosition(Value const *value) const
-{
-  auto it = positions_.find(value);
-  if (it != positions_.end())
-  {
-    return it->second;
-  }
+    void DebugTable::emitBasicBlockStartAnnot(BasicBlock const* block, llvm::formatted_raw_ostream& outstream)
+    {
+        registerValuePosition(block, outstream);
+    }
 
-  return Position::InvalidPosition();
-}
+    void DebugTable::emitFunctionAnnot(Function const* function, llvm::formatted_raw_ostream& outstream)
+    {
+        registerValuePosition(function, outstream);
+    }
 
-void DebugTable::registerModule(StringRef const &filename, Module const *module)
-{
-  current_filename_ = filename;
-  llvm::raw_null_ostream dummy{};
-  module->print(dummy, this);
-}
+    DebugTable::Position DebugTable::getPosition(Value const* value) const
+    {
+        auto it = positions_.find(value);
+        if (it != positions_.end())
+        {
+            return it->second;
+        }
 
-}  // namespace quantum
-}  // namespace microsoft
+        return Position::InvalidPosition();
+    }
+
+    void DebugTable::registerModule(StringRef const& filename, Module const* module)
+    {
+        current_filename_ = filename;
+        llvm::raw_null_ostream dummy{};
+        module->print(dummy, this);
+    }
+
+} // namespace quantum
+} // namespace microsoft
