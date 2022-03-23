@@ -83,7 +83,24 @@ namespace quantum
             profile.allowed_pointer_types_   = {"Qubit*", "Result*"};
         }
 
-        else if (name == "provider_7ee0" || name == "provider_b340")
+        else if (name == "provider_7ee0")
+        {
+            // Supported LLVM types: i64 (integer), double, i1 (bool), %Qubit*, %Result*.
+            profile.allow_internal_calls_     = false;
+            profile.allowlist_external_calls_ = true;
+            profile.allowlist_opcodes_        = true;
+            profile.opcodes_ = Set{"ret", "br", "add", "sub", "mul", "and", "or", "xor", "lshr", "shl", "icmp"};
+            profile.external_calls_ =
+                Set{"__quantum__qis__cnot__body",       "__quantum__qis__cz__body",    "__quantum__qis__h__body",
+                    "__quantum__qis__s__body",          "__quantum__qis__s__adj",      "__quantum__qis__t__body",
+                    "__quantum__qis__t__adj",           "__quantum__qis__x__body",     "__quantum__qis__y__body",
+                    "__quantum__qis__z__body",          "__quantum__qis__rx__body",    "__quantum__qis__ry__body",
+                    "__quantum__qis__rz__body",         "__quantum__qis__reset__body", "__quantum__qis__mz__body",
+                    "__quantum__qis__read_result__body"};
+            profile.allowlist_pointer_types_ = true;
+            profile.allowed_pointer_types_   = {"Qubit*", "Result*"};
+        }
+        else if (name == "provider_b340")
         {
             profile = ValidationPassConfiguration::fromProfileName("base");
             // profile.addAllowedExternalCall("__quantum__qis__[name]")
