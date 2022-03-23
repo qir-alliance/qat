@@ -33,6 +33,8 @@
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Transforms/IPO/Inliner.h"
+#include "llvm/Transforms/Instrumentation.h"
+#include "llvm/Transforms/Scalar/LoopUnrollPass.h"
 #include "llvm/Transforms/Scalar/Reassociate.h"
 #include "llvm/Transforms/Scalar/SCCP.h"
 #include "llvm/Transforms/Scalar/SimplifyCFG.h"
@@ -41,11 +43,17 @@
 #include "llvm/Transforms/Utils/Mem2Reg.h"
 
 // Building
+#include "llvm/IR/AssemblyAnnotationWriter.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/Constants.h"
+#include "llvm/IR/DIBuilder.h"
+#include "llvm/IR/DataLayout.h"
+#include "llvm/IR/DebugInfo.h"
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/Function.h"
 #include "llvm/IR/IRBuilder.h"
+#include "llvm/IR/InstVisitor.h"
+#include "llvm/IR/Instruction.h"
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Module.h"
 #include "llvm/IR/Type.h"
@@ -53,9 +61,12 @@
 
 // Reader tool
 #include "llvm/IRReader/IRReader.h"
+#include "llvm/Support/Debug.h"
+#include "llvm/Support/FileSystem.h"
+#include "llvm/Support/FormattedStream.h"
+#include "llvm/Support/Path.h"
 #include "llvm/Support/SourceMgr.h"
-#include "llvm/Transforms/IPO/Inliner.h"
-#include "llvm/Transforms/Scalar/LoopUnrollPass.h"
+#include "llvm/Support/ToolOutputFile.h"
 
 // Profiles
 #include "llvm/LinkAllPasses.h"
