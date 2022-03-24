@@ -26,10 +26,9 @@ jobs:
         run: |
           cp -R qir/qat /tmp/
 
-
       - name: Checkout code main
         uses: actions/checkout@v2
-        with:          
+        with:
           ref: "main"
           repository: ${{github.event.pull_request.head.repo.full_name}}
 
@@ -59,7 +58,7 @@ jobs:
           mkdir Debug
           cd Debug
           cmake .. 
-          make qat          
+          make qat
         env:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
@@ -67,9 +66,7 @@ jobs:
           CC: clang-11
           CXX: clang++-11
 
-
       - name: Install SSH Client 🔑
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.QISKIT_KEY }}
-
