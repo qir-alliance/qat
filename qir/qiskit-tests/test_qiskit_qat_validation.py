@@ -3,7 +3,7 @@
 #
 
 try:
-    from test_circuits import __all__ as CIRCUITS
+    from test_circuits import core_tests as CIRCUITS
 except:  # noqa: E722
     raise BaseException("Could not find Qiskit QIR tests")
 
