@@ -1,10 +1,10 @@
-name: "macOS CI"
+name: "Trusted macOS CI"
 
 on:
   push:
     branches:
       - main
-  pull_request:
+  pull_request_target:
     branches:
       - main
   release:
@@ -14,7 +14,7 @@ on:
 jobs:
   build:
     runs-on: macos-11
-    name: "Mac CI"
+    name: "Trusted Mac CI"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -22,7 +22,22 @@ jobs:
           ref: ${{github.event.pull_request.head.ref}}
           repository: ${{github.event.pull_request.head.repo.full_name}}
 
-      - name: "Installing dependencies"
+      - name: "Copying QAT source"
+        run: |
+          cp -R qir/qat /tmp/
+
+      - name: Checkout code main
+        uses: actions/checkout@v2
+        with:
+          ref: "main"
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+
+      - name: "Replacing QAT source"
+        run: |
+          rm -rf qir/qat
+          mv /tmp/qat qir/
+
+      - name: "Building QAT"
         run: |
           rm '/usr/local/bin/2to3'
           brew install llvm@11
@@ -44,38 +59,40 @@ jobs:
           chmod +x manage
           exec -l $SHELL
 
-      - name: "Checking format"
+      - name: "Build project"
         run: |
-          ./manage stylecheck
+          mkdir -p Debug
+          cd Debug
+          cmake .. -DMICROSOFT_ENABLE_DYNAMIC_LOADING=0
+          make qat
+          cd ..
+          mv Debug/qir/qat/Apps/qat ./
+          chmod +x qat
+          tar cf qat-mac.zip qat
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
           CC: clang
           CXX: clang++
 
-      - name: "Running unit tests"
-        run: |
-          ./manage test
-        env:
-          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
-          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
-          CC: clang
-          CXX: clang++
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.QISKIT_KEY }}
 
-      - name: "Running examples"
+      - name: "Running Qiskit tests"
         run: |
-          make test-examples
-        env:
-          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
-          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
-          CC: clang
-          CXX: clang++
+          git clone git@github.com:msr-quarc/qiskit-qir.git
+          pushd qiskit-qir
+          pip3 install --user -e .
+          popd
+          export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
 
-      - name: "Performing static analysis"
-        run: |
-          ./manage lint
+          pushd qir/qiskit-tests/
+          pip3 install --user pytest
+          pytest
         env:
-          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
-          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
-          CC: clang
-          CXX: clang++
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CC: clang-11
+          CXX: clang++-11

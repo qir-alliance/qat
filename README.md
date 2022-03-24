@@ -2,7 +2,7 @@
 
 [![Linux CI](https://github.com/qir-alliance/qat/actions/workflows/ci-linux-on-main-pr.yml/badge.svg?branch=main)](https://github.com/qir-alliance/qat/actions/workflows/ci-linux-on-main-pr.yml)
 [![Mac CI](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml/badge.svg?branch=main)](https://github.com/qir-alliance/qat/actions/workflows/ci-mac-on-main-pr.yml)
-[![Documentation](https://github.com/qir-alliance/qat/actions/workflows/cd-docs.yml/badge.svg?branch=main)](https://qir-alliance.github.io/qat/)
+[![Documentation](https://github.com/qir-alliance/qat/actions/workflows/trusted-cd-docs.yml/badge.svg?branch=main)](https://qir-alliance.github.io/qat/)
 
 [![License](https://badgen.net/github/license/qir-alliance/qat)](https://opensource.org/licenses/MIT)
 [![Release](https://badgen.net/github/release/qir-alliance/qat)](https://github.com/qir-alliance/qat/releases/latest)
