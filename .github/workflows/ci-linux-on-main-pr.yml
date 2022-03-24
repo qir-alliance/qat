@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  pull_request_target:
+  pull_request:
     branches:
       - main
   release:
@@ -21,14 +21,6 @@ jobs:
         with:
           ref: ${{github.event.pull_request.head.ref}}
           repository: ${{github.event.pull_request.head.repo.full_name}}
-
-      - name: "Preparing CI"
-        run: |
-          cp -R qir/qat /tmp/
-          git checkout main
-          rm -rf qir/qat
-          mv /tmp/qat qir/
-
 
       - name: "Installing dependencies"
         run: |
@@ -104,11 +96,6 @@ jobs:
           PYTHON_BIN_PATH: /usr/bin/python3
           CC: clang-11
           CXX: clang++-11
-
-      - name: Install SSH Client 🔑
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.QISKIT_KEY }}
 
       - name: "Performing static analysis"
         run: |
