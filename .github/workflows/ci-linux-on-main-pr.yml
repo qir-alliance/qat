@@ -29,7 +29,6 @@ jobs:
           rm -rf qir/qat
           mv /tmp/qat qir/
 
-
       - name: "Installing dependencies"
         run: |
           sudo apt-get update -y
