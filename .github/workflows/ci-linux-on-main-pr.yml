@@ -22,11 +22,19 @@ jobs:
           ref: ${{github.event.pull_request.head.ref}}
           repository: ${{github.event.pull_request.head.repo.full_name}}
 
-      - name: "Preparing CI"
+      - name: "Copying QAT source"
         run: |
           cp -R qir/qat /tmp/
-          git branch
-          git checkout main
+
+
+      - name: Checkout code main
+        uses: actions/checkout@v2
+        with:          
+          ref: "main"
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+          
+      - name: "Replacing QAT source"
+        run: |
           rm -rf qir/qat
           mv /tmp/qat qir/
 
