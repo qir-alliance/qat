@@ -65,10 +65,6 @@ jobs:
           cd Debug
           cmake .. -DMICROSOFT_ENABLE_DYNAMIC_LOADING=0
           make qat
-          cd ..
-          mv Debug/qir/qat/Apps/qat ./
-          chmod +x qat
-          tar cf qat-mac.zip qat
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
