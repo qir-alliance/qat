@@ -57,11 +57,23 @@ jobs:
           dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573
           npm install -g prettier@2.2.1
           chmod +x manage
-          mkdir Debug
-          cd Debug
-          cmake .. 
-          make qat
           exec -l $SHELL
+
+      - name: "Build project"
+        run: |
+          mkdir -p Debug
+          cd Debug
+          cmake .. -DMICROSOFT_ENABLE_DYNAMIC_LOADING=0
+          make qat
+          cd ..
+          mv Debug/qir/qat/Apps/qat ./
+          chmod +x qat
+          tar cf qat-mac.zip qat
+        env:
+          LDFLAGS: "-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@11/include"
+          CC: clang
+          CXX: clang++
 
       - name: Install SSH Client 🔑
         uses: webfactory/ssh-agent@v0.5.4
