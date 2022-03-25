@@ -7,51 +7,51 @@
 
 #include <vector>
 
-namespace microsoft {
-namespace quantum {
-
-void CommentLogger::debug(String const &message)
+namespace microsoft
 {
-  llvm::errs() << "debug - " << location_name_ << ":" << location_row_ << "," << location_col_
-               << " - " << message << "\n";
-}
-
-void CommentLogger::info(String const &message)
+namespace quantum
 {
-  llvm::errs() << "info - " << location_name_ << ":" << location_row_ << "," << location_col_
-               << " - " << message << "\n";
-}
 
-void CommentLogger::warning(String const &message)
-{
-  llvm::errs() << "warning - " << location_name_ << ":" << location_row_ << "," << location_col_
-               << " - " << message << "\n";
-}
+    void CommentLogger::debug(String const& message)
+    {
+        llvm::errs() << "debug - " << location_name_ << ":" << location_row_ << "," << location_col_ << " - " << message
+                     << "\n";
+    }
 
-void CommentLogger::error(String const &message)
-{
-  llvm::errs() << "error - " << location_name_ << ":" << location_row_ << "," << location_col_
-               << " - " << message << "\n";
-}
+    void CommentLogger::info(String const& message)
+    {
+        llvm::errs() << "info - " << location_name_ << ":" << location_row_ << "," << location_col_ << " - " << message
+                     << "\n";
+    }
 
-void CommentLogger::internalError(String const &message)
-{
-  llvm::errs() << "internal error - " << location_name_ << ":" << location_row_ << ","
-               << location_col_ << " - " << message << "\n";
-}
+    void CommentLogger::warning(String const& message)
+    {
+        llvm::errs() << "warning - " << location_name_ << ":" << location_row_ << "," << location_col_ << " - "
+                     << message << "\n";
+    }
 
-void CommentLogger::setLocation(String const &name, int64_t line, int64_t col)
-{
-  location_name_ = name;
-  location_row_  = line;
-  location_col_  = col;
-}
+    void CommentLogger::error(String const& message)
+    {
+        llvm::errs() << "error - " << location_name_ << ":" << location_row_ << "," << location_col_ << " - " << message
+                     << "\n";
+    }
 
-void CommentLogger::setLlvmHint(String const &)
-{}
+    void CommentLogger::internalError(String const& message)
+    {
+        llvm::errs() << "internal error - " << location_name_ << ":" << location_row_ << "," << location_col_ << " - "
+                     << message << "\n";
+    }
 
-void CommentLogger::setFrontendHint(String const &)
-{}
+    void CommentLogger::setLocation(String const& name, int64_t line, int64_t col)
+    {
+        location_name_ = name;
+        location_row_  = line;
+        location_col_  = col;
+    }
 
-}  // namespace quantum
-}  // namespace microsoft
+    void CommentLogger::setLlvmHint(String const&) {}
+
+    void CommentLogger::setFrontendHint(String const&) {}
+
+} // namespace quantum
+} // namespace microsoft

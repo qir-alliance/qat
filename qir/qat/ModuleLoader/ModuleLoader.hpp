@@ -21,10 +21,12 @@ namespace quantum
         using Linker       = llvm::Linker;
         using SMDiagnostic = llvm::SMDiagnostic;
 
-        explicit ModuleLoader(Module* final_module)
+        explicit ModuleLoader(Module* final_module, bool strip_existing_debug = false, bool add_ir_debug_info = false)
           : final_module_{final_module}
           , linker_{*final_module}
           , debug_table_{DebugTable::create()}
+          , strip_existing_debug_{strip_existing_debug}
+          , add_ir_debug_info_{add_ir_debug_info}
         {
         }
 
@@ -42,8 +44,6 @@ namespace quantum
 
         bool addIrFile(String input_file)
         {
-            bool override_debug_symbols = true;
-
             // Converting to absolute path
             llvm::SmallVector<char, 256> input_vec;
             input_vec.assign(input_file.begin(), input_file.end());
@@ -70,11 +70,15 @@ namespace quantum
 
             debug_table_->registerModule(input_file, module.get());
 
-            // Whether or not to override debug symbols
-            if (override_debug_symbols)
+            if (strip_existing_debug_)
             {
                 // Debug info
                 llvm::StripDebugInfo(*module.get());
+            }
+
+            // Whether or not to override debug symbols
+            if (add_ir_debug_info_)
+            {
 
                 // Adding debug versioning
                 auto debug_version_key = "Debug Info Version";
@@ -104,6 +108,8 @@ namespace quantum
         Module*       final_module_;
         Linker        linker_;
         DebugTablePtr debug_table_{nullptr};
+        bool          strip_existing_debug_{false};
+        bool          add_ir_debug_info_{false};
 
         // Single Module Transformation
         //

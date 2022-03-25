@@ -2,68 +2,70 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Llvm/Llvm.hpp"
 #include "Logging/SourceLocation.hpp"
+
+#include "Llvm/Llvm.hpp"
 
 #include <memory>
 #include <unordered_map>
 
-namespace microsoft {
-namespace quantum {
-
-class DebugTable : public llvm::AssemblyAnnotationWriter
+namespace microsoft
 {
-public:
-  using Position = SourceLocation;
+namespace quantum
+{
 
-  using StringRef     = llvm::StringRef;
-  using BasicBlock    = llvm::BasicBlock;
-  using Function      = llvm::Function;
-  using Value         = llvm::Value;
-  using Module        = llvm::Module;
-  using Positions     = std::unordered_map<Value const *, Position>;
-  using DebugTablePtr = std::shared_ptr<DebugTable>;
+    class DebugTable : public llvm::AssemblyAnnotationWriter
+    {
+      public:
+        using Position = SourceLocation;
 
-  /// Pointer constructor for the debug table.
-  static DebugTablePtr create();
+        using StringRef     = llvm::StringRef;
+        using BasicBlock    = llvm::BasicBlock;
+        using Function      = llvm::Function;
+        using Value         = llvm::Value;
+        using Module        = llvm::Module;
+        using Positions     = std::unordered_map<Value const*, Position>;
+        using DebugTablePtr = std::shared_ptr<DebugTable>;
 
-  // Debug table interface
-  //
+        /// Pointer constructor for the debug table.
+        static DebugTablePtr create();
 
-  /// Gets the position of a LLVM value.
-  Position getPosition(Value const *value) const;
+        // Debug table interface
+        //
 
-  /// Registers a module in debug table.
-  void registerModule(StringRef const &filename, Module const *module);
+        /// Gets the position of a LLVM value.
+        Position getPosition(Value const* value) const;
 
-protected:
-  // AssemblyAnnotationWriter interface implementations
-  //
+        /// Registers a module in debug table.
+        void registerModule(StringRef const& filename, Module const* module);
 
-  void printInfoComment(Value const &value, llvm::formatted_raw_ostream &outstream) override;
-  void emitBasicBlockStartAnnot(BasicBlock const            *block,
-                                llvm::formatted_raw_ostream &outstream) override;
-  void emitFunctionAnnot(Function const *function, llvm::formatted_raw_ostream &outstream) override;
+      protected:
+        // AssemblyAnnotationWriter interface implementations
+        //
 
-private:
-  Positions positions_;
-  StringRef current_filename_{};
+        void printInfoComment(Value const& value, llvm::formatted_raw_ostream& outstream) override;
+        void emitBasicBlockStartAnnot(BasicBlock const* block, llvm::formatted_raw_ostream& outstream) override;
+        void emitFunctionAnnot(Function const* function, llvm::formatted_raw_ostream& outstream) override;
 
-  DebugTable() = default;
-  void registerValuePosition(Value const *value, llvm::formatted_raw_ostream &outstream)
-  {
-    outstream.flush();
+      private:
+        Positions positions_;
+        StringRef current_filename_{};
 
-    Position pos;
-    pos.name   = current_filename_;
-    pos.line   = outstream.getLine() + 1;
-    pos.column = outstream.getColumn() + 1;
+        DebugTable() = default;
+        void registerValuePosition(Value const* value, llvm::formatted_raw_ostream& outstream)
+        {
+            outstream.flush();
 
-    positions_.insert(std::make_pair(value, std::move(pos)));
-  }
-};
+            Position pos;
+            pos.name   = current_filename_;
+            pos.line   = outstream.getLine() + 1;
+            pos.column = outstream.getColumn() + 1;
 
-using DebugTablePtr = DebugTable::DebugTablePtr;
+            positions_.insert(std::make_pair(value, std::move(pos)));
+        }
+    };
 
-}  // namespace quantum
-}  // namespace microsoft
+    using DebugTablePtr = DebugTable::DebugTablePtr;
+
+} // namespace quantum
+} // namespace microsoft

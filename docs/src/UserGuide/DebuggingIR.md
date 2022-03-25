@@ -1,46 +1,128 @@
 # Debugging an LLVM IR
 
-```c++
-#include <iostream>
-#include <vector>
+## Quick start with basic example
 
+Assuming that you have compiled `qat` and have its location in your `PATH`
+environment variable, create a C++ file called `segfault.cpp` with following
+contents:
+
+```c++
 int main()
 {
-  std::vector<int> x;
-  x[10299] = x[10299 * 2777] + 2;
-  std::cout << "X[10299] = " << x[10299] << std::endl;
-  return 0;
+  int *ptr   = nullptr;
+  ptr[10299] = ptr[10299 * 2777] + 2;
+  return ptr[99];
 }
 ```
 
-We create an IR and use QAT to add debug info
+Then run following commands
 
 ```
-% clang++ -O3 -c -S -emit-llvm segfault.cpp
-% qat -S segfault.ll > with_debug.ll
-% mkdir -p bin
-% llc -filetype=obj -o bin/testprog.o with_debug.ll
-% clang++ -g -O1 bin/testprog.o -o bin/testprog
-% lldb bin/testprog
+clang++ -O3 -c -S -emit-llvm segfault.cpp
+qat -S segfault.ll > with_debug.ll
+mkdir -p bin
+llc -filetype=obj -o bin/segfault.o with_debug.ll
+clang++ -g -O1 bin/segfault.o -o bin/segfault
+lldb bin/segfault
 ```
 
-Executing the program in the debugger we now see that the IR file is referred to when the segfault is happening:
+Running the program in `lldb` should now create a stack trace that refers to the
+`segfault.ll` file rather than the original `segfault.cpp` file:
 
 ```
-(lldb) target create "bin/testprog"
-Current executable set to '/Users/tfr/Documents/TestArea/LLVMIR/bin/testprog' (x86_64).
+(lldb) target create "bin/segfault"
+Current executable set to '/path/to/test/bin/segfault' (x86_64).
 (lldb) r
-Process 88015 launched: '/Users/tfr/Documents/TestArea/LLVMIR/bin/testprog' (x86_64)
-Hello world
-Process 88015 stopped
+Process 25334 launched: '/path/to/test/bin/segfault' (x86_64)
+Process 25334 stopped
 * thread #1, queue = 'com.apple.main-thread', stop reason = EXC_BAD_ACCESS (code=1, address=0x6d1a00c)
-    frame #0: 0x0000000100003a4e testprog`main at segfault.ll:72:75
-   69     call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %11) #9
-   70     %24 = call nonnull align 8 dereferenceable(8) %"class.std::__1::basic_ostream"* @_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE3putEc(%"class.std::__1::basic_ostream"* nonnull %3, i8 signext %20)
-   71     %25 = call nonnull align 8 dereferenceable(8) %"class.std::__1::basic_ostream"* @_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE5flushEv(%"class.std::__1::basic_ostream"* nonnull %3)
--> 72     %26 = load i32, i32* inttoptr (i64 114401292 to i32*), align 4, !tbaa !6
-   73     %27 = add nsw i32 %26, 2
-   74     store i32 %27, i32* inttoptr (i64 41196 to i32*), align 4, !tbaa !6
-   75     %28 = call nonnull align 8 dereferenceable(8) %"class.std::__1::basic_ostream"* @_ZNSt3__124__put_character_sequenceIcNS_11char_traitsIcEEEERNS_13basic_ostreamIT_T0_EES7_PKS4_m(%"class.std::__1::basic_ostream"* nonnull align 8 dereferenceable(8) @_ZNSt3__14coutE, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.1, i64 0, i64 0), i64 11)
-(lldb)
+    frame #0: 0x0000000100003f60 segfault`main at segfault.ll:8:74
+   5
+   6    ; Function Attrs: nofree norecurse nounwind ssp uwtable
+   7    define i32 @main() local_unnamed_addr #0 {
+-> 8      %1 = load i32, i32* inttoptr (i64 114401292 to i32*), align 4, !tbaa !3
+   9      %2 = add nsw i32 %1, 2
+   10     store i32 %2, i32* inttoptr (i64 41196 to i32*), align 4, !tbaa !3
+   11     %3 = load i32, i32* inttoptr (i64 396 to i32*), align 4, !tbaa !3
 ```
+
+## Detailed basic example
+
+In this example, we generate a simple program that will cause a segmentation
+fault. The main program
+
+```c++
+int main()
+{
+  int *ptr   = nullptr;
+  ptr[10299] = ptr[10299 * 2777] + 2;
+  return ptr[99];
+}
+```
+
+To generate the IR, we use `clang` with `-emit-llvm`
+
+```
+clang++ -O3 -c -S -emit-llvm segfault.cpp
+```
+
+which generates a file called `segfault.ll`. The main content of this file
+should be similar to:
+
+```
+define i32 @main() local_unnamed_addr #0 {
+  %1 = load i32, i32* inttoptr (i64 114401292 to i32*), align 4, !tbaa !3
+  %2 = add nsw i32 %1, 2
+  store i32 %2, i32* inttoptr (i64 41196 to i32*), align 4, !tbaa !3
+  %3 = load i32, i32* inttoptr (i64 396 to i32*), align 4, !tbaa !3
+  ret i32 %3
+}
+```
+
+We would expect that the program would segfault at the line starting with `%1`
+as we have not allocated any memory. To create an IR with debug information, we
+use `qat` as follows:
+
+```
+% qat -S --add-ir-debug segfault.ll > segfault.dbg.ll
+```
+
+This command will add debug information referring to the original `segfault.ll`
+places where no debug information is present. In case that the `.ll` file
+already have debug information, we can strip that using `--strip-existing-dbg`:
+
+```
+% qat -S --strip-existing-dbg --add-ir-debug segfault.ll > segfault.dbg.ll
+```
+
+Next we transform the new `.ll` file into an executable:
+
+```
+% mkdir -p bin
+% llc -filetype=obj -o bin/segfault.o segfault.dbg.ll
+% clang++ -g -O1 bin/segfault.o -o bin/segfault
+```
+
+Running this program in `lldb`, we will now get stack traces that refer to the
+`.ll` file rather than than `.cpp` file:
+
+```
+% lldb bin/segfault
+(lldb) target create "bin/segfault"
+Current executable set to '/path/to/test/bin/segfault' (x86_64).
+(lldb) r
+Process 25334 launched: '/path/to/test/bin/segfault' (x86_64)
+Process 25334 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = EXC_BAD_ACCESS (code=1, address=0x6d1a00c)
+    frame #0: 0x0000000100003f60 segfault`main at segfault.ll:8:74
+   5
+   6    ; Function Attrs: nofree norecurse nounwind ssp uwtable
+   7    define i32 @main() local_unnamed_addr #0 {
+-> 8      %1 = load i32, i32* inttoptr (i64 114401292 to i32*), align 4, !tbaa !3
+   9      %2 = add nsw i32 %1, 2
+   10     store i32 %2, i32* inttoptr (i64 41196 to i32*), align 4, !tbaa !3
+   11     %3 = load i32, i32* inttoptr (i64 396 to i32*), align 4, !tbaa !3
+```
+
+In this way, we can now trace the origin of an issue to the LLVM IR rather than
+the original source file.

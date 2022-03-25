@@ -136,8 +136,8 @@ libraries used by the QAT library are available.
 
 ## Build instructions for users
 
-From the root folder in the repository, create a build
-folder `Debug` and use CMake to build the executable:
+From the root folder in the repository, create a build folder `Debug` and use
+CMake to build the executable:
 
 ```sh
 cd Debug

@@ -2,36 +2,39 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Llvm/Llvm.hpp"
 #include "Logging/ILogger.hpp"
+
+#include "Llvm/Llvm.hpp"
 
 #include <vector>
 
-namespace microsoft {
-namespace quantum {
-
-struct SourceLocation
+namespace microsoft
 {
-  using StringRef = llvm::StringRef;
+namespace quantum
+{
 
-  enum
-  {
-    INVALID_POSITION = -1
-  };
+    struct SourceLocation
+    {
+        using StringRef = llvm::StringRef;
 
-  operator bool() const
-  {
-    return line != INVALID_POSITION && column != INVALID_POSITION;
-  }
+        enum
+        {
+            INVALID_POSITION = -1
+        };
 
-  static SourceLocation InvalidPosition()
-  {
-    return {"", INVALID_POSITION, INVALID_POSITION};
-  }
+        operator bool() const
+        {
+            return line != INVALID_POSITION && column != INVALID_POSITION;
+        }
 
-  StringRef name{};
-  int64_t   line{0};
-  int64_t   column{0};
-};
-}  // namespace quantum
-}  // namespace microsoft
+        static SourceLocation InvalidPosition()
+        {
+            return {"", INVALID_POSITION, INVALID_POSITION};
+        }
+
+        StringRef name{};
+        int64_t   line{0};
+        int64_t   column{0};
+    };
+} // namespace quantum
+} // namespace microsoft

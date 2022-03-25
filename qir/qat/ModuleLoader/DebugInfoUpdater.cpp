@@ -106,7 +106,6 @@ namespace quantum
             return createPointerType(type);
         }
 
-        // Otherwise, we deal with a primitive type
         auto encoding = llvm::dwarf::DW_ATE_signed;
 
         if (type->isIntegerTy())
@@ -126,11 +125,20 @@ namespace quantum
 
     void DebugInfoUpdater::visitFunction(Function& function)
     {
+        // Skipping declarations and already annotated functions
         if (function.isDeclaration() || function_debug_info_.find(&function) != function_debug_info_.end())
         {
             return;
         }
 
+        // Preserving existing subprograms
+        if (function.getSubprogram() != nullptr)
+        {
+            function_debug_info_[&function] = function.getSubprogram();
+            return;
+        }
+
+        // Creating new subprogram
         auto position      = debug_info_->getPosition(&function);
         auto program_flags = llvm::DISubprogram::SPFlagDefinition;
 
@@ -154,29 +162,28 @@ namespace quantum
         {
             auto location = instr.getDebugLoc();
 
+            // Skipping instructions with existing debug locations
+            if (location)
+            {
+                return;
+            }
+
             // Copying scope and inlined at if possible
             llvm::DILocalScope* scope{nullptr};
             llvm::DILocation*   inlined_at{nullptr};
-            if (location)
-            {
-                scope      = location->getScope();
-                inlined_at = location->getInlinedAt();
-            }
-            else
-            {
-                auto block    = instr.getParent();
-                auto function = block->getParent();
-                auto it       = function_debug_info_.find(function);
 
-                // Sanity check
-                if (it == function_debug_info_.end())
-                {
-                    throw std::runtime_error("Could not find parent function - this is not supposed to happen.");
-                }
+            auto block    = instr.getParent();
+            auto function = block->getParent();
+            auto it       = function_debug_info_.find(function);
 
-                auto subprogram = it->second;
-                scope           = subprogram;
+            // Sanity check
+            if (it == function_debug_info_.end())
+            {
+                throw std::runtime_error("Could not find parent function - this is not supposed to happen.");
             }
+
+            auto subprogram = it->second;
+            scope           = subprogram;
 
             // Sanity check
             if (scope == nullptr)

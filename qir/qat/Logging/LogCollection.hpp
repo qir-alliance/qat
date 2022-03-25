@@ -7,76 +7,78 @@
 
 #include <vector>
 
-namespace microsoft {
-namespace quantum {
-
-/// Concrete ILogger implementation that collects all messages and their corresponding location in a
-/// list that can be traversed later on.
-class LogCollection : public ILogger
+namespace microsoft
 {
-public:
-  /// Class that holds the location of where the incident happened.
-  struct Location : public SourceLocation
-  {
-    String llvm_hint;
-    String frontend_hint;
-  };
+namespace quantum
+{
 
-  /// Enum description what type of information we are conveying.
-  enum class Type
-  {
-    Debug,
-    Info,
-    Warning,
-    Error,
-    InternalError,
-  };
+    /// Concrete ILogger implementation that collects all messages and their corresponding location in a
+    /// list that can be traversed later on.
+    class LogCollection : public ILogger
+    {
+      public:
+        /// Class that holds the location of where the incident happened.
+        struct Location : public SourceLocation
+        {
+            String llvm_hint;
+            String frontend_hint;
+        };
 
-  /// Struct to hold a message together with its type and location
-  struct Message
-  {
-    Type     type;
-    Location location;
-    String   message;
-  };
+        /// Enum description what type of information we are conveying.
+        enum class Type
+        {
+            Debug,
+            Info,
+            Warning,
+            Error,
+            InternalError,
+        };
 
-  /// List of messages defined as alias.
-  using Messages = std::vector<Message>;
+        /// Struct to hold a message together with its type and location
+        struct Message
+        {
+            Type     type;
+            Location location;
+            String   message;
+        };
 
-  // Interface implementation
-  //
+        /// List of messages defined as alias.
+        using Messages = std::vector<Message>;
 
-  /// Adds a debug message to the list.
-  void debug(String const &message) override;
+        // Interface implementation
+        //
 
-  /// Adds an info message to the list.
-  void info(String const &message) override;
+        /// Adds a debug message to the list.
+        void debug(String const& message) override;
 
-  /// Adds a warning message to the list.
-  void warning(String const &message) override;
+        /// Adds an info message to the list.
+        void info(String const& message) override;
 
-  /// Adds an error message to the list.
-  void error(String const &message) override;
+        /// Adds a warning message to the list.
+        void warning(String const& message) override;
 
-  /// Adds an internal error message to the list.
-  void internalError(String const &message) override;
+        /// Adds an error message to the list.
+        void error(String const& message) override;
 
-  /// Function that allows to set the current location.
-  void setLocation(String const &name, int64_t line, int64_t col) override;
+        /// Adds an internal error message to the list.
+        void internalError(String const& message) override;
 
-  /// Sets the value of the LLVM instruction causing the issue.
-  void setLlvmHint(String const &value) override;
+        /// Function that allows to set the current location.
+        void setLocation(String const& name, int64_t line, int64_t col) override;
 
-  /// Sets the value of the frontend instruction causing the issue.
-  void setFrontendHint(String const &value) override;
+        /// Sets the value of the LLVM instruction causing the issue.
+        void setLlvmHint(String const& value) override;
 
-  /// Accessor to the messages
-  Messages const &messages() const;
+        /// Sets the value of the frontend instruction causing the issue.
+        void setFrontendHint(String const& value) override;
 
-private:
-  Location current_location_{};  ///< Holds current location.
-  Messages messages_;            ///< All messages emitted.
-};
+        /// Accessor to the messages
+        Messages const& messages() const;
 
-}  // namespace quantum
-}  // namespace microsoft
+      private:
+        Location current_location_{}; ///< Holds current location.
+        Messages messages_;           ///< All messages emitted.
+    };
+
+} // namespace quantum
+} // namespace microsoft
