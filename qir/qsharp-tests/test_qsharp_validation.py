@@ -73,3 +73,9 @@ def test_qsharp_reduction(test_name, request):
 
         assert validate_circuit(test_name, "base", project.qir_filename, [
                                 "--unroll-loops", "--always-inline", "--apply"])
+        assert validate_circuit(test_name, "base", project.qir_filename, [
+                                "--unroll-loops", "--apply"])
+        assert validate_circuit(test_name, "base", project.qir_filename, [
+                                "--always-inline", "--apply"])
+        assert validate_circuit(test_name, "base", project.qir_filename, [
+                                "--apply"])
