@@ -604,6 +604,7 @@
 // Licensed under the MIT License.
 
 #include &quot;Logging/ILogger.hpp&quot;
+#include &quot;Logging/SourceLocation.hpp&quot;
 
 #include &lt;vector&gt;
 
@@ -615,13 +616,10 @@ namespace quantum
     class LogCollection : public ILogger
     {
       public:
-        struct Location
+        struct Location : public SourceLocation
         {
-            String   name{};
-            uint64_t row{0};
-            uint64_t col{0};
-            String   llvm_hint;
-            String   frontend_hint;
+            String llvm_hint;
+            String frontend_hint;
         };
 
         enum class Type
@@ -655,7 +653,7 @@ namespace quantum
 
         void internalError(String const&amp; message) override;
 
-        void setLocation(String const&amp; name, uint64_t row, uint64_t col) override;
+        void setLocation(String const&amp; name, int64_t line, int64_t col) override;
 
         void setLlvmHint(String const&amp; value) override;
 
@@ -672,7 +670,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 March 2022 at 13:16:37 UTC</p></div>
+<p>Updated on 28 March 2022 at 14:28:28 UTC</p></div>
 </div>
           </div>
         </main>

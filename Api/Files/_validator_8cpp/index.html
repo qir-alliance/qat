@@ -741,9 +741,9 @@ namespace quantum
 
                 fout &lt;&lt; &quot;    \&quot;message\&quot;: \&quot;&quot; &lt;&lt; message.message &lt;&lt; &quot;\&quot;,\n&quot;;
                 fout &lt;&lt; &quot;    \&quot;location\&quot;: {\n&quot;;
-                fout &lt;&lt; &quot;      \&quot;filename\&quot;: \&quot;&quot; &lt;&lt; message.location.name &lt;&lt; &quot;\&quot;,\n&quot;;
-                fout &lt;&lt; &quot;      \&quot;row\&quot;: &quot; &lt;&lt; message.location.row &lt;&lt; &quot;,\n&quot;;
-                fout &lt;&lt; &quot;      \&quot;col\&quot;: &quot; &lt;&lt; message.location.col &lt;&lt; &quot;,\n&quot;;
+                fout &lt;&lt; &quot;      \&quot;filename\&quot;: \&quot;&quot; &lt;&lt; static_cast&lt;std::string&gt;(message.location.name) &lt;&lt; &quot;\&quot;,\n&quot;;
+                fout &lt;&lt; &quot;      \&quot;line\&quot;: &quot; &lt;&lt; message.location.line &lt;&lt; &quot;,\n&quot;;
+                fout &lt;&lt; &quot;      \&quot;column\&quot;: &quot; &lt;&lt; message.location.column &lt;&lt; &quot;,\n&quot;;
                 fout &lt;&lt; &quot;      \&quot;llvm_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\&quot;,\n&quot;;
                 fout &lt;&lt; &quot;      \&quot;frontend_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.frontend_hint &lt;&lt; &quot;\&quot;\n&quot;;
                 fout &lt;&lt; &quot;    }\n&quot;;
@@ -760,7 +760,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 March 2022 at 13:16:37 UTC</p></div>
+<p>Updated on 28 March 2022 at 14:28:28 UTC</p></div>
 </div>
           </div>
         </main>

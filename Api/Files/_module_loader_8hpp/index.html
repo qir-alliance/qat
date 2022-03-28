@@ -595,6 +595,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include &quot;ModuleLoader/DebugInfoUpdater.hpp&quot;
+#include &quot;ModuleLoader/InstructionLocationTable.hpp&quot;
 #include &quot;QatTypes/QatTypes.hpp&quot;
 #include &quot;RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp&quot;
 
@@ -612,10 +614,12 @@ namespace quantum
         using Linker       = llvm::Linker;
         using SMDiagnostic = llvm::SMDiagnostic;
 
-        explicit ModuleLoader(Module* final_module)
+        explicit ModuleLoader(Module* final_module, bool strip_existing_debug = false, bool add_ir_debug_info = false)
           : final_module_{final_module}
           , linker_{*final_module}
-
+          , instruction_location_table_{InstructionLocationTable::create()}
+          , strip_existing_debug_{strip_existing_debug}
+          , add_ir_debug_info_{add_ir_debug_info}
         {
         }
 
@@ -631,33 +635,74 @@ namespace quantum
             return !linker_.linkInModule(std::move(module), Linker::Flags::None);
         }
 
-        bool addIrFile(String const&amp; filename)
+        bool addIrFile(String input_file)
         {
+            // Converting to absolute path
+            llvm::SmallVector&lt;char, 256&gt; input_vec;
+            input_vec.assign(input_file.begin(), input_file.end());
+            llvm::sys::fs::make_absolute(input_vec);
+            input_file.resize(input_vec.size());
+            uint64_t i = 0;
+            for (auto&amp; s : input_vec)
+            {
+                input_file[i++] = s;
+            }
 
             // Loading module
             SMDiagnostic            err;
-            std::unique_ptr&lt;Module&gt; module = llvm::parseIRFile(filename, err, final_module_-&gt;getContext());
+            std::unique_ptr&lt;Module&gt; module = llvm::parseIRFile(input_file, err, final_module_-&gt;getContext());
             if (!module)
             {
-                llvm::errs() &lt;&lt; &quot;Failed to load &quot; &lt;&lt; filename &lt;&lt; &quot;\n&quot;;
+                llvm::errs() &lt;&lt; &quot;Failed to load &quot; &lt;&lt; input_file &lt;&lt; &quot;\n&quot;;
                 return false;
+            }
+
+            // Registering all debug info
+            auto directory = llvm::sys::path::parent_path(input_file);
+            auto filename  = llvm::sys::path::filename(input_file);
+
+            instruction_location_table_-&gt;registerModule(input_file, module.get());
+
+            if (strip_existing_debug_)
+            {
+                // Debug info
+                llvm::StripDebugInfo(*module.get());
+            }
+
+            // Whether or not to override debug symbols
+            if (add_ir_debug_info_)
+            {
+
+                // Adding debug versioning
+                auto debug_version_key = &quot;Debug Info Version&quot;;
+                if (!module-&gt;getModuleFlag(debug_version_key))
+                {
+                    module-&gt;addModuleFlag(llvm::Module::Warning, debug_version_key, llvm::DEBUG_METADATA_VERSION);
+                }
+
+                // Update with debug information
+                DebugInfoUpdater updater(instruction_location_table_, *module.get(), directory, filename);
+                updater.update();
             }
 
             // Transforming module
             SingleModuleTransformation transformation;
             if (!transformation.apply(module.get()))
             {
-                llvm::errs() &lt;&lt; &quot;Failed to transform &quot; &lt;&lt; filename &lt;&lt; &quot;\n&quot;;
+                llvm::errs() &lt;&lt; &quot;Failed to transform &quot; &lt;&lt; input_file &lt;&lt; &quot;\n&quot;;
                 return false;
             }
 
             // Linking
-            return addModule(std::move(module), filename);
+            return addModule(std::move(module), input_file);
         }
 
       private:
-        Module* final_module_;
-        Linker  linker_;
+        Module*                     final_module_;
+        Linker                      linker_;
+        InstructionLocationTablePtr instruction_location_table_{nullptr};
+        bool                        strip_existing_debug_{false};
+        bool                        add_ir_debug_info_{false};
 
         // Single Module Transformation
         //
@@ -726,7 +771,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 March 2022 at 13:16:37 UTC</p></div>
+<p>Updated on 28 March 2022 at 14:28:28 UTC</p></div>
 </div>
           </div>
         </main>

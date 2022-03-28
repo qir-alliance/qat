@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d33/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_instruction_location_table_8hpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      microsoft::quantum::@33 - QAT Documentation
+      ModuleLoader/InstructionLocationTable.hpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -220,7 +220,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../"
+                  href="../../Namespaces/"
                   >Namespaces</a
                 >
                 <a
@@ -230,7 +230,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../../Files/"
+                  href="../"
                   >Files</a
                 >
                 <a
@@ -403,7 +403,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../"
+                href="../../Namespaces/"
                 >Namespaces</a
               >
               <a
@@ -413,7 +413,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../../Files/"
+                href="../"
                 >Files</a
               >
               <a
@@ -553,14 +553,105 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> microsoft::quantum::@33 </span>
+        <span class="text-center"> ModuleLoader/InstructionLocationTable.hpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantum33">microsoft::quantum::@33</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="moduleloaderinstructionlocationtablehpp">ModuleLoader/InstructionLocationTable.hpp</h1>
+<h2 id="namespaces">Namespaces</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="classes">Classes</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_instruction_location_table/">microsoft::quantum::InstructionLocationTable</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="source-code">Source code</h2>
+<pre><code class="language-cpp">#pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include &quot;Logging/SourceLocation.hpp&quot;
+
+#include &quot;Llvm/Llvm.hpp&quot;
+
+#include &lt;memory&gt;
+#include &lt;unordered_map&gt;
+
+namespace microsoft
+{
+namespace quantum
+{
+
+    class InstructionLocationTable : public llvm::AssemblyAnnotationWriter
+    {
+      public:
+        using Position = SourceLocation;
+
+        using StringRef                   = llvm::StringRef;
+        using BasicBlock                  = llvm::BasicBlock;
+        using Function                    = llvm::Function;
+        using Value                       = llvm::Value;
+        using Module                      = llvm::Module;
+        using Positions                   = std::unordered_map&lt;Value const*, Position&gt;;
+        using InstructionLocationTablePtr = std::shared_ptr&lt;InstructionLocationTable&gt;;
+
+        static InstructionLocationTablePtr create();
+
+        // Debug table interface
+        //
+
+        Position getPosition(Value const* value) const;
+
+        void registerModule(StringRef const&amp; filename, Module const* module);
+
+      protected:
+        // AssemblyAnnotationWriter interface implementations
+        //
+
+        void printInfoComment(Value const&amp; value, llvm::formatted_raw_ostream&amp; outstream) override;
+        void emitBasicBlockStartAnnot(BasicBlock const* block, llvm::formatted_raw_ostream&amp; outstream) override;
+        void emitFunctionAnnot(Function const* function, llvm::formatted_raw_ostream&amp; outstream) override;
+
+      private:
+        Positions positions_;
+        StringRef current_filename_{};
+
+        InstructionLocationTable() = default;
+        void registerValuePosition(Value const* value, llvm::formatted_raw_ostream&amp; outstream);
+    };
+
+    using InstructionLocationTablePtr = InstructionLocationTable::InstructionLocationTablePtr;
+
+} // namespace quantum
+} // namespace microsoft
+</code></pre>
 <hr />
-<p>Updated on 28 March 2022 at 13:16:37 UTC</p></div>
+<p>Updated on 28 March 2022 at 14:28:28 UTC</p></div>
 </div>
           </div>
         </main>

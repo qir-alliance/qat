@@ -563,6 +563,7 @@
   <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumlogcollectionlocation">microsoft::quantum::LogCollection::Location</h1>
 <p>Class that holds the location of where the incident happened. </p>
 <p><code>#include &lt;Logging/LogCollection.hpp&gt;</code></p>
+<p>Inherits from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></p>
 <h2 id="public-attributes">Public Attributes</h2>
 <table>
 <thead>
@@ -574,18 +575,6 @@
 <tbody>
 <tr>
 <td>String</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_location/#variable-name">name</a></strong></td>
-</tr>
-<tr>
-<td>uint64_t</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_location/#variable-row">row</a></strong></td>
-</tr>
-<tr>
-<td>uint64_t</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_location/#variable-col">col</a></strong></td>
-</tr>
-<tr>
-<td>String</td>
 <td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_location/#variable-llvm_hint">llvm_hint</a></strong></td>
 </tr>
 <tr>
@@ -594,16 +583,69 @@
 </tr>
 </tbody>
 </table>
+<h2 id="additional-inherited-members">Additional inherited members</h2>
+<p><strong>Public Types inherited from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enum</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#enum-@1">@1</a></strong> { INVALID_POSITION}</td>
+</tr>
+<tr>
+<td>using llvm::StringRef</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#using-stringref">StringRef</a></strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Public Functions inherited from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#function-operator-bool">operator bool</a></strong>() const</td>
+</tr>
+<tr>
+<td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#function-invalidposition">InvalidPosition</a></strong>()</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Public Attributes inherited from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StringRef</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#variable-name">name</a></strong></td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#variable-line">line</a></strong></td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#variable-column">column</a></strong></td>
+</tr>
+</tbody>
+</table>
 <h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
-<h3 id="variable-name">variable name</h3>
-<pre><code class="language-cpp">String name {};
-</code></pre>
-<h3 id="variable-row">variable row</h3>
-<pre><code class="language-cpp">uint64_t row {0};
-</code></pre>
-<h3 id="variable-col">variable col</h3>
-<pre><code class="language-cpp">uint64_t col {0};
-</code></pre>
 <h3 id="variable-llvm_hint">variable llvm_hint</h3>
 <pre><code class="language-cpp">String llvm_hint;
 </code></pre>
@@ -611,7 +653,7 @@
 <pre><code class="language-cpp">String frontend_hint;
 </code></pre>
 <hr />
-<p>Updated on 28 March 2022 at 13:16:37 UTC</p></div>
+<p>Updated on 28 March 2022 at 14:28:28 UTC</p></div>
 </div>
           </div>
         </main>

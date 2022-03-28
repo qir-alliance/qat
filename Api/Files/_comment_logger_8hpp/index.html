@@ -620,23 +620,23 @@ namespace quantum
 
         void internalError(String const&amp; message) override;
 
-        void setLocation(String const&amp; name, uint64_t row, uint64_t col) override;
+        void setLocation(String const&amp; name, int64_t line, int64_t col) override;
 
         void setLlvmHint(String const&amp; value) override;
 
         void setFrontendHint(String const&amp; value) override;
 
       private:
-        String   location_name_{&quot;&quot;};
-        uint64_t location_row_{0};
-        uint64_t location_col_{0};
+        String  location_name_{&quot;&quot;};
+        int64_t location_row_{0};
+        int64_t location_col_{0};
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 March 2022 at 13:16:37 UTC</p></div>
+<p>Updated on 28 March 2022 at 14:28:28 UTC</p></div>
 </div>
           </div>
         </main>

@@ -76,6 +76,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_debug_info_updater/</loc>
+         <lastmod>2022-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_factory_configuration/</loc>
          <lastmod>2022-03-28</lastmod>
          <changefreq>daily</changefreq>
@@ -117,6 +122,11 @@
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype/</loc>
+         <lastmod>2022-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_instruction_location_table/</loc>
          <lastmod>2022-03-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -276,6 +286,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/</loc>
+         <lastmod>2022-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_validation_pass_1_1_location/</loc>
          <lastmod>2022-03-28</lastmod>
          <changefreq>daily</changefreq>
@@ -396,6 +411,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_debug_info_updater_8cpp/</loc>
+         <lastmod>2022-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_debug_info_updater_8hpp/</loc>
+         <lastmod>2022-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_factory_8cpp/</loc>
          <lastmod>2022-03-28</lastmod>
          <changefreq>daily</changefreq>
@@ -482,6 +507,16 @@
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_instruction_8hpp/</loc>
+         <lastmod>2022-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_instruction_location_table_8cpp/</loc>
+         <lastmod>2022-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_instruction_location_table_8hpp/</loc>
          <lastmod>2022-03-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -617,6 +652,11 @@
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_select_8cpp/</loc>
+         <lastmod>2022-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_source_location_8hpp/</loc>
          <lastmod>2022-03-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -811,7 +851,7 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d33/</loc>
+         <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d38/</loc>
          <lastmod>2022-03-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -867,6 +907,11 @@
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/UserGuide/BuildingLibrary/</loc>
+         <lastmod>2022-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/UserGuide/DebuggingIR/</loc>
          <lastmod>2022-03-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
