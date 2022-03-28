@@ -49,8 +49,23 @@ namespace quantum
     void InstructionLocationTable::registerModule(StringRef const& filename, Module const* module)
     {
         current_filename_ = filename;
+
+        // Using a null output stream to traverse the DAG and keep track of the position of the cursor.
+        // The cursor position is subsequently recorded as instructions are registered.
         llvm::raw_null_ostream dummy{};
         module->print(dummy, this);
+    }
+
+    void InstructionLocationTable::registerValuePosition(Value const* value, llvm::formatted_raw_ostream& outstream)
+    {
+        outstream.flush();
+
+        Position pos;
+        pos.name   = current_filename_;
+        pos.line   = outstream.getLine() + 1;
+        pos.column = outstream.getColumn() + 1;
+
+        positions_.insert(std::make_pair(value, std::move(pos)));
     }
 
 } // namespace quantum

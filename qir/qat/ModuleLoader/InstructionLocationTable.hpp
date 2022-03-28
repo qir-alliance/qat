@@ -52,17 +52,7 @@ namespace quantum
         StringRef current_filename_{};
 
         InstructionLocationTable() = default;
-        void registerValuePosition(Value const* value, llvm::formatted_raw_ostream& outstream)
-        {
-            outstream.flush();
-
-            Position pos;
-            pos.name   = current_filename_;
-            pos.line   = outstream.getLine() + 1;
-            pos.column = outstream.getColumn() + 1;
-
-            positions_.insert(std::make_pair(value, std::move(pos)));
-        }
+        void registerValuePosition(Value const* value, llvm::formatted_raw_ostream& outstream);
     };
 
     using InstructionLocationTablePtr = InstructionLocationTable::InstructionLocationTablePtr;
