@@ -639,7 +639,71 @@ namespace quantum
             profile.allowed_pointer_types_   = {&quot;i8*&quot;,    &quot;i16*&quot;,    &quot;i32*&quot;,    &quot;i64*&quot;,
                                               &quot;Qubit*&quot;, &quot;Qubit**&quot;, &quot;Result*&quot;, &quot;Result**&quot;};
         }
-        else if (name == &quot;quantinuum&quot; || name == &quot;rigetti&quot; || name == &quot;qci&quot;)
+        else if (name == &quot;provider_4bf9&quot;)
+        {
+            // Supported LLVM instructions: ret, br, phi, add, sub, mul, fadd, fsub, fmul, ashr, and, or,
+            // xor, icmp eq, icmp ne, icmp ugt, icmp uge, icmp ult, icmp ule, fcmp oeq, fcmp ogt, fcmp oge,
+            // fcmp olt, fcmp ole, fcmp one
+            profile.allow_internal_calls_     = false;
+            profile.allowlist_external_calls_ = true;
+            profile.allowlist_opcodes_        = true;
+            profile.opcodes_                  = Set{&quot;ret&quot;,  &quot;br&quot;,   &quot;phi&quot;, &quot;add&quot;, &quot;sub&quot;, &quot;mul&quot;,  &quot;fadd&quot;, &quot;fsub&quot;,
+                                   &quot;fmul&quot;, &quot;ashr&quot;, &quot;and&quot;, &quot;or&quot;,  &quot;xor&quot;, &quot;icmp&quot;, &quot;fcmp&quot;};
+            profile.external_calls_           = Set{
+                &quot;__quantum__qis__cnot__body&quot;,        &quot;__quantum__qis__cz__body&quot;,
+                &quot;__quantum__qis__swap__body&quot;,        &quot;__quantum__qis__h__body&quot;,
+                &quot;__quantum__qis__s__body&quot;,           &quot;__quantum__qis__s__adj&quot;,
+                &quot;__quantum__qis__t__body&quot;,           &quot;__quantum__qis__t__adj&quot;,
+                &quot;__quantum__qis__x__body&quot;,           &quot;__quantum__qis__y__body&quot;,
+                &quot;__quantum__qis__z__body&quot;,           &quot;__quantum__qis__rx__body&quot;,
+                &quot;__quantum__qis__ry__body&quot;,          &quot;__quantum__qis__rz__body&quot;,
+                &quot;__quantum__qis__reset__body&quot;,       &quot;__quantum__qis__mz__body&quot;,
+                &quot;__quantum__qis__read_result__body&quot;,
+
+            };
+            profile.allowlist_pointer_types_ = true;
+            profile.allowed_pointer_types_   = {&quot;Qubit*&quot;, &quot;Result*&quot;};
+        }
+
+        else if (name == &quot;provider_7ee0&quot;)
+        {
+            // Supported LLVM types: i64 (integer), double, i1 (bool), %Qubit*, %Result*.
+            // Supported LLVM instructions: ret, br, add, sub, mul, and, or, xor, lshr, shl, icmp eq, icmp
+            // ne, icmp ule, icmp ult, icmp uge, icmp ugt. Restrictions: rotation convention using radians,
+            // ret should appear only once (no conditional early return). Supported quantum intrinsic
+            // functions:
+            // __quantum__qis__cnot__body(%Qubit*, %Qubit*),
+            // __quantum__qis__cz__body(%Qubit*, %Qubit*),
+            // __quantum__qis__h__body(%Qubit*),
+            // __quantum__qis__s__body(%Qubit*),
+            // __quantum__qis__s__adj(%Qubit*),
+            // __quantum__qis__t__body(%Qubit*),
+            // __quantum__qis__t__adj(%Qubit*),
+            // __quantum__qis__x__body(%Qubit*),
+            // __quantum__qis__y__body(%Qubit*),
+            // __quantum__qis__z__body(%Qubit*),
+            // __quantum__qis__rx__body(double, %Qubit*),
+            // __quantum__qis__ry__body(double, %Qubit*),
+            // __quantum__qis__rz__body(double, %Qubit*),
+            // __quantum__qis__reset__body(%Qubit*),
+            // __quantum__qis__mz__body(%Qubit*, %Result*),
+            // %i1 __quantum__qis__read_result__body(%Result*)
+
+            profile.allow_internal_calls_     = false;
+            profile.allowlist_external_calls_ = true;
+            profile.allowlist_opcodes_        = true;
+            profile.opcodes_ = Set{&quot;ret&quot;, &quot;br&quot;, &quot;add&quot;, &quot;sub&quot;, &quot;mul&quot;, &quot;and&quot;, &quot;or&quot;, &quot;xor&quot;, &quot;lshr&quot;, &quot;shl&quot;, &quot;icmp&quot;};
+            profile.external_calls_ =
+                Set{&quot;__quantum__qis__cnot__body&quot;,       &quot;__quantum__qis__cz__body&quot;,    &quot;__quantum__qis__h__body&quot;,
+                    &quot;__quantum__qis__s__body&quot;,          &quot;__quantum__qis__s__adj&quot;,      &quot;__quantum__qis__t__body&quot;,
+                    &quot;__quantum__qis__t__adj&quot;,           &quot;__quantum__qis__x__body&quot;,     &quot;__quantum__qis__y__body&quot;,
+                    &quot;__quantum__qis__z__body&quot;,          &quot;__quantum__qis__rx__body&quot;,    &quot;__quantum__qis__ry__body&quot;,
+                    &quot;__quantum__qis__rz__body&quot;,         &quot;__quantum__qis__reset__body&quot;, &quot;__quantum__qis__mz__body&quot;,
+                    &quot;__quantum__qis__read_result__body&quot;};
+            profile.allowlist_pointer_types_ = true;
+            profile.allowed_pointer_types_   = {&quot;Qubit*&quot;, &quot;Result*&quot;};
+        }
+        else if (name == &quot;provider_b340&quot;)
         {
             profile = ValidationPassConfiguration::fromProfileName(&quot;base&quot;);
             // profile.addAllowedExternalCall(&quot;__quantum__qis__[name]&quot;)
@@ -713,7 +777,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 24 March 2022 at 09:43:00 UTC</p></div>
+<p>Updated on 28 March 2022 at 13:16:37 UTC</p></div>
 </div>
           </div>
         </main>
