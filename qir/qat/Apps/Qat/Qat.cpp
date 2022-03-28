@@ -214,7 +214,7 @@ int main(int argc, char** argv)
         init();
 
         auto         module = std::make_unique<Module>("qat-link", context);
-        ModuleLoader loader(module.get());
+        ModuleLoader loader(module.get(), config.stripExistingDebugInfo(), config.addIrDebugInfo());
 
         for (auto const& arg : parser.arguments())
         {

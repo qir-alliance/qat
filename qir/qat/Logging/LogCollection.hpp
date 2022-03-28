@@ -3,6 +3,7 @@
 // Licensed under the MIT License.
 
 #include "Logging/ILogger.hpp"
+#include "Logging/SourceLocation.hpp"
 
 #include <vector>
 
@@ -17,13 +18,10 @@ namespace quantum
     {
       public:
         /// Class that holds the location of where the incident happened.
-        struct Location
+        struct Location : public SourceLocation
         {
-            String   name{};
-            uint64_t row{0};
-            uint64_t col{0};
-            String   llvm_hint;
-            String   frontend_hint;
+            String llvm_hint;
+            String frontend_hint;
         };
 
         /// Enum description what type of information we are conveying.
@@ -66,7 +64,7 @@ namespace quantum
         void internalError(String const& message) override;
 
         /// Function that allows to set the current location.
-        void setLocation(String const& name, uint64_t row, uint64_t col) override;
+        void setLocation(String const& name, int64_t line, int64_t col) override;
 
         /// Sets the value of the LLVM instruction causing the issue.
         void setLlvmHint(String const& value) override;

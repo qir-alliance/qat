@@ -42,10 +42,10 @@ namespace quantum
                      << message << "\n";
     }
 
-    void CommentLogger::setLocation(String const& name, uint64_t row, uint64_t col)
+    void CommentLogger::setLocation(String const& name, int64_t line, int64_t col)
     {
         location_name_ = name;
-        location_row_  = row;
+        location_row_  = line;
         location_col_  = col;
     }
 
