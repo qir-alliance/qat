@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "ModuleLoader/DebugInfoUpdater.hpp"
-#include "ModuleLoader/DebugTable.hpp"
+#include "ModuleLoader/InstructionLocationTable.hpp"
 
 #include "Llvm/Llvm.hpp"
 
@@ -12,10 +12,10 @@ namespace quantum
 {
 
     DebugInfoUpdater::DebugInfoUpdater(
-        DebugTablePtr const& debug_info,
-        Module&              module,
-        StringRef const&     directory,
-        StringRef const&     filename)
+        InstructionLocationTablePtr const& debug_info,
+        Module&                            module,
+        StringRef const&                   directory,
+        StringRef const&                   filename)
       : debug_info_{debug_info}
       , module_{module}
       , builder_(module)

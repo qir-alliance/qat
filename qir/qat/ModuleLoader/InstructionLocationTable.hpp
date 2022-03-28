@@ -14,21 +14,21 @@ namespace microsoft
 namespace quantum
 {
 
-    class DebugTable : public llvm::AssemblyAnnotationWriter
+    class InstructionLocationTable : public llvm::AssemblyAnnotationWriter
     {
       public:
         using Position = SourceLocation;
 
-        using StringRef     = llvm::StringRef;
-        using BasicBlock    = llvm::BasicBlock;
-        using Function      = llvm::Function;
-        using Value         = llvm::Value;
-        using Module        = llvm::Module;
-        using Positions     = std::unordered_map<Value const*, Position>;
-        using DebugTablePtr = std::shared_ptr<DebugTable>;
+        using StringRef                   = llvm::StringRef;
+        using BasicBlock                  = llvm::BasicBlock;
+        using Function                    = llvm::Function;
+        using Value                       = llvm::Value;
+        using Module                      = llvm::Module;
+        using Positions                   = std::unordered_map<Value const*, Position>;
+        using InstructionLocationTablePtr = std::shared_ptr<InstructionLocationTable>;
 
         /// Pointer constructor for the debug table.
-        static DebugTablePtr create();
+        static InstructionLocationTablePtr create();
 
         // Debug table interface
         //
@@ -51,7 +51,7 @@ namespace quantum
         Positions positions_;
         StringRef current_filename_{};
 
-        DebugTable() = default;
+        InstructionLocationTable() = default;
         void registerValuePosition(Value const* value, llvm::formatted_raw_ostream& outstream)
         {
             outstream.flush();
@@ -65,7 +65,7 @@ namespace quantum
         }
     };
 
-    using DebugTablePtr = DebugTable::DebugTablePtr;
+    using InstructionLocationTablePtr = InstructionLocationTable::InstructionLocationTablePtr;
 
 } // namespace quantum
 } // namespace microsoft

@@ -3,7 +3,7 @@
 // Licensed under the MIT License.
 
 #include "ModuleLoader/DebugInfoUpdater.hpp"
-#include "ModuleLoader/DebugTable.hpp"
+#include "ModuleLoader/InstructionLocationTable.hpp"
 #include "QatTypes/QatTypes.hpp"
 #include "RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp"
 
@@ -24,7 +24,7 @@ namespace quantum
         explicit ModuleLoader(Module* final_module, bool strip_existing_debug = false, bool add_ir_debug_info = false)
           : final_module_{final_module}
           , linker_{*final_module}
-          , debug_table_{DebugTable::create()}
+          , instruction_location_table_{InstructionLocationTable::create()}
           , strip_existing_debug_{strip_existing_debug}
           , add_ir_debug_info_{add_ir_debug_info}
         {
@@ -68,7 +68,7 @@ namespace quantum
             auto directory = llvm::sys::path::parent_path(input_file);
             auto filename  = llvm::sys::path::filename(input_file);
 
-            debug_table_->registerModule(input_file, module.get());
+            instruction_location_table_->registerModule(input_file, module.get());
 
             if (strip_existing_debug_)
             {
@@ -88,7 +88,7 @@ namespace quantum
                 }
 
                 // Update with debug information
-                DebugInfoUpdater updater(debug_table_, *module.get(), directory, filename);
+                DebugInfoUpdater updater(instruction_location_table_, *module.get(), directory, filename);
                 updater.update();
             }
 
@@ -105,11 +105,11 @@ namespace quantum
         }
 
       private:
-        Module*       final_module_;
-        Linker        linker_;
-        DebugTablePtr debug_table_{nullptr};
-        bool          strip_existing_debug_{false};
-        bool          add_ir_debug_info_{false};
+        Module*                     final_module_;
+        Linker                      linker_;
+        InstructionLocationTablePtr instruction_location_table_{nullptr};
+        bool                        strip_existing_debug_{false};
+        bool                        add_ir_debug_info_{false};
 
         // Single Module Transformation
         //

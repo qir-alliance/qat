@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ModuleLoader/DebugTable.hpp"
+#include "ModuleLoader/InstructionLocationTable.hpp"
 
 #include "Llvm/Llvm.hpp"
 
@@ -23,10 +23,10 @@ namespace quantum
         using StringRef   = llvm::StringRef;
 
         DebugInfoUpdater(
-            DebugTablePtr const& debug_info,
-            Module&              module,
-            StringRef const&     directory,
-            StringRef const&     filename);
+            InstructionLocationTablePtr const& debug_info,
+            Module&                            module,
+            StringRef const&                   directory,
+            StringRef const&                   filename);
 
         void update();
 
@@ -48,10 +48,10 @@ namespace quantum
         DIType*                 getType(llvm::Type* type);
 
       public:
-        DebugTablePtr         debug_info_{nullptr};
-        llvm::Module&         module_;
-        llvm::DIBuilder       builder_;
-        llvm::DebugInfoFinder finder_{};
+        InstructionLocationTablePtr debug_info_{nullptr};
+        llvm::Module&               module_;
+        llvm::DIBuilder             builder_;
+        llvm::DebugInfoFinder       finder_{};
 
         llvm::DICompileUnit* compile_unit_;
         llvm::DIFile*        file_unit_;
