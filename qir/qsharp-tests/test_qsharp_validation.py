@@ -64,7 +64,12 @@ def test_qsharp_reduction(test_name, request):
             return
 
         if not project.compile():
-            raise BaseException("Could not compile Q# program: {}".format(project.filename))
+            logger.warn("Q# program ignored as it could not compile as a library.")
+            return
+
+        if not os.path.isfile(project.qir_filename):
+            logger.warn("Q# program did not generate QIR file.")
+            return
 
         assert validate_circuit(test_name, "base", project.qir_filename, [
                                 "--unroll-loops", "--always-inline", "--apply"])

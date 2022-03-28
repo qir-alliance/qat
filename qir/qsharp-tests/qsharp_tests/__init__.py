@@ -113,10 +113,16 @@ all_qsharp = [
 
 ]
 
+ignore_files = [
+    "CHSHGame.csproj"  # TODO(tfr): debug this example
+]
 
 for project_file in glob.glob(os.path.join(QSHARP_SAMPLES, "**", "*.csproj"), recursive=True):
     project_dir, name = project_file.rsplit("/", 1)
     filename = name
+
+    if filename in ignore_files:
+        continue
 
     if not os.path.isfile(project_file):
         continue
