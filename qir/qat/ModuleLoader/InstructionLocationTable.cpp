@@ -65,7 +65,7 @@ namespace quantum
         pos.line   = outstream.getLine() + 1;
         pos.column = outstream.getColumn() + 1;
 
-        positions_.insert(std::make_pair(value, std::move(pos)));
+        positions_.insert(std::make_pair(value, pos));
     }
 
 } // namespace quantum
