@@ -2,6 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "ModuleLoader/DebugInfoUpdater.hpp"
+#include "ModuleLoader/InstructionLocationTable.hpp"
 #include "QatTypes/QatTypes.hpp"
 #include "RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp"
 
@@ -19,10 +21,12 @@ namespace quantum
         using Linker       = llvm::Linker;
         using SMDiagnostic = llvm::SMDiagnostic;
 
-        explicit ModuleLoader(Module* final_module)
+        explicit ModuleLoader(Module* final_module, bool strip_existing_debug = false, bool add_ir_debug_info = false)
           : final_module_{final_module}
           , linker_{*final_module}
-
+          , instruction_location_table_{InstructionLocationTable::create()}
+          , strip_existing_debug_{strip_existing_debug}
+          , add_ir_debug_info_{add_ir_debug_info}
         {
         }
 
@@ -38,33 +42,74 @@ namespace quantum
             return !linker_.linkInModule(std::move(module), Linker::Flags::None);
         }
 
-        bool addIrFile(String const& filename)
+        bool addIrFile(String input_file)
         {
+            // Converting to absolute path
+            llvm::SmallVector<char, 256> input_vec;
+            input_vec.assign(input_file.begin(), input_file.end());
+            llvm::sys::fs::make_absolute(input_vec);
+            input_file.resize(input_vec.size());
+            uint64_t i = 0;
+            for (auto& s : input_vec)
+            {
+                input_file[i++] = s;
+            }
 
             // Loading module
             SMDiagnostic            err;
-            std::unique_ptr<Module> module = llvm::parseIRFile(filename, err, final_module_->getContext());
+            std::unique_ptr<Module> module = llvm::parseIRFile(input_file, err, final_module_->getContext());
             if (!module)
             {
-                llvm::errs() << "Failed to load " << filename << "\n";
+                llvm::errs() << "Failed to load " << input_file << "\n";
                 return false;
+            }
+
+            // Registering all debug info
+            auto directory = llvm::sys::path::parent_path(input_file);
+            auto filename  = llvm::sys::path::filename(input_file);
+
+            instruction_location_table_->registerModule(input_file, module.get());
+
+            if (strip_existing_debug_)
+            {
+                // Debug info
+                llvm::StripDebugInfo(*module.get());
+            }
+
+            // Whether or not to override debug symbols
+            if (add_ir_debug_info_)
+            {
+
+                // Adding debug versioning
+                auto debug_version_key = "Debug Info Version";
+                if (!module->getModuleFlag(debug_version_key))
+                {
+                    module->addModuleFlag(llvm::Module::Warning, debug_version_key, llvm::DEBUG_METADATA_VERSION);
+                }
+
+                // Update with debug information
+                DebugInfoUpdater updater(instruction_location_table_, *module.get(), directory, filename);
+                updater.update();
             }
 
             // Transforming module
             SingleModuleTransformation transformation;
             if (!transformation.apply(module.get()))
             {
-                llvm::errs() << "Failed to transform " << filename << "\n";
+                llvm::errs() << "Failed to transform " << input_file << "\n";
                 return false;
             }
 
             // Linking
-            return addModule(std::move(module), filename);
+            return addModule(std::move(module), input_file);
         }
 
       private:
-        Module* final_module_;
-        Linker  linker_;
+        Module*                     final_module_;
+        Linker                      linker_;
+        InstructionLocationTablePtr instruction_location_table_{nullptr};
+        bool                        strip_existing_debug_{false};
+        bool                        add_ir_debug_info_{false};
 
         // Single Module Transformation
         //

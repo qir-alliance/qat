@@ -1,8 +1,7 @@
 # Quick start
 
-Before we start, you will need to build the QAT tool. To this end, enter
-`src/Passes` from the root of the repository and create a new folder `Debug`.
-Then run `cmake ..` and use `make` to build `qat`:
+Before we start, you will need to build the QAT tool. To this end, create a new
+folder `Debug`. Then run `cmake ..` and use `make` to build `qat`:
 
 ```sh
 mkdir Debug

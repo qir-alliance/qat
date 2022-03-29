@@ -163,9 +163,9 @@ namespace quantum
 
                 fout << "    \"message\": \"" << message.message << "\",\n";
                 fout << "    \"location\": {\n";
-                fout << "      \"filename\": \"" << message.location.name << "\",\n";
-                fout << "      \"row\": " << message.location.row << ",\n";
-                fout << "      \"col\": " << message.location.col << ",\n";
+                fout << "      \"filename\": \"" << static_cast<std::string>(message.location.name) << "\",\n";
+                fout << "      \"line\": " << message.location.line << ",\n";
+                fout << "      \"column\": " << message.location.column << ",\n";
                 fout << "      \"llvm_hint\": \"" << message.location.llvm_hint << "\",\n";
                 fout << "      \"frontend_hint\": \"" << message.location.frontend_hint << "\"\n";
                 fout << "    }\n";

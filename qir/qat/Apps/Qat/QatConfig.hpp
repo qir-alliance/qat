@@ -63,6 +63,12 @@ namespace quantum
         /// Whether or not experimental features are enabled.
         bool isExperimental() const;
 
+        /// Whether or not to annotate IR with debug info.
+        bool addIrDebugInfo() const;
+
+        /// Whether or not to strip existing debug info.
+        bool stripExistingDebugInfo() const;
+
       private:
         // Variables to be bound to the configuration manager
         //
@@ -76,6 +82,8 @@ namespace quantum
         bool   opt2_{false};
         bool   opt3_{false};
         bool   verify_module_{false};
+        bool   add_ir_debug_info_{false};
+        bool   strip_existing_debug_{false};
 
         bool debug_{false};
         bool experimental_{false};

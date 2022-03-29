@@ -49,8 +49,8 @@ namespace quantum
         /// Sets the current location. Importantly, the location can be set independently of the reported
         /// messages. This allows one to update the location upon updating the cursor position without
         /// having to worry about keeping a copy of the location to pass when reporting messages.
-        /// The most obvious case of this is file path (name) with a line and character (row, col).
-        virtual void setLocation(String const& name, uint64_t row, uint64_t col) = 0;
+        /// The most obvious case of this is file path (name) with a line and character (line, col).
+        virtual void setLocation(String const& name, int64_t line, int64_t col) = 0;
 
         /// Sets the value of the LLVM instruction causing the issue.
         virtual void setLlvmHint(String const& value) = 0;

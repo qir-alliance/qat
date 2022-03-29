@@ -36,11 +36,11 @@ namespace quantum
         messages_.push_back({Type::InternalError, current_location_, message});
     }
 
-    void LogCollection::setLocation(String const& name, uint64_t row, uint64_t col)
+    void LogCollection::setLocation(String const& name, int64_t line, int64_t col)
     {
-        current_location_.name = name;
-        current_location_.row  = row;
-        current_location_.col  = col;
+        current_location_.name   = name;
+        current_location_.line   = line;
+        current_location_.column = col;
     }
 
     LogCollection::Messages const& LogCollection::messages() const

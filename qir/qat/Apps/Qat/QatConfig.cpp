@@ -29,6 +29,8 @@ namespace quantum
 
         config.addParameter(experimental_, "experimental", "Enables experimental features.");
         config.addParameter(dump_config_, "dump-config", "Prints the configuration to the standard output.");
+        config.addParameter(add_ir_debug_info_, "add-ir-debug", "Annotates the IR with debug information.");
+        config.addParameter(strip_existing_debug_, "strip-existing-dbg", "Strips existing debug symbols.");
     }
 
     bool QatConfig::shouldGenerate() const
@@ -94,6 +96,16 @@ namespace quantum
     bool QatConfig::isExperimental() const
     {
         return experimental_;
+    }
+
+    bool QatConfig::addIrDebugInfo() const
+    {
+        return add_ir_debug_info_;
+    }
+
+    bool QatConfig::stripExistingDebugInfo() const
+    {
+        return strip_existing_debug_;
     }
 
 } // namespace quantum
