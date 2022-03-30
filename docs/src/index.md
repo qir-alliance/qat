@@ -10,6 +10,8 @@ User guide:
 - [Building the library](UserGuide/BuildingLibrary.md)
 - [Introduction to profiles](UserGuide/IntroductionToProfiles.md)
 - Applying a profile (TODO(issue-8): Yet to be written)
+- [Debugging IR](UserGuide/DebuggingIR.md)
+- [QAT: Assumptions and Restrictions](UserGuide/GoalsAndAssumptions.md)
 
 Developer guide:
 
