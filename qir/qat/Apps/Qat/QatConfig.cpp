@@ -111,5 +111,9 @@ namespace quantum
         return strip_existing_debug_;
     }
 
+    String const& QatConfig::saveReportTo() const
+    {
+        return save_report_to_;
+    }
 } // namespace quantum
 } // namespace microsoft

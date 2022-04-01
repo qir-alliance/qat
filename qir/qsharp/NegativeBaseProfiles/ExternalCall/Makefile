@@ -2,7 +2,7 @@ all: qat-qsharp
 
 qat-qsharp: QSharpVersion/qir/Example.ll
 	opt -O3 -S QSharpVersion/qir/Example.ll > optimized.ll
-	${QAT_BINARY} -S --validate --save-validation-report validation.json  --profile base optimized.ll || echo "failed!"
+	${QAT_BINARY} -S --validate --save-logs logs.json  --profile base optimized.ll || echo "failed!"
 	@echo "Validation for SimpleLoop finished"
 	
 	
