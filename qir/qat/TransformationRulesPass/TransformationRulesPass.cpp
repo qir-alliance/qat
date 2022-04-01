@@ -285,7 +285,10 @@ namespace quantum
 
         if (depth_ >= config_.maxRecursion())
         {
-            llvm::outs() << "Exceed max recursion of " << config_.maxRecursion() << "\n";
+            requireLogger();
+            logger_->setLocationFromValue(&function);
+            logger_->error("Exceed max recursion of " + std::to_string(config_.maxRecursion()));
+
             return false;
         }
         ++depth_;
@@ -480,26 +483,32 @@ namespace quantum
 
             if (instr1 == nullptr)
             {
-                llvm::outs() << "; WARNING: cannot deal with non-instruction replacements\n";
+                requireLogger();
+                logger_->setLocationFromValue(nullptr);
+                logger_->internalError("Cannot replace with non-instruction replacements");
                 continue;
             }
 
             // Checking if by accident the same instruction was added
             if (already_removed.find(instr1) != already_removed.end())
             {
-                throw std::runtime_error("Instruction was already removed.");
+                requireLogger();
+                logger_->setLocationFromValue(instr1);
+                logger_->internalError("Instruction was already removed.");
+                continue;
             }
             already_removed.insert(instr1);
 
-            // Cheking if have a replacement for the instruction
+            // Checking if have a replacement for the instruction
             if (it->second != nullptr)
             {
                 // ... if so, we just replace it,
                 auto instr2 = llvm::dyn_cast<llvm::Instruction>(it->second);
                 if (instr2 == nullptr)
                 {
-                    llvm::outs() << "; WARNING: cannot replace instruction with non-instruction\n";
-                    llvm::outs() << "; " << *it->second << "\n";
+                    requireLogger();
+                    logger_->setLocationFromValue(instr1);
+                    logger_->internalError("Attempt to replace with non-instruction value. This is not allowed.");
                     continue;
                 }
                 llvm::ReplaceInstWithInst(instr1, instr2);
@@ -609,17 +618,9 @@ namespace quantum
             }
             else
             {
-                llvm::errs() << "; INTERNAL ERROR: block was supposed to be unused.\n";
-                for (auto& x : block->uses())
-                {
-                    llvm::errs() << " -x " << *x << "\n";
-                }
-                for (auto x : block->users())
-                {
-                    llvm::errs() << " -: " << *x << "\n";
-                }
-                llvm::errs() << " ----- \n";
-                llvm::errs() << *block << "\n";
+                requireLogger();
+                logger_->setLocationFromValue(block);
+                logger_->internalError("Block was supposed to be unused");
             }
         }
 
@@ -714,7 +715,10 @@ namespace quantum
                     // Sanity check
                     if (already_visited.find(value) != already_visited.end())
                     {
-                        throw std::runtime_error("Already visited");
+                        requireLogger();
+                        logger_->setLocationFromValue(value);
+                        logger_->internalError("Instruction was visited twice while applying rule to function.");
+                        return value;
                     }
                     already_visited.insert(value);
 
@@ -863,6 +867,14 @@ namespace quantum
     bool TransformationRulesPass::isRequired()
     {
         return true;
+    }
+
+    void TransformationRulesPass::requireLogger()
+    {
+        if (logger_ == nullptr)
+        {
+            throw std::runtime_error("TransformationRulesPass does not have a logger, but need it to emit messages.");
+        }
     }
 
 } // namespace quantum

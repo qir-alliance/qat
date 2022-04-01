@@ -2,9 +2,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "Logging/SourceLocation.hpp"
 #include "QatTypes/QatTypes.hpp"
 
+#include "Llvm/Llvm.hpp"
+
 #include <cstdint>
+#include <iostream>
 #include <string>
 
 namespace microsoft
@@ -17,6 +21,37 @@ namespace quantum
     class ILogger
     {
       public:
+        using Value            = llvm::Value;
+        using LocationResolver = std::function<SourceLocation(Value const*)>;
+
+        /// Class that holds the location of where the incident happened.
+        struct Location : public SourceLocation
+        {
+            String llvm_hint;
+            String frontend_hint;
+        };
+
+        /// Enum description what type of information we are conveying.
+        enum class Type
+        {
+            Debug,
+            Info,
+            Warning,
+            Error,
+            InternalError,
+        };
+
+        /// Struct to hold a message together with its type and location
+        struct Message
+        {
+            Type     type;
+            Location location;
+            String   message;
+        };
+
+        /// List of messages defined as alias.
+        using Messages = std::vector<Message>;
+
         // Constructors, copy and move operators and destructors
         //
 
@@ -50,13 +85,29 @@ namespace quantum
         /// messages. This allows one to update the location upon updating the cursor position without
         /// having to worry about keeping a copy of the location to pass when reporting messages.
         /// The most obvious case of this is file path (name) with a line and character (line, col).
-        virtual void setLocation(String const& name, int64_t line, int64_t col) = 0;
+        virtual void setLocation(SourceLocation const& location) = 0;
 
         /// Sets the value of the LLVM instruction causing the issue.
         virtual void setLlvmHint(String const& value) = 0;
 
         /// Sets the value of the frontend instruction causing the issue.
         virtual void setFrontendHint(String const& value) = 0;
+
+        virtual Messages const& messages() const;
+
+        virtual void dump(std::ostream& fout) const;
+
+        // Location integration with LLVM
+        //
+
+        /// Sets the logger position based on a LLVM value.
+        void setLocationFromValue(llvm::Value const* value);
+
+        /// Sets a resolver which that translates a LLVM value into a position in the source
+        void setLocationResolver(LocationResolver const& r);
+
+      private:
+        LocationResolver location_resolver_{nullptr};
     };
 
 } // namespace quantum

@@ -147,7 +147,7 @@ namespace quantum
                         if (!locs.empty())
                         {
                             auto const& loc = locs.front();
-                            logger_->setLocation(loc.filename, loc.row, loc.col);
+                            logger_->setLocation({loc.filename, loc.row, loc.col});
                             logger_->setLlvmHint(loc.llvm_hint);
                         }
                     }
@@ -201,7 +201,7 @@ namespace quantum
                         if (!locs.empty())
                         {
                             auto const& loc = locs.front();
-                            logger_->setLocation(loc.filename, loc.row, loc.col);
+                            logger_->setLocation({loc.filename, loc.row, loc.col});
                             logger_->setLlvmHint(loc.llvm_hint);
                         }
                     }
@@ -238,7 +238,7 @@ namespace quantum
                         if (!locs.empty())
                         {
                             auto const& loc = locs.front();
-                            logger_->setLocation(loc.filename, loc.row, loc.col);
+                            logger_->setLocation({loc.filename, loc.row, loc.col});
                             logger_->setLlvmHint(loc.llvm_hint);
                         }
                     }

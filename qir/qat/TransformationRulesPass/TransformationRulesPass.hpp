@@ -178,6 +178,9 @@ namespace quantum
         void setLogger(ILoggerPtr logger);
 
       private:
+        /// Helper function that throws an error if the logger is null.
+        void requireLogger();
+
         // Pass configuration
         //
 

@@ -36,14 +36,14 @@ namespace quantum
         messages_.push_back({Type::InternalError, current_location_, message});
     }
 
-    void LogCollection::setLocation(String const& name, int64_t line, int64_t col)
+    void LogCollection::setLocation(SourceLocation const& loc)
     {
-        current_location_.name   = name;
-        current_location_.line   = line;
-        current_location_.column = col;
+        current_location_.name   = loc.name;
+        current_location_.line   = loc.line;
+        current_location_.column = loc.column;
     }
 
-    LogCollection::Messages const& LogCollection::messages() const
+    ILogger::Messages const& LogCollection::messages() const
     {
         return messages_;
     }
@@ -58,6 +58,53 @@ namespace quantum
     {
         current_location_.frontend_hint = value;
         trim(current_location_.frontend_hint);
+    }
+
+    void LogCollection::dump(std::ostream& fout) const
+    {
+        bool not_first = false;
+
+        fout << "[";
+        for (auto& message : messages_)
+        {
+            if (not_first)
+            {
+                fout << ",";
+            }
+            fout << "\n";
+            fout << "  {\n";
+
+            switch (message.type)
+            {
+            case LogCollection::Type::Debug:
+                fout << "    \"type\": \"debug\",\n";
+                break;
+            case LogCollection::Type::Info:
+                fout << "    \"type\": \"info\",\n";
+                break;
+            case LogCollection::Type::Warning:
+                fout << "    \"type\": \"warning\",\n";
+                break;
+            case LogCollection::Type::Error:
+                fout << "    \"type\": \"error\",\n";
+                break;
+            case LogCollection::Type::InternalError:
+                fout << "    \"type\": \"internalError\",\n";
+                break;
+            }
+
+            fout << "    \"message\": \"" << message.message << "\",\n";
+            fout << "    \"location\": {\n";
+            fout << "      \"filename\": \"" << static_cast<std::string>(message.location.name) << "\",\n";
+            fout << "      \"line\": " << message.location.line << ",\n";
+            fout << "      \"column\": " << message.location.column << ",\n";
+            fout << "      \"llvm_hint\": \"" << message.location.llvm_hint << "\",\n";
+            fout << "      \"frontend_hint\": \"" << message.location.frontend_hint << "\"\n";
+            fout << "    }\n";
+            fout << "  }";
+            not_first = true;
+        }
+        fout << "\n]\n";
     }
 
 } // namespace quantum

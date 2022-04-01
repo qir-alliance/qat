@@ -3,6 +3,7 @@
 // Licensed under the MIT License.
 
 #include "Logging/ILogger.hpp"
+#include "Logging/SourceLocation.hpp"
 
 #include <vector>
 
@@ -34,7 +35,7 @@ namespace quantum
         void internalError(String const& message) override;
 
         /// Function that allows to set the current location.
-        void setLocation(String const& name, int64_t line, int64_t col) override;
+        void setLocation(SourceLocation const& loc) override;
 
         /// Sets the value of the LLVM instruction causing the issue.
         void setLlvmHint(String const& value) override;
@@ -43,9 +44,7 @@ namespace quantum
         void setFrontendHint(String const& value) override;
 
       private:
-        String  location_name_{""};
-        int64_t location_row_{0};
-        int64_t location_col_{0};
+        SourceLocation location_;
     };
 
 } // namespace quantum

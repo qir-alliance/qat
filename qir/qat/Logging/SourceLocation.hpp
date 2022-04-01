@@ -2,8 +2,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
-
 #include "Llvm/Llvm.hpp"
 
 #include <vector>

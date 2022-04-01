@@ -31,9 +31,8 @@ namespace quantum
         bool allowlistOpcodes() const;
         bool allowlistExternalCalls() const;
 
-        String const& saveReportTo() const;
-        bool          allowlistPointerTypes() const;
-        Set const&    allowedPointerTypes() const;
+        bool       allowlistPointerTypes() const;
+        Set const& allowedPointerTypes() const;
 
         String profileName() const;
 
@@ -47,8 +46,6 @@ namespace quantum
         Set opcodes_{};
         Set external_calls_{};
         Set allowed_pointer_types_{};
-
-        String save_report_to_{""};
 
         bool allowlist_opcodes_{true};
         bool allowlist_external_calls_{true};

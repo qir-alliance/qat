@@ -12,11 +12,13 @@ namespace quantum
 
     Profile::Profile(
         String const&        name,
+        ILoggerPtr           logger,
         bool                 debug,
         llvm::TargetMachine* target_machine,
         AllocationManagerPtr qubit_allocation_manager,
         AllocationManagerPtr result_allocation_manager)
       : name_{name}
+      , logger_{logger}
       , loop_analysis_manager_{debug}
       , function_analysis_manager_{debug}
       , gscc_analysis_manager_{debug}
@@ -25,7 +27,7 @@ namespace quantum
       , standard_instrumentations_{std::make_unique<llvm::StandardInstrumentations>()}
       , qubit_allocation_manager_{std::move(qubit_allocation_manager)}
       , result_allocation_manager_{std::move(result_allocation_manager)}
-      , validator_{std::make_unique<Validator>(ValidationPassConfiguration(), false, debug)}
+      , validator_{std::make_unique<Validator>(ValidationPassConfiguration(), logger, debug)}
     {
 
         bool verify_each_pass = false;

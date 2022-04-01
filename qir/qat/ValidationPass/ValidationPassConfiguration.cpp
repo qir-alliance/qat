@@ -15,8 +15,6 @@ namespace quantum
         config.setSectionName("Validation configuration", "");
         config.addParameter(
             allow_internal_calls_, "allow-internal-calls", "Whether or not internal calls are allowed.");
-        config.addParameter(
-            save_report_to_, "save-validation-report", "Saves the validation report to specified filename.");
     }
 
     String ValidationPassConfiguration::profileName() const
@@ -163,11 +161,6 @@ namespace quantum
     bool ValidationPassConfiguration::allowlistExternalCalls() const
     {
         return allowlist_external_calls_;
-    }
-
-    String const& ValidationPassConfiguration::saveReportTo() const
-    {
-        return save_report_to_;
     }
 
     bool ValidationPassConfiguration::allowlistPointerTypes() const

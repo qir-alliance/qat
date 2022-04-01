@@ -66,6 +66,9 @@ namespace quantum
         /// Whether or not to annotate IR with debug info.
         bool addIrDebugInfo() const;
 
+        /// Filename to which the log messages are saved to
+        String const& saveReportTo() const;
+
         /// Whether or not to strip existing debug info.
         bool stripExistingDebugInfo() const;
 
@@ -84,6 +87,8 @@ namespace quantum
         bool   verify_module_{false};
         bool   add_ir_debug_info_{false};
         bool   strip_existing_debug_{false};
+
+        String save_report_to_{""};
 
         bool debug_{false};
         bool experimental_{false};
