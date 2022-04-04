@@ -74,8 +74,6 @@ namespace quantum
         llvm::ModuleAnalysisManager& moduleAnalysisManager();
 
       private:
-        void saveReportToFileIfNeeded();
-
         // LLVM logic to run the passes
         //
 
@@ -89,7 +87,6 @@ namespace quantum
         llvm::ModulePassManager module_pass_manager_{};
 
         ILoggerPtr logger_{nullptr}; ///< Logger to keep track of errors and warnings occurring.
-        String     save_to_filename_{""};
     };
 
 } // namespace quantum

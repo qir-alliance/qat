@@ -38,7 +38,7 @@ namespace quantum
         pass_builder_->crossRegisterProxies(
             loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
 
-        // Checking if we need to save the log to a file
+        // Checking if we need to use provided logger or install one
         if (logger_)
         {
             module_pass_manager_.addPass(ValidationPass(cfg, logger_));
@@ -62,7 +62,6 @@ namespace quantum
                 logger_->error("Fatal error: Invalid IR.");
             }
 
-            saveReportToFileIfNeeded();
             return false;
         }
 
@@ -77,11 +76,9 @@ namespace quantum
                 logger_->error("Fatal error: " + static_cast<std::string>(e.what()));
             }
 
-            saveReportToFileIfNeeded();
             return false;
         }
 
-        saveReportToFileIfNeeded();
         return true;
     }
 
@@ -113,14 +110,6 @@ namespace quantum
     Validator::ILoggerPtr Validator::logger() const
     {
         return logger_;
-    }
-
-    void Validator::saveReportToFileIfNeeded()
-    {
-        if (!save_to_filename_.empty() && logger_)
-        {
-            // TODO: Move to logger functionality
-        }
     }
 
 } // namespace quantum
