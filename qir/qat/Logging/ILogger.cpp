@@ -4,6 +4,8 @@
 #include "Logging/ILogger.hpp"
 
 #include <cstdint>
+#include <fstream>
+#include <iostream>
 #include <string>
 
 namespace microsoft
@@ -12,6 +14,8 @@ namespace quantum
 {
     ILogger::~ILogger()
     {
+        // Ensuring that the captured function is deleted to release
+        // shared memory.
         location_resolver_ = nullptr;
     }
 
@@ -34,7 +38,7 @@ namespace quantum
         throw std::runtime_error("messages() is not supported by logger.");
     }
 
-    void ILogger::dump(std::ostream& fout) const
+    void ILogger::dump(std::ostream& out) const
     {
         throw std::runtime_error("dump() is not supported by logger.");
     }

@@ -8,7 +8,7 @@
 #include "Llvm/Llvm.hpp"
 
 #include <cstdint>
-#include <iostream>
+#include <fstream>
 #include <string>
 
 namespace microsoft
@@ -95,7 +95,7 @@ namespace quantum
 
         virtual Messages const& messages() const;
 
-        virtual void dump(std::ostream& fout) const;
+        virtual void dump(std::ostream& out) const;
 
         // Location integration with LLVM
         //

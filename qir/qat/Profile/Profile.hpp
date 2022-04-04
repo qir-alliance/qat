@@ -36,7 +36,7 @@ namespace quantum
 
         explicit Profile(
             String const&        name,
-            ILoggerPtr           logger,
+            ILoggerPtr const&    logger,
             bool                 debug,
             llvm::TargetMachine* target_machine            = nullptr,
             AllocationManagerPtr qubit_allocation_manager  = BasicAllocationManager::createNew(),

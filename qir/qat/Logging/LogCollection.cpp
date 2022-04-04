@@ -4,6 +4,8 @@
 #include "Logging/LogCollection.hpp"
 #include "Utils/Trim.hpp"
 
+#include <fstream>
+#include <iostream>
 #include <vector>
 
 namespace microsoft
@@ -60,51 +62,50 @@ namespace quantum
         trim(current_location_.frontend_hint);
     }
 
-    void LogCollection::dump(std::ostream& fout) const
+    void LogCollection::dump(std::ostream& out) const
     {
         bool not_first = false;
-
-        fout << "[";
+        out << "[";
         for (auto& message : messages_)
         {
             if (not_first)
             {
-                fout << ",";
+                out << ",";
             }
-            fout << "\n";
-            fout << "  {\n";
+            out << "\n";
+            out << "  {\n";
 
             switch (message.type)
             {
             case LogCollection::Type::Debug:
-                fout << "    \"type\": \"debug\",\n";
+                out << "    \"type\": \"debug\",\n";
                 break;
             case LogCollection::Type::Info:
-                fout << "    \"type\": \"info\",\n";
+                out << "    \"type\": \"info\",\n";
                 break;
             case LogCollection::Type::Warning:
-                fout << "    \"type\": \"warning\",\n";
+                out << "    \"type\": \"warning\",\n";
                 break;
             case LogCollection::Type::Error:
-                fout << "    \"type\": \"error\",\n";
+                out << "    \"type\": \"error\",\n";
                 break;
             case LogCollection::Type::InternalError:
-                fout << "    \"type\": \"internalError\",\n";
+                out << "    \"type\": \"internalError\",\n";
                 break;
             }
 
-            fout << "    \"message\": \"" << message.message << "\",\n";
-            fout << "    \"location\": {\n";
-            fout << "      \"filename\": \"" << static_cast<std::string>(message.location.name) << "\",\n";
-            fout << "      \"line\": " << message.location.line << ",\n";
-            fout << "      \"column\": " << message.location.column << ",\n";
-            fout << "      \"llvm_hint\": \"" << message.location.llvm_hint << "\",\n";
-            fout << "      \"frontend_hint\": \"" << message.location.frontend_hint << "\"\n";
-            fout << "    }\n";
-            fout << "  }";
+            out << "    \"message\": \"" << message.message << "\",\n";
+            out << "    \"location\": {\n";
+            out << "      \"filename\": \"" << static_cast<std::string>(message.location.name) << "\",\n";
+            out << "      \"line\": " << message.location.line << ",\n";
+            out << "      \"column\": " << message.location.column << ",\n";
+            out << "      \"llvm_hint\": \"" << message.location.llvm_hint << "\",\n";
+            out << "      \"frontend_hint\": \"" << message.location.frontend_hint << "\"\n";
+            out << "    }\n";
+            out << "  }";
             not_first = true;
         }
-        fout << "\n]\n";
+        out << "\n]\n";
     }
 
 } // namespace quantum

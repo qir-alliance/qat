@@ -146,12 +146,16 @@ int main(int argc, char** argv)
             "validation-configuration", ValidationPassConfiguration::fromProfileName(config.profile()));
 
         // Setting logger up
-        std::shared_ptr<ILogger> logger = std::make_shared<CommentLogger>();
+        std::shared_ptr<ILogger> logger{nullptr};
 
         // Updating logger based on whether we are dumping output
         if (!config.saveReportTo().empty())
         {
             logger = std::make_shared<LogCollection>();
+        }
+        else
+        {
+            logger = std::make_shared<CommentLogger>();
         }
 
         generator->setLogger(logger);
@@ -312,7 +316,7 @@ int main(int argc, char** argv)
         }
 
         // Saving output
-        if (!config.saveReportTo().empty())
+        if (logger && !config.saveReportTo().empty())
         {
             std::fstream fout(config.saveReportTo(), std::ios::out);
             logger->dump(fout);

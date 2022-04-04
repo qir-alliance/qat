@@ -48,7 +48,7 @@ namespace quantum
         Messages const& messages() const override;
 
         /// Enabling dumping collection to a file
-        void dump(std::ostream& fout) const override;
+        void dump(std::ostream& out) const override;
 
       private:
         Location current_location_{}; ///< Holds current location.
