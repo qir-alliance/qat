@@ -2,6 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "QatTypes/QatTypes.hpp"
+
 #include "Llvm/Llvm.hpp"
 
 #include <vector>
@@ -14,6 +16,14 @@ namespace quantum
     struct SourceLocation
     {
         using StringRef = llvm::StringRef;
+
+        SourceLocation() = default;
+        SourceLocation(String v_name, int64_t v_line, int64_t v_column)
+          : name{v_name}
+          , line{v_line}
+          , column{v_column}
+        {
+        }
 
         enum
         {
@@ -30,9 +40,9 @@ namespace quantum
             return {"", INVALID_POSITION, INVALID_POSITION};
         }
 
-        StringRef name{};
-        int64_t   line{0};
-        int64_t   column{0};
+        String  name{};
+        int64_t line{0};
+        int64_t column{0};
     };
 } // namespace quantum
 } // namespace microsoft

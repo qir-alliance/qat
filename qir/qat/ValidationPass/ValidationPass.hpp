@@ -24,15 +24,13 @@ namespace quantum
         using Instruction = llvm::Instruction;
         using Value       = llvm::Value;
         using ILoggerPtr  = std::shared_ptr<ILogger>;
+        using Location    = ILogger::Location;
+        using StringRef   = llvm::StringRef;
 
         // Construction and destruction configuration.
         //
 
-        explicit ValidationPass(ValidationPassConfiguration const& cfg, ILoggerPtr const& logger = nullptr)
-          : config_{cfg}
-          , logger_{logger}
-        {
-        }
+        explicit ValidationPass(ValidationPassConfiguration const& cfg, ILoggerPtr const& logger = nullptr);
 
         /// Copy construction is banned.
         ValidationPass(ValidationPass const&) = delete;
@@ -57,13 +55,6 @@ namespace quantum
         bool satisfyingExternalCallRequirements();
         bool satisfyingPointerRequirements();
 
-        struct Location
-        {
-            String   filename{""};
-            uint64_t row{0};
-            uint64_t col{0};
-            String   llvm_hint{""};
-        };
         using Locations = std::vector<Location>;
 
         ValidationPassConfiguration config_{};

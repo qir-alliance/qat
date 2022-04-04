@@ -43,5 +43,14 @@ namespace quantum
         throw std::runtime_error("dump() is not supported by logger.");
     }
 
+    SourceLocation ILogger::resolveLocation(llvm::Value const* value)
+    {
+        if (location_resolver_)
+        {
+            return location_resolver_(value);
+        }
+        return SourceLocation::InvalidPosition();
+    }
+
 } // namespace quantum
 } // namespace microsoft

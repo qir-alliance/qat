@@ -27,8 +27,33 @@ namespace quantum
         /// Class that holds the location of where the incident happened.
         struct Location : public SourceLocation
         {
-            String llvm_hint;
-            String frontend_hint;
+            Location() = default;
+            Location(SourceLocation const& source)
+              : SourceLocation(source)
+            {
+            }
+
+            Location(
+                String  v_name,
+                int64_t v_line,
+                int64_t v_column,
+                String  v_llvm_hint     = "",
+                String  v_frontend_hint = "")
+              : SourceLocation(v_name, v_line, v_column)
+              , llvm_hint{v_llvm_hint}
+              , frontend_hint{v_frontend_hint}
+            {
+            }
+
+            Location(Location const& source)
+              : SourceLocation(source)
+              , llvm_hint{source.llvm_hint}
+              , frontend_hint{source.frontend_hint}
+            {
+            }
+
+            String llvm_hint{""};
+            String frontend_hint{""};
         };
 
         /// Enum description what type of information we are conveying.
@@ -105,6 +130,9 @@ namespace quantum
 
         /// Sets a resolver which that translates a LLVM value into a position in the source
         void setLocationResolver(LocationResolver const& r);
+
+        /// Returns a source location from the value pointer (if possible)
+        SourceLocation resolveLocation(llvm::Value const* value);
 
       private:
         LocationResolver location_resolver_{nullptr};
