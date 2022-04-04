@@ -38,7 +38,7 @@ namespace quantum
         throw std::runtime_error("messages() is not supported by logger.");
     }
 
-    void ILogger::dump(std::ostream& out) const
+    void ILogger::dump(std::ostream& /*out*/) const
     {
         throw std::runtime_error("dump() is not supported by logger.");
     }
