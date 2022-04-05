@@ -57,7 +57,7 @@ similar mechanism that allows to activate or deactivate existing (and new) LLVM
 passes. We would thus need something like
 
 ```sh
-qat --always-inline --apply -S filename.ll
+qat --always-inline --profile base --apply -S filename.ll
 ```
 
 where `--apply` tells the tool to apply the profile and `-S` tells the tool to
@@ -65,7 +65,7 @@ emit human readable LLVM IR code. Furthermore, if the inline pass is provided as
 an external module, we would need to be able load it
 
 ```sh
-qat --always-inline --load path/to/lib.(dylib|so|dll) --apply -S filename.ll
+qat --always-inline --profile base --load path/to/lib.(dylib|so|dll) --apply -S filename.ll
 ```
 
 We note that from a developer point of view, the underlying code would also need
@@ -117,5 +117,38 @@ dynamic libraries. This allow third party to easily extend the tool to their
 needs while benefiting from the components that QAT ships with.
 
 ## Architecture description
+
+```text
+┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+                         User input
+└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┬ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+┌─────────────────────────────▼─────────────────────────────┐
+│            Configuration and paramater parser             │
+└─────────────┬───────────────────────────────┬─────────────┘
+┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
+│        LLVM (Q)IRs        │   │      Profile config       │
+└─────────────┬─────────────┘   └─────────────┬─────────────┘
+┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
+│       Module loader       │   │     Profile Generator     │
+└─────────────┬─────────────┘   └─────────────┬─────────────┘
+┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
+│       Single module       │   │          Profile          │
+│      transformations      │   └──────┬──────────────┬─────┘
+└─────────────┬─────────────┘   ┌──────▼─────┐ ┌──────▼─────┐
+┌─────────────▼─────────────┐   │            │ │            │
+│   Adding debug symbols    ├───▶ Generation ├─┼▶Validation ├─────┐
+└───────────────────────────┘   │            │ │            │     │
+                                └──────┬─────┘ └──────┬─────┘     │
+                                ┌──────▼──────────────▼─────┐     │
+                                │          Logger           │     │
+                                └───────────────────────────┘     │
+                                              │                   │
+                                              ▼                   ▼
+                                     ┌ ─ ─ ─ ─ ─ ─ ─ ─ ┐┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+                                       Standard error     Standard Output:
+                                     │    or file:     ││   Resulting IR    │
+                                          JSON Logs
+                                     └ ─ ─ ─ ─ ─ ─ ─ ─ ┘└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+```
 
 TODO(issue-9): Yet to be written
