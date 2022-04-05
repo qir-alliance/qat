@@ -25,6 +25,10 @@ RUN cd /src/ && \
       pip install -r requirements.txt && \
       chmod +x manage
 
+# Prettier
+RUN apt install -y nodejs npm
+RUN npm install -g prettier@2.2.1
+
 # running the build
 ENV CC=clang-11 \
   CXX=clang++-11 \
