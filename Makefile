@@ -21,6 +21,10 @@ linux-docker:
 linux-ci: linux-docker
 	docker run -it --rm -t qir-passes-ubuntu:latest ./manage runci
 
+format-in-docker: linux-docker
+	docker run -it --rm -v .:/src/ -t qir-passes-ubuntu:latest ./manage runci
+
+
 test-examples:
 	mkdir -p Debug
 	cd Debug && cmake .. && make qat
