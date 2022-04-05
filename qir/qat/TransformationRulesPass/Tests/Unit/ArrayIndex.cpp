@@ -79,6 +79,9 @@ quantum:                                          ; preds = %load
 
     ir_manip->applyProfile(profile);
 
-    EXPECT_TRUE(ir_manip->hasInstructionSequence(
-        {"tail call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 2 to %Qubit*))"}));
+    EXPECT_TRUE(
+        ir_manip->hasInstructionSequence(
+            {"tail call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 2 to %Qubit*))"}) ||
+        ir_manip->hasInstructionSequence({"tail call void @__quantum__qis__h__body(%Qubit* nonnull "
+                                          "inttoptr (i64 2 to %Qubit*))"}));
 }

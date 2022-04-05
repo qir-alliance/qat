@@ -245,6 +245,14 @@ namespace quantum
             [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
                 auto& fpm = ptr->functionPassManager();
 
+                if (cfg.eliminateConstants())
+                {
+                    fpm.addPass(llvm::InstCombinePass(1000));
+                    fpm.addPass(llvm::AggressiveInstCombinePass());
+                    fpm.addPass(llvm::SCCPPass());
+                    fpm.addPass(llvm::SimplifyCFGPass());
+                }
+
                 // Always inline
                 if (cfg.alwaysInline())
                 {
@@ -254,11 +262,6 @@ namespace quantum
                     mpm.addPass(std::move(inliner_pass));
                 }
 
-                fpm.addPass(llvm::InstCombinePass(1000));
-                fpm.addPass(llvm::AggressiveInstCombinePass());
-                fpm.addPass(llvm::SCCPPass());
-                fpm.addPass(llvm::SimplifyCFGPass());
-
                 if (cfg.eliminateMemory())
                 {
                     fpm.addPass(llvm::PromotePass());
@@ -266,7 +269,10 @@ namespace quantum
 
                 if (cfg.eliminateConstants())
                 {
+                    fpm.addPass(llvm::InstCombinePass(1000));
+                    fpm.addPass(llvm::AggressiveInstCombinePass());
                     fpm.addPass(llvm::SCCPPass());
+                    fpm.addPass(llvm::SimplifyCFGPass());
                 }
 
                 if (cfg.eliminateDeadCode())
