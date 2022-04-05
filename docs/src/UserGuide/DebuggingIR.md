@@ -129,7 +129,8 @@ the original source file.
 
 ## Mixing IR with runtime
 
-In this section we consider a slightly more complicated example where we want to debug an IR combined with a runtime. Our runtime looks as follows:
+In this section we consider a slightly more complicated example where we want to
+debug an IR combined with a runtime. Our runtime looks as follows:
 
 ```c++
 int foo();
@@ -151,7 +152,10 @@ int main()
 }
 ```
 
-As in the previous example, our IR will produce a segmentation fault. To ensure that we get a stack trace containing traces of both the runtime and the IR, we use a recursive function that alternates between using functionality in the runtime and the main IR itself:
+As in the previous example, our IR will produce a segmentation fault. To ensure
+that we get a stack trace containing traces of both the runtime and the IR, we
+use a recursive function that alternates between using functionality in the
+runtime and the main IR itself:
 
 ```c++
 int standard_recurse(int);
@@ -173,7 +177,8 @@ int ir_recurse(int n)
 }
 ```
 
-As in the previous example, we annotate `foo.ll` with debug information using QAT before creating the object file and linking:
+As in the previous example, we annotate `foo.ll` with debug information using
+QAT before creating the object file and linking:
 
 ```sh
   clang++ -c -g -o bin/runtime.o runtime.cpp
@@ -184,7 +189,8 @@ As in the previous example, we annotate `foo.ll` with debug information using QA
   clang++ -g bin/foo.dbg.o bin/runtime.o -o bin/qir_program
 ```
 
-Running the debugger, we can now execute the program and produce a stack trace as in the previous examples:
+Running the debugger, we can now execute the program and produce a stack trace
+as in the previous examples:
 
 ```
 Current executable set to '/path/to/test/bin/qir_program' (x86_64).
@@ -238,18 +244,27 @@ frame #1: 0x0000000100003efa qir_program`standard_recurse(n=0) at runtime.cpp:9:
 (lldb)
 ```
 
-We note how this incorporates traces from both `runtime.cpp` and `foo.ll` with exact line reference. In this way, it is possible to debug in a similar manner to what we are used to from classical computing.
+We note how this incorporates traces from both `runtime.cpp` and `foo.ll` with
+exact line reference. In this way, it is possible to debug in a similar manner
+to what we are used to from classical computing.
 
 ## Multi-IR projects
 
-Occasionally, we may want combine multiple IRs to produce one debuggable executable. We note that we can choose two paths: Either we link at the IR level, or we link at the object level. Unfortunately, LLVM does not produce adequate debug symbols when multiple compilation units are defined in the same IR. Hence, if we wish to follow the path of the former, we first need to combine the IRs and then add debug information with reference to the _one combined file_:
+Occasionally, we may want combine multiple IRs to produce one debuggable
+executable. We note that we can choose two paths: Either we link at the IR
+level, or we link at the object level. Unfortunately, LLVM does not produce
+adequate debug symbols when multiple compilation units are defined in the same
+IR. Hence, if we wish to follow the path of the former, we first need to combine
+the IRs and then add debug information with reference to the _one combined
+file_:
 
 ```sh
 qat -S foo.ll bar.ll > combined.ll
 qat -S --strip-existing-dbg  --add-ir-debug combined.ll > combined.dbg.ll
 ```
 
-However, this approach looses the information about the location of the original files `foo.ll` and `bar.ll`:
+However, this approach looses the information about the location of the original
+files `foo.ll` and `bar.ll`:
 
 ```lldb
   * thread #1, queue = 'com.apple.main-thread', stop reason = EXC_BAD_ACCESS (code=1, address=0x6d1a00c)
@@ -279,7 +294,10 @@ However, this approach looses the information about the location of the original
     frame #23: 0x000000010000d51e dyld`start + 462
 ```
 
-To keep information about the original files, we have to turn to the second approach where we create separate object files. This will prevent some optimisations such as inlining, but will ensure that we can trace locations in the individual files:
+To keep information about the original files, we have to turn to the second
+approach where we create separate object files. This will prevent some
+optimisations such as inlining, but will ensure that we can trace locations in
+the individual files:
 
 ```sh
   clang++ -c -S -emit-llvm foo.cpp
@@ -292,4 +310,5 @@ To keep information about the original files, we have to turn to the second appr
   clang++ -g bin/foo.dbg.o bin/bar.dbg.o -o bin/foo_bar_example
 ```
 
-The executable will now contain debug symbols referring to `foo.ll` and `bar.ll`.
+The executable will now contain debug symbols referring to `foo.ll` and
+`bar.ll`.
