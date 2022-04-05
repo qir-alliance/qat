@@ -22,7 +22,7 @@ linux-ci: linux-docker
 	docker run -it --rm -t qir-passes-ubuntu:latest ./manage runci
 
 format-in-docker: linux-docker
-	docker run -it --rm -v .:/src/ -t qir-passes-ubuntu:latest ./manage runci
+	docker run -it --rm -v .:/src/ -t qir-passes-ubuntu:latest ./manage stylecheck --fix-issues
 
 
 test-examples:
