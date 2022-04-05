@@ -64,22 +64,46 @@ tools and packages are used:
 - Python packages specified in `requirements.txt`
 - clang-format
 - clang-tidy
+- NodeJS & Prettier
 
 The installation process varies depending on the platform you use. The following
 subsections provide details on how to install these tools on each platform.
 
 ### On macOS
 
-TODO(issue-45): Create developer prerequisites for macOS in docs.
+To install LLVM version 11, we use the `brew` package `llvm@11` which will
+install the LLVM libraries alongside with Clang 11, Clang format and Clang Tidy:
+
+```sh
+brew install llvm@11
+```
+
+Python and NodeJS can also be installed using `brew`:
+
+```sh
+brew install python@3.9 node@16
+```
+
+After successful installation, you may need to update your environment variables
+to ensure that CMake will use the right version of Clang as well as the LLVM
+libraries:
+
+```sh
+export CC=clang-11
+export CXX=clang++-11
+export LDFLAGS="-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm@11/include"
+```
 
 ### On Ubuntu 20.04
 
-Installing the Clang tools on Ubuntu along with Python can be accomplished by
-running these commands:
+Installing the Clang tools on Ubuntu along with Python and NodeJS can be
+accomplished by running these commands:
 
 ```sh
 apt install clang-format-11 clang-tidy-11
 apt install python3 python3-pip
+apt install nodejs npm
 ```
 
 We recommend that you use version 11 of Clang in order to be consistent with the
@@ -97,8 +121,9 @@ export CXX=clang++-11
 Last but not least, we install the Python libraries that are required:
 
 ```sh
-      pip install -r requirements.txt
-      chmod +x manage
+pip install -r requirements.txt
+chmod +x manage
+npm install -g prettier@2.2.1
 ```
 
 As a result, the `manage` tool will be available for you to help you make sure
@@ -120,7 +145,17 @@ git submodule update --init --recursive
 
 ### Installing LLVM on macOS
 
-TODO(issue-45): Document installation process
+If you have previously installed the packages under
+[Developer prerequisites](#developer-prerequisites), you do not need to take any
+additional steps for macOS. If you are relying on the natively installed Clang,
+you may need to install the LLVM libraries:
+
+```sh
+brew install llvm@11
+```
+
+Additionally, you may need to update your `LDFLAGS` and `CPPFLAGS` for the
+toolchain to work properly.
 
 ### Installing LLVM on Ubuntu 20.04
 
@@ -140,6 +175,7 @@ From the root folder in the repository, create a build folder `Debug` and use
 CMake to build the executable:
 
 ```sh
+mkdir Debug
 cd Debug
 cmake ..
 make qat
