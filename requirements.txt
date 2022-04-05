@@ -1,5 +1,5 @@
 autopep8==1.6.0
-click==8.0.1
+click==7.1.2
 lit==12.0.1
 toml==0.10.2
 

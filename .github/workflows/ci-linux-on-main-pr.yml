@@ -67,6 +67,16 @@ jobs:
           CC: clang-11
           CXX: clang++-11
 
+      - name: "Running Q# tests"
+        run: |
+          git clone https://github.com/microsoft/Quantum.git
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
+          export QSHARP_SAMPLES=${PWD}/Quantum/samples    
+
+          pushd qir/qsharp-tests/
+          pip3 install --user pytest
+          pytest
+
       - name: "Running QIR tests"
         run: |
           mkdir -p Debug
