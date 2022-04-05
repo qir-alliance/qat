@@ -242,7 +242,7 @@ namespace quantum
             });
 
         registerAnonymousProfileComponent<LlvmPassesConfiguration>(
-            [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
                 auto& fpm = ptr->functionPassManager();
 
                 if (cfg.eliminateConstants())

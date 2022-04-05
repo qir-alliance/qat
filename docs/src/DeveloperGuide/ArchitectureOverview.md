@@ -199,10 +199,20 @@ figure whereas the pass execution is illustrated on the right hand-side:
                                                    └ ─ ─ ─ ─ ─ ─ ─ ┘
 ```
 
-We note that the figure does not contain a comprehensive list of passes that can
-be installed. Whether or not any of the listed passes is added to the pass
-managers is happening at the discretion of each of the components and is further
-subject to the configuration provided to these components. This means that
-depending on the profile configuration, the pass may perform one task or
-another. This is in particular true for the transformation pass which uses a set
-of rules to perform replacements in the IR.
+For each component available, QAT checks if the component is active and if it
+is, the components setup function is ran with its configuration class. This
+class can be configured from the command line or through the profile. We note
+that the figure does not contain a comprehensive list of passes that can be
+installed. Whether or not any of the listed passes is added to the pass managers
+is happening at the discretion of each of the components and is further subject
+to the configuration provided to these components. This means that depending on
+the profile configuration, the pass may perform one task or another. This is in
+particular true for the transformation pass which uses a set of rules to perform
+replacements in the IR.
+
+The transformation component is a highly configurable component that does
+replacements of pieces of the DAG in the IR with using a custom replacer
+function. The infrastructure is written such that it is possible to express a
+new pattern in just a couple of lines and the developer can focus on the
+replacement routine rather than the task of capturing the right segment of
+instructions.
