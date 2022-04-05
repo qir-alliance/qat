@@ -192,7 +192,7 @@ QAT before creating the object file and linking:
 Running the debugger, we can now execute the program and produce a stack trace
 as in the previous examples:
 
-```
+```lldb
 Current executable set to '/path/to/test/bin/qir_program' (x86_64).
 (lldb) r
 Process 54371 launched: '/path/to/test/bin/qir_program' (x86_64)
