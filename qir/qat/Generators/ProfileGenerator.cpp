@@ -30,7 +30,7 @@ namespace quantum
 
         // Creating profile
         // TODO(issue-12): Set target machine
-        Profile ret{name, debug, nullptr, qubit_allocation_manager, result_allocation_manager};
+        Profile ret{name, logger_, debug, nullptr, qubit_allocation_manager, result_allocation_manager};
 
         auto module_pass_manager = createGenerationModulePassManager(ret, optimization_level, debug);
 
@@ -51,7 +51,7 @@ namespace quantum
 
         // Creating validator
         auto validator =
-            std::make_unique<Validator>(configuration_manager_.get<ValidationPassConfiguration>(), false, debug);
+            std::make_unique<Validator>(configuration_manager_.get<ValidationPassConfiguration>(), logger_, debug);
 
         ret.setValidator(std::move(validator));
 
@@ -134,6 +134,7 @@ namespace quantum
     void ProfileGenerator::setupDefaultComponentPipeline()
     {
         using namespace llvm;
+        ILoggerPtr logger = logger_;
 
         registerProfileComponent<LlvmPassesConfiguration>(
             "llvm-optimization", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
@@ -227,7 +228,7 @@ namespace quantum
 
         registerProfileComponent<TransformationRulesPassConfiguration>(
             "transformation-rules",
-            [](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            [logger](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
                 auto& ret = ptr->modulePassManager();
 
                 // Defining the mapping
@@ -237,7 +238,9 @@ namespace quantum
                 factory.usingConfiguration(ptr->configurationManager().get<FactoryConfiguration>());
 
                 // Creating profile pass
-                ret.addPass(TransformationRulesPass(std::move(rule_set), cfg, &profile));
+                auto pass = TransformationRulesPass(std::move(rule_set), cfg, &profile);
+                pass.setLogger(logger);
+                ret.addPass(std::move(pass));
 
                 // TODO(issue-59): Move to a separate pass.
                 ret.addPass(createModuleToFunctionPassAdaptor(llvm::InstCombinePass(1000)));
@@ -250,16 +253,23 @@ namespace quantum
         // replicateProfileComponent("llvm-optimization");
 
         registerProfileComponent<GroupingPassConfiguration>(
-            "grouping", [](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            "grouping", [logger](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
                 if (cfg.circuitSeparation())
                 {
                     auto& mam = profile.moduleAnalysisManager();
-                    mam.registerPass([&] { return GroupingAnalysisPass(cfg); });
+                    mam.registerPass([&] { return GroupingAnalysisPass(cfg, logger); });
                     auto& ret = ptr->modulePassManager();
 
-                    ret.addPass(GroupingPass(cfg));
+                    auto pass = GroupingPass(cfg);
+                    pass.setLogger(logger);
+                    ret.addPass(std::move(pass));
                 }
             });
+    }
+
+    void ProfileGenerator::setLogger(ILoggerPtr const& logger)
+    {
+        logger_ = logger;
     }
 
 } // namespace quantum

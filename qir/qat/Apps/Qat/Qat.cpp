@@ -51,6 +51,7 @@
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "GroupingPass/GroupingPassConfiguration.hpp"
+#include "Logging/CommentLogger.hpp"
 #include "ModuleLoader/ModuleLoader.hpp"
 #include "Profile/Profile.hpp"
 #include "Rules/Factory.hpp"
@@ -64,6 +65,7 @@
 
 #include <dlfcn.h>
 
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <unordered_map>
@@ -116,6 +118,7 @@ void init()
 
 int main(int argc, char** argv)
 {
+    int ret = 0;
 
     try
     {
@@ -141,6 +144,21 @@ int main(int argc, char** argv)
         // Setting profile validation configuration
         configuration_manager.addConfig<ValidationPassConfiguration>(
             "validation-configuration", ValidationPassConfiguration::fromProfileName(config.profile()));
+
+        // Setting logger up
+        std::shared_ptr<ILogger> logger{nullptr};
+
+        // Updating logger based on whether we are dumping output
+        if (!config.saveReportTo().empty())
+        {
+            logger = std::make_shared<LogCollection>();
+        }
+        else
+        {
+            logger = std::make_shared<CommentLogger>();
+        }
+
+        generator->setLogger(logger);
 
         // Setting default component pipelines up
         generator->setupDefaultComponentPipeline();
@@ -231,6 +249,11 @@ int main(int argc, char** argv)
             exit(-1);
         }
 
+        // Making LLVM locations resolvable
+        auto location_table = loader.locationTable();
+        logger->setLocationResolver(
+            [location_table](llvm::Value const* val) { return location_table->getPosition(val); });
+
         // Getting the optimization level
         //
         auto optimization_level = llvm::PassBuilder::OptimizationLevel::O0;
@@ -274,29 +297,37 @@ int main(int argc, char** argv)
             llvm::WriteBitcodeToFile(*module, llvm::outs());
         }
 
-        if (config.verifyModule())
+        if (ret == 0 && config.verifyModule())
         {
             if (!profile.verify(*module))
             {
                 std::cerr << "IR is broken." << std::endl;
-                exit(-1);
+                ret = -1;
             }
         }
 
-        if (config.shouldValidate())
+        if (ret == 0 && config.shouldValidate())
         {
             if (!profile.validate(*module))
             {
                 std::cerr << "IR did not validate to the profile constraints." << std::endl;
-                exit(-1);
+                ret = -1;
             }
+        }
+
+        // Saving output
+        if (logger && !config.saveReportTo().empty())
+        {
+            std::fstream fout(config.saveReportTo(), std::ios::out);
+            logger->dump(fout);
+            fout.close();
         }
     }
     catch (std::exception const& e)
     {
         std::cerr << "An error occurred: " << e.what() << std::endl;
-        exit(-1);
+        ret = -1;
     }
 
-    return 0;
+    return ret;
 }

@@ -12,6 +12,13 @@ namespace microsoft
 {
 namespace quantum
 {
+
+    ValidationPass::ValidationPass(ValidationPassConfiguration const& cfg, ILoggerPtr const& logger)
+      : config_{cfg}
+      , logger_{logger}
+    {
+    }
+
     void ValidationPass::opcodeChecks(Instruction& instr)
     {
         auto opname = instr.getOpcodeName();
@@ -147,7 +154,7 @@ namespace quantum
                         if (!locs.empty())
                         {
                             auto const& loc = locs.front();
-                            logger_->setLocation(loc.filename, loc.row, loc.col);
+                            logger_->setLocation({loc.name, loc.line, loc.column});
                             logger_->setLlvmHint(loc.llvm_hint);
                         }
                     }
@@ -201,7 +208,7 @@ namespace quantum
                         if (!locs.empty())
                         {
                             auto const& loc = locs.front();
-                            logger_->setLocation(loc.filename, loc.row, loc.col);
+                            logger_->setLocation({loc.name, loc.line, loc.column});
                             logger_->setLlvmHint(loc.llvm_hint);
                         }
                     }
@@ -238,7 +245,7 @@ namespace quantum
                         if (!locs.empty())
                         {
                             auto const& loc = locs.front();
-                            logger_->setLocation(loc.filename, loc.row, loc.col);
+                            logger_->setLocation({loc.name, loc.line, loc.column});
                             logger_->setLlvmHint(loc.llvm_hint);
                         }
                     }
@@ -262,12 +269,13 @@ namespace quantum
             {
                 for (auto& instr : block)
                 {
-                    current_location_ = Location{};
+                    auto loc          = logger_->resolveLocation(&instr);
+                    current_location_ = Location{loc};
                     llvm::DebugLoc dl = instr.getDebugLoc();
                     if (dl)
                     {
                         current_location_ =
-                            Location{static_cast<String>(dl->getFilename()), dl->getLine(), dl->getColumn(), ""};
+                            Location{static_cast<String>(dl->getFilename()), dl->getLine(), dl->getColumn(), "", ""};
                     }
                     llvm::raw_string_ostream rso(current_location_.llvm_hint);
                     instr.print(rso);

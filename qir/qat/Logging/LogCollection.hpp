@@ -17,34 +17,6 @@ namespace quantum
     class LogCollection : public ILogger
     {
       public:
-        /// Class that holds the location of where the incident happened.
-        struct Location : public SourceLocation
-        {
-            String llvm_hint;
-            String frontend_hint;
-        };
-
-        /// Enum description what type of information we are conveying.
-        enum class Type
-        {
-            Debug,
-            Info,
-            Warning,
-            Error,
-            InternalError,
-        };
-
-        /// Struct to hold a message together with its type and location
-        struct Message
-        {
-            Type     type;
-            Location location;
-            String   message;
-        };
-
-        /// List of messages defined as alias.
-        using Messages = std::vector<Message>;
-
         // Interface implementation
         //
 
@@ -64,7 +36,7 @@ namespace quantum
         void internalError(String const& message) override;
 
         /// Function that allows to set the current location.
-        void setLocation(String const& name, int64_t line, int64_t col) override;
+        void setLocation(SourceLocation const& loc) override;
 
         /// Sets the value of the LLVM instruction causing the issue.
         void setLlvmHint(String const& value) override;
@@ -73,7 +45,10 @@ namespace quantum
         void setFrontendHint(String const& value) override;
 
         /// Accessor to the messages
-        Messages const& messages() const;
+        Messages const& messages() const override;
+
+        /// Enabling dumping collection to a file
+        void dump(std::ostream& out) const override;
 
       private:
         Location current_location_{}; ///< Holds current location.

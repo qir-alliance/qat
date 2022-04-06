@@ -31,6 +31,9 @@ namespace quantum
         config.addParameter(dump_config_, "dump-config", "Prints the configuration to the standard output.");
         config.addParameter(add_ir_debug_info_, "add-ir-debug", "Annotates the IR with debug information.");
         config.addParameter(strip_existing_debug_, "strip-existing-dbg", "Strips existing debug symbols.");
+
+        config.addParameter(
+            save_report_to_, "save-logs", "Saves the logs report to specified filename in JSON format.");
     }
 
     bool QatConfig::shouldGenerate() const
@@ -108,5 +111,9 @@ namespace quantum
         return strip_existing_debug_;
     }
 
+    String const& QatConfig::saveReportTo() const
+    {
+        return save_report_to_;
+    }
 } // namespace quantum
 } // namespace microsoft

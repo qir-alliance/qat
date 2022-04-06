@@ -29,11 +29,14 @@ namespace quantum
         /// Validator class used to check that an IR fulfils a given specification
         using ValidatorPtr = Validator::ValidatorPtr;
 
+        using ILoggerPtr = std::shared_ptr<ILogger>;
+
         // Constructors
         //
 
         explicit Profile(
             String const&        name,
+            ILoggerPtr const&    logger,
             bool                 debug,
             llvm::TargetMachine* target_machine            = nullptr,
             AllocationManagerPtr qubit_allocation_manager  = BasicAllocationManager::createNew(),
@@ -118,6 +121,8 @@ namespace quantum
 
         /// Name of the selected profile
         String name_{};
+
+        ILoggerPtr logger_{nullptr};
 
         // LLVM logic to run the passes
         //

@@ -61,7 +61,7 @@ namespace quantum
         outstream.flush();
 
         Position pos;
-        pos.name   = current_filename_;
+        pos.name   = static_cast<String>(current_filename_);
         pos.line   = outstream.getLine() + 1;
         pos.column = outstream.getColumn() + 1;
 

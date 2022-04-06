@@ -105,6 +105,9 @@ namespace quantum
         /// Whether or not this pass is required to run.
         static bool isRequired();
 
+        /// Sets the logger
+        void setLogger(ILoggerPtr logger);
+
       private:
         GroupingPassConfiguration config_{};
 

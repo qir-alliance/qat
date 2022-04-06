@@ -23,15 +23,15 @@ namespace quantum
     class Validator
     {
       public:
-        using ValidatorPtr      = std::unique_ptr<Validator>;
-        using LogColloectionPtr = std::shared_ptr<LogCollection>;
+        using ValidatorPtr = std::unique_ptr<Validator>;
+        using ILoggerPtr   = std::shared_ptr<ILogger>;
 
         // Constructors
         //
 
         explicit Validator(
             ValidationPassConfiguration const& cfg,
-            bool                               force_log_collection,
+            ILoggerPtr const&                  logger,
             bool                               debug,
             llvm::TargetMachine*               target_machine = nullptr);
 
@@ -53,7 +53,7 @@ namespace quantum
         bool validate(llvm::Module& module);
 
         /// Returns the logger. This value may be null if no logger was set.
-        LogColloectionPtr logger() const;
+        ILoggerPtr logger() const;
 
       protected:
         using PassBuilderPtr = std::unique_ptr<llvm::PassBuilder>;
@@ -74,8 +74,6 @@ namespace quantum
         llvm::ModuleAnalysisManager& moduleAnalysisManager();
 
       private:
-        void saveReportToFileIfNeeded();
-
         // LLVM logic to run the passes
         //
 
@@ -88,8 +86,7 @@ namespace quantum
 
         llvm::ModulePassManager module_pass_manager_{};
 
-        LogColloectionPtr logger_{nullptr}; ///< Logger to keep track of errors and warnings occurring.
-        String            save_to_filename_{""};
+        ILoggerPtr logger_{nullptr}; ///< Logger to keep track of errors and warnings occurring.
     };
 
 } // namespace quantum

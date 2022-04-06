@@ -41,8 +41,9 @@ namespace quantum
         // Construction and destruction configuration.
         //
 
-        explicit GroupingAnalysisPass(GroupingPassConfiguration const& cfg)
+        explicit GroupingAnalysisPass(GroupingPassConfiguration const& cfg, ILoggerPtr const& logger)
           : config_{cfg}
+          , logger_{logger}
         {
         }
 

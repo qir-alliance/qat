@@ -377,5 +377,10 @@ namespace quantum
         return llvm::PreservedAnalyses::none();
     }
 
+    void GroupingPass::setLogger(ILoggerPtr logger)
+    {
+        logger_ = std::move(logger);
+    }
+
 } // namespace quantum
 } // namespace microsoft

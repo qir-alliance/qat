@@ -104,6 +104,11 @@ namespace quantum
             return addModule(std::move(module), input_file);
         }
 
+        InstructionLocationTablePtr locationTable() const
+        {
+            return instruction_location_table_;
+        }
+
       private:
         Module*                     final_module_;
         Linker                      linker_;

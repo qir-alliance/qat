@@ -145,11 +145,11 @@ namespace quantum
 
         auto  profile               = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
         auto& configuration_manager = generator->configurationManager();
+        auto  logger                = std::make_shared<LogCollection>();
         auto  validator =
-            std::make_unique<Validator>(configuration_manager.get<ValidationPassConfiguration>(), true, debug);
+            std::make_unique<Validator>(configuration_manager.get<ValidationPassConfiguration>(), logger, debug);
         validator->validate(*module_);
 
-        auto logger = validator->logger();
         if (!logger)
         {
             throw std::runtime_error("Logger not present. Cannot test the presence of errors without a logger.");
@@ -202,11 +202,12 @@ namespace quantum
     {
         auto  profile               = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
         auto& configuration_manager = generator->configurationManager();
-        auto  validator =
-            std::make_unique<Validator>(configuration_manager.get<ValidationPassConfiguration>(), true, debug);
+        auto  logger                = std::make_shared<LogCollection>();
+
+        auto validator =
+            std::make_unique<Validator>(configuration_manager.get<ValidationPassConfiguration>(), logger, debug);
         validator->validate(*module_);
 
-        auto logger = validator->logger();
         if (!logger)
         {
             throw std::runtime_error("Logger not present. Cannot test the presence of errors without a logger.");

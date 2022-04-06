@@ -32,6 +32,8 @@ namespace quantum
         /// List of components to be configured.
         using Components = std::vector<std::pair<String, SetupFunctionWrapper>>;
 
+        using ILoggerPtr = std::shared_ptr<ILogger>;
+
         // Construction, moves and copies
         //
 
@@ -102,6 +104,8 @@ namespace quantum
         /// Sets the default pipeline up.
         void setupDefaultComponentPipeline();
 
+        void setLogger(ILoggerPtr const& logger = nullptr);
+
       protected:
         /// Internal function that creates a module pass for QIR transformation. The module pass is
         /// defined through the profile, the optimization level and whether or not we are in debug mode.
@@ -118,6 +122,7 @@ namespace quantum
             bool                     debug);
 
       private:
+        ILoggerPtr           logger_{nullptr};       ///< Logger used to output messages
         ConfigurationManager configuration_manager_; ///< Holds the configuration that defines the profile
         Components           components_;            ///< List of registered components that configures the profile
 
