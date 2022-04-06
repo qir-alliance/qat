@@ -723,11 +723,11 @@ namespace quantum
 
         auto  profile               = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
         auto&amp; configuration_manager = generator-&gt;configurationManager();
+        auto  logger                = std::make_shared&lt;LogCollection&gt;();
         auto  validator =
-            std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), true, debug);
+            std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), logger, debug);
         validator-&gt;validate(*module_);
 
-        auto logger = validator-&gt;logger();
         if (!logger)
         {
             throw std::runtime_error(&quot;Logger not present. Cannot test the presence of errors without a logger.&quot;);
@@ -780,11 +780,12 @@ namespace quantum
     {
         auto  profile               = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
         auto&amp; configuration_manager = generator-&gt;configurationManager();
-        auto  validator =
-            std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), true, debug);
+        auto  logger                = std::make_shared&lt;LogCollection&gt;();
+
+        auto validator =
+            std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), logger, debug);
         validator-&gt;validate(*module_);
 
-        auto logger = validator-&gt;logger();
         if (!logger)
         {
             throw std::runtime_error(&quot;Logger not present. Cannot test the presence of errors without a logger.&quot;);
@@ -931,7 +932,7 @@ source_filename = &quot;IrManipulationTestHelper.ll&quot;
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

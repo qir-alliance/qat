@@ -590,6 +590,13 @@ namespace microsoft
 {
 namespace quantum
 {
+
+    ValidationPass::ValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger)
+      : config_{cfg}
+      , logger_{logger}
+    {
+    }
+
     void ValidationPass::opcodeChecks(Instruction&amp; instr)
     {
         auto opname = instr.getOpcodeName();
@@ -725,7 +732,7 @@ namespace quantum
                         if (!locs.empty())
                         {
                             auto const&amp; loc = locs.front();
-                            logger_-&gt;setLocation(loc.filename, loc.row, loc.col);
+                            logger_-&gt;setLocation({loc.name, loc.line, loc.column});
                             logger_-&gt;setLlvmHint(loc.llvm_hint);
                         }
                     }
@@ -779,7 +786,7 @@ namespace quantum
                         if (!locs.empty())
                         {
                             auto const&amp; loc = locs.front();
-                            logger_-&gt;setLocation(loc.filename, loc.row, loc.col);
+                            logger_-&gt;setLocation({loc.name, loc.line, loc.column});
                             logger_-&gt;setLlvmHint(loc.llvm_hint);
                         }
                     }
@@ -816,7 +823,7 @@ namespace quantum
                         if (!locs.empty())
                         {
                             auto const&amp; loc = locs.front();
-                            logger_-&gt;setLocation(loc.filename, loc.row, loc.col);
+                            logger_-&gt;setLocation({loc.name, loc.line, loc.column});
                             logger_-&gt;setLlvmHint(loc.llvm_hint);
                         }
                     }
@@ -840,12 +847,13 @@ namespace quantum
             {
                 for (auto&amp; instr : block)
                 {
-                    current_location_ = Location{};
+                    auto loc          = logger_-&gt;resolveLocation(&amp;instr);
+                    current_location_ = Location{loc};
                     llvm::DebugLoc dl = instr.getDebugLoc();
                     if (dl)
                     {
                         current_location_ =
-                            Location{static_cast&lt;String&gt;(dl-&gt;getFilename()), dl-&gt;getLine(), dl-&gt;getColumn(), &quot;&quot;};
+                            Location{static_cast&lt;String&gt;(dl-&gt;getFilename()), dl-&gt;getLine(), dl-&gt;getColumn(), &quot;&quot;, &quot;&quot;};
                     }
                     llvm::raw_string_ostream rso(current_location_.llvm_hint);
                     instr.print(rso);
@@ -881,7 +889,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

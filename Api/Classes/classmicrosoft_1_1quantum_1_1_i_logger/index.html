@@ -562,6 +562,52 @@
 <p><a href="#detailed-description">More...</a></p>
 <p><code>#include &lt;Logging/ILogger.hpp&gt;</code></p>
 <p>Inherited by <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/">microsoft::quantum::CommentLogger</a>, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/">microsoft::quantum::LogCollection</a></p>
+<h2 id="public-classes">Public Classes</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>struct</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">Location</a></strong> <br>Class that holds the location of where the incident happened.</td>
+</tr>
+<tr>
+<td>struct</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_message/">Message</a></strong> <br>Struct to hold a message together with its type and location.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-types">Public Types</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enum class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#enum-type">Type</a></strong> { Debug, Info, Warning, Error, InternalError}<br>Enum description what type of information we are conveying.</td>
+</tr>
+<tr>
+<td>using llvm::Value</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-value">Value</a></strong></td>
+</tr>
+<tr>
+<td>using std::function&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a>(Value const  *)&gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-locationresolver">LocationResolver</a></strong></td>
+</tr>
+<tr>
+<td>using std::vector&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_message/">Message</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-messages">Messages</a></strong> <br>List of messages defined as alias.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="public-functions">Public Functions</h2>
 <table>
 <thead>
@@ -617,7 +663,7 @@
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocation">setLocation</a></strong>(String const &amp; name, int64_t line, int64_t col) =0</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocation">setLocation</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a> const &amp; location) =0</td>
 </tr>
 <tr>
 <td>virtual void</td>
@@ -627,12 +673,81 @@
 <td>virtual void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setfrontendhint">setFrontendHint</a></strong>(String const &amp; value) =0<br>Sets the value of the frontend instruction causing the issue.</td>
 </tr>
+<tr>
+<td>virtual <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-messages">Messages</a> const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-messages">messages</a></strong>() const</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-dump">dump</a></strong>(std::ostream &amp; out) const</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationfromvalue">setLocationFromValue</a></strong>(llvm::Value const * value)<br>Sets the logger position based on a LLVM value.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationresolver">setLocationResolver</a></strong>(LocationResolver const &amp; r)<br>Sets a resolver which that translates a LLVM value into a position in the source.</td>
+</tr>
+<tr>
+<td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-resolvelocation">resolveLocation</a></strong>(llvm::Value const * value)<br>Returns a source location from the value pointer (if possible)</td>
+</tr>
 </tbody>
 </table>
 <h2 id="detailed-description">Detailed Description</h2>
 <pre><code class="language-cpp">class microsoft::quantum::ILogger;
 </code></pre>
 <p>Logger interface to allow the collection of different types of messages during QIR transformation and/or validation. </p>
+<h2 id="public-types-documentation">Public Types Documentation</h2>
+<h3 id="enum-type">enum Type</h3>
+<table>
+<thead>
+<tr>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Debug</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Info</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Warning</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Error</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>InternalError</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Enum description what type of information we are conveying. </p>
+<h3 id="using-value">using Value</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ILogger::Value =  llvm::Value;
+</code></pre>
+<h3 id="using-locationresolver">using LocationResolver</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ILogger::LocationResolver =  std::function&lt;SourceLocation(Value const*)&gt;;
+</code></pre>
+<h3 id="using-messages">using Messages</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ILogger::Messages =  std::vector&lt;Message&gt;;
+</code></pre>
+<p>List of messages defined as alias. </p>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-ilogger">function ILogger</h3>
 <pre><code class="language-cpp">ILogger() =default
@@ -697,9 +812,7 @@
 <p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-internalerror">microsoft::quantum::CommentLogger::internalError</a>, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-internalerror">microsoft::quantum::LogCollection::internalError</a></p>
 <h3 id="function-setlocation">function setLocation</h3>
 <pre><code class="language-cpp">virtual void setLocation(
-    String const &amp; name,
-    int64_t line,
-    int64_t col
+    SourceLocation const &amp; location
 ) =0
 </code></pre>
 <p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setlocation">microsoft::quantum::CommentLogger::setLocation</a>, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-setlocation">microsoft::quantum::LogCollection::setLocation</a></p>
@@ -718,8 +831,36 @@
 </code></pre>
 <p>Sets the value of the frontend instruction causing the issue. </p>
 <p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setfrontendhint">microsoft::quantum::CommentLogger::setFrontendHint</a>, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-setfrontendhint">microsoft::quantum::LogCollection::setFrontendHint</a></p>
+<h3 id="function-messages">function messages</h3>
+<pre><code class="language-cpp">virtual Messages const  &amp; messages() const
+</code></pre>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-messages">microsoft::quantum::LogCollection::messages</a></p>
+<h3 id="function-dump">function dump</h3>
+<pre><code class="language-cpp">virtual void dump(
+    std::ostream &amp; out
+) const
+</code></pre>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-dump">microsoft::quantum::LogCollection::dump</a></p>
+<h3 id="function-setlocationfromvalue">function setLocationFromValue</h3>
+<pre><code class="language-cpp">void setLocationFromValue(
+    llvm::Value const * value
+)
+</code></pre>
+<p>Sets the logger position based on a LLVM value. </p>
+<h3 id="function-setlocationresolver">function setLocationResolver</h3>
+<pre><code class="language-cpp">void setLocationResolver(
+    LocationResolver const &amp; r
+)
+</code></pre>
+<p>Sets a resolver which that translates a LLVM value into a position in the source. </p>
+<h3 id="function-resolvelocation">function resolveLocation</h3>
+<pre><code class="language-cpp">SourceLocation resolveLocation(
+    llvm::Value const * value
+)
+</code></pre>
+<p>Returns a source location from the value pointer (if possible) </p>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

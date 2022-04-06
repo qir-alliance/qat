@@ -592,39 +592,37 @@ namespace quantum
 
     void CommentLogger::debug(String const&amp; message)
     {
-        llvm::errs() &lt;&lt; &quot;debug - &quot; &lt;&lt; location_name_ &lt;&lt; &quot;:&quot; &lt;&lt; location_row_ &lt;&lt; &quot;,&quot; &lt;&lt; location_col_ &lt;&lt; &quot; - &quot; &lt;&lt; message
-                     &lt;&lt; &quot;\n&quot;;
+        llvm::errs() &lt;&lt; &quot;debug - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
+                     &lt;&lt; message &lt;&lt; &quot;\n&quot;;
     }
 
     void CommentLogger::info(String const&amp; message)
     {
-        llvm::errs() &lt;&lt; &quot;info - &quot; &lt;&lt; location_name_ &lt;&lt; &quot;:&quot; &lt;&lt; location_row_ &lt;&lt; &quot;,&quot; &lt;&lt; location_col_ &lt;&lt; &quot; - &quot; &lt;&lt; message
-                     &lt;&lt; &quot;\n&quot;;
+        llvm::errs() &lt;&lt; &quot;info - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
+                     &lt;&lt; message &lt;&lt; &quot;\n&quot;;
     }
 
     void CommentLogger::warning(String const&amp; message)
     {
-        llvm::errs() &lt;&lt; &quot;warning - &quot; &lt;&lt; location_name_ &lt;&lt; &quot;:&quot; &lt;&lt; location_row_ &lt;&lt; &quot;,&quot; &lt;&lt; location_col_ &lt;&lt; &quot; - &quot;
+        llvm::errs() &lt;&lt; &quot;warning - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
                      &lt;&lt; message &lt;&lt; &quot;\n&quot;;
     }
 
     void CommentLogger::error(String const&amp; message)
     {
-        llvm::errs() &lt;&lt; &quot;error - &quot; &lt;&lt; location_name_ &lt;&lt; &quot;:&quot; &lt;&lt; location_row_ &lt;&lt; &quot;,&quot; &lt;&lt; location_col_ &lt;&lt; &quot; - &quot; &lt;&lt; message
-                     &lt;&lt; &quot;\n&quot;;
+        llvm::errs() &lt;&lt; &quot;error - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
+                     &lt;&lt; message &lt;&lt; &quot;\n&quot;;
     }
 
     void CommentLogger::internalError(String const&amp; message)
     {
-        llvm::errs() &lt;&lt; &quot;internal error - &quot; &lt;&lt; location_name_ &lt;&lt; &quot;:&quot; &lt;&lt; location_row_ &lt;&lt; &quot;,&quot; &lt;&lt; location_col_ &lt;&lt; &quot; - &quot;
-                     &lt;&lt; message &lt;&lt; &quot;\n&quot;;
+        llvm::errs() &lt;&lt; &quot;internal error - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column
+                     &lt;&lt; &quot; - &quot; &lt;&lt; message &lt;&lt; &quot;\n&quot;;
     }
 
-    void CommentLogger::setLocation(String const&amp; name, int64_t line, int64_t col)
+    void CommentLogger::setLocation(SourceLocation const&amp; loc)
     {
-        location_name_ = name;
-        location_row_  = line;
-        location_col_  = col;
+        location_ = loc;
     }
 
     void CommentLogger::setLlvmHint(String const&amp;) {}
@@ -635,7 +633,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

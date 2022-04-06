@@ -582,6 +582,8 @@
 #include &quot;Logging/LogCollection.hpp&quot;
 #include &quot;Utils/Trim.hpp&quot;
 
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
 #include &lt;vector&gt;
 
 namespace microsoft
@@ -614,14 +616,14 @@ namespace quantum
         messages_.push_back({Type::InternalError, current_location_, message});
     }
 
-    void LogCollection::setLocation(String const&amp; name, int64_t line, int64_t col)
+    void LogCollection::setLocation(SourceLocation const&amp; loc)
     {
-        current_location_.name   = name;
-        current_location_.line   = line;
-        current_location_.column = col;
+        current_location_.name   = loc.name;
+        current_location_.line   = loc.line;
+        current_location_.column = loc.column;
     }
 
-    LogCollection::Messages const&amp; LogCollection::messages() const
+    ILogger::Messages const&amp; LogCollection::messages() const
     {
         return messages_;
     }
@@ -638,11 +640,57 @@ namespace quantum
         trim(current_location_.frontend_hint);
     }
 
+    void LogCollection::dump(std::ostream&amp; out) const
+    {
+        bool not_first = false;
+        out &lt;&lt; &quot;[&quot;;
+        for (auto&amp; message : messages_)
+        {
+            if (not_first)
+            {
+                out &lt;&lt; &quot;,&quot;;
+            }
+            out &lt;&lt; &quot;\n&quot;;
+            out &lt;&lt; &quot;  {\n&quot;;
+
+            switch (message.type)
+            {
+            case LogCollection::Type::Debug:
+                out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;debug\&quot;,\n&quot;;
+                break;
+            case LogCollection::Type::Info:
+                out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;info\&quot;,\n&quot;;
+                break;
+            case LogCollection::Type::Warning:
+                out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;warning\&quot;,\n&quot;;
+                break;
+            case LogCollection::Type::Error:
+                out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;error\&quot;,\n&quot;;
+                break;
+            case LogCollection::Type::InternalError:
+                out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;internalError\&quot;,\n&quot;;
+                break;
+            }
+
+            out &lt;&lt; &quot;    \&quot;message\&quot;: \&quot;&quot; &lt;&lt; message.message &lt;&lt; &quot;\&quot;,\n&quot;;
+            out &lt;&lt; &quot;    \&quot;location\&quot;: {\n&quot;;
+            out &lt;&lt; &quot;      \&quot;filename\&quot;: \&quot;&quot; &lt;&lt; static_cast&lt;std::string&gt;(message.location.name) &lt;&lt; &quot;\&quot;,\n&quot;;
+            out &lt;&lt; &quot;      \&quot;line\&quot;: &quot; &lt;&lt; message.location.line &lt;&lt; &quot;,\n&quot;;
+            out &lt;&lt; &quot;      \&quot;column\&quot;: &quot; &lt;&lt; message.location.column &lt;&lt; &quot;,\n&quot;;
+            out &lt;&lt; &quot;      \&quot;llvm_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\&quot;,\n&quot;;
+            out &lt;&lt; &quot;      \&quot;frontend_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.frontend_hint &lt;&lt; &quot;\&quot;\n&quot;;
+            out &lt;&lt; &quot;    }\n&quot;;
+            out &lt;&lt; &quot;  }&quot;;
+            not_first = true;
+        }
+        out &lt;&lt; &quot;\n]\n&quot;;
+    }
+
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

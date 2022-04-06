@@ -617,15 +617,13 @@ namespace quantum
         using Instruction = llvm::Instruction;
         using Value       = llvm::Value;
         using ILoggerPtr  = std::shared_ptr&lt;ILogger&gt;;
+        using Location    = ILogger::Location;
+        using StringRef   = llvm::StringRef;
 
         // Construction and destruction configuration.
         //
 
-        explicit ValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr)
-          : config_{cfg}
-          , logger_{logger}
-        {
-        }
+        explicit ValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr);
 
         ValidationPass(ValidationPass const&amp;) = delete;
 
@@ -646,13 +644,6 @@ namespace quantum
         bool satisfyingExternalCallRequirements();
         bool satisfyingPointerRequirements();
 
-        struct Location
-        {
-            String   filename{&quot;&quot;};
-            uint64_t row{0};
-            uint64_t col{0};
-            String   llvm_hint{&quot;&quot;};
-        };
         using Locations = std::vector&lt;Location&gt;;
 
         ValidationPassConfiguration config_{};
@@ -678,7 +669,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

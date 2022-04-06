@@ -578,6 +578,10 @@
 <td>using Validator::ValidatorPtr</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#using-validatorptr">ValidatorPtr</a></strong> <br><a href="">Validator</a> class used to check that an IR fulfils a given specification.</td>
 </tr>
+<tr>
+<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#using-iloggerptr">ILoggerPtr</a></strong></td>
+</tr>
 </tbody>
 </table>
 <h2 id="public-functions">Public Functions</h2>
@@ -591,7 +595,7 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#function-profile">Profile</a></strong>(String const &amp; name, bool debug, llvm::TargetMachine * target_machine =nullptr, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#using-allocationmanagerptr">AllocationManagerPtr</a> qubit_allocation_manager =<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-createnew">BasicAllocationManager::createNew</a>(), <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#using-allocationmanagerptr">AllocationManagerPtr</a> result_allocation_manager =<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-createnew">BasicAllocationManager::createNew</a>())</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#function-profile">Profile</a></strong>(String const &amp; name, ILoggerPtr const &amp; logger, bool debug, llvm::TargetMachine * target_machine =nullptr, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#using-allocationmanagerptr">AllocationManagerPtr</a> qubit_allocation_manager =<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-createnew">BasicAllocationManager::createNew</a>(), <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#using-allocationmanagerptr">AllocationManagerPtr</a> result_allocation_manager =<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/#function-createnew">BasicAllocationManager::createNew</a>())</td>
 </tr>
 <tr>
 <td></td>
@@ -710,10 +714,14 @@
 <pre><code class="language-cpp">using microsoft::quantum::Profile::ValidatorPtr =  Validator::ValidatorPtr;
 </code></pre>
 <p><a href="">Validator</a> class used to check that an IR fulfils a given specification. </p>
+<h3 id="using-iloggerptr">using ILoggerPtr</h3>
+<pre><code class="language-cpp">using microsoft::quantum::Profile::ILoggerPtr =  std::shared_ptr&lt;ILogger&gt;;
+</code></pre>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-profile">function Profile</h3>
 <pre><code class="language-cpp">explicit Profile(
     String const &amp; name,
+    ILoggerPtr const &amp; logger,
     bool debug,
     llvm::TargetMachine * target_machine =nullptr,
     AllocationManagerPtr qubit_allocation_manager =BasicAllocationManager::createNew(),
@@ -811,7 +819,7 @@
 <pre><code class="language-cpp">friend class ProfileGenerator;
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

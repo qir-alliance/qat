@@ -622,9 +622,8 @@ namespace quantum
         bool allowlistOpcodes() const;
         bool allowlistExternalCalls() const;
 
-        String const&amp; saveReportTo() const;
-        bool          allowlistPointerTypes() const;
-        Set const&amp;    allowedPointerTypes() const;
+        bool       allowlistPointerTypes() const;
+        Set const&amp; allowedPointerTypes() const;
 
         String profileName() const;
 
@@ -638,8 +637,6 @@ namespace quantum
         Set opcodes_{};
         Set external_calls_{};
         Set allowed_pointer_types_{};
-
-        String save_report_to_{&quot;&quot;};
 
         bool allowlist_opcodes_{true};
         bool allowlist_external_calls_{true};
@@ -655,7 +652,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

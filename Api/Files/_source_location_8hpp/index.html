@@ -595,7 +595,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Logging/ILogger.hpp&quot;
+#include &quot;QatTypes/QatTypes.hpp&quot;
 
 #include &quot;Llvm/Llvm.hpp&quot;
 
@@ -609,6 +609,14 @@ namespace quantum
     struct SourceLocation
     {
         using StringRef = llvm::StringRef;
+
+        SourceLocation() = default;
+        SourceLocation(String v_name, int64_t v_line, int64_t v_column)
+          : name{v_name}
+          , line{v_line}
+          , column{v_column}
+        {
+        }
 
         enum
         {
@@ -625,15 +633,15 @@ namespace quantum
             return {&quot;&quot;, INVALID_POSITION, INVALID_POSITION};
         }
 
-        StringRef name{};
-        int64_t   line{0};
-        int64_t   column{0};
+        String  name{};
+        int64_t line{0};
+        int64_t column{0};
     };
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

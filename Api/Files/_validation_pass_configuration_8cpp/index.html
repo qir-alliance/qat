@@ -593,8 +593,6 @@ namespace quantum
         config.setSectionName(&quot;Validation configuration&quot;, &quot;&quot;);
         config.addParameter(
             allow_internal_calls_, &quot;allow-internal-calls&quot;, &quot;Whether or not internal calls are allowed.&quot;);
-        config.addParameter(
-            save_report_to_, &quot;save-validation-report&quot;, &quot;Saves the validation report to specified filename.&quot;);
     }
 
     String ValidationPassConfiguration::profileName() const
@@ -743,11 +741,6 @@ namespace quantum
         return allowlist_external_calls_;
     }
 
-    String const&amp; ValidationPassConfiguration::saveReportTo() const
-    {
-        return save_report_to_;
-    }
-
     bool ValidationPassConfiguration::allowlistPointerTypes() const
     {
         return allowlist_pointer_types_;
@@ -777,7 +770,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

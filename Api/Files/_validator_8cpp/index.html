@@ -596,14 +596,14 @@ namespace quantum
 
     Validator::Validator(
         ValidationPassConfiguration const&amp; cfg,
-        bool                               force_log_collection,
+        ILoggerPtr const&amp;                  logger,
         bool                               debug,
         llvm::TargetMachine*               target_machine)
       : loop_analysis_manager_{debug}
       , function_analysis_manager_{debug}
       , gscc_analysis_manager_{debug}
       , module_analysis_manager_{debug}
-      , logger_{nullptr}
+      , logger_{logger}
     {
 
         pass_builder_ = std::make_unique&lt;llvm::PassBuilder&gt;(target_machine);
@@ -616,17 +616,7 @@ namespace quantum
         pass_builder_-&gt;crossRegisterProxies(
             loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
 
-        if (force_log_collection || !cfg.saveReportTo().empty())
-        {
-            logger_ = std::make_shared&lt;LogCollection&gt;();
-        }
-
-        if (!cfg.saveReportTo().empty())
-        {
-            save_to_filename_ = cfg.saveReportTo();
-        }
-
-        // Checking if we need to save the log to a file
+        // Checking if we need to use provided logger or install one
         if (logger_)
         {
             module_pass_manager_.addPass(ValidationPass(cfg, logger_));
@@ -650,7 +640,6 @@ namespace quantum
                 logger_-&gt;error(&quot;Fatal error: Invalid IR.&quot;);
             }
 
-            saveReportToFileIfNeeded();
             return false;
         }
 
@@ -665,11 +654,9 @@ namespace quantum
                 logger_-&gt;error(&quot;Fatal error: &quot; + static_cast&lt;std::string&gt;(e.what()));
             }
 
-            saveReportToFileIfNeeded();
             return false;
         }
 
-        saveReportToFileIfNeeded();
         return true;
     }
 
@@ -698,69 +685,16 @@ namespace quantum
         return module_analysis_manager_;
     }
 
-    Validator::LogColloectionPtr Validator::logger() const
+    Validator::ILoggerPtr Validator::logger() const
     {
         return logger_;
-    }
-
-    void Validator::saveReportToFileIfNeeded()
-    {
-        if (!save_to_filename_.empty() &amp;&amp; logger_)
-        {
-            std::fstream fout(save_to_filename_, std::ios::out);
-            bool         not_first = false;
-
-            fout &lt;&lt; &quot;[&quot;;
-            for (auto&amp; message : logger_-&gt;messages())
-            {
-                if (not_first)
-                {
-                    fout &lt;&lt; &quot;,&quot;;
-                }
-                fout &lt;&lt; &quot;\n&quot;;
-                fout &lt;&lt; &quot;  {\n&quot;;
-
-                switch (message.type)
-                {
-                case LogCollection::Type::Debug:
-                    fout &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;debug\&quot;,\n&quot;;
-                    break;
-                case LogCollection::Type::Info:
-                    fout &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;info\&quot;,\n&quot;;
-                    break;
-                case LogCollection::Type::Warning:
-                    fout &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;warning\&quot;,\n&quot;;
-                    break;
-                case LogCollection::Type::Error:
-                    fout &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;error\&quot;,\n&quot;;
-                    break;
-                case LogCollection::Type::InternalError:
-                    fout &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;internalError\&quot;,\n&quot;;
-                    break;
-                }
-
-                fout &lt;&lt; &quot;    \&quot;message\&quot;: \&quot;&quot; &lt;&lt; message.message &lt;&lt; &quot;\&quot;,\n&quot;;
-                fout &lt;&lt; &quot;    \&quot;location\&quot;: {\n&quot;;
-                fout &lt;&lt; &quot;      \&quot;filename\&quot;: \&quot;&quot; &lt;&lt; static_cast&lt;std::string&gt;(message.location.name) &lt;&lt; &quot;\&quot;,\n&quot;;
-                fout &lt;&lt; &quot;      \&quot;line\&quot;: &quot; &lt;&lt; message.location.line &lt;&lt; &quot;,\n&quot;;
-                fout &lt;&lt; &quot;      \&quot;column\&quot;: &quot; &lt;&lt; message.location.column &lt;&lt; &quot;,\n&quot;;
-                fout &lt;&lt; &quot;      \&quot;llvm_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\&quot;,\n&quot;;
-                fout &lt;&lt; &quot;      \&quot;frontend_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.frontend_hint &lt;&lt; &quot;\&quot;\n&quot;;
-                fout &lt;&lt; &quot;    }\n&quot;;
-                fout &lt;&lt; &quot;  }&quot;;
-                not_first = true;
-            }
-            fout &lt;&lt; &quot;\n]\n&quot;;
-
-            fout.close();
-        }
     }
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

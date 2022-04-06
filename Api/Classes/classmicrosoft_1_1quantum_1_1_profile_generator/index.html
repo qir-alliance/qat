@@ -593,6 +593,10 @@
 <td>using std::vector&lt; std::pair&lt; String, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunctionwrapper">SetupFunctionWrapper</a> &gt; &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-components">Components</a></strong> <br>List of components to be configured.</td>
 </tr>
+<tr>
+<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-iloggerptr">ILoggerPtr</a></strong></td>
+</tr>
 </tbody>
 </table>
 <h2 id="public-functions">Public Functions</h2>
@@ -680,6 +684,10 @@
 <td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-setupdefaultcomponentpipeline">setupDefaultComponentPipeline</a></strong>()<br>Sets the default pipeline up.</td>
 </tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-setlogger">setLogger</a></strong>(ILoggerPtr const &amp; logger =nullptr)</td>
+</tr>
 </tbody>
 </table>
 <h2 id="protected-functions">Protected Functions</h2>
@@ -724,6 +732,9 @@ using microsoft::quantum::ProfileGenerator::SetupFunction =  std::function&lt;vo
 <pre><code class="language-cpp">using microsoft::quantum::ProfileGenerator::Components =  std::vector&lt;std::pair&lt;String, SetupFunctionWrapper&gt; &gt;;
 </code></pre>
 <p>List of components to be configured. </p>
+<h3 id="using-iloggerptr">using ILoggerPtr</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ProfileGenerator::ILoggerPtr =  std::shared_ptr&lt;ILogger&gt;;
+</code></pre>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-profilegenerator">function ProfileGenerator</h3>
 <pre><code class="language-cpp">ProfileGenerator() =default
@@ -822,6 +833,11 @@ void registerAnonymousProfileComponent(
 <p>Sets the default pipeline up. </p>
 <p>More unroll parameters <a href="https://llvm.org/doxygen/LoopUnrollPass_8cpp.html">https://llvm.org/doxygen/LoopUnrollPass_8cpp.html</a></p>
 <p>Header <a href="https://llvm.org/doxygen/LoopUnrollPass_8h.html">https://llvm.org/doxygen/LoopUnrollPass_8h.html</a></p>
+<h3 id="function-setlogger">function setLogger</h3>
+<pre><code class="language-cpp">void setLogger(
+    ILoggerPtr const &amp; logger =nullptr
+)
+</code></pre>
 <h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
 <h3 id="function-creategenerationmodulepassmanager">function createGenerationModulePassManager</h3>
 <pre><code class="language-cpp">llvm::ModulePassManager createGenerationModulePassManager(
@@ -840,7 +856,7 @@ void registerAnonymousProfileComponent(
 </code></pre>
 <p>Internal function that creates a module pass for QIR validation. At the moment, this function is a placeholder for future functionality. </p>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

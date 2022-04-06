@@ -697,6 +697,11 @@ namespace quantum
             return addModule(std::move(module), input_file);
         }
 
+        InstructionLocationTablePtr locationTable() const
+        {
+            return instruction_location_table_;
+        }
+
       private:
         Module*                     final_module_;
         Linker                      linker_;
@@ -771,7 +776,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

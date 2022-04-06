@@ -588,14 +588,6 @@
 <td>class</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/">microsoft::quantum::LogCollection</a></strong></td>
 </tr>
-<tr>
-<td>struct</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_location/">microsoft::quantum::LogCollection::Location</a></strong> <br>Class that holds the location of where the incident happened.</td>
-</tr>
-<tr>
-<td>struct</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_message/">microsoft::quantum::LogCollection::Message</a></strong> <br>Struct to hold a message together with its type and location.</td>
-</tr>
 </tbody>
 </table>
 <h2 id="source-code">Source code</h2>
@@ -616,30 +608,6 @@ namespace quantum
     class LogCollection : public ILogger
     {
       public:
-        struct Location : public SourceLocation
-        {
-            String llvm_hint;
-            String frontend_hint;
-        };
-
-        enum class Type
-        {
-            Debug,
-            Info,
-            Warning,
-            Error,
-            InternalError,
-        };
-
-        struct Message
-        {
-            Type     type;
-            Location location;
-            String   message;
-        };
-
-        using Messages = std::vector&lt;Message&gt;;
-
         // Interface implementation
         //
 
@@ -653,13 +621,15 @@ namespace quantum
 
         void internalError(String const&amp; message) override;
 
-        void setLocation(String const&amp; name, int64_t line, int64_t col) override;
+        void setLocation(SourceLocation const&amp; loc) override;
 
         void setLlvmHint(String const&amp; value) override;
 
         void setFrontendHint(String const&amp; value) override;
 
-        Messages const&amp; messages() const;
+        Messages const&amp; messages() const override;
+
+        void dump(std::ostream&amp; out) const override;
 
       private:
         Location current_location_{}; 
@@ -670,7 +640,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

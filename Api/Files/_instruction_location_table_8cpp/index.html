@@ -639,7 +639,7 @@ namespace quantum
         outstream.flush();
 
         Position pos;
-        pos.name   = current_filename_;
+        pos.name   = static_cast&lt;String&gt;(current_filename_);
         pos.line   = outstream.getLine() + 1;
         pos.column = outstream.getColumn() + 1;
 
@@ -650,7 +650,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

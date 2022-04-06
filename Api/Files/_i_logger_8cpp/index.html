@@ -582,18 +582,59 @@
 #include &quot;Logging/ILogger.hpp&quot;
 
 #include &lt;cstdint&gt;
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
 #include &lt;string&gt;
 
 namespace microsoft
 {
 namespace quantum
 {
-    ILogger::~ILogger() = default;
-}
+    ILogger::~ILogger()
+    {
+        // Ensuring that the captured function is deleted to release
+        // shared memory.
+        location_resolver_ = nullptr;
+    }
+
+    void ILogger::setLocationFromValue(llvm::Value const* value)
+    {
+        if (location_resolver_)
+        {
+            auto loc = location_resolver_(value);
+            setLocation(loc);
+        }
+    }
+
+    void ILogger::setLocationResolver(LocationResolver const&amp; r)
+    {
+        location_resolver_ = r;
+    }
+
+    ILogger::Messages const&amp; ILogger::messages() const
+    {
+        throw std::runtime_error(&quot;messages() is not supported by logger.&quot;);
+    }
+
+    void ILogger::dump(std::ostream&amp; /*out*/) const
+    {
+        throw std::runtime_error(&quot;dump() is not supported by logger.&quot;);
+    }
+
+    SourceLocation ILogger::resolveLocation(llvm::Value const* value)
+    {
+        if (location_resolver_)
+        {
+            return location_resolver_(value);
+        }
+        return SourceLocation::InvalidPosition();
+    }
+
+} // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

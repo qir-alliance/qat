@@ -575,8 +575,8 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#using-validatorptr">ValidatorPtr</a></strong></td>
 </tr>
 <tr>
-<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/">LogCollection</a> &gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#using-logcolloectionptr">LogColloectionPtr</a></strong></td>
+<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#using-iloggerptr">ILoggerPtr</a></strong></td>
 </tr>
 </tbody>
 </table>
@@ -606,7 +606,7 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#function-validator">Validator</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">ValidationPassConfiguration</a> const &amp; cfg, bool force_log_collection, bool debug, llvm::TargetMachine * target_machine =nullptr)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#function-validator">Validator</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">ValidationPassConfiguration</a> const &amp; cfg, ILoggerPtr const &amp; logger, bool debug, llvm::TargetMachine * target_machine =nullptr)</td>
 </tr>
 <tr>
 <td></td>
@@ -637,7 +637,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#function-validate">validate</a></strong>(llvm::Module &amp; module)</td>
 </tr>
 <tr>
-<td>LogColloectionPtr</td>
+<td>ILoggerPtr</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#function-logger">logger</a></strong>() const<br>Returns the logger. This value may be null if no logger was set.</td>
 </tr>
 </tbody>
@@ -681,8 +681,8 @@
 <h3 id="using-validatorptr">using ValidatorPtr</h3>
 <pre><code class="language-cpp">using microsoft::quantum::Validator::ValidatorPtr =  std::unique_ptr&lt;Validator&gt;;
 </code></pre>
-<h3 id="using-logcolloectionptr">using LogColloectionPtr</h3>
-<pre><code class="language-cpp">using microsoft::quantum::Validator::LogColloectionPtr =  std::shared_ptr&lt;LogCollection&gt;;
+<h3 id="using-iloggerptr">using ILoggerPtr</h3>
+<pre><code class="language-cpp">using microsoft::quantum::Validator::ILoggerPtr =  std::shared_ptr&lt;ILogger&gt;;
 </code></pre>
 <h2 id="protected-types-documentation">Protected Types Documentation</h2>
 <h3 id="using-passbuilderptr">using PassBuilderPtr</h3>
@@ -692,7 +692,7 @@
 <h3 id="function-validator">function Validator</h3>
 <pre><code class="language-cpp">explicit Validator(
     ValidationPassConfiguration const &amp; cfg,
-    bool force_log_collection,
+    ILoggerPtr const &amp; logger,
     bool debug,
     llvm::TargetMachine * target_machine =nullptr
 )
@@ -730,7 +730,7 @@
 </code></pre>
 <p>Validates that a module complies with the specified QIR profile. Returns true if the module is valid and false otherwize. </p>
 <h3 id="function-logger">function logger</h3>
-<pre><code class="language-cpp">LogColloectionPtr logger() const
+<pre><code class="language-cpp">ILoggerPtr logger() const
 </code></pre>
 <p>Returns the logger. This value may be null if no logger was set. </p>
 <h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
@@ -755,7 +755,7 @@
 </code></pre>
 <p>Returns a reference to the module analysis manager. </p>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

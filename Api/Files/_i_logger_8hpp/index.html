@@ -588,6 +588,14 @@
 <td>class</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></strong></td>
 </tr>
+<tr>
+<td>struct</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">microsoft::quantum::ILogger::Location</a></strong> <br>Class that holds the location of where the incident happened.</td>
+</tr>
+<tr>
+<td>struct</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_message/">microsoft::quantum::ILogger::Message</a></strong> <br>Struct to hold a message together with its type and location.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="source-code">Source code</h2>
@@ -595,9 +603,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include &quot;Logging/SourceLocation.hpp&quot;
 #include &quot;QatTypes/QatTypes.hpp&quot;
 
+#include &quot;Llvm/Llvm.hpp&quot;
+
 #include &lt;cstdint&gt;
+#include &lt;fstream&gt;
 #include &lt;string&gt;
 
 namespace microsoft
@@ -608,6 +620,58 @@ namespace quantum
     class ILogger
     {
       public:
+        using Value            = llvm::Value;
+        using LocationResolver = std::function&lt;SourceLocation(Value const*)&gt;;
+
+        struct Location : public SourceLocation
+        {
+            Location() = default;
+            Location(SourceLocation const&amp; source)
+              : SourceLocation(source)
+            {
+            }
+
+            Location(
+                String  v_name,
+                int64_t v_line,
+                int64_t v_column,
+                String  v_llvm_hint     = &quot;&quot;,
+                String  v_frontend_hint = &quot;&quot;)
+              : SourceLocation(v_name, v_line, v_column)
+              , llvm_hint{v_llvm_hint}
+              , frontend_hint{v_frontend_hint}
+            {
+            }
+
+            Location(Location const&amp; source)
+              : SourceLocation(source)
+              , llvm_hint{source.llvm_hint}
+              , frontend_hint{source.frontend_hint}
+            {
+            }
+
+            String llvm_hint{&quot;&quot;};
+            String frontend_hint{&quot;&quot;};
+        };
+
+        enum class Type
+        {
+            Debug,
+            Info,
+            Warning,
+            Error,
+            InternalError,
+        };
+
+        struct Message
+        {
+            Type     type;
+            Location location;
+            String   message;
+        };
+
+        using Messages = std::vector&lt;Message&gt;;
+
         // Constructors, copy and move operators and destructors
         //
 
@@ -632,18 +696,34 @@ namespace quantum
 
         virtual void internalError(String const&amp; message) = 0;
 
-        virtual void setLocation(String const&amp; name, int64_t line, int64_t col) = 0;
+        virtual void setLocation(SourceLocation const&amp; location) = 0;
 
         virtual void setLlvmHint(String const&amp; value) = 0;
 
         virtual void setFrontendHint(String const&amp; value) = 0;
+
+        virtual Messages const&amp; messages() const;
+
+        virtual void dump(std::ostream&amp; out) const;
+
+        // Location integration with LLVM
+        //
+
+        void setLocationFromValue(llvm::Value const* value);
+
+        void setLocationResolver(LocationResolver const&amp; r);
+
+        SourceLocation resolveLocation(llvm::Value const* value);
+
+      private:
+        LocationResolver location_resolver_{nullptr};
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

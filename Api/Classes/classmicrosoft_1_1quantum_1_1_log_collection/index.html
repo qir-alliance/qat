@@ -562,44 +562,6 @@
 <p><a href="#detailed-description">More...</a></p>
 <p><code>#include &lt;Logging/LogCollection.hpp&gt;</code></p>
 <p>Inherits from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></p>
-<h2 id="public-classes">Public Classes</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>struct</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_location/">Location</a></strong> <br>Class that holds the location of where the incident happened.</td>
-</tr>
-<tr>
-<td>struct</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_message/">Message</a></strong> <br>Struct to hold a message together with its type and location.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="public-types">Public Types</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>enum class</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#enum-type">Type</a></strong> { Debug, Info, Warning, Error, InternalError}<br>Enum description what type of information we are conveying.</td>
-</tr>
-<tr>
-<td>using std::vector&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_message/">Message</a> &gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#using-messages">Messages</a></strong> <br>List of messages defined as alias.</td>
-</tr>
-</tbody>
-</table>
 <h2 id="public-functions">Public Functions</h2>
 <table>
 <thead>
@@ -631,7 +593,7 @@
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-setlocation">setLocation</a></strong>(String const &amp; name, int64_t line, int64_t col) override<br>Function that allows to set the current location.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-setlocation">setLocation</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a> const &amp; loc) override<br>Function that allows to set the current location.</td>
 </tr>
 <tr>
 <td>virtual void</td>
@@ -642,12 +604,62 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-setfrontendhint">setFrontendHint</a></strong>(String const &amp; value) override<br>Sets the value of the frontend instruction causing the issue.</td>
 </tr>
 <tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#using-messages">Messages</a> const  &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-messages">messages</a></strong>() const<br>Accessor to the messages.</td>
+<td>virtual <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-messages">Messages</a> const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-messages">messages</a></strong>() const override<br>Accessor to the messages.</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#function-dump">dump</a></strong>(std::ostream &amp; out) const override<br>Enabling dumping collection to a file.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="additional-inherited-members">Additional inherited members</h2>
+<p><strong>Public Classes inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>struct</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">Location</a></strong> <br>Class that holds the location of where the incident happened.</td>
+</tr>
+<tr>
+<td>struct</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_message/">Message</a></strong> <br>Struct to hold a message together with its type and location.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Public Types inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enum class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#enum-type">Type</a></strong> { Debug, Info, Warning, Error, InternalError}<br>Enum description what type of information we are conveying.</td>
+</tr>
+<tr>
+<td>using llvm::Value</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-value">Value</a></strong></td>
+</tr>
+<tr>
+<td>using std::function&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a>(Value const  *)&gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-locationresolver">LocationResolver</a></strong></td>
+</tr>
+<tr>
+<td>using std::vector&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_message/">Message</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-messages">Messages</a></strong> <br>List of messages defined as alias.</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Public Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></strong></p>
 <table>
 <thead>
@@ -681,55 +693,24 @@
 <td>virtual</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-~ilogger">~ILogger</a></strong>()</td>
 </tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationfromvalue">setLocationFromValue</a></strong>(llvm::Value const * value)<br>Sets the logger position based on a LLVM value.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationresolver">setLocationResolver</a></strong>(LocationResolver const &amp; r)<br>Sets a resolver which that translates a LLVM value into a position in the source.</td>
+</tr>
+<tr>
+<td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-resolvelocation">resolveLocation</a></strong>(llvm::Value const * value)<br>Returns a source location from the value pointer (if possible)</td>
+</tr>
 </tbody>
 </table>
 <h2 id="detailed-description">Detailed Description</h2>
 <pre><code class="language-cpp">class microsoft::quantum::LogCollection;
 </code></pre>
 <p>Concrete <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> implementation that collects all messages and their corresponding location in a list that can be traversed later on. </p>
-<h2 id="public-types-documentation">Public Types Documentation</h2>
-<h3 id="enum-type">enum Type</h3>
-<table>
-<thead>
-<tr>
-<th>Enumerator</th>
-<th>Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Debug</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Info</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Warning</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Error</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>InternalError</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Enum description what type of information we are conveying. </p>
-<h3 id="using-messages">using Messages</h3>
-<pre><code class="language-cpp">using microsoft::quantum::LogCollection::Messages =  std::vector&lt;Message&gt;;
-</code></pre>
-<p>List of messages defined as alias. </p>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-debug">function debug</h3>
 <pre><code class="language-cpp">virtual void debug(
@@ -768,9 +749,7 @@
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-internalerror">microsoft::quantum::ILogger::internalError</a></p>
 <h3 id="function-setlocation">function setLocation</h3>
 <pre><code class="language-cpp">virtual void setLocation(
-    String const &amp; name,
-    int64_t line,
-    int64_t col
+    SourceLocation const &amp; loc
 ) override
 </code></pre>
 <p>Function that allows to set the current location. </p>
@@ -790,11 +769,19 @@
 <p>Sets the value of the frontend instruction causing the issue. </p>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setfrontendhint">microsoft::quantum::ILogger::setFrontendHint</a></p>
 <h3 id="function-messages">function messages</h3>
-<pre><code class="language-cpp">Messages const  &amp; messages() const
+<pre><code class="language-cpp">virtual Messages const  &amp; messages() const override
 </code></pre>
 <p>Accessor to the messages. </p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-messages">microsoft::quantum::ILogger::messages</a></p>
+<h3 id="function-dump">function dump</h3>
+<pre><code class="language-cpp">virtual void dump(
+    std::ostream &amp; out
+) const override
+</code></pre>
+<p>Enabling dumping collection to a file. </p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-dump">microsoft::quantum::ILogger::dump</a></p>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>

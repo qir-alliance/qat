@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_message/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      microsoft::quantum::LogCollection::Message - QAT Documentation
+      microsoft::quantum::ILogger::Location - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,16 +553,44 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> microsoft::quantum::LogCollection::Message </span>
+        <span class="text-center"> microsoft::quantum::ILogger::Location </span>
       </span>
     </h1>
     
-    <p class="mt-8 text-xl text-gray-500 leading-8">Struct to hold a message together with its type and location.</p>
+    <p class="mt-8 text-xl text-gray-500 leading-8">Class that holds the location of where the incident happened.</p>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumlogcollectionmessage">microsoft::quantum::LogCollection::Message</h1>
-<p>Struct to hold a message together with its type and location. </p>
-<p><code>#include &lt;Logging/LogCollection.hpp&gt;</code></p>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumiloggerlocation">microsoft::quantum::ILogger::Location</h1>
+<p>Class that holds the location of where the incident happened. </p>
+<p><code>#include &lt;Logging/ILogger.hpp&gt;</code></p>
+<p>Inherits from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></p>
+<h2 id="public-functions">Public Functions</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-location">Location</a></strong>() =default</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-location">Location</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a> const &amp; source)</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-location">Location</a></strong>(String v_name, int64_t v_line, int64_t v_column, String v_llvm_hint ="", String v_frontend_hint ="")</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-location">Location</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">Location</a> const &amp; source)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="public-attributes">Public Attributes</h2>
 <table>
 <thead>
@@ -573,31 +601,117 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/#enum-type">Type</a></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_message/#variable-type">type</a></strong></td>
-</tr>
-<tr>
-<td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_location/">Location</a></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_message/#variable-location">location</a></strong></td>
+<td>String</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#variable-llvm_hint">llvm_hint</a></strong></td>
 </tr>
 <tr>
 <td>String</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_log_collection_1_1_message/#variable-message">message</a></strong></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#variable-frontend_hint">frontend_hint</a></strong></td>
 </tr>
 </tbody>
 </table>
+<h2 id="additional-inherited-members">Additional inherited members</h2>
+<p><strong>Public Types inherited from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enum</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#enum-@1">@1</a></strong> { INVALID_POSITION}</td>
+</tr>
+<tr>
+<td>using llvm::StringRef</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#using-stringref">StringRef</a></strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Public Functions inherited from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#function-sourcelocation">SourceLocation</a></strong>() =default</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#function-sourcelocation">SourceLocation</a></strong>(String v_name, int64_t v_line, int64_t v_column)</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#function-operator-bool">operator bool</a></strong>() const</td>
+</tr>
+<tr>
+<td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#function-invalidposition">InvalidPosition</a></strong>()</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Public Attributes inherited from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#variable-name">name</a></strong></td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#variable-line">line</a></strong></td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#variable-column">column</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-functions-documentation">Public Functions Documentation</h2>
+<h3 id="function-location">function Location</h3>
+<pre><code class="language-cpp">Location() =default
+</code></pre>
+<h3 id="function-location_1">function Location</h3>
+<pre><code class="language-cpp">inline Location(
+    SourceLocation const &amp; source
+)
+</code></pre>
+<h3 id="function-location_2">function Location</h3>
+<pre><code class="language-cpp">inline Location(
+    String v_name,
+    int64_t v_line,
+    int64_t v_column,
+    String v_llvm_hint =&quot;&quot;,
+    String v_frontend_hint =&quot;&quot;
+)
+</code></pre>
+<h3 id="function-location_3">function Location</h3>
+<pre><code class="language-cpp">inline Location(
+    Location const &amp; source
+)
+</code></pre>
 <h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
-<h3 id="variable-type">variable type</h3>
-<pre><code class="language-cpp">Type type;
+<h3 id="variable-llvm_hint">variable llvm_hint</h3>
+<pre><code class="language-cpp">String llvm_hint {&quot;&quot;};
 </code></pre>
-<h3 id="variable-location">variable location</h3>
-<pre><code class="language-cpp">Location location;
-</code></pre>
-<h3 id="variable-message">variable message</h3>
-<pre><code class="language-cpp">String message;
+<h3 id="variable-frontend_hint">variable frontend_hint</h3>
+<pre><code class="language-cpp">String frontend_hint {&quot;&quot;};
 </code></pre>
 <hr />
-<p>Updated on  5 April 2022 at 17:23:00 UTC</p></div>
+<p>Updated on  6 April 2022 at 07:02:19 UTC</p></div>
 </div>
           </div>
         </main>
