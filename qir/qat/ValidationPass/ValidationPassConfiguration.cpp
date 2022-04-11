@@ -67,18 +67,22 @@ namespace quantum
             profile.allow_internal_calls_     = false;
             profile.allowlist_external_calls_ = true;
             profile.allowlist_opcodes_        = true;
-            profile.opcodes_                  = Set{"ret",  "br",   "phi", "add", "sub", "mul",  "fadd", "fsub",
+            profile.opcodes_                  = Set{"ret", "inttoptr",  "br",   "phi", "add", "sub", "mul",  "fadd", "fsub",
                                    "fmul", "ashr", "and", "or",  "xor", "icmp", "fcmp"};
             profile.external_calls_           = Set{
-                "__quantum__qis__cnot__body",        "__quantum__qis__cz__body",
-                "__quantum__qis__swap__body",        "__quantum__qis__h__body",
-                "__quantum__qis__s__body",           "__quantum__qis__s__adj",
-                "__quantum__qis__t__body",           "__quantum__qis__t__adj",
-                "__quantum__qis__x__body",           "__quantum__qis__y__body",
-                "__quantum__qis__z__body",           "__quantum__qis__rx__body",
-                "__quantum__qis__ry__body",          "__quantum__qis__rz__body",
-                "__quantum__qis__reset__body",       "__quantum__qis__mz__body",
-                "__quantum__qis__read_result__body",
+                "__quantum__qis__cnot__body",               "__quantum__qis__cz__body",
+                "__quantum__qis__swap__body",               "__quantum__qis__h__body",
+                "__quantum__qis__s__body",                  "__quantum__qis__s__adj",
+                "__quantum__qis__t__body",                  "__quantum__qis__t__adj",
+                "__quantum__qis__x__body",                  "__quantum__qis__y__body",
+                "__quantum__qis__z__body",                  "__quantum__qis__rx__body",
+                "__quantum__qis__ry__body",                 "__quantum__qis__rz__body",
+                "__quantum__qis__reset__body",              "__quantum__qis__mz__body",
+                "__quantum__qis__read_result__body",        "__quantum__rt__result_record_output",
+                "__quantum__rt__bool_record_output",        "__quantum__rt__integer_record_output",
+                "__quantum__rt__double_record_output",      "__quantum__rt__tuple_start_record_output",
+                "__quantum__rt__tuple_end_record_output",   "__quantum__rt__array_start_record_output",
+                "__quantum__rt__array_end_record_output",
 
             };
             profile.allowlist_pointer_types_ = true;
@@ -112,14 +116,18 @@ namespace quantum
             profile.allow_internal_calls_     = false;
             profile.allowlist_external_calls_ = true;
             profile.allowlist_opcodes_        = true;
-            profile.opcodes_ = Set{"ret", "br", "add", "sub", "mul", "and", "or", "xor", "lshr", "shl", "icmp"};
+            profile.opcodes_ = Set{"ret", "inttoptr", "br", "add", "sub", "mul", "and", "or", "xor", "lshr", "shl", "icmp"};
             profile.external_calls_ =
-                Set{"__quantum__qis__cnot__body",       "__quantum__qis__cz__body",    "__quantum__qis__h__body",
-                    "__quantum__qis__s__body",          "__quantum__qis__s__adj",      "__quantum__qis__t__body",
-                    "__quantum__qis__t__adj",           "__quantum__qis__x__body",     "__quantum__qis__y__body",
-                    "__quantum__qis__z__body",          "__quantum__qis__rx__body",    "__quantum__qis__ry__body",
-                    "__quantum__qis__rz__body",         "__quantum__qis__reset__body", "__quantum__qis__mz__body",
-                    "__quantum__qis__read_result__body"};
+                Set{"__quantum__qis__cnot__body",               "__quantum__qis__cz__body",                 "__quantum__qis__h__body",
+                    "__quantum__qis__s__body",                  "__quantum__qis__s__adj",                   "__quantum__qis__t__body",
+                    "__quantum__qis__t__adj",                   "__quantum__qis__x__body",                  "__quantum__qis__y__body",
+                    "__quantum__qis__z__body",                  "__quantum__qis__rx__body",                 "__quantum__qis__ry__body",
+                    "__quantum__qis__rz__body",                 "__quantum__qis__reset__body",              "__quantum__qis__mz__body",
+                    "__quantum__qis__read_result__body",        "__quantum__rt__result_record_output",      "__quantum__rt__bool_record_output",
+                    "__quantum__rt__integer_record_output",     "__quantum__rt__tuple_start_record_output", "__quantum__rt__tuple_end_record_output",
+                    "__quantum__rt__array_start_record_output", "__quantum__rt__array_end_record_output",
+                
+                };
             profile.allowlist_pointer_types_ = true;
             profile.allowed_pointer_types_   = {"Qubit*", "Result*"};
         }
