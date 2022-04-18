@@ -1,7 +1,7 @@
 all: qat-qsharp
 
 qat-qsharp: QSharpVersion/qir/Example.ll
-	${QAT_BINARY} --apply -S --verify-module --always-inline --disable-grouping --profile base QSharpVersion/qir/Example.ll > combined.ll
+	${QAT_BINARY} --apply -S --verify-module --profile base QSharpVersion/qir/Example.ll > combined.ll
 	opt -O3 -S combined.ll > optimized.ll
 	${QAT_BINARY} -S --validate --save-logs validation.json  --profile base optimized.ll || echo "failed!"
 	@echo "Validation for SimpleLoop finished"
