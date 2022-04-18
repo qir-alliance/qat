@@ -4,7 +4,8 @@ USER root
 
 RUN apt-get -y update && \
     apt-get -y remove llvm-10 && \
-    apt-get -y install cmake clang-11 clang-format-11 clang-tidy-11
+    apt-get -y install cmake clang-11 clang-format-11 clang-tidy-11 && \
+    npm install -g prettier@2.2.1
 
 USER codespace
 
