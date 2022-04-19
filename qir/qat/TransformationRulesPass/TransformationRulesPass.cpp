@@ -795,6 +795,8 @@ namespace quantum
             }
 
             processReplacements();
+
+            // TODO(tfr): Count qubits for entry function
         }
 
         return llvm::PreservedAnalyses::none();
