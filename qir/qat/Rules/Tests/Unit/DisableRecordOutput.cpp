@@ -26,7 +26,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 
     ir_manip->declareFunction("void @__quantum__rt__result_record_output(%Result*)");
     ir_manip->declareFunction("void @__quantum__rt__integer_record_output(i64)");
-    ir_manip->declareFunction("void @__quantum__rt__double_record_output(f64)");
+    ir_manip->declareFunction("void @__quantum__rt__double_record_output(double)");
     ir_manip->declareFunction("void @__quantum__rt__bool_record_output(i1)");
     ir_manip->declareFunction("void @__quantum__rt__tuple_start_record_output()");
     ir_manip->declareFunction("void @__quantum__rt__tuple_end_record_output()");
@@ -48,7 +48,7 @@ TEST(RuleSetTestSuite, DisablingRecordOutput)
     auto ir_manip = newIrManip(R"script(
     call void @__quantum__rt__result_record_output(%Result* null)      
     call void @__quantum__rt__integer_record_output(i64 0)    
-    call void @__quantum__rt__double_record_output(f64 0)    
+    call void @__quantum__rt__double_record_output(double 0.000000e+00)    
     call void @__quantum__rt__bool_record_output(i1 0)    
     call void @__quantum__rt__tuple_start_record_output()    
     call void @__quantum__rt__tuple_end_record_output()    
