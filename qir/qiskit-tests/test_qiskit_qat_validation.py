@@ -57,4 +57,4 @@ def test_qat_validation(circuit_name, request):
     circuit = request.getfixturevalue(circuit_name)
     generated_ir = to_qir(circuit)
     logger.debug(generated_ir)
-    assert validate_circuit(circuit_name, "provider_4bf9", circuit)
+    assert validate_circuit(circuit_name, "base", circuit)
