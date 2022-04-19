@@ -25,7 +25,7 @@ jobs:
       - name: "Copying QAT source"
         run: |
           cp -R qir/qat /tmp/
-          cp -R qir/qiski-tests /tmp/
+          cp -R qir/qiskit-tests /tmp/
 
       - name: Checkout code main
         uses: actions/checkout@v2
