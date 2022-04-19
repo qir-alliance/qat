@@ -14,11 +14,11 @@ namespace quantum
         config.setSectionName("Pass configuration", "Configuration of the pass and its corresponding optimizations.");
 
         // Experimental settings
-        config.addExperimentalParameter(delete_dead_code_, true, true, "delete-dead-code", "Deleted dead code.");
+        config.addExperimentalParameter(delete_dead_code_, true, false, "delete-dead-code", "Deleted dead code.");
         config.addExperimentalParameter(
             clone_functions_, true, false, "clone-functions", "Clone functions to ensure correct qubit allocation.");
         config.addExperimentalParameter(
-            transform_execution_path_only_, true, true, "transform-execution-path-only",
+            transform_execution_path_only_, true, false, "transform-execution-path-only",
             "Transform execution paths only.");
 
         config.addExperimentalParameter(
