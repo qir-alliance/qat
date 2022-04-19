@@ -80,7 +80,9 @@ jobs:
         run: |
           git clone git@github.com:msr-quarc/qiskit-qir.git
           pushd qiskit-qir
+
           git checkout 111e8149e5ea79c20764c044c454facc5188b2bd
+
           pip3 install --user -e .
           popd
           export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
