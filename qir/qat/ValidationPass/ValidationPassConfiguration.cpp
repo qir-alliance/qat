@@ -100,7 +100,6 @@ namespace quantum
             profile.allowlist_pointer_types_ = true;
             profile.allowed_pointer_types_   = {"Qubit*", "Result*"};
         }
-
         else if (name == "provider_7ee0")
         {
             // Supported LLVM types: i64 (integer), double, i1 (bool), %Qubit*, %Result*.
