@@ -630,6 +630,11 @@ namespace quantum
             disableStringSupport();
         }
 
+        if (config.disableRecordOutputSupport())
+        {
+            disableRecordOutputSupport();
+        }
+
         if (config.optimizeResultOne())
         {
             optimizeResultOne();
@@ -1235,6 +1240,18 @@ namespace quantum
         removeFunctionCall(&quot;__quantum__rt__bigint_to_string&quot;);
     }
 
+    void RuleFactory::disableRecordOutputSupport()
+    {
+        removeFunctionCall(&quot;__quantum__rt__result_record_output&quot;);
+        removeFunctionCall(&quot;__quantum__rt__bool_record_output&quot;);
+        removeFunctionCall(&quot;__quantum__rt__integer_record_output&quot;);
+        removeFunctionCall(&quot;__quantum__rt__double_record_output&quot;);
+        removeFunctionCall(&quot;__quantum__rt__tuple_start_record_output&quot;);
+        removeFunctionCall(&quot;__quantum__rt__tuple_end_record_output&quot;);
+        removeFunctionCall(&quot;__quantum__rt__array_start_record_output&quot;);
+        removeFunctionCall(&quot;__quantum__rt__array_end_record_output&quot;);
+    }
+
     ReplacementRulePtr RuleFactory::addRule(ReplacementRule&amp;&amp; rule)
     {
         auto ret = std::make_shared&lt;ReplacementRule&gt;(std::move(rule));
@@ -1253,7 +1270,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 19 April 2022 at 20:54:52 UTC</p></div>
+<p>Updated on 20 April 2022 at 06:41:19 UTC</p></div>
 </div>
           </div>
         </main>
