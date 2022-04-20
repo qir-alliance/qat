@@ -33,4 +33,5 @@ declare void @__quantum__qis__cnot__body(%Qubit*, %Qubit*)
 
 declare void @__quantum__qis__h__body(%Qubit*)
 
-attributes #0 = { "EntryPoint" }
+attributes #0 = { "EntryPoint" "maxQubitIndex"="1" "maxResultIndex"="0" "requiredQubits"="2" "requiredResults"="0" }
+attributes #1 = { "maxQubitIndex"="0" "maxResultIndex"="0" "requiredQubits"="0" "requiredResults"="0" }
