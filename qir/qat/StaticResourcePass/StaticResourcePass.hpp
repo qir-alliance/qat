@@ -2,52 +2,54 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Llvm/Llvm.hpp"
 #include "Logging/ILogger.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
 #include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
 
+#include "Llvm/Llvm.hpp"
+
 #include <functional>
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft {
-namespace quantum {
-
-class StaticResourcePass : public llvm::PassInfoMixin<StaticResourcePass>
+namespace microsoft
 {
-public:
-  using Instruction = llvm::Instruction;
-  using Value       = llvm::Value;
-  using ILoggerPtr  = std::shared_ptr<ILogger>;
-  using Location    = ILogger::Location;
-  using StringRef   = llvm::StringRef;
+namespace quantum
+{
 
-  // Construction and destruction configuration.
-  //
+    class StaticResourcePass : public llvm::PassInfoMixin<StaticResourcePass>
+    {
+      public:
+        using Instruction = llvm::Instruction;
+        using Value       = llvm::Value;
+        using ILoggerPtr  = std::shared_ptr<ILogger>;
+        using Location    = ILogger::Location;
+        using StringRef   = llvm::StringRef;
 
-  explicit StaticResourcePass(StaticResourcePassConfiguration const &cfg,
-                              ILoggerPtr const                      &logger = nullptr);
+        // Construction and destruction configuration.
+        //
 
-  /// Copy construction is banned.
-  StaticResourcePass(StaticResourcePass const &) = delete;
+        explicit StaticResourcePass(StaticResourcePassConfiguration const& cfg, ILoggerPtr const& logger = nullptr);
 
-  /// We allow move semantics.
-  StaticResourcePass(StaticResourcePass &&) = default;
+        /// Copy construction is banned.
+        StaticResourcePass(StaticResourcePass const&) = delete;
 
-  /// Default destruction.
-  ~StaticResourcePass() = default;
+        /// We allow move semantics.
+        StaticResourcePass(StaticResourcePass&&) = default;
 
-  llvm::PreservedAnalyses run(llvm::Module &module, llvm::ModuleAnalysisManager &mam);
-  /// Whether or not this pass is required to run.
-  static bool isRequired();
+        /// Default destruction.
+        ~StaticResourcePass() = default;
 
-private:
-  StaticResourcePassConfiguration config_{};
+        llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
+        /// Whether or not this pass is required to run.
+        static bool isRequired();
 
-  ILoggerPtr logger_{nullptr};
-};
+      private:
+        StaticResourcePassConfiguration config_{};
 
-}  // namespace quantum
-}  // namespace microsoft
+        ILoggerPtr logger_{nullptr};
+    };
+
+} // namespace quantum
+} // namespace microsoft
