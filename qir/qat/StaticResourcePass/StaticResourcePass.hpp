@@ -46,6 +46,10 @@ namespace quantum
         static bool isRequired();
 
       private:
+        bool enforceRequirements(llvm::Module& module) const;
+        void allocateOnReset(llvm::Module& module) const;
+        void annotateQubits(llvm::Module& module) const;
+
         StaticResourcePassConfiguration config_{};
 
         ILoggerPtr logger_{nullptr};

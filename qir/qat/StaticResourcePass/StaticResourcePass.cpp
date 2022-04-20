@@ -19,11 +19,46 @@ namespace quantum
     {
     }
 
-    llvm::PreservedAnalyses StaticResourcePass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
+    bool StaticResourcePass::enforceRequirements(llvm::Module& module) const
+    {
+        if (config_.shouldReplaceQubitsOnReset())
+        {
+            uint64_t function_counts{0};
+            uint64_t body_counts{0};
+
+            for (auto& function : module)
+            {
+                ++function_counts;
+                for (auto& body : function)
+                {
+                    ++body_counts;
+                }
+            }
+
+            if (function_counts != 1 || body_counts != 1)
+            {
+                if (logger_)
+                {
+                    logger_->error(
+                        "Qubit replacement on reset only possible using straight line code (single function, "
+                        "one body).");
+                    return false;
+                }
+                else
+                {
+                    throw std::runtime_error(
+                        "Qubit replacement on reset only possible using straight line code (single function, "
+                        "one body).");
+                }
+            }
+        }
+        return true;
+    }
+
+    void StaticResourcePass::annotateQubits(llvm::Module& module) const
     {
         if (config_.shouldAnnotateResultUse() || config_.shouldAnnotateQubitUse())
         {
-            // TODO: Move this out into an analysis pass
             for (auto& function : module)
             {
                 uint64_t                     largest_qubit_index  = 0;
@@ -104,11 +139,6 @@ namespace quantum
 
                 if (config_.shouldAnnotateQubitUse())
                 {
-                    for (auto& x : qubits_used)
-                    {
-                        llvm::errs() << x << ", ";
-                    }
-                    llvm::errs() << "\n";
                     std::stringstream ss{""};
                     ss << qubits_used.size();
                     function.addFnAttr("requiredQubits", ss.str());
@@ -136,6 +166,23 @@ namespace quantum
                 }
             }
         }
+    }
+
+    void StaticResourcePass::allocateOnReset(llvm::Module& /*module*/) const
+    {
+        // TODO(tfr): needs implementation
+    }
+
+    llvm::PreservedAnalyses StaticResourcePass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
+    {
+        if (!enforceRequirements(module))
+        {
+            return llvm::PreservedAnalyses::none();
+        }
+
+        allocateOnReset(module);
+
+        annotateQubits(module);
 
         return llvm::PreservedAnalyses::all();
     }

@@ -35,12 +35,17 @@ namespace quantum
         /// Whether or not to annotate every function with the maximum result index accessed.
         bool shouldAnnotateMaxResultIndex() const;
 
+        /// Whether or not qubits should be replaced upon resetting
+        bool shouldReplaceQubitsOnReset() const;
+
       private:
         bool annotate_qubit_use_{true};
         bool annotate_result_use_{true};
 
         bool annotate_max_qubit_index_{true};
         bool annotate_max_result_index_{true};
+
+        bool replace_qubit_on_reset_{false};
     };
 
 } // namespace quantum

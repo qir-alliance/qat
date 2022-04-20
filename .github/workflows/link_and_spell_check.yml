@@ -33,7 +33,7 @@ jobs:
           config_file: "utils/md_lint_config.yml"
       - name: Markdown link check
         # cspell:words gaurav
-        uses: gaurav-nelson/github-action-markdown-link-check@v1.0.13
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
           use-verbose-mode: "yes"
         if: ${{ success() || failure() }}

@@ -22,6 +22,9 @@ namespace quantum
 
         config.addParameter(
             annotate_max_result_index_, "annotate-max-result-index", "Annotate the maximum result index used");
+
+        config.addParameter(
+            annotate_max_result_index_, "annotate-max-result-index", "Annotate the maximum result index used");
     }
 
     bool StaticResourcePassConfiguration::shouldAnnotateQubitUse() const
