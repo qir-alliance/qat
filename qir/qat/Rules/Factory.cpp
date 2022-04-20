@@ -52,6 +52,11 @@ namespace quantum
             disableStringSupport();
         }
 
+        if (config.disableRecordOutputSupport())
+        {
+            disableRecordOutputSupport();
+        }
+
         if (config.optimizeResultOne())
         {
             optimizeResultOne();
@@ -670,6 +675,18 @@ namespace quantum
         removeFunctionCall("__quantum__rt__qubit_to_string");
         removeFunctionCall("__quantum__rt__range_to_string");
         removeFunctionCall("__quantum__rt__bigint_to_string");
+    }
+
+    void RuleFactory::disableRecordOutputSupport()
+    {
+        removeFunctionCall("__quantum__rt__result_record_output");
+        removeFunctionCall("__quantum__rt__bool_record_output");
+        removeFunctionCall("__quantum__rt__integer_record_output");
+        removeFunctionCall("__quantum__rt__double_record_output");
+        removeFunctionCall("__quantum__rt__tuple_start_record_output");
+        removeFunctionCall("__quantum__rt__tuple_end_record_output");
+        removeFunctionCall("__quantum__rt__array_start_record_output");
+        removeFunctionCall("__quantum__rt__array_end_record_output");
     }
 
     ReplacementRulePtr RuleFactory::addRule(ReplacementRule&& rule)
