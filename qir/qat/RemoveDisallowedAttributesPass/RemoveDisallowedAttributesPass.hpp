@@ -44,7 +44,14 @@ namespace quantum
                 {
                     for (auto& attr : attrset)
                     {
-                        auto r = static_cast<String>(attr.getAsString());
+                        auto r        = static_cast<String>(attr.getAsString());
+                        auto original = r;
+
+                        auto p = r.find('=');
+                        if (p != std::string::npos)
+                        {
+                            r = r.substr(0, p);
+                        }
 
                         // Stripping quotes
                         if (r.size() >= 2 && r[0] == '"' && r[r.size() - 1] == '"')
@@ -55,7 +62,7 @@ namespace quantum
                         // Inserting if allowed
                         if (allowed_attrs_.find(r) != allowed_attrs_.end())
                         {
-                            to_keep.insert(r);
+                            to_keep.insert(original);
                         }
                     }
                 }
