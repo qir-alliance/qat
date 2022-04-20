@@ -163,6 +163,9 @@ namespace quantum
         /// `__quantum__rt__message`.
         void disableStringSupport();
 
+        /// Removes output recording by removing related runtime instructions.
+        void disableRecordOutputSupport();
+
         // Configuration
         //
 

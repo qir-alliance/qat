@@ -43,6 +43,9 @@ namespace quantum
             config.addParameter(
                 disable_string_support_, true, "disable-string-support",
                 "Disables string support by instruction removal.");
+            config.addParameter(
+                disable_record_output_support_, true, "disable-record-output-support",
+                "Disables record output support by instruction removal.");
         }
 
         static FactoryConfiguration createDisabled()
@@ -51,6 +54,7 @@ namespace quantum
             ret.disable_reference_counting_        = false;
             ret.disable_alias_counting_            = false;
             ret.disable_string_support_            = false;
+            ret.disable_record_output_support_     = false;
             ret.optimize_result_one_               = false;
             ret.optimize_result_zero_              = false;
             ret.use_static_qubit_array_allocation_ = false;
@@ -72,6 +76,11 @@ namespace quantum
         bool disableStringSupport() const
         {
             return disable_string_support_;
+        }
+
+        bool disableRecordOutputSupport() const
+        {
+            return disable_record_output_support_;
         }
 
         bool optimizeResultOne() const
@@ -108,7 +117,8 @@ namespace quantum
         {
             return (
                 disable_reference_counting_ == false && disable_alias_counting_ == false &&
-                disable_string_support_ == false && optimize_result_one_ == false && optimize_result_zero_ == false &&
+                disable_string_support_ == false && disable_record_output_support_ == false &&
+                optimize_result_one_ == false && optimize_result_zero_ == false &&
                 use_static_qubit_array_allocation_ == false && use_static_qubit_allocation_ == false &&
                 use_static_result_allocation_ == false);
         }
@@ -121,6 +131,7 @@ namespace quantum
                 disable_reference_counting_ == ref.disable_reference_counting_ &&
                 disable_alias_counting_ == ref.disable_alias_counting_ &&
                 disable_string_support_ == ref.disable_string_support_ &&
+                disable_record_output_support_ == ref.disable_record_output_support_ &&
                 optimize_result_one_ == ref.optimize_result_one_ &&
                 optimize_result_zero_ == ref.optimize_result_zero_ &&
                 use_static_qubit_array_allocation_ == ref.use_static_qubit_array_allocation_ &&
@@ -134,6 +145,7 @@ namespace quantum
         bool disable_reference_counting_{true};
         bool disable_alias_counting_{true};
         bool disable_string_support_{true};
+        bool disable_record_output_support_{true};
         /// @}
 
         /// Optimizations
