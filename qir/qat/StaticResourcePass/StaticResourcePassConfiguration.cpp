@@ -47,5 +47,10 @@ namespace quantum
         return annotate_max_result_index_;
     }
 
+    bool StaticResourcePassConfiguration::shouldReplaceQubitsOnReset() const
+    {
+        return replace_qubit_on_reset_;
+    }
+
 } // namespace quantum
 } // namespace microsoft

@@ -42,13 +42,24 @@ namespace quantum
         ~StaticResourcePass() = default;
 
         llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
+
         /// Whether or not this pass is required to run.
         static bool isRequired();
 
       private:
+        struct ResourceStats
+        {
+            uint64_t largest_qubit_index{0};
+            uint64_t largest_result_index{0};
+            uint64_t usage_qubit_counts{0};
+            uint64_t usage_result_counts{0};
+        };
+
         bool enforceRequirements(llvm::Module& module) const;
         void allocateOnReset(llvm::Module& module) const;
         void annotateQubits(llvm::Module& module) const;
+
+        ResourceStats getLargestIndices(llvm::Function& function) const;
 
         StaticResourcePassConfiguration config_{};
 
