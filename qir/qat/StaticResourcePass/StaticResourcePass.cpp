@@ -19,7 +19,125 @@ namespace quantum
     {
     }
 
-    void StaticResourcePass::remapQubits(llvm::Module& /*module*/) const {}
+    void StaticResourcePass::remapQubits(llvm::Module& module) const
+    {
+        llvm::IRBuilder<> builder{module.getContext()};
+
+        for (auto& function : module)
+        {
+            std::unordered_map<uint64_t, uint64_t> qubits_mapping{};
+            std::unordered_map<uint64_t, uint64_t> results_mapping{};
+            std::unordered_set<llvm::Value*>       already_replaced{};
+
+            for (auto& block : function)
+            {
+                for (auto& instr : block)
+                {
+                    for (auto& op : instr.operands())
+                    {
+                        // In case we already did the mapping, we skip to next instruction
+                        if (already_replaced.find(op) != already_replaced.end())
+                        {
+                            continue;
+                        }
+
+                        auto* instruction_ptr = llvm::dyn_cast<llvm::IntToPtrInst>(op);
+                        auto* operator_ptr =
+                            llvm::dyn_cast<llvm::ConcreteOperator<llvm::Operator, llvm::Instruction::IntToPtr>>(op);
+
+                        auto* nullptr_cast = llvm::dyn_cast<llvm::ConstantPointerNull>(op);
+
+                        if (instruction_ptr || operator_ptr || nullptr_cast)
+                        {
+
+                            auto pointer_type = llvm::dyn_cast<llvm::PointerType>(op->getType());
+                            if (!pointer_type)
+                            {
+                                continue;
+                            }
+
+                            llvm::Type* element_type = pointer_type->getElementType();
+
+                            if (!element_type->isStructTy())
+                            {
+                                continue;
+                            }
+
+                            auto type_name = static_cast<String>(element_type->getStructName());
+                            if (type_name != "Qubit" && type_name != "Result")
+                            {
+                                continue;
+                            }
+
+                            bool     is_constant_int = nullptr_cast != nullptr;
+                            uint64_t n               = 0;
+
+                            auto user = llvm::dyn_cast<llvm::User>(op);
+
+                            // In case there exists a user, it must have exactly one argument
+                            // which should be an integer. In case of deferred integers, the mapping
+                            // will not work
+                            if (user && user->getNumOperands() == 1)
+                            {
+                                auto cst = llvm::dyn_cast<llvm::ConstantInt>(user->getOperand(0));
+
+                                if (cst)
+                                {
+                                    is_constant_int = true;
+                                    n               = cst->getValue().getZExtValue();
+                                }
+                            }
+
+                            // We only perform the mapping for constant integer casts. Anything else
+                            // cannot be remapped.
+                            if (is_constant_int)
+                            {
+                                uint64_t remapped_index = 0;
+
+                                // Getting remapped index based on resource type
+                                if (type_name == "Qubit")
+                                {
+                                    if (qubits_mapping.find(n) == qubits_mapping.end())
+                                    {
+                                        remapped_index    = qubits_mapping.size();
+                                        qubits_mapping[n] = remapped_index;
+                                    }
+                                    else
+                                    {
+                                        remapped_index = qubits_mapping[n];
+                                    }
+                                }
+                                else if (type_name == "Result")
+                                {
+                                    if (results_mapping.find(n) == results_mapping.end())
+                                    {
+                                        remapped_index     = results_mapping.size();
+                                        results_mapping[n] = remapped_index;
+                                    }
+                                    else
+                                    {
+                                        remapped_index = results_mapping[n];
+                                    }
+                                }
+
+                                // Creating new instruction with remapped index
+                                builder.SetInsertPoint(&instr);
+
+                                auto idx       = llvm::APInt(64, remapped_index);
+                                auto new_index = llvm::ConstantInt::get(module.getContext(), idx);
+                                auto new_instr = new llvm::IntToPtrInst(new_index, pointer_type);
+                                builder.Insert(new_instr);
+
+                                op->replaceAllUsesWith(new_instr);
+                                already_replaced.insert(new_instr);
+                                already_replaced.insert(op);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     bool StaticResourcePass::enforceRequirements(llvm::Module& module) const
     {
