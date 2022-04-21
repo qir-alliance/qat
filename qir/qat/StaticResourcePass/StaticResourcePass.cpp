@@ -143,6 +143,11 @@ namespace quantum
         {
             for (auto& function : module)
             {
+                if (function.isDeclaration())
+                {
+                    continue;
+                }
+
                 auto stats = getLargestIndices(function);
 
                 if (config_.shouldAnnotateQubitUse())
