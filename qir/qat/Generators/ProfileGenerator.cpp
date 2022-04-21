@@ -256,7 +256,7 @@ namespace quantum
 
         registerProfileComponent<StaticResourcePassConfiguration>(
             "static-resource",
-            [logger](StaticResourcePassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            [logger](StaticResourcePassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
                 auto& pass_manager = ptr->modulePassManager();
                 pass_manager.addPass(StaticResourcePass(cfg, logger));
             });
