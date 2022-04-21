@@ -21,6 +21,11 @@ namespace quantum
 
     void StaticResourcePass::remapQubits(llvm::Module& module) const
     {
+        if (!config_.shouldReindexQubits())
+        {
+            return;
+        }
+
         llvm::IRBuilder<> builder{module.getContext()};
 
         for (auto& function : module)

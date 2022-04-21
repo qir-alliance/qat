@@ -38,6 +38,12 @@ namespace quantum
         /// Whether or not qubits should be replaced upon resetting
         bool shouldReplaceQubitsOnReset() const;
 
+        /// Whether or not qubit ids should be re-indexed sequentially starting from 0
+        bool shouldReindexQubits() const;
+
+        /// Creates a configuration where all features are disabled
+        static StaticResourcePassConfiguration createDisabled();
+
       private:
         bool annotate_qubit_use_{true};
         bool annotate_result_use_{true};
@@ -46,6 +52,7 @@ namespace quantum
         bool annotate_max_result_index_{true};
 
         bool replace_qubit_on_reset_{false};
+        bool reindex_qubits_{false};
     };
 
 } // namespace quantum

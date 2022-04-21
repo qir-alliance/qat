@@ -25,6 +25,10 @@ namespace quantum
 
         config.addParameter(
             annotate_max_result_index_, "annotate-max-result-index", "Annotate the maximum result index used");
+
+        config.addParameter(
+            reindex_qubits_, "reindex-qubits",
+            "Re-indexes statically allocated qubits with sequential ids starting from 0");
     }
 
     bool StaticResourcePassConfiguration::shouldAnnotateQubitUse() const
@@ -50,6 +54,25 @@ namespace quantum
     bool StaticResourcePassConfiguration::shouldReplaceQubitsOnReset() const
     {
         return replace_qubit_on_reset_;
+    }
+
+    bool StaticResourcePassConfiguration::shouldReindexQubits() const
+    {
+        return reindex_qubits_;
+    }
+
+    StaticResourcePassConfiguration StaticResourcePassConfiguration::createDisabled()
+    {
+        StaticResourcePassConfiguration ret;
+        ret.annotate_qubit_use_  = false;
+        ret.annotate_result_use_ = false;
+
+        ret.annotate_max_qubit_index_  = false;
+        ret.annotate_max_result_index_ = false;
+
+        ret.replace_qubit_on_reset_ = false;
+        ret.reindex_qubits_         = false;
+        return ret;
     }
 
 } // namespace quantum
