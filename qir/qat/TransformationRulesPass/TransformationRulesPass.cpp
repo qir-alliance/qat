@@ -766,24 +766,11 @@ namespace quantum
         }
         else
         {
-            bool first_function = true;
 
             // Otherwise we apply to all sections of the code.
             replacements_.clear();
             for (auto& function : module)
             {
-                // Sanity check to prevent that QAT is being used in correctly
-                /*
-              if (!first_function &&
-                  (config_.shouldAnnotateResultUse() || config_.shouldAnnotateQubitUse()))
-              {
-                throw std::runtime_error(
-                    "Cannot annotate qubit or result use in IRs that has multiple function. To enable this "
-                    "functionality use the option `--transform-execution-path-only`");
-              }
-              */
-
-                first_function = false;
 
                 // Transforming each function
                 for (auto& block : function)

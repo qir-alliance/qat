@@ -19,6 +19,8 @@ namespace quantum
     {
     }
 
+    void StaticResourcePass::remapQubits(llvm::Module& /*module*/) const {}
+
     bool StaticResourcePass::enforceRequirements(llvm::Module& module) const
     {
         if (config_.shouldReplaceQubitsOnReset())
@@ -192,6 +194,8 @@ namespace quantum
         {
             return llvm::PreservedAnalyses::none();
         }
+
+        remapQubits(module);
 
         allocateOnReset(module);
 

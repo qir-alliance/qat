@@ -58,6 +58,7 @@ namespace quantum
         bool enforceRequirements(llvm::Module& module) const;
         void allocateOnReset(llvm::Module& module) const;
         void annotateQubits(llvm::Module& module) const;
+        void remapQubits(llvm::Module& module) const;
 
         ResourceStats getLargestIndices(llvm::Function& function) const;
 
