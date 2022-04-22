@@ -612,7 +612,9 @@ namespace quantum
     {
       public:
         RemoveDisallowedAttributesPass()
-          : allowed_attrs_{{static_cast&lt;String&gt;(&quot;EntryPoint&quot;), static_cast&lt;String&gt;(&quot;InteropFriendly&quot;)}}
+          : allowed_attrs_{
+                static_cast&lt;String&gt;(&quot;EntryPoint&quot;), static_cast&lt;String&gt;(&quot;InteropFriendly&quot;),
+                static_cast&lt;String&gt;(&quot;requiredQubits&quot;), static_cast&lt;String&gt;(&quot;requiredResults&quot;)}
         {
         }
 
@@ -621,8 +623,8 @@ namespace quantum
             std::string const LLVM_FUNC_NAME = &quot;@llvm.&quot;;
             for (auto&amp; fnc : module)
             {
-                std::unordered_set&lt;String&gt; to_keep;
-                auto                       name = static_cast&lt;std::string&gt;(fnc.getName());
+                std::unordered_map&lt;String, String&gt; to_keep;
+                auto                               name = static_cast&lt;std::string&gt;(fnc.getName());
 
                 // Skipping any LLVM function
                 if (name.size() &gt;= LLVM_FUNC_NAME.size() &amp;&amp; name.substr(0, LLVM_FUNC_NAME.size()) == LLVM_FUNC_NAME)
@@ -635,7 +637,15 @@ namespace quantum
                 {
                     for (auto&amp; attr : attrset)
                     {
-                        auto r = static_cast&lt;String&gt;(attr.getAsString());
+                        auto        r = static_cast&lt;String&gt;(attr.getAsString());
+                        std::string value{};
+
+                        auto p = r.find('=');
+                        if (p != std::string::npos)
+                        {
+                            value = r.substr(p + 1, r.size() - p - 1);
+                            r     = r.substr(0, p);
+                        }
 
                         // Stripping quotes
                         if (r.size() &gt;= 2 &amp;&amp; r[0] == '&quot;' &amp;&amp; r[r.size() - 1] == '&quot;')
@@ -643,10 +653,15 @@ namespace quantum
                             r = r.substr(1, r.size() - 2);
                         }
 
+                        if (value.size() &gt;= 2 &amp;&amp; value[0] == '&quot;' &amp;&amp; value[value.size() - 1] == '&quot;')
+                        {
+                            value = value.substr(1, value.size() - 2);
+                        }
+
                         // Inserting if allowed
                         if (allowed_attrs_.find(r) != allowed_attrs_.end())
                         {
-                            to_keep.insert(r);
+                            to_keep.insert(std::make_pair(r, value));
                         }
                     }
                 }
@@ -655,7 +670,14 @@ namespace quantum
                 fnc.setAttributes({});
                 for (auto&amp; attr : to_keep)
                 {
-                    fnc.addFnAttr(attr);
+                    if (attr.second.empty())
+                    {
+                        fnc.addFnAttr(attr.first);
+                    }
+                    else
+                    {
+                        fnc.addFnAttr(attr.first, attr.second);
+                    }
                 }
 
                 // Updating all users attributes
@@ -680,7 +702,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 20 April 2022 at 06:41:19 UTC</p></div>
+<p>Updated on 22 April 2022 at 02:37:17 UTC</p></div>
 </div>
           </div>
         </main>

@@ -600,7 +600,7 @@ namespace quantum
             &quot;Transform execution paths only.&quot;);
 
         config.addExperimentalParameter(
-            max_recursion_, max_recursion_, uint64_t(0), &quot;max-recursion&quot;,
+            max_recursion_, max_recursion_, uint64_t(1), &quot;max-recursion&quot;,
             &quot;Defines the maximum recursion when unrolling the execution path&quot;);
 
         config.addExperimentalParameter(
@@ -614,10 +614,6 @@ namespace quantum
 
         config.addParameter(
             entry_point_attr_, &quot;entry-point-attr&quot;, &quot;Specifies the attribute indicating the entry point.&quot;);
-
-        config.addParameter(annotate_qubit_use_, &quot;annotate-qubit-use&quot;, &quot;Annotate the number of qubits used&quot;);
-
-        config.addParameter(annotate_result_use_, &quot;annotate-result-use&quot;, &quot;Annotate the number of results used&quot;);
     }
 
     TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createDisabled()
@@ -628,7 +624,7 @@ namespace quantum
         ret.transform_execution_path_only_ = false;
         ret.max_recursion_                 = 512;
         ret.reuse_qubits_                  = false;
-        ret.annotate_qubit_use_            = false;
+        ret.reuse_results_                 = false;
 
         return ret;
     }
@@ -641,7 +637,7 @@ namespace quantum
         ret.transform_execution_path_only_ = false;
         ret.max_recursion_                 = 512;
         ret.reuse_qubits_                  = true;
-        ret.annotate_qubit_use_            = false;
+        ret.reuse_results_                 = false;
 
         return ret;
     }
@@ -671,19 +667,9 @@ namespace quantum
         return reuse_qubits_;
     }
 
-    bool TransformationRulesPassConfiguration::shouldAnnotateQubitUse() const
-    {
-        return annotate_qubit_use_;
-    }
-
     bool TransformationRulesPassConfiguration::shouldReuseResults() const
     {
         return reuse_results_;
-    }
-
-    bool TransformationRulesPassConfiguration::shouldAnnotateResultUse() const
-    {
-        return annotate_result_use_;
     }
 
     std::string TransformationRulesPassConfiguration::entryPointAttr() const
@@ -715,7 +701,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 20 April 2022 at 06:41:19 UTC</p></div>
+<p>Updated on 22 April 2022 at 02:37:17 UTC</p></div>
 </div>
           </div>
         </main>

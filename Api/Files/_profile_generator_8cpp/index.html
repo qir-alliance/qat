@@ -586,6 +586,8 @@
 #include &quot;GroupingPass/GroupingPassConfiguration.hpp&quot;
 #include &quot;Rules/Factory.hpp&quot;
 #include &quot;Rules/RuleSet.hpp&quot;
+#include &quot;StaticResourcePass/StaticResourcePass.hpp&quot;
+#include &quot;StaticResourcePass/StaticResourcePassConfiguration.hpp&quot;
 #include &quot;TransformationRulesPass/TransformationRulesPass.hpp&quot;
 #include &quot;TransformationRulesPass/TransformationRulesPassConfiguration.hpp&quot;
 #include &quot;ValidationPass/ValidationPassConfiguration.hpp&quot;
@@ -826,6 +828,13 @@ namespace quantum
         // TODO(issue-59): Causes memory sanitation issue
         // replicateProfileComponent(&quot;llvm-optimization&quot;);
 
+        registerProfileComponent&lt;StaticResourcePassConfiguration&gt;(
+            &quot;static-resource&quot;,
+            [logger](StaticResourcePassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
+                auto&amp; pass_manager = ptr-&gt;modulePassManager();
+                pass_manager.addPass(StaticResourcePass(cfg, logger));
+            });
+
         registerProfileComponent&lt;GroupingPassConfiguration&gt;(
             &quot;grouping&quot;, [logger](GroupingPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile) {
                 if (cfg.circuitSeparation())
@@ -850,7 +859,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 20 April 2022 at 06:41:19 UTC</p></div>
+<p>Updated on 22 April 2022 at 02:37:17 UTC</p></div>
 </div>
           </div>
         </main>

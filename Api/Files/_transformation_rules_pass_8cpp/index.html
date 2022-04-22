@@ -1286,6 +1286,7 @@ namespace quantum
         std::unordered_set&lt;llvm::Value*&gt; already_visited;
         for (auto&amp; function : module)
         {
+
             if (function.hasFnAttribute(config_.entryPointAttr()))
             {
                 runOnFunction(function, [this, &amp;already_visited](llvm::Value* value, DeletableInstructions&amp;) {
@@ -1308,20 +1309,6 @@ namespace quantum
                     }
                     return value;
                 });
-
-                if (config_.shouldAnnotateQubitUse())
-                {
-                    std::stringstream ss{&quot;&quot;};
-                    ss &lt;&lt; profile_-&gt;getQubitAllocationManager()-&gt;maxAllocationsUsed();
-                    function.addFnAttr(&quot;requiredQubits&quot;, ss.str());
-                }
-
-                if (config_.shouldAnnotateResultUse())
-                {
-                    std::stringstream ss{&quot;&quot;};
-                    ss &lt;&lt; profile_-&gt;getResultAllocationManager()-&gt;maxAllocationsUsed();
-                    function.addFnAttr(&quot;requiredResults&quot;, ss.str());
-                }
             }
         }
 
@@ -1330,7 +1317,7 @@ namespace quantum
 
     llvm::PreservedAnalyses TransformationRulesPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam)
     {
-        // In case the module is istructed to clone functions,
+        // In case the module is instructed to clone functions,
         if (config_.shouldCloneFunctions())
         {
             setupCopyAndExpand();
@@ -1358,10 +1345,12 @@ namespace quantum
         else
         {
 
-            // Otherwize we apply to all sections of the code.
+            // Otherwise we apply to all sections of the code.
             replacements_.clear();
             for (auto&amp; function : module)
             {
+
+                // Transforming each function
                 for (auto&amp; block : function)
                 {
                     for (auto&amp; instr : block)
@@ -1460,7 +1449,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 20 April 2022 at 06:41:19 UTC</p></div>
+<p>Updated on 22 April 2022 at 02:37:17 UTC</p></div>
 </div>
           </div>
         </main>
