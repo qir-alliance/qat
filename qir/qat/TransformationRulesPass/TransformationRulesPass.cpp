@@ -708,6 +708,7 @@ namespace quantum
         std::unordered_set<llvm::Value*> already_visited;
         for (auto& function : module)
         {
+
             if (function.hasFnAttribute(config_.entryPointAttr()))
             {
                 runOnFunction(function, [this, &already_visited](llvm::Value* value, DeletableInstructions&) {
@@ -730,20 +731,6 @@ namespace quantum
                     }
                     return value;
                 });
-
-                if (config_.shouldAnnotateQubitUse())
-                {
-                    std::stringstream ss{""};
-                    ss << profile_->getQubitAllocationManager()->maxAllocationsUsed();
-                    function.addFnAttr("requiredQubits", ss.str());
-                }
-
-                if (config_.shouldAnnotateResultUse())
-                {
-                    std::stringstream ss{""};
-                    ss << profile_->getResultAllocationManager()->maxAllocationsUsed();
-                    function.addFnAttr("requiredResults", ss.str());
-                }
             }
         }
 
@@ -752,7 +739,7 @@ namespace quantum
 
     llvm::PreservedAnalyses TransformationRulesPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& mam)
     {
-        // In case the module is istructed to clone functions,
+        // In case the module is instructed to clone functions,
         if (config_.shouldCloneFunctions())
         {
             setupCopyAndExpand();
@@ -780,10 +767,12 @@ namespace quantum
         else
         {
 
-            // Otherwize we apply to all sections of the code.
+            // Otherwise we apply to all sections of the code.
             replacements_.clear();
             for (auto& function : module)
             {
+
+                // Transforming each function
                 for (auto& block : function)
                 {
                     for (auto& instr : block)

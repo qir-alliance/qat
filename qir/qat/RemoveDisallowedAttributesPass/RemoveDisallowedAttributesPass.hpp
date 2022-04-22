@@ -19,7 +19,9 @@ namespace quantum
     {
       public:
         RemoveDisallowedAttributesPass()
-          : allowed_attrs_{{static_cast<String>("EntryPoint"), static_cast<String>("InteropFriendly")}}
+          : allowed_attrs_{
+                static_cast<String>("EntryPoint"), static_cast<String>("InteropFriendly"),
+                static_cast<String>("requiredQubits"), static_cast<String>("requiredResults")}
         {
         }
 
@@ -28,8 +30,8 @@ namespace quantum
             std::string const LLVM_FUNC_NAME = "@llvm.";
             for (auto& fnc : module)
             {
-                std::unordered_set<String> to_keep;
-                auto                       name = static_cast<std::string>(fnc.getName());
+                std::unordered_map<String, String> to_keep;
+                auto                               name = static_cast<std::string>(fnc.getName());
 
                 // Skipping any LLVM function
                 if (name.size() >= LLVM_FUNC_NAME.size() && name.substr(0, LLVM_FUNC_NAME.size()) == LLVM_FUNC_NAME)
@@ -42,7 +44,15 @@ namespace quantum
                 {
                     for (auto& attr : attrset)
                     {
-                        auto r = static_cast<String>(attr.getAsString());
+                        auto        r = static_cast<String>(attr.getAsString());
+                        std::string value{};
+
+                        auto p = r.find('=');
+                        if (p != std::string::npos)
+                        {
+                            value = r.substr(p + 1, r.size() - p - 1);
+                            r     = r.substr(0, p);
+                        }
 
                         // Stripping quotes
                         if (r.size() >= 2 && r[0] == '"' && r[r.size() - 1] == '"')
@@ -50,10 +60,15 @@ namespace quantum
                             r = r.substr(1, r.size() - 2);
                         }
 
+                        if (value.size() >= 2 && value[0] == '"' && value[value.size() - 1] == '"')
+                        {
+                            value = value.substr(1, value.size() - 2);
+                        }
+
                         // Inserting if allowed
                         if (allowed_attrs_.find(r) != allowed_attrs_.end())
                         {
-                            to_keep.insert(r);
+                            to_keep.insert(std::make_pair(r, value));
                         }
                     }
                 }
@@ -62,7 +77,14 @@ namespace quantum
                 fnc.setAttributes({});
                 for (auto& attr : to_keep)
                 {
-                    fnc.addFnAttr(attr);
+                    if (attr.second.empty())
+                    {
+                        fnc.addFnAttr(attr.first);
+                    }
+                    else
+                    {
+                        fnc.addFnAttr(attr.first, attr.second);
+                    }
                 }
 
                 // Updating all users attributes

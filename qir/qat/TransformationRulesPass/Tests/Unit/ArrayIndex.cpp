@@ -4,6 +4,7 @@
 #include "Generators/ConfigurableProfileGenerator.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
+#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
 
@@ -76,6 +77,7 @@ quantum:                                          ; preds = %load
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(StaticResourcePassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 

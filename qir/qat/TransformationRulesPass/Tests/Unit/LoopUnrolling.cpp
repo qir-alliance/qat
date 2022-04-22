@@ -4,6 +4,7 @@
 #include "Generators/ConfigurableProfileGenerator.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
+#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
 
@@ -82,6 +83,7 @@ exit__1:                                          ; preds = %header__1
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(StaticResourcePassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 

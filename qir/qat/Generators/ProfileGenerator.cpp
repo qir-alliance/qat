@@ -8,6 +8,8 @@
 #include "GroupingPass/GroupingPassConfiguration.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/RuleSet.hpp"
+#include "StaticResourcePass/StaticResourcePass.hpp"
+#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
 #include "TransformationRulesPass/TransformationRulesPass.hpp"
 #include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "ValidationPass/ValidationPassConfiguration.hpp"
@@ -251,6 +253,13 @@ namespace quantum
 
         // TODO(issue-59): Causes memory sanitation issue
         // replicateProfileComponent("llvm-optimization");
+
+        registerProfileComponent<StaticResourcePassConfiguration>(
+            "static-resource",
+            [logger](StaticResourcePassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+                auto& pass_manager = ptr->modulePassManager();
+                pass_manager.addPass(StaticResourcePass(cfg, logger));
+            });
 
         registerProfileComponent<GroupingPassConfiguration>(
             "grouping", [logger](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {

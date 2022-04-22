@@ -93,9 +93,7 @@ namespace quantum
         // Allocation options
         //
         bool reuse_qubits_{true};
-        bool annotate_qubit_use_{true};
         bool reuse_results_{true};
-        bool annotate_result_use_{true};
     };
 
 } // namespace quantum

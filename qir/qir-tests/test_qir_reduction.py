@@ -18,9 +18,10 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
 
     qat_binary = os.environ.get("QAT_BINARY")
 
+    cmd = [qat_binary, "-S"] + args + ["--profile",
+                                       profile, filename]
     p = subprocess.Popen(
-        [qat_binary, "-S"] + args + ["--profile",
-                                     profile, filename],
+        cmd,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
 
@@ -41,6 +42,7 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
 
     if not ret:
         print("Processed file:", filename)
+        print("Command:", " ".join(cmd))
         print("QAT error output:")
         for line in errs.strip().split("\n"):
             print("    | {}".format(line))

@@ -22,7 +22,7 @@ namespace quantum
             "Transform execution paths only.");
 
         config.addExperimentalParameter(
-            max_recursion_, max_recursion_, uint64_t(0), "max-recursion",
+            max_recursion_, max_recursion_, uint64_t(1), "max-recursion",
             "Defines the maximum recursion when unrolling the execution path");
 
         config.addExperimentalParameter(
@@ -36,10 +36,6 @@ namespace quantum
 
         config.addParameter(
             entry_point_attr_, "entry-point-attr", "Specifies the attribute indicating the entry point.");
-
-        config.addParameter(annotate_qubit_use_, "annotate-qubit-use", "Annotate the number of qubits used");
-
-        config.addParameter(annotate_result_use_, "annotate-result-use", "Annotate the number of results used");
     }
 
     TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createDisabled()
@@ -50,7 +46,7 @@ namespace quantum
         ret.transform_execution_path_only_ = false;
         ret.max_recursion_                 = 512;
         ret.reuse_qubits_                  = false;
-        ret.annotate_qubit_use_            = false;
+        ret.reuse_results_                 = false;
 
         return ret;
     }
@@ -63,7 +59,7 @@ namespace quantum
         ret.transform_execution_path_only_ = false;
         ret.max_recursion_                 = 512;
         ret.reuse_qubits_                  = true;
-        ret.annotate_qubit_use_            = false;
+        ret.reuse_results_                 = false;
 
         return ret;
     }
@@ -93,19 +89,9 @@ namespace quantum
         return reuse_qubits_;
     }
 
-    bool TransformationRulesPassConfiguration::shouldAnnotateQubitUse() const
-    {
-        return annotate_qubit_use_;
-    }
-
     bool TransformationRulesPassConfiguration::shouldReuseResults() const
     {
         return reuse_results_;
-    }
-
-    bool TransformationRulesPassConfiguration::shouldAnnotateResultUse() const
-    {
-        return annotate_result_use_;
     }
 
     std::string TransformationRulesPassConfiguration::entryPointAttr() const
