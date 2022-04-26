@@ -18,7 +18,7 @@ namespace microsoft
 namespace quantum
 {
 
-    class StaticResourcePass : public llvm::PassInfoMixin<StaticResourcePass>
+    class ReplaceQubitOnResetPass : public llvm::PassInfoMixin<ReplaceQubitOnResetPass>
     {
       public:
         using Instruction = llvm::Instruction;
@@ -37,40 +37,25 @@ namespace quantum
         // Construction and destruction configuration.
         //
 
-        explicit StaticResourcePass(StaticResourcePassConfiguration const& cfg, ILoggerPtr const& logger = nullptr);
+        explicit ReplaceQubitOnResetPass(
+            StaticResourcePassConfiguration const& cfg,
+            ILoggerPtr const&                      logger = nullptr);
 
         /// Copy construction is banned.
-        StaticResourcePass(StaticResourcePass const&) = delete;
+        ReplaceQubitOnResetPass(ReplaceQubitOnResetPass const&) = delete;
 
         /// We allow move semantics.
-        StaticResourcePass(StaticResourcePass&&) = default;
+        ReplaceQubitOnResetPass(ReplaceQubitOnResetPass&&) = default;
 
         /// Default destruction.
-        ~StaticResourcePass() = default;
+        ~ReplaceQubitOnResetPass() = default;
 
-        llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
+        llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& mam);
 
         /// Whether or not this pass is required to run.
         static bool isRequired();
 
       private:
-        struct ResourceStats
-        {
-            uint64_t largest_qubit_index{0};
-            uint64_t largest_result_index{0};
-            uint64_t usage_qubit_counts{0};
-            uint64_t usage_result_counts{0};
-        };
-
-        bool enforceRequirements(llvm::Module& module) const;
-        void allocateOnReset(llvm::Module& module) const;
-        void annotateQubits(llvm::Module& module) const;
-        void remapQubits(llvm::Module& module) const;
-
-        bool extractResourceId(llvm::Value* value, uint64_t& return_value, ResourceType& type) const;
-
-        ResourceStats getLargestIndices(llvm::Function& function) const;
-
         StaticResourcePassConfiguration config_{};
 
         ILoggerPtr logger_{nullptr};

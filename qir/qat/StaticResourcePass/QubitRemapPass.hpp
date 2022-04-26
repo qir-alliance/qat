@@ -2,62 +2,64 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Llvm/Llvm.hpp"
 #include "Logging/ILogger.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
 #include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
 
+#include "Llvm/Llvm.hpp"
+
 #include <functional>
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft {
-namespace quantum {
-
-class QubitRemapPass : public llvm::PassInfoMixin<QubitRemapPass>
+namespace microsoft
 {
-public:
-  using Instruction = llvm::Instruction;
-  using Value       = llvm::Value;
-  using ILoggerPtr  = std::shared_ptr<ILogger>;
-  using Location    = ILogger::Location;
-  using StringRef   = llvm::StringRef;
+namespace quantum
+{
 
-  enum ResourceType
-  {
-    None,
-    Qubit,
-    Result
-  };
+    class QubitRemapPass : public llvm::PassInfoMixin<QubitRemapPass>
+    {
+      public:
+        using Instruction = llvm::Instruction;
+        using Value       = llvm::Value;
+        using ILoggerPtr  = std::shared_ptr<ILogger>;
+        using Location    = ILogger::Location;
+        using StringRef   = llvm::StringRef;
 
-  // Construction and destruction configuration.
-  //
+        enum ResourceType
+        {
+            None,
+            Qubit,
+            Result
+        };
 
-  explicit QubitRemapPass(StaticResourcePassConfiguration const &cfg,
-                          ILoggerPtr const                      &logger = nullptr);
+        // Construction and destruction configuration.
+        //
 
-  /// Copy construction is banned.
-  QubitRemapPass(QubitRemapPass const &) = delete;
+        explicit QubitRemapPass(StaticResourcePassConfiguration const& cfg, ILoggerPtr const& logger = nullptr);
 
-  /// We allow move semantics.
-  QubitRemapPass(QubitRemapPass &&) = default;
+        /// Copy construction is banned.
+        QubitRemapPass(QubitRemapPass const&) = delete;
 
-  /// Default destruction.
-  ~QubitRemapPass() = default;
+        /// We allow move semantics.
+        QubitRemapPass(QubitRemapPass&&) = default;
 
-  llvm::PreservedAnalyses run(llvm::Function &function, llvm::FunctionAnalysisManager &mam);
+        /// Default destruction.
+        ~QubitRemapPass() = default;
 
-  /// Whether or not this pass is required to run.
-  static bool isRequired();
+        llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& mam);
 
-private:
-  bool extractResourceId(llvm::Value *value, uint64_t &return_value, ResourceType &type) const;
+        /// Whether or not this pass is required to run.
+        static bool isRequired();
 
-  StaticResourcePassConfiguration config_{};
+      private:
+        bool extractResourceId(llvm::Value* value, uint64_t& return_value, ResourceType& type) const;
 
-  ILoggerPtr logger_{nullptr};
-};
+        StaticResourcePassConfiguration config_{};
 
-}  // namespace quantum
-}  // namespace microsoft
+        ILoggerPtr logger_{nullptr};
+    };
+
+} // namespace quantum
+} // namespace microsoft
