@@ -259,6 +259,10 @@ namespace quantum
             [logger](StaticResourcePassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
                 auto& pass_manager = ptr->modulePassManager();
                 pass_manager.addPass(StaticResourcePass(cfg, logger));
+
+                // TODO(issue-59): Move to a separate pass.
+                pass_manager.addPass(createModuleToFunctionPassAdaptor(llvm::AggressiveInstCombinePass()));
+                pass_manager.addPass(createModuleToFunctionPassAdaptor(llvm::SCCPPass()));
             });
 
         registerProfileComponent<GroupingPassConfiguration>(
