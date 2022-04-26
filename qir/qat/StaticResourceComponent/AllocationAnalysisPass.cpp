@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "StaticResourcePass/AllocationAnalysisPass.hpp"
+#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
 
 #include "Llvm/Llvm.hpp"
 

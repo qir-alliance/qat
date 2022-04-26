@@ -5,7 +5,7 @@
 #include "Logging/ILogger.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
-#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
+#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 #include "Llvm/Llvm.hpp"
 
@@ -63,7 +63,7 @@ namespace quantum
         // Construction and destruction configuration.
         //
 
-        explicit AllocationAnalysisPass(StaticResourcePassConfiguration const& cfg, ILoggerPtr const& logger)
+        explicit AllocationAnalysisPass(StaticResourceComponentConfiguration const& cfg, ILoggerPtr const& logger)
           : config_{cfg}
           , logger_{logger}
         {
@@ -86,7 +86,7 @@ namespace quantum
       private:
         bool extractResourceId(llvm::Value* value, uint64_t& return_value, ResourceType& type) const;
 
-        StaticResourcePassConfiguration config_{};
+        StaticResourceComponentConfiguration config_{};
 
         ILoggerPtr logger_{nullptr};
 

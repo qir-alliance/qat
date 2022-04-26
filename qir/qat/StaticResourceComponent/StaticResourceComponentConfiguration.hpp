@@ -10,14 +10,14 @@ namespace microsoft
 namespace quantum
 {
 
-    class StaticResourcePassConfiguration
+    class StaticResourceComponentConfiguration
     {
       public:
         using Set = std::unordered_set<std::string>;
         // Setup and construction
         //
 
-        StaticResourcePassConfiguration() = default;
+        StaticResourceComponentConfiguration() = default;
 
         /// Setup function that adds the configuration flags to the ConfigurationManager. See the
         /// ConfigurationManager documentation for more details on how the setup process is implemented.
@@ -42,7 +42,7 @@ namespace quantum
         bool shouldReindexQubits() const;
 
         /// Creates a configuration where all features are disabled
-        static StaticResourcePassConfiguration createDisabled();
+        static StaticResourceComponentConfiguration createDisabled();
 
       private:
         bool annotate_qubit_use_{true};

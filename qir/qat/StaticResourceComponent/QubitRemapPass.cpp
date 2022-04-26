@@ -4,9 +4,9 @@
 #include "Logging/ILogger.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
-#include "StaticResourcePass/AllocationAnalysisPass.hpp"
-#include "StaticResourcePass/QubitRemapPass.hpp"
-#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
+#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "StaticResourceComponent/QubitRemapPass.hpp"
+#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 #include "Llvm/Llvm.hpp"
 
@@ -19,7 +19,7 @@ namespace microsoft
 namespace quantum
 {
 
-    QubitRemapPass::QubitRemapPass(StaticResourcePassConfiguration const& cfg, ILoggerPtr const& logger)
+    QubitRemapPass::QubitRemapPass(StaticResourceComponentConfiguration const& cfg, ILoggerPtr const& logger)
       : config_{cfg}
       , logger_{logger}
     {

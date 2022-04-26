@@ -5,7 +5,7 @@
 #include "Logging/ILogger.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
-#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
+#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 #include "Llvm/Llvm.hpp"
 
@@ -18,7 +18,7 @@ namespace microsoft
 namespace quantum
 {
 
-    class ReplaceQubitOnResetPass : public llvm::PassInfoMixin<ReplaceQubitOnResetPass>
+    class ResourceAnnotationPass : public llvm::PassInfoMixin<ResourceAnnotationPass>
     {
       public:
         using Instruction = llvm::Instruction;
@@ -37,26 +37,26 @@ namespace quantum
         // Construction and destruction configuration.
         //
 
-        explicit ReplaceQubitOnResetPass(
-            StaticResourcePassConfiguration const& cfg,
-            ILoggerPtr const&                      logger = nullptr);
+        explicit ResourceAnnotationPass(
+            StaticResourceComponentConfiguration const& cfg,
+            ILoggerPtr const&                           logger = nullptr);
 
         /// Copy construction is banned.
-        ReplaceQubitOnResetPass(ReplaceQubitOnResetPass const&) = delete;
+        ResourceAnnotationPass(ResourceAnnotationPass const&) = delete;
 
         /// We allow move semantics.
-        ReplaceQubitOnResetPass(ReplaceQubitOnResetPass&&) = default;
+        ResourceAnnotationPass(ResourceAnnotationPass&&) = default;
 
         /// Default destruction.
-        ~ReplaceQubitOnResetPass() = default;
+        ~ResourceAnnotationPass() = default;
 
-        llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& mam);
+        llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& fam);
 
         /// Whether or not this pass is required to run.
         static bool isRequired();
 
       private:
-        StaticResourcePassConfiguration config_{};
+        StaticResourceComponentConfiguration config_{};
 
         ILoggerPtr logger_{nullptr};
     };

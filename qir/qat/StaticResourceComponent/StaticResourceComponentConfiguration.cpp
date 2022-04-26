@@ -3,14 +3,14 @@
 
 #include "Commandline/ConfigurationManager.hpp"
 #include "QatTypes/QatTypes.hpp"
-#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
+#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 namespace microsoft
 {
 namespace quantum
 {
 
-    void StaticResourcePassConfiguration::setup(ConfigurationManager& config)
+    void StaticResourceComponentConfiguration::setup(ConfigurationManager& config)
     {
         config.setSectionName("Static resource manipulation", "");
         config.addParameter(annotate_qubit_use_, "annotate-qubit-use", "Annotate the number of qubits used");
@@ -34,39 +34,39 @@ namespace quantum
             replace_qubit_on_reset_, "replace-qubit-on-reset", "Replaces a qubit with new qubit if the qubit is reset");
     }
 
-    bool StaticResourcePassConfiguration::shouldAnnotateQubitUse() const
+    bool StaticResourceComponentConfiguration::shouldAnnotateQubitUse() const
     {
         return annotate_qubit_use_;
     }
 
-    bool StaticResourcePassConfiguration::shouldAnnotateResultUse() const
+    bool StaticResourceComponentConfiguration::shouldAnnotateResultUse() const
     {
         return annotate_result_use_;
     }
 
-    bool StaticResourcePassConfiguration::shouldAnnotateMaxQubitIndex() const
+    bool StaticResourceComponentConfiguration::shouldAnnotateMaxQubitIndex() const
     {
         return annotate_max_qubit_index_;
     }
 
-    bool StaticResourcePassConfiguration::shouldAnnotateMaxResultIndex() const
+    bool StaticResourceComponentConfiguration::shouldAnnotateMaxResultIndex() const
     {
         return annotate_max_result_index_;
     }
 
-    bool StaticResourcePassConfiguration::shouldReplaceQubitsOnReset() const
+    bool StaticResourceComponentConfiguration::shouldReplaceQubitsOnReset() const
     {
         return replace_qubit_on_reset_;
     }
 
-    bool StaticResourcePassConfiguration::shouldReindexQubits() const
+    bool StaticResourceComponentConfiguration::shouldReindexQubits() const
     {
         return reindex_qubits_;
     }
 
-    StaticResourcePassConfiguration StaticResourcePassConfiguration::createDisabled()
+    StaticResourceComponentConfiguration StaticResourceComponentConfiguration::createDisabled()
     {
-        StaticResourcePassConfiguration ret;
+        StaticResourceComponentConfiguration ret;
         ret.annotate_qubit_use_  = false;
         ret.annotate_result_use_ = false;
 

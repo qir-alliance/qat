@@ -4,9 +4,9 @@
 #include "Logging/ILogger.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
-#include "StaticResourcePass/AllocationAnalysisPass.hpp"
-#include "StaticResourcePass/ReplaceQubitOnResetPass.hpp"
-#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
+#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
+#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 #include "Llvm/Llvm.hpp"
 
@@ -20,8 +20,8 @@ namespace quantum
 {
 
     ReplaceQubitOnResetPass::ReplaceQubitOnResetPass(
-        StaticResourcePassConfiguration const& cfg,
-        ILoggerPtr const&                      logger)
+        StaticResourceComponentConfiguration const& cfg,
+        ILoggerPtr const&                           logger)
       : config_{cfg}
       , logger_{logger}
     {

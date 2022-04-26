@@ -8,11 +8,11 @@
 #include "GroupingPass/GroupingPassConfiguration.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/RuleSet.hpp"
-#include "StaticResourcePass/AllocationAnalysisPass.hpp"
-#include "StaticResourcePass/QubitRemapPass.hpp"
-#include "StaticResourcePass/ReplaceQubitOnResetPass.hpp"
-#include "StaticResourcePass/StaticResourcePass.hpp"
-#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
+#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "StaticResourceComponent/QubitRemapPass.hpp"
+#include "StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
+#include "StaticResourceComponent/ResourceAnnotationPass.hpp"
+#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "TransformationRulesPass/TransformationRulesPass.hpp"
 #include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "ValidationPass/ValidationPassConfiguration.hpp"
@@ -256,9 +256,9 @@ namespace quantum
         // TODO(issue-59): Causes memory sanitation issue
         // replicateProfileComponent("llvm-optimization");
 
-        registerProfileComponent<StaticResourcePassConfiguration>(
+        registerProfileComponent<StaticResourceComponentConfiguration>(
             "static-resource",
-            [logger](StaticResourcePassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            [logger](StaticResourceComponentConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
                 auto& fam = profile.functionAnalysisManager();
                 fam.registerPass([&] { return AllocationAnalysisPass(cfg, logger); });
 
@@ -271,10 +271,7 @@ namespace quantum
                 fpm.addPass(llvm::AggressiveInstCombinePass());
                 fpm.addPass(llvm::SCCPPass());
                 fpm.addPass(llvm::SimplifyCFGPass());
-
-                auto& pass_manager = ptr->modulePassManager();
-
-                pass_manager.addPass(StaticResourcePass(cfg, logger));
+                fpm.addPass(ResourceAnnotationPass(cfg, logger));
             });
 
         registerProfileComponent<GroupingPassConfiguration>(
