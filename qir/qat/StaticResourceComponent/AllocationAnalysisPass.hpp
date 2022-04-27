@@ -28,7 +28,7 @@ namespace quantum
             ResultResource
         };
 
-        struct ResourceId
+        struct ResourceAccessLocation
         {
             llvm::Value*       operand{nullptr};
             ResourceType       type{ResourceType::NotResource};
@@ -37,8 +37,8 @@ namespace quantum
             uint64_t           operand_id{0};
         };
 
-        using ResourceValueToId  = std::unordered_map<llvm::Value*, ResourceId>;
-        using ResourceAccessList = std::vector<ResourceId>;
+        using ResourceValueToId  = std::unordered_map<llvm::Value*, ResourceAccessLocation>;
+        using ResourceAccessList = std::vector<ResourceAccessLocation>;
 
         uint64_t largest_qubit_index{0};
         uint64_t largest_result_index{0};
@@ -52,13 +52,13 @@ namespace quantum
     class AllocationAnalysisPass : public llvm::AnalysisInfoMixin<AllocationAnalysisPass>
     {
       public:
-        using Result       = AllocationAnalysis;
-        using Instruction  = llvm::Instruction;
-        using Value        = llvm::Value;
-        using ILoggerPtr   = std::shared_ptr<ILogger>;
-        using BlockSet     = std::unordered_set<llvm::BasicBlock*>;
-        using ResourceType = AllocationAnalysis::ResourceType;
-        using ResourceId   = AllocationAnalysis::ResourceId;
+        using Result                 = AllocationAnalysis;
+        using Instruction            = llvm::Instruction;
+        using Value                  = llvm::Value;
+        using ILoggerPtr             = std::shared_ptr<ILogger>;
+        using BlockSet               = std::unordered_set<llvm::BasicBlock*>;
+        using ResourceType           = AllocationAnalysis::ResourceType;
+        using ResourceAccessLocation = AllocationAnalysis::ResourceAccessLocation;
 
         // Construction and destruction configuration.
         //

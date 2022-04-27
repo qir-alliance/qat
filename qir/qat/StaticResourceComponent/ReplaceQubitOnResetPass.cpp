@@ -118,30 +118,56 @@ namespace quantum
                         // Getting remapped index based on resource type
                         if (type == Qubit)
                         {
-                            if (qubits_mapping.find(n) == qubits_mapping.end())
+                            if (qubits_mapping.find(n) != qubits_mapping.end())
                             {
-                                throw std::runtime_error("TODO: XXX");
+                                remapped_index = qubits_mapping[n];
                             }
                             else
                             {
-                                remapped_index = qubits_mapping[n];
+                                if (logger_)
+                                {
+                                    logger_->setLocationFromValue(op);
+                                    logger_->internalError("Original qubit index not found.");
+                                }
+                                else
+                                {
+                                    throw std::runtime_error("Original qubit index not found.");
+                                }
+                                continue;
                             }
                         }
                         else if (type == Result)
                         {
-                            if (results_mapping.find(n) == results_mapping.end())
+                            if (results_mapping.find(n) != results_mapping.end())
                             {
-                                throw std::runtime_error("TODO: XXX");
+                                remapped_index = results_mapping[n];
                             }
                             else
                             {
-                                remapped_index = results_mapping[n];
+                                if (logger_)
+                                {
+                                    logger_->setLocationFromValue(op);
+                                    logger_->internalError("Original result index not found.");
+                                }
+                                else
+                                {
+                                    throw std::runtime_error("Original result index not found.");
+                                }
+                                continue;
                             }
                         }
                         else
                         {
-                            // TODO: Internal error
-                            llvm::errs() << ";; Operand class could not be determined: " << *op << "\n";
+                            if (logger_)
+                            {
+                                logger_->setLocationFromValue(op);
+                                logger_->internalError("Operand class could not be determined");
+                            }
+                            else
+                            {
+                                throw std::runtime_error("Operand class could not be determined");
+                            }
+
                             continue;
                         }
 

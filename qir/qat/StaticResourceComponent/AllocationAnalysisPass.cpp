@@ -110,8 +110,7 @@ namespace quantum
                         continue;
                     }
 
-                    // TODO: Refactor ResourceId -> ResourceAccessLocation
-                    ResourceId value{op, type, n, &instr, i};
+                    ResourceAccessLocation value{op, type, n, &instr, i};
                     ret.access_map[op] = value;
                     ret.resource_access.push_back(value);
 
