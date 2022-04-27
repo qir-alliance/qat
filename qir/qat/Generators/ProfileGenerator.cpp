@@ -267,10 +267,14 @@ namespace quantum
                 fpm.addPass(ReplaceQubitOnResetPass(cfg, logger));
                 fpm.addPass(QubitRemapPass(cfg, logger));
 
-                fpm.addPass(llvm::InstCombinePass(1000));
-                fpm.addPass(llvm::AggressiveInstCombinePass());
-                fpm.addPass(llvm::SCCPPass());
-                fpm.addPass(llvm::SimplifyCFGPass());
+                if (cfg.shouldInlineAfterIdChange() && cfg.isChangingIds())
+                {
+                    fpm.addPass(llvm::InstCombinePass(1000));
+                    fpm.addPass(llvm::AggressiveInstCombinePass());
+                    fpm.addPass(llvm::SCCPPass());
+                    fpm.addPass(llvm::SimplifyCFGPass());
+                }
+
                 fpm.addPass(ResourceAnnotationPass(cfg, logger));
             });
 

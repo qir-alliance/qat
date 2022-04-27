@@ -32,6 +32,9 @@ namespace quantum
 
         config.addParameter(
             replace_qubit_on_reset_, "replace-qubit-on-reset", "Replaces a qubit with new qubit if the qubit is reset");
+
+        config.addParameter(
+            inline_after_id_change_, "inline-after-id-change", "Replaces a qubit with new qubit if the qubit is reset");
     }
 
     bool StaticResourceComponentConfiguration::shouldAnnotateQubitUse() const
@@ -64,6 +67,16 @@ namespace quantum
         return reindex_qubits_;
     }
 
+    bool StaticResourceComponentConfiguration::shouldInlineAfterIdChange() const
+    {
+        return inline_after_id_change_;
+    }
+
+    bool StaticResourceComponentConfiguration::isChangingIds() const
+    {
+        return reindex_qubits_ || replace_qubit_on_reset_;
+    }
+
     StaticResourceComponentConfiguration StaticResourceComponentConfiguration::createDisabled()
     {
         StaticResourceComponentConfiguration ret;
@@ -75,6 +88,8 @@ namespace quantum
 
         ret.replace_qubit_on_reset_ = false;
         ret.reindex_qubits_         = false;
+        ret.inline_after_id_change_ = false;
+
         return ret;
     }
 

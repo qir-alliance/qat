@@ -41,6 +41,12 @@ namespace quantum
         /// Whether or not qubit ids should be re-indexed sequentially starting from 0
         bool shouldReindexQubits() const;
 
+        /// Whether or not this component should inline after changing qubit ids
+        bool shouldInlineAfterIdChange() const;
+
+        /// Whether or not the configuration is set to changing qubit ids
+        bool isChangingIds() const;
+
         /// Creates a configuration where all features are disabled
         static StaticResourceComponentConfiguration createDisabled();
 
@@ -53,6 +59,8 @@ namespace quantum
 
         bool replace_qubit_on_reset_{false};
         bool reindex_qubits_{false};
+
+        bool inline_after_id_change_{true};
     };
 
 } // namespace quantum
