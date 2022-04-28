@@ -3,14 +3,14 @@
 
 #include "Commandline/ConfigurationManager.hpp"
 #include "QatTypes/QatTypes.hpp"
-#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
+#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 namespace microsoft
 {
 namespace quantum
 {
 
-    void StaticResourcePassConfiguration::setup(ConfigurationManager& config)
+    void StaticResourceComponentConfiguration::setup(ConfigurationManager& config)
     {
         config.setSectionName("Static resource manipulation", "");
         config.addParameter(annotate_qubit_use_, "annotate-qubit-use", "Annotate the number of qubits used");
@@ -29,41 +29,57 @@ namespace quantum
         config.addParameter(
             reindex_qubits_, "reindex-qubits",
             "Re-indexes statically allocated qubits with sequential ids starting from 0");
+
+        config.addParameter(
+            replace_qubit_on_reset_, "replace-qubit-on-reset", "Replaces a qubit with new qubit if the qubit is reset");
+
+        config.addParameter(
+            inline_after_id_change_, "inline-after-id-change", "Inlines instructions after id was changed");
     }
 
-    bool StaticResourcePassConfiguration::shouldAnnotateQubitUse() const
+    bool StaticResourceComponentConfiguration::shouldAnnotateQubitUse() const
     {
         return annotate_qubit_use_;
     }
 
-    bool StaticResourcePassConfiguration::shouldAnnotateResultUse() const
+    bool StaticResourceComponentConfiguration::shouldAnnotateResultUse() const
     {
         return annotate_result_use_;
     }
 
-    bool StaticResourcePassConfiguration::shouldAnnotateMaxQubitIndex() const
+    bool StaticResourceComponentConfiguration::shouldAnnotateMaxQubitIndex() const
     {
         return annotate_max_qubit_index_;
     }
 
-    bool StaticResourcePassConfiguration::shouldAnnotateMaxResultIndex() const
+    bool StaticResourceComponentConfiguration::shouldAnnotateMaxResultIndex() const
     {
         return annotate_max_result_index_;
     }
 
-    bool StaticResourcePassConfiguration::shouldReplaceQubitsOnReset() const
+    bool StaticResourceComponentConfiguration::shouldReplaceQubitsOnReset() const
     {
         return replace_qubit_on_reset_;
     }
 
-    bool StaticResourcePassConfiguration::shouldReindexQubits() const
+    bool StaticResourceComponentConfiguration::shouldReindexQubits() const
     {
         return reindex_qubits_;
     }
 
-    StaticResourcePassConfiguration StaticResourcePassConfiguration::createDisabled()
+    bool StaticResourceComponentConfiguration::shouldInlineAfterIdChange() const
     {
-        StaticResourcePassConfiguration ret;
+        return inline_after_id_change_;
+    }
+
+    bool StaticResourceComponentConfiguration::isChangingIds() const
+    {
+        return reindex_qubits_ || replace_qubit_on_reset_;
+    }
+
+    StaticResourceComponentConfiguration StaticResourceComponentConfiguration::createDisabled()
+    {
+        StaticResourceComponentConfiguration ret;
         ret.annotate_qubit_use_  = false;
         ret.annotate_result_use_ = false;
 
@@ -72,6 +88,8 @@ namespace quantum
 
         ret.replace_qubit_on_reset_ = false;
         ret.reindex_qubits_         = false;
+        ret.inline_after_id_change_ = false;
+
         return ret;
     }
 

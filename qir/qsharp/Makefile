@@ -40,4 +40,4 @@ clean:
 	cd Atomics/Loop && make clean
 	cd Atomics/QubitAllocation && make clean
 	cd Atomics/SelectStatement && make clean
-
+	cd MeasurementSeries && make clean

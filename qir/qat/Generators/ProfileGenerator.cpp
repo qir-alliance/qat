@@ -8,14 +8,16 @@
 #include "GroupingPass/GroupingPassConfiguration.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/RuleSet.hpp"
-#include "StaticResourcePass/StaticResourcePass.hpp"
-#include "StaticResourcePass/StaticResourcePassConfiguration.hpp"
+#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "StaticResourceComponent/QubitRemapPass.hpp"
+#include "StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
+#include "StaticResourceComponent/ResourceAnnotationPass.hpp"
+#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "TransformationRulesPass/TransformationRulesPass.hpp"
 #include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "ValidationPass/ValidationPassConfiguration.hpp"
 
 #include "Llvm/Llvm.hpp"
-
 namespace microsoft
 {
 namespace quantum
@@ -254,11 +256,26 @@ namespace quantum
         // TODO(issue-59): Causes memory sanitation issue
         // replicateProfileComponent("llvm-optimization");
 
-        registerProfileComponent<StaticResourcePassConfiguration>(
+        registerProfileComponent<StaticResourceComponentConfiguration>(
             "static-resource",
-            [logger](StaticResourcePassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
-                auto& pass_manager = ptr->modulePassManager();
-                pass_manager.addPass(StaticResourcePass(cfg, logger));
+            [logger](StaticResourceComponentConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+                auto& fam = profile.functionAnalysisManager();
+                fam.registerPass([&] { return AllocationAnalysisPass(cfg, logger); });
+
+                auto& fpm = ptr->functionPassManager();
+                fpm.addPass(AllocationAnalysisPassPrinter());
+                fpm.addPass(ReplaceQubitOnResetPass(cfg, logger));
+                fpm.addPass(QubitRemapPass(cfg, logger));
+
+                if (cfg.shouldInlineAfterIdChange() && cfg.isChangingIds())
+                {
+                    fpm.addPass(llvm::InstCombinePass(1000));
+                    fpm.addPass(llvm::AggressiveInstCombinePass());
+                    fpm.addPass(llvm::SCCPPass());
+                    fpm.addPass(llvm::SimplifyCFGPass());
+                }
+
+                fpm.addPass(ResourceAnnotationPass(cfg, logger));
             });
 
         registerProfileComponent<GroupingPassConfiguration>(

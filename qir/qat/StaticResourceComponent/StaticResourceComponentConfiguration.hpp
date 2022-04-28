@@ -10,14 +10,14 @@ namespace microsoft
 namespace quantum
 {
 
-    class StaticResourcePassConfiguration
+    class StaticResourceComponentConfiguration
     {
       public:
         using Set = std::unordered_set<std::string>;
         // Setup and construction
         //
 
-        StaticResourcePassConfiguration() = default;
+        StaticResourceComponentConfiguration() = default;
 
         /// Setup function that adds the configuration flags to the ConfigurationManager. See the
         /// ConfigurationManager documentation for more details on how the setup process is implemented.
@@ -41,10 +41,16 @@ namespace quantum
         /// Whether or not qubit ids should be re-indexed sequentially starting from 0
         bool shouldReindexQubits() const;
 
-        /// Creates a configuration where all features are disabled
-        static StaticResourcePassConfiguration createDisabled();
+        /// Whether or not this component should inline after changing qubit ids
+        bool shouldInlineAfterIdChange() const;
 
-      private:
+        /// Whether or not the configuration is set to changing qubit ids
+        bool isChangingIds() const;
+
+        /// Creates a configuration where all features are disabled
+        static StaticResourceComponentConfiguration createDisabled();
+
+      protected:
         bool annotate_qubit_use_{true};
         bool annotate_result_use_{true};
 
@@ -53,6 +59,8 @@ namespace quantum
 
         bool replace_qubit_on_reset_{false};
         bool reindex_qubits_{false};
+
+        bool inline_after_id_change_{true};
     };
 
 } // namespace quantum

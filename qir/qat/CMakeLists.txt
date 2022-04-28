@@ -19,7 +19,8 @@ microsoft_add_library(ModuleLoader)
 
 microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
 microsoft_add_library(ValidationPass Logging)
-microsoft_add_library(StaticResourcePass Logging)
+microsoft_add_library(StaticResourceComponent Logging)
+microsoft_add_library_tests(StaticResourceComponent  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
 
 
 microsoft_add_library(GroupingPass Logging)
@@ -29,7 +30,7 @@ microsoft_add_library_tests(AllocationManager Logging GroupingPass)
 
 microsoft_add_library(TransformationRulesPass)
 target_link_libraries(TransformationRulesPass PRIVATE Rules Commandline AllocationManager)
-microsoft_add_library_tests(TransformationRulesPass Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass StaticResourcePass Logging GroupingPass) 
+microsoft_add_library_tests(TransformationRulesPass Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass StaticResourceComponent Logging GroupingPass) 
 
 
 microsoft_add_library(Rules)
@@ -38,7 +39,7 @@ microsoft_add_library_tests(Rules Rules TransformationRulesPass AllocationManage
 target_link_libraries(Rules PRIVATE AllocationManager)
 
 microsoft_add_library(Generators)
-target_link_libraries(Generators PRIVATE Rules Commandline AllocationManager TransformationRulesPass Profile Validator StaticResourcePass ValidationPass)
+target_link_libraries(Generators PRIVATE Rules Commandline AllocationManager TransformationRulesPass Profile Validator StaticResourceComponent ValidationPass)
 microsoft_add_library_tests(Generators Rules TransformationRulesPass AllocationManager Commandline Generators Logging GroupingPass)
 
 add_subdirectory(Apps)
