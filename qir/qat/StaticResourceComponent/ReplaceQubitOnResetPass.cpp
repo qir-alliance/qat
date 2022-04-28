@@ -31,7 +31,7 @@ namespace quantum
     {
         if (!config_.shouldReplaceQubitsOnReset())
         {
-            return llvm::PreservedAnalyses::none();
+            return llvm::PreservedAnalyses::all();
         }
 
         auto& function_details = fam.getResult<AllocationAnalysisPass>(function);
@@ -212,7 +212,7 @@ namespace quantum
             }
         }
 
-        return llvm::PreservedAnalyses::all();
+        return llvm::PreservedAnalyses::none();
     }
 
     bool ReplaceQubitOnResetPass::isRequired()

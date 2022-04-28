@@ -29,7 +29,7 @@ namespace quantum
     {
         if (!config_.shouldReindexQubits())
         {
-            return llvm::PreservedAnalyses::none();
+            return llvm::PreservedAnalyses::all();
         }
 
         auto& function_details = fam.getResult<AllocationAnalysisPass>(function);
@@ -109,7 +109,7 @@ namespace quantum
             value.used_by->setOperand(value.operand_id, new_instr);
         }
 
-        return llvm::PreservedAnalyses::all();
+        return llvm::PreservedAnalyses::none();
     }
 
     bool QubitRemapPass::isRequired()

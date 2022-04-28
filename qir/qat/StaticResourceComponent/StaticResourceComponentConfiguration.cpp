@@ -34,7 +34,7 @@ namespace quantum
             replace_qubit_on_reset_, "replace-qubit-on-reset", "Replaces a qubit with new qubit if the qubit is reset");
 
         config.addParameter(
-            inline_after_id_change_, "inline-after-id-change", "Replaces a qubit with new qubit if the qubit is reset");
+            inline_after_id_change_, "inline-after-id-change", "Inlines instructions after id was changed");
     }
 
     bool StaticResourceComponentConfiguration::shouldAnnotateQubitUse() const
