@@ -82,6 +82,50 @@ class AnalysisReadoutPass : public llvm::PassInfoMixin<AnalysisReadoutPass>
     AllocationAnalysis& analysis_result_;
 };
 
+class Configuration : public StaticResourceComponentConfiguration
+{
+  public:
+    Configuration()
+      : StaticResourceComponentConfiguration(StaticResourceComponentConfiguration::createDisabled())
+    {
+    }
+
+    void enableAnnotateQubitUse()
+    {
+        annotate_qubit_use_ = true;
+    }
+
+    void enableAnnotateResultUse()
+    {
+        annotate_result_use_ = true;
+    }
+
+    void enableAnnotateMaxQubitIndex()
+    {
+        annotate_max_qubit_index_ = true;
+    }
+
+    void enableAnnotateMaxResultIndex()
+    {
+        annotate_max_result_index_ = true;
+    }
+
+    void enableReplaceQubitOnReset()
+    {
+        replace_qubit_on_reset_ = true;
+    }
+
+    void enableReindexQubits()
+    {
+        reindex_qubits_ = true;
+    }
+
+    void enableInlineAfterIdChange()
+    {
+        inline_after_id_change_ = true;
+    }
+};
+
 std::shared_ptr<ConfigurableProfileGenerator> newProfile(
     AllocationAnalysis&                         analysis_result,
     StaticResourceComponentConfiguration const& cfg)
@@ -130,11 +174,47 @@ TEST(StaticResourceComponent, AllocationAnalysisPass)
   )script");
     AllocationAnalysis analysis_result{0};
 
-    auto profile = newProfile(analysis_result, StaticResourceComponentConfiguration::createDisabled());
+    auto profile = newProfile(analysis_result, Configuration());
     ir_manip->applyProfile(profile);
 
     EXPECT_EQ(analysis_result.usage_qubit_counts, 3);
     EXPECT_EQ(analysis_result.usage_result_counts, 3);
     EXPECT_EQ(analysis_result.largest_qubit_index, 9);
+    EXPECT_EQ(analysis_result.largest_result_index, 2);
+}
+
+TEST(StaticResourceComponent, AllocationAnalysisPass2)
+{
+    auto               ir_manip = newIrManip(R"script(
+    call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 9 to %Qubit*))
+    call void @__quantum__qis__cnot__body(%Qubit* inttoptr (i64 9 to %Qubit*), %Qubit* inttoptr (i64 1 to %Qubit*))
+    call void @__quantum__qis__cnot__body(%Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* inttoptr (i64 2 to %Qubit*))
+    %result0 = call %Result* @__quantum__qis__m__body(%Qubit* inttoptr (i64 9 to %Qubit*))
+    %result1 = call %Result* @__quantum__qis__m__body(%Qubit* inttoptr (i64 1 to %Qubit*))
+    %result2 = call %Result* @__quantum__qis__m__body(%Qubit* inttoptr (i64 2 to %Qubit*))
+    call void @__quantum__rt__array_start_record_output()
+    call void @__quantum__rt__result_record_output(%Result* %result0)
+    call void @__quantum__rt__result_record_output(%Result* %result1)
+    call void @__quantum__rt__result_record_output(%Result* %result2)
+    call void @__quantum__rt__array_end_record_output()
+    call void @__quantum__rt__array_start_record_output()
+    %zero = call %Result* @__quantum__rt__result_get_zero()
+    call void @__quantum__rt__result_record_output(%Result* %zero)
+    %zero1 = call %Result* @__quantum__rt__result_get_zero()
+    call void @__quantum__rt__result_record_output(%Result* %zero1)
+    %zero2 = call %Result* @__quantum__rt__result_get_zero()
+    call void @__quantum__rt__result_record_output(%Result* %zero2)
+    call void @__quantum__rt__array_end_record_output()
+  )script");
+    AllocationAnalysis analysis_result{0};
+
+    Configuration config;
+    config.enableReindexQubits();
+    auto profile = newProfile(analysis_result, config);
+    ir_manip->applyProfile(profile);
+
+    EXPECT_EQ(analysis_result.usage_qubit_counts, 3);
+    EXPECT_EQ(analysis_result.usage_result_counts, 3);
+    EXPECT_EQ(analysis_result.largest_qubit_index, 2);
     EXPECT_EQ(analysis_result.largest_result_index, 2);
 }

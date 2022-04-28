@@ -50,7 +50,7 @@ namespace quantum
         /// Creates a configuration where all features are disabled
         static StaticResourceComponentConfiguration createDisabled();
 
-      private:
+      protected:
         bool annotate_qubit_use_{true};
         bool annotate_result_use_{true};
 
