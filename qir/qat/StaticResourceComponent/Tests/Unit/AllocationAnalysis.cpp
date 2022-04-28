@@ -41,6 +41,8 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
     ir_manip->declareFunction("void @__quantum__rt__result_record_output(%Result*)");
     ir_manip->declareFunction("void @__quantum__rt__array_end_record_output()");
     ir_manip->declareFunction("%Result* @__quantum__rt__result_get_zero()");
+    ir_manip->declareFunction("void @__quantum__qis__mz__body(%Qubit*, %Result*)");
+    ir_manip->declareFunction("void @__quantum__qis__reset__body(%Qubit*)");
 
     ir_manip->declareFunction("i64 @TeleportChain__Calculate__body(i64, %Qubit*)");
 
@@ -183,7 +185,7 @@ TEST(StaticResourceComponent, AllocationAnalysisPass)
     EXPECT_EQ(analysis_result.largest_result_index, 2);
 }
 
-TEST(StaticResourceComponent, AllocationAnalysisPass2)
+TEST(StaticResourceComponent, RemapTest)
 {
     auto               ir_manip = newIrManip(R"script(
     call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 9 to %Qubit*))
@@ -217,4 +219,109 @@ TEST(StaticResourceComponent, AllocationAnalysisPass2)
     EXPECT_EQ(analysis_result.usage_result_counts, 3);
     EXPECT_EQ(analysis_result.largest_qubit_index, 2);
     EXPECT_EQ(analysis_result.largest_result_index, 2);
+}
+
+TEST(StaticResourceComponent, AllocateOnMeasure)
+{
+    auto               ir_manip = newIrManip(R"script(
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 1 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 2 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 3 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 4 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 5 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 6 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  )script");
+    AllocationAnalysis analysis_result{0};
+
+    Configuration config;
+    config.enableReplaceQubitOnReset();
+
+    auto profile = newProfile(analysis_result, config);
+    ir_manip->applyProfile(profile);
+
+    EXPECT_EQ(analysis_result.usage_qubit_counts, 7);
+    EXPECT_EQ(analysis_result.usage_result_counts, 7);
+    EXPECT_EQ(analysis_result.largest_qubit_index, 6);
+    EXPECT_EQ(analysis_result.largest_result_index, 6);
+
+    EXPECT_TRUE(ir_manip->hasInstructionSequence({
+        "%0 = inttoptr i64 0 to %Qubit*",
+        "%1 = inttoptr i64 0 to %Result*",
+        "call void @__quantum__qis__mz__body(%Qubit* %0, %Result* %1)",
+        "%2 = inttoptr i64 1 to %Qubit*",
+        "%3 = inttoptr i64 1 to %Result*",
+        "call void @__quantum__qis__mz__body(%Qubit* %2, %Result* nonnull %3)",
+        "%4 = inttoptr i64 2 to %Qubit*",
+        "%5 = inttoptr i64 2 to %Result*",
+        "call void @__quantum__qis__mz__body(%Qubit* %4, %Result* nonnull %5)",
+        "%6 = inttoptr i64 3 to %Qubit*",
+        "%7 = inttoptr i64 3 to %Result*",
+        "call void @__quantum__qis__mz__body(%Qubit* %6, %Result* nonnull %7)",
+        "%8 = inttoptr i64 4 to %Qubit*",
+        "%9 = inttoptr i64 4 to %Result*",
+        "call void @__quantum__qis__mz__body(%Qubit* %8, %Result* nonnull %9)",
+        "%10 = inttoptr i64 5 to %Qubit*",
+        "%11 = inttoptr i64 5 to %Result*",
+        "call void @__quantum__qis__mz__body(%Qubit* %10, %Result* nonnull %11)",
+        "%12 = inttoptr i64 6 to %Qubit*",
+        "%13 = inttoptr i64 6 to %Result*",
+        "call void @__quantum__qis__mz__body(%Qubit* %12, %Result* nonnull %13)",
+    }));
+}
+
+TEST(StaticResourceComponent, AllocateOnMeasureWithInline)
+{
+    auto               ir_manip = newIrManip(R"script(
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 1 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 2 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 3 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 4 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 5 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 6 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  )script");
+    AllocationAnalysis analysis_result{0};
+
+    Configuration config;
+    config.enableReplaceQubitOnReset();
+    config.enableInlineAfterIdChange();
+
+    auto profile = newProfile(analysis_result, config);
+    ir_manip->applyProfile(profile);
+
+    EXPECT_EQ(analysis_result.usage_qubit_counts, 7);
+    EXPECT_EQ(analysis_result.usage_result_counts, 7);
+    EXPECT_EQ(analysis_result.largest_qubit_index, 6);
+    EXPECT_EQ(analysis_result.largest_result_index, 6);
+
+    EXPECT_TRUE(ir_manip->hasInstructionSequence({
+        "call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)",
+        "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* "
+        "nonnull inttoptr (i64 1 to %Result*))",
+        "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* "
+        "nonnull inttoptr (i64 2 to %Result*))",
+        "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 3 to %Qubit*), %Result* "
+        "nonnull inttoptr (i64 3 to %Result*))",
+        "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 4 to %Qubit*), %Result* "
+        "nonnull inttoptr (i64 4 to %Result*))",
+        "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 5 to %Qubit*), %Result* "
+        "nonnull inttoptr (i64 5 to %Result*))",
+        "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 6 to %Qubit*), %Result* "
+        "nonnull inttoptr (i64 6 to %Result*))",
+    }));
 }

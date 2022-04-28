@@ -93,6 +93,7 @@ namespace quantum
                             qubits_mapping[it->second.index] = next_qubit_index++;
                             to_remove.push_back(&instr);
                         }
+                        continue;
                     }
                 }
 
