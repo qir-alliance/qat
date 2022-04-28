@@ -20,6 +20,7 @@ microsoft_add_library(ModuleLoader)
 microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
 microsoft_add_library(ValidationPass Logging)
 microsoft_add_library(StaticResourceComponent Logging)
+microsoft_add_library_tests(StaticResourceComponent  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
 
 
 microsoft_add_library(GroupingPass Logging)
