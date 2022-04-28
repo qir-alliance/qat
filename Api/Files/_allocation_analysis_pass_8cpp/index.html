@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/dir_0044b2fe65e25fef5055866d37861d82/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_allocation_analysis_pass_8cpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      StaticResourcePass - QAT Documentation
+      StaticResourceComponent/AllocationAnalysisPass.cpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,13 +553,13 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> StaticResourcePass </span>
+        <span class="text-center"> StaticResourceComponent/AllocationAnalysisPass.cpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="staticresourcepass">StaticResourcePass</h1>
-<h2 id="files">Files</h2>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="staticresourcecomponentallocationanalysispasscpp">StaticResourceComponent/AllocationAnalysisPass.cpp</h1>
+<h2 id="namespaces">Namespaces</h2>
 <table>
 <thead>
 <tr>
@@ -568,21 +568,176 @@
 </thead>
 <tbody>
 <tr>
-<td><strong><a href="/qat/Api/Files/_static_resource_pass_8cpp/#file-staticresourcepass.cpp">StaticResourcePass/StaticResourcePass.cpp</a></strong></td>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
 </tr>
 <tr>
-<td><strong><a href="/qat/Api/Files/_static_resource_pass_8hpp/#file-staticresourcepass.hpp">StaticResourcePass/StaticResourcePass.hpp</a></strong></td>
-</tr>
-<tr>
-<td><strong><a href="/qat/Api/Files/_static_resource_pass_configuration_8cpp/#file-staticresourcepassconfiguration.cpp">StaticResourcePass/StaticResourcePassConfiguration.cpp</a></strong></td>
-</tr>
-<tr>
-<td><strong><a href="/qat/Api/Files/_static_resource_pass_configuration_8hpp/#file-staticresourcepassconfiguration.hpp">StaticResourcePass/StaticResourcePassConfiguration.hpp</a></strong></td>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
 </tr>
 </tbody>
 </table>
+<h2 id="source-code">Source code</h2>
+<pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include &quot;StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
+
+#include &quot;Llvm/Llvm.hpp&quot;
+
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+
+namespace microsoft
+{
+namespace quantum
+{
+
+    llvm::AnalysisKey AllocationAnalysisPass::Key;
+
+    bool AllocationAnalysisPass::extractResourceId(llvm::Value* value, uint64_t&amp; return_value, ResourceType&amp; type) const
+    {
+        auto* instruction_ptr = llvm::dyn_cast&lt;llvm::IntToPtrInst&gt;(value);
+        auto* operator_ptr = llvm::dyn_cast&lt;llvm::ConcreteOperator&lt;llvm::Operator, llvm::Instruction::IntToPtr&gt;&gt;(value);
+
+        auto* nullptr_cast = llvm::dyn_cast&lt;llvm::ConstantPointerNull&gt;(value);
+
+        if (instruction_ptr || operator_ptr || nullptr_cast)
+        {
+
+            auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(value-&gt;getType());
+            if (!pointer_type)
+            {
+                return false;
+            }
+
+            llvm::Type* element_type = pointer_type-&gt;getElementType();
+
+            if (!element_type-&gt;isStructTy())
+            {
+                return false;
+            }
+
+            type           = ResourceType::NotResource;
+            auto type_name = static_cast&lt;String&gt;(element_type-&gt;getStructName());
+            if (type_name == &quot;Qubit&quot;)
+            {
+                type = ResourceType::QubitResource;
+            }
+
+            if (type_name == &quot;Result&quot;)
+            {
+                type = ResourceType::ResultResource;
+            }
+
+            if (type == ResourceType::NotResource)
+            {
+                return false;
+            }
+
+            bool     is_constant_int = nullptr_cast != nullptr;
+            uint64_t n               = 0;
+
+            auto user = llvm::dyn_cast&lt;llvm::User&gt;(value);
+
+            // In case there exists a user, it must have exactly one argument
+            // which should be an integer. In case of deferred integers, the mapping
+            // will not work
+            if (user &amp;&amp; user-&gt;getNumOperands() == 1)
+            {
+                auto cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(user-&gt;getOperand(0));
+
+                if (cst)
+                {
+                    is_constant_int = true;
+                    n               = cst-&gt;getValue().getZExtValue();
+                }
+            }
+
+            if (is_constant_int)
+            {
+                return_value = n;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    AllocationAnalysisPass::Result AllocationAnalysisPass::run(
+        llvm::Function&amp; function,
+        llvm::FunctionAnalysisManager&amp; /*fam*/)
+    {
+        AllocationAnalysis ret;
+
+        std::unordered_set&lt;uint64_t&gt; qubits_used{};
+        std::unordered_set&lt;uint64_t&gt; results_used{};
+
+        for (auto&amp; block : function)
+        {
+            for (auto&amp; instr : block)
+            {
+                for (uint64_t i = 0; i &lt; instr.getNumOperands(); ++i)
+                {
+                    auto         op   = instr.getOperand(i);
+                    ResourceType type = ResourceType::NotResource;
+                    uint64_t     n    = 0;
+
+                    // Checking if it is a qubit resource reference and extracting the corresponding
+                    // id and type. Otherwise, we skip to the next operand.
+                    if (!extractResourceId(op, n, type))
+                    {
+                        continue;
+                    }
+
+                    ResourceAccessLocation value{op, type, n, &amp;instr, i};
+                    ret.access_map[op] = value;
+                    ret.resource_access.push_back(value);
+
+                    switch (type)
+                    {
+                    case ResourceType::QubitResource:
+                        qubits_used.insert(n);
+                        ret.largest_qubit_index = ret.largest_qubit_index &lt; n ? n : ret.largest_qubit_index;
+
+                        break;
+                    case ResourceType::ResultResource:
+                        results_used.insert(n);
+                        ret.largest_result_index = ret.largest_result_index &lt; n ? n : ret.largest_result_index;
+                        break;
+                    case ResourceType::NotResource:
+                    default:
+                        break;
+                    }
+                }
+            }
+        }
+
+        ret.usage_qubit_counts  = qubits_used.size();
+        ret.usage_result_counts = results_used.size();
+
+        return ret;
+    }
+
+    bool AllocationAnalysisPass::isRequired()
+    {
+        return true;
+    }
+
+    llvm::PreservedAnalyses AllocationAnalysisPassPrinter::run(
+        llvm::Function&amp;                module,
+        llvm::FunctionAnalysisManager&amp; fam)
+    {
+        auto&amp; result = fam.getResult&lt;AllocationAnalysisPass&gt;(module);
+        llvm::errs() &lt;&lt; result.largest_qubit_index &lt;&lt; &quot; qc cc blocks.\n&quot;;
+        llvm::errs() &lt;&lt; result.largest_result_index &lt;&lt; &quot; qc mc cc blocks.\n&quot;;
+
+        return llvm::PreservedAnalyses::all();
+    }
+
+} // namespace quantum
+} // namespace microsoft
+</code></pre>
 <hr />
-<p>Updated on 22 April 2022 at 02:37:17 UTC</p></div>
+<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
 </div>
           </div>
         </main>

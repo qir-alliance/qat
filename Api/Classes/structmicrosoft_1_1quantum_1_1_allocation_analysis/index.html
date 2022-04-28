@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      microsoft::quantum::StaticResourcePass - QAT Documentation
+      microsoft::quantum::AllocationAnalysis - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,13 +553,27 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> microsoft::quantum::StaticResourcePass </span>
+        <span class="text-center"> microsoft::quantum::AllocationAnalysis </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumstaticresourcepass">microsoft::quantum::StaticResourcePass</h1>
-<p>Inherits from llvm::PassInfoMixin&lt; StaticResourcePass &gt;</p>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumallocationanalysis">microsoft::quantum::AllocationAnalysis</h1>
+<h2 id="public-classes">Public Classes</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>struct</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis_1_1_resource_access_location/">ResourceAccessLocation</a></strong></td>
+</tr>
+</tbody>
+</table>
 <h2 id="public-types">Public Types</h2>
 <table>
 <thead>
@@ -570,28 +584,20 @@
 </thead>
 <tbody>
 <tr>
-<td>using llvm::Instruction</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#using-instruction">Instruction</a></strong></td>
+<td>enum</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/#enum-resourcetype">ResourceType</a></strong> { NotResource, QubitResource, ResultResource}</td>
 </tr>
 <tr>
-<td>using llvm::Value</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#using-value">Value</a></strong></td>
+<td>using std::unordered_map&lt; llvm::Value *, <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis_1_1_resource_access_location/">ResourceAccessLocation</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/#using-resourcevaluetoid">ResourceValueToId</a></strong></td>
 </tr>
 <tr>
-<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#using-iloggerptr">ILoggerPtr</a></strong></td>
-</tr>
-<tr>
-<td>using <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">ILogger::Location</a></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#using-location">Location</a></strong></td>
-</tr>
-<tr>
-<td>using llvm::StringRef</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#using-stringref">StringRef</a></strong></td>
+<td>using std::vector&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis_1_1_resource_access_location/">ResourceAccessLocation</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/#using-resourceaccesslist">ResourceAccessList</a></strong></td>
 </tr>
 </tbody>
 </table>
-<h2 id="public-functions">Public Functions</h2>
+<h2 id="public-attributes">Public Attributes</h2>
 <table>
 <thead>
 <tr>
@@ -601,82 +607,86 @@
 </thead>
 <tbody>
 <tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#function-staticresourcepass">StaticResourcePass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass_configuration/">StaticResourcePassConfiguration</a> const &amp; cfg, ILoggerPtr const &amp; logger =nullptr)</td>
+<td>uint64_t</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/#variable-largest_qubit_index">largest_qubit_index</a></strong></td>
 </tr>
 <tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#function-staticresourcepass">StaticResourcePass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/">StaticResourcePass</a> const &amp; )<br>Copy construction is banned.</td>
+<td>uint64_t</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/#variable-largest_result_index">largest_result_index</a></strong></td>
 </tr>
 <tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#function-staticresourcepass">StaticResourcePass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/">StaticResourcePass</a> &amp;&amp; ) =default<br>We allow move semantics.</td>
+<td>uint64_t</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/#variable-usage_qubit_counts">usage_qubit_counts</a></strong></td>
 </tr>
 <tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#function-~staticresourcepass">~StaticResourcePass</a></strong>() =default<br>Default destruction.</td>
+<td>uint64_t</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/#variable-usage_result_counts">usage_result_counts</a></strong></td>
 </tr>
 <tr>
-<td>llvm::PreservedAnalyses</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#function-run">run</a></strong>(llvm::Module &amp; module, llvm::ModuleAnalysisManager &amp; mam)</td>
+<td>ResourceValueToId</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/#variable-access_map">access_map</a></strong></td>
 </tr>
 <tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_pass/#function-isrequired">isRequired</a></strong>()<br>Whether or not this pass is required to run.</td>
+<td>ResourceAccessList</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/#variable-resource_access">resource_access</a></strong></td>
 </tr>
 </tbody>
 </table>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
-<h3 id="using-instruction">using Instruction</h3>
-<pre><code class="language-cpp">using microsoft::quantum::StaticResourcePass::Instruction =  llvm::Instruction;
+<h3 id="enum-resourcetype">enum ResourceType</h3>
+<table>
+<thead>
+<tr>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NotResource</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>QubitResource</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ResultResource</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="using-resourcevaluetoid">using ResourceValueToId</h3>
+<pre><code class="language-cpp">using microsoft::quantum::AllocationAnalysis::ResourceValueToId =  std::unordered_map&lt;llvm::Value*, ResourceAccessLocation&gt;;
 </code></pre>
-<h3 id="using-value">using Value</h3>
-<pre><code class="language-cpp">using microsoft::quantum::StaticResourcePass::Value =  llvm::Value;
+<h3 id="using-resourceaccesslist">using ResourceAccessList</h3>
+<pre><code class="language-cpp">using microsoft::quantum::AllocationAnalysis::ResourceAccessList =  std::vector&lt;ResourceAccessLocation&gt;;
 </code></pre>
-<h3 id="using-iloggerptr">using ILoggerPtr</h3>
-<pre><code class="language-cpp">using microsoft::quantum::StaticResourcePass::ILoggerPtr =  std::shared_ptr&lt;ILogger&gt;;
+<h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
+<h3 id="variable-largest_qubit_index">variable largest_qubit_index</h3>
+<pre><code class="language-cpp">uint64_t largest_qubit_index {0};
 </code></pre>
-<h3 id="using-location">using Location</h3>
-<pre><code class="language-cpp">using microsoft::quantum::StaticResourcePass::Location =  ILogger::Location;
+<h3 id="variable-largest_result_index">variable largest_result_index</h3>
+<pre><code class="language-cpp">uint64_t largest_result_index {0};
 </code></pre>
-<h3 id="using-stringref">using StringRef</h3>
-<pre><code class="language-cpp">using microsoft::quantum::StaticResourcePass::StringRef =  llvm::StringRef;
+<h3 id="variable-usage_qubit_counts">variable usage_qubit_counts</h3>
+<pre><code class="language-cpp">uint64_t usage_qubit_counts {0};
 </code></pre>
-<h2 id="public-functions-documentation">Public Functions Documentation</h2>
-<h3 id="function-staticresourcepass">function StaticResourcePass</h3>
-<pre><code class="language-cpp">explicit StaticResourcePass(
-    StaticResourcePassConfiguration const &amp; cfg,
-    ILoggerPtr const &amp; logger =nullptr
-)
+<h3 id="variable-usage_result_counts">variable usage_result_counts</h3>
+<pre><code class="language-cpp">uint64_t usage_result_counts {0};
 </code></pre>
-<h3 id="function-staticresourcepass_1">function StaticResourcePass</h3>
-<pre><code class="language-cpp">StaticResourcePass(
-    StaticResourcePass const &amp; 
-)
+<h3 id="variable-access_map">variable access_map</h3>
+<pre><code class="language-cpp">ResourceValueToId access_map {};
 </code></pre>
-<p>Copy construction is banned. </p>
-<h3 id="function-staticresourcepass_2">function StaticResourcePass</h3>
-<pre><code class="language-cpp">StaticResourcePass(
-    StaticResourcePass &amp;&amp; 
-) =default
+<h3 id="variable-resource_access">variable resource_access</h3>
+<pre><code class="language-cpp">ResourceAccessList resource_access {};
 </code></pre>
-<p>We allow move semantics. </p>
-<h3 id="function-staticresourcepass_3">function ~StaticResourcePass</h3>
-<pre><code class="language-cpp">~StaticResourcePass() =default
-</code></pre>
-<p>Default destruction. </p>
-<h3 id="function-run">function run</h3>
-<pre><code class="language-cpp">llvm::PreservedAnalyses run(
-    llvm::Module &amp; module,
-    llvm::ModuleAnalysisManager &amp; mam
-)
-</code></pre>
-<h3 id="function-isrequired">function isRequired</h3>
-<pre><code class="language-cpp">static bool isRequired()
-</code></pre>
-<p>Whether or not this pass is required to run. </p>
 <hr />
-<p>Updated on 22 April 2022 at 02:37:17 UTC</p></div>
+<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
 </div>
           </div>
         </main>

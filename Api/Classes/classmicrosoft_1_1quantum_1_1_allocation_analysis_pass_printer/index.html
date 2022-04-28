@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_static_resource_pass_configuration_8cpp/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_allocation_analysis_pass_printer/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      StaticResourcePass/StaticResourcePassConfiguration.cpp - QAT Documentation
+      microsoft::quantum::AllocationAnalysisPassPrinter - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -215,7 +215,7 @@
                 </h3>
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../../Classes/"
+                  href="../"
                   >Classes</a
                 >
                 <a
@@ -230,7 +230,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../"
+                  href="../../Files/"
                   >Files</a
                 >
                 <a
@@ -398,7 +398,7 @@
               </h3>
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../../Classes/"
+                href="../"
                 >Classes</a
               >
               <a
@@ -413,7 +413,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../"
+                href="../../Files/"
                 >Files</a
               >
               <a
@@ -553,111 +553,44 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> StaticResourcePass/StaticResourcePassConfiguration.cpp </span>
+        <span class="text-center"> microsoft::quantum::AllocationAnalysisPassPrinter </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="staticresourcepassstaticresourcepassconfigurationcpp">StaticResourcePass/StaticResourcePassConfiguration.cpp</h1>
-<h2 id="namespaces">Namespaces</h2>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumallocationanalysispassprinter">microsoft::quantum::AllocationAnalysisPassPrinter</h1>
+<p>Inherits from llvm::PassInfoMixin&lt; AllocationAnalysisPassPrinter &gt;</p>
+<h2 id="public-functions">Public Functions</h2>
 <table>
 <thead>
 <tr>
+<th></th>
 <th>Name</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
+<td>llvm::PreservedAnalyses</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_allocation_analysis_pass_printer/#function-run">run</a></strong>(llvm::Function &amp; module, llvm::FunctionAnalysisManager &amp; mam)</td>
 </tr>
 <tr>
-<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_allocation_analysis_pass_printer/#function-isrequired">isRequired</a></strong>()</td>
 </tr>
 </tbody>
 </table>
-<h2 id="source-code">Source code</h2>
-<pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-
-#include &quot;Commandline/ConfigurationManager.hpp&quot;
-#include &quot;QatTypes/QatTypes.hpp&quot;
-#include &quot;StaticResourcePass/StaticResourcePassConfiguration.hpp&quot;
-
-namespace microsoft
-{
-namespace quantum
-{
-
-    void StaticResourcePassConfiguration::setup(ConfigurationManager&amp; config)
-    {
-        config.setSectionName(&quot;Static resource manipulation&quot;, &quot;&quot;);
-        config.addParameter(annotate_qubit_use_, &quot;annotate-qubit-use&quot;, &quot;Annotate the number of qubits used&quot;);
-
-        config.addParameter(annotate_result_use_, &quot;annotate-result-use&quot;, &quot;Annotate the number of results used&quot;);
-
-        config.addParameter(
-            annotate_max_qubit_index_, &quot;annotate-max-qubit-index&quot;, &quot;Annotate the maximum qubit index used&quot;);
-
-        config.addParameter(
-            annotate_max_result_index_, &quot;annotate-max-result-index&quot;, &quot;Annotate the maximum result index used&quot;);
-
-        config.addParameter(
-            annotate_max_result_index_, &quot;annotate-max-result-index&quot;, &quot;Annotate the maximum result index used&quot;);
-
-        config.addParameter(
-            reindex_qubits_, &quot;reindex-qubits&quot;,
-            &quot;Re-indexes statically allocated qubits with sequential ids starting from 0&quot;);
-    }
-
-    bool StaticResourcePassConfiguration::shouldAnnotateQubitUse() const
-    {
-        return annotate_qubit_use_;
-    }
-
-    bool StaticResourcePassConfiguration::shouldAnnotateResultUse() const
-    {
-        return annotate_result_use_;
-    }
-
-    bool StaticResourcePassConfiguration::shouldAnnotateMaxQubitIndex() const
-    {
-        return annotate_max_qubit_index_;
-    }
-
-    bool StaticResourcePassConfiguration::shouldAnnotateMaxResultIndex() const
-    {
-        return annotate_max_result_index_;
-    }
-
-    bool StaticResourcePassConfiguration::shouldReplaceQubitsOnReset() const
-    {
-        return replace_qubit_on_reset_;
-    }
-
-    bool StaticResourcePassConfiguration::shouldReindexQubits() const
-    {
-        return reindex_qubits_;
-    }
-
-    StaticResourcePassConfiguration StaticResourcePassConfiguration::createDisabled()
-    {
-        StaticResourcePassConfiguration ret;
-        ret.annotate_qubit_use_  = false;
-        ret.annotate_result_use_ = false;
-
-        ret.annotate_max_qubit_index_  = false;
-        ret.annotate_max_result_index_ = false;
-
-        ret.replace_qubit_on_reset_ = false;
-        ret.reindex_qubits_         = false;
-        return ret;
-    }
-
-} // namespace quantum
-} // namespace microsoft
+<h2 id="public-functions-documentation">Public Functions Documentation</h2>
+<h3 id="function-run">function run</h3>
+<pre><code class="language-cpp">llvm::PreservedAnalyses run(
+    llvm::Function &amp; module,
+    llvm::FunctionAnalysisManager &amp; mam
+)
+</code></pre>
+<h3 id="function-isrequired">function isRequired</h3>
+<pre><code class="language-cpp">static inline bool isRequired()
 </code></pre>
 <hr />
-<p>Updated on 22 April 2022 at 02:37:17 UTC</p></div>
+<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
 </div>
           </div>
         </main>

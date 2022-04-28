@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_static_resource_pass_1_1_resource_stats/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      microsoft::quantum::StaticResourcePass::ResourceStats - QAT Documentation
+      microsoft::quantum::QubitRemapPass - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,13 +553,14 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> microsoft::quantum::StaticResourcePass::ResourceStats </span>
+        <span class="text-center"> microsoft::quantum::QubitRemapPass </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumstaticresourcepassresourcestats">microsoft::quantum::StaticResourcePass::ResourceStats</h1>
-<h2 id="public-attributes">Public Attributes</h2>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumqubitremappass">microsoft::quantum::QubitRemapPass</h1>
+<p>Inherits from llvm::PassInfoMixin&lt; QubitRemapPass &gt;</p>
+<h2 id="public-types">Public Types</h2>
 <table>
 <thead>
 <tr>
@@ -569,38 +570,144 @@
 </thead>
 <tbody>
 <tr>
-<td>uint64_t</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_static_resource_pass_1_1_resource_stats/#variable-largest_qubit_index">largest_qubit_index</a></strong></td>
+<td>enum</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#enum-resourcetype">ResourceType</a></strong> { None, Qubit, Result}</td>
 </tr>
 <tr>
-<td>uint64_t</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_static_resource_pass_1_1_resource_stats/#variable-largest_result_index">largest_result_index</a></strong></td>
+<td>using llvm::Instruction</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#using-instruction">Instruction</a></strong></td>
 </tr>
 <tr>
-<td>uint64_t</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_static_resource_pass_1_1_resource_stats/#variable-usage_qubit_counts">usage_qubit_counts</a></strong></td>
+<td>using llvm::Value</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#using-value">Value</a></strong></td>
 </tr>
 <tr>
-<td>uint64_t</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_static_resource_pass_1_1_resource_stats/#variable-usage_result_counts">usage_result_counts</a></strong></td>
+<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#using-iloggerptr">ILoggerPtr</a></strong></td>
+</tr>
+<tr>
+<td>using <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">ILogger::Location</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#using-location">Location</a></strong></td>
+</tr>
+<tr>
+<td>using llvm::StringRef</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#using-stringref">StringRef</a></strong></td>
 </tr>
 </tbody>
 </table>
-<h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
-<h3 id="variable-largest_qubit_index">variable largest_qubit_index</h3>
-<pre><code class="language-cpp">uint64_t largest_qubit_index {0};
+<h2 id="public-functions">Public Functions</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#function-qubitremappass">QubitRemapPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_component_configuration/">StaticResourceComponentConfiguration</a> const &amp; cfg, ILoggerPtr const &amp; logger =nullptr)</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#function-qubitremappass">QubitRemapPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/">QubitRemapPass</a> const &amp; )<br>Copy construction is banned.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#function-qubitremappass">QubitRemapPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/">QubitRemapPass</a> &amp;&amp; ) =default<br>We allow move semantics.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#function-~qubitremappass">~QubitRemapPass</a></strong>() =default<br>Default destruction.</td>
+</tr>
+<tr>
+<td>llvm::PreservedAnalyses</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#function-run">run</a></strong>(llvm::Function &amp; function, llvm::FunctionAnalysisManager &amp; mam)</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/#function-isrequired">isRequired</a></strong>()<br>Whether or not this pass is required to run.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-types-documentation">Public Types Documentation</h2>
+<h3 id="enum-resourcetype">enum ResourceType</h3>
+<table>
+<thead>
+<tr>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>None</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Qubit</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Result</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="using-instruction">using Instruction</h3>
+<pre><code class="language-cpp">using microsoft::quantum::QubitRemapPass::Instruction =  llvm::Instruction;
 </code></pre>
-<h3 id="variable-largest_result_index">variable largest_result_index</h3>
-<pre><code class="language-cpp">uint64_t largest_result_index {0};
+<h3 id="using-value">using Value</h3>
+<pre><code class="language-cpp">using microsoft::quantum::QubitRemapPass::Value =  llvm::Value;
 </code></pre>
-<h3 id="variable-usage_qubit_counts">variable usage_qubit_counts</h3>
-<pre><code class="language-cpp">uint64_t usage_qubit_counts {0};
+<h3 id="using-iloggerptr">using ILoggerPtr</h3>
+<pre><code class="language-cpp">using microsoft::quantum::QubitRemapPass::ILoggerPtr =  std::shared_ptr&lt;ILogger&gt;;
 </code></pre>
-<h3 id="variable-usage_result_counts">variable usage_result_counts</h3>
-<pre><code class="language-cpp">uint64_t usage_result_counts {0};
+<h3 id="using-location">using Location</h3>
+<pre><code class="language-cpp">using microsoft::quantum::QubitRemapPass::Location =  ILogger::Location;
 </code></pre>
+<h3 id="using-stringref">using StringRef</h3>
+<pre><code class="language-cpp">using microsoft::quantum::QubitRemapPass::StringRef =  llvm::StringRef;
+</code></pre>
+<h2 id="public-functions-documentation">Public Functions Documentation</h2>
+<h3 id="function-qubitremappass">function QubitRemapPass</h3>
+<pre><code class="language-cpp">explicit QubitRemapPass(
+    StaticResourceComponentConfiguration const &amp; cfg,
+    ILoggerPtr const &amp; logger =nullptr
+)
+</code></pre>
+<h3 id="function-qubitremappass_1">function QubitRemapPass</h3>
+<pre><code class="language-cpp">QubitRemapPass(
+    QubitRemapPass const &amp; 
+)
+</code></pre>
+<p>Copy construction is banned. </p>
+<h3 id="function-qubitremappass_2">function QubitRemapPass</h3>
+<pre><code class="language-cpp">QubitRemapPass(
+    QubitRemapPass &amp;&amp; 
+) =default
+</code></pre>
+<p>We allow move semantics. </p>
+<h3 id="function-qubitremappass_3">function ~QubitRemapPass</h3>
+<pre><code class="language-cpp">~QubitRemapPass() =default
+</code></pre>
+<p>Default destruction. </p>
+<h3 id="function-run">function run</h3>
+<pre><code class="language-cpp">llvm::PreservedAnalyses run(
+    llvm::Function &amp; function,
+    llvm::FunctionAnalysisManager &amp; mam
+)
+</code></pre>
+<h3 id="function-isrequired">function isRequired</h3>
+<pre><code class="language-cpp">static bool isRequired()
+</code></pre>
+<p>Whether or not this pass is required to run. </p>
 <hr />
-<p>Updated on 22 April 2022 at 02:37:17 UTC</p></div>
+<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
 </div>
           </div>
         </main>

@@ -586,14 +586,16 @@
 #include &quot;GroupingPass/GroupingPassConfiguration.hpp&quot;
 #include &quot;Rules/Factory.hpp&quot;
 #include &quot;Rules/RuleSet.hpp&quot;
-#include &quot;StaticResourcePass/StaticResourcePass.hpp&quot;
-#include &quot;StaticResourcePass/StaticResourcePassConfiguration.hpp&quot;
+#include &quot;StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
+#include &quot;StaticResourceComponent/QubitRemapPass.hpp&quot;
+#include &quot;StaticResourceComponent/ReplaceQubitOnResetPass.hpp&quot;
+#include &quot;StaticResourceComponent/ResourceAnnotationPass.hpp&quot;
+#include &quot;StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
 #include &quot;TransformationRulesPass/TransformationRulesPass.hpp&quot;
 #include &quot;TransformationRulesPass/TransformationRulesPassConfiguration.hpp&quot;
 #include &quot;ValidationPass/ValidationPassConfiguration.hpp&quot;
 
 #include &quot;Llvm/Llvm.hpp&quot;
-
 namespace microsoft
 {
 namespace quantum
@@ -828,11 +830,26 @@ namespace quantum
         // TODO(issue-59): Causes memory sanitation issue
         // replicateProfileComponent(&quot;llvm-optimization&quot;);
 
-        registerProfileComponent&lt;StaticResourcePassConfiguration&gt;(
+        registerProfileComponent&lt;StaticResourceComponentConfiguration&gt;(
             &quot;static-resource&quot;,
-            [logger](StaticResourcePassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
-                auto&amp; pass_manager = ptr-&gt;modulePassManager();
-                pass_manager.addPass(StaticResourcePass(cfg, logger));
+            [logger](StaticResourceComponentConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile) {
+                auto&amp; fam = profile.functionAnalysisManager();
+                fam.registerPass([&amp;] { return AllocationAnalysisPass(cfg, logger); });
+
+                auto&amp; fpm = ptr-&gt;functionPassManager();
+                fpm.addPass(AllocationAnalysisPassPrinter());
+                fpm.addPass(ReplaceQubitOnResetPass(cfg, logger));
+                fpm.addPass(QubitRemapPass(cfg, logger));
+
+                if (cfg.shouldInlineAfterIdChange() &amp;&amp; cfg.isChangingIds())
+                {
+                    fpm.addPass(llvm::InstCombinePass(1000));
+                    fpm.addPass(llvm::AggressiveInstCombinePass());
+                    fpm.addPass(llvm::SCCPPass());
+                    fpm.addPass(llvm::SimplifyCFGPass());
+                }
+
+                fpm.addPass(ResourceAnnotationPass(cfg, logger));
             });
 
         registerProfileComponent&lt;GroupingPassConfiguration&gt;(
@@ -859,7 +876,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 22 April 2022 at 02:37:17 UTC</p></div>
+<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
 </div>
           </div>
         </main>

@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_static_resource_pass_8cpp/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      StaticResourcePass/StaticResourcePass.cpp - QAT Documentation
+      microsoft::quantum::ReplaceQubitOnResetPass - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -215,7 +215,7 @@
                 </h3>
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../../Classes/"
+                  href="../"
                   >Classes</a
                 >
                 <a
@@ -230,7 +230,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../"
+                  href="../../Files/"
                   >Files</a
                 >
                 <a
@@ -398,7 +398,7 @@
               </h3>
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../../Classes/"
+                href="../"
                 >Classes</a
               >
               <a
@@ -413,7 +413,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../"
+                href="../../Files/"
                 >Files</a
               >
               <a
@@ -553,368 +553,161 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> StaticResourcePass/StaticResourcePass.cpp </span>
+        <span class="text-center"> microsoft::quantum::ReplaceQubitOnResetPass </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="staticresourcepassstaticresourcepasscpp">StaticResourcePass/StaticResourcePass.cpp</h1>
-<h2 id="namespaces">Namespaces</h2>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumreplacequbitonresetpass">microsoft::quantum::ReplaceQubitOnResetPass</h1>
+<p>Inherits from llvm::PassInfoMixin&lt; ReplaceQubitOnResetPass &gt;</p>
+<h2 id="public-types">Public Types</h2>
 <table>
 <thead>
 <tr>
+<th></th>
 <th>Name</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
+<td>enum</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#enum-resourcetype">ResourceType</a></strong> { None, Qubit, Result}</td>
 </tr>
 <tr>
-<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
+<td>using llvm::Instruction</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#using-instruction">Instruction</a></strong></td>
+</tr>
+<tr>
+<td>using llvm::Value</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#using-value">Value</a></strong></td>
+</tr>
+<tr>
+<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#using-iloggerptr">ILoggerPtr</a></strong></td>
+</tr>
+<tr>
+<td>using <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">ILogger::Location</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#using-location">Location</a></strong></td>
+</tr>
+<tr>
+<td>using llvm::StringRef</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#using-stringref">StringRef</a></strong></td>
 </tr>
 </tbody>
 </table>
-<h2 id="source-code">Source code</h2>
-<pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-
-#include &quot;StaticResourcePass/StaticResourcePass.hpp&quot;
-
-#include &quot;Llvm/Llvm.hpp&quot;
-
-#include &lt;fstream&gt;
-#include &lt;iostream&gt;
-
-namespace microsoft
-{
-namespace quantum
-{
-
-    StaticResourcePass::StaticResourcePass(StaticResourcePassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger)
-      : config_{cfg}
-      , logger_{logger}
-    {
-    }
-
-    void StaticResourcePass::remapQubits(llvm::Module&amp; module) const
-    {
-        if (!config_.shouldReindexQubits())
-        {
-            return;
-        }
-
-        llvm::IRBuilder&lt;&gt; builder{module.getContext()};
-
-        for (auto&amp; function : module)
-        {
-            std::unordered_map&lt;uint64_t, uint64_t&gt; qubits_mapping{};
-            std::unordered_map&lt;uint64_t, uint64_t&gt; results_mapping{};
-            std::unordered_set&lt;llvm::Value*&gt;       already_replaced{};
-
-            for (auto&amp; block : function)
-            {
-                for (auto&amp; instr : block)
-                {
-                    for (auto&amp; op : instr.operands())
-                    {
-                        // In case we already did the mapping, we skip to next instruction
-                        if (already_replaced.find(op) != already_replaced.end())
-                        {
-                            continue;
-                        }
-
-                        auto* instruction_ptr = llvm::dyn_cast&lt;llvm::IntToPtrInst&gt;(op);
-                        auto* operator_ptr =
-                            llvm::dyn_cast&lt;llvm::ConcreteOperator&lt;llvm::Operator, llvm::Instruction::IntToPtr&gt;&gt;(op);
-
-                        auto* nullptr_cast = llvm::dyn_cast&lt;llvm::ConstantPointerNull&gt;(op);
-
-                        if (instruction_ptr || operator_ptr || nullptr_cast)
-                        {
-
-                            auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(op-&gt;getType());
-                            if (!pointer_type)
-                            {
-                                continue;
-                            }
-
-                            llvm::Type* element_type = pointer_type-&gt;getElementType();
-
-                            if (!element_type-&gt;isStructTy())
-                            {
-                                continue;
-                            }
-
-                            auto type_name = static_cast&lt;String&gt;(element_type-&gt;getStructName());
-                            if (type_name != &quot;Qubit&quot; &amp;&amp; type_name != &quot;Result&quot;)
-                            {
-                                continue;
-                            }
-
-                            bool     is_constant_int = nullptr_cast != nullptr;
-                            uint64_t n               = 0;
-
-                            auto user = llvm::dyn_cast&lt;llvm::User&gt;(op);
-
-                            // In case there exists a user, it must have exactly one argument
-                            // which should be an integer. In case of deferred integers, the mapping
-                            // will not work
-                            if (user &amp;&amp; user-&gt;getNumOperands() == 1)
-                            {
-                                auto cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(user-&gt;getOperand(0));
-
-                                if (cst)
-                                {
-                                    is_constant_int = true;
-                                    n               = cst-&gt;getValue().getZExtValue();
-                                }
-                            }
-
-                            // We only perform the mapping for constant integer casts. Anything else
-                            // cannot be remapped.
-                            if (is_constant_int)
-                            {
-                                uint64_t remapped_index = 0;
-
-                                // Getting remapped index based on resource type
-                                if (type_name == &quot;Qubit&quot;)
-                                {
-                                    if (qubits_mapping.find(n) == qubits_mapping.end())
-                                    {
-                                        remapped_index    = qubits_mapping.size();
-                                        qubits_mapping[n] = remapped_index;
-                                    }
-                                    else
-                                    {
-                                        remapped_index = qubits_mapping[n];
-                                    }
-                                }
-                                else if (type_name == &quot;Result&quot;)
-                                {
-                                    if (results_mapping.find(n) == results_mapping.end())
-                                    {
-                                        remapped_index     = results_mapping.size();
-                                        results_mapping[n] = remapped_index;
-                                    }
-                                    else
-                                    {
-                                        remapped_index = results_mapping[n];
-                                    }
-                                }
-
-                                // Creating new instruction with remapped index
-                                builder.SetInsertPoint(&amp;instr);
-
-                                auto idx       = llvm::APInt(64, remapped_index);
-                                auto new_index = llvm::ConstantInt::get(module.getContext(), idx);
-                                auto new_instr = new llvm::IntToPtrInst(new_index, pointer_type);
-                                builder.Insert(new_instr);
-
-                                op-&gt;replaceAllUsesWith(new_instr);
-                                already_replaced.insert(new_instr);
-                                already_replaced.insert(op);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    bool StaticResourcePass::enforceRequirements(llvm::Module&amp; module) const
-    {
-        if (config_.shouldReplaceQubitsOnReset())
-        {
-            uint64_t function_counts{0};
-            uint64_t body_counts{0};
-
-            for (auto&amp; function : module)
-            {
-                ++function_counts;
-                for (auto&amp; body : function)
-                {
-                    ++body_counts;
-                }
-            }
-
-            if (function_counts != 1 || body_counts != 1)
-            {
-                if (logger_)
-                {
-                    logger_-&gt;error(
-                        &quot;Qubit replacement on reset only possible using straight line code (single function, &quot;
-                        &quot;one body).&quot;);
-                    return false;
-                }
-                else
-                {
-                    throw std::runtime_error(
-                        &quot;Qubit replacement on reset only possible using straight line code (single function, &quot;
-                        &quot;one body).&quot;);
-                }
-            }
-        }
-        return true;
-    }
-
-    StaticResourcePass::ResourceStats StaticResourcePass::getLargestIndices(llvm::Function&amp; function) const
-    {
-        ResourceStats                ret;
-        std::unordered_set&lt;uint64_t&gt; qubits_used{};
-        std::unordered_set&lt;uint64_t&gt; results_used{};
-
-        for (auto&amp; block : function)
-        {
-            for (auto&amp; instr : block)
-            {
-                for (auto&amp; op : instr.operands())
-                {
-                    auto* a = llvm::dyn_cast&lt;llvm::IntToPtrInst&gt;(op);
-                    auto* b = llvm::dyn_cast&lt;llvm::ConcreteOperator&lt;llvm::Operator, llvm::Instruction::IntToPtr&gt;&gt;(op);
-
-                    auto* nullptr_cast = llvm::dyn_cast&lt;llvm::ConstantPointerNull&gt;(op);
-
-                    if (a || b || nullptr_cast)
-                    {
-
-                        auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(op-&gt;getType());
-                        if (!pointer_type)
-                        {
-                            continue;
-                        }
-
-                        llvm::Type* element_type = pointer_type-&gt;getElementType();
-
-                        if (!element_type-&gt;isStructTy())
-                        {
-                            continue;
-                        }
-
-                        auto type_name = static_cast&lt;String&gt;(element_type-&gt;getStructName());
-                        if (type_name != &quot;Qubit&quot; &amp;&amp; type_name != &quot;Result&quot;)
-                        {
-                            continue;
-                        }
-
-                        bool     is_constant_int = nullptr_cast != nullptr;
-                        uint64_t n               = 0;
-
-                        auto user = llvm::dyn_cast&lt;llvm::User&gt;(op);
-
-                        if (user &amp;&amp; user-&gt;getNumOperands() == 1)
-                        {
-                            auto cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(user-&gt;getOperand(0));
-
-                            if (cst)
-                            {
-                                is_constant_int = true;
-                                n               = cst-&gt;getValue().getZExtValue();
-                            }
-                        }
-
-                        if (is_constant_int)
-                        {
-                            // Updating qubit index
-                            if (type_name == &quot;Qubit&quot;)
-                            {
-                                qubits_used.insert(n);
-                                ret.largest_qubit_index = ret.largest_qubit_index &lt; n ? n : ret.largest_qubit_index;
-                            }
-
-                            // Updating result index
-                            if (type_name == &quot;Result&quot;)
-                            {
-                                results_used.insert(n);
-                                ret.largest_result_index = ret.largest_result_index &lt; n ? n : ret.largest_result_index;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        ret.usage_qubit_counts  = qubits_used.size();
-        ret.usage_result_counts = results_used.size();
-
-        return ret;
-    }
-
-    void StaticResourcePass::annotateQubits(llvm::Module&amp; module) const
-    {
-        if (config_.shouldAnnotateResultUse() || config_.shouldAnnotateQubitUse())
-        {
-            for (auto&amp; function : module)
-            {
-                if (function.isDeclaration())
-                {
-                    continue;
-                }
-
-                auto stats = getLargestIndices(function);
-
-                if (config_.shouldAnnotateQubitUse())
-                {
-                    std::stringstream ss{&quot;&quot;};
-                    ss &lt;&lt; stats.usage_qubit_counts;
-                    function.addFnAttr(&quot;requiredQubits&quot;, ss.str());
-                }
-
-                if (config_.shouldAnnotateMaxQubitIndex())
-                {
-                    std::stringstream ss{&quot;&quot;};
-                    ss &lt;&lt; stats.largest_qubit_index;
-                    function.addFnAttr(&quot;maxQubitIndex&quot;, ss.str());
-                }
-
-                if (config_.shouldAnnotateResultUse())
-                {
-                    std::stringstream ss{&quot;&quot;};
-                    ss &lt;&lt; stats.usage_result_counts;
-                    function.addFnAttr(&quot;requiredResults&quot;, ss.str());
-                }
-
-                if (config_.shouldAnnotateMaxResultIndex())
-                {
-                    std::stringstream ss{&quot;&quot;};
-                    ss &lt;&lt; stats.largest_result_index;
-                    function.addFnAttr(&quot;maxResultIndex&quot;, ss.str());
-                }
-            }
-        }
-    }
-
-    void StaticResourcePass::allocateOnReset(llvm::Module&amp; /*module*/) const
-    {
-        // TODO(tfr): needs implementation
-    }
-
-    llvm::PreservedAnalyses StaticResourcePass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
-    {
-        if (!enforceRequirements(module))
-        {
-            return llvm::PreservedAnalyses::none();
-        }
-
-        remapQubits(module);
-
-        allocateOnReset(module);
-
-        annotateQubits(module);
-
-        return llvm::PreservedAnalyses::all();
-    }
-
-    bool StaticResourcePass::isRequired()
-    {
-        return true;
-    }
-
-} // namespace quantum
-} // namespace microsoft
+<h2 id="public-functions">Public Functions</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#function-replacequbitonresetpass">ReplaceQubitOnResetPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_component_configuration/">StaticResourceComponentConfiguration</a> const &amp; cfg, ILoggerPtr const &amp; logger =nullptr)</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#function-replacequbitonresetpass">ReplaceQubitOnResetPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/">ReplaceQubitOnResetPass</a> const &amp; )<br>Copy construction is banned.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#function-replacequbitonresetpass">ReplaceQubitOnResetPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/">ReplaceQubitOnResetPass</a> &amp;&amp; ) =default<br>We allow move semantics.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#function-~replacequbitonresetpass">~ReplaceQubitOnResetPass</a></strong>() =default<br>Default destruction.</td>
+</tr>
+<tr>
+<td>llvm::PreservedAnalyses</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#function-run">run</a></strong>(llvm::Function &amp; function, llvm::FunctionAnalysisManager &amp; mam)</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/#function-isrequired">isRequired</a></strong>()<br>Whether or not this pass is required to run.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-types-documentation">Public Types Documentation</h2>
+<h3 id="enum-resourcetype">enum ResourceType</h3>
+<table>
+<thead>
+<tr>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>None</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Qubit</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Result</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="using-instruction">using Instruction</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ReplaceQubitOnResetPass::Instruction =  llvm::Instruction;
 </code></pre>
+<h3 id="using-value">using Value</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ReplaceQubitOnResetPass::Value =  llvm::Value;
+</code></pre>
+<h3 id="using-iloggerptr">using ILoggerPtr</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ReplaceQubitOnResetPass::ILoggerPtr =  std::shared_ptr&lt;ILogger&gt;;
+</code></pre>
+<h3 id="using-location">using Location</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ReplaceQubitOnResetPass::Location =  ILogger::Location;
+</code></pre>
+<h3 id="using-stringref">using StringRef</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ReplaceQubitOnResetPass::StringRef =  llvm::StringRef;
+</code></pre>
+<h2 id="public-functions-documentation">Public Functions Documentation</h2>
+<h3 id="function-replacequbitonresetpass">function ReplaceQubitOnResetPass</h3>
+<pre><code class="language-cpp">explicit ReplaceQubitOnResetPass(
+    StaticResourceComponentConfiguration const &amp; cfg,
+    ILoggerPtr const &amp; logger =nullptr
+)
+</code></pre>
+<h3 id="function-replacequbitonresetpass_1">function ReplaceQubitOnResetPass</h3>
+<pre><code class="language-cpp">ReplaceQubitOnResetPass(
+    ReplaceQubitOnResetPass const &amp; 
+)
+</code></pre>
+<p>Copy construction is banned. </p>
+<h3 id="function-replacequbitonresetpass_2">function ReplaceQubitOnResetPass</h3>
+<pre><code class="language-cpp">ReplaceQubitOnResetPass(
+    ReplaceQubitOnResetPass &amp;&amp; 
+) =default
+</code></pre>
+<p>We allow move semantics. </p>
+<h3 id="function-replacequbitonresetpass_3">function ~ReplaceQubitOnResetPass</h3>
+<pre><code class="language-cpp">~ReplaceQubitOnResetPass() =default
+</code></pre>
+<p>Default destruction. </p>
+<h3 id="function-run">function run</h3>
+<pre><code class="language-cpp">llvm::PreservedAnalyses run(
+    llvm::Function &amp; function,
+    llvm::FunctionAnalysisManager &amp; mam
+)
+</code></pre>
+<h3 id="function-isrequired">function isRequired</h3>
+<pre><code class="language-cpp">static bool isRequired()
+</code></pre>
+<p>Whether or not this pass is required to run. </p>
 <hr />
-<p>Updated on 22 April 2022 at 02:37:17 UTC</p></div>
+<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
 </div>
           </div>
         </main>
