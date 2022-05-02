@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
+#include "Generators/PostTransformConfig.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "Llvm/Llvm.hpp"
 #include "Rules/Factory.hpp"
@@ -59,9 +60,10 @@ TEST(RuleSetTestSuite, AllocationActionRelease)
   ConfigurationManager &configuration_manager = profile->configurationManager();
   configuration_manager.addConfig<FactoryConfiguration>();
   configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+  configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
   ir_manip->applyProfile(profile);
-
+  llvm::errs() << *ir_manip->module() << "\n";
   EXPECT_TRUE(
       ir_manip->hasInstructionSequence({"%qubit = inttoptr i64 0 to %Qubit*",
                                         "call void @__quantum__qis__h__body(%Qubit* %qubit)"}));
@@ -91,6 +93,7 @@ TEST(RuleSetTestSuite, MultipleAllocationsNoRelease)
   ConfigurationManager &configuration_manager = profile->configurationManager();
   configuration_manager.addConfig<FactoryConfiguration>();
   configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+  configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
   ir_manip->applyProfile(profile);
 
@@ -155,6 +158,7 @@ TEST(RuleSetTestSuite, AllocateReleaseMultipleTimes)
   configuration_manager.addConfig<FactoryConfiguration>();
 
   configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+  configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
   ir_manip->applyProfile(profile);
 
@@ -204,6 +208,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByName)
 
   ConfigurationManager &configuration_manager = profile->configurationManager();
   configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+  configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
   ir_manip->applyProfile(profile);
 
@@ -231,7 +236,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByNameWithNoName)
 
   ConfigurationManager &configuration_manager = profile->configurationManager();
   configuration_manager.addConfig<FactoryConfiguration>();
-
+  configuration_manager.setConfig(PostTransformConfig::createDisabled());
   configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
   ir_manip->applyProfile(profile);
@@ -260,7 +265,7 @@ TEST(RuleSetTestSuite, ErrorReleaseWithTypeErasedAllocation)
 
   ConfigurationManager &configuration_manager = profile->configurationManager();
   configuration_manager.addConfig<FactoryConfiguration>();
-
+  configuration_manager.setConfig(PostTransformConfig::createDisabled());
   configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
   ir_manip->applyProfile(profile);

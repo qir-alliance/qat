@@ -68,9 +68,11 @@ TEST(RuleSetTestSuite, SelectOnOne)
   // %5 = select i1 %2, <type> %3, <type> %4
   //
   // will be mapped to using this instruction.
+
   EXPECT_TRUE(ir_manip->hasInstructionSequence({
-      "%0 = call i1 @__quantum__qis__read_result__body(%Result* inttoptr (i64 1 to %Result*))",
-      "%1 = select i1 %0, i8 3, i8 4",
+      "%0 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to "
+      "%Result*))",
+      "%1 = select i1 %0, i8 5, i8 6",
   }));
 
   EXPECT_FALSE(ir_manip->hasInstructionSequence(

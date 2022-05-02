@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
+#include "Generators/PostTransformConfig.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "Llvm/Llvm.hpp"
 #include "Rules/Factory.hpp"
@@ -67,6 +68,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationOffsets)
 
   ConfigurationManager &configuration_manager = profile->configurationManager();
   configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+  configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
   ir_manip->applyProfile(profile);
 
@@ -112,6 +114,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)
 
   ConfigurationManager &configuration_manager = profile->configurationManager();
   configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+  configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
   ir_manip->applyProfile(profile);
 
@@ -165,6 +168,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationAdvanced)
 
   ConfigurationManager &configuration_manager = profile->configurationManager();
   configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+  configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
   ir_manip->applyProfile(profile);
 

@@ -4,6 +4,7 @@
 #include "Generators/ProfileGenerator.hpp"
 
 #include "Generators/LlvmPassesConfiguration.hpp"
+#include "Generators/PostTransformConfig.hpp"
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "GroupingPass/GroupingPassConfiguration.hpp"
@@ -245,16 +246,33 @@ void ProfileGenerator::setupDefaultComponentPipeline()
         auto pass = TransformationRulesPass(std::move(rule_set), cfg, &profile);
         pass.setLogger(logger);
         ret.addPass(std::move(pass));
-
-        // TODO(issue-59): Move to a separate pass.
-        ret.addPass(createModuleToFunctionPassAdaptor(llvm::InstCombinePass(1000)));
-        ret.addPass(createModuleToFunctionPassAdaptor(llvm::AggressiveInstCombinePass()));
-        ret.addPass(createModuleToFunctionPassAdaptor(llvm::SCCPPass()));
-        ret.addPass(createModuleToFunctionPassAdaptor(llvm::SimplifyCFGPass()));
       });
 
-  // TODO(issue-59): Causes memory sanitation issue
-  // replicateProfileComponent("llvm-optimization");
+  registerProfileComponent<PostTransformConfig>(
+      "post-transform",
+      [logger](PostTransformConfig const &cfg, ProfileGenerator *ptr, Profile &profile) {
+        auto &ret = ptr->functionPassManager();
+
+        if (cfg.shouldAddInstCombinePass())
+        {
+          ret.addPass(llvm::InstCombinePass(1000));
+        }
+
+        if (cfg.shouldAddAggressiveInstCombinePass())
+        {
+          ret.addPass(llvm::AggressiveInstCombinePass());
+        }
+
+        if (cfg.shouldAddSccpPass())
+        {
+          ret.addPass(llvm::SCCPPass());
+        }
+
+        if (cfg.shouldAddSimplifyCfgPass())
+        {
+          ret.addPass(llvm::SimplifyCFGPass());
+        }
+      });
 
   registerProfileComponent<StaticResourceComponentConfiguration>(
       "static-resource", [logger](StaticResourceComponentConfiguration const &cfg,
