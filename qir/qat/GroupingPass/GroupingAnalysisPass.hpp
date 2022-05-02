@@ -3,93 +3,89 @@
 // Licensed under the MIT License.
 
 #include "GroupingPass/GroupingPassConfiguration.hpp"
+#include "Llvm/Llvm.hpp"
 #include "Logging/ILogger.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
-
-#include "Llvm/Llvm.hpp"
 
 #include <functional>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
-namespace microsoft
+namespace microsoft {
+namespace quantum {
+
+struct GroupAnalysis
 {
-namespace quantum
+  using BlockList = std::vector<llvm::BasicBlock *>;
+  BlockList qc_cc_blocks{};
+  BlockList qc_mc_cc_blocks{};
+};
+
+class GroupingAnalysisPass : public llvm::AnalysisInfoMixin<GroupingAnalysisPass>
 {
+public:
+  using Result      = GroupAnalysis;
+  using Instruction = llvm::Instruction;
+  using Value       = llvm::Value;
+  using ILoggerPtr  = ILogger::ILoggerPtr;
+  using BlockSet    = std::unordered_set<llvm::BasicBlock *>;
 
-    struct GroupAnalysis
-    {
-        using BlockList = std::vector<llvm::BasicBlock*>;
-        BlockList qc_cc_blocks{};
-        BlockList qc_mc_cc_blocks{};
-    };
+  static String const QIS_START;
+  static String const READ_INSTR_START;
 
-    class GroupingAnalysisPass : public llvm::AnalysisInfoMixin<GroupingAnalysisPass>
-    {
-      public:
-        using Result      = GroupAnalysis;
-        using Instruction = llvm::Instruction;
-        using Value       = llvm::Value;
-        using ILoggerPtr  = std::shared_ptr<ILogger>;
-        using BlockSet    = std::unordered_set<llvm::BasicBlock*>;
+  // Construction and destruction configuration.
+  //
 
-        static String const QIS_START;
-        static String const READ_INSTR_START;
+  explicit GroupingAnalysisPass(GroupingPassConfiguration const &cfg, ILoggerPtr const &logger)
+    : config_{cfg}
+    , logger_{logger}
+  {}
 
-        // Construction and destruction configuration.
-        //
+  /// Copy construction is banned.
+  GroupingAnalysisPass(GroupingAnalysisPass const &) = delete;
 
-        explicit GroupingAnalysisPass(GroupingPassConfiguration const& cfg, ILoggerPtr const& logger)
-          : config_{cfg}
-          , logger_{logger}
-        {
-        }
+  /// We allow move semantics.
+  GroupingAnalysisPass(GroupingAnalysisPass &&) = default;
 
-        /// Copy construction is banned.
-        GroupingAnalysisPass(GroupingAnalysisPass const&) = delete;
+  /// Default destruction.
+  ~GroupingAnalysisPass() = default;
 
-        /// We allow move semantics.
-        GroupingAnalysisPass(GroupingAnalysisPass&&) = default;
+  Result run(llvm::Module &module, llvm::ModuleAnalysisManager &mam);
 
-        /// Default destruction.
-        ~GroupingAnalysisPass() = default;
+  void runBlockAnalysis(llvm::Module &module);
 
-        Result run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
+  /// Whether or not this pass is required to run.
+  static bool isRequired();
 
-        void runBlockAnalysis(llvm::Module& module);
+private:
+  GroupingPassConfiguration config_{};
 
-        /// Whether or not this pass is required to run.
-        static bool isRequired();
+  // Block classification
+  //
+  BlockSet contains_quantum_circuit_{};
+  BlockSet contains_quantum_measurement_{};
 
-      private:
-        GroupingPassConfiguration config_{};
+  BlockSet pure_quantum_instructions_{};
+  BlockSet pure_quantum_measurement_{};
 
-        // Block classification
-        //
-        BlockSet contains_quantum_circuit_{};
-        BlockSet contains_quantum_measurement_{};
+  ILoggerPtr logger_{nullptr};
 
-        BlockSet pure_quantum_instructions_{};
-        BlockSet pure_quantum_measurement_{};
+  static llvm::AnalysisKey Key;
+  friend struct llvm::AnalysisInfoMixin<GroupingAnalysisPass>;
+};
 
-        ILoggerPtr logger_{nullptr};
+class GroupingAnalysisPassPrinter : public llvm::PassInfoMixin<GroupingAnalysisPassPrinter>
+{
+public:
+  llvm::PreservedAnalyses run(llvm::Module &module, llvm::ModuleAnalysisManager &mam);
 
-        static llvm::AnalysisKey Key;
-        friend struct llvm::AnalysisInfoMixin<GroupingAnalysisPass>;
-    };
+  static bool isRequired()
+  {
+    return true;
+  }
+};
 
-    class GroupingAnalysisPassPrinter : public llvm::PassInfoMixin<GroupingAnalysisPassPrinter>
-    {
-      public:
-        llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
-
-        static bool isRequired()
-        {
-            return true;
-        }
-    };
-
-} // namespace quantum
-} // namespace microsoft
+}  // namespace quantum
+}  // namespace microsoft

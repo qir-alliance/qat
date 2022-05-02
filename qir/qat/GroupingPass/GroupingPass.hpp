@@ -3,135 +3,132 @@
 // Licensed under the MIT License.
 
 #include "GroupingPass/GroupingPassConfiguration.hpp"
+#include "Llvm/Llvm.hpp"
 #include "Logging/ILogger.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
-
-#include "Llvm/Llvm.hpp"
 
 #include <functional>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
-namespace microsoft
+namespace microsoft {
+namespace quantum {
+
+///
+/// ```
+/// ┌─────────────────────────────────┐│┌──────────────────────────────────┐
+/// │         No measurements         │││        With measurements         │
+/// └─────────────────────────────────┘│└──────────────────────────────────┘
+///                                    │
+///      Before             After      │       Before            After
+/// ─────────────────┬─────────────────┼──────────────────┬─────────────────
+///                                    │
+///                          [entry]   │                          [entry]
+///                  │                 │                  │
+///                                    │                    ┌───
+///      [entry]                       │       [entry]      │
+///                  │ ┌───            │                  │ │  [bb head cc]
+///                    │               │                    │
+///                    │     [bb cc]   │                    │
+///                  │ │               │                  │ │     [bb qc]
+///   [mixed qc/cc]  ──▶               │  [mixed qc/mc/cc]──▶
+///                    │               │                    │
+///                  │ │     [bb qc]   │                  │ │     [bb mc]
+///                    │               │                    │
+///                    └───            │                    │
+///       [bb2]      │                 │        [bb2]     │ │  [bb tail cc]
+///                                    │                    │
+///                           [bb2]    │                    └───
+///                  │                 │                  │
+///                                    │                           [bb2]
+///                                    │
+/// ```
+///
+
+class GroupingPass : public llvm::PassInfoMixin<GroupingPass>
 {
-namespace quantum
-{
+public:
+  using Instruction   = llvm::Instruction;
+  using Value         = llvm::Value;
+  using ILoggerPtr    = ILogger::ILoggerPtr;
+  using BlockSet      = std::unordered_set<llvm::BasicBlock *>;
+  using SharedBuilder = std::shared_ptr<llvm::IRBuilder<>>;
+  // Construction and destruction configuration.
+  //
 
-    ///
-    /// ```
-    /// ┌─────────────────────────────────┐│┌──────────────────────────────────┐
-    /// │         No measurements         │││        With measurements         │
-    /// └─────────────────────────────────┘│└──────────────────────────────────┘
-    ///                                    │
-    ///      Before             After      │       Before            After
-    /// ─────────────────┬─────────────────┼──────────────────┬─────────────────
-    ///                                    │
-    ///                          [entry]   │                          [entry]
-    ///                  │                 │                  │
-    ///                                    │                    ┌───
-    ///      [entry]                       │       [entry]      │
-    ///                  │ ┌───            │                  │ │  [bb head cc]
-    ///                    │               │                    │
-    ///                    │     [bb cc]   │                    │
-    ///                  │ │               │                  │ │     [bb qc]
-    ///   [mixed qc/cc]  ──▶               │  [mixed qc/mc/cc]──▶
-    ///                    │               │                    │
-    ///                  │ │     [bb qc]   │                  │ │     [bb mc]
-    ///                    │               │                    │
-    ///                    └───            │                    │
-    ///       [bb2]      │                 │        [bb2]     │ │  [bb tail cc]
-    ///                                    │                    │
-    ///                           [bb2]    │                    └───
-    ///                  │                 │                  │
-    ///                                    │                           [bb2]
-    ///                                    │
-    /// ```
-    ///
+  enum
+  {
+    PURE_CLASSICAL                = 0,
+    SOURCE_QUANTUM                = 1,
+    DEST_QUANTUM                  = 2,
+    PURE_QUANTUM                  = SOURCE_QUANTUM | DEST_QUANTUM,
+    TRANSFER_CLASSICAL_TO_QUANTUM = DEST_QUANTUM,
+    TRANSFER_QUANTUM_TO_CLASSICAL = SOURCE_QUANTUM,
 
-    class GroupingPass : public llvm::PassInfoMixin<GroupingPass>
-    {
-      public:
-        using Instruction   = llvm::Instruction;
-        using Value         = llvm::Value;
-        using ILoggerPtr    = std::shared_ptr<ILogger>;
-        using BlockSet      = std::unordered_set<llvm::BasicBlock*>;
-        using SharedBuilder = std::shared_ptr<llvm::IRBuilder<>>;
-        // Construction and destruction configuration.
-        //
+    INVALID_MIXED_LOCATION = -1
+  };
 
-        enum
-        {
-            PURE_CLASSICAL                = 0,
-            SOURCE_QUANTUM                = 1,
-            DEST_QUANTUM                  = 2,
-            PURE_QUANTUM                  = SOURCE_QUANTUM | DEST_QUANTUM,
-            TRANSFER_CLASSICAL_TO_QUANTUM = DEST_QUANTUM,
-            TRANSFER_QUANTUM_TO_CLASSICAL = SOURCE_QUANTUM,
+  explicit GroupingPass(GroupingPassConfiguration const &cfg)
+    : config_{cfg}
+  {}
 
-            INVALID_MIXED_LOCATION = -1
-        };
+  /// Copy construction is banned.
+  GroupingPass(GroupingPass const &) = delete;
 
-        explicit GroupingPass(GroupingPassConfiguration const& cfg)
-          : config_{cfg}
-        {
-        }
+  /// We allow move semantics.
+  GroupingPass(GroupingPass &&) = default;
 
-        /// Copy construction is banned.
-        GroupingPass(GroupingPass const&) = delete;
+  /// Default destruction.
+  ~GroupingPass() = default;
 
-        /// We allow move semantics.
-        GroupingPass(GroupingPass&&) = default;
+  //
+  void prepareSourceSeparation(llvm::Module &module, llvm::BasicBlock *block);
+  void nextQuantumCycle(llvm::Module &module, llvm::BasicBlock *block);
+  void expandBasedOnSource(llvm::Module &module, llvm::BasicBlock *block);
 
-        /// Default destruction.
-        ~GroupingPass() = default;
+  void expandBasedOnDest(llvm::Module &module, llvm::BasicBlock *block, bool move_quatum,
+                         String const &name);
 
-        //
-        void prepareSourceSeparation(llvm::Module& module, llvm::BasicBlock* block);
-        void nextQuantumCycle(llvm::Module& module, llvm::BasicBlock* block);
-        void expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* block);
+  //
+  bool    isQuantumRegister(llvm::Type const *type);
+  int64_t classifyInstruction(llvm::Instruction const *instr);
 
-        void expandBasedOnDest(llvm::Module& module, llvm::BasicBlock* block, bool move_quatum, String const& name);
+  llvm::PreservedAnalyses run(llvm::Module &module, llvm::ModuleAnalysisManager &mam);
 
-        //
-        bool    isQuantumRegister(llvm::Type const* type);
-        int64_t classifyInstruction(llvm::Instruction const* instr);
+  void runBlockAnalysis(llvm::Module &module);
 
-        llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
+  /// Whether or not this pass is required to run.
+  static bool isRequired();
 
-        void runBlockAnalysis(llvm::Module& module);
+  /// Sets the logger
+  void setLogger(ILoggerPtr logger);
 
-        /// Whether or not this pass is required to run.
-        static bool isRequired();
+private:
+  GroupingPassConfiguration config_{};
 
-        /// Sets the logger
-        void setLogger(ILoggerPtr logger);
+  // Basic blocks used to build
 
-      private:
-        GroupingPassConfiguration config_{};
+  llvm::BasicBlock *post_classical_block_{nullptr};
+  llvm::BasicBlock *quantum_block_{nullptr};
+  llvm::BasicBlock *pre_classical_block_{nullptr};
 
-        // Basic blocks used to build
+  // Builders
+  //
 
-        llvm::BasicBlock* post_classical_block_{nullptr};
-        llvm::BasicBlock* quantum_block_{nullptr};
-        llvm::BasicBlock* pre_classical_block_{nullptr};
+  SharedBuilder pre_classical_builder_{};
+  SharedBuilder quantum_builder_{};
+  SharedBuilder post_classical_builder_{};
 
-        // Builders
-        //
+  std::vector<llvm::BasicBlock *> quantum_blocks_{};
+  std::vector<llvm::BasicBlock *> classical_blocks_{};
 
-        SharedBuilder pre_classical_builder_{};
-        SharedBuilder quantum_builder_{};
-        SharedBuilder post_classical_builder_{};
+  BlockSet   visited_blocks_;
+  ILoggerPtr logger_{nullptr};
 
-        std::vector<llvm::BasicBlock*> quantum_blocks_{};
-        std::vector<llvm::BasicBlock*> classical_blocks_{};
+  std::unordered_set<String> quantum_register_types_ = {"Qubit", "Result"};
+};
 
-        BlockSet   visited_blocks_;
-        ILoggerPtr logger_{nullptr};
-
-        std::unordered_set<String> quantum_register_types_ = {"Qubit", "Result"};
-    };
-
-} // namespace quantum
-} // namespace microsoft
+}  // namespace quantum
+}  // namespace microsoft
