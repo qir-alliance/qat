@@ -4,55 +4,57 @@
 
 #include "Commandline/ConfigurationManager.hpp"
 
-namespace microsoft {
-namespace quantum {
-
-struct PostTransformConfig
+namespace microsoft
 {
-public:
-  void setup(ConfigurationManager &config)
-  {
-    config.setSectionName("Post transform optimisation", "");
-  }
+namespace quantum
+{
 
-  static PostTransformConfig createDisabled()
-  {
-    PostTransformConfig ret;
+    struct PostTransformConfig
+    {
+      public:
+        void setup(ConfigurationManager& config)
+        {
+            config.setSectionName("Post transform optimisation", "");
+        }
 
-    ret.inst_combine_pass_            = false;
-    ret.aggressive_inst_combine_pass_ = false;
-    ret.sccp_pass_                    = false;
-    ret.simplify_cfg_pass_            = false;
+        static PostTransformConfig createDisabled()
+        {
+            PostTransformConfig ret;
 
-    return ret;
-  }
+            ret.inst_combine_pass_            = false;
+            ret.aggressive_inst_combine_pass_ = false;
+            ret.sccp_pass_                    = false;
+            ret.simplify_cfg_pass_            = false;
 
-  bool shouldAddInstCombinePass() const
-  {
-    return inst_combine_pass_;
-  }
+            return ret;
+        }
 
-  bool shouldAddAggressiveInstCombinePass() const
-  {
-    return aggressive_inst_combine_pass_;
-  }
+        bool shouldAddInstCombinePass() const
+        {
+            return inst_combine_pass_;
+        }
 
-  bool shouldAddSccpPass() const
-  {
-    return sccp_pass_;
-  }
+        bool shouldAddAggressiveInstCombinePass() const
+        {
+            return aggressive_inst_combine_pass_;
+        }
 
-  bool shouldAddSimplifyCfgPass() const
-  {
-    return simplify_cfg_pass_;
-  }
+        bool shouldAddSccpPass() const
+        {
+            return sccp_pass_;
+        }
 
-private:
-  bool inst_combine_pass_{true};
-  bool aggressive_inst_combine_pass_{true};
-  bool sccp_pass_{true};
-  bool simplify_cfg_pass_{true};
-};
+        bool shouldAddSimplifyCfgPass() const
+        {
+            return simplify_cfg_pass_;
+        }
 
-}  // namespace quantum
-}  // namespace microsoft
+      private:
+        bool inst_combine_pass_{true};
+        bool aggressive_inst_combine_pass_{true};
+        bool sccp_pass_{true};
+        bool simplify_cfg_pass_{true};
+    };
+
+} // namespace quantum
+} // namespace microsoft

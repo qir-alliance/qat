@@ -3,53 +3,55 @@
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
 #include "GroupingPass/GroupingPass.hpp"
-#include "Llvm/Llvm.hpp"
 #include "Rules/Factory.hpp"
 #include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
 
+#include "Llvm/Llvm.hpp"
+
 #include <functional>
 
 using namespace microsoft::quantum;
 
-namespace {
-using IrManipulationTestHelperPtr = std::shared_ptr<IrManipulationTestHelper>;
-IrManipulationTestHelperPtr newIrManip(std::string const &script)
+namespace
 {
-  IrManipulationTestHelperPtr ir_manip = std::make_shared<IrManipulationTestHelper>();
+using IrManipulationTestHelperPtr = std::shared_ptr<IrManipulationTestHelper>;
+IrManipulationTestHelperPtr newIrManip(std::string const& script)
+{
+    IrManipulationTestHelperPtr ir_manip = std::make_shared<IrManipulationTestHelper>();
 
-  ir_manip->declareOpaque("Qubit");
-  ir_manip->declareOpaque("Result");
-  ir_manip->declareOpaque("Array");
-  ir_manip->declareOpaque("Tuple");
-  ir_manip->declareOpaque("Range");
-  ir_manip->declareOpaque("Callable");
-  ir_manip->declareOpaque("String");
+    ir_manip->declareOpaque("Qubit");
+    ir_manip->declareOpaque("Result");
+    ir_manip->declareOpaque("Array");
+    ir_manip->declareOpaque("Tuple");
+    ir_manip->declareOpaque("Range");
+    ir_manip->declareOpaque("Callable");
+    ir_manip->declareOpaque("String");
 
-  ir_manip->declareFunction("%Qubit* @__quantum__rt__qubit_allocate()");
-  ir_manip->declareFunction("void @__quantum__rt__qubit_release(%Qubit*)");
-  ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
-  ir_manip->declareFunction("i8* @__quantum__rt__array_get_element_ptr_1d(%Array*, i64)");
+    ir_manip->declareFunction("%Qubit* @__quantum__rt__qubit_allocate()");
+    ir_manip->declareFunction("void @__quantum__rt__qubit_release(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
+    ir_manip->declareFunction("i8* @__quantum__rt__array_get_element_ptr_1d(%Array*, i64)");
 
-  ir_manip->declareFunction("i64 @TeleportChain__Calculate__body(i64, %Qubit*)");
+    ir_manip->declareFunction("i64 @TeleportChain__Calculate__body(i64, %Qubit*)");
 
-  if (!ir_manip->fromBodyString(script))
-  {
-    llvm::outs() << ir_manip->generateScript(script) << "\n\n";
-    llvm::outs() << ir_manip->getErrorMessage() << "\n";
-    exit(-1);
-  }
+    if (!ir_manip->fromBodyString(script))
+    {
+        llvm::outs() << ir_manip->generateScript(script) << "\n\n";
+        llvm::outs() << ir_manip->getErrorMessage() << "\n";
+        exit(-1);
+    }
 
-  return ir_manip;
+    return ir_manip;
 }
 
-}  // namespace
+} // namespace
 
 // Single allocation with action and then release
 TEST(TransformationRulesPass, ArrayIndexReplacement1)
 {
-  auto ir_manip = newIrManip(R"script(
+    auto ir_manip = newIrManip(R"script(
   %0 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* nonnull inttoptr (i64 2 to %Array*), i64 0)
   %1 = bitcast i8* %0 to %Qubit**
   br label %load
@@ -62,26 +64,26 @@ quantum:                                          ; preds = %load
   tail call void @__quantum__qis__h__body(%Qubit* %2)
   )script");
 
-  auto configure_profile = [](RuleSet &rule_set) {
-    auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(),
-                               BasicAllocationManager::createNew(), nullptr);
+    auto configure_profile = [](RuleSet& rule_set) {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
-    factory.useStaticQubitArrayAllocation();
-  };
+        factory.useStaticQubitArrayAllocation();
+    };
 
-  auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
 
-  ConfigurationManager &configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = profile->configurationManager();
 
-  configuration_manager.addConfig<FactoryConfiguration>();
-  configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
-  configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
-  configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
+    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
 
-  ir_manip->applyProfile(profile);
+    ir_manip->applyProfile(profile);
 
-  llvm::errs() << *ir_manip->module() << "\n";
+    llvm::errs() << *ir_manip->module() << "\n";
 
-  EXPECT_TRUE(ir_manip->hasInstructionSequence(
-      {"tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))"}));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence(
+        {"tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))"}));
 }

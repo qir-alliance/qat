@@ -2,105 +2,108 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Llvm/Llvm.hpp"
 #include "Logging/ILogger.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
 #include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+
+#include "Llvm/Llvm.hpp"
 
 #include <functional>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
-namespace microsoft {
-namespace quantum {
-
-struct AllocationAnalysis
+namespace microsoft
 {
-  enum ResourceType
-  {
-    NotResource,
-    QubitResource,
-    ResultResource
-  };
-
-  struct ResourceAccessLocation
-  {
-    llvm::Value       *operand{nullptr};
-    ResourceType       type{ResourceType::NotResource};
-    uint64_t           index{-1};
-    llvm::Instruction *used_by{nullptr};
-    uint64_t           operand_id{0};
-  };
-
-  using ResourceValueToId  = std::unordered_map<llvm::Value *, ResourceAccessLocation>;
-  using ResourceAccessList = std::vector<ResourceAccessLocation>;
-
-  uint64_t largest_qubit_index{0};
-  uint64_t largest_result_index{0};
-  uint64_t usage_qubit_counts{0};
-  uint64_t usage_result_counts{0};
-
-  ResourceValueToId  access_map{};
-  ResourceAccessList resource_access{};
-};
-
-class AllocationAnalysisPass : public llvm::AnalysisInfoMixin<AllocationAnalysisPass>
+namespace quantum
 {
-public:
-  using Result                 = AllocationAnalysis;
-  using Instruction            = llvm::Instruction;
-  using Value                  = llvm::Value;
-  using ILoggerPtr             = ILogger::ILoggerPtr;
-  using BlockSet               = std::unordered_set<llvm::BasicBlock *>;
-  using ResourceType           = AllocationAnalysis::ResourceType;
-  using ResourceAccessLocation = AllocationAnalysis::ResourceAccessLocation;
 
-  // Construction and destruction configuration.
-  //
+    struct AllocationAnalysis
+    {
+        enum ResourceType
+        {
+            NotResource,
+            QubitResource,
+            ResultResource
+        };
 
-  explicit AllocationAnalysisPass(StaticResourceComponentConfiguration const &cfg,
-                                  ILoggerPtr const                           &logger)
-    : config_{cfg}
-    , logger_{logger}
-  {}
+        struct ResourceAccessLocation
+        {
+            llvm::Value*       operand{nullptr};
+            ResourceType       type{ResourceType::NotResource};
+            uint64_t           index{-1};
+            llvm::Instruction* used_by{nullptr};
+            uint64_t           operand_id{0};
+        };
 
-  /// Copy construction is banned.
-  AllocationAnalysisPass(AllocationAnalysisPass const &) = delete;
+        using ResourceValueToId  = std::unordered_map<llvm::Value*, ResourceAccessLocation>;
+        using ResourceAccessList = std::vector<ResourceAccessLocation>;
 
-  /// We allow move semantics.
-  AllocationAnalysisPass(AllocationAnalysisPass &&) = default;
+        uint64_t largest_qubit_index{0};
+        uint64_t largest_result_index{0};
+        uint64_t usage_qubit_counts{0};
+        uint64_t usage_result_counts{0};
 
-  /// Default destruction.
-  ~AllocationAnalysisPass() = default;
+        ResourceValueToId  access_map{};
+        ResourceAccessList resource_access{};
+    };
 
-  Result run(llvm::Function &function, llvm::FunctionAnalysisManager &fam);
+    class AllocationAnalysisPass : public llvm::AnalysisInfoMixin<AllocationAnalysisPass>
+    {
+      public:
+        using Result                 = AllocationAnalysis;
+        using Instruction            = llvm::Instruction;
+        using Value                  = llvm::Value;
+        using ILoggerPtr             = ILogger::ILoggerPtr;
+        using BlockSet               = std::unordered_set<llvm::BasicBlock*>;
+        using ResourceType           = AllocationAnalysis::ResourceType;
+        using ResourceAccessLocation = AllocationAnalysis::ResourceAccessLocation;
 
-  /// Whether or not this pass is required to run.
-  static bool isRequired();
+        // Construction and destruction configuration.
+        //
 
-private:
-  bool extractResourceId(llvm::Value *value, uint64_t &return_value, ResourceType &type) const;
+        explicit AllocationAnalysisPass(StaticResourceComponentConfiguration const& cfg, ILoggerPtr const& logger)
+          : config_{cfg}
+          , logger_{logger}
+        {
+        }
 
-  StaticResourceComponentConfiguration config_{};
+        /// Copy construction is banned.
+        AllocationAnalysisPass(AllocationAnalysisPass const&) = delete;
 
-  ILoggerPtr logger_{nullptr};
+        /// We allow move semantics.
+        AllocationAnalysisPass(AllocationAnalysisPass&&) = default;
 
-  static llvm::AnalysisKey Key;
-  friend struct llvm::AnalysisInfoMixin<AllocationAnalysisPass>;
-};
+        /// Default destruction.
+        ~AllocationAnalysisPass() = default;
 
-class AllocationAnalysisPassPrinter : public llvm::PassInfoMixin<AllocationAnalysisPassPrinter>
-{
-public:
-  llvm::PreservedAnalyses run(llvm::Function &module, llvm::FunctionAnalysisManager &mam);
+        Result run(llvm::Function& function, llvm::FunctionAnalysisManager& fam);
 
-  static bool isRequired()
-  {
-    return true;
-  }
-};
+        /// Whether or not this pass is required to run.
+        static bool isRequired();
 
-}  // namespace quantum
-}  // namespace microsoft
+      private:
+        bool extractResourceId(llvm::Value* value, uint64_t& return_value, ResourceType& type) const;
+
+        StaticResourceComponentConfiguration config_{};
+
+        ILoggerPtr logger_{nullptr};
+
+        static llvm::AnalysisKey Key;
+        friend struct llvm::AnalysisInfoMixin<AllocationAnalysisPass>;
+    };
+
+    class AllocationAnalysisPassPrinter : public llvm::PassInfoMixin<AllocationAnalysisPassPrinter>
+    {
+      public:
+        llvm::PreservedAnalyses run(llvm::Function& module, llvm::FunctionAnalysisManager& mam);
+
+        static bool isRequired()
+        {
+            return true;
+        }
+    };
+
+} // namespace quantum
+} // namespace microsoft
