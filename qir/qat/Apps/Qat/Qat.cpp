@@ -322,6 +322,12 @@ int main(int argc, char** argv)
             logger->dump(fout);
             fout.close();
         }
+
+        // Enforcing that logged errors causes non-zero return value.
+        if (logger && (logger->hadErrors() || logger->hadWarnings()))
+        {
+            ret = -1;
+        }
     }
     catch (std::exception const& e)
     {

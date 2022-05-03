@@ -258,7 +258,7 @@ namespace quantum
                 }
                 else
                 {
-                    llvm::errs() << ";; Error: Could not delete " << *ptr << "\n";
+                    throw std::runtime_error("No logger present - Error: Unable to delete instruction.\n");
                 }
             }
             else
@@ -317,7 +317,15 @@ namespace quantum
             auto ptr = *it;
             if (!ptr->use_empty())
             {
-                llvm::errs() << ";; Error: Could not delete " << *ptr << "\n";
+                if (logger_)
+                {
+                    logger_->setLocationFromValue(ptr);
+                    logger_->error("Could not delete node.");
+                }
+                else
+                {
+                    throw std::runtime_error("No logger present - Error: Unable to delete instruction.\n");
+                }
             }
             else
             {

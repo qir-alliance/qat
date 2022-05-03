@@ -25,16 +25,19 @@ namespace quantum
 
     void LogCollection::warning(String const& message)
     {
+        had_warnings_ = true;
         messages_.push_back({Type::Warning, current_location_, message});
     }
 
     void LogCollection::error(String const& message)
     {
+        had_errors_ = true;
         messages_.push_back({Type::Error, current_location_, message});
     }
 
     void LogCollection::internalError(String const& message)
     {
+        had_errors_ = true;
         messages_.push_back({Type::InternalError, current_location_, message});
     }
 

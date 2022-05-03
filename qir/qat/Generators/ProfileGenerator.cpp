@@ -7,6 +7,7 @@
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "GroupingPass/GroupingPassConfiguration.hpp"
+#include "PreTransformValidation/PreTransformValidationPass.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/RuleSet.hpp"
 #include "StaticResourceComponent/AllocationAnalysisPass.hpp"
@@ -140,6 +141,13 @@ namespace quantum
     {
         using namespace llvm;
         ILoggerPtr logger = logger_;
+        registerProfileComponent<PreTransformValidationPassConfiguration>(
+            "pre-transform-validation",
+            [logger](PreTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+                auto& mpm = ptr->modulePassManager();
+
+                mpm.addPass(PreTransformValidationPass(cfg, logger));
+            });
 
         registerProfileComponent<LlvmPassesConfiguration>(
             "llvm-optimization", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
@@ -280,7 +288,7 @@ namespace quantum
                 fam.registerPass([&] { return AllocationAnalysisPass(cfg, logger); });
 
                 auto& fpm = ptr->functionPassManager();
-                fpm.addPass(AllocationAnalysisPassPrinter());
+
                 fpm.addPass(ReplaceQubitOnResetPass(cfg, logger));
                 fpm.addPass(QubitRemapPass(cfg, logger));
 

@@ -14,7 +14,7 @@ namespace quantum
       public:
         void setup(ConfigurationManager& config)
         {
-            config.setSectionName("Post transform optimisation", "");
+            config.setSectionName("Post-transform optimisation", "");
         }
 
         static PostTransformConfig createDisabled()

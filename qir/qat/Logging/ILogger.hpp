@@ -136,6 +136,16 @@ namespace quantum
         /// Returns a source location from the value pointer (if possible)
         SourceLocation resolveLocation(llvm::Value const* value);
 
+        /// Whether or not errors were logged.
+        bool hadErrors() const;
+
+        /// Whether or not warnings were logged.
+        bool hadWarnings() const;
+
+      protected:
+        bool had_errors_{false};   ///< Variable to indicate whether or not errors were reported.
+        bool had_warnings_{false}; ///< Variable to indicate whether or not warnings were reported.
+
       private:
         LocationResolver location_resolver_{nullptr};
     };

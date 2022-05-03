@@ -52,5 +52,15 @@ namespace quantum
         return SourceLocation::InvalidPosition();
     }
 
+    bool ILogger::hadErrors() const
+    {
+        return had_errors_;
+    }
+
+    bool ILogger::hadWarnings() const
+    {
+        return had_warnings_;
+    }
+
 } // namespace quantum
 } // namespace microsoft

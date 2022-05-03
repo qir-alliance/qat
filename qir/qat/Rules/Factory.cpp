@@ -127,8 +127,9 @@ namespace quantum
             }
             else
             {
-                llvm::errs() << "\n" << *val << "\n";
-                llvm::errs() << "Support for callable replacement is not implemented yet.\n";
+                throw std::runtime_error(
+                    "No logger present - internal error: Support for callable replacement is not implemented "
+                    "yet.\n");
             }
 
             return false;
@@ -402,8 +403,8 @@ namespace quantum
                      }
                      else
                      {
-                         llvm::errs() << "\n" << *val << "\n";
-                         llvm::errs() << "Cannot release qubit arising from phi node.\n";
+                         throw std::runtime_error(
+                             "No logger present - Warning: Cannot release qubit arising from phi node.\n");
                      }
                      return false;
                  }
@@ -415,8 +416,8 @@ namespace quantum
                  }
                  else
                  {
-                     llvm::errs() << "\n" << *val << "\n";
-                     llvm::errs() << "annot release qubit from non-standard allocation.\n";
+                     throw std::runtime_error(
+                         "No logger present - Error: Cannot release qubit from non-standard allocation.\n");
                  }
 
                  return deleter(builder, val, cap, rep);

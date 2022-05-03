@@ -3,6 +3,7 @@
 // Licensed under the MIT License.
 
 #include "Commandline/ConfigurationManager.hpp"
+#include "PreTransformValidation/PreTransformValidationPassConfiguration.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
 
