@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
+#include "PreTransformValidation/PreTransformValidationPassConfiguration.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/ReplacementRule.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
@@ -59,6 +60,11 @@ TEST(RuleSetTestSuite, SelectOnOne)
     };
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+
+    configuration_manager.setConfig(PreTransformValidationPassConfiguration::createDisabled());
+
     ir_manip->applyProfile(profile);
 
     // This optimization is specific to the the __quantum__qis__read_result__body which

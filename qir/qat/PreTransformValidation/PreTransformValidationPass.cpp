@@ -25,17 +25,18 @@ namespace quantum
     {
         uint64_t function_count{0};
 
-        for (auto& function : module)
+        if (config_.requireStraightLineCode())
         {
-
-            if (function.isDeclaration())
+            for (auto& function : module)
             {
-                continue;
-            }
 
-            ++function_count;
-            if (config_.requireStraightLineCode())
-            {
+                if (function.isDeclaration())
+                {
+                    continue;
+                }
+
+                ++function_count;
+
                 if (function_count > 1)
                 {
                     if (logger_)
@@ -48,22 +49,22 @@ namespace quantum
                         throw std::runtime_error("Expected straight line code, but multiple functions present.");
                     }
                 }
-            }
 
-            uint64_t block_count{0};
-            for (auto& block : function)
-            {
-                ++block_count;
-                if (block_count > 1)
+                uint64_t block_count{0};
+                for (auto& block : function)
                 {
-                    if (logger_)
+                    ++block_count;
+                    if (block_count > 1)
                     {
-                        logger_->setLocationFromValue(&block);
-                        logger_->error("Expected straight line code, but multiple blocks present.");
-                    }
-                    else
-                    {
-                        throw std::runtime_error("Expected straight line code, but multiple blocks present.");
+                        if (logger_)
+                        {
+                            logger_->setLocationFromValue(&block);
+                            logger_->error("Expected straight line code, but multiple blocks present.");
+                        }
+                        else
+                        {
+                            throw std::runtime_error("Expected straight line code, but multiple blocks present.");
+                        }
                     }
                 }
             }

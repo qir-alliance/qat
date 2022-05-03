@@ -3,6 +3,7 @@
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
 #include "GroupingPass/GroupingPass.hpp"
+#include "PreTransformValidation/PreTransformValidationPassConfiguration.hpp"
 #include "Rules/Factory.hpp"
 #include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
@@ -84,6 +85,7 @@ exit__1:                                          ; preds = %header__1
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
+    configuration_manager.setConfig(PreTransformValidationPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 
