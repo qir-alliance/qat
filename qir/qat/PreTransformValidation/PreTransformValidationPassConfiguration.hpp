@@ -14,26 +14,34 @@ namespace quantum
     class PreTransformValidationPassConfiguration
     {
       public:
+        using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+
         void setup(ConfigurationManager& config)
         {
             config.setSectionName("Pre-transform validation", "");
+            replace_qubits_on_reset_ = config.getParameter("replace-qubit-on-reset");
         }
 
         static PreTransformValidationPassConfiguration createDisabled()
         {
             PreTransformValidationPassConfiguration ret;
-            ret.require_straightline_code_ = false;
+            ret.disable_straightline_code_requirement_ = true;
             return ret;
         }
 
         bool requireStraightLineCode() const
         {
-            /// TODO: Configure from configurations
-            return require_straightline_code_;
+            if (disable_straightline_code_requirement_)
+            {
+                return false;
+            }
+
+            return replace_qubits_on_reset_->value<bool>();
         }
 
       private:
-        bool require_straightline_code_{true};
+        bool             disable_straightline_code_requirement_{false};
+        DeferredValuePtr replace_qubits_on_reset_{nullptr};
     };
 
 } // namespace quantum

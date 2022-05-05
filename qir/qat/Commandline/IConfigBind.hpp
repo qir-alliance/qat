@@ -57,6 +57,12 @@ namespace quantum
         /// bound variable.
         virtual String value() = 0;
 
+        /// Pointer to underlying data.
+        virtual void* pointer() const = 0;
+
+        /// Type index of contained data
+        virtual std::type_index valueType() const = 0;
+
         // Properties
         //
 

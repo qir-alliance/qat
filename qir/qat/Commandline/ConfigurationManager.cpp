@@ -12,6 +12,8 @@ namespace quantum
 
     void ConfigurationManager::setupArguments(ParameterParser& parser)
     {
+        parameters_.clear();
+
         for (auto& section : config_sections_)
         {
             if (section.enabled_by_default)
@@ -181,6 +183,28 @@ namespace quantum
         }
 
         config_sections_.back().enabled_by_default = false;
+    }
+
+    DeferredValue::DeferredValuePtr ConfigurationManager::getParameter(String const& name)
+    {
+
+        auto it = deferred_refs_.find(name);
+        if (it != deferred_refs_.end())
+        {
+            return it->second;
+        }
+
+        auto ret = DeferredValue::create();
+
+        deferred_refs_[name] = ret;
+
+        auto it2 = parameters_.find(name);
+        if (it2 != parameters_.end())
+        {
+            ret->setReference(it2->second);
+        }
+
+        return ret;
     }
 
 } // namespace quantum
