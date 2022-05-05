@@ -257,7 +257,7 @@ namespace quantum
             });
 
         registerProfileComponent<PostTransformConfig>(
-            "post-transform", [logger](PostTransformConfig const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            "post-transform", [logger](PostTransformConfig const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
                 auto& ret = ptr->functionPassManager();
 
                 if (cfg.shouldAddInstCombinePass())
