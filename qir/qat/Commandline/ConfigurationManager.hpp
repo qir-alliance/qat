@@ -41,14 +41,14 @@ namespace quantum
             value_ref_ = value;
         }
 
-        bool isDeferencable() const
+        bool isDereferencable() const
         {
             return value_ref_ != nullptr;
         }
 
         template <typename T> T value() const
         {
-            if (!isDeferencable())
+            if (!isDereferencable())
             {
                 throw std::runtime_error("Deferred command line parameter is not dereferrencable.");
             }
