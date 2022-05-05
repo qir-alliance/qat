@@ -119,7 +119,7 @@ namespace quantum
         auto logger = logger_;
 
         /// Array access replacement
-        auto callable_replacer = [logger](Builder&, Value* val, Captures& captures, Replacements&) {
+        auto callable_replacer = [logger](Builder&, Value* val, Captures&, Replacements&) {
             if (logger)
             {
                 logger->setLocationFromValue(val);
