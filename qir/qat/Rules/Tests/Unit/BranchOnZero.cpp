@@ -69,7 +69,6 @@ continue__1:
     auto configure_profile = [](RuleSet& rule_set) {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
-        // factory.useStaticResultAllocation();
 
         factory.optimizeResultZero();
     };

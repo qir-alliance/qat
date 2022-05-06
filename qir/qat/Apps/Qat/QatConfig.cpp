@@ -48,6 +48,12 @@ namespace quantum
 
     String QatConfig::profile() const
     {
+        if (profile_ == "base")
+        {
+            // TODO(tfr): Remove warning upon final release.
+            llvm::errs() << "; WARNING: 'base' profile renamed 'default'. Please update your scripts.\n";
+            return "default";
+        }
         return profile_;
     }
 
