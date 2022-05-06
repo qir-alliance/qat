@@ -159,9 +159,10 @@ LoopCase__Main__body.1.exit:                      ; preds = %header__1.exit__1_c
   %ret.0.lcssa.i = phi i64 [ %4, %header__1.exit__1_crit_edge.i ], [ 1, %entry ]
   )script",
         {
-            "%2 = add i64 %0, 1",
             "%0 = phi i64 [ %2, %body__1.i ], [ 2, %entry ]",
             "%4 = select i1 %3, i64 1337, i64 122",
+            "%1 = icmp sgt i64 %0, 5",
             "%.not1.i = icmp slt i64 5, 1",
+            "%ret.0.lcssa.i = phi i64 [ %4, %header__1.exit__1_crit_edge.i ], [ 1, %entry ]",
         });
 }

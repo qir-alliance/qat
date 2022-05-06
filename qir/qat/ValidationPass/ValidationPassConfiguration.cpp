@@ -46,11 +46,13 @@ namespace quantum
             profile.allowlist_external_calls_ = true;
             profile.allowlist_opcodes_        = true;
             profile.opcodes_                  = OpcodeSet{
-                {"ret"},         {"call"},        {"br"},          {"phi"},         {"add"},         {"sub"},
-                {"mul"},         {"fadd"},        {"fsub"},        {"fmul"},        {"ashr"},        {"and"},
-                {"or"},          {"xor"},         {"icmp", "eq"},  {"icmp", "ne"},  {"icmp", "ugt"}, {"icmp", "uge"},
-                {"icmp", "ult"}, {"icmp", "ule"}, {"fcmp", "oeq"}, {"fcmp", "ogt"}, {"fcmp", "oge"}, {"fcmp", "olt"},
+                {"ret"},  {"call"}, {"inttoptr"}, {"br"},   {"add"}, {"sub"}, {"mul"},
+                {"fadd"}, {"fsub"}, {"fmul"},     {"ashr"}, {"and"}, {"or"},  {"xor"},
+                /*
+                {"icmp", "eq"},  {"icmp", "ne"},  {"icmp", "ugt"}, {"icmp", "uge"}, {"icmp", "ult"},
+                {"icmp", "ule"}, {"fcmp", "oeq"}, {"fcmp", "ogt"}, {"fcmp", "oge"}, {"fcmp", "olt"},
                 {"fcmp", "ole"}, {"fcmp", "one"},
+                */
             };
             profile.external_calls_ = Set{
                 "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
@@ -65,9 +67,9 @@ namespace quantum
                 "__quantum__qis__x__body:void (%Qubit*)",
                 "__quantum__qis__y__body:void (%Qubit*)",
                 "__quantum__qis__z__body:void (%Qubit*)",
-                "__quantum__qis__rx__body:void (f64, %Qubit*)",
-                "__quantum__qis__ry__body:void (f64, %Qubit*)",
-                "__quantum__qis__rz__body:void (f64, %Qubit*)",
+                "__quantum__qis__rx__body:void (double, %Qubit*)",
+                "__quantum__qis__ry__body:void (double, %Qubit*)",
+                "__quantum__qis__rz__body:void (double, %Qubit*)",
                 "__quantum__qis__reset__body:void (%Qubit*)",
                 "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
                 "__quantum__qis__read_result__body:i1 (%Result*)",
