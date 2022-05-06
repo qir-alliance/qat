@@ -46,11 +46,10 @@ namespace quantum
         static bool isRequired();
 
       private:
-        void opcodeChecks(Instruction& instr);
         void callChecks(Instruction& instr);
         void pointerChecks(Instruction& instr);
 
-        bool satisfyingOpcodeRequirements();
+        bool satisfyingOpcodeRequirements(llvm::Module& module);
         bool satisfyingInternalCallRequirements();
         bool satisfyingExternalCallRequirements();
         bool satisfyingPointerRequirements();

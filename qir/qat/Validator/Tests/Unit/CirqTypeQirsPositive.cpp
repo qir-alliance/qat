@@ -66,7 +66,7 @@ void expectSuccess(String const& profile_name, String const& script)
 
 TEST(CirqPositive, BscMeanField)
 {
-    expectSuccess("base", R"script(
+    expectSuccess("default", R"script(
   %0 = inttoptr i64 0 to %Qubit*
   %1 = inttoptr i64 1 to %Qubit*
   %2 = inttoptr i64 2 to %Qubit*
