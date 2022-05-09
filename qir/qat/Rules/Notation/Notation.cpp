@@ -21,7 +21,8 @@ namespace quantum
         ReplacerFunction deleteInstruction()
         {
             return [](ReplacementRule::Builder&, ReplacementRule::Value* val, ReplacementRule::Captures&,
-                      ReplacementRule::Replacements& replacements) {
+                      ReplacementRule::Replacements& replacements)
+            {
                 auto type = val->getType();
                 val->replaceAllUsesWith(llvm::UndefValue::get(type));
                 replacements.push_back({llvm::dyn_cast<llvm::Instruction>(val), nullptr});

@@ -48,7 +48,8 @@ TEST(RuleSetTestSuite, AllocationActionRelease)
   call void @__quantum__rt__qubit_release(%Qubit* %qubit)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
+    auto configure_profile = [](RuleSet& rule_set)
+    {
         auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
         factory.useStaticQubitAllocation();
     };
@@ -79,7 +80,8 @@ TEST(RuleSetTestSuite, MultipleAllocationsNoRelease)
   )script");
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(
-        [](RuleSet& rule_set) {
+        [](RuleSet& rule_set)
+        {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
 
@@ -137,7 +139,8 @@ TEST(RuleSetTestSuite, AllocateReleaseMultipleTimes)
   )script");
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(
-        [](RuleSet& rule_set) {
+        [](RuleSet& rule_set)
+        {
             auto a = BasicAllocationManager::createNew();
             auto b = BasicAllocationManager::createNew();
             a->setReuseRegisters(true);
@@ -191,7 +194,8 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByName)
   )script");
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(
-        [](RuleSet& rule_set) {
+        [](RuleSet& rule_set)
+        {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
 
@@ -216,7 +220,8 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByNameWithNoName)
   )script");
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(
-        [](RuleSet& rule_set) {
+        [](RuleSet& rule_set)
+        {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
 
@@ -244,7 +249,8 @@ TEST(RuleSetTestSuite, ErrorReleaseWithTypeErasedAllocation)
   )script");
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(
-        [](RuleSet& rule_set) {
+        [](RuleSet& rule_set)
+        {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
 

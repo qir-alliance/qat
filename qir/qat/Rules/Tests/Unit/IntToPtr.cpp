@@ -52,13 +52,17 @@ TEST(RuleSetTestSuite, IntToPtr)
   %0 = inttoptr i64 2 to %Array*
  )script");
     bool matched           = false;
-    auto configure_profile = [&matched](RuleSet& rule_set) {
+    auto configure_profile = [&matched](RuleSet& rule_set)
+    {
         auto inttoptr = intToPtr(constInt());
-        auto rule     = ReplacementRule(std::move(inttoptr), [&matched](Builder&, Value*, Captures&, Replacements&) {
-            matched = true;
-            return true;
-        });
-        auto ret      = std::make_shared<ReplacementRule>(std::move(rule));
+        auto rule     = ReplacementRule(
+                std::move(inttoptr),
+                [&matched](Builder&, Value*, Captures&, Replacements&)
+                {
+                matched = true;
+                return true;
+                });
+        auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
         rule_set.addRule(ret);
     };
@@ -76,13 +80,17 @@ TEST(RuleSetTestSuite, EmbeddedIntToPtr)
   )script");
     bool matched  = false;
 
-    auto configure_profile = [&matched](RuleSet& rule_set) {
+    auto configure_profile = [&matched](RuleSet& rule_set)
+    {
         auto inttoptr = call("__quantum__rt__array_get_element_ptr_1d", intToPtr(constInt()), constInt());
-        auto rule     = ReplacementRule(std::move(inttoptr), [&matched](Builder&, Value*, Captures&, Replacements&) {
-            matched = true;
-            return true;
-        });
-        auto ret      = std::make_shared<ReplacementRule>(std::move(rule));
+        auto rule     = ReplacementRule(
+                std::move(inttoptr),
+                [&matched](Builder&, Value*, Captures&, Replacements&)
+                {
+                matched = true;
+                return true;
+                });
+        auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
         rule_set.addRule(ret);
     };
@@ -101,13 +109,17 @@ TEST(RuleSetTestSuite, ExpandedIntToPtr)
   )script");
     bool matched  = false;
 
-    auto configure_profile = [&matched](RuleSet& rule_set) {
+    auto configure_profile = [&matched](RuleSet& rule_set)
+    {
         auto inttoptr = call("__quantum__rt__array_get_element_ptr_1d", intToPtr(constInt()), constInt());
-        auto rule     = ReplacementRule(std::move(inttoptr), [&matched](Builder&, Value*, Captures&, Replacements&) {
-            matched = true;
-            return true;
-        });
-        auto ret      = std::make_shared<ReplacementRule>(std::move(rule));
+        auto rule     = ReplacementRule(
+                std::move(inttoptr),
+                [&matched](Builder&, Value*, Captures&, Replacements&)
+                {
+                matched = true;
+                return true;
+                });
+        auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
         rule_set.addRule(ret);
     };

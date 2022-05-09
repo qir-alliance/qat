@@ -146,7 +146,8 @@ namespace quantum
     {
         configuration_manager_.addConfig<R>(id);
 
-        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile) {
+        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile)
+        {
             if (ptr->configuration_manager_.isActive<R>())
             {
                 auto& config = ptr->configuration_manager_.get<R>();
@@ -160,7 +161,8 @@ namespace quantum
 
     template <typename R> void ProfileGenerator::replaceProfileComponent(String const& id, SetupFunction<R> setup)
     {
-        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile) {
+        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile)
+        {
             if (ptr->configuration_manager_.isActive<R>())
             {
                 auto& config = ptr->configuration_manager_.get<R>();
@@ -188,7 +190,8 @@ namespace quantum
             throw std::runtime_error("Configuration '" + static_cast<String>(typeid(R).name()) + "' does not exist.");
         }
 
-        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile) {
+        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile)
+        {
             if (ptr->configuration_manager_.isActive<R>())
             {
                 auto& config = ptr->configuration_manager_.get<R>();

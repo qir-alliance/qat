@@ -141,7 +141,9 @@ namespace quantum
         ILoggerPtr logger = logger_;
 
         registerProfileComponent<LlvmPassesConfiguration>(
-            "llvm-optimization", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+            "llvm-optimization",
+            [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+            {
                 auto& mpm = ptr->modulePassManager();
                 auto& fpm = ptr->functionPassManager();
 
@@ -188,7 +190,7 @@ namespace quantum
                     {
                         auto& pass_builder = ptr->passBuilder();
 
-                        if (auto err = pass_builder.parsePassPipeline(mpm, pass_pipeline, false, false))
+                        if (auto err = pass_builder.parsePassPipeline(mpm, pass_pipeline))
                         {
                             throw std::runtime_error(
                                 "Failed to set pass pipeline up. Value: '" + pass_pipeline +
@@ -203,7 +205,7 @@ namespace quantum
                         mpm.addPass(std::move(pipeline1));
 
                         llvm::ModulePassManager pipeline2 =
-                            pass_builder.buildModuleSimplificationPipeline(opt, llvm::PassBuilder::ThinLTOPhase::None);
+                            pass_builder.buildModuleSimplificationPipeline(opt, llvm::ThinOrFullLTOPhase::None);
                         mpm.addPass(std::move(pipeline2));
 
                         llvm::ModulePassManager pipeline3 =
@@ -232,7 +234,8 @@ namespace quantum
 
         registerProfileComponent<TransformationRulesPassConfiguration>(
             "transformation-rules",
-            [logger](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            [logger](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
+            {
                 auto& ret = ptr->modulePassManager();
 
                 // Defining the mapping
@@ -258,7 +261,8 @@ namespace quantum
 
         registerProfileComponent<StaticResourceComponentConfiguration>(
             "static-resource",
-            [logger](StaticResourceComponentConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            [logger](StaticResourceComponentConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
+            {
                 auto& fam = profile.functionAnalysisManager();
                 fam.registerPass([&] { return AllocationAnalysisPass(cfg, logger); });
 
@@ -279,7 +283,9 @@ namespace quantum
             });
 
         registerProfileComponent<GroupingPassConfiguration>(
-            "grouping", [logger](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            "grouping",
+            [logger](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
+            {
                 if (cfg.circuitSeparation())
                 {
                     auto& mam = profile.moduleAnalysisManager();

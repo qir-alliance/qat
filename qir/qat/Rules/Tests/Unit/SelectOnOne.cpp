@@ -51,7 +51,8 @@ TEST(RuleSetTestSuite, SelectOnOne)
   ret i8 %3
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
+    auto configure_profile = [](RuleSet& rule_set)
+    {
         auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
 
         factory.optimizeResultOne();

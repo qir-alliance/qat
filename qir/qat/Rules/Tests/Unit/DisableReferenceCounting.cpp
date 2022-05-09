@@ -51,7 +51,8 @@ TEST(RuleSetTestSuite, DISABLED_DisablingArrayhReferenceCounting)
     call void @__quantum__rt__array_update_reference_count(%Array* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
+    auto configure_profile = [](RuleSet& rule_set)
+    {
         auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
 
         factory.disableReferenceCounting();
@@ -96,7 +97,8 @@ TEST(RuleSetTestSuite, DisablingStringReferenceCounting)
     call void @__quantum__rt__string_update_reference_count(%String* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
+    auto configure_profile = [](RuleSet& rule_set)
+    {
         auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
 
         factory.disableReferenceCounting();
@@ -141,7 +143,8 @@ TEST(RuleSetTestSuite, DisablingResultReferenceCounting)
     call void @__quantum__rt__result_update_reference_count(%Result* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
+    auto configure_profile = [](RuleSet& rule_set)
+    {
         auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
 
         factory.disableReferenceCounting();

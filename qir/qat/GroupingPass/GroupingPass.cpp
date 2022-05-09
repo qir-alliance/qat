@@ -124,10 +124,13 @@ namespace quantum
 
         // Replacing entry
         tail_classical->setName("exit_quantum_grouping");
-        tail_classical->replaceUsesWithIf(pre_classical_block_, [](llvm::Use& use) {
-            auto* phi_node = llvm::dyn_cast<llvm::PHINode>(use.getUser());
-            return (phi_node == nullptr);
-        });
+        tail_classical->replaceUsesWithIf(
+            pre_classical_block_,
+            [](llvm::Use& use)
+            {
+                auto* phi_node = llvm::dyn_cast<llvm::PHINode>(use.getUser());
+                return (phi_node == nullptr);
+            });
     }
 
     void GroupingPass::nextQuantumCycle(llvm::Module& module, llvm::BasicBlock* tail_classical)
@@ -270,10 +273,13 @@ namespace quantum
         std::vector<llvm::Instruction*> to_delete;
         auto extra_block = llvm::BasicBlock::Create(context, "unnamed", block->getParent(), block);
         extra_block->takeName(block);
-        block->replaceUsesWithIf(extra_block, [](llvm::Use& use) {
-            auto* phi_node = llvm::dyn_cast<llvm::PHINode>(use.getUser());
-            return (phi_node == nullptr);
-        });
+        block->replaceUsesWithIf(
+            extra_block,
+            [](llvm::Use& use)
+            {
+                auto* phi_node = llvm::dyn_cast<llvm::PHINode>(use.getUser());
+                return (phi_node == nullptr);
+            });
 
         block->setName(name);
 

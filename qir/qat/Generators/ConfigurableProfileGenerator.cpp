@@ -33,7 +33,8 @@ namespace quantum
 
         replaceProfileComponent<TransformationRulesPassConfiguration>(
             "transformation-rules",
-            [configure](TransformationRulesPassConfiguration const& config, ProfileGenerator* ptr, Profile& profile) {
+            [configure](TransformationRulesPassConfiguration const& config, ProfileGenerator* ptr, Profile& profile)
+            {
                 auto& ret = ptr->modulePassManager();
 
                 // Defining the mapping

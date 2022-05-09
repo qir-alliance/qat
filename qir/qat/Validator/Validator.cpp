@@ -21,10 +21,10 @@ namespace quantum
         ILoggerPtr const&                  logger,
         bool                               debug,
         llvm::TargetMachine*               target_machine)
-      : loop_analysis_manager_{debug}
-      , function_analysis_manager_{debug}
-      , gscc_analysis_manager_{debug}
-      , module_analysis_manager_{debug}
+      : loop_analysis_manager_{}
+      , function_analysis_manager_{}
+      , gscc_analysis_manager_{}
+      , module_analysis_manager_{}
       , logger_{logger}
     {
 
