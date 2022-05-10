@@ -23,10 +23,10 @@ namespace quantum
 
     llvm::PreservedAnalyses PreTransformValidationPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
     {
-        uint64_t function_count{0};
-
         if (config_.requireStraightLineCode())
         {
+            uint64_t function_count{0};
+
             for (auto& function : module)
             {
 
