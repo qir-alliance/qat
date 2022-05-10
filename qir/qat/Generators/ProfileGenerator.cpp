@@ -143,14 +143,17 @@ namespace quantum
         ILoggerPtr logger = logger_;
         registerProfileComponent<PreTransformValidationPassConfiguration>(
             "pre-transform-validation",
-            [logger](PreTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+            [logger](PreTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+            {
                 auto& mpm = ptr->modulePassManager();
 
                 mpm.addPass(PreTransformValidationPass(cfg, logger));
             });
 
         registerProfileComponent<LlvmPassesConfiguration>(
-            "llvm-optimization", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+            "llvm-optimization",
+            [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+            {
                 auto& mpm = ptr->modulePassManager();
                 auto& fpm = ptr->functionPassManager();
 
@@ -241,13 +244,14 @@ namespace quantum
 
         registerProfileComponent<TransformationRulesPassConfiguration>(
             "transformation-rules",
-            [logger](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            [logger](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
+            {
                 auto& ret = ptr->modulePassManager();
 
                 // Defining the mapping
                 RuleSet rule_set;
                 auto    factory = RuleFactory(
-                    rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), logger);
+                       rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), logger);
                 factory.usingConfiguration(ptr->configurationManager().get<FactoryConfiguration>());
 
                 // Creating profile pass
@@ -257,7 +261,9 @@ namespace quantum
             });
 
         registerProfileComponent<PostTransformConfig>(
-            "post-transform", [logger](PostTransformConfig const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+            "post-transform",
+            [logger](PostTransformConfig const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+            {
                 auto& ret = ptr->functionPassManager();
 
                 if (cfg.shouldAddInstCombinePass())
@@ -283,7 +289,8 @@ namespace quantum
 
         registerProfileComponent<StaticResourceComponentConfiguration>(
             "static-resource",
-            [logger](StaticResourceComponentConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            [logger](StaticResourceComponentConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
+            {
                 auto& fam = profile.functionAnalysisManager();
                 fam.registerPass([&] { return AllocationAnalysisPass(cfg, logger); });
 
@@ -304,7 +311,9 @@ namespace quantum
             });
 
         registerProfileComponent<GroupingPassConfiguration>(
-            "grouping", [logger](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile) {
+            "grouping",
+            [logger](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
+            {
                 if (cfg.circuitSeparation())
                 {
                     auto& mam = profile.moduleAnalysisManager();

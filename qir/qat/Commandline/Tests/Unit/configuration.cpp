@@ -154,10 +154,10 @@ TEST(CommandlineTestSuite, Configuration)
         ConfigurationManager configuration_manager;
         auto                 var = configuration_manager.getParameter("param2");
 
-        EXPECT_FALSE(var->isDereferencable());
+        EXPECT_FALSE(var->isDereferenceable());
 
         configuration_manager.addConfig<TestConfig2>();
-        EXPECT_TRUE(var->isDereferencable());
+        EXPECT_TRUE(var->isDereferenceable());
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);

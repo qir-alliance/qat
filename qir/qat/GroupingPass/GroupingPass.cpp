@@ -124,10 +124,13 @@ namespace quantum
 
         // Replacing entry
         tail_classical->setName("exit_quantum_grouping");
-        tail_classical->replaceUsesWithIf(pre_classical_block_, [](llvm::Use& use) {
-            auto* phi_node = llvm::dyn_cast<llvm::PHINode>(use.getUser());
-            return (phi_node == nullptr);
-        });
+        tail_classical->replaceUsesWithIf(
+            pre_classical_block_,
+            [](llvm::Use& use)
+            {
+                auto* phi_node = llvm::dyn_cast<llvm::PHINode>(use.getUser());
+                return (phi_node == nullptr);
+            });
     }
 
     void GroupingPass::nextQuantumCycle(llvm::Module& module, llvm::BasicBlock* tail_classical)
@@ -161,7 +164,7 @@ namespace quantum
         prepareSourceSeparation(module, tail_classical);
 
         // Variables used for the modifications
-        std::vector<llvm::Instruction*>  to_delete;
+        to_delete_.clear();
         std::unordered_set<llvm::Value*> depends_on_qc;
         std::unordered_set<llvm::Value*> post_classical_instructions;
 
@@ -203,7 +206,7 @@ namespace quantum
                 quantum_builder_->Insert(new_instr);
 
                 instr.replaceAllUsesWith(new_instr);
-                to_delete.push_back(&instr);
+                to_delete_.push_back(&instr);
             }
             else if (instr_class != INVALID_MIXED_LOCATION)
             {
@@ -220,7 +223,7 @@ namespace quantum
                     new_instr->takeName(&instr);
                     post_classical_builder_->Insert(new_instr);
                     instr.replaceAllUsesWith(new_instr);
-                    to_delete.push_back(&instr);
+                    to_delete_.push_back(&instr);
 
                     post_classical_instructions.insert(new_instr);
                     continue;
@@ -234,7 +237,7 @@ namespace quantum
                 pre_classical_builder_->Insert(new_instr);
 
                 instr.replaceAllUsesWith(new_instr);
-                to_delete.push_back(&instr);
+                to_delete_.push_back(&instr);
             }
             else
             {
@@ -246,26 +249,7 @@ namespace quantum
         quantum_builder_->CreateBr(post_classical_block_);
         post_classical_builder_->CreateBr(tail_classical);
 
-        for (auto it = to_delete.rbegin(); it != to_delete.rend(); ++it)
-        {
-            auto ptr = *it;
-            if (!ptr->use_empty())
-            {
-                if (logger_)
-                {
-                    logger_->setLocationFromValue(ptr);
-                    logger_->error("Could not delete node.");
-                }
-                else
-                {
-                    throw std::runtime_error("No logger present - Error: Unable to delete instruction.\n");
-                }
-            }
-            else
-            {
-                ptr->eraseFromParent();
-            }
-        }
+        deleteInstructions();
     }
 
     void GroupingPass::expandBasedOnDest(
@@ -274,14 +258,18 @@ namespace quantum
         bool              move_quatum,
         String const&     name)
     {
-        auto&                           context = module.getContext();
-        std::vector<llvm::Instruction*> to_delete;
+        auto& context = module.getContext();
+        to_delete_.clear();
+
         auto extra_block = llvm::BasicBlock::Create(context, "unnamed", block->getParent(), block);
         extra_block->takeName(block);
-        block->replaceUsesWithIf(extra_block, [](llvm::Use& use) {
-            auto* phi_node = llvm::dyn_cast<llvm::PHINode>(use.getUser());
-            return (phi_node == nullptr);
-        });
+        block->replaceUsesWithIf(
+            extra_block,
+            [](llvm::Use& use)
+            {
+                auto* phi_node = llvm::dyn_cast<llvm::PHINode>(use.getUser());
+                return (phi_node == nullptr);
+            });
 
         block->setName(name);
 
@@ -306,13 +294,18 @@ namespace quantum
                 first_builder.Insert(new_instr);
 
                 instr.replaceAllUsesWith(new_instr);
-                to_delete.push_back(&instr);
+                to_delete_.push_back(&instr);
             }
         }
 
         first_builder.CreateBr(block);
 
-        for (auto it = to_delete.rbegin(); it != to_delete.rend(); ++it)
+        deleteInstructions();
+    }
+
+    void GroupingPass::deleteInstructions()
+    {
+        for (auto it = to_delete_.rbegin(); it != to_delete_.rend(); ++it)
         {
             auto ptr = *it;
             if (!ptr->use_empty())

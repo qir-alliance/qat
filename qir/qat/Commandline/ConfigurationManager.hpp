@@ -48,7 +48,7 @@ namespace quantum
 
         template <typename T> T value() const
         {
-            if (!isDereferencable())
+            if (!isDereferenceable())
             {
                 throw std::runtime_error("Deferred command line parameter is not dereferenceable.");
             }

@@ -93,7 +93,8 @@ namespace quantum
     void RuleFactory::resolveConstantArraySizes()
     {
         /// Array access replacement
-        auto size_replacer = [](Builder&, Value* val, Captures& cap, Replacements& replacements) {
+        auto size_replacer = [](Builder&, Value* val, Captures& cap, Replacements& replacements)
+        {
             // Get the index and testing that it is a constant int
             auto cst = llvm::dyn_cast<llvm::ConstantInt>(cap["size"]);
             if (cst == nullptr)
@@ -119,7 +120,8 @@ namespace quantum
         auto logger = logger_;
 
         /// Array access replacement
-        auto callable_replacer = [logger](Builder&, Value* val, Captures&, Replacements&) {
+        auto callable_replacer = [logger](Builder&, Value* val, Captures&, Replacements&)
+        {
             if (logger)
             {
                 logger->setLocationFromValue(val);
@@ -149,54 +151,55 @@ namespace quantum
         /// Allocation
         auto default_iw = default_integer_width_;
         auto allocation_replacer =
-            [default_iw, qubit_alloc_manager](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
-                auto cst = llvm::dyn_cast<llvm::ConstantInt>(cap["size"]);
-                if (cst == nullptr)
-                {
-                    return false;
-                }
+            [default_iw, qubit_alloc_manager](Builder& builder, Value* val, Captures& cap, Replacements& replacements)
+        {
+            auto cst = llvm::dyn_cast<llvm::ConstantInt>(cap["size"]);
+            if (cst == nullptr)
+            {
+                return false;
+            }
 
-                auto ptr_type = llvm::dyn_cast<llvm::PointerType>(val->getType());
-                if (ptr_type == nullptr)
-                {
-                    return false;
-                }
+            auto ptr_type = llvm::dyn_cast<llvm::PointerType>(val->getType());
+            if (ptr_type == nullptr)
+            {
+                return false;
+            }
 
-                if (cst == nullptr)
-                {
-                    return false;
-                }
+            if (cst == nullptr)
+            {
+                return false;
+            }
 
-                auto llvm_size = cst->getValue();
-                auto name      = val->getName().str();
-                auto size      = llvm_size.getZExtValue();
-                auto offset    = qubit_alloc_manager->allocate(name, size);
+            auto llvm_size = cst->getValue();
+            auto name      = val->getName().str();
+            auto size      = llvm_size.getZExtValue();
+            auto offset    = qubit_alloc_manager->allocate(name, size);
 
-                // Creating a new index APInt that is shifted by the offset of the allocation
-                auto idx = llvm::APInt(default_iw, offset);
+            // Creating a new index APInt that is shifted by the offset of the allocation
+            auto idx = llvm::APInt(default_iw, offset);
 
-                // Computing offset
-                auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
+            // Computing offset
+            auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
 
-                // Replacing the instruction with new instruction
-                auto old_instr = llvm::dyn_cast<Instruction>(val);
+            // Replacing the instruction with new instruction
+            auto old_instr = llvm::dyn_cast<Instruction>(val);
 
-                // Safety precaution to ensure that we are dealing with a Instruction
-                if (old_instr == nullptr)
-                {
-                    return false;
-                }
+            // Safety precaution to ensure that we are dealing with a Instruction
+            if (old_instr == nullptr)
+            {
+                return false;
+            }
 
-                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
-                instr->takeName(old_instr);
+            auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
+            instr->takeName(old_instr);
 
-                // Ensuring that we have replaced the instruction before
-                // identifying release
-                old_instr->replaceAllUsesWith(instr);
+            // Ensuring that we have replaced the instruction before
+            // identifying release
+            old_instr->replaceAllUsesWith(instr);
 
-                replacements.push_back({old_instr, instr});
-                return true;
-            };
+            replacements.push_back({old_instr, instr});
+            return true;
+        };
 
         /// This rule is replacing the allocate qubit array instruction
         ///
@@ -212,62 +215,63 @@ namespace quantum
 
         /// Array access replacement
         auto access_replacer =
-            [qubit_alloc_manager](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
-                // Getting the type pointer
-                auto ptr_type = llvm::dyn_cast<llvm::PointerType>(val->getType());
-                if (ptr_type == nullptr)
-                {
-                    return false;
-                }
+            [qubit_alloc_manager](Builder& builder, Value* val, Captures& cap, Replacements& replacements)
+        {
+            // Getting the type pointer
+            auto ptr_type = llvm::dyn_cast<llvm::PointerType>(val->getType());
+            if (ptr_type == nullptr)
+            {
+                return false;
+            }
 
-                // Get the index and testing that it is a constant int
-                auto cst = llvm::dyn_cast<llvm::ConstantInt>(cap["index"]);
-                if (cst == nullptr)
-                {
-                    // ... if not, we cannot perform the mapping.
-                    return false;
-                }
+            // Get the index and testing that it is a constant int
+            auto cst = llvm::dyn_cast<llvm::ConstantInt>(cap["index"]);
+            if (cst == nullptr)
+            {
+                // ... if not, we cannot perform the mapping.
+                return false;
+            }
 
-                // Computing the index by getting the current index value and offsetting by
-                // the offset at which the qubit array is allocated.
-                auto offset_cst = llvm::dyn_cast<llvm::ConstantInt>(cap["arrayName"]);
-                if (offset_cst == nullptr)
-                {
-                    return false;
-                }
-                auto llvm_offset = offset_cst->getValue();
-                auto offset      = llvm_offset.getZExtValue();
+            // Computing the index by getting the current index value and offsetting by
+            // the offset at which the qubit array is allocated.
+            auto offset_cst = llvm::dyn_cast<llvm::ConstantInt>(cap["arrayName"]);
+            if (offset_cst == nullptr)
+            {
+                return false;
+            }
+            auto llvm_offset = offset_cst->getValue();
+            auto offset      = llvm_offset.getZExtValue();
 
-                // Creating a new index APInt that is shifted by the offset of the allocation
-                auto llvm_size = cst->getValue();
-                auto idx       = llvm::APInt(llvm_size.getBitWidth(), llvm_size.getZExtValue() + offset);
+            // Creating a new index APInt that is shifted by the offset of the allocation
+            auto llvm_size = cst->getValue();
+            auto idx       = llvm::APInt(llvm_size.getBitWidth(), llvm_size.getZExtValue() + offset);
 
-                // Computing offset
-                auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
+            // Computing offset
+            auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
 
-                auto old_instr = llvm::dyn_cast<Instruction>(val);
+            auto old_instr = llvm::dyn_cast<Instruction>(val);
 
-                if (old_instr == nullptr)
-                {
-                    return false;
-                }
+            if (old_instr == nullptr)
+            {
+                return false;
+            }
 
-                // Converting pointer
-                builder.SetInsertPoint(old_instr->getNextNode());
+            // Converting pointer
+            builder.SetInsertPoint(old_instr->getNextNode());
 
-                auto instr = builder.CreateIntToPtr(new_index, ptr_type);
-                instr->takeName(old_instr);
-                old_instr->replaceAllUsesWith(instr);
+            auto instr = builder.CreateIntToPtr(new_index, ptr_type);
+            instr->takeName(old_instr);
+            old_instr->replaceAllUsesWith(instr);
 
-                // Replacing the instruction with new instruction
-                replacements.push_back({old_instr, nullptr});
+            // Replacing the instruction with new instruction
+            replacements.push_back({old_instr, nullptr});
 
-                // Deleting the getelement and cast operations
-                replacements.push_back({llvm::dyn_cast<Instruction>(cap["getElement"]), nullptr});
-                replacements.push_back({llvm::dyn_cast<Instruction>(cap["cast"]), nullptr});
+            // Deleting the getelement and cast operations
+            replacements.push_back({llvm::dyn_cast<Instruction>(cap["getElement"]), nullptr});
+            replacements.push_back({llvm::dyn_cast<Instruction>(cap["cast"]), nullptr});
 
-                return true;
-            };
+            return true;
+        };
 
         auto get_element = call(
             "__quantum__rt__array_get_element_ptr_1d", intToPtr("arrayName"_cap = constInt()),
@@ -282,7 +286,8 @@ namespace quantum
 
         addRule(
             {call("__quantum__rt__qubit_release_array", intToPtr("const"_cap = constInt())),
-             [qubit_alloc_manager, deleter](Builder& builder, Value* val, Captures& cap, Replacements& rep) {
+             [qubit_alloc_manager, deleter](Builder& builder, Value* val, Captures& cap, Replacements& rep)
+             {
                  // Recovering the qubit id
                  auto cst = llvm::dyn_cast<llvm::ConstantInt>(cap["const"]);
                  if (cst == nullptr)
@@ -305,47 +310,48 @@ namespace quantum
         auto qubit_alloc_manager = qubit_alloc_manager_;
         auto default_iw          = default_integer_width_;
         auto allocation_replacer =
-            [default_iw, qubit_alloc_manager](Builder& builder, Value* val, Captures&, Replacements& replacements) {
-                // Getting the type pointer
-                auto ptr_type = llvm::dyn_cast<llvm::PointerType>(val->getType());
-                if (ptr_type == nullptr)
-                {
-                    return false;
-                }
+            [default_iw, qubit_alloc_manager](Builder& builder, Value* val, Captures&, Replacements& replacements)
+        {
+            // Getting the type pointer
+            auto ptr_type = llvm::dyn_cast<llvm::PointerType>(val->getType());
+            if (ptr_type == nullptr)
+            {
+                return false;
+            }
 
-                auto qubit_name = val->getName().str();
+            auto qubit_name = val->getName().str();
 
-                // Computing the index by getting the current index value and offseting by
-                // the offset at which the qubit array is allocated.
-                auto offset = qubit_alloc_manager->allocate(qubit_name);
+            // Computing the index by getting the current index value and offseting by
+            // the offset at which the qubit array is allocated.
+            auto offset = qubit_alloc_manager->allocate(qubit_name);
 
-                // Creating a new index APInt that is shifted by the offset of the allocation
-                auto idx = llvm::APInt(default_iw, offset);
+            // Creating a new index APInt that is shifted by the offset of the allocation
+            auto idx = llvm::APInt(default_iw, offset);
 
-                // Computing offset
-                auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
+            // Computing offset
+            auto new_index = llvm::ConstantInt::get(builder.getContext(), idx);
 
-                auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
+            auto instr = new llvm::IntToPtrInst(new_index, ptr_type);
 
-                // Replacing the instruction with new instruction
-                auto old_instr = llvm::dyn_cast<Instruction>(val);
+            // Replacing the instruction with new instruction
+            auto old_instr = llvm::dyn_cast<Instruction>(val);
 
-                // Safety precaution to ensure that we are dealing with a Instruction
-                if (old_instr == nullptr)
-                {
-                    return false;
-                }
+            // Safety precaution to ensure that we are dealing with a Instruction
+            if (old_instr == nullptr)
+            {
+                return false;
+            }
 
-                instr->takeName(old_instr);
+            instr->takeName(old_instr);
 
-                // Ensuring that we have replaced the instruction before
-                // identifying release
-                old_instr->replaceAllUsesWith(instr);
+            // Ensuring that we have replaced the instruction before
+            // identifying release
+            old_instr->replaceAllUsesWith(instr);
 
-                replacements.push_back({old_instr, instr});
+            replacements.push_back({old_instr, instr});
 
-                return true;
-            };
+            return true;
+        };
 
         // Dealing with qubit allocation
         addRule({call("__quantum__rt__qubit_allocate"), allocation_replacer});
@@ -365,7 +371,8 @@ namespace quantum
 
         addRule(
             {call("__quantum__rt__qubit_release", intToPtr("const"_cap = constInt())),
-             [qubit_alloc_manager, deleter](Builder& builder, Value* val, Captures& cap, Replacements& rep) {
+             [qubit_alloc_manager, deleter](Builder& builder, Value* val, Captures& cap, Replacements& rep)
+             {
                  // Recovering the qubit id
                  auto cst = llvm::dyn_cast<llvm::ConstantInt>(cap["const"]);
                  if (cst == nullptr)
@@ -388,7 +395,8 @@ namespace quantum
         // call void @__quantum__rt__qubit_release(%Qubit* %leftMessage)
         addRule(
             {call("__quantum__rt__qubit_release", "name"_cap = _),
-             [qubit_alloc_manager, deleter, logger](Builder& builder, Value* val, Captures& cap, Replacements& rep) {
+             [qubit_alloc_manager, deleter, logger](Builder& builder, Value* val, Captures& cap, Replacements& rep)
+             {
                  // Getting the name
                  auto name = cap["name"]->getName().str();
 
@@ -430,8 +438,9 @@ namespace quantum
     {
         auto result_alloc_manager = result_alloc_manager_;
         auto default_iw           = default_integer_width_;
-        auto replace_measurement  = [default_iw, result_alloc_manager](
-                                       Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
+        auto replace_measurement =
+            [default_iw, result_alloc_manager](Builder& builder, Value* val, Captures& cap, Replacements& replacements)
+        {
             // Getting the type pointer
             auto ptr_type = llvm::dyn_cast<llvm::PointerType>(val->getType());
             if (ptr_type == nullptr)
@@ -484,7 +493,7 @@ namespace quantum
 
                 llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
                 fnc                          = llvm::Function::Create(
-                    fnc_type, llvm::Function::ExternalLinkage, "__quantum__qis__mz__body", module);
+                                             fnc_type, llvm::Function::ExternalLinkage, "__quantum__qis__mz__body", module);
             }
 
             // Ensuring we are inserting after the instruction being deleted
@@ -513,7 +522,8 @@ namespace quantum
 
     void RuleFactory::optimizeResultZero()
     {
-        auto replace_branch_negative = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
+        auto replace_branch_negative = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements)
+        {
             auto cond = llvm::dyn_cast<llvm::Instruction>(val);
             if (cond == nullptr)
             {
@@ -545,7 +555,7 @@ namespace quantum
 
                 llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
                 fnc                          = llvm::Function::Create(
-                    fnc_type, llvm::Function::ExternalLinkage, "__quantum__qis__read_result__body", module);
+                                             fnc_type, llvm::Function::ExternalLinkage, "__quantum__qis__read_result__body", module);
             }
 
             builder.SetInsertPoint(llvm::dyn_cast<llvm::Instruction>(val));
@@ -586,7 +596,8 @@ namespace quantum
 
     void RuleFactory::optimizeResultOne()
     {
-        auto replace_branch_positive = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
+        auto replace_branch_positive = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements)
+        {
             auto cond = llvm::dyn_cast<llvm::Instruction>(val);
             if (cond == nullptr)
             {
@@ -618,7 +629,7 @@ namespace quantum
 
                 llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
                 fnc                          = llvm::Function::Create(
-                    fnc_type, llvm::Function::ExternalLinkage, "__quantum__qis__read_result__body", module);
+                                             fnc_type, llvm::Function::ExternalLinkage, "__quantum__qis__read_result__body", module);
             }
 
             builder.SetInsertPoint(llvm::dyn_cast<llvm::Instruction>(val));

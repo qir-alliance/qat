@@ -60,7 +60,8 @@ namespace quantum
         {
             pass_builder_->registerPeepholeEPCallback(
                 [this, verify_each_pass,
-                 debug](llvm::FunctionPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel) {
+                 debug](llvm::FunctionPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel)
+                {
                     llvm::ExitOnError error_safeguard("Unable to parse PeepholeEP pipeline: ");
                     error_safeguard(
                         pass_builder_->parsePassPipeline(pass_manager, peephole_ep_pipeline_, verify_each_pass, debug));
@@ -71,7 +72,8 @@ namespace quantum
         {
             pass_builder_->registerLateLoopOptimizationsEPCallback(
                 [this, verify_each_pass,
-                 debug](llvm::LoopPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel) {
+                 debug](llvm::LoopPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel)
+                {
                     llvm::ExitOnError error_safeguard("Unable to parse LateLoopOptimizationsEP pipeline: ");
                     error_safeguard(pass_builder_->parsePassPipeline(
                         pass_manager, late_loop_optimizations_ep_pipeline_, verify_each_pass, debug));
@@ -82,7 +84,8 @@ namespace quantum
         {
             pass_builder_->registerLoopOptimizerEndEPCallback(
                 [this, verify_each_pass,
-                 debug](llvm::LoopPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel) {
+                 debug](llvm::LoopPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel)
+                {
                     llvm::ExitOnError error_safeguard("Unable to parse LoopOptimizerEndEP pipeline: ");
                     error_safeguard(pass_builder_->parsePassPipeline(
                         pass_manager, loop_optimizer_end_ep_pipeline_, verify_each_pass, debug));
@@ -93,7 +96,8 @@ namespace quantum
         {
             pass_builder_->registerScalarOptimizerLateEPCallback(
                 [this, verify_each_pass,
-                 debug](llvm::FunctionPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel) {
+                 debug](llvm::FunctionPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel)
+                {
                     llvm::ExitOnError error_safeguard("Unable to parse ScalarOptimizerLateEP pipeline: ");
                     error_safeguard(pass_builder_->parsePassPipeline(
                         pass_manager, scalar_optimizer_late_ep_pipeline_, verify_each_pass, debug));
@@ -104,7 +108,8 @@ namespace quantum
         {
             pass_builder_->registerCGSCCOptimizerLateEPCallback(
                 [this, verify_each_pass,
-                 debug](llvm::CGSCCPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel) {
+                 debug](llvm::CGSCCPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel)
+                {
                     llvm::ExitOnError error_safeguard("Unable to parse CGSCCOptimizerLateEP pipeline: ");
                     error_safeguard(pass_builder_->parsePassPipeline(
                         pass_manager, cgscc_optimizer_late_ep_pipeline_, verify_each_pass, debug));
@@ -115,7 +120,8 @@ namespace quantum
         {
             pass_builder_->registerVectorizerStartEPCallback(
                 [this, verify_each_pass,
-                 debug](llvm::FunctionPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel) {
+                 debug](llvm::FunctionPassManager& pass_manager, llvm::PassBuilder::OptimizationLevel)
+                {
                     llvm::ExitOnError error_safeguard("Unable to parse VectorizerStartEP pipeline: ");
                     error_safeguard(pass_builder_->parsePassPipeline(
                         pass_manager, vectorizer_start_ep_pipeline_, verify_each_pass, debug));
@@ -125,7 +131,8 @@ namespace quantum
         if (tryParsePipelineText<llvm::ModulePassManager>(*pass_builder_, pipeline_start_ep_pipeline_))
         {
             pass_builder_->registerPipelineStartEPCallback(
-                [this, verify_each_pass, debug](llvm::ModulePassManager& pass_manager) {
+                [this, verify_each_pass, debug](llvm::ModulePassManager& pass_manager)
+                {
                     llvm::ExitOnError error_safeguard("Unable to parse PipelineStartEP pipeline: ");
                     error_safeguard(pass_builder_->parsePassPipeline(
                         pass_manager, pipeline_start_ep_pipeline_, verify_each_pass, debug));
@@ -136,7 +143,8 @@ namespace quantum
         {
             pass_builder_->registerOptimizerLastEPCallback(
                 [this, verify_each_pass,
-                 debug](llvm::ModulePassManager& pass_manager, llvm::PassBuilder::OptimizationLevel) {
+                 debug](llvm::ModulePassManager& pass_manager, llvm::PassBuilder::OptimizationLevel)
+                {
                     llvm::ExitOnError error_safeguard("Unable to parse OptimizerLastEP pipeline: ");
                     error_safeguard(pass_builder_->parsePassPipeline(
                         pass_manager, optimizer_last_ep_pipeline_, verify_each_pass, debug));
