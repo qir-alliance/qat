@@ -51,7 +51,7 @@ namespace quantum
         if (profile_ == "base")
         {
             // TODO(tfr): Remove warning upon final release.
-            llvm::errs() << "; WARNING: 'base' profile renamed 'default'. Please update your scripts.\n";
+            llvm::errs() << "; WARNING: 'base' profile renamed to 'default'. Please update your scripts.\n";
             return "default";
         }
         return profile_;
