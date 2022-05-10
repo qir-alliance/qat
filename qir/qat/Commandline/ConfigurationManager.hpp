@@ -50,7 +50,7 @@ namespace quantum
         {
             if (!isDereferencable())
             {
-                throw std::runtime_error("Deferred command line parameter is not dereferrencable.");
+                throw std::runtime_error("Deferred command line parameter is not dereferenceable.");
             }
 
             if (value_ref_->valueType() != std::type_index(typeid(T)))
