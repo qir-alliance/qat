@@ -41,7 +41,7 @@ namespace quantum
             value_ref_ = value;
         }
 
-        bool isDereferencable() const
+        bool isDereferenceable() const
         {
             return value_ref_ != nullptr;
         }
