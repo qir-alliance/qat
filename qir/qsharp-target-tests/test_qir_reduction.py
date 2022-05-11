@@ -41,6 +41,11 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
 
     if not ret:
         print("Processed file:", filename)
+        with open(filename, "r") as fb:
+            for line in fb.readlines():
+                print("    | {}".format(line.rstrip()))
+        print("")
+
         print("QAT error output:")
         for line in errs.strip().split("\n"):
             print("    | {}".format(line))
