@@ -1,9 +1,9 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 #
-from validation_tests import *
-from comparison_tests import *
-from reduction_tests import *
+from target1 import *
+from target3 import *
+from target4 import *
 
 
-__all__ = all_comparison + all_reduction + all_validation
+__all__ = target1_tests + target3_tests + target4_tests
