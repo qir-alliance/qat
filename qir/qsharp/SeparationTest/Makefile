@@ -1,10 +1,10 @@
 all: qat-qsharp
 
 qat-qsharp: QSharpVersion/qir/Example.ll
-	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --profile base QSharpVersion/qir/Example.ll  || echo "failed!"
+	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --profile default QSharpVersion/qir/Example.ll  || echo "failed!"
 
 ungrouped: QSharpVersion/qir/Example.ll
-	${QAT_BINARY} --apply -S -O3 --always-inline --unroll-loops --disable-grouping --profile base QSharpVersion/qir/Example.ll  > ungrouped.ll
+	${QAT_BINARY} --apply -S -O3 --always-inline --unroll-loops --disable-grouping --profile default QSharpVersion/qir/Example.ll  > ungrouped.ll
 	
 	
 

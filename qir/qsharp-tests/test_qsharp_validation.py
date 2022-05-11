@@ -71,11 +71,11 @@ def test_qsharp_reduction(test_name, request):
             logger.warn("Q# program did not generate QIR file.")
             return
 
-        assert validate_circuit(test_name, "base", project.qir_filename, [
+        assert validate_circuit(test_name, "default", project.qir_filename, [
                                 "--unroll-loops", "--always-inline", "--apply"])
-        assert validate_circuit(test_name, "base", project.qir_filename, [
+        assert validate_circuit(test_name, "default", project.qir_filename, [
                                 "--unroll-loops", "--apply"])
-        assert validate_circuit(test_name, "base", project.qir_filename, [
+        assert validate_circuit(test_name, "default", project.qir_filename, [
                                 "--always-inline", "--apply"])
-        assert validate_circuit(test_name, "base", project.qir_filename, [
+        assert validate_circuit(test_name, "default", project.qir_filename, [
                                 "--apply"])

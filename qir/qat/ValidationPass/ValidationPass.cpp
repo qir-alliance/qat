@@ -19,20 +19,6 @@ namespace quantum
     {
     }
 
-    void ValidationPass::opcodeChecks(Instruction& instr)
-    {
-        auto opname = instr.getOpcodeName();
-        opcode_location_[opname].push_back(current_location_);
-        if (opcodes_.find(opname) != opcodes_.end())
-        {
-            ++opcodes_[opname];
-        }
-        else
-        {
-            opcodes_[opname] = 1;
-        }
-    }
-
     void ValidationPass::callChecks(Instruction& instr)
     {
         auto call_instr = llvm::dyn_cast<llvm::CallBase>(&instr);
@@ -45,33 +31,36 @@ namespace quantum
                 return;
             }
 
-            auto name = static_cast<std::string>(f->getName());
+            String                   signature;
+            llvm::raw_string_ostream ostream(signature);
+            ostream << f->getName() << ":";
+            ostream << *f->getFunctionType();
 
             if (f->isDeclaration())
             {
-                if (external_calls_.find(name) != external_calls_.end())
+                if (external_calls_.find(signature) != external_calls_.end())
                 {
-                    ++external_calls_[name];
+                    ++external_calls_[signature];
                 }
                 else
                 {
-                    external_calls_[name] = 1;
+                    external_calls_[signature] = 1;
                 }
 
-                external_call_location_[name].push_back(current_location_);
+                external_call_location_[signature].push_back(current_location_);
             }
             else
             {
-                if (internal_calls_.find(name) != internal_calls_.end())
+                if (internal_calls_.find(signature) != internal_calls_.end())
                 {
-                    ++internal_calls_[name];
+                    ++internal_calls_[signature];
                 }
                 else
                 {
-                    internal_calls_[name] = 1;
+                    internal_calls_[signature] = 1;
                 }
 
-                internal_call_location_[name].push_back(current_location_);
+                internal_call_location_[signature].push_back(current_location_);
             }
         }
     }
@@ -135,35 +124,143 @@ namespace quantum
         }
     }
 
-    bool ValidationPass::satisfyingOpcodeRequirements()
+    bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
     {
         auto ret = true;
         if (config_.allowlistOpcodes())
         {
-            auto const& allowed_ops = config_.allowedOpcodes();
-            for (auto const& k : opcodes_)
-            {
-                if (allowed_ops.find(k.first) == allowed_ops.end())
-                {
-                    logger_->setLlvmHint("");
 
-                    // Adding debug location
-                    if (opcode_location_.find(k.first) != opcode_location_.end())
+            auto const& allowed_ops = config_.allowedOpcodes();
+
+            for (auto& function : module)
+            {
+                for (auto& block : function)
+                {
+                    for (auto& instr : block)
                     {
-                        auto const& locs = opcode_location_[k.first];
-                        if (!locs.empty())
+                        auto loc          = logger_->resolveLocation(&instr);
+                        current_location_ = Location{loc};
+                        llvm::DebugLoc dl = instr.getDebugLoc();
+                        if (dl)
                         {
-                            auto const& loc = locs.front();
-                            logger_->setLocation({loc.name, loc.line, loc.column});
-                            logger_->setLlvmHint(loc.llvm_hint);
+                            current_location_ = Location{
+                                static_cast<String>(dl->getFilename()), dl->getLine(), dl->getColumn(), "", ""};
+                        }
+                        llvm::raw_string_ostream rso(current_location_.llvm_hint);
+                        instr.print(rso);
+
+                        String opname = static_cast<String>(instr.getOpcodeName());
+                        String first_arg{""};
+                        String code = opname;
+
+                        auto cmp = llvm::dyn_cast<llvm::CmpInst>(&instr);
+                        if (cmp)
+                        {
+                            switch (cmp->getPredicate())
+                            {
+                            case llvm::CmpInst::Predicate::FCMP_FALSE:
+                                first_arg = "false";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_OEQ:
+                                first_arg = "oeq";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_OGT:
+                                first_arg = "ogt";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_OGE:
+                                first_arg = "oge";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_OLT:
+                                first_arg = "olt";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_OLE:
+                                first_arg = "ole";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_ONE:
+                                first_arg = "one";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_ORD:
+                                first_arg = "ord";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_UNO:
+                                first_arg = "uno";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_UEQ:
+                                first_arg = "ueq";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_UGT:
+                                first_arg = "ugt";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_UGE:
+                                first_arg = "uge";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_ULT:
+                                first_arg = "ult";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_ULE:
+                                first_arg = "ule";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_UNE:
+                                first_arg = "une";
+                                break;
+                            case llvm::CmpInst::Predicate::FCMP_TRUE:
+                                first_arg = "true";
+                                break;
+                            case llvm::CmpInst::Predicate::ICMP_EQ:
+                                first_arg = "eq";
+                                break;
+                            case llvm::CmpInst::Predicate::ICMP_NE:
+                                first_arg = "ne";
+                                break;
+                            case llvm::CmpInst::Predicate::ICMP_UGT:
+                                first_arg = "ugt";
+                                break;
+                            case llvm::CmpInst::Predicate::ICMP_UGE:
+                                first_arg = "uge";
+                                break;
+                            case llvm::CmpInst::Predicate::ICMP_ULT:
+                                first_arg = "ult";
+                                break;
+                            case llvm::CmpInst::Predicate::ICMP_ULE:
+                                first_arg = "ule";
+                                break;
+                            case llvm::CmpInst::Predicate::ICMP_SGT:
+                                first_arg = "sgt";
+                                break;
+                            case llvm::CmpInst::Predicate::ICMP_SGE:
+                                first_arg = "sge";
+                                break;
+                            case llvm::CmpInst::Predicate::ICMP_SLT:
+                                first_arg = "slt";
+                                break;
+                            case llvm::CmpInst::Predicate::ICMP_SLE:
+                                first_arg = "sle";
+                                break;
+                            }
+                        }
+
+                        if (!first_arg.empty())
+                        {
+                            code += " " + first_arg;
+                        }
+
+                        OpcodeValue opcode1{opname};
+                        OpcodeValue opcode2{opname, first_arg};
+
+                        if (allowed_ops.find(opcode1) == allowed_ops.end() &&
+                            allowed_ops.find(opcode2) == allowed_ops.end())
+                        {
+
+                            logger_->setLocation(
+                                {current_location_.name, current_location_.line, current_location_.column});
+                            logger_->setLlvmHint(current_location_.llvm_hint);
+
+                            logger_->error(
+                                "Opcode '" + code + "' is not allowed for this profile (" + config_.profileName() +
+                                ").");
+                            ret = false;
                         }
                     }
-
-                    // Emitting error
-                    logger_->error(
-                        "Opcode '" + k.first + "' is not allowed for this profile (" + config_.profileName() + ").");
-
-                    ret = false;
                 }
             }
         }
@@ -280,7 +377,6 @@ namespace quantum
                     llvm::raw_string_ostream rso(current_location_.llvm_hint);
                     instr.print(rso);
 
-                    opcodeChecks(instr);
                     callChecks(instr);
                     pointerChecks(instr);
                 }
@@ -289,7 +385,7 @@ namespace quantum
 
         bool raise_exception = false;
 
-        raise_exception |= !satisfyingOpcodeRequirements();
+        raise_exception |= !satisfyingOpcodeRequirements(module);
         raise_exception |= !satisfyingExternalCallRequirements();
         raise_exception |= !satisfyingInternalCallRequirements();
         raise_exception |= !satisfyingPointerRequirements();

@@ -34,6 +34,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
         llvm::outs() << ir_manip->getErrorMessage() << "\n";
         exit(-1);
     }
+
     return ir_manip;
 }
 
@@ -51,7 +52,8 @@ TEST(RuleSetTestSuite, DisablingStrings)
   )script");
 
     auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableStringSupport();
     };

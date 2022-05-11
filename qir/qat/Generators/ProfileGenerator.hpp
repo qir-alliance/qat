@@ -3,6 +3,7 @@
 // Licensed under the MIT License.
 
 #include "Commandline/ConfigurationManager.hpp"
+#include "PreTransformValidation/PreTransformValidationPassConfiguration.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
 
@@ -32,7 +33,7 @@ namespace quantum
         /// List of components to be configured.
         using Components = std::vector<std::pair<String, SetupFunctionWrapper>>;
 
-        using ILoggerPtr = std::shared_ptr<ILogger>;
+        using ILoggerPtr = ILogger::ILoggerPtr;
 
         // Construction, moves and copies
         //

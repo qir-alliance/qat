@@ -23,7 +23,7 @@ namespace quantum
       public:
         using Instruction = llvm::Instruction;
         using Value       = llvm::Value;
-        using ILoggerPtr  = std::shared_ptr<ILogger>;
+        using ILoggerPtr  = ILogger::ILoggerPtr;
         using Location    = ILogger::Location;
         using StringRef   = llvm::StringRef;
 

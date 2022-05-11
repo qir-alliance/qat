@@ -55,7 +55,7 @@ namespace quantum
         using Result                 = AllocationAnalysis;
         using Instruction            = llvm::Instruction;
         using Value                  = llvm::Value;
-        using ILoggerPtr             = std::shared_ptr<ILogger>;
+        using ILoggerPtr             = ILogger::ILoggerPtr;
         using BlockSet               = std::unordered_set<llvm::BasicBlock*>;
         using ResourceType           = AllocationAnalysis::ResourceType;
         using ResourceAccessLocation = AllocationAnalysis::ResourceAccessLocation;

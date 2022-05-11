@@ -1,5 +1,5 @@
 all: QSharpVersion/qir/Example.ll
-	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --profile base QSharpVersion/qir/Example.ll  || echo "failed!"
+	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --profile default QSharpVersion/qir/Example.ll  || echo "failed!"
 	
 
 stdlib: QSharpVersion/qir/Example.ll

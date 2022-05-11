@@ -1,2 +1,2 @@
 all:
-		${QAT_BINARY} --apply -S --profile base  input.ll
+		${QAT_BINARY} --apply -S --profile default  input.ll

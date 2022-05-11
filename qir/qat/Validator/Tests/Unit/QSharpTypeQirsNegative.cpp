@@ -80,7 +80,7 @@ void expectFail(String const& profile_name, String const& script, std::vector<St
 TEST(QSharpNegative, IfWithPhi)
 {
     expectFail(
-        "base", R"script(
+        "default", R"script(
   %0 = icmp eq i64 9, 1
   br i1 %0, label %quantum, label %IfWithPhi__Main__body.exit
 
@@ -100,7 +100,7 @@ IfWithPhi__Main__body.exit:                        ; preds = %quantum, %entry
 TEST(QSharpNegative, SelectStmt)
 {
     expectFail(
-        "base", R"script(
+        "default", R"script(
   tail call void @__quantum__qis__h__body(%Qubit* null)
   tail call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 1 to %Qubit*))
   tail call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* inttoptr (i64 1 to %Qubit*))
@@ -117,7 +117,7 @@ TEST(QSharpNegative, SelectStmt)
 TEST(QSharpNegative, ExternalFunctions)
 {
     expectFail(
-        "base", R"script(
+        "default", R"script(
   %q.i = tail call %Qubit* @__quantum__rt__qubit_allocate()
   tail call void @__quantum__qis__h__body(%Qubit* %q.i)
   %result.i.i = tail call %Result* @__quantum__qis__m__body(%Qubit* %q.i)
@@ -137,7 +137,7 @@ TEST(QSharpNegative, ExternalFunctions)
 TEST(QSharpNegative, LoopWithPhiAndSelect)
 {
     expectFail(
-        "base", R"script(
+        "default", R"script(
   %.not1.i = icmp slt i64 5, 1
   br i1 %.not1.i, label %LoopCase__Main__body.1.exit, label %body__1.i
 
@@ -159,9 +159,10 @@ LoopCase__Main__body.1.exit:                      ; preds = %header__1.exit__1_c
   %ret.0.lcssa.i = phi i64 [ %4, %header__1.exit__1_crit_edge.i ], [ 1, %entry ]
   )script",
         {
-            "%2 = add i64 %0, 1",
             "%0 = phi i64 [ %2, %body__1.i ], [ 2, %entry ]",
             "%4 = select i1 %3, i64 1337, i64 122",
+            "%1 = icmp sgt i64 %0, 5",
             "%.not1.i = icmp slt i64 5, 1",
+            "%ret.0.lcssa.i = phi i64 [ %4, %header__1.exit__1_crit_edge.i ], [ 1, %entry ]",
         });
 }

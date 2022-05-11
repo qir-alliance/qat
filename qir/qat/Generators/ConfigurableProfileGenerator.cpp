@@ -38,8 +38,8 @@ namespace quantum
 
                 // Defining the mapping
                 RuleSet rule_set;
-                auto    factory =
-                    RuleFactory(rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager());
+                auto    factory = RuleFactory(
+                    rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), nullptr);
                 configure(rule_set);
 
                 // Creating profile pass

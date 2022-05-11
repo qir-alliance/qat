@@ -5,6 +5,48 @@
 #include "Commandline/ConfigurationManager.hpp"
 #include "QatTypes/QatTypes.hpp"
 
+#include <functional>
+#include <set>
+
+namespace microsoft
+{
+namespace quantum
+{
+    struct OpcodeValue
+    {
+        String id{""};
+        String predicate{""};
+        OpcodeValue(String const& name, String const& fi = "")
+          : id{name}
+          , predicate{fi}
+        {
+        }
+
+        OpcodeValue()                   = default;
+        OpcodeValue(OpcodeValue&&)      = default;
+        OpcodeValue(OpcodeValue const&) = default;
+        OpcodeValue& operator=(OpcodeValue&&) = default;
+        OpcodeValue& operator=(OpcodeValue const&) = default;
+        bool         operator==(OpcodeValue const& other) const
+        {
+            return id == other.id && predicate == other.predicate;
+        }
+    };
+} // namespace quantum
+} // namespace microsoft
+
+namespace std
+{
+template <> struct hash<microsoft::quantum::OpcodeValue>
+{
+    size_t operator()(microsoft::quantum::OpcodeValue const& x) const
+    {
+        hash<std::string> hasher;
+        return hasher(x.id + "." + x.predicate);
+    }
+};
+} // namespace std
+
 namespace microsoft
 {
 namespace quantum
@@ -13,7 +55,9 @@ namespace quantum
     class ValidationPassConfiguration
     {
       public:
-        using Set = std::unordered_set<std::string>;
+        using Set       = std::unordered_set<std::string>;
+        using OpcodeSet = std::unordered_set<OpcodeValue>;
+
         // Setup and construction
         //
 
@@ -24,7 +68,7 @@ namespace quantum
         void setup(ConfigurationManager& config);
 
         static ValidationPassConfiguration fromProfileName(String const& name);
-        Set const&                         allowedOpcodes() const;
+        OpcodeSet const&                   allowedOpcodes() const;
         Set const&                         allowedExternalCallNames() const;
 
         bool allowInternalCalls() const;
@@ -43,9 +87,9 @@ namespace quantum
 
         String profile_name_{"null"};
 
-        Set opcodes_{};
-        Set external_calls_{};
-        Set allowed_pointer_types_{};
+        OpcodeSet opcodes_{};
+        Set       external_calls_{};
+        Set       allowed_pointer_types_{};
 
         bool allowlist_opcodes_{true};
         bool allowlist_external_calls_{true};

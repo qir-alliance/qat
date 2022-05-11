@@ -26,10 +26,12 @@ namespace quantum
     RuleFactory::RuleFactory(
         RuleSet&             rule_set,
         AllocationManagerPtr qubit_alloc_manager,
-        AllocationManagerPtr result_alloc_manager)
+        AllocationManagerPtr result_alloc_manager,
+        ILoggerPtr           logger)
       : rule_set_{rule_set}
       , qubit_alloc_manager_{std::move(qubit_alloc_manager)}
       , result_alloc_manager_{std::move(result_alloc_manager)}
+      , logger_{std::move(logger)}
     {
     }
 
@@ -114,11 +116,22 @@ namespace quantum
 
     void RuleFactory::inlineCallables()
     {
+        auto logger = logger_;
+
         /// Array access replacement
-        auto callable_replacer = [](Builder&, Value* val, Captures& captures, Replacements&) {
-            llvm::errs() << "FOUND CALLABLE\n";
-            llvm::errs() << *val << "\n";
-            llvm::errs() << "Calling " << *captures["function"] << "\n";
+        auto callable_replacer = [logger](Builder&, Value* val, Captures&, Replacements&) {
+            if (logger)
+            {
+                logger->setLocationFromValue(val);
+                logger->internalError("Support for callable replacement is not implemented yet.");
+            }
+            else
+            {
+                throw std::runtime_error(
+                    "No logger present - internal error: Support for callable replacement is not implemented "
+                    "yet.\n");
+            }
+
             return false;
         };
 
@@ -288,6 +301,7 @@ namespace quantum
 
     void RuleFactory::useStaticQubitAllocation()
     {
+        auto logger              = logger_;
         auto qubit_alloc_manager = qubit_alloc_manager_;
         auto default_iw          = default_integer_width_;
         auto allocation_replacer =
@@ -374,36 +388,37 @@ namespace quantum
         // call void @__quantum__rt__qubit_release(%Qubit* %leftMessage)
         addRule(
             {call("__quantum__rt__qubit_release", "name"_cap = _),
-             [qubit_alloc_manager, deleter](Builder& builder, Value* val, Captures& cap, Replacements& rep) {
+             [qubit_alloc_manager, deleter, logger](Builder& builder, Value* val, Captures& cap, Replacements& rep) {
                  // Getting the name
                  auto name = cap["name"]->getName().str();
 
                  auto* phi_node = llvm::dyn_cast<llvm::PHINode>(cap["name"]);
                  if (phi_node != nullptr)
                  {
-                     llvm::errs() << "Warning: Cannot release qubit arising from phi node:\n";
-                     llvm::errs() << *val << "\n\n";
 
+                     if (logger)
+                     {
+                         logger->setLocationFromValue(val);
+                         logger->warning("Cannot release qubit arising from phi node.");
+                     }
+                     else
+                     {
+                         throw std::runtime_error(
+                             "No logger present - Warning: Cannot release qubit arising from phi node.\n");
+                     }
                      return false;
                  }
 
-                 // Returning in case the name comes out empty
-                 if (name.empty())
+                 if (logger)
                  {
-
-                     // TODO(issue-15): report error
-                     llvm::errs() << "FAILED due to unnamed non standard allocation:\n";
-                     llvm::errs() << *val << "\n\n";
-
-                     // Deleting the instruction in order to proceed
-                     // and trying to discover as many other errors as possible
-                     return deleter(builder, val, cap, rep);
+                     logger->setLocationFromValue(val);
+                     logger->error("Cannot release qubit from non-standard allocation.");
                  }
-
-                 // TODO(issue-15): report error
-                 llvm::errs() << "FAILED due to non standard allocation:\n";
-                 llvm::errs() << *cap["name"] << "\n";
-                 llvm::errs() << *val << "\n\n";
+                 else
+                 {
+                     throw std::runtime_error(
+                         "No logger present - Error: Cannot release qubit from non-standard allocation.\n");
+                 }
 
                  return deleter(builder, val, cap, rep);
              }
