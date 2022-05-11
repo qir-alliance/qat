@@ -52,7 +52,8 @@ TEST(RuleSetTestSuite, DISABLED_DisablingArrayhAliasCounting)
   )script");
 
     auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableAliasCounting();
     };
@@ -89,7 +90,8 @@ TEST(RuleSetTestSuite, DisablingStringAliasCounting)
   )script");
 
     auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableAliasCounting();
     };
@@ -128,7 +130,8 @@ TEST(RuleSetTestSuite, DisablingResultAliasCounting)
   )script");
 
     auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableAliasCounting();
     };

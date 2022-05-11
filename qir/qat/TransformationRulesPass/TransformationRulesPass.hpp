@@ -71,7 +71,7 @@ namespace quantum
         using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
         using Captures             = RuleSet::Captures;
         using ConstantArguments    = std::unordered_map<std::string, llvm::ConstantInt*>;
-        using ILoggerPtr           = std::shared_ptr<ILogger>;
+        using ILoggerPtr           = ILogger::ILoggerPtr;
 
         // Construction and destruction configuration.
         //

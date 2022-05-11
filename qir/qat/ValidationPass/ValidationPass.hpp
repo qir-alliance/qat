@@ -23,7 +23,7 @@ namespace quantum
       public:
         using Instruction = llvm::Instruction;
         using Value       = llvm::Value;
-        using ILoggerPtr  = std::shared_ptr<ILogger>;
+        using ILoggerPtr  = ILogger::ILoggerPtr;
         using Location    = ILogger::Location;
         using StringRef   = llvm::StringRef;
 
@@ -46,11 +46,10 @@ namespace quantum
         static bool isRequired();
 
       private:
-        void opcodeChecks(Instruction& instr);
         void callChecks(Instruction& instr);
         void pointerChecks(Instruction& instr);
 
-        bool satisfyingOpcodeRequirements();
+        bool satisfyingOpcodeRequirements(llvm::Module& module);
         bool satisfyingInternalCallRequirements();
         bool satisfyingExternalCallRequirements();
         bool satisfyingPointerRequirements();

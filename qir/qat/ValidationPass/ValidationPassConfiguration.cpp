@@ -28,7 +28,7 @@ namespace quantum
         auto profile = ValidationPassConfiguration();
         if (name == "generic")
         {
-            profile.opcodes_               = Set{};
+            profile.opcodes_               = OpcodeSet{};
             profile.external_calls_        = Set{};
             profile.allowed_pointer_types_ = Set{};
 
@@ -40,19 +40,39 @@ namespace quantum
             profile.allow_struct_return_      = true;
             profile.allow_pointer_return_     = true;
         }
-        else if (name == "base")
+        else if (name == "default")
         {
             profile.allow_internal_calls_     = false;
             profile.allowlist_external_calls_ = true;
             profile.allowlist_opcodes_        = true;
-            profile.opcodes_        = Set{"br", "call", "unreachable", "ret", "inttoptr"}; //  "phi", "select",
+            profile.opcodes_                  = OpcodeSet{
+                {"ret"},  {"call"}, {"inttoptr"}, {"br"},   {"add"}, {"sub"}, {"mul"},
+                {"fadd"}, {"fsub"}, {"fmul"},     {"ashr"}, {"and"}, {"or"},  {"xor"},
+                /*
+                {"icmp", "eq"},  {"icmp", "ne"},  {"icmp", "ugt"}, {"icmp", "uge"}, {"icmp", "ult"},
+                {"icmp", "ule"}, {"fcmp", "oeq"}, {"fcmp", "ogt"}, {"fcmp", "oge"}, {"fcmp", "olt"},
+                {"fcmp", "ole"}, {"fcmp", "one"},
+                */
+            };
             profile.external_calls_ = Set{
-                "__quantum__qis__cnot__body",  "__quantum__qis__cz__body", "__quantum__qis__cx__body",
-                "__quantum__qis__cy__body",    "__quantum__qis__h__body",  "__quantum__qis__s__body",
-                "__quantum__qis__s__adj",      "__quantum__qis__t__body",  "__quantum__qis__t__adj",
-                "__quantum__qis__x__body",     "__quantum__qis__y__body",  "__quantum__qis__z__body",
-                "__quantum__qis__rx__body",    "__quantum__qis__ry__body", "__quantum__qis__rz__body",
-                "__quantum__qis__reset__body", "__quantum__qis__mz__body", "__quantum__qis__read_result__body",
+                "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
+                "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
+                "__quantum__qis__cx__body:void (%Qubit*, %Qubit*)",
+                "__quantum__qis__cy__body:void (%Qubit*, %Qubit*)",
+                "__quantum__qis__h__body:void (%Qubit*)",
+                "__quantum__qis__s__body:void (%Qubit*)",
+                "__quantum__qis__s__adj:void (%Qubit*)",
+                "__quantum__qis__t__body:void (%Qubit*)",
+                "__quantum__qis__t__adj:void (%Qubit*)",
+                "__quantum__qis__x__body:void (%Qubit*)",
+                "__quantum__qis__y__body:void (%Qubit*)",
+                "__quantum__qis__z__body:void (%Qubit*)",
+                "__quantum__qis__rx__body:void (double, %Qubit*)",
+                "__quantum__qis__ry__body:void (double, %Qubit*)",
+                "__quantum__qis__rz__body:void (double, %Qubit*)",
+                "__quantum__qis__reset__body:void (%Qubit*)",
+                "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
+                "__quantum__qis__read_result__body:i1 (%Result*)",
 
             };
             profile.allowlist_pointer_types_ = true;
@@ -67,8 +87,10 @@ namespace quantum
             profile.allow_internal_calls_     = false;
             profile.allowlist_external_calls_ = true;
             profile.allowlist_opcodes_        = true;
-            profile.opcodes_        = Set{"call", "ret",  "inttoptr", "br",  "phi", "add", "sub",  "mul", "fadd",
-                                   "fsub", "fmul", "ashr",     "and", "or",  "xor", "icmp", "fcmp"};
+            profile.opcodes_                  = OpcodeSet{
+                {"call"}, {"ret"},  {"inttoptr"}, {"br"},  {"phi"}, {"add"}, {"sub"},  {"mul"},  {"fadd"},
+                {"fsub"}, {"fmul"}, {"ashr"},     {"and"}, {"or"},  {"xor"}, {"icmp"}, {"fcmp"},
+            };
             profile.external_calls_ = Set{
                 "__quantum__qis__cnot__body",
                 "__quantum__qis__cz__body",
@@ -127,8 +149,10 @@ namespace quantum
             profile.allow_internal_calls_     = false;
             profile.allowlist_external_calls_ = true;
             profile.allowlist_opcodes_        = true;
-            profile.opcodes_ =
-                Set{"call", "ret", "inttoptr", "br", "add", "sub", "mul", "and", "or", "xor", "lshr", "shl", "icmp"};
+            profile.opcodes_                  = OpcodeSet{
+                {"call"}, {"ret"}, {"inttoptr"}, {"br"},   {"add"}, {"sub"},  {"mul"},
+                {"and"},  {"or"},  {"xor"},      {"lshr"}, {"shl"}, {"icmp"},
+            };
             profile.external_calls_ = Set{
                 "__quantum__qis__cnot__body",
                 "__quantum__qis__cz__body",
@@ -163,8 +187,12 @@ namespace quantum
             profile.allow_internal_calls_     = false;
             profile.allowlist_external_calls_ = true;
             profile.allowlist_opcodes_        = true;
-            profile.opcodes_                  = Set{"call", "ret", "inttoptr"};
-            profile.external_calls_           = Set{
+            profile.opcodes_                  = OpcodeSet{
+                {"call"},
+                {"ret"},
+                {"inttoptr"},
+            };
+            profile.external_calls_ = Set{
                 "__quantum__qis__cnot__body",
                 "__quantum__qis__cz__body",
                 "__quantum__qis__swap__body",
@@ -201,7 +229,7 @@ namespace quantum
         return profile;
     }
 
-    ValidationPassConfiguration::Set const& ValidationPassConfiguration::allowedOpcodes() const
+    ValidationPassConfiguration::OpcodeSet const& ValidationPassConfiguration::allowedOpcodes() const
     {
         return opcodes_;
     }

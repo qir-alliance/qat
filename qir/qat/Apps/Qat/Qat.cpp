@@ -284,17 +284,26 @@ int main(int argc, char** argv)
         if (config.shouldGenerate())
         {
             profile.apply(*module);
+
+            //  Preventing subsequent routines to run if errors occurred.
+            if (logger && (logger->hadErrors() || logger->hadWarnings()))
+            {
+                ret = -1;
+            }
         }
 
         // We deliberately emit LLVM prior to verification and validation
         // to allow output the IR for debugging purposes.
-        if (config.shouldEmitLlvm())
+        if (ret == 0)
         {
-            llvm::outs() << *module << "\n";
-        }
-        else
-        {
-            llvm::WriteBitcodeToFile(*module, llvm::outs());
+            if (config.shouldEmitLlvm())
+            {
+                llvm::outs() << *module << "\n";
+            }
+            else
+            {
+                llvm::WriteBitcodeToFile(*module, llvm::outs());
+            }
         }
 
         if (ret == 0 && config.verifyModule())
@@ -302,6 +311,13 @@ int main(int argc, char** argv)
             if (!profile.verify(*module))
             {
                 std::cerr << "IR is broken." << std::endl;
+                ret = -1;
+            }
+
+            // Safety pre-caution to ensure that all errors and warnings reported
+            // results in failure.
+            if (logger && (logger->hadErrors() || logger->hadWarnings()))
+            {
                 ret = -1;
             }
         }

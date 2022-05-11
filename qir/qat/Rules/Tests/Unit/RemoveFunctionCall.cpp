@@ -46,7 +46,8 @@ TEST(RuleSetTestSuite, RemovingFunctionCall)
   )script");
 
     auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.removeFunctionCall("__quantum__qis__h__body");
     };

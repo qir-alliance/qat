@@ -55,7 +55,7 @@ namespace quantum
       public:
         using Instruction   = llvm::Instruction;
         using Value         = llvm::Value;
-        using ILoggerPtr    = std::shared_ptr<ILogger>;
+        using ILoggerPtr    = ILogger::ILoggerPtr;
         using BlockSet      = std::unordered_set<llvm::BasicBlock*>;
         using SharedBuilder = std::shared_ptr<llvm::IRBuilder<>>;
         // Construction and destruction configuration.
@@ -109,6 +109,8 @@ namespace quantum
         void setLogger(ILoggerPtr logger);
 
       private:
+        void deleteInstructions();
+
         GroupingPassConfiguration config_{};
 
         // Basic blocks used to build
@@ -131,6 +133,8 @@ namespace quantum
         ILoggerPtr logger_{nullptr};
 
         std::unordered_set<String> quantum_register_types_ = {"Qubit", "Result"};
+
+        std::vector<llvm::Instruction*> to_delete_;
     };
 
 } // namespace quantum

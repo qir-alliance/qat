@@ -70,7 +70,7 @@ void expectSuccess(String const& profile_name, String const& script)
 
 TEST(QSharpPositive, TeleportChain)
 {
-    expectSuccess("base", R"script(
+    expectSuccess("default", R"script(
   tail call void @__quantum__qis__h__body(%Qubit* null)
   tail call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
   tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))
@@ -131,7 +131,7 @@ quantum17:                                        ; preds = %quantum12, %quantum
 
 TEST(QSharpPositive, SimpleLoop)
 {
-    expectSuccess("base", R"script(
+    expectSuccess("default", R"script(
   tail call void @__quantum__qis__h__body(%Qubit* null)
   tail call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)
   tail call void @__quantum__qis__reset__body(%Qubit* null)
@@ -157,7 +157,7 @@ TEST(QSharpPositive, SimpleLoop)
 
 TEST(QSharpPositive, LoopRecursion)
 {
-    expectSuccess("base", R"script(
+    expectSuccess("default", R"script(
   tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
   tail call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
   tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))

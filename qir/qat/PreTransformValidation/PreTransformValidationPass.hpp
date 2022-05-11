@@ -3,9 +3,10 @@
 // Licensed under the MIT License.
 
 #include "Logging/ILogger.hpp"
+#include "PreTransformValidation/PreTransformValidationPass.hpp"
+#include "PreTransformValidation/PreTransformValidationPassConfiguration.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 #include "Llvm/Llvm.hpp"
 
@@ -18,7 +19,7 @@ namespace microsoft
 namespace quantum
 {
 
-    class ResourceAnnotationPass : public llvm::PassInfoMixin<ResourceAnnotationPass>
+    class PreTransformValidationPass : public llvm::PassInfoMixin<PreTransformValidationPass>
     {
       public:
         using Instruction = llvm::Instruction;
@@ -27,38 +28,31 @@ namespace quantum
         using Location    = ILogger::Location;
         using StringRef   = llvm::StringRef;
 
-        enum ResourceType
-        {
-            None,
-            Qubit,
-            Result
-        };
-
         // Construction and destruction configuration.
         //
 
-        explicit ResourceAnnotationPass(
-            StaticResourceComponentConfiguration const& cfg,
-            ILoggerPtr const&                           logger = nullptr);
+        explicit PreTransformValidationPass(
+            PreTransformValidationPassConfiguration const& cfg,
+            ILoggerPtr const&                              logger = nullptr);
 
         /// Copy construction is banned.
-        ResourceAnnotationPass(ResourceAnnotationPass const&) = delete;
+        PreTransformValidationPass(PreTransformValidationPass const&) = delete;
 
         /// We allow move semantics.
-        ResourceAnnotationPass(ResourceAnnotationPass&&) = default;
+        PreTransformValidationPass(PreTransformValidationPass&&) = default;
 
         /// Default destruction.
-        ~ResourceAnnotationPass() = default;
+        ~PreTransformValidationPass() = default;
 
-        llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& fam);
-
+        llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
         /// Whether or not this pass is required to run.
         static bool isRequired();
 
       private:
-        StaticResourceComponentConfiguration config_{};
+        using Locations = std::vector<Location>;
 
-        ILoggerPtr logger_{nullptr};
+        PreTransformValidationPassConfiguration config_{};
+        ILoggerPtr                              logger_{nullptr};
     };
 
 } // namespace quantum
