@@ -31,8 +31,7 @@ namespace quantum
         using namespace microsoft::quantum::notation;
         addConstExprRule(
             {branch("cond"_cap = constInt(), "if_false"_cap = _, "if_true"_cap = _),
-             [](Builder& builder, Value* val, Captures& captures, Replacements& replacements)
-             {
+             [](Builder& builder, Value* val, Captures& captures, Replacements& replacements) {
                  auto cst   = llvm::dyn_cast<llvm::ConstantInt>(captures["cond"]);
                  auto instr = llvm::dyn_cast<llvm::Instruction>(val);
 
@@ -72,38 +71,36 @@ namespace quantum
         if (config_.assumeNoExceptions())
         {
             // Replacing all invokes with calls
-            addConstExprRule(
-                {unnamedInvoke(), [](Builder& builder, Value* val, Captures&, Replacements& replacements)
-                 {
-                     auto invoke = llvm::dyn_cast<llvm::InvokeInst>(val);
-                     if (invoke == nullptr)
-                     {
-                         return false;
-                     }
+            addConstExprRule({unnamedInvoke(), [](Builder& builder, Value* val, Captures&, Replacements& replacements) {
+                                  auto invoke = llvm::dyn_cast<llvm::InvokeInst>(val);
+                                  if (invoke == nullptr)
+                                  {
+                                      return false;
+                                  }
 
-                     auto callee_function = invoke->getCalledFunction();
+                                  auto callee_function = invoke->getCalledFunction();
 
-                     // List with new call arguments
-                     std::vector<llvm::Value*> new_arguments;
-                     for (unsigned i = 0; i < invoke->getNumArgOperands(); ++i)
-                     {
-                         // Getting the i'th argument
-                         llvm::Value* arg = invoke->getArgOperand(i);
+                                  // List with new call arguments
+                                  std::vector<llvm::Value*> new_arguments;
+                                  for (unsigned i = 0; i < invoke->getNumArgOperands(); ++i)
+                                  {
+                                      // Getting the i'th argument
+                                      llvm::Value* arg = invoke->getArgOperand(i);
 
-                         new_arguments.push_back(arg);
-                     }
+                                      new_arguments.push_back(arg);
+                                  }
 
-                     // Creating a new call
-                     auto* new_call = builder.CreateCall(callee_function, new_arguments);
-                     builder.CreateBr(invoke->getNormalDest());
+                                  // Creating a new call
+                                  auto* new_call = builder.CreateCall(callee_function, new_arguments);
+                                  builder.CreateBr(invoke->getNormalDest());
 
-                     new_call->takeName(invoke);
+                                  new_call->takeName(invoke);
 
-                     // Replace all calls to old function with calls to new function
-                     invoke->replaceAllUsesWith(new_call);
-                     replacements.push_back({invoke, nullptr});
-                     return true;
-                 }});
+                                  // Replace all calls to old function with calls to new function
+                                  invoke->replaceAllUsesWith(new_call);
+                                  replacements.push_back({invoke, nullptr});
+                                  return true;
+                              }});
         }
     }
 
@@ -430,9 +427,9 @@ namespace quantum
         {
             if (function.hasFnAttribute(config_.entryPointAttr()))
             {
-                runOnFunction(
-                    function, [this](llvm::Value* value, DeletableInstructions& modifier)
-                    { return copyAndExpand(value, modifier); });
+                runOnFunction(function, [this](llvm::Value* value, DeletableInstructions& modifier) {
+                    return copyAndExpand(value, modifier);
+                });
             }
         }
 
@@ -467,9 +464,9 @@ namespace quantum
                 active_pieces_.insert(&function);
 
                 // Detecting active code
-                runOnFunction(
-                    function, [this](llvm::Value* value, DeletableInstructions& modifier)
-                    { return detectActiveCode(value, modifier); });
+                runOnFunction(function, [this](llvm::Value* value, DeletableInstructions& modifier) {
+                    return detectActiveCode(value, modifier);
+                });
             }
         }
 
@@ -714,29 +711,26 @@ namespace quantum
 
             if (function.hasFnAttribute(config_.entryPointAttr()))
             {
-                runOnFunction(
-                    function,
-                    [this, &already_visited](llvm::Value* value, DeletableInstructions&)
+                runOnFunction(function, [this, &already_visited](llvm::Value* value, DeletableInstructions&) {
+                    auto instr = llvm::dyn_cast<llvm::Instruction>(value);
+
+                    // Sanity check
+                    if (already_visited.find(value) != already_visited.end())
                     {
-                        auto instr = llvm::dyn_cast<llvm::Instruction>(value);
-
-                        // Sanity check
-                        if (already_visited.find(value) != already_visited.end())
-                        {
-                            requireLogger();
-                            logger_->setLocationFromValue(value);
-                            logger_->internalError("Instruction was visited twice while applying rule to function.");
-                            return value;
-                        }
-                        already_visited.insert(value);
-
-                        // Checking if we should analyse
-                        if (instr != nullptr)
-                        {
-                            rule_set_.matchAndReplace(instr, replacements_);
-                        }
+                        requireLogger();
+                        logger_->setLocationFromValue(value);
+                        logger_->internalError("Instruction was visited twice while applying rule to function.");
                         return value;
-                    });
+                    }
+                    already_visited.insert(value);
+
+                    // Checking if we should analyse
+                    if (instr != nullptr)
+                    {
+                        rule_set_.matchAndReplace(instr, replacements_);
+                    }
+                    return value;
+                });
             }
         }
 
