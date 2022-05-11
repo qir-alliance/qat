@@ -1,13 +1,12 @@
-// Licensed under the MIT License.
-
 namespace QATSample {
-    open Microsoft.Quantum.Arrays;
+    open Microsoft.Quantum.Intrinsic;
 
     @EntryPoint()
-    operation Main(): Int
+    operation Main(): Result
     {
-        mutable arr = [1,2,3,4,5,6,7,8,9,10];
+        use (q1,q2,q3) = (Qubit(), Qubit(), Qubit());
+        CCNOT(q1, q2, q3);
 
-        return arr[3];
+        return Zero;
     }
 }

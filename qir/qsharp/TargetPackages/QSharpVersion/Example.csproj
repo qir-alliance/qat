@@ -5,10 +5,15 @@
     <TargetFramework>net6.0</TargetFramework>
     <QirGeneration>true</QirGeneration>
     <AdditionalQscArguments>--runtime-override AdaptiveExecution</AdditionalQscArguments>
+    <IncludeCSharpRuntime>False</IncludeCSharpRuntime>
+    <IncludeQSharpCorePackages>False</IncludeQSharpCorePackages>
+    <IncludeProviderPackages>False</IncludeProviderPackages>
+    <CSharpGeneration>False</CSharpGeneration>
+
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Quantum.Type1.Core" Version="0.24.41276-alpha" IsTargetPackage="true" />
+    <PackageReference Include="Microsoft.Quantum.Type1.Core" Version="0.24.208024"  />
   </ItemGroup>
 
 </Project>
