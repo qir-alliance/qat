@@ -655,6 +655,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-locationresolver">LocationResolver</a></strong></td>
 </tr>
 <tr>
+<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-iloggerptr">ILoggerPtr</a></strong></td>
+</tr>
+<tr>
 <td>using std::vector&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_message/">Message</a> &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-messages">Messages</a></strong> <br>List of messages defined as alias.</td>
 </tr>
@@ -704,6 +708,33 @@
 <tr>
 <td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-resolvelocation">resolveLocation</a></strong>(llvm::Value const * value)<br>Returns a source location from the value pointer (if possible)</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-haderrors">hadErrors</a></strong>() const<br>Whether or not errors were logged.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-hadwarnings">hadWarnings</a></strong>() const<br>Whether or not warnings were logged.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Protected Attributes inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#variable-had_errors_">had_errors_</a></strong> <br>Variable to indicate whether or not errors were reported.</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#variable-had_warnings_">had_warnings_</a></strong> <br>Variable to indicate whether or not warnings were reported.</td>
 </tr>
 </tbody>
 </table>
@@ -781,7 +812,7 @@
 <p>Enabling dumping collection to a file. </p>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-dump">microsoft::quantum::ILogger::dump</a></p>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

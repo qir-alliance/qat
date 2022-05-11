@@ -597,6 +597,7 @@
 
 #include &quot;AllocationManager/AllocationManager.hpp&quot;
 #include &quot;Commandline/ConfigurationManager.hpp&quot;
+#include &quot;Logging/ILogger.hpp&quot;
 #include &quot;QatTypes/QatTypes.hpp&quot;
 #include &quot;Rules/FactoryConfig.hpp&quot;
 #include &quot;Rules/ReplacementRule.hpp&quot;
@@ -618,6 +619,8 @@ namespace quantum
 
         using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
 
+        using ILoggerPtr = ILogger::ILoggerPtr;
+
         // Constructor configuration. Explicit construction with
         // rule set to be configured, which can be moved using move
         // semantics. No copy allowed.
@@ -626,7 +629,8 @@ namespace quantum
         RuleFactory(
             RuleSet&amp;             rule_set,
             AllocationManagerPtr qubit_alloc_manager,
-            AllocationManagerPtr result_alloc_manager);
+            AllocationManagerPtr result_alloc_manager,
+            ILoggerPtr           logger);
         RuleFactory()                   = delete;
         RuleFactory(RuleFactory const&amp;) = delete;
         RuleFactory(RuleFactory&amp;&amp;)      = default;
@@ -693,6 +697,8 @@ namespace quantum
 
         AllocationManagerPtr result_alloc_manager_{nullptr};
 
+        ILoggerPtr logger_{nullptr};
+
         //
 
         uint32_t default_integer_width_{64};
@@ -702,7 +708,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

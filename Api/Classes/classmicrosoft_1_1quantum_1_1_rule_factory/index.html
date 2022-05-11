@@ -578,6 +578,10 @@
 <td>using <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/#using-allocationmanagerptr">IAllocationManager::AllocationManagerPtr</a></td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#using-allocationmanagerptr">AllocationManagerPtr</a></strong> <br>Allocation manager pointer used to hold allocation managers.</td>
 </tr>
+<tr>
+<td>using ILogger::ILoggerPtr</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#using-iloggerptr">ILoggerPtr</a></strong> <br>Interface to logger.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="public-functions">Public Functions</h2>
@@ -591,7 +595,7 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-rulefactory">RuleFactory</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/">RuleSet</a> &amp; rule_set, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#using-allocationmanagerptr">AllocationManagerPtr</a> qubit_alloc_manager, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#using-allocationmanagerptr">AllocationManagerPtr</a> result_alloc_manager)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-rulefactory">RuleFactory</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/">RuleSet</a> &amp; rule_set, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#using-allocationmanagerptr">AllocationManagerPtr</a> qubit_alloc_manager, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#using-allocationmanagerptr">AllocationManagerPtr</a> result_alloc_manager, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#using-iloggerptr">ILoggerPtr</a> logger)</td>
 </tr>
 <tr>
 <td></td>
@@ -680,12 +684,17 @@
 <pre><code class="language-cpp">using microsoft::quantum::RuleFactory::AllocationManagerPtr =  IAllocationManager::AllocationManagerPtr;
 </code></pre>
 <p>Allocation manager pointer used to hold allocation managers. </p>
+<h3 id="using-iloggerptr">using ILoggerPtr</h3>
+<pre><code class="language-cpp">using microsoft::quantum::RuleFactory::ILoggerPtr =  ILogger::ILoggerPtr;
+</code></pre>
+<p>Interface to logger. </p>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-rulefactory">function RuleFactory</h3>
 <pre><code class="language-cpp">RuleFactory(
     RuleSet &amp; rule_set,
     AllocationManagerPtr qubit_alloc_manager,
-    AllocationManagerPtr result_alloc_manager
+    AllocationManagerPtr result_alloc_manager,
+    ILoggerPtr logger
 )
 </code></pre>
 <h3 id="function-rulefactory_1">function RuleFactory</h3>
@@ -813,7 +822,7 @@ br i1 %1, label %then0__1, label %continue__1
 </code></pre>
 <p>Sets the integer width used when it cannot be deducted from the context of the transformation. </p>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

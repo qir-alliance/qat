@@ -575,7 +575,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#using-validatorptr">ValidatorPtr</a></strong></td>
 </tr>
 <tr>
-<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
+<td>using ILogger::ILoggerPtr</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#using-iloggerptr">ILoggerPtr</a></strong></td>
 </tr>
 </tbody>
@@ -682,7 +682,7 @@
 <pre><code class="language-cpp">using microsoft::quantum::Validator::ValidatorPtr =  std::unique_ptr&lt;Validator&gt;;
 </code></pre>
 <h3 id="using-iloggerptr">using ILoggerPtr</h3>
-<pre><code class="language-cpp">using microsoft::quantum::Validator::ILoggerPtr =  std::shared_ptr&lt;ILogger&gt;;
+<pre><code class="language-cpp">using microsoft::quantum::Validator::ILoggerPtr =  ILogger::ILoggerPtr;
 </code></pre>
 <h2 id="protected-types-documentation">Protected Types Documentation</h2>
 <h3 id="using-passbuilderptr">using PassBuilderPtr</h3>
@@ -728,7 +728,7 @@
     llvm::Module &amp; module
 )
 </code></pre>
-<p>Validates that a module complies with the specified QIR profile. Returns true if the module is valid and false otherwize. </p>
+<p>Validates that a module complies with the specified QIR profile. Returns true if the module is valid and false otherwise. </p>
 <h3 id="function-logger">function logger</h3>
 <pre><code class="language-cpp">ILoggerPtr logger() const
 </code></pre>
@@ -755,7 +755,7 @@
 </code></pre>
 <p>Returns a reference to the module analysis manager. </p>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

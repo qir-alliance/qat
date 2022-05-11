@@ -594,7 +594,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-components">Components</a></strong> <br>List of components to be configured.</td>
 </tr>
 <tr>
-<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
+<td>using ILogger::ILoggerPtr</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-iloggerptr">ILoggerPtr</a></strong></td>
 </tr>
 </tbody>
@@ -733,7 +733,7 @@ using microsoft::quantum::ProfileGenerator::SetupFunction =  std::function&lt;vo
 </code></pre>
 <p>List of components to be configured. </p>
 <h3 id="using-iloggerptr">using ILoggerPtr</h3>
-<pre><code class="language-cpp">using microsoft::quantum::ProfileGenerator::ILoggerPtr =  std::shared_ptr&lt;ILogger&gt;;
+<pre><code class="language-cpp">using microsoft::quantum::ProfileGenerator::ILoggerPtr =  ILogger::ILoggerPtr;
 </code></pre>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-profilegenerator">function ProfileGenerator</h3>
@@ -856,7 +856,7 @@ void registerAnonymousProfileComponent(
 </code></pre>
 <p>Internal function that creates a module pass for QIR validation. At the moment, this function is a placeholder for future functionality. </p>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

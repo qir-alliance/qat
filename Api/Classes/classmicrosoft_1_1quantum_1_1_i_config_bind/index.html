@@ -604,6 +604,14 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-value">value</a></strong>() =0</td>
 </tr>
 <tr>
+<td>virtual void *</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-pointer">pointer</a></strong>() const =0<br>Pointer to underlying data.</td>
+</tr>
+<tr>
+<td>virtual std::type_index</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-valuetype">valueType</a></strong>() const =0<br>Type index of contained data.</td>
+</tr>
+<tr>
 <td>String</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-name">name</a></strong>() const<br>Returns the name of the bound configuration variable.</td>
 </tr>
@@ -704,6 +712,16 @@
 </code></pre>
 <p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-value">microsoft::quantum::ConfigBind::value</a></p>
 <p>Interface function to return a string representation of the current value of the bound variable. </p>
+<h3 id="function-pointer">function pointer</h3>
+<pre><code class="language-cpp">virtual void * pointer() const =0
+</code></pre>
+<p>Pointer to underlying data. </p>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-pointer">microsoft::quantum::ConfigBind::pointer</a></p>
+<h3 id="function-valuetype">function valueType</h3>
+<pre><code class="language-cpp">virtual std::type_index valueType() const =0
+</code></pre>
+<p>Type index of contained data. </p>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-valuetype">microsoft::quantum::ConfigBind::valueType</a></p>
 <h3 id="function-name">function name</h3>
 <pre><code class="language-cpp">String name() const
 </code></pre>
@@ -752,7 +770,7 @@
 </code></pre>
 <p>Marks the config as experimental. </p>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

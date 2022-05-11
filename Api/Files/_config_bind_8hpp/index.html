@@ -643,6 +643,10 @@ namespace quantum
 
         String value() override;
 
+        void* pointer() const override;
+
+        std::type_index valueType() const override;
+
       private:
         template &lt;typename R&gt; bool setupArguments(ParameterParser&amp;, R const&amp;);
 
@@ -805,11 +809,21 @@ namespace quantum
         }
     }
 
+    template &lt;typename T&gt; void* ConfigBind&lt;T&gt;::pointer() const
+    {
+        return static_cast&lt;void*&gt;(&amp;bind_);
+    }
+
+    template &lt;typename T&gt; std::type_index ConfigBind&lt;T&gt;::valueType() const
+    {
+        return std::type_index(typeid(T));
+    }
+
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

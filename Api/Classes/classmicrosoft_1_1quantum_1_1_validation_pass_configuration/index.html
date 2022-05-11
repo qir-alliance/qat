@@ -572,6 +572,10 @@
 <td>using std::unordered_set&lt; std::string &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#using-set">Set</a></strong></td>
 </tr>
+<tr>
+<td>using std::unordered_set&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">OpcodeValue</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#using-opcodeset">OpcodeSet</a></strong></td>
+</tr>
 </tbody>
 </table>
 <h2 id="public-functions">Public Functions</h2>
@@ -592,7 +596,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#function-setup">setup</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> &amp; config)</td>
 </tr>
 <tr>
-<td>Set const  &amp;</td>
+<td>OpcodeSet const  &amp;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/#function-allowedopcodes">allowedOpcodes</a></strong>() const</td>
 </tr>
 <tr>
@@ -633,6 +637,9 @@
 <h3 id="using-set">using Set</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ValidationPassConfiguration::Set =  std::unordered_set&lt;std::string&gt;;
 </code></pre>
+<h3 id="using-opcodeset">using OpcodeSet</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ValidationPassConfiguration::OpcodeSet =  std::unordered_set&lt;OpcodeValue&gt;;
+</code></pre>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-validationpassconfiguration">function ValidationPassConfiguration</h3>
 <pre><code class="language-cpp">ValidationPassConfiguration() =default
@@ -644,7 +651,7 @@
 </code></pre>
 <p>Setup function that adds the configuration flags to the <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a>. See the <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> documentation for more details on how the setup process is implemented. </p>
 <h3 id="function-allowedopcodes">function allowedOpcodes</h3>
-<pre><code class="language-cpp">Set const  &amp; allowedOpcodes() const
+<pre><code class="language-cpp">OpcodeSet const  &amp; allowedOpcodes() const
 </code></pre>
 <h3 id="function-allowedexternalcallnames">function allowedExternalCallNames</h3>
 <pre><code class="language-cpp">Set const  &amp; allowedExternalCallNames() const
@@ -673,7 +680,7 @@
 )
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

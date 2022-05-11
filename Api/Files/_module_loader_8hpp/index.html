@@ -689,7 +689,7 @@ namespace quantum
             SingleModuleTransformation transformation;
             if (!transformation.apply(module.get()))
             {
-                llvm::errs() &lt;&lt; &quot;Failed to transform &quot; &lt;&lt; input_file &lt;&lt; &quot;\n&quot;;
+                llvm::errs() &lt;&lt; &quot;Failed to prepare &quot; &lt;&lt; input_file &lt;&lt; &quot; using single module transformations.\n&quot;;
                 return false;
             }
 
@@ -776,7 +776,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

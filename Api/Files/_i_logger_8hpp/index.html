@@ -610,6 +610,7 @@
 
 #include &lt;cstdint&gt;
 #include &lt;fstream&gt;
+#include &lt;memory&gt;
 #include &lt;string&gt;
 
 namespace microsoft
@@ -622,6 +623,7 @@ namespace quantum
       public:
         using Value            = llvm::Value;
         using LocationResolver = std::function&lt;SourceLocation(Value const*)&gt;;
+        using ILoggerPtr       = std::shared_ptr&lt;ILogger&gt;;
 
         struct Location : public SourceLocation
         {
@@ -715,6 +717,14 @@ namespace quantum
 
         SourceLocation resolveLocation(llvm::Value const* value);
 
+        bool hadErrors() const;
+
+        bool hadWarnings() const;
+
+      protected:
+        bool had_errors_{false};   
+        bool had_warnings_{false}; 
+
       private:
         LocationResolver location_resolver_{nullptr};
     };
@@ -723,7 +733,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

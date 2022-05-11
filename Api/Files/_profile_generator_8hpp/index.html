@@ -596,6 +596,7 @@
 // Licensed under the MIT License.
 
 #include &quot;Commandline/ConfigurationManager.hpp&quot;
+#include &quot;PreTransformValidation/PreTransformValidationPassConfiguration.hpp&quot;
 #include &quot;Profile/Profile.hpp&quot;
 #include &quot;QatTypes/QatTypes.hpp&quot;
 
@@ -621,7 +622,7 @@ namespace quantum
 
         using Components = std::vector&lt;std::pair&lt;String, SetupFunctionWrapper&gt;&gt;;
 
-        using ILoggerPtr = std::shared_ptr&lt;ILogger&gt;;
+        using ILoggerPtr = ILogger::ILoggerPtr;
 
         // Construction, moves and copies
         //
@@ -760,7 +761,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

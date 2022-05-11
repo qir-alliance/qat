@@ -603,16 +603,19 @@ namespace quantum
 
     void LogCollection::warning(String const&amp; message)
     {
+        had_warnings_ = true;
         messages_.push_back({Type::Warning, current_location_, message});
     }
 
     void LogCollection::error(String const&amp; message)
     {
+        had_errors_ = true;
         messages_.push_back({Type::Error, current_location_, message});
     }
 
     void LogCollection::internalError(String const&amp; message)
     {
+        had_errors_ = true;
         messages_.push_back({Type::InternalError, current_location_, message});
     }
 
@@ -690,7 +693,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

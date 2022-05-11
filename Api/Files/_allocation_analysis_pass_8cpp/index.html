@@ -727,8 +727,6 @@ namespace quantum
         llvm::FunctionAnalysisManager&amp; fam)
     {
         auto&amp; result = fam.getResult&lt;AllocationAnalysisPass&gt;(module);
-        llvm::errs() &lt;&lt; result.largest_qubit_index &lt;&lt; &quot; qc cc blocks.\n&quot;;
-        llvm::errs() &lt;&lt; result.largest_result_index &lt;&lt; &quot; qc mc cc blocks.\n&quot;;
 
         return llvm::PreservedAnalyses::all();
     }
@@ -737,7 +735,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

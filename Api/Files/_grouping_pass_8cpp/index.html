@@ -739,7 +739,7 @@ namespace quantum
         prepareSourceSeparation(module, tail_classical);
 
         // Variables used for the modifications
-        std::vector&lt;llvm::Instruction*&gt;  to_delete;
+        to_delete_.clear();
         std::unordered_set&lt;llvm::Value*&gt; depends_on_qc;
         std::unordered_set&lt;llvm::Value*&gt; post_classical_instructions;
 
@@ -781,7 +781,7 @@ namespace quantum
                 quantum_builder_-&gt;Insert(new_instr);
 
                 instr.replaceAllUsesWith(new_instr);
-                to_delete.push_back(&amp;instr);
+                to_delete_.push_back(&amp;instr);
             }
             else if (instr_class != INVALID_MIXED_LOCATION)
             {
@@ -798,7 +798,7 @@ namespace quantum
                     new_instr-&gt;takeName(&amp;instr);
                     post_classical_builder_-&gt;Insert(new_instr);
                     instr.replaceAllUsesWith(new_instr);
-                    to_delete.push_back(&amp;instr);
+                    to_delete_.push_back(&amp;instr);
 
                     post_classical_instructions.insert(new_instr);
                     continue;
@@ -812,7 +812,7 @@ namespace quantum
                 pre_classical_builder_-&gt;Insert(new_instr);
 
                 instr.replaceAllUsesWith(new_instr);
-                to_delete.push_back(&amp;instr);
+                to_delete_.push_back(&amp;instr);
             }
             else
             {
@@ -824,18 +824,7 @@ namespace quantum
         quantum_builder_-&gt;CreateBr(post_classical_block_);
         post_classical_builder_-&gt;CreateBr(tail_classical);
 
-        for (auto it = to_delete.rbegin(); it != to_delete.rend(); ++it)
-        {
-            auto ptr = *it;
-            if (!ptr-&gt;use_empty())
-            {
-                llvm::errs() &lt;&lt; &quot;;; Error: Could not delete &quot; &lt;&lt; *ptr &lt;&lt; &quot;\n&quot;;
-            }
-            else
-            {
-                ptr-&gt;eraseFromParent();
-            }
-        }
+        deleteInstructions();
     }
 
     void GroupingPass::expandBasedOnDest(
@@ -844,8 +833,9 @@ namespace quantum
         bool              move_quatum,
         String const&amp;     name)
     {
-        auto&amp;                           context = module.getContext();
-        std::vector&lt;llvm::Instruction*&gt; to_delete;
+        auto&amp; context = module.getContext();
+        to_delete_.clear();
+
         auto extra_block = llvm::BasicBlock::Create(context, &quot;unnamed&quot;, block-&gt;getParent(), block);
         extra_block-&gt;takeName(block);
         block-&gt;replaceUsesWithIf(extra_block, [](llvm::Use&amp; use) {
@@ -876,18 +866,31 @@ namespace quantum
                 first_builder.Insert(new_instr);
 
                 instr.replaceAllUsesWith(new_instr);
-                to_delete.push_back(&amp;instr);
+                to_delete_.push_back(&amp;instr);
             }
         }
 
         first_builder.CreateBr(block);
 
-        for (auto it = to_delete.rbegin(); it != to_delete.rend(); ++it)
+        deleteInstructions();
+    }
+
+    void GroupingPass::deleteInstructions()
+    {
+        for (auto it = to_delete_.rbegin(); it != to_delete_.rend(); ++it)
         {
             auto ptr = *it;
             if (!ptr-&gt;use_empty())
             {
-                llvm::errs() &lt;&lt; &quot;;; Error: Could not delete &quot; &lt;&lt; *ptr &lt;&lt; &quot;\n&quot;;
+                if (logger_)
+                {
+                    logger_-&gt;setLocationFromValue(ptr);
+                    logger_-&gt;error(&quot;Could not delete node.&quot;);
+                }
+                else
+                {
+                    throw std::runtime_error(&quot;No logger present - Error: Unable to delete instruction.\n&quot;);
+                }
             }
             else
             {
@@ -964,7 +967,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

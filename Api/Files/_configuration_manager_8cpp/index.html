@@ -590,6 +590,8 @@ namespace quantum
 
     void ConfigurationManager::setupArguments(ParameterParser&amp; parser)
     {
+        parameters_.clear();
+
         for (auto&amp; section : config_sections_)
         {
             if (section.enabled_by_default)
@@ -761,11 +763,33 @@ namespace quantum
         config_sections_.back().enabled_by_default = false;
     }
 
+    DeferredValue::DeferredValuePtr ConfigurationManager::getParameter(String const&amp; name)
+    {
+
+        auto it = deferred_refs_.find(name);
+        if (it != deferred_refs_.end())
+        {
+            return it-&gt;second;
+        }
+
+        auto ret = DeferredValue::create();
+
+        deferred_refs_[name] = ret;
+
+        auto it2 = parameters_.find(name);
+        if (it2 != parameters_.end())
+        {
+            ret-&gt;setReference(it2-&gt;second);
+        }
+
+        return ret;
+    }
+
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

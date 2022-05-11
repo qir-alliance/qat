@@ -630,11 +630,21 @@ namespace quantum
         return SourceLocation::InvalidPosition();
     }
 
+    bool ILogger::hadErrors() const
+    {
+        return had_errors_;
+    }
+
+    bool ILogger::hadWarnings() const
+    {
+        return had_warnings_;
+    }
+
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

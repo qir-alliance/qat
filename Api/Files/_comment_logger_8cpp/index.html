@@ -604,18 +604,22 @@ namespace quantum
 
     void CommentLogger::warning(String const&amp; message)
     {
+        had_warnings_ = true;
+
         llvm::errs() &lt;&lt; &quot;warning - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
                      &lt;&lt; message &lt;&lt; &quot;\n&quot;;
     }
 
     void CommentLogger::error(String const&amp; message)
     {
+        had_errors_ = true;
         llvm::errs() &lt;&lt; &quot;error - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
                      &lt;&lt; message &lt;&lt; &quot;\n&quot;;
     }
 
     void CommentLogger::internalError(String const&amp; message)
     {
+        had_errors_ = true;
         llvm::errs() &lt;&lt; &quot;internal error - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column
                      &lt;&lt; &quot; - &quot; &lt;&lt; message &lt;&lt; &quot;\n&quot;;
     }
@@ -633,7 +637,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

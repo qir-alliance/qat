@@ -573,6 +573,9 @@
 <tr>
 <td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
 </tr>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacestd/">std</a></strong></td>
+</tr>
 </tbody>
 </table>
 <h2 id="classes">Classes</h2>
@@ -584,6 +587,14 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>struct</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">microsoft::quantum::OpcodeValue</a></strong></td>
+</tr>
+<tr>
+<td>struct</td>
+<td><strong><a href="/qat/Api/Classes/structstd_1_1hash_3_01microsoft_1_1quantum_1_1_opcode_value_01_4/">std::hash&lt; microsoft::quantum::OpcodeValue &gt;</a></strong></td>
+</tr>
 <tr>
 <td>class</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">microsoft::quantum::ValidationPassConfiguration</a></strong></td>
@@ -598,6 +609,48 @@
 #include &quot;Commandline/ConfigurationManager.hpp&quot;
 #include &quot;QatTypes/QatTypes.hpp&quot;
 
+#include &lt;functional&gt;
+#include &lt;set&gt;
+
+namespace microsoft
+{
+namespace quantum
+{
+    struct OpcodeValue
+    {
+        String id{&quot;&quot;};
+        String predicate{&quot;&quot;};
+        OpcodeValue(String const&amp; name, String const&amp; fi = &quot;&quot;)
+          : id{name}
+          , predicate{fi}
+        {
+        }
+
+        OpcodeValue()                   = default;
+        OpcodeValue(OpcodeValue&amp;&amp;)      = default;
+        OpcodeValue(OpcodeValue const&amp;) = default;
+        OpcodeValue&amp; operator=(OpcodeValue&amp;&amp;) = default;
+        OpcodeValue&amp; operator=(OpcodeValue const&amp;) = default;
+        bool         operator==(OpcodeValue const&amp; other) const
+        {
+            return id == other.id &amp;&amp; predicate == other.predicate;
+        }
+    };
+} // namespace quantum
+} // namespace microsoft
+
+namespace std
+{
+template &lt;&gt; struct hash&lt;microsoft::quantum::OpcodeValue&gt;
+{
+    size_t operator()(microsoft::quantum::OpcodeValue const&amp; x) const
+    {
+        hash&lt;std::string&gt; hasher;
+        return hasher(x.id + &quot;.&quot; + x.predicate);
+    }
+};
+} // namespace std
+
 namespace microsoft
 {
 namespace quantum
@@ -606,7 +659,9 @@ namespace quantum
     class ValidationPassConfiguration
     {
       public:
-        using Set = std::unordered_set&lt;std::string&gt;;
+        using Set       = std::unordered_set&lt;std::string&gt;;
+        using OpcodeSet = std::unordered_set&lt;OpcodeValue&gt;;
+
         // Setup and construction
         //
 
@@ -615,7 +670,7 @@ namespace quantum
         void setup(ConfigurationManager&amp; config);
 
         static ValidationPassConfiguration fromProfileName(String const&amp; name);
-        Set const&amp;                         allowedOpcodes() const;
+        OpcodeSet const&amp;                   allowedOpcodes() const;
         Set const&amp;                         allowedExternalCallNames() const;
 
         bool allowInternalCalls() const;
@@ -634,9 +689,9 @@ namespace quantum
 
         String profile_name_{&quot;null&quot;};
 
-        Set opcodes_{};
-        Set external_calls_{};
-        Set allowed_pointer_types_{};
+        OpcodeSet opcodes_{};
+        Set       external_calls_{};
+        Set       allowed_pointer_types_{};
 
         bool allowlist_opcodes_{true};
         bool allowlist_external_calls_{true};
@@ -652,7 +707,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

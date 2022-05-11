@@ -616,8 +616,8 @@ namespace quantum
 
                 // Defining the mapping
                 RuleSet rule_set;
-                auto    factory =
-                    RuleFactory(rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager());
+                auto    factory = RuleFactory(
+                    rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), nullptr);
                 configure(rule_set);
 
                 // Creating profile pass
@@ -642,7 +642,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

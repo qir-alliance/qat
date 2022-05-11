@@ -606,6 +606,18 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#using-boolptr">BoolPtr</a></strong></td>
 </tr>
 <tr>
+<td>using std::unordered_map&lt; String, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#using-iconfigbindptr">IConfigBindPtr</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#using-parameters">Parameters</a></strong></td>
+</tr>
+<tr>
+<td>using DeferredValue::DeferredValuePtr</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#using-deferredvalueptr">DeferredValuePtr</a></strong></td>
+</tr>
+<tr>
+<td>using std::unordered_map&lt; String, DeferredValuePtr &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#using-deferredrefs">DeferredRefs</a></strong></td>
+</tr>
+<tr>
 <td>using std::vector&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section/">Section</a> &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#using-sections">Sections</a></strong> <br>List of available sections.</td>
 </tr>
@@ -708,6 +720,10 @@
 <td>template &lt;typename T > <br>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addparameter">addParameter</a></strong>(T &amp; bind, String const &amp; name, String const &amp; description)</td>
 </tr>
+<tr>
+<td>DeferredValuePtr</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-getparameter">getParameter</a></strong>(String const &amp; name)</td>
+</tr>
 </tbody>
 </table>
 <h2 id="detailed-description">Detailed Description</h2>
@@ -733,6 +749,15 @@
 <p>Type index class. </p>
 <h3 id="using-boolptr">using BoolPtr</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ConfigurationManager::BoolPtr =  std::shared_ptr&lt;bool&gt;;
+</code></pre>
+<h3 id="using-parameters">using Parameters</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ConfigurationManager::Parameters =  std::unordered_map&lt;String, IConfigBindPtr&gt;;
+</code></pre>
+<h3 id="using-deferredvalueptr">using DeferredValuePtr</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ConfigurationManager::DeferredValuePtr =  DeferredValue::DeferredValuePtr;
+</code></pre>
+<h3 id="using-deferredrefs">using DeferredRefs</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ConfigurationManager::DeferredRefs =  std::unordered_map&lt;String, DeferredValuePtr&gt;;
 </code></pre>
 <h3 id="using-sections">using Sections</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ConfigurationManager::Sections =  std::vector&lt;Section&gt;;
@@ -878,8 +903,13 @@ inline void addParameter(
 )
 </code></pre>
 <p>Adds a new parameter to the configuration section. This method uses the bound variable value as default value. This function should be used by the configuration class. </p>
+<h3 id="function-getparameter">function getParameter</h3>
+<pre><code class="language-cpp">DeferredValuePtr getParameter(
+    String const &amp; name
+)
+</code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>

@@ -586,6 +586,10 @@
 <tbody>
 <tr>
 <td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_deferred_value/">microsoft::quantum::DeferredValue</a></strong></td>
+</tr>
+<tr>
+<td>class</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">microsoft::quantum::ConfigurationManager</a></strong></td>
 </tr>
 <tr>
@@ -618,14 +622,64 @@ namespace microsoft
 namespace quantum
 {
 
+    class ConfigurationManager;
+
+    class DeferredValue
+    {
+      public:
+        using DeferredValuePtr = std::shared_ptr&lt;DeferredValue&gt;;
+        using IConfigBindPtr   = std::shared_ptr&lt;IConfigBind&gt;;
+
+        static DeferredValuePtr create()
+        {
+            DeferredValuePtr ret;
+            ret.reset(new DeferredValue());
+            return ret;
+        }
+
+        void setReference(IConfigBindPtr const&amp; value)
+        {
+            value_ref_ = value;
+        }
+
+        bool isDereferenceable() const
+        {
+            return value_ref_ != nullptr;
+        }
+
+        template &lt;typename T&gt; T value() const
+        {
+            if (!isDereferenceable())
+            {
+                throw std::runtime_error(&quot;Deferred command line parameter is not dereferenceable.&quot;);
+            }
+
+            if (value_ref_-&gt;valueType() != std::type_index(typeid(T)))
+            {
+                throw std::runtime_error(&quot;Type mismatch for deferred command line parameter.&quot;);
+            }
+
+            auto ptr = static_cast&lt;T*&gt;(value_ref_-&gt;pointer());
+
+            return *ptr;
+        }
+
+      private:
+        DeferredValue() = default;
+        IConfigBindPtr value_ref_{nullptr};
+    };
+
     class ConfigurationManager
     {
       public:
-        using IConfigBindPtr = std::shared_ptr&lt;IConfigBind&gt;; 
-        using ConfigList     = std::vector&lt;IConfigBindPtr&gt;;  
-        using VoidPtr        = std::shared_ptr&lt;void&gt;;        
-        using TypeId         = std::type_index;              
-        using BoolPtr        = std::shared_ptr&lt;bool&gt;;
+        using IConfigBindPtr   = std::shared_ptr&lt;IConfigBind&gt;; 
+        using ConfigList       = std::vector&lt;IConfigBindPtr&gt;;  
+        using VoidPtr          = std::shared_ptr&lt;void&gt;;        
+        using TypeId           = std::type_index;              
+        using BoolPtr          = std::shared_ptr&lt;bool&gt;;
+        using Parameters       = std::unordered_map&lt;String, IConfigBindPtr&gt;;
+        using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+        using DeferredRefs     = std::unordered_map&lt;String, DeferredValuePtr&gt;;
 
         struct Section
         {
@@ -710,10 +764,21 @@ namespace quantum
 
         template &lt;typename T&gt; inline void addParameter(T&amp; bind, String const&amp; name, String const&amp; description);
 
+        DeferredValuePtr getParameter(String const&amp; name);
+
       private:
         template &lt;typename T&gt; inline T&amp; getInternal() const;
 
-        Sections config_sections_{}; 
+        template &lt;typename T&gt;
+        std::shared_ptr&lt;ConfigBind&lt;T&gt;&gt; newParameter(
+            T&amp;            bind,
+            T             default_value,
+            String const&amp; name,
+            String const&amp; description);
+
+        Sections     config_sections_{}; 
+        Parameters   parameters_{};      
+        DeferredRefs deferred_refs_{};   
     };
 
     template &lt;typename T&gt; inline void ConfigurationManager::addConfig(String const&amp; id, T const&amp; default_value)
@@ -816,13 +881,37 @@ namespace quantum
     }
 
     template &lt;typename T&gt;
+    inline std::shared_ptr&lt;ConfigBind&lt;T&gt;&gt; ConfigurationManager::newParameter(
+        T&amp;            bind,
+        T             default_value,
+        String const&amp; name,
+        String const&amp; description)
+    {
+        if (parameters_.find(name) != parameters_.end())
+        {
+            throw std::runtime_error(&quot;Parameter '&quot; + name + &quot;' already exists.&quot;);
+        }
+
+        auto ret          = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, default_value, name, description);
+        parameters_[name] = ret;
+
+        auto it = deferred_refs_.find(name);
+        if (it != deferred_refs_.end())
+        {
+            it-&gt;second-&gt;setReference(ret);
+        }
+
+        return ret;
+    }
+
+    template &lt;typename T&gt;
     inline void ConfigurationManager::addParameter(
         T&amp;            bind,
         T             default_value,
         String const&amp; name,
         String const&amp; description)
     {
-        auto ptr = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, default_value, name, description);
+        auto ptr = newParameter&lt;T&gt;(bind, default_value, name, description);
         config_sections_.back().settings.push_back(ptr);
     }
 
@@ -834,7 +923,7 @@ namespace quantum
         String const&amp; name,
         String const&amp; description)
     {
-        auto ptr = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, default_value, name, description);
+        auto ptr = newParameter&lt;T&gt;(bind, default_value, name, description);
         ptr-&gt;markAsExperimental(off_value);
         config_sections_.back().settings.push_back(ptr);
     }
@@ -842,7 +931,7 @@ namespace quantum
     template &lt;typename T&gt;
     inline void ConfigurationManager::addParameter(T&amp; bind, String const&amp; name, String const&amp; description)
     {
-        auto ptr = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, T(bind), name, description);
+        auto ptr = newParameter&lt;T&gt;(bind, T(bind), name, description);
         config_sections_.back().settings.push_back(ptr);
     }
 
@@ -854,7 +943,7 @@ namespace quantum
         String const&amp; description)
     {
 
-        auto ptr = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, T(default_value), name, description);
+        auto ptr = newParameter&lt;T&gt;(bind, T(default_value), name, description);
         ptr-&gt;markAsExperimental(T(bind));
         config_sections_.back().settings.push_back(ptr);
     }
@@ -863,7 +952,7 @@ namespace quantum
     inline void ConfigurationManager::addExperimentalParameter(T&amp; bind, String const&amp; name, String const&amp; description)
     {
 
-        auto ptr = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, T(bind), name, description);
+        auto ptr = newParameter&lt;T&gt;(bind, T(bind), name, description);
         ptr-&gt;markAsExperimental(T(bind));
         config_sections_.back().settings.push_back(ptr);
     }
@@ -871,7 +960,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 28 April 2022 at 17:00:24 UTC</p></div>
+<p>Updated on 11 May 2022 at 07:56:30 UTC</p></div>
 </div>
           </div>
         </main>
