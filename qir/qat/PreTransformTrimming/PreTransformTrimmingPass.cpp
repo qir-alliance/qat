@@ -8,49 +8,52 @@
 #include <fstream>
 #include <iostream>
 
-namespace microsoft {
-namespace quantum {
-
-PreTransformTrimmingPass::PreTransformTrimmingPass(PreTransformTrimmingPassConfiguration const &cfg,
-                                                   ILoggerPtr const &logger)
-  : config_{cfg}
-  , logger_{logger}
-{}
-
-llvm::PreservedAnalyses PreTransformTrimmingPass::run(llvm::Module &module,
-                                                      llvm::ModuleAnalysisManager & /*mam*/)
+namespace microsoft
+{
+namespace quantum
 {
 
-  std::vector<llvm::Function *> deletables;
-  auto                          entry_point_attr = config_.entryPointAttr();
-  for (auto &function : module)
-  {
-
-    if (function.isDeclaration())
+    PreTransformTrimmingPass::PreTransformTrimmingPass(
+        PreTransformTrimmingPassConfiguration const& cfg,
+        ILoggerPtr const&                            logger)
+      : config_{cfg}
+      , logger_{logger}
     {
-      continue;
     }
 
-    if (function.hasFnAttribute(entry_point_attr))
+    llvm::PreservedAnalyses PreTransformTrimmingPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
     {
-      continue;
+
+        std::vector<llvm::Function*> deletables;
+        auto                         entry_point_attr = config_.entryPointAttr();
+        for (auto& function : module)
+        {
+
+            if (function.isDeclaration())
+            {
+                continue;
+            }
+
+            if (function.hasFnAttribute(entry_point_attr))
+            {
+                continue;
+            }
+
+            deletables.push_back(&function);
+        }
+
+        for (auto& x : deletables)
+        {
+            x->eraseFromParent();
+        }
+
+        return llvm::PreservedAnalyses::none();
     }
 
-    deletables.push_back(&function);
-  }
+    bool PreTransformTrimmingPass::isRequired()
+    {
+        return true;
+    }
 
-  for (auto &x : deletables)
-  {
-    x->eraseFromParent();
-  }
-
-  return llvm::PreservedAnalyses::none();
-}
-
-bool PreTransformTrimmingPass::isRequired()
-{
-  return true;
-}
-
-}  // namespace quantum
-}  // namespace microsoft
+} // namespace quantum
+} // namespace microsoft

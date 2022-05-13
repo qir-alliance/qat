@@ -6,34 +6,36 @@
 
 #include <limits>
 
-namespace microsoft {
-namespace quantum {
-
-class PreTransformTrimmingPassConfiguration
+namespace microsoft
 {
-public:
-  using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+namespace quantum
+{
 
-  void setup(ConfigurationManager &config)
-  {
-    config.setSectionName("Pre-transform trimming", "");
-    entry_point_attr_ = config.getParameter("entry-point-attr");
-  }
+    class PreTransformTrimmingPassConfiguration
+    {
+      public:
+        using DeferredValuePtr = DeferredValue::DeferredValuePtr;
 
-  static PreTransformTrimmingPassConfiguration createDisabled()
-  {
-    PreTransformTrimmingPassConfiguration ret;
-    return ret;
-  }
+        void setup(ConfigurationManager& config)
+        {
+            config.setSectionName("Pre-transform trimming", "");
+            entry_point_attr_ = config.getParameter("entry-point-attr");
+        }
 
-  std::string entryPointAttr() const
-  {
-    return entry_point_attr_->value<std::string>();
-  }
+        static PreTransformTrimmingPassConfiguration createDisabled()
+        {
+            PreTransformTrimmingPassConfiguration ret;
+            return ret;
+        }
 
-private:
-  DeferredValuePtr entry_point_attr_{nullptr};
-};
+        std::string entryPointAttr() const
+        {
+            return entry_point_attr_->value<std::string>();
+        }
 
-}  // namespace quantum
-}  // namespace microsoft
+      private:
+        DeferredValuePtr entry_point_attr_{nullptr};
+    };
+
+} // namespace quantum
+} // namespace microsoft

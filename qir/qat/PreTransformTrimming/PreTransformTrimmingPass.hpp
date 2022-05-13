@@ -2,54 +2,58 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Llvm/Llvm.hpp"
 #include "Logging/ILogger.hpp"
 #include "PreTransformTrimming/PreTransformTrimmingPass.hpp"
 #include "PreTransformTrimming/PreTransformTrimmingPassConfiguration.hpp"
 #include "Profile/Profile.hpp"
 #include "QatTypes/QatTypes.hpp"
 
+#include "Llvm/Llvm.hpp"
+
 #include <functional>
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft {
-namespace quantum {
-
-class PreTransformTrimmingPass : public llvm::PassInfoMixin<PreTransformTrimmingPass>
+namespace microsoft
 {
-public:
-  using Instruction = llvm::Instruction;
-  using Value       = llvm::Value;
-  using ILoggerPtr  = ILogger::ILoggerPtr;
-  using Location    = ILogger::Location;
-  using StringRef   = llvm::StringRef;
+namespace quantum
+{
 
-  // Construction and destruction configuration.
-  //
+    class PreTransformTrimmingPass : public llvm::PassInfoMixin<PreTransformTrimmingPass>
+    {
+      public:
+        using Instruction = llvm::Instruction;
+        using Value       = llvm::Value;
+        using ILoggerPtr  = ILogger::ILoggerPtr;
+        using Location    = ILogger::Location;
+        using StringRef   = llvm::StringRef;
 
-  explicit PreTransformTrimmingPass(PreTransformTrimmingPassConfiguration const &cfg,
-                                    ILoggerPtr const                            &logger = nullptr);
+        // Construction and destruction configuration.
+        //
 
-  /// Copy construction is banned.
-  PreTransformTrimmingPass(PreTransformTrimmingPass const &) = delete;
+        explicit PreTransformTrimmingPass(
+            PreTransformTrimmingPassConfiguration const& cfg,
+            ILoggerPtr const&                            logger = nullptr);
 
-  /// We allow move semantics.
-  PreTransformTrimmingPass(PreTransformTrimmingPass &&) = default;
+        /// Copy construction is banned.
+        PreTransformTrimmingPass(PreTransformTrimmingPass const&) = delete;
 
-  /// Default destruction.
-  ~PreTransformTrimmingPass() = default;
+        /// We allow move semantics.
+        PreTransformTrimmingPass(PreTransformTrimmingPass&&) = default;
 
-  llvm::PreservedAnalyses run(llvm::Module &module, llvm::ModuleAnalysisManager &mam);
-  /// Whether or not this pass is required to run.
-  static bool isRequired();
+        /// Default destruction.
+        ~PreTransformTrimmingPass() = default;
 
-private:
-  using Locations = std::vector<Location>;
+        llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
+        /// Whether or not this pass is required to run.
+        static bool isRequired();
 
-  PreTransformTrimmingPassConfiguration config_{};
-  ILoggerPtr                            logger_{nullptr};
-};
+      private:
+        using Locations = std::vector<Location>;
 
-}  // namespace quantum
-}  // namespace microsoft
+        PreTransformTrimmingPassConfiguration config_{};
+        ILoggerPtr                            logger_{nullptr};
+    };
+
+} // namespace quantum
+} // namespace microsoft
