@@ -2,33 +2,57 @@
 // Licensed under the MIT License.
 
 #include "Rules/Notation/Notation.hpp"
+
+#include "Llvm/Llvm.hpp"
 #include "Rules/Patterns/AnyPattern.hpp"
 #include "Rules/Patterns/CallPattern.hpp"
 #include "Rules/Patterns/Instruction.hpp"
 
-#include "Llvm/Llvm.hpp"
-
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft
+namespace microsoft {
+namespace quantum {
+namespace notation {
+
+ReplacerFunction deleteInstruction()
 {
-namespace quantum
-{
-    namespace notation
+  return [](ReplacementRule::Builder &, ReplacementRule::Value *val, ReplacementRule::Captures &,
+            ReplacementRule::Replacements &replacements) {
+    auto type  = val->getType();
+    auto instr = llvm::dyn_cast<llvm::Instruction>(val);
+
+    if (instr == nullptr)
     {
+      return false;
+    }
+    llvm::errs() << "Removing " << *instr << "\n";
+    val->replaceAllUsesWith(llvm::UndefValue::get(type));
+    replacements.push_back({instr, nullptr});
 
-        ReplacerFunction deleteInstruction()
-        {
-            return [](ReplacementRule::Builder&, ReplacementRule::Value* val, ReplacementRule::Captures&,
-                      ReplacementRule::Replacements& replacements) {
-                auto type = val->getType();
-                val->replaceAllUsesWith(llvm::UndefValue::get(type));
-                replacements.push_back({llvm::dyn_cast<llvm::Instruction>(val), nullptr});
-                return true;
-            };
-        }
+    return true;
+  };
+}
 
-    } // namespace notation
-} // namespace quantum
-} // namespace microsoft
+ReplacerFunction deleteUnusedInstruction()
+{
+  return [](ReplacementRule::Builder &, ReplacementRule::Value *val, ReplacementRule::Captures &,
+            ReplacementRule::Replacements &replacements) {
+    auto type  = val->getType();
+    auto instr = llvm::dyn_cast<llvm::Instruction>(val);
+
+    llvm::errs() << "Deleting  " << *val << "\n";
+
+    if (instr && instr->use_empty())
+    {
+      replacements.push_back({instr, nullptr});
+      return true;
+    }
+    llvm::errs() << "FAILED: " << instr->use_empty() << "\n";
+    return false;
+  };
+}
+
+}  // namespace notation
+}  // namespace quantum
+}  // namespace microsoft

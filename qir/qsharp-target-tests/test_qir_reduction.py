@@ -69,7 +69,7 @@ def test_qat_target1(test_name, request):
     with request.getfixturevalue(test_name) as project:
 
         assert validate_circuit(test_name, "default", project.qir_filename, [
-                                "--validate", "--unroll-loops", "--always-inline", "--apply"])
+                                "--validate", "--entry-point-attr", "EntryPoint", "--unroll-loops", "--always-inline", "--apply"])
 
 
 # @pytest.mark.parametrize("test_name", target3_tests)
