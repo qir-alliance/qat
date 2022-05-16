@@ -43,19 +43,21 @@ namespace quantum
                       ReplacementRule::Replacements& replacements) {
                 std::unordered_map<llvm::Value*, llvm::Value*> replace_set{replacements.begin(), replacements.end()};
 
-                auto type  = val->getType();
                 auto instr = llvm::dyn_cast<llvm::Instruction>(val);
 
-                bool is_used = false;
-                for (auto u : instr->users())
+                if (instr)
                 {
-                    is_used |= replace_set.find(u) == replace_set.end();
-                }
+                    bool is_used = false;
+                    for (auto u : instr->users())
+                    {
+                        is_used |= replace_set.find(u) == replace_set.end();
+                    }
 
-                if (instr && (instr->use_empty() || !is_used))
-                {
-                    replacements.push_back({instr, nullptr});
-                    return true;
+                    if (instr->use_empty() || !is_used)
+                    {
+                        replacements.push_back({instr, nullptr});
+                        return true;
+                    }
                 }
 
                 return false;
