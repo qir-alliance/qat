@@ -762,6 +762,8 @@ namespace quantum
         llvm::errs() << module << "\n\n";
         if (config_.shouldTransformExecutionPathOnly())
         {
+            // TODO: This implementation path lacks backwards replacement (see else section)
+
             // We only apply transformation rules to code which is reachable
             // via the execution path.
             runApplyRules(module, mam);
@@ -773,14 +775,25 @@ namespace quantum
             replacements_.clear();
             for (auto& function : module)
             {
+                std::vector<llvm::Instruction*> instructions;
 
-                // Transforming each function
+                // Creating a list of all instructions in the function
+                // and matching rules in forward direction
                 for (auto& block : function)
                 {
                     for (auto& instr : block)
                     {
                         rule_set_.matchAndReplace(&instr, replacements_);
+
+                        instructions.push_back(&instr);
                     }
+                }
+
+                // Matching in reverse order
+                std::reverse(instructions.begin(), instructions.end());
+                for (auto instr : instructions)
+                {
+                    rule_set_.matchAndReplace(instr, replacements_, RuleSet::ReplaceDirection::ReplaceBackwards);
                 }
             }
 

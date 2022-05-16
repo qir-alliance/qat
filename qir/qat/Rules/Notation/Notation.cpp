@@ -41,12 +41,19 @@ namespace quantum
         {
             return [](ReplacementRule::Builder&, ReplacementRule::Value* val, ReplacementRule::Captures&,
                       ReplacementRule::Replacements& replacements) {
+                std::unordered_map<llvm::Value*, llvm::Value*> replace_set{replacements.begin(), replacements.end()};
+
                 auto type  = val->getType();
                 auto instr = llvm::dyn_cast<llvm::Instruction>(val);
 
                 llvm::errs() << "Deleting  " << *val << "\n";
+                bool is_used = false;
+                for (auto u : instr->users())
+                {
+                    is_used |= replace_set.find(u) == replace_set.end();
+                }
 
-                if (instr && instr->use_empty())
+                if (instr && (instr->use_empty() || !is_used))
                 {
                     replacements.push_back({instr, nullptr});
                     return true;

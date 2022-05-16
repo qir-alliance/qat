@@ -72,9 +72,6 @@ namespace quantum
             optimizeResultZero();
         }
 
-        // TODO: Add config
-        removeGetZeroOrOne();
-
         if (config.useStaticQubitArrayAllocation())
         {
             useStaticQubitArrayAllocation();
@@ -89,6 +86,9 @@ namespace quantum
         {
             useStaticResultAllocation();
         }
+
+        // TODO: Add config
+        removeGetZeroOrOne();
     }
 
     void RuleFactory::removeFunctionCall(String const& name)
@@ -99,8 +99,12 @@ namespace quantum
     void RuleFactory::removeGetZeroOrOne()
     {
         llvm::errs() << "Settting removal up\n";
-        addRule({callByNameOnly("__quantum__rt__result_get_zero"), deleteInstruction()});
-        addRule({callByNameOnly("__quantum__rt__result_get_one"), deleteInstruction()});
+        addRule(
+            {callByNameOnly("__quantum__rt__result_get_zero"), deleteUnusedInstruction()},
+            RuleSet::ReplaceDirection::ReplaceBackwards);
+        addRule(
+            {callByNameOnly("__quantum__rt__result_get_one"), deleteUnusedInstruction()},
+            RuleSet::ReplaceDirection::ReplaceBackwards);
     }
 
     void RuleFactory::resolveConstantArraySizes()
@@ -766,11 +770,11 @@ namespace quantum
         removeFunctionCall("__quantum__rt__array_end_record_output");
     }
 
-    ReplacementRulePtr RuleFactory::addRule(ReplacementRule&& rule)
+    ReplacementRulePtr RuleFactory::addRule(ReplacementRule&& rule, RuleSet::ReplaceDirection const& dir)
     {
         auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
-        rule_set_.addRule(ret);
+        rule_set_.addRule(ret, dir);
 
         return ret;
     }
