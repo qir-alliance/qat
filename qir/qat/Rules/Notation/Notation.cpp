@@ -29,7 +29,7 @@ namespace quantum
                 {
                     return false;
                 }
-                llvm::errs() << "Removing " << *instr << "\n";
+
                 val->replaceAllUsesWith(llvm::UndefValue::get(type));
                 replacements.push_back({instr, nullptr});
 
@@ -46,7 +46,6 @@ namespace quantum
                 auto type  = val->getType();
                 auto instr = llvm::dyn_cast<llvm::Instruction>(val);
 
-                llvm::errs() << "Deleting  " << *val << "\n";
                 bool is_used = false;
                 for (auto u : instr->users())
                 {
@@ -58,7 +57,7 @@ namespace quantum
                     replacements.push_back({instr, nullptr});
                     return true;
                 }
-                llvm::errs() << "FAILED: " << instr->use_empty() << "\n";
+
                 return false;
             };
         }

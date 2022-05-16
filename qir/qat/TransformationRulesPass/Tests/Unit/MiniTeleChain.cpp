@@ -185,8 +185,6 @@ TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit: 
 
     ir_manip->applyProfile(profile);
 
-    llvm::errs() << "------\n" << *ir_manip->module() << "xxxxxxxxx\n\n";
-
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         // clang-format off
 "call void @__quantum__qis__h__body(%Qubit* null)",

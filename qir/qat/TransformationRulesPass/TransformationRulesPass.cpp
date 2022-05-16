@@ -756,10 +756,10 @@ namespace quantum
         }
 
         // Applying rule set
-        llvm::errs() << module << "\n\n";
+
         if (config_.shouldTransformExecutionPathOnly())
         {
-            // TODO: This implementation path lacks backwards replacement (see else section)
+            // TODO(tfr): This implementation path lacks backwards replacement (see else section)
 
             // We only apply transformation rules to code which is reachable
             // via the execution path.

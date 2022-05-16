@@ -59,7 +59,7 @@ namespace quantum
             disableRecordOutputSupport();
         }
 
-        // TODO: Add config
+        // TODO(tfr): Add config
         optimizeConstantResult();
 
         if (config.optimizeResultOne())
@@ -87,7 +87,7 @@ namespace quantum
             useStaticResultAllocation();
         }
 
-        // TODO: Add config
+        // TODO(tfr): Add config
         removeGetZeroOrOne();
     }
 
@@ -98,7 +98,6 @@ namespace quantum
 
     void RuleFactory::removeGetZeroOrOne()
     {
-        llvm::errs() << "Settting removal up\n";
         addRule(
             {callByNameOnly("__quantum__rt__result_get_zero"), deleteUnusedInstruction()},
             RuleSet::ReplaceDirection::ReplaceBackwards);
@@ -531,7 +530,6 @@ namespace quantum
     void RuleFactory::optimizeResultZero()
     {
         auto replace_branch_negative = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
-            llvm::errs() << "MAtch??\n";
             auto cond = llvm::dyn_cast<llvm::Instruction>(val);
             if (cond == nullptr)
             {
@@ -677,7 +675,6 @@ namespace quantum
     void RuleFactory::optimizeConstantResult()
     {
         auto replace_constant_result = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
-            llvm::errs() << "Found constant comparison " << *val << "\n";
             auto f1 = llvm::dyn_cast<llvm::CallInst>(cap["1"]);
             auto f2 = llvm::dyn_cast<llvm::CallInst>(cap["2"]);
             if (f1 == nullptr || f2 == nullptr)

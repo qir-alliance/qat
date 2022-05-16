@@ -24,13 +24,12 @@ namespace quantum
             return fail(instr, captures);
         }
 
-        llvm::errs() << "Matching against " << *instr << "\n";
         auto target_function = call_instr->getCalledFunction();
         if (target_function == nullptr)
         {
             return fail(instr, captures);
         }
-        llvm::errs() << " == success\n";
+
         auto name = target_function->getName();
 
         if (name != name_)
