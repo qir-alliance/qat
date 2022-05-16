@@ -480,6 +480,13 @@ namespace quantum
         std::unordered_set<llvm::Value*> already_removed;
         for (auto it = replacements_.rbegin(); it != replacements_.rend(); ++it)
         {
+            // Ignoring values that were already removed.
+            if (already_removed.find(it->first) != already_removed.end())
+            {
+                continue;
+            }
+            already_removed.insert(it->first);
+
             auto instr1 = llvm::dyn_cast<llvm::Instruction>(it->first);
 
             if (instr1 == nullptr)
@@ -489,16 +496,6 @@ namespace quantum
                 logger_->internalError("Cannot replace with non-instruction replacements");
                 continue;
             }
-
-            // Checking if by accident the same instruction was added
-            if (already_removed.find(instr1) != already_removed.end())
-            {
-                requireLogger();
-                logger_->setLocationFromValue(instr1);
-                logger_->internalError("Instruction was already removed.");
-                continue;
-            }
-            already_removed.insert(instr1);
 
             // Checking if have a replacement for the instruction
             if (it->second != nullptr)
