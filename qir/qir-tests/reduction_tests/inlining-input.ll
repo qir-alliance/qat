@@ -54,5 +54,5 @@ declare void @__quantum__rt__message(%String*)
 declare void @__quantum__rt__string_update_reference_count(%String*, i32)
 
 attributes #0 = { "InteropFriendly" }
-attributes #1 = { "EntryPoint" }
+attributes #1 = { "InteropFriendly" }
 

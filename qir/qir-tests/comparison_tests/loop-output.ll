@@ -30,4 +30,4 @@ exit_quantum_grouping:                            ; preds = %post-classical
 
 declare void @__quantum__qis__h__body(%Qubit*)
 
-attributes #0 = { "EntryPoint" "maxQubitIndex"="0" "maxResultIndex"="0" "requiredQubits"="1" "requiredResults"="0" }
+attributes #0 = { "InteropFriendly" "maxQubitIndex"="0" "maxResultIndex"="0" "requiredQubits"="1" "requiredResults"="0" }
