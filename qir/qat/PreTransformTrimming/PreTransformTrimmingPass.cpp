@@ -44,7 +44,10 @@ namespace quantum
 
         for (auto& x : deletables)
         {
-            x->eraseFromParent();
+            if (x->use_empty())
+            {
+                x->eraseFromParent();
+            }
         }
 
         return llvm::PreservedAnalyses::none();
