@@ -775,7 +775,6 @@ namespace quantum
             replacements_.clear();
             for (auto& function : module)
             {
-                std::vector<llvm::Instruction*> instructions;
 
                 // Creating a list of all instructions in the function
                 // and matching rules in forward direction
@@ -784,12 +783,19 @@ namespace quantum
                     for (auto& instr : block)
                     {
                         rule_set_.matchAndReplace(&instr, replacements_);
-
-                        instructions.push_back(&instr);
                     }
                 }
 
                 // Matching in reverse order
+                std::vector<llvm::Instruction*> instructions;
+                for (auto& block : function)
+                {
+                    for (auto& instr : block)
+                    {
+                        instructions.push_back(&instr);
+                    }
+                }
+
                 std::reverse(instructions.begin(), instructions.end());
                 for (auto instr : instructions)
                 {
