@@ -41,9 +41,12 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
 
     if not ret:
         print("Processed file:", filename)
-        with open(filename, "r") as fb:
-            for line in fb.readlines():
-                print("    | {}".format(line.rstrip()))
+        if not os.path.exists(filename):
+            print("File does not exists: {}".format(filename))
+        else:
+            with open(filename, "r") as fb:
+                for line in fb.readlines():
+                    print("    | {}".format(line.rstrip()))
         print("")
 
         print("QAT error output:")
@@ -67,6 +70,7 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
 @pytest.mark.parametrize("test_name", target1_tests)
 def test_taget_opeorations(test_name, request):
     with request.getfixturevalue(test_name) as project:
+        assert project.compile()
 
         assert validate_circuit(test_name, "default", project.qir_filename, [
                                 "--validate", "--entry-point-attr", "EntryPoint", "--unroll-loops", "--always-inline", "--apply"])
