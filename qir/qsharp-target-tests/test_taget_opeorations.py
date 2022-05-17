@@ -65,21 +65,8 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
 
 
 @pytest.mark.parametrize("test_name", target1_tests)
-def test_qat_target1(test_name, request):
+def test_taget_opeorations(test_name, request):
     with request.getfixturevalue(test_name) as project:
 
         assert validate_circuit(test_name, "default", project.qir_filename, [
                                 "--validate", "--entry-point-attr", "EntryPoint", "--unroll-loops", "--always-inline", "--apply"])
-
-
-# @pytest.mark.parametrize("test_name", target3_tests)
-# def test_qat_target2(test_name, request):
-#    input_file = request.getfixturevalue(test_name)
-#    assert validate_circuit(test_name, "base", input_file, ["--validate", "--unroll-loops", "--always-inline"])
-#
-#
-# @pytest.mark.parametrize("test_name", target4_tests)
-# def test_qat_target4(test_name, request):
-#    input_file = request.getfixturevalue(test_name)
-#    output_file = input_file.replace("-input.ll", "-output.ll")
-#    assert validate_circuit(test_name, "base", input_file,  ["--unroll-loops", "--always-inline", "--apply"], output_file)

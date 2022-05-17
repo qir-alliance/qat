@@ -699,16 +699,6 @@ namespace quantum
             return true;
         };
 
-        /*
-          Here is an example IR for which we want to make a match:
-
-          %1 = call %Result* @__quantum__rt__result_get_one()
-          %2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
-          br i1 %2, label %then0__1, label %continue__1
-        */
-
-        // Variations of get_one
-        // Variations of get_one
         auto get_zero = call("__quantum__rt__result_get_zero");
         auto get_one  = call("__quantum__rt__result_get_one");
 

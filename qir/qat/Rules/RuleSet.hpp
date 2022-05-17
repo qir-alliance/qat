@@ -77,8 +77,8 @@ namespace quantum
         uint64_t size() const;
 
       private:
-        Rules rules_;           ///< Rules that describes QIR mappings
-        Rules rules_backwards_; ///< Rules that describes QIR mappings
+        Rules rules_;           ///< Primary rules that describes QIR mappings
+        Rules rules_backwards_; ///< Secondary rules which are used in backwards mode
     };
 
 } // namespace quantum
