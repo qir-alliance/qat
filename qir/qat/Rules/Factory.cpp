@@ -59,8 +59,10 @@ namespace quantum
             disableRecordOutputSupport();
         }
 
-        // TODO(tfr): Add config
-        optimizeConstantResult();
+        if (config.optimizeQuantumConstants())
+        {
+            optimizeConstantResult();
+        }
 
         if (config.optimizeResultOne())
         {
@@ -87,8 +89,10 @@ namespace quantum
             useStaticResultAllocation();
         }
 
-        // TODO(tfr): Add config
-        removeGetZeroOrOne();
+        if (config.removeGetZeroOrOne())
+        {
+            removeGetZeroOrOne();
+        }
     }
 
     void RuleFactory::removeFunctionCall(String const& name)
