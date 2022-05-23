@@ -13,7 +13,7 @@ namespace QATSample {
       use control = Qubit();
       use target = Qubit();
 
-      CNOT(control, target);
+      CNOTFromSinglyControlled(control, target);
 
       return Zero;
     }
