@@ -296,13 +296,35 @@ int main(int argc, char** argv)
         // to allow output the IR for debugging purposes.
         if (ret == 0)
         {
-            if (config.shouldEmitLlvm())
+            if (config.outputFile().empty())
             {
-                llvm::outs() << *module << "\n";
+                if (config.shouldEmitLlvm())
+                {
+                    llvm::outs() << *module << "\n";
+                }
+                else
+                {
+                    llvm::WriteBitcodeToFile(*module, llvm::outs());
+                }
             }
             else
             {
-                llvm::WriteBitcodeToFile(*module, llvm::outs());
+                std::error_code      ec;
+                llvm::raw_fd_ostream fout(config.outputFile(), ec);
+
+                if (config.shouldEmitLlvm())
+                {
+                    fout << *module << "\n";
+                }
+                else
+                {
+                    llvm::WriteBitcodeToFile(*module, fout);
+                }
+
+                if (ec.value() != 0)
+                {
+                    throw std::runtime_error("Failed to write output to file.");
+                }
             }
         }
 
