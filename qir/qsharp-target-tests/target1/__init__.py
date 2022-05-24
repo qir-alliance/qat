@@ -86,7 +86,6 @@ target1_tests = [
 
 ]
 
-print(available1)
 for fr in available1:
     f = os.path.join(SCRIPT_DIR, fr)
 # for f in glob.glob(os.path.join(BASE_DIR, "*.qs")):

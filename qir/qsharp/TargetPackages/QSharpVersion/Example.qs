@@ -1,12 +1,19 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 namespace QATSample {
     open Microsoft.Quantum.Intrinsic;
+    open Microsoft.Quantum.Canon;
+    open Microsoft.Quantum.Arrays;
+    open Microsoft.Quantum.Measurement;
 
     @EntryPoint()
     operation Main(): Result
     {
-        use (q1,q2,q3) = (Qubit(), Qubit(), Qubit());
-        CCNOT(q1, q2, q3);
-
-        return Zero;
+let desired = Zero;
+use target = Qubit();
+ SetToBasisState(desired, target);
+ return Zero;
     }
 }
+

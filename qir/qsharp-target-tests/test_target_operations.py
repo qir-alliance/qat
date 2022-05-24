@@ -71,6 +71,5 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
 def test_taget_opeorations(test_name, request):
     with request.getfixturevalue(test_name) as project:
         assert project.compile()
-
         assert validate_circuit(test_name, "default", project.qir_filename, [
-                                "--validate", "--entry-point-attr", "EntryPoint", "--unroll-loops", "--always-inline", "--apply"])
+                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
