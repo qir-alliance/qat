@@ -23,4 +23,4 @@ open_qasm_body.exit:                      ; preds = %header__1.i
 
 declare void @__quantum__qis__h__body(%Qubit*)
 
-attributes #0 = { "InteropFriendly" }
+attributes #0 = { "EntryPoint" }
