@@ -585,6 +585,7 @@
 #include &quot;GroupingPass/GroupingAnalysisPass.hpp&quot;
 #include &quot;GroupingPass/GroupingPass.hpp&quot;
 #include &quot;GroupingPass/GroupingPassConfiguration.hpp&quot;
+#include &quot;PreTransformTrimming/PreTransformTrimmingPass.hpp&quot;
 #include &quot;PreTransformValidation/PreTransformValidationPass.hpp&quot;
 #include &quot;Rules/Factory.hpp&quot;
 #include &quot;Rules/RuleSet.hpp&quot;
@@ -719,13 +720,6 @@ namespace quantum
     {
         using namespace llvm;
         ILoggerPtr logger = logger_;
-        registerProfileComponent&lt;PreTransformValidationPassConfiguration&gt;(
-            &quot;pre-transform-validation&quot;,
-            [logger](PreTransformValidationPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
-                auto&amp; mpm = ptr-&gt;modulePassManager();
-
-                mpm.addPass(PreTransformValidationPass(cfg, logger));
-            });
 
         registerProfileComponent&lt;LlvmPassesConfiguration&gt;(
             &quot;llvm-optimization&quot;, [](LlvmPassesConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
@@ -811,6 +805,22 @@ namespace quantum
                 {
                     fpm.addPass(llvm::ADCEPass());
                 }
+            });
+
+        registerProfileComponent&lt;PreTransformTrimmingPassConfiguration&gt;(
+            &quot;pre-transform-trimming&quot;,
+            [logger](PreTransformTrimmingPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
+                auto&amp; mpm = ptr-&gt;modulePassManager();
+
+                mpm.addPass(PreTransformTrimmingPass(cfg, logger));
+            });
+
+        registerProfileComponent&lt;PreTransformValidationPassConfiguration&gt;(
+            &quot;pre-transform-validation&quot;,
+            [logger](PreTransformValidationPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
+                auto&amp; mpm = ptr-&gt;modulePassManager();
+
+                mpm.addPass(PreTransformValidationPass(cfg, logger));
             });
 
         registerProfileComponent&lt;TransformationRulesPassConfiguration&gt;(
@@ -901,7 +911,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 18 May 2022 at 18:49:56 UTC</p></div>
+<p>Updated on 24 May 2022 at 08:15:40 UTC</p></div>
 </div>
           </div>
         </main>

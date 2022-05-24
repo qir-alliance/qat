@@ -637,6 +637,11 @@ namespace quantum
             disableRecordOutputSupport();
         }
 
+        if (config.optimizeQuantumConstants())
+        {
+            optimizeConstantResult();
+        }
+
         if (config.optimizeResultOne())
         {
             optimizeResultOne();
@@ -661,11 +666,26 @@ namespace quantum
         {
             useStaticResultAllocation();
         }
+
+        if (config.removeGetZeroOrOne())
+        {
+            removeGetZeroOrOne();
+        }
     }
 
     void RuleFactory::removeFunctionCall(String const&amp; name)
     {
         addRule({callByNameOnly(name), deleteInstruction()});
+    }
+
+    void RuleFactory::removeGetZeroOrOne()
+    {
+        addRule(
+            {callByNameOnly(&quot;__quantum__rt__result_get_zero&quot;), deleteUnusedInstruction()},
+            RuleSet::ReplaceDirection::ReplaceBackwards);
+        addRule(
+            {callByNameOnly(&quot;__quantum__rt__result_get_one&quot;), deleteUnusedInstruction()},
+            RuleSet::ReplaceDirection::ReplaceBackwards);
     }
 
     void RuleFactory::resolveConstantArraySizes()
@@ -1124,6 +1144,7 @@ namespace quantum
             cond-&gt;replaceAllUsesWith(new_cond);
 
             // Deleting the previous condition and function to fetch one
+
             replacements.push_back({cond, nullptr});
             replacements.push_back({cap[&quot;zero&quot;], nullptr});
 
@@ -1218,6 +1239,42 @@ namespace quantum
         addRule({call(&quot;__quantum__rt__result_equal&quot;, &quot;one&quot;_cap = get_one, &quot;result&quot;_cap = _), replace_branch_positive});
     }
 
+    void RuleFactory::optimizeConstantResult()
+    {
+        auto replace_constant_result = [](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; replacements) {
+            auto f1 = llvm::dyn_cast&lt;llvm::CallInst&gt;(cap[&quot;1&quot;]);
+            auto f2 = llvm::dyn_cast&lt;llvm::CallInst&gt;(cap[&quot;2&quot;]);
+            if (f1 == nullptr || f2 == nullptr)
+            {
+                return false;
+            }
+
+            auto n1 = f1-&gt;getCalledFunction()-&gt;getName();
+            auto n2 = f2-&gt;getCalledFunction()-&gt;getName();
+
+            bool value      = n1 == n2;
+            auto llvm_value = llvm::APInt(1, value);
+
+            // Computing offset
+            auto new_instr = llvm::ConstantInt::get(builder.getContext(), llvm_value);
+
+            val-&gt;replaceAllUsesWith(new_instr);
+
+            replacements.push_back({val, nullptr});
+            replacements.push_back({f1, nullptr});
+            replacements.push_back({f2, nullptr});
+            return true;
+        };
+
+        auto get_zero = call(&quot;__quantum__rt__result_get_zero&quot;);
+        auto get_one  = call(&quot;__quantum__rt__result_get_one&quot;);
+
+        addRule({call(&quot;__quantum__rt__result_equal&quot;, &quot;1&quot;_cap = get_zero, &quot;2&quot;_cap = get_zero), replace_constant_result});
+        addRule({call(&quot;__quantum__rt__result_equal&quot;, &quot;1&quot;_cap = get_zero, &quot;2&quot;_cap = get_one), replace_constant_result});
+        addRule({call(&quot;__quantum__rt__result_equal&quot;, &quot;1&quot;_cap = get_one, &quot;2&quot;_cap = get_zero), replace_constant_result});
+        addRule({call(&quot;__quantum__rt__result_equal&quot;, &quot;1&quot;_cap = get_one, &quot;2&quot;_cap = get_one), replace_constant_result});
+    }
+
     void RuleFactory::disableReferenceCounting()
     {
         removeFunctionCall(&quot;__quantum__rt__array_update_reference_count&quot;);
@@ -1267,11 +1324,11 @@ namespace quantum
         removeFunctionCall(&quot;__quantum__rt__array_end_record_output&quot;);
     }
 
-    ReplacementRulePtr RuleFactory::addRule(ReplacementRule&amp;&amp; rule)
+    ReplacementRulePtr RuleFactory::addRule(ReplacementRule&amp;&amp; rule, RuleSet::ReplaceDirection const&amp; dir)
     {
         auto ret = std::make_shared&lt;ReplacementRule&gt;(std::move(rule));
 
-        rule_set_.addRule(ret);
+        rule_set_.addRule(ret, dir);
 
         return ret;
     }
@@ -1285,7 +1342,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 18 May 2022 at 18:49:56 UTC</p></div>
+<p>Updated on 24 May 2022 at 08:15:39 UTC</p></div>
 </div>
           </div>
         </main>

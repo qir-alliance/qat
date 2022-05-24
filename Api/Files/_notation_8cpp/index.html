@@ -603,10 +603,45 @@ namespace quantum
         {
             return [](ReplacementRule::Builder&amp;, ReplacementRule::Value* val, ReplacementRule::Captures&amp;,
                       ReplacementRule::Replacements&amp; replacements) {
-                auto type = val-&gt;getType();
+                auto type  = val-&gt;getType();
+                auto instr = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
+
+                if (instr == nullptr)
+                {
+                    return false;
+                }
+
                 val-&gt;replaceAllUsesWith(llvm::UndefValue::get(type));
-                replacements.push_back({llvm::dyn_cast&lt;llvm::Instruction&gt;(val), nullptr});
+                replacements.push_back({instr, nullptr});
+
                 return true;
+            };
+        }
+
+        ReplacerFunction deleteUnusedInstruction()
+        {
+            return [](ReplacementRule::Builder&amp;, ReplacementRule::Value* val, ReplacementRule::Captures&amp;,
+                      ReplacementRule::Replacements&amp; replacements) {
+                std::unordered_map&lt;llvm::Value*, llvm::Value*&gt; replace_set{replacements.begin(), replacements.end()};
+
+                auto instr = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
+
+                if (instr)
+                {
+                    bool is_used = false;
+                    for (auto u : instr-&gt;users())
+                    {
+                        is_used |= replace_set.find(u) == replace_set.end();
+                    }
+
+                    if (instr-&gt;use_empty() || !is_used)
+                    {
+                        replacements.push_back({instr, nullptr});
+                        return true;
+                    }
+                }
+
+                return false;
             };
         }
 
@@ -615,7 +650,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on 18 May 2022 at 18:49:56 UTC</p></div>
+<p>Updated on 24 May 2022 at 08:15:39 UTC</p></div>
 </div>
           </div>
         </main>

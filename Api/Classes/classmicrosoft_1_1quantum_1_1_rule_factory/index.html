@@ -647,7 +647,15 @@
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-optimizeresultzero">optimizeResultZero</a></strong>()<br>Replaces branching of quantum results compared to zero. This method is not implemented yet.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-optimizeresultzero">optimizeResultZero</a></strong>()<br>Replaces branching of quantum results compared to zero.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-optimizeconstantresult">optimizeConstantResult</a></strong>()<br>Replaces branching of quantum constant results.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-removegetzeroorone">removeGetZeroOrOne</a></strong>()<br>Removes unused quantum zeros or ones.</td>
 </tr>
 <tr>
 <td>void</td>
@@ -798,7 +806,15 @@ br i1 %1, label %then0__1, label %continue__1
 <h3 id="function-optimizeresultzero">function optimizeResultZero</h3>
 <pre><code class="language-cpp">void optimizeResultZero()
 </code></pre>
-<p>Replaces branching of quantum results compared to zero. This method is not implemented yet. </p>
+<p>Replaces branching of quantum results compared to zero. </p>
+<h3 id="function-optimizeconstantresult">function optimizeConstantResult</h3>
+<pre><code class="language-cpp">void optimizeConstantResult()
+</code></pre>
+<p>Replaces branching of quantum constant results. </p>
+<h3 id="function-removegetzeroorone">function removeGetZeroOrOne</h3>
+<pre><code class="language-cpp">void removeGetZeroOrOne()
+</code></pre>
+<p>Removes unused quantum zeros or ones. </p>
 <h3 id="function-disablereferencecounting">function disableReferenceCounting</h3>
 <pre><code class="language-cpp">void disableReferenceCounting()
 </code></pre>
@@ -822,7 +838,7 @@ br i1 %1, label %then0__1, label %continue__1
 </code></pre>
 <p>Sets the integer width used when it cannot be deducted from the context of the transformation. </p>
 <hr />
-<p>Updated on 18 May 2022 at 18:49:56 UTC</p></div>
+<p>Updated on 24 May 2022 at 08:15:39 UTC</p></div>
 </div>
           </div>
         </main>

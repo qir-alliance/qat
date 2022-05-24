@@ -571,6 +571,10 @@
 </thead>
 <tbody>
 <tr>
+<td>enum</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/#enum-replacedirection">ReplaceDirection</a></strong> { ReplaceForwards, ReplaceBackwards}</td>
+</tr>
+<tr>
 <td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/">ReplacementRule</a> &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/#using-replacementruleptr">ReplacementRulePtr</a></strong></td>
 </tr>
@@ -639,15 +643,15 @@
 </tr>
 <tr>
 <td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/#function-matchandreplace">matchAndReplace</a></strong>(Instruction * value, Replacements &amp; replacements)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/#function-matchandreplace">matchAndReplace</a></strong>(Instruction * value, Replacements &amp; replacements, ReplaceDirection const &amp; dir =ReplaceForwards)</td>
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/#function-addrule">addRule</a></strong>(ReplacementRulePtr const &amp; rule)<br>Adds a new replacement rule to the set.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/#function-addrule">addRule</a></strong>(ReplacementRulePtr const &amp; rule, ReplaceDirection const &amp; dir =ReplaceForwards)<br>Adds a new replacement rule to the set.</td>
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/#function-addrule">addRule</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/">ReplacementRule</a> &amp;&amp; rule)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/#function-addrule">addRule</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/">ReplacementRule</a> &amp;&amp; rule, ReplaceDirection const &amp; dir =ReplaceForwards)</td>
 </tr>
 <tr>
 <td>void</td>
@@ -664,6 +668,28 @@
 </code></pre>
 <p><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/">RuleSet</a> contains a set of replacement rules and the corresponding logic to apply the rules. The class allows one to apply the rules by which each rule is tested one-by-one until a successful attempt at performing a replace has happened, or the list was exhausted. </p>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
+<h3 id="enum-replacedirection">enum ReplaceDirection</h3>
+<table>
+<thead>
+<tr>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ReplaceForwards</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ReplaceBackwards</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h3 id="using-replacementruleptr">using ReplacementRulePtr</h3>
 <pre><code class="language-cpp">using microsoft::quantum::RuleSet::ReplacementRulePtr =  std::shared_ptr&lt;ReplacementRule&gt;;
 </code></pre>
@@ -718,19 +744,22 @@
 <h3 id="function-matchandreplace">function matchAndReplace</h3>
 <pre><code class="language-cpp">bool matchAndReplace(
     Instruction * value,
-    Replacements &amp; replacements
+    Replacements &amp; replacements,
+    ReplaceDirection const &amp; dir =ReplaceForwards
 )
 </code></pre>
 <p>Matches patterns and runs the replacement routines if a match is found. The function returns true if a pattern is matched and and the replacement was a success. In all other cases, it returns false. </p>
 <h3 id="function-addrule">function addRule</h3>
 <pre><code class="language-cpp">void addRule(
-    ReplacementRulePtr const &amp; rule
+    ReplacementRulePtr const &amp; rule,
+    ReplaceDirection const &amp; dir =ReplaceForwards
 )
 </code></pre>
 <p>Adds a new replacement rule to the set. </p>
 <h3 id="function-addrule_1">function addRule</h3>
 <pre><code class="language-cpp">void addRule(
-    ReplacementRule &amp;&amp; rule
+    ReplacementRule &amp;&amp; rule,
+    ReplaceDirection const &amp; dir =ReplaceForwards
 )
 </code></pre>
 <h3 id="function-clear">function clear</h3>
@@ -742,7 +771,7 @@
 </code></pre>
 <p>Returns the size of the rule set. </p>
 <hr />
-<p>Updated on 18 May 2022 at 18:49:56 UTC</p></div>
+<p>Updated on 24 May 2022 at 08:15:39 UTC</p></div>
 </div>
           </div>
         </main>
