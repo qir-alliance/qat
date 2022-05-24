@@ -12,9 +12,9 @@ namespace QATSample {
     {
       use qubit = Qubit();
 
-      let _ = M(qubit);
+      let ret = M(qubit);
 
-      return Zero;
+      return ret;
     }
 }
 
