@@ -184,6 +184,7 @@ TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit: 
     configuration_manager.setConfig(PreTransformValidationPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
+
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         // clang-format off
 "call void @__quantum__qis__h__body(%Qubit* null)",

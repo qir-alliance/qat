@@ -41,7 +41,7 @@ declare void @__quantum__qis__cnot__body(%Qubit*, %Qubit*)
 
 declare void @__quantum__qis__h__body(%Qubit*)
 
-define void @SimpleLoop__Main() #1 {
+define void @SimpleLoop__Main() #0 {
 entry:
   call void @SimpleLoop__Main__body()
   ret void
@@ -53,6 +53,5 @@ declare void @__quantum__rt__message(%String*)
 
 declare void @__quantum__rt__string_update_reference_count(%String*, i32)
 
-attributes #0 = { "InteropFriendly" }
-attributes #1 = { "EntryPoint" }
+attributes #0 = { "EntryPoint" }
 

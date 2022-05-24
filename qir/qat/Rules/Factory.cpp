@@ -59,6 +59,11 @@ namespace quantum
             disableRecordOutputSupport();
         }
 
+        if (config.optimizeQuantumConstants())
+        {
+            optimizeConstantResult();
+        }
+
         if (config.optimizeResultOne())
         {
             optimizeResultOne();
@@ -83,11 +88,26 @@ namespace quantum
         {
             useStaticResultAllocation();
         }
+
+        if (config.removeGetZeroOrOne())
+        {
+            removeGetZeroOrOne();
+        }
     }
 
     void RuleFactory::removeFunctionCall(String const& name)
     {
         addRule({callByNameOnly(name), deleteInstruction()});
+    }
+
+    void RuleFactory::removeGetZeroOrOne()
+    {
+        addRule(
+            {callByNameOnly("__quantum__rt__result_get_zero"), deleteUnusedInstruction()},
+            RuleSet::ReplaceDirection::ReplaceBackwards);
+        addRule(
+            {callByNameOnly("__quantum__rt__result_get_one"), deleteUnusedInstruction()},
+            RuleSet::ReplaceDirection::ReplaceBackwards);
     }
 
     void RuleFactory::resolveConstantArraySizes()
@@ -561,6 +581,7 @@ namespace quantum
             cond->replaceAllUsesWith(new_cond);
 
             // Deleting the previous condition and function to fetch one
+
             replacements.push_back({cond, nullptr});
             replacements.push_back({cap["zero"], nullptr});
 
@@ -655,6 +676,42 @@ namespace quantum
         addRule({call("__quantum__rt__result_equal", "one"_cap = get_one, "result"_cap = _), replace_branch_positive});
     }
 
+    void RuleFactory::optimizeConstantResult()
+    {
+        auto replace_constant_result = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
+            auto f1 = llvm::dyn_cast<llvm::CallInst>(cap["1"]);
+            auto f2 = llvm::dyn_cast<llvm::CallInst>(cap["2"]);
+            if (f1 == nullptr || f2 == nullptr)
+            {
+                return false;
+            }
+
+            auto n1 = f1->getCalledFunction()->getName();
+            auto n2 = f2->getCalledFunction()->getName();
+
+            bool value      = n1 == n2;
+            auto llvm_value = llvm::APInt(1, value);
+
+            // Computing offset
+            auto new_instr = llvm::ConstantInt::get(builder.getContext(), llvm_value);
+
+            val->replaceAllUsesWith(new_instr);
+
+            replacements.push_back({val, nullptr});
+            replacements.push_back({f1, nullptr});
+            replacements.push_back({f2, nullptr});
+            return true;
+        };
+
+        auto get_zero = call("__quantum__rt__result_get_zero");
+        auto get_one  = call("__quantum__rt__result_get_one");
+
+        addRule({call("__quantum__rt__result_equal", "1"_cap = get_zero, "2"_cap = get_zero), replace_constant_result});
+        addRule({call("__quantum__rt__result_equal", "1"_cap = get_zero, "2"_cap = get_one), replace_constant_result});
+        addRule({call("__quantum__rt__result_equal", "1"_cap = get_one, "2"_cap = get_zero), replace_constant_result});
+        addRule({call("__quantum__rt__result_equal", "1"_cap = get_one, "2"_cap = get_one), replace_constant_result});
+    }
+
     void RuleFactory::disableReferenceCounting()
     {
         removeFunctionCall("__quantum__rt__array_update_reference_count");
@@ -704,11 +761,11 @@ namespace quantum
         removeFunctionCall("__quantum__rt__array_end_record_output");
     }
 
-    ReplacementRulePtr RuleFactory::addRule(ReplacementRule&& rule)
+    ReplacementRulePtr RuleFactory::addRule(ReplacementRule&& rule, RuleSet::ReplaceDirection const& dir)
     {
         auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
-        rule_set_.addRule(ret);
+        rule_set_.addRule(ret, dir);
 
         return ret;
     }

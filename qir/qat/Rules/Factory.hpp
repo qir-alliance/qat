@@ -148,8 +148,14 @@ namespace quantum
         /// which removes the need for constant one.
         void optimizeResultOne();
 
-        /// Replaces branching of quantum results compared to zero. This method is not implemented yet.
+        /// Replaces branching of quantum results compared to zero.
         void optimizeResultZero();
+
+        /// Replaces branching of quantum constant results.
+        void optimizeConstantResult();
+
+        /// Removes unused quantum zeros or ones
+        void removeGetZeroOrOne();
 
         // Disabling by feature
         //
@@ -180,7 +186,9 @@ namespace quantum
       private:
         /// Helper function that moves a replacement rule into a shared pointer, adds it to the rule set
         /// and returns a copy of it.
-        ReplacementRulePtr addRule(ReplacementRule&& rule);
+        ReplacementRulePtr addRule(
+            ReplacementRule&&                rule,
+            RuleSet::ReplaceDirection const& dir = RuleSet::ReplaceDirection::ReplaceForwards);
 
         // Affected artefacts
         //

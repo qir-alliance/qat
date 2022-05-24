@@ -7,6 +7,7 @@
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "GroupingPass/GroupingPassConfiguration.hpp"
+#include "PreTransformTrimming/PreTransformTrimmingPass.hpp"
 #include "PreTransformValidation/PreTransformValidationPass.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/RuleSet.hpp"
@@ -141,13 +142,6 @@ namespace quantum
     {
         using namespace llvm;
         ILoggerPtr logger = logger_;
-        registerProfileComponent<PreTransformValidationPassConfiguration>(
-            "pre-transform-validation",
-            [logger](PreTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
-                auto& mpm = ptr->modulePassManager();
-
-                mpm.addPass(PreTransformValidationPass(cfg, logger));
-            });
 
         registerProfileComponent<LlvmPassesConfiguration>(
             "llvm-optimization", [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
@@ -237,6 +231,22 @@ namespace quantum
                 {
                     fpm.addPass(llvm::ADCEPass());
                 }
+            });
+
+        registerProfileComponent<PreTransformTrimmingPassConfiguration>(
+            "pre-transform-trimming",
+            [logger](PreTransformTrimmingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+                auto& mpm = ptr->modulePassManager();
+
+                mpm.addPass(PreTransformTrimmingPass(cfg, logger));
+            });
+
+        registerProfileComponent<PreTransformValidationPassConfiguration>(
+            "pre-transform-validation",
+            [logger](PreTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+                auto& mpm = ptr->modulePassManager();
+
+                mpm.addPass(PreTransformValidationPass(cfg, logger));
             });
 
         registerProfileComponent<TransformationRulesPassConfiguration>(

@@ -295,7 +295,7 @@ source_filename = "IrManipulationTestHelper.ll"
         {
             script += "declare " + op + "\n";
         }
-        script += "\nattributes #0 = { \"InteropFriendly\" }\n";
+        script += "\nattributes #0 = { \"EntryPoint\" }\n";
         return script;
     }
 

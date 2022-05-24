@@ -57,6 +57,8 @@ namespace quantum
             ret.disable_record_output_support_     = false;
             ret.optimize_result_one_               = false;
             ret.optimize_result_zero_              = false;
+            ret.optimize_qauntum_constants_        = false;
+            ret.remove_get_one_or_zero_            = false;
             ret.use_static_qubit_array_allocation_ = false;
             ret.use_static_qubit_allocation_       = false;
             ret.use_static_result_allocation_      = false;
@@ -93,6 +95,16 @@ namespace quantum
             return optimize_result_zero_;
         }
 
+        bool optimizeQuantumConstants() const
+        {
+            return optimize_qauntum_constants_;
+        }
+
+        bool removeGetZeroOrOne() const
+        {
+            return remove_get_one_or_zero_;
+        }
+
         bool useStaticQubitArrayAllocation() const
         {
             return use_static_qubit_array_allocation_;
@@ -119,6 +131,7 @@ namespace quantum
                 disable_reference_counting_ == false && disable_alias_counting_ == false &&
                 disable_string_support_ == false && disable_record_output_support_ == false &&
                 optimize_result_one_ == false && optimize_result_zero_ == false &&
+                optimize_qauntum_constants_ == false && remove_get_one_or_zero_ == false &&
                 use_static_qubit_array_allocation_ == false && use_static_qubit_allocation_ == false &&
                 use_static_result_allocation_ == false);
         }
@@ -134,6 +147,8 @@ namespace quantum
                 disable_record_output_support_ == ref.disable_record_output_support_ &&
                 optimize_result_one_ == ref.optimize_result_one_ &&
                 optimize_result_zero_ == ref.optimize_result_zero_ &&
+                remove_get_one_or_zero_ == ref.remove_get_one_or_zero_ &&
+                optimize_qauntum_constants_ == ref.optimize_qauntum_constants_ &&
                 use_static_qubit_array_allocation_ == ref.use_static_qubit_array_allocation_ &&
                 use_static_qubit_allocation_ == ref.use_static_qubit_allocation_ &&
                 use_static_result_allocation_ == ref.use_static_result_allocation_);
@@ -152,6 +167,8 @@ namespace quantum
         /// @{
         bool optimize_result_one_{true};
         bool optimize_result_zero_{true};
+        bool optimize_qauntum_constants_{true};
+        bool remove_get_one_or_zero_{true};
         /// @}
 
         bool use_static_qubit_array_allocation_{true};
