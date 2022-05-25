@@ -5,21 +5,38 @@ import tempfile
 
 import subprocess
 import pytest
-from TargetTestScripts import available1, SCRIPT_DIR
+from TargetTestScripts import available1, available3, available4, SCRIPT_DIR
 
 BASE_DIR = os.path.dirname(__file__)
 TEMPLATE_DIR = os.path.join(BASE_DIR, "..", "template")
 
 
 class QsharpProject(object):
-    def __init__(self, filename):
+    def __init__(self, filename, type, version, channel):
         self.filename = filename
+        self.type = type
+        self.version = version
+        self.channel = ""
+        if channel:
+            self.channel = "-{}".format(channel)
 
     def __enter__(self):
         self.project_dir = tempfile.mkdtemp()
 
         # Copying project
         shutil.copytree(TEMPLATE_DIR, self.project_dir, dirs_exist_ok=True)
+
+        # Updating project file
+        with open(os.path.join(TEMPLATE_DIR, "Example.csproj"), "r") as fb:
+            project_template = fb.read()
+
+        with open(os.path.join(self.project_dir, "Example.csproj"), "w") as fb:
+            project_template = project_template.replace("{{type}}", self.type)
+            project_template = project_template.replace("{{version}}", self.version)
+            project_template = project_template.replace("{{channel}}", self.channel)
+
+            fb.write(project_template)
+
         self.project_file = os.path.join(self.project_dir, "Example.qs")
 
         shutil.copyfile(self.filename, self.project_file)
@@ -77,24 +94,29 @@ class QsharpProject(object):
 def generate_test(project_file: str):
     @pytest.fixture()
     def response():
-        return QsharpProject(project_file)
+        def x(type, version, channel):
+            return QsharpProject(project_file, type, version, channel)
+        return x
 
     return response
 
 
-target1_tests = [
+def create_test_set(prefix, availables):
+    targets = []
+    for fr in available1:
+        f = os.path.join(SCRIPT_DIR, fr)
+        _, name = f.rsplit("/", 1)
 
-]
+        if not os.path.isfile(f):
+            continue
 
-for fr in available1:
-    f = os.path.join(SCRIPT_DIR, fr)
-# for f in glob.glob(os.path.join(BASE_DIR, "*.qs")):
-    _, name = f.rsplit("/", 1)
+        name = prefix + "_" + name.replace("-", "_").replace(".", "_")
+        globals()[name] = generate_test(f)
+        targets.append(name)
 
-    if not os.path.isfile(f):
-        continue
+    return targets
 
-    name = "target1_"+name.replace("-", "_").replace(".", "_")
-    locals()[name] = generate_test(f)
-    print(locals())
-    target1_tests.append(name)
+
+target1_tests = create_test_set("target1", available1)
+target3_tests = create_test_set("target3", available3)
+target4_tests = create_test_set("target4", available4)

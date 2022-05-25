@@ -1,6 +1,4 @@
-from target1 import target1_tests
-from target3 import target3_tests
-from target4 import target4_tests
+from target1 import target1_tests, target3_tests, target4_tests
 
 
 import subprocess
@@ -67,9 +65,29 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
     return ret
 
 
+VERSION = "0.24.41975"
+CHANNEL = "alpha"
+
+
 @pytest.mark.parametrize("test_name", target1_tests)
-def test_taget_opeorations(test_name, request):
-    with request.getfixturevalue(test_name) as project:
+def test_target1(test_name, request):
+    with request.getfixturevalue(test_name)("Type1", VERSION, CHANNEL) as project:
         assert project.compile()
-        assert validate_circuit(test_name, "default", project.qir_filename, [
+        assert validate_circuit(test_name, "provider_1", project.qir_filename, [
+                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
+
+
+@pytest.mark.parametrize("test_name", target3_tests)
+def test_target3(test_name, request):
+    with request.getfixturevalue(test_name)("Type3", VERSION, CHANNEL) as project:
+        assert project.compile()
+        assert validate_circuit(test_name, "provider_3", project.qir_filename, [
+                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
+
+
+@pytest.mark.parametrize("test_name", target4_tests)
+def test_target4(test_name, request):
+    with request.getfixturevalue(test_name)("Type4", VERSION, CHANNEL) as project:
+        assert project.compile()
+        assert validate_circuit(test_name, "provider_4", project.qir_filename, [
                                 "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])

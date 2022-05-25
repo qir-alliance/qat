@@ -27,7 +27,7 @@ available1 = [
     "Decompositions/CZControlled.qs",
     "Decompositions/CZAdjointControlled.qs",
     "Decompositions/CZControlledAdjoint.qs",
-    # TODO(tfr):   "Decompositions/ExpFrac.qs",
+    # TODO(tfr): "Decompositions/ExpFrac.qs",
     # TODO(tfr): "Decompositions/ExpFracAdjoint.qs",
     # TODO(tfr): "Decompositions/ExpFracControlled.qs",
     # TODO(tfr): "Decompositions/ExpFracAdjointControlled.qs",
