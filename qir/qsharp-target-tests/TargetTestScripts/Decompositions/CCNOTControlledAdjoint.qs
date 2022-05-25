@@ -15,7 +15,7 @@ namespace QATSample {
       use control3 = Qubit();      
       use target = Qubit();
 
-      Adjoint Controlled CCNOT([control1], (control2, control3, target));
+      Controlled Adjoint CCNOT([control1], (control2, control3, target));
 
       return Zero;
     }

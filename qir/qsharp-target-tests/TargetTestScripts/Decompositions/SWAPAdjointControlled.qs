@@ -10,12 +10,11 @@ namespace QATSample {
     @EntryPoint()
     operation Main(): Result
     {
-      use control1 = Qubit();
-      use control2 = Qubit();
-      use control3 = Qubit();      
-      use target = Qubit();
+      use control = Qubit();
+      use qubit1 = Qubit();
+      use qubit2 = Qubit();
 
-      Adjoint Controlled CCNOT([control1], (control2, control3, target));
+      Adjoint Controlled SWAP([control], (qubit1, qubit2));
 
       return Zero;
     }
