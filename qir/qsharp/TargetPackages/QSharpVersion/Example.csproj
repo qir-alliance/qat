@@ -4,7 +4,6 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <IncludeProviderPackages>False</IncludeProviderPackages>
-    <ExecutionTarget>quantinuum.qpu</ExecutionTarget>
     <TargetCapability>AdaptiveExecution</TargetCapability>
     <QirGeneration>true</QirGeneration>    
   </PropertyGroup>
@@ -12,7 +11,7 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Quantum.Type1.Core" Version="0.24.41975"  />
+    <PackageReference Include="Microsoft.Quantum.Type3.Core" Version="0.24.41975"  />
   </ItemGroup>
 
 </Project>

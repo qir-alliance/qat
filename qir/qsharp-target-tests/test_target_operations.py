@@ -1,4 +1,4 @@
-from target1 import target1_tests, target3_tests, target4_tests
+from TargetTestScripts import target1_tests, target3_tests, target4_tests
 
 
 import subprocess
@@ -77,7 +77,7 @@ def test_target1(test_name, request):
                                 "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
 
 
-@pytest.mark.parametrize("test_name", target3_tests)
+@ pytest.mark.parametrize("test_name", target3_tests)
 def test_target3(test_name, request):
     with request.getfixturevalue(test_name)("Type3", VERSION, CHANNEL) as project:
         assert project.compile()
@@ -85,7 +85,7 @@ def test_target3(test_name, request):
                                 "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
 
 
-@pytest.mark.parametrize("test_name", target4_tests)
+@ pytest.mark.parametrize("test_name", target4_tests)
 def test_target4(test_name, request):
     with request.getfixturevalue(test_name)("Type4", VERSION, CHANNEL) as project:
         assert project.compile()
