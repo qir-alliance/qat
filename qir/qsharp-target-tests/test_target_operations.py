@@ -91,6 +91,3 @@ def test_target3(test_name, request):
         assert project.compile()
         assert validate_circuit(test_name, "provider_3", project.qir_filename, [
                                 "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
-
-
-ways-inline", "--apply"])
