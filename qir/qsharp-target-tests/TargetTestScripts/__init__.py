@@ -124,6 +124,14 @@ available1 = [
     "Decompositions/ZControlled.qs",
     "Decompositions/ZAdjointControlled.qs",
     "Decompositions/ZControlledAdjoint.qs",
+
+
+    "CodeBlocks/QubitArrays1.qs",
+    "CodeBlocks/QubitArrays2.qs",
+    # TODO(tfr): Does not compile "CodeBlocks/Range1.qs",
+    "CodeBlocks/OffsetBySix.qs",
+    "CodeBlocks/ConstantCircuitUsingMutables1.qs",
+    "CodeBlocks/Branching1.qs",
 ]
 
 available3 = [
@@ -242,6 +250,14 @@ available3 = [
     "Decompositions/ZControlled.qs",
     "Decompositions/ZAdjointControlled.qs",
     "Decompositions/ZControlledAdjoint.qs",
+
+
+    "CodeBlocks/QubitArrays1.qs",
+    "CodeBlocks/QubitArrays2.qs",
+    # TODO(tfr): Does not compile "CodeBlocks/Range1.qs",
+    "CodeBlocks/OffsetBySix.qs",
+    "CodeBlocks/ConstantCircuitUsingMutables1.qs",
+    "CodeBlocks/Branching1.qs",
 ]
 
 available4 = [
@@ -360,6 +376,14 @@ available4 = [
     "Decompositions/ZControlled.qs",
     "Decompositions/ZAdjointControlled.qs",
     "Decompositions/ZControlledAdjoint.qs",
+
+
+    "CodeBlocks/QubitArrays1.qs",
+    "CodeBlocks/QubitArrays2.qs",
+    # TODO(tfr): Does not compile "CodeBlocks/Range1.qs",
+    "CodeBlocks/OffsetBySix.qs",
+    # TODO(tfr): Does not compile "CodeBlocks/ConstantCircuitUsingMutables1.qs",
+    # TODO(tfr): Does not compile "CodeBlocks/Branching1.qs",
 ]
 
 
@@ -473,6 +497,8 @@ def create_test_set(prefix, availables):
 
         name = prefix + "_" + name.replace("-", "_").replace(".", "_")
         globals()[name] = generate_test(f)
+        print(name)
+
         targets.append(name)
 
     return targets

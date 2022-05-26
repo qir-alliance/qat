@@ -65,8 +65,8 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
     return ret
 
 
-VERSION = "0.24.41975"
-CHANNEL = "alpha"
+VERSION = os.environ.get("QSHARP_VERSION", "0.24.41975")
+CHANNEL = os.environ.get("QSHARP_CHANNEL", "alpha")
 
 
 @pytest.mark.parametrize("test_name", target4_tests)
