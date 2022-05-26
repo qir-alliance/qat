@@ -10,10 +10,12 @@ namespace QATSample {
     @EntryPoint()
     operation Main(): Result
     {
-let desired = Zero;
-use target = Qubit();
- SetToBasisState(desired, target);
- return Zero;
+      let theta = 0.9151884577207765;
+      use qubit = Qubit();
+
+      Adjoint R1(theta, qubit);
+
+      return Zero;
     }
 }
 

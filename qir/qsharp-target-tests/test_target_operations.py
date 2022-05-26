@@ -69,25 +69,26 @@ VERSION = "0.24.41975"
 CHANNEL = "alpha"
 
 
-@pytest.mark.parametrize("test_name", target1_tests)
-def test_target1(test_name, request):
-    with request.getfixturevalue(test_name)("Type1", VERSION, CHANNEL) as project:
-        assert project.compile()
-        assert validate_circuit(test_name, "provider_1", project.qir_filename, [
-                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
-
-
-@ pytest.mark.parametrize("test_name", target3_tests)
-def test_target3(test_name, request):
-    with request.getfixturevalue(test_name)("Type3", VERSION, CHANNEL) as project:
-        assert project.compile()
-        assert validate_circuit(test_name, "provider_3", project.qir_filename, [
-                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
-
-
-@ pytest.mark.parametrize("test_name", target4_tests)
+@pytest.mark.parametrize("test_name", target4_tests)
 def test_target4(test_name, request):
-    with request.getfixturevalue(test_name)("Type4", VERSION, CHANNEL) as project:
+    with request.getfixturevalue(test_name)("rigetti.qpu", VERSION, CHANNEL) as project:
         assert project.compile()
         assert validate_circuit(test_name, "provider_4", project.qir_filename, [
-                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
+                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--disable-grouping", "--replace-qubit-on-reset", "--reindex-qubits",  "--apply"])
+
+
+# @pytest.mark.parametrize("test_name", target1_tests)
+# def test_target1(test_name, request):
+#     with request.getfixturevalue(test_name)("quantinuum.qpu", VERSION, CHANNEL) as project:
+#         assert project.compile()
+#         assert validate_circuit(test_name, "provider_1", project.qir_filename, [
+#                                 "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
+#
+#
+# @pytest.mark.parametrize("test_name", target3_tests)
+# def test_target3(test_name, request):
+#     with request.getfixturevalue(test_name)("qci.qpu", VERSION, CHANNEL) as project:
+#         assert project.compile()
+#         assert validate_circuit(test_name, "provider_3", project.qir_filename, [
+#                                 "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
+#
