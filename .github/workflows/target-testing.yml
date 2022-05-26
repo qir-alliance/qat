@@ -1,4 +1,4 @@
-name: "Linux CI"
+name: "Q# target testing"
 
 on:
   push:
