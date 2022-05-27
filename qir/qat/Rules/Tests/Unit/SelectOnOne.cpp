@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
-#include "PreTransformValidation/PreTransformValidationPassConfiguration.hpp"
+#include "PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/ReplacementRule.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
@@ -63,7 +63,7 @@ TEST(RuleSetTestSuite, SelectOnOne)
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
 
-    configuration_manager.setConfig(PreTransformValidationPassConfiguration::createDisabled());
+    configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 

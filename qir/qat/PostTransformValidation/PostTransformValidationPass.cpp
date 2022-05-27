@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "PreTransformValidation/PreTransformValidationPass.hpp"
+#include "PostTransformValidation/PostTransformValidationPass.hpp"
 
 #include "Llvm/Llvm.hpp"
 
@@ -13,15 +13,15 @@ namespace microsoft
 namespace quantum
 {
 
-    PreTransformValidationPass::PreTransformValidationPass(
-        PreTransformValidationPassConfiguration const& cfg,
-        ILoggerPtr const&                              logger)
+    PostTransformValidationPass::PostTransformValidationPass(
+        PostTransformValidationPassConfiguration const& cfg,
+        ILoggerPtr const&                               logger)
       : config_{cfg}
       , logger_{logger}
     {
     }
 
-    llvm::PreservedAnalyses PreTransformValidationPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
+    llvm::PreservedAnalyses PostTransformValidationPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
     {
         if (config_.requireStraightLineCode())
         {
@@ -73,7 +73,7 @@ namespace quantum
         return llvm::PreservedAnalyses::all();
     }
 
-    bool PreTransformValidationPass::isRequired()
+    bool PostTransformValidationPass::isRequired()
     {
         return true;
     }
