@@ -120,7 +120,7 @@ namespace quantum
         if (tryParsePipelineText<llvm::ModulePassManager>(*pass_builder_, pipeline_start_ep_pipeline_))
         {
             pass_builder_->registerPipelineStartEPCallback(
-                [this](llvm::ModulePassManager& pass_manager)
+                [this](llvm::ModulePassManager& pass_manager, llvm::PassBuilder::OptimizationLevel)
                 {
                     llvm::ExitOnError error_safeguard("Unable to parse PipelineStartEP pipeline: ");
                     error_safeguard(pass_builder_->parsePassPipeline(pass_manager, pipeline_start_ep_pipeline_));
@@ -130,7 +130,7 @@ namespace quantum
         if (tryParsePipelineText<llvm::FunctionPassManager>(*pass_builder_, optimizer_last_ep_pipeline_))
         {
             pass_builder_->registerOptimizerLastEPCallback(
-                [this](llvm::ModulePassManager& pass_manager)
+                [this](llvm::ModulePassManager& pass_manager, llvm::PassBuilder::OptimizationLevel)
                 {
                     llvm::ExitOnError error_safeguard("Unable to parse OptimizerLastEP pipeline: ");
                     error_safeguard(pass_builder_->parsePassPipeline(pass_manager, optimizer_last_ep_pipeline_));
