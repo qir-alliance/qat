@@ -3,6 +3,7 @@
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
 #include "GroupingPass/GroupingPass.hpp"
+#include "PreTransformValidation/PreTransformValidationPassConfiguration.hpp"
 #include "Rules/Factory.hpp"
 #include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
@@ -64,9 +65,9 @@ quantum:                                          ; preds = %load
   tail call void @__quantum__qis__h__body(%Qubit* %2)
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
-    {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set) {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.useStaticQubitArrayAllocation();
     };
@@ -79,11 +80,10 @@ quantum:                                          ; preds = %load
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
+    configuration_manager.setConfig(PreTransformValidationPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 
-    llvm::errs() << *ir_manip->module() << "\n";
-
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
-        {"tail call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 2 to %Qubit*))"}));
+        {"tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))"}));
 }

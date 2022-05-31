@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 #include "Generators/LlvmPassesConfiguration.hpp"
+#include "Generators/PostTransformConfig.hpp"
 #include "Generators/ProfileGenerator.hpp"
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "GroupingPass/GroupingPassConfiguration.hpp"
+#include "PreTransformTrimming/PreTransformTrimmingPass.hpp"
+#include "PreTransformValidation/PreTransformValidationPass.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/RuleSet.hpp"
 #include "StaticResourceComponent/AllocationAnalysisPass.hpp"
@@ -232,6 +235,22 @@ namespace quantum
                 }
             });
 
+        registerProfileComponent<PreTransformTrimmingPassConfiguration>(
+            "pre-transform-trimming",
+            [logger](PreTransformTrimmingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+                auto& mpm = ptr->modulePassManager();
+
+                mpm.addPass(PreTransformTrimmingPass(cfg, logger));
+            });
+
+        registerProfileComponent<PreTransformValidationPassConfiguration>(
+            "pre-transform-validation",
+            [logger](PreTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+                auto& mpm = ptr->modulePassManager();
+
+                mpm.addPass(PreTransformValidationPass(cfg, logger));
+            });
+
         registerProfileComponent<TransformationRulesPassConfiguration>(
             "transformation-rules",
             [logger](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
@@ -240,24 +259,40 @@ namespace quantum
 
                 // Defining the mapping
                 RuleSet rule_set;
-                auto    factory =
-                    RuleFactory(rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager());
+                auto    factory = RuleFactory(
+                    rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), logger);
                 factory.usingConfiguration(ptr->configurationManager().get<FactoryConfiguration>());
 
                 // Creating profile pass
                 auto pass = TransformationRulesPass(std::move(rule_set), cfg, &profile);
                 pass.setLogger(logger);
                 ret.addPass(std::move(pass));
-
-                // TODO(issue-59): Move to a separate pass.
-                ret.addPass(createModuleToFunctionPassAdaptor(llvm::InstCombinePass(1000)));
-                ret.addPass(createModuleToFunctionPassAdaptor(llvm::AggressiveInstCombinePass()));
-                ret.addPass(createModuleToFunctionPassAdaptor(llvm::SCCPPass()));
-                ret.addPass(createModuleToFunctionPassAdaptor(llvm::SimplifyCFGPass()));
             });
 
-        // TODO(issue-59): Causes memory sanitation issue
-        // replicateProfileComponent("llvm-optimization");
+        registerProfileComponent<PostTransformConfig>(
+            "post-transform", [logger](PostTransformConfig const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+                auto& ret = ptr->functionPassManager();
+
+                if (cfg.shouldAddInstCombinePass())
+                {
+                    ret.addPass(llvm::InstCombinePass(1000));
+                }
+
+                if (cfg.shouldAddAggressiveInstCombinePass())
+                {
+                    ret.addPass(llvm::AggressiveInstCombinePass());
+                }
+
+                if (cfg.shouldAddSccpPass())
+                {
+                    ret.addPass(llvm::SCCPPass());
+                }
+
+                if (cfg.shouldAddSimplifyCfgPass())
+                {
+                    ret.addPass(llvm::SimplifyCFGPass());
+                }
+            });
 
         registerProfileComponent<StaticResourceComponentConfiguration>(
             "static-resource",
@@ -267,7 +302,7 @@ namespace quantum
                 fam.registerPass([&] { return AllocationAnalysisPass(cfg, logger); });
 
                 auto& fpm = ptr->functionPassManager();
-                fpm.addPass(AllocationAnalysisPassPrinter());
+
                 fpm.addPass(ReplaceQubitOnResetPass(cfg, logger));
                 fpm.addPass(QubitRemapPass(cfg, logger));
 

@@ -32,6 +32,8 @@ namespace quantum
         config.addParameter(add_ir_debug_info_, "add-ir-debug", "Annotates the IR with debug information.");
         config.addParameter(strip_existing_debug_, "strip-existing-dbg", "Strips existing debug symbols.");
 
+        config.addParameter(output_file_, "output", "Output file. If empty, the output is sent to stdout.");
+
         config.addParameter(
             save_report_to_, "save-logs", "Saves the logs report to specified filename in JSON format.");
     }
@@ -48,6 +50,12 @@ namespace quantum
 
     String QatConfig::profile() const
     {
+        if (profile_ == "base")
+        {
+            // TODO(tfr): Remove warning upon final release.
+            llvm::errs() << "; WARNING: 'base' profile renamed to 'default'. Please update your scripts.\n";
+            return "default";
+        }
         return profile_;
     }
 
@@ -109,6 +117,11 @@ namespace quantum
     bool QatConfig::stripExistingDebugInfo() const
     {
         return strip_existing_debug_;
+    }
+
+    String const& QatConfig::outputFile() const
+    {
+        return output_file_;
     }
 
     String const& QatConfig::saveReportTo() const

@@ -4,6 +4,7 @@
 
 #include "AllocationManager/AllocationManager.hpp"
 #include "Commandline/ConfigurationManager.hpp"
+#include "Logging/ILogger.hpp"
 #include "QatTypes/QatTypes.hpp"
 #include "Rules/FactoryConfig.hpp"
 #include "Rules/ReplacementRule.hpp"
@@ -29,6 +30,9 @@ namespace quantum
         /// Allocation manager pointer used to hold allocation managers
         using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
 
+        /// Interface to logger
+        using ILoggerPtr = ILogger::ILoggerPtr;
+
         // Constructor configuration. Explicit construction with
         // rule set to be configured, which can be moved using move
         // semantics. No copy allowed.
@@ -37,7 +41,8 @@ namespace quantum
         RuleFactory(
             RuleSet&             rule_set,
             AllocationManagerPtr qubit_alloc_manager,
-            AllocationManagerPtr result_alloc_manager);
+            AllocationManagerPtr result_alloc_manager,
+            ILoggerPtr           logger);
         RuleFactory()                   = delete;
         RuleFactory(RuleFactory const&) = delete;
         RuleFactory(RuleFactory&&)      = default;
@@ -143,8 +148,14 @@ namespace quantum
         /// which removes the need for constant one.
         void optimizeResultOne();
 
-        /// Replaces branching of quantum results compared to zero. This method is not implemented yet.
+        /// Replaces branching of quantum results compared to zero.
         void optimizeResultZero();
+
+        /// Replaces branching of quantum constant results.
+        void optimizeConstantResult();
+
+        /// Removes unused quantum zeros or ones
+        void removeGetZeroOrOne();
 
         // Disabling by feature
         //
@@ -175,7 +186,9 @@ namespace quantum
       private:
         /// Helper function that moves a replacement rule into a shared pointer, adds it to the rule set
         /// and returns a copy of it.
-        ReplacementRulePtr addRule(ReplacementRule&& rule);
+        ReplacementRulePtr addRule(
+            ReplacementRule&&                rule,
+            RuleSet::ReplaceDirection const& dir = RuleSet::ReplaceDirection::ReplaceForwards);
 
         // Affected artefacts
         //
@@ -190,6 +203,9 @@ namespace quantum
 
         /// Result allocation manager which is used in the case of static results allocation.
         AllocationManagerPtr result_alloc_manager_{nullptr};
+
+        /// Logger used to emit messages during transformations
+        ILoggerPtr logger_{nullptr};
 
         /// Configuration
         //

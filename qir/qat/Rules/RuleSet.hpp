@@ -32,6 +32,12 @@ namespace quantum
         using Builder              = ReplacementRule::Builder;
         using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
 
+        enum ReplaceDirection
+        {
+            ReplaceForwards,
+            ReplaceBackwards
+        };
+
         // Constructors
         //
         RuleSet()               = default;
@@ -52,14 +58,17 @@ namespace quantum
         /// is found. The function returns true if a pattern is matched and
         /// and the replacement was a success. In all other cases, it returns
         /// false.
-        bool matchAndReplace(Instruction* value, Replacements& replacements);
+        bool matchAndReplace(
+            Instruction*            value,
+            Replacements&           replacements,
+            ReplaceDirection const& dir = ReplaceForwards);
 
         // Set up and configuration
         //
 
         /// Adds a new replacement rule to the set.
-        void addRule(ReplacementRulePtr const& rule);
-        void addRule(ReplacementRule&& rule);
+        void addRule(ReplacementRulePtr const& rule, ReplaceDirection const& dir = ReplaceForwards);
+        void addRule(ReplacementRule&& rule, ReplaceDirection const& dir = ReplaceForwards);
 
         /// Clears the rule set for all rules.
         void clear();
@@ -68,7 +77,8 @@ namespace quantum
         uint64_t size() const;
 
       private:
-        Rules rules_; ///< Rules that describes QIR mappings
+        Rules rules_;           ///< Primary rules that describes QIR mappings
+        Rules rules_backwards_; ///< Secondary rules which are used in backwards mode
     };
 
 } // namespace quantum

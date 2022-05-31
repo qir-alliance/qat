@@ -51,9 +51,9 @@ TEST(RuleSetTestSuite, DISABLED_DisablingArrayhAliasCounting)
     call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
-    {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set) {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableAliasCounting();
     };
@@ -89,9 +89,9 @@ TEST(RuleSetTestSuite, DisablingStringAliasCounting)
     call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
-    {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set) {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableAliasCounting();
     };
@@ -129,9 +129,9 @@ TEST(RuleSetTestSuite, DisablingResultAliasCounting)
     call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
-    {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set) {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableAliasCounting();
     };

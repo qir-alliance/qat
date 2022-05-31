@@ -60,6 +60,12 @@ namespace quantum
         /// String representation of the bound value.
         String value() override;
 
+        /// Pointer to underlying data.
+        void* pointer() const override;
+
+        /// Type index of contained data
+        std::type_index valueType() const override;
+
       private:
         /// Generic function to setup arguments of any type.
         template <typename R> bool setupArguments(ParameterParser&, R const&);
@@ -229,6 +235,16 @@ namespace quantum
         {
             bind_ = parser.get(name());
         }
+    }
+
+    template <typename T> void* ConfigBind<T>::pointer() const
+    {
+        return static_cast<void*>(&bind_);
+    }
+
+    template <typename T> std::type_index ConfigBind<T>::valueType() const
+    {
+        return std::type_index(typeid(T));
     }
 
 } // namespace quantum

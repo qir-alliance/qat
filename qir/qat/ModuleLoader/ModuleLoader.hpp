@@ -96,7 +96,7 @@ namespace quantum
             SingleModuleTransformation transformation;
             if (!transformation.apply(module.get()))
             {
-                llvm::errs() << "Failed to transform " << input_file << "\n";
+                llvm::errs() << "Failed to prepare " << input_file << " using single module transformations.\n";
                 return false;
             }
 

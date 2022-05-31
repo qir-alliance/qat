@@ -56,9 +56,9 @@ TEST(RuleSetTestSuite, DisablingRecordOutput)
     call void @__quantum__rt__array_end_record_output()    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
-    {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set) {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableRecordOutputSupport();
     };

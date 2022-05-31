@@ -24,7 +24,7 @@ namespace quantum
     {
       public:
         using ValidatorPtr = std::unique_ptr<Validator>;
-        using ILoggerPtr   = std::shared_ptr<ILogger>;
+        using ILoggerPtr   = ILogger::ILoggerPtr;
 
         // Constructors
         //
@@ -49,7 +49,7 @@ namespace quantum
         //
 
         /// Validates that a module complies with the specified QIR profile. Returns true if the module is
-        /// valid and false otherwize.
+        /// valid and false otherwise.
         bool validate(llvm::Module& module);
 
         /// Returns the logger. This value may be null if no logger was set.

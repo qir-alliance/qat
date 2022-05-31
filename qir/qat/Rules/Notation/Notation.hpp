@@ -174,6 +174,9 @@ namespace quantum
         /// ```
         /// to delete the instructions that calls functions with the name `name`.
         ReplacerFunction deleteInstruction();
+
+        /// Deletes an instruction if it is unused.
+        ReplacerFunction deleteUnusedInstruction();
         /// @}
 
         /// @addtogroup shorthandNotation

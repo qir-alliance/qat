@@ -149,8 +149,6 @@ namespace quantum
         llvm::FunctionAnalysisManager& fam)
     {
         auto& result = fam.getResult<AllocationAnalysisPass>(module);
-        llvm::errs() << result.largest_qubit_index << " qc cc blocks.\n";
-        llvm::errs() << result.largest_result_index << " qc mc cc blocks.\n";
 
         return llvm::PreservedAnalyses::all();
     }

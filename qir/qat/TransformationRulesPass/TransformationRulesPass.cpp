@@ -483,6 +483,13 @@ namespace quantum
         std::unordered_set<llvm::Value*> already_removed;
         for (auto it = replacements_.rbegin(); it != replacements_.rend(); ++it)
         {
+            // Ignoring values that were already removed.
+            if (already_removed.find(it->first) != already_removed.end())
+            {
+                continue;
+            }
+            already_removed.insert(it->first);
+
             auto instr1 = llvm::dyn_cast<llvm::Instruction>(it->first);
 
             if (instr1 == nullptr)
@@ -492,16 +499,6 @@ namespace quantum
                 logger_->internalError("Cannot replace with non-instruction replacements");
                 continue;
             }
-
-            // Checking if by accident the same instruction was added
-            if (already_removed.find(instr1) != already_removed.end())
-            {
-                requireLogger();
-                logger_->setLocationFromValue(instr1);
-                logger_->internalError("Instruction was already removed.");
-                continue;
-            }
-            already_removed.insert(instr1);
 
             // Checking if have a replacement for the instruction
             if (it->second != nullptr)
@@ -521,6 +518,7 @@ namespace quantum
             {
                 // ... otherwize we delete the the instruction
                 // Removing all uses
+
                 if (!instr1->use_empty())
                 {
                     auto type = instr1->getType();
@@ -764,8 +762,11 @@ namespace quantum
         }
 
         // Applying rule set
+
         if (config_.shouldTransformExecutionPathOnly())
         {
+            // TODO(tfr): This implementation path lacks backwards replacement (see else section)
+
             // We only apply transformation rules to code which is reachable
             // via the execution path.
             runApplyRules(module, mam);
@@ -778,13 +779,30 @@ namespace quantum
             for (auto& function : module)
             {
 
-                // Transforming each function
+                // Creating a list of all instructions in the function
+                // and matching rules in forward direction
                 for (auto& block : function)
                 {
                     for (auto& instr : block)
                     {
                         rule_set_.matchAndReplace(&instr, replacements_);
                     }
+                }
+
+                // Matching in reverse order
+                std::vector<llvm::Instruction*> instructions;
+                for (auto& block : function)
+                {
+                    for (auto& instr : block)
+                    {
+                        instructions.push_back(&instr);
+                    }
+                }
+
+                std::reverse(instructions.begin(), instructions.end());
+                for (auto instr : instructions)
+                {
+                    rule_set_.matchAndReplace(instr, replacements_, RuleSet::ReplaceDirection::ReplaceBackwards);
                 }
             }
 

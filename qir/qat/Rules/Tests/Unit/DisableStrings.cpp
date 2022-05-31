@@ -34,6 +34,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
         llvm::outs() << ir_manip->getErrorMessage() << "\n";
         exit(-1);
     }
+
     return ir_manip;
 }
 
@@ -50,9 +51,9 @@ TEST(RuleSetTestSuite, DisablingStrings)
     call void @__quantum__rt__string_update_reference_count(%String* %0, i32 -11)          
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
-    {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set) {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableStringSupport();
     };

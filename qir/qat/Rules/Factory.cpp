@@ -26,10 +26,12 @@ namespace quantum
     RuleFactory::RuleFactory(
         RuleSet&             rule_set,
         AllocationManagerPtr qubit_alloc_manager,
-        AllocationManagerPtr result_alloc_manager)
+        AllocationManagerPtr result_alloc_manager,
+        ILoggerPtr           logger)
       : rule_set_{rule_set}
       , qubit_alloc_manager_{std::move(qubit_alloc_manager)}
       , result_alloc_manager_{std::move(result_alloc_manager)}
+      , logger_{std::move(logger)}
     {
     }
 
@@ -57,6 +59,11 @@ namespace quantum
             disableRecordOutputSupport();
         }
 
+        if (config.optimizeQuantumConstants())
+        {
+            optimizeConstantResult();
+        }
+
         if (config.optimizeResultOne())
         {
             optimizeResultOne();
@@ -81,11 +88,26 @@ namespace quantum
         {
             useStaticResultAllocation();
         }
+
+        if (config.removeGetZeroOrOne())
+        {
+            removeGetZeroOrOne();
+        }
     }
 
     void RuleFactory::removeFunctionCall(String const& name)
     {
         addRule({callByNameOnly(name), deleteInstruction()});
+    }
+
+    void RuleFactory::removeGetZeroOrOne()
+    {
+        addRule(
+            {callByNameOnly("__quantum__rt__result_get_zero"), deleteUnusedInstruction()},
+            RuleSet::ReplaceDirection::ReplaceBackwards);
+        addRule(
+            {callByNameOnly("__quantum__rt__result_get_one"), deleteUnusedInstruction()},
+            RuleSet::ReplaceDirection::ReplaceBackwards);
     }
 
     void RuleFactory::resolveConstantArraySizes()
@@ -115,12 +137,22 @@ namespace quantum
 
     void RuleFactory::inlineCallables()
     {
+        auto logger = logger_;
+
         /// Array access replacement
-        auto callable_replacer = [](Builder&, Value* val, Captures& captures, Replacements&)
-        {
-            llvm::errs() << "FOUND CALLABLE\n";
-            llvm::errs() << *val << "\n";
-            llvm::errs() << "Calling " << *captures["function"] << "\n";
+        auto callable_replacer = [logger](Builder&, Value* val, Captures&, Replacements&) {
+            if (logger)
+            {
+                logger->setLocationFromValue(val);
+                logger->internalError("Support for callable replacement is not implemented yet.");
+            }
+            else
+            {
+                throw std::runtime_error(
+                    "No logger present - internal error: Support for callable replacement is not implemented "
+                    "yet.\n");
+            }
+
             return false;
         };
 
@@ -293,6 +325,7 @@ namespace quantum
 
     void RuleFactory::useStaticQubitAllocation()
     {
+        auto logger              = logger_;
         auto qubit_alloc_manager = qubit_alloc_manager_;
         auto default_iw          = default_integer_width_;
         auto allocation_replacer =
@@ -381,37 +414,37 @@ namespace quantum
         // call void @__quantum__rt__qubit_release(%Qubit* %leftMessage)
         addRule(
             {call("__quantum__rt__qubit_release", "name"_cap = _),
-             [qubit_alloc_manager, deleter](Builder& builder, Value* val, Captures& cap, Replacements& rep)
-             {
+             [qubit_alloc_manager, deleter, logger](Builder& builder, Value* val, Captures& cap, Replacements& rep) {
                  // Getting the name
                  auto name = cap["name"]->getName().str();
 
                  auto* phi_node = llvm::dyn_cast<llvm::PHINode>(cap["name"]);
                  if (phi_node != nullptr)
                  {
-                     llvm::errs() << "Warning: Cannot release qubit arising from phi node:\n";
-                     llvm::errs() << *val << "\n\n";
 
+                     if (logger)
+                     {
+                         logger->setLocationFromValue(val);
+                         logger->warning("Cannot release qubit arising from phi node.");
+                     }
+                     else
+                     {
+                         throw std::runtime_error(
+                             "No logger present - Warning: Cannot release qubit arising from phi node.\n");
+                     }
                      return false;
                  }
 
-                 // Returning in case the name comes out empty
-                 if (name.empty())
+                 if (logger)
                  {
-
-                     // TODO(issue-15): report error
-                     llvm::errs() << "FAILED due to unnamed non standard allocation:\n";
-                     llvm::errs() << *val << "\n\n";
-
-                     // Deleting the instruction in order to proceed
-                     // and trying to discover as many other errors as possible
-                     return deleter(builder, val, cap, rep);
+                     logger->setLocationFromValue(val);
+                     logger->error("Cannot release qubit from non-standard allocation.");
                  }
-
-                 // TODO(issue-15): report error
-                 llvm::errs() << "FAILED due to non standard allocation:\n";
-                 llvm::errs() << *cap["name"] << "\n";
-                 llvm::errs() << *val << "\n\n";
+                 else
+                 {
+                     throw std::runtime_error(
+                         "No logger present - Error: Cannot release qubit from non-standard allocation.\n");
+                 }
 
                  return deleter(builder, val, cap, rep);
              }
@@ -556,6 +589,7 @@ namespace quantum
             cond->replaceAllUsesWith(new_cond);
 
             // Deleting the previous condition and function to fetch one
+
             replacements.push_back({cond, nullptr});
             replacements.push_back({cap["zero"], nullptr});
 
@@ -651,6 +685,42 @@ namespace quantum
         addRule({call("__quantum__rt__result_equal", "one"_cap = get_one, "result"_cap = _), replace_branch_positive});
     }
 
+    void RuleFactory::optimizeConstantResult()
+    {
+        auto replace_constant_result = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
+            auto f1 = llvm::dyn_cast<llvm::CallInst>(cap["1"]);
+            auto f2 = llvm::dyn_cast<llvm::CallInst>(cap["2"]);
+            if (f1 == nullptr || f2 == nullptr)
+            {
+                return false;
+            }
+
+            auto n1 = f1->getCalledFunction()->getName();
+            auto n2 = f2->getCalledFunction()->getName();
+
+            bool value      = n1 == n2;
+            auto llvm_value = llvm::APInt(1, value);
+
+            // Computing offset
+            auto new_instr = llvm::ConstantInt::get(builder.getContext(), llvm_value);
+
+            val->replaceAllUsesWith(new_instr);
+
+            replacements.push_back({val, nullptr});
+            replacements.push_back({f1, nullptr});
+            replacements.push_back({f2, nullptr});
+            return true;
+        };
+
+        auto get_zero = call("__quantum__rt__result_get_zero");
+        auto get_one  = call("__quantum__rt__result_get_one");
+
+        addRule({call("__quantum__rt__result_equal", "1"_cap = get_zero, "2"_cap = get_zero), replace_constant_result});
+        addRule({call("__quantum__rt__result_equal", "1"_cap = get_zero, "2"_cap = get_one), replace_constant_result});
+        addRule({call("__quantum__rt__result_equal", "1"_cap = get_one, "2"_cap = get_zero), replace_constant_result});
+        addRule({call("__quantum__rt__result_equal", "1"_cap = get_one, "2"_cap = get_one), replace_constant_result});
+    }
+
     void RuleFactory::disableReferenceCounting()
     {
         removeFunctionCall("__quantum__rt__array_update_reference_count");
@@ -700,11 +770,11 @@ namespace quantum
         removeFunctionCall("__quantum__rt__array_end_record_output");
     }
 
-    ReplacementRulePtr RuleFactory::addRule(ReplacementRule&& rule)
+    ReplacementRulePtr RuleFactory::addRule(ReplacementRule&& rule, RuleSet::ReplaceDirection const& dir)
     {
         auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
-        rule_set_.addRule(ret);
+        rule_set_.addRule(ret, dir);
 
         return ret;
     }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
+#include "Generators/PostTransformConfig.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "Rules/Factory.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
@@ -48,9 +49,9 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
   %result5 = call %Result* @__quantum__qis__m__body(%Qubit* null)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
-    {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set) {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticResultAllocation();
     };
 
@@ -60,6 +61,7 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
     ir_manip->applyProfile(profile);
 
