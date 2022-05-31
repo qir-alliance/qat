@@ -26,7 +26,7 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y 
-          sudo apt-get remove -y llvm-12 clang-format-11 clang-tidy-11 
+          sudo apt-get remove -y llvm-12 llvm-11 clang-format-11 clang-tidy-11 
           sudo apt-get install -y curl pkg-config findutils  wget
           sudo apt install -y clang-13 cmake clang-format-13 clang-tidy-13 
           sudo apt-get install -y llvm-13 lldb-13 llvm-13-dev libllvm11 llvm-13-runtime opt 
