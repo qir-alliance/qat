@@ -48,7 +48,6 @@ jobs:
 
       - name: "Checking format"
         run: |
-          clang-format --version
           clang-format-13 --version
 
           ./manage stylecheck
