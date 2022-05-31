@@ -62,7 +62,8 @@ continue__1:
   ret i8 0
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
+    auto configure_profile = [](RuleSet& rule_set)
+    {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
@@ -109,7 +110,8 @@ continue__1:
   ret i8 0
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
+    auto configure_profile = [](RuleSet& rule_set)
+    {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
@@ -157,7 +159,8 @@ continue__1:
   ret i8 0
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
+    auto configure_profile = [](RuleSet& rule_set)
+    {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
@@ -205,7 +208,8 @@ continue__1:
   ret i8 0
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
+    auto configure_profile = [](RuleSet& rule_set)
+    {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 

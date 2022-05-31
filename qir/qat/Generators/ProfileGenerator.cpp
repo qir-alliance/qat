@@ -237,7 +237,8 @@ namespace quantum
 
         registerProfileComponent<PreTransformTrimmingPassConfiguration>(
             "pre-transform-trimming",
-            [logger](PreTransformTrimmingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+            [logger](PreTransformTrimmingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+            {
                 auto& mpm = ptr->modulePassManager();
 
                 mpm.addPass(PreTransformTrimmingPass(cfg, logger));
@@ -245,7 +246,8 @@ namespace quantum
 
         registerProfileComponent<PreTransformValidationPassConfiguration>(
             "pre-transform-validation",
-            [logger](PreTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+            [logger](PreTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+            {
                 auto& mpm = ptr->modulePassManager();
 
                 mpm.addPass(PreTransformValidationPass(cfg, logger));
@@ -260,7 +262,7 @@ namespace quantum
                 // Defining the mapping
                 RuleSet rule_set;
                 auto    factory = RuleFactory(
-                    rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), logger);
+                       rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), logger);
                 factory.usingConfiguration(ptr->configurationManager().get<FactoryConfiguration>());
 
                 // Creating profile pass
@@ -270,7 +272,9 @@ namespace quantum
             });
 
         registerProfileComponent<PostTransformConfig>(
-            "post-transform", [logger](PostTransformConfig const& cfg, ProfileGenerator* ptr, Profile& /*profile*/) {
+            "post-transform",
+            [logger](PostTransformConfig const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+            {
                 auto& ret = ptr->functionPassManager();
 
                 if (cfg.shouldAddInstCombinePass())

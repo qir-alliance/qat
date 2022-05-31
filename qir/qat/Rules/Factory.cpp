@@ -140,7 +140,8 @@ namespace quantum
         auto logger = logger_;
 
         /// Array access replacement
-        auto callable_replacer = [logger](Builder&, Value* val, Captures&, Replacements&) {
+        auto callable_replacer = [logger](Builder&, Value* val, Captures&, Replacements&)
+        {
             if (logger)
             {
                 logger->setLocationFromValue(val);
@@ -414,7 +415,8 @@ namespace quantum
         // call void @__quantum__rt__qubit_release(%Qubit* %leftMessage)
         addRule(
             {call("__quantum__rt__qubit_release", "name"_cap = _),
-             [qubit_alloc_manager, deleter, logger](Builder& builder, Value* val, Captures& cap, Replacements& rep) {
+             [qubit_alloc_manager, deleter, logger](Builder& builder, Value* val, Captures& cap, Replacements& rep)
+             {
                  // Getting the name
                  auto name = cap["name"]->getName().str();
 
@@ -687,7 +689,8 @@ namespace quantum
 
     void RuleFactory::optimizeConstantResult()
     {
-        auto replace_constant_result = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements) {
+        auto replace_constant_result = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements)
+        {
             auto f1 = llvm::dyn_cast<llvm::CallInst>(cap["1"]);
             auto f2 = llvm::dyn_cast<llvm::CallInst>(cap["2"]);
             if (f1 == nullptr || f2 == nullptr)
