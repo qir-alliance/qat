@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  pull_request_target:
+  pull_request:
     branches:
       - main
   release:
@@ -83,8 +83,11 @@ jobs:
 
           git checkout 111e8149e5ea79c20764c044c454facc5188b2bd
 
+          echo "Installing qiskit qir"
           pip3 install --user -e .
+          echo "Done!"
           popd
+
           export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
           export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
 
