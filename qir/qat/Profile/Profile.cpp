@@ -19,10 +19,6 @@ namespace quantum
         AllocationManagerPtr result_allocation_manager)
       : name_{name}
       , logger_{logger}
-      , loop_analysis_manager_{}
-      , function_analysis_manager_{}
-      , gscc_analysis_manager_{}
-      , module_analysis_manager_{}
       , pass_instrumentation_callbacks_{std::make_unique<llvm::PassInstrumentationCallbacks>()}
       , standard_instrumentations_{std::make_unique<llvm::StandardInstrumentations>(debug)}
       , qubit_allocation_manager_{std::move(qubit_allocation_manager)}
@@ -30,7 +26,6 @@ namespace quantum
       , validator_{std::make_unique<Validator>(ValidationPassConfiguration(), logger, debug)}
     {
 
-        bool verify_each_pass = false;
         standard_instrumentations_->registerCallbacks(*pass_instrumentation_callbacks_);
 
         // TODO(issue-13): Parameterize
@@ -40,7 +35,7 @@ namespace quantum
         pass_builder_ = std::make_unique<llvm::PassBuilder>(
             target_machine, pipeline_tuning_options_, pgo_options_, pass_instrumentation_callbacks_.get());
 
-        registerEPCallbacks(verify_each_pass, debug);
+        registerEPCallbacks();
 
         // Creating a full pass builder and registering each of the
         // components to make them accessible to the developer.
@@ -53,7 +48,7 @@ namespace quantum
             loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
     }
 
-    void Profile::registerEPCallbacks(bool verify_each_pass, bool debug)
+    void Profile::registerEPCallbacks()
     {
 
         if (tryParsePipelineText<llvm::FunctionPassManager>(*pass_builder_, peephole_ep_pipeline_))
