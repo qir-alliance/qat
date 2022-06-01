@@ -19,8 +19,8 @@ namespace quantum
     Validator::Validator(
         ValidationPassConfiguration const& cfg,
         ILoggerPtr const&                  logger,
-        bool                               debug,
-        llvm::TargetMachine*               target_machine)
+        bool /*debug*/,
+        llvm::TargetMachine* target_machine)
       : logger_{logger}
     {
 
