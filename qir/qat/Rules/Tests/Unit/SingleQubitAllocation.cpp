@@ -50,8 +50,7 @@ TEST(RuleSetTestSuite, AllocationActionRelease)
   call void @__quantum__rt__qubit_release(%Qubit* %qubit)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
-    {
+    auto configure_profile = [](RuleSet& rule_set) {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticQubitAllocation();
@@ -84,8 +83,7 @@ TEST(RuleSetTestSuite, MultipleAllocationsNoRelease)
   )script");
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(
-        [](RuleSet& rule_set)
-        {
+        [](RuleSet& rule_set) {
             auto factory = RuleFactory(
                 rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
@@ -144,8 +142,7 @@ TEST(RuleSetTestSuite, AllocateReleaseMultipleTimes)
   )script");
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(
-        [](RuleSet& rule_set)
-        {
+        [](RuleSet& rule_set) {
             auto a = BasicAllocationManager::createNew();
             auto b = BasicAllocationManager::createNew();
             a->setReuseRegisters(true);
@@ -200,8 +197,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByName)
   )script");
     auto logger   = std::make_shared<CommentLogger>();
     auto profile  = std::make_shared<ConfigurableProfileGenerator>(
-        [logger](RuleSet& rule_set)
-        {
+        [logger](RuleSet& rule_set) {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), logger);
 
@@ -228,8 +224,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByNameWithNoName)
   )script");
     auto logger   = std::make_shared<CommentLogger>();
     auto profile  = std::make_shared<ConfigurableProfileGenerator>(
-        [logger](RuleSet& rule_set)
-        {
+        [logger](RuleSet& rule_set) {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), logger);
 
@@ -259,8 +254,7 @@ TEST(RuleSetTestSuite, ErrorReleaseWithTypeErasedAllocation)
 
     auto logger  = std::make_shared<CommentLogger>();
     auto profile = std::make_shared<ConfigurableProfileGenerator>(
-        [logger](RuleSet& rule_set)
-        {
+        [logger](RuleSet& rule_set) {
             auto factory =
                 RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), logger);
 

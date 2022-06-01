@@ -55,8 +55,7 @@ TEST(RuleSetTestSuite, RemovingLeftOverZeroAndOnes)
     call void @__quantum__rt__string_update_reference_count(%String* %1, i32 -1)
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
-    {
+    auto configure_profile = [](RuleSet& rule_set) {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 

@@ -65,8 +65,7 @@ quantum:                                          ; preds = %load
   tail call void @__quantum__qis__h__body(%Qubit* %2)
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
-    {
+    auto configure_profile = [](RuleSet& rule_set) {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
