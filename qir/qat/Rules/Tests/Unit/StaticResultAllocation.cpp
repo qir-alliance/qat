@@ -49,7 +49,8 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
   %result5 = call %Result* @__quantum__qis__m__body(%Qubit* null)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
+    auto configure_profile = [](RuleSet& rule_set)
+    {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticResultAllocation();

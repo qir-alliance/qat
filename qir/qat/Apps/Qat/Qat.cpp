@@ -251,8 +251,8 @@ int main(int argc, char** argv)
 
         // Making LLVM locations resolvable
         auto location_table = loader.locationTable();
-        logger->setLocationResolver(
-            [location_table](llvm::Value const* val) { return location_table->getPosition(val); });
+        logger->setLocationResolver([location_table](llvm::Value const* val)
+                                    { return location_table->getPosition(val); });
 
         // Getting the optimization level
         //
