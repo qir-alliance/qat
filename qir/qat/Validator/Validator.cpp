@@ -21,11 +21,7 @@ namespace quantum
         ILoggerPtr const&                  logger,
         bool                               debug,
         llvm::TargetMachine*               target_machine)
-      : loop_analysis_manager_{}
-      , function_analysis_manager_{}
-      , gscc_analysis_manager_{}
-      , module_analysis_manager_{}
-      , logger_{logger}
+      : logger_{logger}
     {
 
         pass_builder_ = std::make_unique<llvm::PassBuilder>(target_machine);
