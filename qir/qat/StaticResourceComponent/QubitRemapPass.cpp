@@ -84,7 +84,7 @@ namespace quantum
                 }
                 break;
             case AllocationAnalysis::ResultResource:
-                if (results_mapping.find(index) == results_mapping.end())
+                if (results_mapping.find(index) != results_mapping.end())
                 {
                     remapped_index = results_mapping[index];
                 }
@@ -97,6 +97,17 @@ namespace quantum
 
             builder.SetInsertPoint(value.used_by);
 
+            // Removing non-null attribute if it exists as remapping may change this
+            auto call_instr = llvm::dyn_cast<llvm::CallInst>(value.used_by);
+            if (call_instr)
+            {
+                auto attrs = call_instr->getAttributes();
+                auto newlist =
+                    attrs.removeParamAttribute(function.getContext(), value.operand_id, llvm::Attribute::NonNull);
+                call_instr->setAttributes(newlist);
+            }
+
+            // Creating replacement instruction
             auto idx = llvm::APInt(64, remapped_index);
 
             auto         new_index = llvm::ConstantInt::get(function.getContext(), idx);

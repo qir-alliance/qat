@@ -178,6 +178,16 @@ namespace quantum
                             continue;
                         }
 
+                        // Removing operand nonnull if present
+                        auto call_instr = llvm::dyn_cast<llvm::CallInst>(&instr);
+                        if (call_instr)
+                        {
+                            auto attrs = call_instr->getAttributes();
+                            auto newlist =
+                                attrs.removeParamAttribute(function.getContext(), i, llvm::Attribute::NonNull);
+                            call_instr->setAttributes(newlist);
+                        }
+
                         // Creating new instruction with remapped index
                         builder.SetInsertPoint(&instr);
 
