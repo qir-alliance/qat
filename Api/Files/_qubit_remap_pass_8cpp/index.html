@@ -662,7 +662,7 @@ namespace quantum
                 }
                 break;
             case AllocationAnalysis::ResultResource:
-                if (results_mapping.find(index) == results_mapping.end())
+                if (results_mapping.find(index) != results_mapping.end())
                 {
                     remapped_index = results_mapping[index];
                 }
@@ -675,6 +675,17 @@ namespace quantum
 
             builder.SetInsertPoint(value.used_by);
 
+            // Removing non-null attribute if it exists as remapping may change this
+            auto call_instr = llvm::dyn_cast&lt;llvm::CallInst&gt;(value.used_by);
+            if (call_instr)
+            {
+                auto attrs = call_instr-&gt;getAttributes();
+                auto newlist =
+                    attrs.removeParamAttribute(function.getContext(), value.operand_id, llvm::Attribute::NonNull);
+                call_instr-&gt;setAttributes(newlist);
+            }
+
+            // Creating replacement instruction
             auto idx = llvm::APInt(64, remapped_index);
 
             auto         new_index = llvm::ConstantInt::get(function.getContext(), idx);
@@ -698,7 +709,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  1 June 2022 at 09:22:45 UTC</p></div>
+<p>Updated on  2 June 2022 at 08:35:14 UTC</p></div>
 </div>
           </div>
         </main>

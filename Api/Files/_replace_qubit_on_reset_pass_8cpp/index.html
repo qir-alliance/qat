@@ -756,6 +756,16 @@ namespace quantum
                             continue;
                         }
 
+                        // Removing operand nonnull if present
+                        auto call_instr = llvm::dyn_cast&lt;llvm::CallInst&gt;(&amp;instr);
+                        if (call_instr)
+                        {
+                            auto attrs = call_instr-&gt;getAttributes();
+                            auto newlist =
+                                attrs.removeParamAttribute(function.getContext(), i, llvm::Attribute::NonNull);
+                            call_instr-&gt;setAttributes(newlist);
+                        }
+
                         // Creating new instruction with remapped index
                         builder.SetInsertPoint(&amp;instr);
 
@@ -802,7 +812,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  1 June 2022 at 09:22:45 UTC</p></div>
+<p>Updated on  2 June 2022 at 08:35:14 UTC</p></div>
 </div>
           </div>
         </main>
