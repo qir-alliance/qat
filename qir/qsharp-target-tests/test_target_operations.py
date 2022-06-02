@@ -73,7 +73,7 @@ CHANNEL = os.environ.get("QSHARP_CHANNEL", "alpha")
 def test_target4(test_name, request):
     with request.getfixturevalue(test_name)("rigetti.qpu", VERSION, CHANNEL) as project:
         assert project.compile()
-        assert validate_circuit(test_name, "provider_4", project.qir_filename, [
+        assert validate_circuit(test_name, "provider_b340", project.qir_filename, [
                                 "--validate", "-O3", "--unroll-loops", "--always-inline", "--disable-grouping", "--replace-qubit-on-reset", "--reindex-qubits",  "--apply"])
 
 
@@ -81,7 +81,7 @@ def test_target4(test_name, request):
 def test_target1(test_name, request):
     with request.getfixturevalue(test_name)("quantinuum.qpu", VERSION, CHANNEL) as project:
         assert project.compile()
-        assert validate_circuit(test_name, "provider_1", project.qir_filename, [
+        assert validate_circuit(test_name, "provider_7ee0", project.qir_filename, [
                                 "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
 
 
@@ -89,5 +89,5 @@ def test_target1(test_name, request):
 def test_target3(test_name, request):
     with request.getfixturevalue(test_name)("qci.qpu", VERSION, CHANNEL) as project:
         assert project.compile()
-        assert validate_circuit(test_name, "provider_3", project.qir_filename, [
+        assert validate_circuit(test_name, "provider_b340bf9", project.qir_filename, [
                                 "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])

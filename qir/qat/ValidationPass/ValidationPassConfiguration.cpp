@@ -79,7 +79,7 @@ namespace quantum
             profile.allowed_pointer_types_   = {"i8*",    "i16*",    "i32*",    "i64*",
                                               "Qubit*", "Qubit**", "Result*", "Result**"};
         }
-        else if (name == "provider_4bf9" || name == "provider_3")
+        else if (name == "provider_b340bf9")
         {
             // Supported LLVM instructions: ret, br, phi, add, sub, mul, fadd, fsub, fmul, ashr, and, or,
             // xor, icmp eq, icmp ne, icmp ugt, icmp uge, icmp ult, icmp ule, fcmp oeq, fcmp ogt, fcmp oge,
@@ -122,7 +122,7 @@ namespace quantum
             profile.allowlist_pointer_types_ = true;
             profile.allowed_pointer_types_   = {"Qubit*", "Result*"};
         }
-        else if (name == "provider_7ee0" || name == "provider_1")
+        else if (name == "provider_7ee0")
         {
             // Supported LLVM types: i64 (integer), double, i1 (bool), %Qubit*, %Result*.
             // Supported LLVM instructions: ret, br, add, sub, mul, and, or, xor, lshr, shl, icmp eq, icmp
@@ -182,7 +182,7 @@ namespace quantum
             profile.allowlist_pointer_types_ = true;
             profile.allowed_pointer_types_   = {"Qubit*", "Result*"};
         }
-        else if (name == "provider_b340" || name == "provider_4")
+        else if (name == "provider_b340")
         {
             profile.allow_internal_calls_     = false;
             profile.allowlist_external_calls_ = true;
