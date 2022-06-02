@@ -191,22 +191,22 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/</loc>
+         <lastmod>2022-06-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass_configuration/</loc>
+         <lastmod>2022-06-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_pre_transform_trimming_pass/</loc>
          <lastmod>2022-06-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_pre_transform_trimming_pass_configuration/</loc>
-         <lastmod>2022-06-02</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_pre_transform_validation_pass/</loc>
-         <lastmod>2022-06-02</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_pre_transform_validation_pass_configuration/</loc>
          <lastmod>2022-06-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -691,6 +691,21 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_post_transform_validation_pass_8cpp/</loc>
+         <lastmod>2022-06-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_post_transform_validation_pass_8hpp/</loc>
+         <lastmod>2022-06-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_post_transform_validation_pass_configuration_8hpp/</loc>
+         <lastmod>2022-06-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_pre_transform_trimming_pass_8cpp/</loc>
          <lastmod>2022-06-02</lastmod>
          <changefreq>daily</changefreq>
@@ -702,21 +717,6 @@
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_pre_transform_trimming_pass_configuration_8hpp/</loc>
-         <lastmod>2022-06-02</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Files/_pre_transform_validation_pass_8cpp/</loc>
-         <lastmod>2022-06-02</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Files/_pre_transform_validation_pass_8hpp/</loc>
-         <lastmod>2022-06-02</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Files/_pre_transform_validation_pass_configuration_8hpp/</loc>
          <lastmod>2022-06-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -916,11 +916,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Files/dir_0fe84ea4ccc23857d4db0615c2678184/</loc>
-         <lastmod>2022-06-02</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_13002e6e9a3be65aeac8e1b6c1ea9008/</loc>
          <lastmod>2022-06-02</lastmod>
          <changefreq>daily</changefreq>
@@ -967,6 +962,11 @@
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_bc70899ed1f4b37c346358e1e878ce58/</loc>
+         <lastmod>2022-06-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/dir_c15e684057bea667e6dbded2e5ded5b0/</loc>
          <lastmod>2022-06-02</lastmod>
          <changefreq>daily</changefreq>
     </url>

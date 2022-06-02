@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_pre_transform_validation_pass_configuration_8hpp/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      PreTransformValidation/PreTransformValidationPassConfiguration.hpp - QAT Documentation
+      microsoft::quantum::PostTransformValidationPass - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -215,7 +215,7 @@
                 </h3>
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../../Classes/"
+                  href="../"
                   >Classes</a
                 >
                 <a
@@ -230,7 +230,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../"
+                  href="../../Files/"
                   >Files</a
                 >
                 <a
@@ -398,7 +398,7 @@
               </h3>
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../../Classes/"
+                href="../"
                 >Classes</a
               >
               <a
@@ -413,7 +413,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../"
+                href="../../Files/"
                 >Files</a
               >
               <a
@@ -553,29 +553,14 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> PreTransformValidation/PreTransformValidationPassConfiguration.hpp </span>
+        <span class="text-center"> microsoft::quantum::PostTransformValidationPass </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="pretransformvalidationpretransformvalidationpassconfigurationhpp">PreTransformValidation/PreTransformValidationPassConfiguration.hpp</h1>
-<h2 id="namespaces">Namespaces</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
-</tr>
-<tr>
-<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
-</tr>
-</tbody>
-</table>
-<h2 id="classes">Classes</h2>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumposttransformvalidationpass">microsoft::quantum::PostTransformValidationPass</h1>
+<p>Inherits from llvm::PassInfoMixin&lt; PostTransformValidationPass &gt;</p>
+<h2 id="public-types">Public Types</h2>
 <table>
 <thead>
 <tr>
@@ -585,63 +570,113 @@
 </thead>
 <tbody>
 <tr>
-<td>class</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_pre_transform_validation_pass_configuration/">microsoft::quantum::PreTransformValidationPassConfiguration</a></strong></td>
+<td>using llvm::Instruction</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#using-instruction">Instruction</a></strong></td>
+</tr>
+<tr>
+<td>using llvm::Value</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#using-value">Value</a></strong></td>
+</tr>
+<tr>
+<td>using ILogger::ILoggerPtr</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#using-iloggerptr">ILoggerPtr</a></strong></td>
+</tr>
+<tr>
+<td>using <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">ILogger::Location</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#using-location">Location</a></strong></td>
+</tr>
+<tr>
+<td>using llvm::StringRef</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#using-stringref">StringRef</a></strong></td>
 </tr>
 </tbody>
 </table>
-<h2 id="source-code">Source code</h2>
-<pre><code class="language-cpp">#pragma once
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-
-#include &quot;Commandline/ConfigurationManager.hpp&quot;
-
-#include &lt;limits&gt;
-
-namespace microsoft
-{
-namespace quantum
-{
-
-    class PreTransformValidationPassConfiguration
-    {
-      public:
-        using DeferredValuePtr = DeferredValue::DeferredValuePtr;
-
-        void setup(ConfigurationManager&amp; config)
-        {
-            config.setSectionName(&quot;Pre-transform validation&quot;, &quot;&quot;);
-            replace_qubits_on_reset_ = config.getParameter(&quot;replace-qubit-on-reset&quot;);
-        }
-
-        static PreTransformValidationPassConfiguration createDisabled()
-        {
-            PreTransformValidationPassConfiguration ret;
-            ret.disable_straightline_code_requirement_ = true;
-            return ret;
-        }
-
-        bool requireStraightLineCode() const
-        {
-            if (disable_straightline_code_requirement_)
-            {
-                return false;
-            }
-
-            return replace_qubits_on_reset_-&gt;value&lt;bool&gt;();
-        }
-
-      private:
-        bool             disable_straightline_code_requirement_{false};
-        DeferredValuePtr replace_qubits_on_reset_{nullptr};
-    };
-
-} // namespace quantum
-} // namespace microsoft
+<h2 id="public-functions">Public Functions</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#function-posttransformvalidationpass">PostTransformValidationPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass_configuration/">PostTransformValidationPassConfiguration</a> const &amp; cfg, ILoggerPtr const &amp; logger =nullptr)</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#function-posttransformvalidationpass">PostTransformValidationPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/">PostTransformValidationPass</a> const &amp; )<br>Copy construction is banned.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#function-posttransformvalidationpass">PostTransformValidationPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/">PostTransformValidationPass</a> &amp;&amp; ) =default<br>We allow move semantics.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#function-~posttransformvalidationpass">~PostTransformValidationPass</a></strong>() =default<br>Default destruction.</td>
+</tr>
+<tr>
+<td>llvm::PreservedAnalyses</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#function-run">run</a></strong>(llvm::Module &amp; module, llvm::ModuleAnalysisManager &amp; mam)</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/#function-isrequired">isRequired</a></strong>()<br>Whether or not this pass is required to run.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-types-documentation">Public Types Documentation</h2>
+<h3 id="using-instruction">using Instruction</h3>
+<pre><code class="language-cpp">using microsoft::quantum::PostTransformValidationPass::Instruction =  llvm::Instruction;
 </code></pre>
+<h3 id="using-value">using Value</h3>
+<pre><code class="language-cpp">using microsoft::quantum::PostTransformValidationPass::Value =  llvm::Value;
+</code></pre>
+<h3 id="using-iloggerptr">using ILoggerPtr</h3>
+<pre><code class="language-cpp">using microsoft::quantum::PostTransformValidationPass::ILoggerPtr =  ILogger::ILoggerPtr;
+</code></pre>
+<h3 id="using-location">using Location</h3>
+<pre><code class="language-cpp">using microsoft::quantum::PostTransformValidationPass::Location =  ILogger::Location;
+</code></pre>
+<h3 id="using-stringref">using StringRef</h3>
+<pre><code class="language-cpp">using microsoft::quantum::PostTransformValidationPass::StringRef =  llvm::StringRef;
+</code></pre>
+<h2 id="public-functions-documentation">Public Functions Documentation</h2>
+<h3 id="function-posttransformvalidationpass">function PostTransformValidationPass</h3>
+<pre><code class="language-cpp">explicit PostTransformValidationPass(
+    PostTransformValidationPassConfiguration const &amp; cfg,
+    ILoggerPtr const &amp; logger =nullptr
+)
+</code></pre>
+<h3 id="function-posttransformvalidationpass_1">function PostTransformValidationPass</h3>
+<pre><code class="language-cpp">PostTransformValidationPass(
+    PostTransformValidationPass const &amp; 
+)
+</code></pre>
+<p>Copy construction is banned. </p>
+<h3 id="function-posttransformvalidationpass_2">function PostTransformValidationPass</h3>
+<pre><code class="language-cpp">PostTransformValidationPass(
+    PostTransformValidationPass &amp;&amp; 
+) =default
+</code></pre>
+<p>We allow move semantics. </p>
+<h3 id="function-posttransformvalidationpass_3">function ~PostTransformValidationPass</h3>
+<pre><code class="language-cpp">~PostTransformValidationPass() =default
+</code></pre>
+<p>Default destruction. </p>
+<h3 id="function-run">function run</h3>
+<pre><code class="language-cpp">llvm::PreservedAnalyses run(
+    llvm::Module &amp; module,
+    llvm::ModuleAnalysisManager &amp; mam
+)
+</code></pre>
+<h3 id="function-isrequired">function isRequired</h3>
+<pre><code class="language-cpp">static bool isRequired()
+</code></pre>
+<p>Whether or not this pass is required to run. </p>
 <hr />
-<p>Updated on  2 June 2022 at 08:35:14 UTC</p></div>
+<p>Updated on  2 June 2022 at 09:49:19 UTC</p></div>
 </div>
           </div>
         </main>

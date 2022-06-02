@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/dir_0fe84ea4ccc23857d4db0615c2678184/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_post_transform_validation_pass_8hpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      PreTransformValidation - QAT Documentation
+      PostTransformValidation/PostTransformValidationPass.hpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,13 +553,13 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> PreTransformValidation </span>
+        <span class="text-center"> PostTransformValidation/PostTransformValidationPass.hpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="pretransformvalidation">PreTransformValidation</h1>
-<h2 id="files">Files</h2>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="posttransformvalidationposttransformvalidationpasshpp">PostTransformValidation/PostTransformValidationPass.hpp</h1>
+<h2 id="namespaces">Namespaces</h2>
 <table>
 <thead>
 <tr>
@@ -568,18 +568,87 @@
 </thead>
 <tbody>
 <tr>
-<td><strong><a href="/qat/Api/Files/_pre_transform_validation_pass_8cpp/#file-pretransformvalidationpass.cpp">PreTransformValidation/PreTransformValidationPass.cpp</a></strong></td>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
 </tr>
 <tr>
-<td><strong><a href="/qat/Api/Files/_pre_transform_validation_pass_8hpp/#file-pretransformvalidationpass.hpp">PreTransformValidation/PreTransformValidationPass.hpp</a></strong></td>
-</tr>
-<tr>
-<td><strong><a href="/qat/Api/Files/_pre_transform_validation_pass_configuration_8hpp/#file-pretransformvalidationpassconfiguration.hpp">PreTransformValidation/PreTransformValidationPassConfiguration.hpp</a></strong></td>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
 </tr>
 </tbody>
 </table>
+<h2 id="classes">Classes</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/">microsoft::quantum::PostTransformValidationPass</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="source-code">Source code</h2>
+<pre><code class="language-cpp">#pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include &quot;Logging/ILogger.hpp&quot;
+#include &quot;PostTransformValidation/PostTransformValidationPass.hpp&quot;
+#include &quot;PostTransformValidation/PostTransformValidationPassConfiguration.hpp&quot;
+#include &quot;Profile/Profile.hpp&quot;
+#include &quot;QatTypes/QatTypes.hpp&quot;
+
+#include &quot;Llvm/Llvm.hpp&quot;
+
+#include &lt;functional&gt;
+#include &lt;unordered_map&gt;
+#include &lt;vector&gt;
+
+namespace microsoft
+{
+namespace quantum
+{
+
+    class PostTransformValidationPass : public llvm::PassInfoMixin&lt;PostTransformValidationPass&gt;
+    {
+      public:
+        using Instruction = llvm::Instruction;
+        using Value       = llvm::Value;
+        using ILoggerPtr  = ILogger::ILoggerPtr;
+        using Location    = ILogger::Location;
+        using StringRef   = llvm::StringRef;
+
+        // Construction and destruction configuration.
+        //
+
+        explicit PostTransformValidationPass(
+            PostTransformValidationPassConfiguration const&amp; cfg,
+            ILoggerPtr const&amp;                               logger = nullptr);
+
+        PostTransformValidationPass(PostTransformValidationPass const&amp;) = delete;
+
+        PostTransformValidationPass(PostTransformValidationPass&amp;&amp;) = default;
+
+        ~PostTransformValidationPass() = default;
+
+        llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
+        static bool isRequired();
+
+      private:
+        using Locations = std::vector&lt;Location&gt;;
+
+        PostTransformValidationPassConfiguration config_{};
+        ILoggerPtr                               logger_{nullptr};
+    };
+
+} // namespace quantum
+} // namespace microsoft
+</code></pre>
 <hr />
-<p>Updated on  2 June 2022 at 08:35:14 UTC</p></div>
+<p>Updated on  2 June 2022 at 09:49:19 UTC</p></div>
 </div>
           </div>
         </main>

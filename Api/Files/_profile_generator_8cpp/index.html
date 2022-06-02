@@ -585,8 +585,8 @@
 #include &quot;GroupingPass/GroupingAnalysisPass.hpp&quot;
 #include &quot;GroupingPass/GroupingPass.hpp&quot;
 #include &quot;GroupingPass/GroupingPassConfiguration.hpp&quot;
+#include &quot;PostTransformValidation/PostTransformValidationPass.hpp&quot;
 #include &quot;PreTransformTrimming/PreTransformTrimmingPass.hpp&quot;
-#include &quot;PreTransformValidation/PreTransformValidationPass.hpp&quot;
 #include &quot;Rules/Factory.hpp&quot;
 #include &quot;Rules/RuleSet.hpp&quot;
 #include &quot;StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
@@ -815,14 +815,6 @@ namespace quantum
                 mpm.addPass(PreTransformTrimmingPass(cfg, logger));
             });
 
-        registerProfileComponent&lt;PreTransformValidationPassConfiguration&gt;(
-            &quot;pre-transform-validation&quot;,
-            [logger](PreTransformValidationPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
-                auto&amp; mpm = ptr-&gt;modulePassManager();
-
-                mpm.addPass(PreTransformValidationPass(cfg, logger));
-            });
-
         registerProfileComponent&lt;TransformationRulesPassConfiguration&gt;(
             &quot;transformation-rules&quot;,
             [logger](TransformationRulesPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile) {
@@ -863,6 +855,14 @@ namespace quantum
                 {
                     ret.addPass(llvm::SimplifyCFGPass());
                 }
+            });
+
+        registerProfileComponent&lt;PostTransformValidationPassConfiguration&gt;(
+            &quot;post-transform-validation&quot;,
+            [logger](PostTransformValidationPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
+                auto&amp; mpm = ptr-&gt;modulePassManager();
+
+                mpm.addPass(PostTransformValidationPass(cfg, logger));
             });
 
         registerProfileComponent&lt;StaticResourceComponentConfiguration&gt;(
@@ -911,7 +911,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  2 June 2022 at 08:35:14 UTC</p></div>
+<p>Updated on  2 June 2022 at 09:49:19 UTC</p></div>
 </div>
           </div>
         </main>
