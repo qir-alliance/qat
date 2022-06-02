@@ -65,7 +65,7 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
     return ret
 
 
-VERSION = os.environ.get("QSHARP_VERSION", "0.24.41975")
+VERSION = os.environ.get("QSHARP_VERSION", "0.24.213020")
 CHANNEL = os.environ.get("QSHARP_CHANNEL", "alpha")
 
 
