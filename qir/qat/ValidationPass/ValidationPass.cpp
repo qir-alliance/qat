@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
 #include "ValidationPass/ValidationPass.hpp"
 
 #include "Llvm/Llvm.hpp"
@@ -358,7 +359,7 @@ namespace quantum
         return ret;
     }
 
-    llvm::PreservedAnalyses ValidationPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
+    llvm::PreservedAnalyses ValidationPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& mam)
     {
         for (auto& function : module)
         {

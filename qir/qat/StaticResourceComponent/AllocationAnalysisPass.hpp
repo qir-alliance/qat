@@ -63,9 +63,8 @@ namespace quantum
         // Construction and destruction configuration.
         //
 
-        explicit AllocationAnalysisPass(StaticResourceComponentConfiguration const& cfg, ILoggerPtr const& logger)
-          : config_{cfg}
-          , logger_{logger}
+        explicit AllocationAnalysisPass(ILoggerPtr const& logger)
+          : logger_{logger}
         {
         }
 
@@ -85,8 +84,6 @@ namespace quantum
 
       private:
         bool extractResourceId(llvm::Value* value, uint64_t& return_value, ResourceType& type) const;
-
-        StaticResourceComponentConfiguration config_{};
 
         ILoggerPtr logger_{nullptr};
 

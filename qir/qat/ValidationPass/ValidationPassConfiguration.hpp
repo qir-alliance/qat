@@ -78,6 +78,9 @@ namespace quantum
         bool       allowlistPointerTypes() const;
         Set const& allowedPointerTypes() const;
 
+        bool requiresQubits() const;
+        bool requiresResults() const;
+
         String profileName() const;
 
       private:
@@ -99,6 +102,9 @@ namespace quantum
         bool allow_primitive_return_{true};
         bool allow_struct_return_{true};
         bool allow_pointer_return_{true};
+
+        bool requires_qubits_{false};
+        bool requires_results_{false};
     };
 
 } // namespace quantum
