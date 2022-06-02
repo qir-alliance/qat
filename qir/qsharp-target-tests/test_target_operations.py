@@ -89,5 +89,5 @@ def test_target1(test_name, request):
 def test_target3(test_name, request):
     with request.getfixturevalue(test_name)("qci.qpu", VERSION, CHANNEL) as project:
         assert project.compile()
-        assert validate_circuit(test_name, "provider_b340bf9", project.qir_filename, [
+        assert validate_circuit(test_name, "provider_4bf9", project.qir_filename, [
                                 "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])

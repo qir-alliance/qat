@@ -7,6 +7,7 @@ import pytest
 
 
 SCRIPT_DIR = os.path.dirname(__file__)
+# TODO(issue-93): Activate remaining codeblock examples.
 
 available1 = [
     "Decompositions/CCNOT.qs",

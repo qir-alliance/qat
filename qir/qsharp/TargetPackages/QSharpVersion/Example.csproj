@@ -7,6 +7,7 @@
     <ExecutionTarget>qci.qpu</ExecutionTarget>
     <!--ExecutionTarget>rigetti.qpu</ExecutionTarget-->
     <!--TargetCapability>AdaptiveExecution</TargetCapability-->
+    <QirGeneration>true</QirGeneration>
   </PropertyGroup>
 
 </Project>

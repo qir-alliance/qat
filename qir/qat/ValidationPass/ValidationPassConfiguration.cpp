@@ -79,7 +79,7 @@ namespace quantum
             profile.allowed_pointer_types_   = {"i8*",    "i16*",    "i32*",    "i64*",
                                               "Qubit*", "Qubit**", "Result*", "Result**"};
         }
-        else if (name == "provider_b340bf9")
+        else if (name == "provider_4bf9")
         {
             // Supported LLVM instructions: ret, br, phi, add, sub, mul, fadd, fsub, fmul, ashr, and, or,
             // xor, icmp eq, icmp ne, icmp ugt, icmp uge, icmp ult, icmp ule, fcmp oeq, fcmp ogt, fcmp oge,
