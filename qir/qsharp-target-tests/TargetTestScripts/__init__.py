@@ -45,6 +45,8 @@ available1 = [
     "Decompositions/IControlled.qs",
     "Decompositions/IAdjointControlled.qs",
     "Decompositions/IControlledAdjoint.qs",
+    "Decompositions/Measure.qs",
+    "Decompositions/MeasureEachZ.qs",
     "Decompositions/M.qs",
     "Decompositions/MResetX.qs",
     "Decompositions/MResetY.qs",
@@ -165,6 +167,8 @@ available3 = [
     "Decompositions/IControlled.qs",
     "Decompositions/IAdjointControlled.qs",
     "Decompositions/IControlledAdjoint.qs",
+    "Decompositions/Measure.qs",
+    "Decompositions/MeasureEachZ.qs",
     "Decompositions/M.qs",
     "Decompositions/MResetX.qs",
     "Decompositions/MResetY.qs",
@@ -285,6 +289,8 @@ available4 = [
     "Decompositions/IControlled.qs",
     "Decompositions/IAdjointControlled.qs",
     "Decompositions/IControlledAdjoint.qs",
+    "Decompositions/Measure.qs",
+    "Decompositions/MeasureEachZ.qs",
     "Decompositions/M.qs",
     # TODO(issue-91): not straightline input "Decompositions/MResetX.qs",
     "Decompositions/MResetY.qs",
@@ -366,7 +372,6 @@ available4 = [
     "CodeBlocks/QubitArrays2.qs",
     "CodeBlocks/OffsetBySix.qs",
 ]
-
 
 BASE_DIR = os.path.dirname(__file__)
 TEMPLATE_DIR = os.path.join(BASE_DIR, "..", "template")
