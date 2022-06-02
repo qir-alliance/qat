@@ -359,7 +359,7 @@ namespace quantum
         return ret;
     }
 
-    llvm::PreservedAnalyses ValidationPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& mam)
+    llvm::PreservedAnalyses ValidationPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
     {
         for (auto& function : module)
         {
