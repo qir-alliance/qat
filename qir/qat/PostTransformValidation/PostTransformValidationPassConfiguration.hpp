@@ -11,7 +11,7 @@ namespace microsoft
 namespace quantum
 {
 
-    class PreTransformValidationPassConfiguration
+    class PostTransformValidationPassConfiguration
     {
       public:
         using DeferredValuePtr = DeferredValue::DeferredValuePtr;
@@ -22,9 +22,9 @@ namespace quantum
             replace_qubits_on_reset_ = config.getParameter("replace-qubit-on-reset");
         }
 
-        static PreTransformValidationPassConfiguration createDisabled()
+        static PostTransformValidationPassConfiguration createDisabled()
         {
-            PreTransformValidationPassConfiguration ret;
+            PostTransformValidationPassConfiguration ret;
             ret.disable_straightline_code_requirement_ = true;
             return ret;
         }
