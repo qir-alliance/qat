@@ -7,22 +7,16 @@ namespace QATSample {
     open Microsoft.Quantum.Arrays;
     open Microsoft.Quantum.Measurement;
 
-    operation OffsetBySix(q: Qubit[]): Qubit[]
-    {
-      let z = q[3...];
-      return z[3...];
-    }
-
     @EntryPoint()
     operation Main(): Result
     {
-      use qubits = Qubit[4];  
-      use control2 = Qubit();
-      use target = Qubit();
-      let controls = OffsetBySix(qubits);
+      use control = Qubit();
+      let pauli = PauliX;
+      let numerator = 17;
+      let power = 19;
+      use qubit = Qubit();
 
-      Adjoint Controlled CX(controls, (control2, target));
-      ResetAll(controls);
+      Controlled Adjoint RFrac([control], (pauli, numerator, power, qubit));
 
       return Zero;
     }

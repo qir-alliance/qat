@@ -16,7 +16,7 @@ namespace QATSample {
     @EntryPoint()
     operation Main(): Result
     {
-      use qubits = Qubit[4];  
+      use qubits = Qubit[10];  
       use control2 = Qubit();
       use target = Qubit();
       let controls = OffsetBySix(qubits);
