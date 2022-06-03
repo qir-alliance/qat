@@ -14,7 +14,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    name: "Linux CI"
+    name: "Target Testing On Linux"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
