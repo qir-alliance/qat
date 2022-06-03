@@ -48,6 +48,7 @@ jobs:
 
       - name: "Checking format"
         run: |
+          /usr/bin/clang-format --version        
           ./manage stylecheck
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -58,7 +59,6 @@ jobs:
 
       - name: "Running unit tests"
         run: |
-          /usr/bin/clang-format --version
           ./manage test
         env:
           DEBIAN_FRONTEND: noninteractive
