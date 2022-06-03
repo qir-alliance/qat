@@ -58,6 +58,7 @@ jobs:
 
       - name: "Running unit tests"
         run: |
+          /usr/bin/clang-format --version
           ./manage test
         env:
           DEBIAN_FRONTEND: noninteractive
