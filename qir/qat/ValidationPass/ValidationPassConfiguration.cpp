@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ValidationPass/ValidationPassConfiguration.hpp"
-
 #include "Commandline/ConfigurationManager.hpp"
 #include "QatTypes/QatTypes.hpp"
+#include "ValidationPass/ValidationPassConfiguration.hpp"
 
 namespace microsoft
 {
