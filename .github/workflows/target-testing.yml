@@ -43,8 +43,8 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang-13
+          CXX: clang++-13
 
       - name: "Running target tests"
         run: |
@@ -63,5 +63,5 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang-13
+          CXX: clang++-13
