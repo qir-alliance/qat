@@ -48,7 +48,6 @@ jobs:
 
       - name: "Checking format"
         run: |
-          /usr/bin/clang-format --version        
           ./manage stylecheck
         env:
           DEBIAN_FRONTEND: noninteractive
