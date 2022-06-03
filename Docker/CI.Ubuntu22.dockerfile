@@ -20,7 +20,7 @@ RUN apt-get install -y && \
     apt install -y python3 python3-pip && \
     npm install -g prettier@2.2.1 && \
     export CC=clang-13 && \
-    export CXX=clang++ 
+    export CXX=clang++-13
 
 # Python
 RUN apt install -y python3 python3-pip && \
