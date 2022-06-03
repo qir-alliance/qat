@@ -21,7 +21,7 @@ microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationM
 microsoft_add_library(ValidationPass Logging)
 microsoft_add_library(PreTransformTrimming Logging)
 
-microsoft_add_library(PreTransformValidation Logging)
+microsoft_add_library(PostTransformValidation Logging)
 microsoft_add_library(StaticResourceComponent Logging)
 microsoft_add_library_tests(StaticResourceComponent  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
 
@@ -42,7 +42,7 @@ microsoft_add_library_tests(Rules Rules TransformationRulesPass AllocationManage
 target_link_libraries(Rules PRIVATE AllocationManager)
 
 microsoft_add_library(Generators)
-target_link_libraries(Generators PRIVATE Rules Commandline AllocationManager TransformationRulesPass Profile Validator StaticResourceComponent ValidationPass PreTransformValidation PreTransformTrimming)
+target_link_libraries(Generators PRIVATE Rules Commandline AllocationManager TransformationRulesPass Profile Validator StaticResourceComponent ValidationPass PostTransformValidation PreTransformTrimming)
 microsoft_add_library_tests(Generators Rules TransformationRulesPass AllocationManager Commandline Generators Logging GroupingPass)
 
 add_subdirectory(Apps)

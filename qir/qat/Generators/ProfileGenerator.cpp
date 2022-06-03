@@ -7,8 +7,8 @@
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "GroupingPass/GroupingPassConfiguration.hpp"
+#include "PostTransformValidation/PostTransformValidationPass.hpp"
 #include "PreTransformTrimming/PreTransformTrimmingPass.hpp"
-#include "PreTransformValidation/PreTransformValidationPass.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/RuleSet.hpp"
 #include "StaticResourceComponent/AllocationAnalysisPass.hpp"
@@ -244,15 +244,6 @@ namespace quantum
                 mpm.addPass(PreTransformTrimmingPass(cfg, logger));
             });
 
-        registerProfileComponent<PreTransformValidationPassConfiguration>(
-            "pre-transform-validation",
-            [logger](PreTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
-            {
-                auto& mpm = ptr->modulePassManager();
-
-                mpm.addPass(PreTransformValidationPass(cfg, logger));
-            });
-
         registerProfileComponent<TransformationRulesPassConfiguration>(
             "transformation-rules",
             [logger](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
@@ -296,6 +287,15 @@ namespace quantum
                 {
                     ret.addPass(llvm::SimplifyCFGPass());
                 }
+            });
+
+        registerProfileComponent<PostTransformValidationPassConfiguration>(
+            "post-transform-validation",
+            [logger](PostTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+            {
+                auto& mpm = ptr->modulePassManager();
+
+                mpm.addPass(PostTransformValidationPass(cfg, logger));
             });
 
         registerProfileComponent<StaticResourceComponentConfiguration>(

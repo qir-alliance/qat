@@ -1,6 +1,4 @@
-from target1 import target1_tests
-from target3 import target3_tests
-from target4 import target4_tests
+from TargetTestScripts import target1_tests, target3_tests, target4_tests
 
 
 import subprocess
@@ -67,10 +65,29 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
     return ret
 
 
-@pytest.mark.parametrize("test_name", target1_tests)
-def test_taget_opeorations(test_name, request):
-    with request.getfixturevalue(test_name) as project:
-        assert project.compile()
+VERSION = os.environ.get("QSHARP_VERSION", "0.24.213020")
+CHANNEL = os.environ.get("QSHARP_CHANNEL", "alpha")
 
-        assert validate_circuit(test_name, "default", project.qir_filename, [
-                                "--validate", "--entry-point-attr", "EntryPoint", "--unroll-loops", "--always-inline", "--apply"])
+
+@pytest.mark.parametrize("test_name", target4_tests)
+def test_target4(test_name, request):
+    with request.getfixturevalue(test_name)("rigetti.qpu", VERSION, CHANNEL) as project:
+        assert project.compile()
+        assert validate_circuit(test_name, "provider_b340", project.qir_filename, [
+                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--disable-grouping", "--replace-qubit-on-reset", "--reindex-qubits",  "--apply"])
+
+
+@pytest.mark.parametrize("test_name", target1_tests)
+def test_target1(test_name, request):
+    with request.getfixturevalue(test_name)("quantinuum.qpu", VERSION, CHANNEL) as project:
+        assert project.compile()
+        assert validate_circuit(test_name, "provider_7ee0", project.qir_filename, [
+                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
+
+
+@pytest.mark.parametrize("test_name", target3_tests)
+def test_target3(test_name, request):
+    with request.getfixturevalue(test_name)("qci.qpu", VERSION, CHANNEL) as project:
+        assert project.compile()
+        assert validate_circuit(test_name, "provider_4bf9", project.qir_filename, [
+                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])

@@ -11,16 +11,13 @@ RUN apt-get install -y curl \
   wget
 
 # build dependencies
-RUN apt-get install -y && \
-    apt-get remove -y llvm-12 clang-format-11 clang-tidy-11 && \
+RUN apt-get remove -y llvm-12 clang-format-11 clang-tidy-11 && \
     apt-get install -y curl pkg-config findutils  wget && \
-    apt install -y clang-13 cmake clang-format-13 clang-tidy-13 && \
+    apt-get install -y clang-13 cmake clang-format-13 clang-tidy-13 && \
     apt-get install -y llvm-13 lldb-13 llvm-13-dev libllvm11 llvm-13-runtime opt && \
     apt-get install -y nodejs npm && \
-    apt install -y python3 python3-pip && \
-    npm install -g prettier@2.2.1 && \
-    export CC=clang-13 && \
-    export CXX=clang++ 
+    apt-get install -y python3 python3-pip && \
+    npm install -g prettier@2.2.1 
 
 # Python
 RUN apt install -y python3 python3-pip && \
