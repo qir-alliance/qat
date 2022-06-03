@@ -112,7 +112,7 @@ namespace quantum
 
     void RuleFactory::resolveConstantArraySizes()
     {
-        /// Array access replacement
+        // Array access replacement
         auto size_replacer = [](Builder&, Value* val, Captures& cap, Replacements& replacements)
         {
             // Get the index and testing that it is a constant int
@@ -139,7 +139,7 @@ namespace quantum
     {
         auto logger = logger_;
 
-        /// Array access replacement
+        // Array access replacement
         auto callable_replacer = [logger](Builder&, Value* val, Captures&, Replacements&)
         {
             if (logger)
@@ -233,7 +233,7 @@ namespace quantum
 
         addRule({call("__quantum__rt__qubit_allocate_array", "size"_cap = _), allocation_replacer});
 
-        /// Array access replacement
+        // Array access replacement
         auto access_replacer =
             [qubit_alloc_manager](Builder& builder, Value* val, Captures& cap, Replacements& replacements)
         {
