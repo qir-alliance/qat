@@ -262,6 +262,16 @@ namespace quantum
                 ret.addPass(std::move(pass));
             });
 
+        registerProfileComponent<PostTransformValidationPassConfiguration>(
+            "post-transform-validation",
+            [logger](
+                PostTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile&
+                /*profile*/)
+            {
+                auto& mpm = ptr->modulePassManager();
+
+                mpm.addPass(PostTransformValidationPass(cfg, logger));
+            });
         registerProfileComponent<PostTransformConfig>(
             "post-transform",
             [logger](PostTransformConfig const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
@@ -287,15 +297,6 @@ namespace quantum
                 {
                     ret.addPass(llvm::SimplifyCFGPass());
                 }
-            });
-
-        registerProfileComponent<PostTransformValidationPassConfiguration>(
-            "post-transform-validation",
-            [logger](PostTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
-            {
-                auto& mpm = ptr->modulePassManager();
-
-                mpm.addPass(PostTransformValidationPass(cfg, logger));
             });
 
         registerProfileComponent<StaticResourceComponentConfiguration>(
