@@ -87,10 +87,9 @@ namespace quantum
             profile.allow_internal_calls_     = false;
             profile.allowlist_external_calls_ = true;
             profile.allowlist_opcodes_        = true;
-            profile.opcodes_                  = OpcodeSet{
-                {"call"}, {"ret"},  {"inttoptr"}, {"br"},  {"phi"}, {"add"}, {"sub"},  {"mul"},  {"fadd"},
-                {"fsub"}, {"fmul"}, {"ashr"},     {"and"}, {"or"},  {"xor"}, {"icmp"}, {"fcmp"},
-            };
+            profile.opcodes_ = OpcodeSet{{"call"}, {"ret"},  {"inttoptr"}, {"br"},   {"phi"},    {"add"}, {"sub"},
+                                         {"mul"},  {"fadd"}, {"fsub"},     {"fmul"}, {"ashr"},   {"shl"}, {"and"},
+                                         {"or"},   {"xor"},  {"icmp"},     {"fcmp"}, {"select"}, {"zext"}};
             profile.external_calls_ = Set{
                 "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
                 "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
@@ -111,7 +110,7 @@ namespace quantum
                 "__quantum__qis__read_result__body:i1 (%Result*)",
                 "__quantum__rt__result_record_output:void (%Result*)",
                 "__quantum__rt__bool_record_output:void (i1)",
-                "__quantum__rt__integer_record_output:void (i64)",
+                "__quantum__rt__int_record_output:void (i64)",
                 "__quantum__rt__double_record_output:void (double)",
                 "__quantum__rt__tuple_start_record_output:void ()",
                 "__quantum__rt__tuple_end_record_output:void ()",
@@ -149,10 +148,9 @@ namespace quantum
             profile.allow_internal_calls_     = false;
             profile.allowlist_external_calls_ = true;
             profile.allowlist_opcodes_        = true;
-            profile.opcodes_                  = OpcodeSet{
-                {"call"}, {"ret"}, {"inttoptr"}, {"br"},   {"add"}, {"sub"},  {"mul"},
-                {"and"},  {"or"},  {"xor"},      {"lshr"}, {"shl"}, {"icmp"},
-            };
+            profile.opcodes_ =
+                OpcodeSet{{"call"}, {"ret"}, {"inttoptr"}, {"br"},  {"add"},  {"sub"},    {"mul"}, {"and"},
+                          {"or"},   {"xor"}, {"lshr"},     {"shl"}, {"icmp"}, {"select"}, {"zext"}};
             profile.external_calls_ = Set{
                 "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
                 "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
@@ -172,7 +170,7 @@ namespace quantum
                 "__quantum__qis__read_result__body:i1 (%Result*)",
                 "__quantum__rt__result_record_output:void (%Result*)",
                 "__quantum__rt__bool_record_output:void (i1)",
-                "__quantum__rt__integer_record_output:void (i64)",
+                "__quantum__rt__int_record_output:void (i64)",
                 "__quantum__rt__tuple_start_record_output:void ()",
                 "__quantum__rt__tuple_end_record_output:void ()",
                 "__quantum__rt__array_start_record_output:void ()",
