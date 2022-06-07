@@ -71,7 +71,7 @@ jobs:
           export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
 
           pushd qir/qiskit-tests/
-          pip3 install --user pytest
+          pip3 install pytest
 
           python3 -m pytest
         env:
