@@ -37,12 +37,40 @@ jobs:
           echo "/Users/runner/Library/Python/3.9/lib/python/bin" >> $GITHUB_PATH
           echo "/usr/local/bin/$HOME/bin" >> $GITHUB_PATH
           git submodule update --init --recursive
+          python3 -m pip install --upgrade pip
           pip3 install --user -r requirements.txt
           python3 -c "import autopep8;print(autopep8.__file__)"
           dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573
           npm install -g prettier@2.2.1
           chmod +x manage
           exec -l $SHELL
+
+      - name: "Running Qiskit tests"
+        run: |
+          mkdir -p Debug
+          pushd Debug
+          cmake ..
+          make -j qat
+          popd
+
+          git clone https://github.com/microsoft/qiskit-qir.git
+          pushd qiskit-qir
+
+          echo "Installing qiskit qir"
+          pip3 install --user -e .
+          echo "Done!"
+          popd
+
+          export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
+
+          pushd qir/qiskit-tests/
+          pip3 install --user pytest
+          pytest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CC: clang-13
+          CXX: clang++-13
 
       - name: "Checking format"
         run: |
@@ -81,8 +109,8 @@ jobs:
           popd
 
           export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat        
-          pip install pytest
-          pip install -r requirements.txt
+          pip3 install pytest
+          pip3 install -r requirements.txt
           cd qir/qir-tests/
           pytest
         env:
@@ -92,35 +120,14 @@ jobs:
           CC: clang-13
           CXX: clang++-13
 
-      - name: "Running Qiskit tests"
-        run: |
-          git clone https://github.com/microsoft/qiskit-qir.git
-          pushd qiskit-qir
-
-          echo "Installing qiskit qir"
-          pip3 install --user -e .
-          echo "Done!"
-          popd
-
-          export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
-          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
-
-          pushd qir/qiskit-tests/
-          pip3 install --user pytest
-          pytest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CC: clang-13
-          CXX: clang++-13
-
       - name: "Running examples"
         run: |
           make test-examples
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@13/lib -Wl,-rpath,/usr/local/opt/llvm@13/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@13/include"
-          CC: clang
-          CXX: clang++
+          CC: clang-13
+          CXX: clang++-13
 
       - name: "Performing static analysis"
         run: |
@@ -128,5 +135,5 @@ jobs:
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@13/lib -Wl,-rpath,/usr/local/opt/llvm@13/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@13/include"
-          CC: clang
-          CXX: clang++
+          CC: clang-13
+          CXX: clang++-13
