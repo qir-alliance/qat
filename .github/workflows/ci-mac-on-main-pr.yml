@@ -97,8 +97,6 @@ jobs:
           git clone https://github.com/microsoft/qiskit-qir.git
           pushd qiskit-qir
 
-          git checkout 111e8149e5ea79c20764c044c454facc5188b2bd
-
           echo "Installing qiskit qir"
           pip3 install --user -e .
           echo "Done!"
