@@ -148,15 +148,21 @@ namespace quantum
             "llvm-optimization",
             [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
             {
-                auto&                     mpm = ptr->modulePassManager();
-                llvm::FunctionPassManager early_fpm;
-                mpm.addPass(llvm::ForceFunctionAttrsPass());
-                mpm.addPass(llvm::InferFunctionAttrsPass());
-                auto& fpm = ptr->functionPassManager();
+                auto& mpm = ptr->modulePassManager();
 
-                early_fpm.addPass(llvm::SimplifyCFGPass());
-                early_fpm.addPass(llvm::EarlyCSEPass(false));
-                mpm.addPass(FunctionToModule(std::move(early_fpm)));
+                // Eliminating intrinsic functions
+                if (cfg.eliminateConstants())
+                {
+                    llvm::FunctionPassManager early_fpm;
+                    mpm.addPass(llvm::ForceFunctionAttrsPass());
+                    mpm.addPass(llvm::InferFunctionAttrsPass());
+
+                    early_fpm.addPass(llvm::SimplifyCFGPass());
+                    early_fpm.addPass(llvm::EarlyCSEPass(false));
+                    mpm.addPass(FunctionToModule(std::move(early_fpm)));
+                }
+
+                auto& fpm = ptr->functionPassManager();
 
                 // Always inline
                 if (cfg.alwaysInline())

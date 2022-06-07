@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
+#include "Generators/LlvmPassesConfiguration.hpp"
+#include "GroupingPass/GroupingPassConfiguration.hpp"
+#include "PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "Rules/Factory.hpp"
 #include "Rules/Notation/Notation.hpp"
 #include "Rules/ReplacementRule.hpp"
+#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
 
@@ -67,7 +71,15 @@ TEST(RuleSetTestSuite, IntToPtr)
         rule_set.addRule(ret);
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto                  profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+
+    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
+    configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
+
     ir_manip->applyProfile(profile);
 
     EXPECT_TRUE(matched);
