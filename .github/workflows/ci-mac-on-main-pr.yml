@@ -69,8 +69,8 @@ jobs:
           pytest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CC: clang-13
-          CXX: clang++-13
+          CC: clang
+          CXX: clang++
 
       - name: "Checking format"
         run: |
@@ -117,8 +117,8 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
-          CC: clang-13
-          CXX: clang++-13
+          CC: clang
+          CXX: clang++
 
       - name: "Running examples"
         run: |
@@ -126,8 +126,8 @@ jobs:
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@13/lib -Wl,-rpath,/usr/local/opt/llvm@13/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@13/include"
-          CC: clang-13
-          CXX: clang++-13
+          CC: clang
+          CXX: clang++
 
       - name: "Performing static analysis"
         run: |
@@ -135,5 +135,5 @@ jobs:
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@13/lib -Wl,-rpath,/usr/local/opt/llvm@13/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@13/include"
-          CC: clang-13
-          CXX: clang++-13
+          CC: clang
+          CXX: clang++
