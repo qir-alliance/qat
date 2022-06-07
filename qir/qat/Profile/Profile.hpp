@@ -99,7 +99,7 @@ namespace quantum
         using StandardInstrumentationsPtr     = std::unique_ptr<llvm::StandardInstrumentations>;
         using PassBuilderPtr                  = std::unique_ptr<llvm::PassBuilder>;
 
-        void registerEPCallbacks(bool verify_each_pass, bool debug);
+        void registerEPCallbacks();
 
         template <typename PassManager>
         bool tryParsePipelineText(llvm::PassBuilder& pass_builder, std::string const& pipeline_options)

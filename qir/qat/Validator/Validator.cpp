@@ -19,13 +19,9 @@ namespace quantum
     Validator::Validator(
         ValidationPassConfiguration const& cfg,
         ILoggerPtr const&                  logger,
-        bool                               debug,
-        llvm::TargetMachine*               target_machine)
-      : loop_analysis_manager_{debug}
-      , function_analysis_manager_{debug}
-      , gscc_analysis_manager_{debug}
-      , module_analysis_manager_{debug}
-      , logger_{logger}
+        bool /*debug*/,
+        llvm::TargetMachine* target_machine)
+      : logger_{logger}
     {
 
         pass_builder_ = std::make_unique<llvm::PassBuilder>(target_machine);

@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: "Linux CI"
     steps:
       - name: Checkout code
@@ -26,16 +26,15 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y 
-          sudo apt-get remove -y llvm-12
+          sudo apt-get remove -y llvm-14 clang-format-14 clang-tidy-14 llvm-12 llvm-11 clang-11 clang-format-11 clang-tidy-11
           sudo apt-get install -y curl pkg-config findutils  wget
-          sudo apt install -y clang-11 cmake clang-format-11 clang-tidy-11 
-          sudo apt-get install -y llvm-11 lldb-11 llvm-11-dev libllvm11 llvm-11-runtime opt 
+          sudo apt install -y clang-13 cmake clang-format-13 clang-tidy-13 
+          sudo apt-get install -y llvm-13 lldb-13 llvm-13-dev libllvm11 llvm-13-runtime opt 
           sudo apt-get install -y nodejs npm
           sudo apt install -y python3 python3-pip 
-          sudo apt-get remove -y llvm-10
-          sudo ln -s /usr/lib/llvm-11/bin/opt /usr/bin/opt
+          sudo ln -s /usr/lib/llvm-13/bin/opt /usr/bin/opt
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 0       
-          dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573          
+          dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.24.201332          
           git submodule update --init --recursive
           pip install -r requirements.txt  
           npm install -g prettier@2.2.1
@@ -44,8 +43,8 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang-13
+          CXX: clang++-13
 
       - name: "Checking format"
         run: |
@@ -54,8 +53,8 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang-13
+          CXX: clang++-13
 
       - name: "Running unit tests"
         run: |
@@ -64,8 +63,8 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang-13
+          CXX: clang++-13
 
       - name: "Running Q# tests"
         run: |
@@ -94,8 +93,8 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang-13
+          CXX: clang++-13
 
       - name: "Running examples"
         run: |
@@ -104,8 +103,8 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang-13
+          CXX: clang++-13
 
       - name: "Performing static analysis"
         run: |
@@ -114,5 +113,5 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
-          CC: clang-11
-          CXX: clang++-11
+          CC: clang-13
+          CXX: clang++-13

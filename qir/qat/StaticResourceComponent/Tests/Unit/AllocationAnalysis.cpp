@@ -139,7 +139,8 @@ std::shared_ptr<ConfigurableProfileGenerator> newProfile(
     configuration_manager.addConfig<DummyConfig>();
 
     profile->registerAnonymousProfileComponent<DummyConfig>(
-        [&analysis_result](DummyConfig const& config, ProfileGenerator* ptr, Profile& profile) {
+        [&analysis_result](DummyConfig const& config, ProfileGenerator* ptr, Profile& profile)
+        {
             auto& fpm = ptr->functionPassManager();
             fpm.addPass(AnalysisReadoutPass(analysis_result));
         });
