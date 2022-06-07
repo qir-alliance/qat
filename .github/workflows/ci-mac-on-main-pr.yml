@@ -56,16 +56,23 @@ jobs:
           git clone https://github.com/microsoft/qiskit-qir.git
           pushd qiskit-qir
 
-          echo "Installing qiskit qir"
           pip3 install --user -e .
-          echo "Done!"
           popd
+
+          echo "Testing installation"
+          python -c "from qiskit_qir import to_qir"
+          echo "Done"
 
           export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
           export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
 
           pushd qir/qiskit-tests/
+          which pytest
+          whereis pytest
           pip3 install --user pytest
+          which pytest
+          whereis pytest
+
           pytest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
