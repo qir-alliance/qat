@@ -67,13 +67,9 @@ jobs:
           export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
 
           pushd qir/qiskit-tests/
-          which pytest
-          whereis pytest
           pip3 install --user pytest
-          which pytest
-          whereis pytest
 
-          pytest
+          python3 -m pytest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CC: clang
@@ -105,7 +101,7 @@ jobs:
 
           pushd qir/qsharp-tests/
           pip3 install --user pytest
-          pytest
+          python3 -m pytest
 
       - name: "Running QIR tests"
         run: |
@@ -119,7 +115,7 @@ jobs:
           pip3 install pytest
           pip3 install -r requirements.txt
           cd qir/qir-tests/
-          pytest
+          python3 -m pytest
         env:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
