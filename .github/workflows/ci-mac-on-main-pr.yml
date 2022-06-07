@@ -46,39 +46,6 @@ jobs:
           chmod +x manage
           exec -l $SHELL
 
-      - name: "Running Qiskit tests"
-        run: |
-          virtualenv develop_env
-          source develop_env/bin/activate
-
-          mkdir -p Debug
-          pushd Debug
-          cmake ..
-          make -j qat
-          popd
-
-          git clone https://github.com/microsoft/qiskit-qir.git
-          pushd qiskit-qir
-
-          pip3 install -e .
-          popd
-
-          echo "Testing installation"
-          python -c "from qiskit_qir import to_qir"
-          echo "Done"
-
-          export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
-          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
-
-          pushd qir/qiskit-tests/
-          pip3 install pytest
-
-          python3 -m pytest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CC: clang
-          CXX: clang++
-
       - name: "Checking format"
         run: |
           ./manage stylecheck
@@ -133,6 +100,39 @@ jobs:
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@13/lib -Wl,-rpath,/usr/local/opt/llvm@13/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@13/include"
+          CC: clang
+          CXX: clang++
+
+      - name: "Running Qiskit tests"
+        run: |
+          virtualenv develop_env
+          source develop_env/bin/activate
+
+          mkdir -p Debug
+          pushd Debug
+          cmake ..
+          make -j qat
+          popd
+
+          git clone https://github.com/microsoft/qiskit-qir.git
+          pushd qiskit-qir
+
+          pip3 install -e .
+          popd
+
+          echo "Testing installation"
+          python -c "from qiskit_qir import to_qir"
+          echo "Done"
+
+          export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
+
+          pushd qir/qiskit-tests/
+          pip3 install pytest
+
+          python3 -m pytest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CC: clang
           CXX: clang++
 
