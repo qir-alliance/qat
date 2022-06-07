@@ -139,34 +139,6 @@ namespace quantum
         throw std::runtime_error("Component " + id + " not found.");
     }
 
-    class DummyPass : public llvm::PassInfoMixin<DummyPass>
-    {
-      public:
-        // Construction and destruction configuration.
-        //
-
-        DummyPass() = default;
-
-        /// Copy construction is banned.
-        DummyPass(DummyPass const&) = delete;
-
-        /// We allow move semantics.
-        DummyPass(DummyPass&&) = default;
-
-        /// Default destruction.
-        ~DummyPass() = default;
-        llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam)
-        {
-            llvm::errs() << module << "\n";
-            return llvm::PreservedAnalyses::all();
-        }
-        /// Whether or not this pass is required to run.
-        static bool isRequired()
-        {
-            return true;
-        }
-    };
-
     void ProfileGenerator::setupDefaultComponentPipeline()
     {
         using namespace llvm;

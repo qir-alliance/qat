@@ -46,13 +46,6 @@ namespace quantum
         config.addParameter(
             eliminate_dead_code_, "eliminate-dead-code", "Uses LLVMs aggressive dead code elimination.");
         config.addParameter(eliminate_memory_, "eliminate-memory", "Maps memory into registers where feasible.");
-
-        config.addExperimentalParameter(
-            use_llvm_opt_pipeline_, false, false, "use-llvm-opt-pipeline", "Disables the the default pipeline.");
-
-        config.addExperimentalParameter(
-            opt_pipeline_config_, static_cast<String>(""), static_cast<String>(""), "opt-pipeline-config",
-            "LLVM passes pipeline to use upon applying this component.");
     }
 
     bool LlvmPassesConfiguration::alwaysInline() const
@@ -113,11 +106,6 @@ namespace quantum
     bool LlvmPassesConfiguration::unrollForgeScev() const
     {
         return unroll_forget_scev_;
-    }
-
-    bool LlvmPassesConfiguration::useLlvmOptPipeline() const
-    {
-        return use_llvm_opt_pipeline_;
     }
 
     String LlvmPassesConfiguration::optPipelineConfig() const
