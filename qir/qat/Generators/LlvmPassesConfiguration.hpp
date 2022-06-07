@@ -52,9 +52,6 @@ namespace quantum
 
         bool unrollForgeScev() const;
 
-        /// Opt pipeline configuration string.
-        String optPipelineConfig() const;
-
         /// Whether or not to add a pass to eliminate constants.
         bool eliminateConstants() const;
 

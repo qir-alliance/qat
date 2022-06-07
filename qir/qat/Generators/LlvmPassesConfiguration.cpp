@@ -108,11 +108,6 @@ namespace quantum
         return unroll_forget_scev_;
     }
 
-    String LlvmPassesConfiguration::optPipelineConfig() const
-    {
-        return opt_pipeline_config_;
-    }
-
     bool LlvmPassesConfiguration::eliminateConstants() const
     {
         return eliminate_constants_;
@@ -148,8 +143,6 @@ namespace quantum
         ret.eliminate_constants_                = false;
         ret.eliminate_dead_code_                = false;
         ret.eliminate_memory_                   = false;
-        ret.use_llvm_opt_pipeline_              = false;
-        ret.opt_pipeline_config_                = "";
 
         return ret;
     }
@@ -174,8 +167,6 @@ namespace quantum
         ret.eliminate_constants_                = true;
         ret.eliminate_dead_code_                = true;
         ret.eliminate_memory_                   = true;
-        ret.use_llvm_opt_pipeline_              = false;
-        ret.opt_pipeline_config_                = "";
 
         return ret;
     }
@@ -187,7 +178,7 @@ namespace quantum
                unroll_allow_upper_bound_ == false && unroll_allow_profile_based_peeling_ == false &&
                unroll_full_unroll_count_ == 0 && unroll_opt_level_ == 0 && unroll_only_when_forced_ == false &&
                unroll_forget_scev_ == false && eliminate_constants_ == false && eliminate_dead_code_ == false &&
-               eliminate_memory_ == false && use_llvm_opt_pipeline_ == false && opt_pipeline_config_ == "";
+               eliminate_memory_ == false;
     }
 
 } // namespace quantum
