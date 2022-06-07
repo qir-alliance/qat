@@ -39,6 +39,7 @@ jobs:
           git submodule update --init --recursive
           python3 -m pip install --upgrade pip
           pip3 install --user -r requirements.txt
+          pip3 install virtualenv
           python3 -c "import autopep8;print(autopep8.__file__)"
           dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573
           npm install -g prettier@2.2.1
@@ -47,6 +48,9 @@ jobs:
 
       - name: "Running Qiskit tests"
         run: |
+          virtualenv develop_env
+          source develop_env/bin/activate
+
           mkdir -p Debug
           pushd Debug
           cmake ..
@@ -56,7 +60,7 @@ jobs:
           git clone https://github.com/microsoft/qiskit-qir.git
           pushd qiskit-qir
 
-          pip3 install --user -e .
+          pip3 install -e .
           popd
 
           echo "Testing installation"
