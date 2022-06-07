@@ -722,10 +722,10 @@ namespace quantum
             explicit SingleModuleTransformation(
                 OptimizationLevel const&amp; optimization_level = OptimizationLevel::O0,
                 bool                     debug              = false)
-              : loop_analysis_manager_{debug}
-              , function_analysis_manager_{debug}
-              , gscc_analysis_manager_{debug}
-              , module_analysis_manager_{debug}
+              : loop_analysis_manager_{}
+              , function_analysis_manager_{}
+              , gscc_analysis_manager_{}
+              , module_analysis_manager_{}
               , optimization_level_{optimization_level}
               , debug_{debug}
             {
@@ -776,7 +776,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  3 June 2022 at 20:24:59 UTC</p></div>
+<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
 </div>
           </div>
         </main>

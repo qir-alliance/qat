@@ -597,13 +597,9 @@ namespace quantum
     Validator::Validator(
         ValidationPassConfiguration const&amp; cfg,
         ILoggerPtr const&amp;                  logger,
-        bool                               debug,
-        llvm::TargetMachine*               target_machine)
-      : loop_analysis_manager_{debug}
-      , function_analysis_manager_{debug}
-      , gscc_analysis_manager_{debug}
-      , module_analysis_manager_{debug}
-      , logger_{logger}
+        bool /*debug*/,
+        llvm::TargetMachine* target_machine)
+      : logger_{logger}
     {
 
         pass_builder_ = std::make_unique&lt;llvm::PassBuilder&gt;(target_machine);
@@ -694,7 +690,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  3 June 2022 at 20:24:59 UTC</p></div>
+<p>Updated on  7 June 2022 at 22:20:12 UTC</p></div>
 </div>
           </div>
         </main>

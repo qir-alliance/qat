@@ -624,13 +624,6 @@ namespace quantum
         config.addParameter(
             eliminate_dead_code_, &quot;eliminate-dead-code&quot;, &quot;Uses LLVMs aggressive dead code elimination.&quot;);
         config.addParameter(eliminate_memory_, &quot;eliminate-memory&quot;, &quot;Maps memory into registers where feasible.&quot;);
-
-        config.addExperimentalParameter(
-            use_llvm_opt_pipeline_, false, false, &quot;use-llvm-opt-pipeline&quot;, &quot;Disables the the default pipeline.&quot;);
-
-        config.addExperimentalParameter(
-            opt_pipeline_config_, static_cast&lt;String&gt;(&quot;&quot;), static_cast&lt;String&gt;(&quot;&quot;), &quot;opt-pipeline-config&quot;,
-            &quot;LLVM passes pipeline to use upon applying this component.&quot;);
     }
 
     bool LlvmPassesConfiguration::alwaysInline() const
@@ -693,16 +686,6 @@ namespace quantum
         return unroll_forget_scev_;
     }
 
-    bool LlvmPassesConfiguration::useLlvmOptPipeline() const
-    {
-        return use_llvm_opt_pipeline_;
-    }
-
-    String LlvmPassesConfiguration::optPipelineConfig() const
-    {
-        return opt_pipeline_config_;
-    }
-
     bool LlvmPassesConfiguration::eliminateConstants() const
     {
         return eliminate_constants_;
@@ -738,8 +721,6 @@ namespace quantum
         ret.eliminate_constants_                = false;
         ret.eliminate_dead_code_                = false;
         ret.eliminate_memory_                   = false;
-        ret.use_llvm_opt_pipeline_              = false;
-        ret.opt_pipeline_config_                = &quot;&quot;;
 
         return ret;
     }
@@ -764,8 +745,6 @@ namespace quantum
         ret.eliminate_constants_                = true;
         ret.eliminate_dead_code_                = true;
         ret.eliminate_memory_                   = true;
-        ret.use_llvm_opt_pipeline_              = false;
-        ret.opt_pipeline_config_                = &quot;&quot;;
 
         return ret;
     }
@@ -777,14 +756,14 @@ namespace quantum
                unroll_allow_upper_bound_ == false &amp;&amp; unroll_allow_profile_based_peeling_ == false &amp;&amp;
                unroll_full_unroll_count_ == 0 &amp;&amp; unroll_opt_level_ == 0 &amp;&amp; unroll_only_when_forced_ == false &amp;&amp;
                unroll_forget_scev_ == false &amp;&amp; eliminate_constants_ == false &amp;&amp; eliminate_dead_code_ == false &amp;&amp;
-               eliminate_memory_ == false &amp;&amp; use_llvm_opt_pipeline_ == false &amp;&amp; opt_pipeline_config_ == &quot;&quot;;
+               eliminate_memory_ == false;
     }
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  3 June 2022 at 20:24:59 UTC</p></div>
+<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
 </div>
           </div>
         </main>

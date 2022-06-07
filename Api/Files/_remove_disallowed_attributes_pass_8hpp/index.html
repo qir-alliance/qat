@@ -614,20 +614,28 @@ namespace quantum
         RemoveDisallowedAttributesPass()
           : allowed_attrs_{
                 static_cast&lt;String&gt;(&quot;EntryPoint&quot;), static_cast&lt;String&gt;(&quot;InteropFriendly&quot;),
-                static_cast&lt;String&gt;(&quot;requiredQubits&quot;), static_cast&lt;String&gt;(&quot;requiredResults&quot;)}
+                static_cast&lt;String&gt;(&quot;requiredQubits&quot;), static_cast&lt;String&gt;(&quot;requiredResults&quot;)
+                /*
+                static_cast&lt;String&gt;(&quot;nofree&quot;)
+                static_cast&lt;String&gt;(&quot;nosync&quot;)
+                static_cast&lt;String&gt;(&quot;nounwind&quot;)
+                static_cast&lt;String&gt;(&quot;readnone&quot;)
+                static_cast&lt;String&gt;(&quot;speculatable&quot;)
+                static_cast&lt;String&gt;(&quot;willreturn&quot;)
+                */
+            }
         {
         }
 
         llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
         {
-            std::string const LLVM_FUNC_NAME = &quot;@llvm.&quot;;
             for (auto&amp; fnc : module)
             {
                 std::unordered_map&lt;String, String&gt; to_keep;
                 auto                               name = static_cast&lt;std::string&gt;(fnc.getName());
 
                 // Skipping any LLVM function
-                if (name.size() &gt;= LLVM_FUNC_NAME.size() &amp;&amp; name.substr(0, LLVM_FUNC_NAME.size()) == LLVM_FUNC_NAME)
+                if (fnc.isIntrinsic())
                 {
                     continue;
                 }
@@ -702,7 +710,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  3 June 2022 at 20:24:59 UTC</p></div>
+<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
 </div>
           </div>
         </main>

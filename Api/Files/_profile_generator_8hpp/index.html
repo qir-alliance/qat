@@ -703,7 +703,8 @@ namespace quantum
     {
         configuration_manager_.addConfig&lt;R&gt;(id);
 
-        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile) {
+        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
+        {
             if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
             {
                 auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
@@ -717,7 +718,8 @@ namespace quantum
 
     template &lt;typename R&gt; void ProfileGenerator::replaceProfileComponent(String const&amp; id, SetupFunction&lt;R&gt; setup)
     {
-        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile) {
+        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
+        {
             if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
             {
                 auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
@@ -745,7 +747,8 @@ namespace quantum
             throw std::runtime_error(&quot;Configuration '&quot; + static_cast&lt;String&gt;(typeid(R).name()) + &quot;' does not exist.&quot;);
         }
 
-        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile) {
+        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
+        {
             if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
             {
                 auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
@@ -761,7 +764,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  3 June 2022 at 20:24:59 UTC</p></div>
+<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
 </div>
           </div>
         </main>

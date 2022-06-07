@@ -609,7 +609,8 @@ namespace quantum
         using namespace microsoft::quantum::notation;
         addConstExprRule(
             {branch(&quot;cond&quot;_cap = constInt(), &quot;if_false&quot;_cap = _, &quot;if_true&quot;_cap = _),
-             [](Builder&amp; builder, Value* val, Captures&amp; captures, Replacements&amp; replacements) {
+             [](Builder&amp; builder, Value* val, Captures&amp; captures, Replacements&amp; replacements)
+             {
                  auto cst   = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(captures[&quot;cond&quot;]);
                  auto instr = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
 
@@ -649,36 +650,38 @@ namespace quantum
         if (config_.assumeNoExceptions())
         {
             // Replacing all invokes with calls
-            addConstExprRule({unnamedInvoke(), [](Builder&amp; builder, Value* val, Captures&amp;, Replacements&amp; replacements) {
-                                  auto invoke = llvm::dyn_cast&lt;llvm::InvokeInst&gt;(val);
-                                  if (invoke == nullptr)
-                                  {
-                                      return false;
-                                  }
+            addConstExprRule(
+                {unnamedInvoke(), [](Builder&amp; builder, Value* val, Captures&amp;, Replacements&amp; replacements)
+                 {
+                     auto invoke = llvm::dyn_cast&lt;llvm::InvokeInst&gt;(val);
+                     if (invoke == nullptr)
+                     {
+                         return false;
+                     }
 
-                                  auto callee_function = invoke-&gt;getCalledFunction();
+                     auto callee_function = invoke-&gt;getCalledFunction();
 
-                                  // List with new call arguments
-                                  std::vector&lt;llvm::Value*&gt; new_arguments;
-                                  for (unsigned i = 0; i &lt; invoke-&gt;getNumArgOperands(); ++i)
-                                  {
-                                      // Getting the i'th argument
-                                      llvm::Value* arg = invoke-&gt;getArgOperand(i);
+                     // List with new call arguments
+                     std::vector&lt;llvm::Value*&gt; new_arguments;
+                     for (unsigned i = 0; i &lt; invoke-&gt;getNumArgOperands(); ++i)
+                     {
+                         // Getting the i'th argument
+                         llvm::Value* arg = invoke-&gt;getArgOperand(i);
 
-                                      new_arguments.push_back(arg);
-                                  }
+                         new_arguments.push_back(arg);
+                     }
 
-                                  // Creating a new call
-                                  auto* new_call = builder.CreateCall(callee_function, new_arguments);
-                                  builder.CreateBr(invoke-&gt;getNormalDest());
+                     // Creating a new call
+                     auto* new_call = builder.CreateCall(callee_function, new_arguments);
+                     builder.CreateBr(invoke-&gt;getNormalDest());
 
-                                  new_call-&gt;takeName(invoke);
+                     new_call-&gt;takeName(invoke);
 
-                                  // Replace all calls to old function with calls to new function
-                                  invoke-&gt;replaceAllUsesWith(new_call);
-                                  replacements.push_back({invoke, nullptr});
-                                  return true;
-                              }});
+                     // Replace all calls to old function with calls to new function
+                     invoke-&gt;replaceAllUsesWith(new_call);
+                     replacements.push_back({invoke, nullptr});
+                     return true;
+                 }});
         }
     }
 
@@ -1005,9 +1008,9 @@ namespace quantum
         {
             if (function.hasFnAttribute(config_.entryPointAttr()))
             {
-                runOnFunction(function, [this](llvm::Value* value, DeletableInstructions&amp; modifier) {
-                    return copyAndExpand(value, modifier);
-                });
+                runOnFunction(
+                    function, [this](llvm::Value* value, DeletableInstructions&amp; modifier)
+                    { return copyAndExpand(value, modifier); });
             }
         }
 
@@ -1042,9 +1045,9 @@ namespace quantum
                 active_pieces_.insert(&amp;function);
 
                 // Detecting active code
-                runOnFunction(function, [this](llvm::Value* value, DeletableInstructions&amp; modifier) {
-                    return detectActiveCode(value, modifier);
-                });
+                runOnFunction(
+                    function, [this](llvm::Value* value, DeletableInstructions&amp; modifier)
+                    { return detectActiveCode(value, modifier); });
             }
         }
 
@@ -1287,26 +1290,29 @@ namespace quantum
 
             if (function.hasFnAttribute(config_.entryPointAttr()))
             {
-                runOnFunction(function, [this, &amp;already_visited](llvm::Value* value, DeletableInstructions&amp;) {
-                    auto instr = llvm::dyn_cast&lt;llvm::Instruction&gt;(value);
-
-                    // Sanity check
-                    if (already_visited.find(value) != already_visited.end())
+                runOnFunction(
+                    function,
+                    [this, &amp;already_visited](llvm::Value* value, DeletableInstructions&amp;)
                     {
-                        requireLogger();
-                        logger_-&gt;setLocationFromValue(value);
-                        logger_-&gt;internalError(&quot;Instruction was visited twice while applying rule to function.&quot;);
+                        auto instr = llvm::dyn_cast&lt;llvm::Instruction&gt;(value);
+
+                        // Sanity check
+                        if (already_visited.find(value) != already_visited.end())
+                        {
+                            requireLogger();
+                            logger_-&gt;setLocationFromValue(value);
+                            logger_-&gt;internalError(&quot;Instruction was visited twice while applying rule to function.&quot;);
+                            return value;
+                        }
+                        already_visited.insert(value);
+
+                        // Checking if we should analyse
+                        if (instr != nullptr)
+                        {
+                            rule_set_.matchAndReplace(instr, replacements_);
+                        }
                         return value;
-                    }
-                    already_visited.insert(value);
-
-                    // Checking if we should analyse
-                    if (instr != nullptr)
-                    {
-                        rule_set_.matchAndReplace(instr, replacements_);
-                    }
-                    return value;
-                });
+                    });
             }
         }
 
@@ -1437,8 +1443,8 @@ namespace quantum
 
         llvm::SmallVector&lt;llvm::ReturnInst*, 8&gt; returns; // Ignore returns cloned.
 
-        // Note: In LLVM 13 upgrade 'true' to 'llvm::CloneFunctionChangeType::LocalChangesOnly'
-        llvm::CloneFunctionInto(function, &amp;callee, remapper, true, returns, &quot;&quot;, nullptr);
+        llvm::CloneFunctionInto(
+            function, &amp;callee, remapper, llvm::CloneFunctionChangeType::LocalChangesOnly, returns, &quot;&quot;, nullptr);
 
         verifyFunction(*function);
 
@@ -1467,7 +1473,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  3 June 2022 at 20:24:59 UTC</p></div>
+<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
 </div>
           </div>
         </main>

@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_validation_pass_configuration_8hpp/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      ValidationPass/ValidationPassConfiguration.hpp - QAT Documentation
+      microsoft::quantum::FunctionToModule - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -215,7 +215,7 @@
                 </h3>
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../../Classes/"
+                  href="../"
                   >Classes</a
                 >
                 <a
@@ -230,7 +230,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../"
+                  href="../../Files/"
                   >Files</a
                 >
                 <a
@@ -398,7 +398,7 @@
               </h3>
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../../Classes/"
+                href="../"
                 >Classes</a
               >
               <a
@@ -413,7 +413,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../"
+                href="../../Files/"
                 >Files</a
               >
               <a
@@ -553,32 +553,14 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> ValidationPass/ValidationPassConfiguration.hpp </span>
+        <span class="text-center"> microsoft::quantum::FunctionToModule </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="validationpassvalidationpassconfigurationhpp">ValidationPass/ValidationPassConfiguration.hpp</h1>
-<h2 id="namespaces">Namespaces</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
-</tr>
-<tr>
-<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
-</tr>
-<tr>
-<td><strong><a href="/qat/Api/Namespaces/namespacestd/">std</a></strong></td>
-</tr>
-</tbody>
-</table>
-<h2 id="classes">Classes</h2>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumfunctiontomodule">microsoft::quantum::FunctionToModule</h1>
+<p>Inherits from llvm::PassInfoMixin&lt; FunctionToModule &gt;</p>
+<h2 id="public-functions">Public Functions</h2>
 <table>
 <thead>
 <tr>
@@ -588,126 +570,65 @@
 </thead>
 <tbody>
 <tr>
-<td>struct</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">microsoft::quantum::OpcodeValue</a></strong></td>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/#function-functiontomodule">FunctionToModule</a></strong>(llvm::FunctionPassManager &amp;&amp; manager)</td>
 </tr>
 <tr>
-<td>struct</td>
-<td><strong><a href="/qat/Api/Classes/structstd_1_1hash_3_01microsoft_1_1quantum_1_1_opcode_value_01_4/">std::hash&lt; microsoft::quantum::OpcodeValue &gt;</a></strong></td>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/#function-functiontomodule">FunctionToModule</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/">FunctionToModule</a> const &amp; )<br>Copy construction is banned.</td>
 </tr>
 <tr>
-<td>class</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">microsoft::quantum::ValidationPassConfiguration</a></strong></td>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/#function-functiontomodule">FunctionToModule</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/">FunctionToModule</a> &amp;&amp; ) =default<br>We allow move semantics.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/#function-~functiontomodule">~FunctionToModule</a></strong>() =default<br>Default destruction.</td>
+</tr>
+<tr>
+<td>llvm::PreservedAnalyses</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/#function-run">run</a></strong>(llvm::Module &amp; module, llvm::ModuleAnalysisManager &amp; mam)</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/#function-isrequired">isRequired</a></strong>()<br>Whether or not this pass is required to run.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="source-code">Source code</h2>
-<pre><code class="language-cpp">#pragma once
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-
-#include &quot;Commandline/ConfigurationManager.hpp&quot;
-#include &quot;QatTypes/QatTypes.hpp&quot;
-
-#include &lt;functional&gt;
-#include &lt;set&gt;
-
-namespace microsoft
-{
-namespace quantum
-{
-    struct OpcodeValue
-    {
-        String id{&quot;&quot;};
-        String predicate{&quot;&quot;};
-        OpcodeValue(String const&amp; name, String const&amp; fi = &quot;&quot;)
-          : id{name}
-          , predicate{fi}
-        {
-        }
-
-        OpcodeValue()                   = default;
-        OpcodeValue(OpcodeValue&amp;&amp;)      = default;
-        OpcodeValue(OpcodeValue const&amp;) = default;
-        OpcodeValue&amp; operator=(OpcodeValue&amp;&amp;) = default;
-        OpcodeValue&amp; operator=(OpcodeValue const&amp;) = default;
-        bool         operator==(OpcodeValue const&amp; other) const
-        {
-            return id == other.id &amp;&amp; predicate == other.predicate;
-        }
-    };
-} // namespace quantum
-} // namespace microsoft
-
-namespace std
-{
-template &lt;&gt; struct hash&lt;microsoft::quantum::OpcodeValue&gt;
-{
-    size_t operator()(microsoft::quantum::OpcodeValue const&amp; x) const
-    {
-        hash&lt;std::string&gt; hasher;
-        return hasher(x.id + &quot;.&quot; + x.predicate);
-    }
-};
-} // namespace std
-
-namespace microsoft
-{
-namespace quantum
-{
-
-    class ValidationPassConfiguration
-    {
-      public:
-        using Set       = std::unordered_set&lt;std::string&gt;;
-        using OpcodeSet = std::unordered_set&lt;OpcodeValue&gt;;
-
-        // Setup and construction
-        //
-
-        ValidationPassConfiguration() = default;
-
-        void setup(ConfigurationManager&amp; config);
-
-        static ValidationPassConfiguration fromProfileName(String const&amp; name);
-        OpcodeSet const&amp;                   allowedOpcodes() const;
-        Set const&amp;                         allowedExternalCallNames() const;
-
-        bool allowInternalCalls() const;
-        bool allowlistOpcodes() const;
-        bool allowlistExternalCalls() const;
-
-        bool       allowlistPointerTypes() const;
-        Set const&amp; allowedPointerTypes() const;
-
-        String profileName() const;
-
-      private:
-        void addAllowedExternalCall(String const&amp; name);
-        void addAllowedOpcode(String const&amp; name);
-        void addAllowedPointerType(String const&amp; name);
-
-        String profile_name_{&quot;null&quot;};
-
-        OpcodeSet opcodes_{};
-        Set       external_calls_{};
-        Set       allowed_pointer_types_{};
-
-        bool allowlist_opcodes_{true};
-        bool allowlist_external_calls_{true};
-        bool allow_internal_calls_{false};
-        bool allowlist_pointer_types_{false};
-
-        bool allow_primitive_return_{true};
-        bool allow_struct_return_{true};
-        bool allow_pointer_return_{true};
-    };
-
-} // namespace quantum
-} // namespace microsoft
+<h2 id="public-functions-documentation">Public Functions Documentation</h2>
+<h3 id="function-functiontomodule">function FunctionToModule</h3>
+<pre><code class="language-cpp">inline explicit FunctionToModule(
+    llvm::FunctionPassManager &amp;&amp; manager
+)
 </code></pre>
+<h3 id="function-functiontomodule_1">function FunctionToModule</h3>
+<pre><code class="language-cpp">FunctionToModule(
+    FunctionToModule const &amp; 
+)
+</code></pre>
+<p>Copy construction is banned. </p>
+<h3 id="function-functiontomodule_2">function FunctionToModule</h3>
+<pre><code class="language-cpp">FunctionToModule(
+    FunctionToModule &amp;&amp; 
+) =default
+</code></pre>
+<p>We allow move semantics. </p>
+<h3 id="function-functiontomodule_3">function ~FunctionToModule</h3>
+<pre><code class="language-cpp">~FunctionToModule() =default
+</code></pre>
+<p>Default destruction. </p>
+<h3 id="function-run">function run</h3>
+<pre><code class="language-cpp">inline llvm::PreservedAnalyses run(
+    llvm::Module &amp; module,
+    llvm::ModuleAnalysisManager &amp; mam
+)
+</code></pre>
+<h3 id="function-isrequired">function isRequired</h3>
+<pre><code class="language-cpp">static inline bool isRequired()
+</code></pre>
+<p>Whether or not this pass is required to run. </p>
 <hr />
-<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
+<p>Updated on  7 June 2022 at 22:20:12 UTC</p></div>
 </div>
           </div>
         </main>

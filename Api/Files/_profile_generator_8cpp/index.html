@@ -596,14 +596,15 @@
 #include &quot;StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
 #include &quot;TransformationRulesPass/TransformationRulesPass.hpp&quot;
 #include &quot;TransformationRulesPass/TransformationRulesPassConfiguration.hpp&quot;
+#include &quot;Utils/FunctionToModule.hpp&quot;
 #include &quot;ValidationPass/ValidationPassConfiguration.hpp&quot;
 
 #include &quot;Llvm/Llvm.hpp&quot;
+
 namespace microsoft
 {
 namespace quantum
 {
-
     Profile ProfileGenerator::newProfile(String const&amp; name, OptimizationLevel const&amp; optimization_level, bool debug)
     {
         auto qubit_allocation_manager  = BasicAllocationManager::createNew();
@@ -629,7 +630,7 @@ namespace quantum
             }
 
             c.second(this, ret);
-            module_pass_manager.addPass(createModuleToFunctionPassAdaptor(std::move(function_pass_manager)));
+            module_pass_manager.addPass(FunctionToModule(std::move(function_pass_manager)));
         }
 
         ret.setModulePassManager(std::move(module_pass_manager));
@@ -722,8 +723,23 @@ namespace quantum
         ILoggerPtr logger = logger_;
 
         registerProfileComponent&lt;LlvmPassesConfiguration&gt;(
-            &quot;llvm-optimization&quot;, [](LlvmPassesConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
+            &quot;llvm-optimization&quot;,
+            [](LlvmPassesConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/)
+            {
                 auto&amp; mpm = ptr-&gt;modulePassManager();
+
+                // Eliminating intrinsic functions
+                if (cfg.eliminateConstants())
+                {
+                    llvm::FunctionPassManager early_fpm;
+                    mpm.addPass(llvm::ForceFunctionAttrsPass());
+                    mpm.addPass(llvm::InferFunctionAttrsPass());
+
+                    early_fpm.addPass(llvm::SimplifyCFGPass());
+                    early_fpm.addPass(llvm::EarlyCSEPass(false));
+                    mpm.addPass(FunctionToModule(std::move(early_fpm)));
+                }
+
                 auto&amp; fpm = ptr-&gt;functionPassManager();
 
                 // Always inline
@@ -757,40 +773,6 @@ namespace quantum
                     fpm.addPass(llvm::LoopUnrollPass(loop_config));
                 }
 
-                if (cfg.useLlvmOptPipeline())
-                {
-                    auto                                 pass_pipeline = cfg.optPipelineConfig();
-                    llvm::PassBuilder::OptimizationLevel opt           = ptr-&gt;optimizationLevel();
-                    if (!pass_pipeline.empty())
-                    {
-                        auto&amp; pass_builder = ptr-&gt;passBuilder();
-
-                        if (auto err = pass_builder.parsePassPipeline(mpm, pass_pipeline, false, false))
-                        {
-                            throw std::runtime_error(
-                                &quot;Failed to set pass pipeline up. Value: '&quot; + pass_pipeline +
-                                &quot;', error: &quot; + toString(std::move(err)));
-                        }
-                    }
-                    else
-                    {
-                        // If not explicitly disabled, we fall back to the default LLVM pipeline
-                        auto&amp;                   pass_builder = ptr-&gt;passBuilder();
-                        llvm::ModulePassManager pipeline1    = pass_builder.buildPerModuleDefaultPipeline(opt);
-                        mpm.addPass(std::move(pipeline1));
-
-                        llvm::ModulePassManager pipeline2 =
-                            pass_builder.buildModuleSimplificationPipeline(opt, llvm::PassBuilder::ThinLTOPhase::None);
-                        mpm.addPass(std::move(pipeline2));
-
-                        llvm::ModulePassManager pipeline3 =
-                            pass_builder.buildModuleOptimizationPipeline(opt, ptr-&gt;isDebugMode());
-                        mpm.addPass(std::move(pipeline3));
-                    }
-                }
-
-                fpm.addPass(llvm::SimplifyCFGPass());
-
                 if (cfg.eliminateMemory())
                 {
                     fpm.addPass(llvm::PromotePass());
@@ -809,7 +791,8 @@ namespace quantum
 
         registerProfileComponent&lt;PreTransformTrimmingPassConfiguration&gt;(
             &quot;pre-transform-trimming&quot;,
-            [logger](PreTransformTrimmingPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
+            [logger](PreTransformTrimmingPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/)
+            {
                 auto&amp; mpm = ptr-&gt;modulePassManager();
 
                 mpm.addPass(PreTransformTrimmingPass(cfg, logger));
@@ -817,13 +800,14 @@ namespace quantum
 
         registerProfileComponent&lt;TransformationRulesPassConfiguration&gt;(
             &quot;transformation-rules&quot;,
-            [logger](TransformationRulesPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile) {
+            [logger](TransformationRulesPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile)
+            {
                 auto&amp; ret = ptr-&gt;modulePassManager();
 
                 // Defining the mapping
                 RuleSet rule_set;
                 auto    factory = RuleFactory(
-                    rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), logger);
+                       rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), logger);
                 factory.usingConfiguration(ptr-&gt;configurationManager().get&lt;FactoryConfiguration&gt;());
 
                 // Creating profile pass
@@ -833,33 +817,39 @@ namespace quantum
             });
 
         registerProfileComponent&lt;PostTransformConfig&gt;(
-            &quot;post-transform&quot;, [logger](PostTransformConfig const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
-                auto&amp; ret = ptr-&gt;functionPassManager();
+            &quot;post-transform&quot;,
+            [logger](PostTransformConfig const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/)
+            {
+                auto&amp; mpm = ptr-&gt;modulePassManager();
+                auto&amp; fpm = ptr-&gt;functionPassManager();
 
                 if (cfg.shouldAddInstCombinePass())
                 {
-                    ret.addPass(llvm::InstCombinePass(1000));
+                    fpm.addPass(llvm::InstCombinePass(1000));
                 }
 
                 if (cfg.shouldAddAggressiveInstCombinePass())
                 {
-                    ret.addPass(llvm::AggressiveInstCombinePass());
+                    fpm.addPass(llvm::AggressiveInstCombinePass());
                 }
 
                 if (cfg.shouldAddSccpPass())
                 {
-                    ret.addPass(llvm::SCCPPass());
+                    fpm.addPass(llvm::SCCPPass());
                 }
 
                 if (cfg.shouldAddSimplifyCfgPass())
                 {
-                    ret.addPass(llvm::SimplifyCFGPass());
+                    fpm.addPass(llvm::SimplifyCFGPass());
                 }
             });
 
         registerProfileComponent&lt;PostTransformValidationPassConfiguration&gt;(
             &quot;post-transform-validation&quot;,
-            [logger](PostTransformValidationPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/) {
+            [logger](
+                PostTransformValidationPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp;
+                /*profile*/)
+            {
                 auto&amp; mpm = ptr-&gt;modulePassManager();
 
                 mpm.addPass(PostTransformValidationPass(cfg, logger));
@@ -867,7 +857,8 @@ namespace quantum
 
         registerProfileComponent&lt;StaticResourceComponentConfiguration&gt;(
             &quot;static-resource&quot;,
-            [logger](StaticResourceComponentConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile) {
+            [logger](StaticResourceComponentConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile)
+            {
                 auto&amp; fam = profile.functionAnalysisManager();
                 fam.registerPass([&amp;] { return AllocationAnalysisPass(cfg, logger); });
 
@@ -888,7 +879,9 @@ namespace quantum
             });
 
         registerProfileComponent&lt;GroupingPassConfiguration&gt;(
-            &quot;grouping&quot;, [logger](GroupingPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile) {
+            &quot;grouping&quot;,
+            [logger](GroupingPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile)
+            {
                 if (cfg.circuitSeparation())
                 {
                     auto&amp; mam = profile.moduleAnalysisManager();
@@ -911,7 +904,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  3 June 2022 at 20:24:59 UTC</p></div>
+<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
 </div>
           </div>
         </main>

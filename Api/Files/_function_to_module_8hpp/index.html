@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_validation_pass_configuration_8hpp/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_function_to_module_8hpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      ValidationPass/ValidationPassConfiguration.hpp - QAT Documentation
+      Utils/FunctionToModule.hpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,12 +553,12 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> ValidationPass/ValidationPassConfiguration.hpp </span>
+        <span class="text-center"> Utils/FunctionToModule.hpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="validationpassvalidationpassconfigurationhpp">ValidationPass/ValidationPassConfiguration.hpp</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="utilsfunctiontomodulehpp">Utils/FunctionToModule.hpp</h1>
 <h2 id="namespaces">Namespaces</h2>
 <table>
 <thead>
@@ -573,9 +573,6 @@
 <tr>
 <td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
 </tr>
-<tr>
-<td><strong><a href="/qat/Api/Namespaces/namespacestd/">std</a></strong></td>
-</tr>
 </tbody>
 </table>
 <h2 id="classes">Classes</h2>
@@ -588,16 +585,8 @@
 </thead>
 <tbody>
 <tr>
-<td>struct</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">microsoft::quantum::OpcodeValue</a></strong></td>
-</tr>
-<tr>
-<td>struct</td>
-<td><strong><a href="/qat/Api/Classes/structstd_1_1hash_3_01microsoft_1_1quantum_1_1_opcode_value_01_4/">std::hash&lt; microsoft::quantum::OpcodeValue &gt;</a></strong></td>
-</tr>
-<tr>
 <td>class</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">microsoft::quantum::ValidationPassConfiguration</a></strong></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/">microsoft::quantum::FunctionToModule</a></strong></td>
 </tr>
 </tbody>
 </table>
@@ -606,103 +595,54 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Commandline/ConfigurationManager.hpp&quot;
-#include &quot;QatTypes/QatTypes.hpp&quot;
-
-#include &lt;functional&gt;
-#include &lt;set&gt;
-
-namespace microsoft
-{
-namespace quantum
-{
-    struct OpcodeValue
-    {
-        String id{&quot;&quot;};
-        String predicate{&quot;&quot;};
-        OpcodeValue(String const&amp; name, String const&amp; fi = &quot;&quot;)
-          : id{name}
-          , predicate{fi}
-        {
-        }
-
-        OpcodeValue()                   = default;
-        OpcodeValue(OpcodeValue&amp;&amp;)      = default;
-        OpcodeValue(OpcodeValue const&amp;) = default;
-        OpcodeValue&amp; operator=(OpcodeValue&amp;&amp;) = default;
-        OpcodeValue&amp; operator=(OpcodeValue const&amp;) = default;
-        bool         operator==(OpcodeValue const&amp; other) const
-        {
-            return id == other.id &amp;&amp; predicate == other.predicate;
-        }
-    };
-} // namespace quantum
-} // namespace microsoft
-
-namespace std
-{
-template &lt;&gt; struct hash&lt;microsoft::quantum::OpcodeValue&gt;
-{
-    size_t operator()(microsoft::quantum::OpcodeValue const&amp; x) const
-    {
-        hash&lt;std::string&gt; hasher;
-        return hasher(x.id + &quot;.&quot; + x.predicate);
-    }
-};
-} // namespace std
-
+#include &quot;Llvm/Llvm.hpp&quot;
 namespace microsoft
 {
 namespace quantum
 {
 
-    class ValidationPassConfiguration
+    class FunctionToModule : public llvm::PassInfoMixin&lt;FunctionToModule&gt;
     {
       public:
-        using Set       = std::unordered_set&lt;std::string&gt;;
-        using OpcodeSet = std::unordered_set&lt;OpcodeValue&gt;;
-
-        // Setup and construction
+        // Construction and destruction configuration.
         //
 
-        ValidationPassConfiguration() = default;
+        explicit FunctionToModule(llvm::FunctionPassManager&amp;&amp; manager)
+          : manager_{std::move(manager)}
+        {
+        }
 
-        void setup(ConfigurationManager&amp; config);
+        FunctionToModule(FunctionToModule const&amp;) = delete;
 
-        static ValidationPassConfiguration fromProfileName(String const&amp; name);
-        OpcodeSet const&amp;                   allowedOpcodes() const;
-        Set const&amp;                         allowedExternalCallNames() const;
+        FunctionToModule(FunctionToModule&amp;&amp;) = default;
 
-        bool allowInternalCalls() const;
-        bool allowlistOpcodes() const;
-        bool allowlistExternalCalls() const;
+        ~FunctionToModule() = default;
+        llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam)
+        {
+            llvm::FunctionAnalysisManager&amp; fam =
+                mam.getResult&lt;llvm::FunctionAnalysisManagerModuleProxy&gt;(module).getManager();
 
-        bool       allowlistPointerTypes() const;
-        Set const&amp; allowedPointerTypes() const;
+            for (auto&amp; f : module)
+            {
+                if (f.isDeclaration())
+                {
+                    continue;
+                }
 
-        String profileName() const;
+                auto ret = manager_.run(f, fam);
+                fam.invalidate(f, ret);
+            }
+
+            return llvm::PreservedAnalyses::none();
+        }
+        static bool isRequired()
+        {
+            return true;
+        }
 
       private:
-        void addAllowedExternalCall(String const&amp; name);
-        void addAllowedOpcode(String const&amp; name);
-        void addAllowedPointerType(String const&amp; name);
-
-        String profile_name_{&quot;null&quot;};
-
-        OpcodeSet opcodes_{};
-        Set       external_calls_{};
-        Set       allowed_pointer_types_{};
-
-        bool allowlist_opcodes_{true};
-        bool allowlist_external_calls_{true};
-        bool allow_internal_calls_{false};
-        bool allowlist_pointer_types_{false};
-
-        bool allow_primitive_return_{true};
-        bool allow_struct_return_{true};
-        bool allow_pointer_return_{true};
+        llvm::FunctionPassManager manager_;
     };
-
 } // namespace quantum
 } // namespace microsoft
 </code></pre>

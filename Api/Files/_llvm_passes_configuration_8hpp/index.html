@@ -633,10 +633,6 @@ namespace quantum
 
         bool unrollForgeScev() const;
 
-        bool useLlvmOptPipeline() const;
-
-        String optPipelineConfig() const;
-
         bool eliminateConstants() const;
 
         bool eliminateDeadCode() const;
@@ -671,16 +667,13 @@ namespace quantum
         bool eliminate_constants_{true};
         bool eliminate_dead_code_{true};
         bool eliminate_memory_{true};
-
-        bool   use_llvm_opt_pipeline_{false};
-        String opt_pipeline_config_{&quot;&quot;};
     };
 
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  3 June 2022 at 20:24:59 UTC</p></div>
+<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
 </div>
           </div>
         </main>

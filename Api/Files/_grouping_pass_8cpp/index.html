@@ -702,10 +702,13 @@ namespace quantum
 
         // Replacing entry
         tail_classical-&gt;setName(&quot;exit_quantum_grouping&quot;);
-        tail_classical-&gt;replaceUsesWithIf(pre_classical_block_, [](llvm::Use&amp; use) {
-            auto* phi_node = llvm::dyn_cast&lt;llvm::PHINode&gt;(use.getUser());
-            return (phi_node == nullptr);
-        });
+        tail_classical-&gt;replaceUsesWithIf(
+            pre_classical_block_,
+            [](llvm::Use&amp; use)
+            {
+                auto* phi_node = llvm::dyn_cast&lt;llvm::PHINode&gt;(use.getUser());
+                return (phi_node == nullptr);
+            });
     }
 
     void GroupingPass::nextQuantumCycle(llvm::Module&amp; module, llvm::BasicBlock* tail_classical)
@@ -838,10 +841,13 @@ namespace quantum
 
         auto extra_block = llvm::BasicBlock::Create(context, &quot;unnamed&quot;, block-&gt;getParent(), block);
         extra_block-&gt;takeName(block);
-        block-&gt;replaceUsesWithIf(extra_block, [](llvm::Use&amp; use) {
-            auto* phi_node = llvm::dyn_cast&lt;llvm::PHINode&gt;(use.getUser());
-            return (phi_node == nullptr);
-        });
+        block-&gt;replaceUsesWithIf(
+            extra_block,
+            [](llvm::Use&amp; use)
+            {
+                auto* phi_node = llvm::dyn_cast&lt;llvm::PHINode&gt;(use.getUser());
+                return (phi_node == nullptr);
+            });
 
         block-&gt;setName(name);
 
@@ -967,7 +973,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  3 June 2022 at 20:24:59 UTC</p></div>
+<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
 </div>
           </div>
         </main>
