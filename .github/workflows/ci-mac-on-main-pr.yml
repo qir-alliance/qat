@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: macos-11
     name: "Mac CI"
     steps:
       - name: Checkout code
@@ -89,6 +89,29 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
           PYTHON_BIN_PATH: /usr/bin/python3
+          CC: clang-13
+          CXX: clang++-13
+
+      - name: "Running Qiskit tests"
+        run: |
+          git clone https://github.com/microsoft/qiskit-qir.git
+          pushd qiskit-qir
+
+          git checkout 111e8149e5ea79c20764c044c454facc5188b2bd
+
+          echo "Installing qiskit qir"
+          pip3 install --user -e .
+          echo "Done!"
+          popd
+
+          export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
+
+          pushd qir/qiskit-tests/
+          pip3 install --user pytest
+          pytest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CC: clang-13
           CXX: clang++-13
 

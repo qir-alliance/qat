@@ -124,11 +124,23 @@ available1 = [
     "Decompositions/ZControlledAdjoint.qs",
 
 
-    "CodeBlocks/QubitArrays1.qs",
-    "CodeBlocks/QubitArrays2.qs",
-    "CodeBlocks/OffsetBySix.qs",
+    "CodeBlocks/ArrayConcatenation.qs",
+    "CodeBlocks/ArrayConcatenation2.qs",
+    "CodeBlocks/Branching1.qs",
+    "CodeBlocks/BranchingAndQubitArrays.qs",
     "CodeBlocks/ConstantCircuitUsingMutables1.qs",
-    # "CodeBlocks/Branching1.qs",
+    "CodeBlocks/ForLoop1.qs",
+    "CodeBlocks/ForLoop2.qs",
+    "CodeBlocks/ForLoopConstExpr.qs",
+    "CodeBlocks/ForLoopQubits.qs",
+    "CodeBlocks/OffsetBySix.qs",
+    "CodeBlocks/QubitArray2.qs",
+    "CodeBlocks/QubitArrays1.qs",
+    # "CodeBlocks/Range1.qs",
+    # "CodeBlocks/ReadResultAsBool.qs",
+    "CodeBlocks/Select1.qs",
+    "CodeBlocks/TwoDArray.qs",
+    "CodeBlocks/TwoDArray2.qs",
 ]
 
 available3 = [
@@ -246,11 +258,23 @@ available3 = [
     "Decompositions/ZControlledAdjoint.qs",
 
 
-    "CodeBlocks/QubitArrays1.qs",
-    "CodeBlocks/QubitArrays2.qs",
-    "CodeBlocks/OffsetBySix.qs",
+    "CodeBlocks/ArrayConcatenation.qs",
+    "CodeBlocks/ArrayConcatenation2.qs",
+    "CodeBlocks/Branching1.qs",
+    "CodeBlocks/BranchingAndQubitArrays.qs",
     "CodeBlocks/ConstantCircuitUsingMutables1.qs",
-    # "CodeBlocks/Branching1.qs",
+    "CodeBlocks/ForLoop1.qs",
+    "CodeBlocks/ForLoop2.qs",
+    "CodeBlocks/ForLoopConstExpr.qs",
+    "CodeBlocks/ForLoopQubits.qs",
+    "CodeBlocks/OffsetBySix.qs",
+    "CodeBlocks/QubitArray2.qs",
+    "CodeBlocks/QubitArrays1.qs",
+    # "CodeBlocks/Range1.qs",
+    # "CodeBlocks/ReadResultAsBool.qs",
+    "CodeBlocks/Select1.qs",
+    "CodeBlocks/TwoDArray.qs",
+    "CodeBlocks/TwoDArray2.qs",
 ]
 
 available4 = [
@@ -368,10 +392,25 @@ available4 = [
     "Decompositions/ZControlledAdjoint.qs",
 
 
-    "CodeBlocks/QubitArrays1.qs",
-    "CodeBlocks/QubitArrays2.qs",
+    # "CodeBlocks/ArrayConcatenation.qs",
+    # "CodeBlocks/ArrayConcatenation2.qs",
+    # "CodeBlocks/Branching1.qs",
+    # "CodeBlocks/BranchingAndQubitArrays.qs",
+    # "CodeBlocks/ConstantCircuitUsingMutables1.qs",
+    "CodeBlocks/ForLoop1.qs",
+    "CodeBlocks/ForLoop2.qs",
+    # "CodeBlocks/ForLoopConstExpr.qs",
+    "CodeBlocks/ForLoopQubits.qs",
     "CodeBlocks/OffsetBySix.qs",
+    "CodeBlocks/QubitArray2.qs",
+    "CodeBlocks/QubitArrays1.qs",
+    # "CodeBlocks/Range1.qs",
+    # "CodeBlocks/ReadResultAsBool.qs",
+    # "CodeBlocks/Select1.qs",
+    "CodeBlocks/TwoDArray.qs",
+    "CodeBlocks/TwoDArray2.qs",
 ]
+
 
 BASE_DIR = os.path.dirname(__file__)
 TEMPLATE_DIR = os.path.join(BASE_DIR, "..", "template")
