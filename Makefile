@@ -15,11 +15,14 @@ doxygen:
 	doxygen doxygen.cfg
 
 
+linux-docker-no-cache:
+	docker build --no-cache -f Docker/CI.Ubuntu22.dockerfile -t qir-passes-ubuntu:latest .
+
 linux-docker:
-	docker build --no-cache -f Docker/CI.Ubuntu20.dockerfile -t qir-passes-ubuntu:latest .
+	docker build -f Docker/CI.Ubuntu22.dockerfile -t qir-passes-ubuntu:latest .
 
 linux-ci: linux-docker
-	docker run -it --rm -t qir-passes-ubuntu:latest ./manage runci
+	docker run -it -v ${PWD}:/src --rm -t qir-passes-ubuntu:latest ./manage runci
 
 test-examples:
 	mkdir -p Debug

@@ -46,13 +46,6 @@ namespace quantum
         config.addParameter(
             eliminate_dead_code_, "eliminate-dead-code", "Uses LLVMs aggressive dead code elimination.");
         config.addParameter(eliminate_memory_, "eliminate-memory", "Maps memory into registers where feasible.");
-
-        config.addExperimentalParameter(
-            use_llvm_opt_pipeline_, false, false, "use-llvm-opt-pipeline", "Disables the the default pipeline.");
-
-        config.addExperimentalParameter(
-            opt_pipeline_config_, static_cast<String>(""), static_cast<String>(""), "opt-pipeline-config",
-            "LLVM passes pipeline to use upon applying this component.");
     }
 
     bool LlvmPassesConfiguration::alwaysInline() const
@@ -115,16 +108,6 @@ namespace quantum
         return unroll_forget_scev_;
     }
 
-    bool LlvmPassesConfiguration::useLlvmOptPipeline() const
-    {
-        return use_llvm_opt_pipeline_;
-    }
-
-    String LlvmPassesConfiguration::optPipelineConfig() const
-    {
-        return opt_pipeline_config_;
-    }
-
     bool LlvmPassesConfiguration::eliminateConstants() const
     {
         return eliminate_constants_;
@@ -160,8 +143,6 @@ namespace quantum
         ret.eliminate_constants_                = false;
         ret.eliminate_dead_code_                = false;
         ret.eliminate_memory_                   = false;
-        ret.use_llvm_opt_pipeline_              = false;
-        ret.opt_pipeline_config_                = "";
 
         return ret;
     }
@@ -186,8 +167,6 @@ namespace quantum
         ret.eliminate_constants_                = true;
         ret.eliminate_dead_code_                = true;
         ret.eliminate_memory_                   = true;
-        ret.use_llvm_opt_pipeline_              = false;
-        ret.opt_pipeline_config_                = "";
 
         return ret;
     }
@@ -199,7 +178,7 @@ namespace quantum
                unroll_allow_upper_bound_ == false && unroll_allow_profile_based_peeling_ == false &&
                unroll_full_unroll_count_ == 0 && unroll_opt_level_ == 0 && unroll_only_when_forced_ == false &&
                unroll_forget_scev_ == false && eliminate_constants_ == false && eliminate_dead_code_ == false &&
-               eliminate_memory_ == false && use_llvm_opt_pipeline_ == false && opt_pipeline_config_ == "";
+               eliminate_memory_ == false;
     }
 
 } // namespace quantum

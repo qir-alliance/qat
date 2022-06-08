@@ -26,11 +26,11 @@ class TestAnalysis
     TestAnalysis(TestAnalysis const&) = delete;
     TestAnalysis(TestAnalysis&&)      = default;
     ~TestAnalysis()                   = default;
-    explicit TestAnalysis(bool debug = false)
-      : loop_analysis_manager_{debug}
-      , function_analysis_manager_{debug}
-      , gscc_analysis_manager_{debug}
-      , module_analysis_manager_{debug}
+    explicit TestAnalysis()
+      : loop_analysis_manager_{}
+      , function_analysis_manager_{}
+      , gscc_analysis_manager_{}
+      , module_analysis_manager_{}
     {
 
         // Creating a full pass builder and registering each of the

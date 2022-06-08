@@ -21,20 +21,28 @@ namespace quantum
         RemoveDisallowedAttributesPass()
           : allowed_attrs_{
                 static_cast<String>("EntryPoint"), static_cast<String>("InteropFriendly"),
-                static_cast<String>("requiredQubits"), static_cast<String>("requiredResults")}
+                static_cast<String>("requiredQubits"), static_cast<String>("requiredResults")
+                /*
+                static_cast<String>("nofree")
+                static_cast<String>("nosync")
+                static_cast<String>("nounwind")
+                static_cast<String>("readnone")
+                static_cast<String>("speculatable")
+                static_cast<String>("willreturn")
+                */
+            }
         {
         }
 
         llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
         {
-            std::string const LLVM_FUNC_NAME = "@llvm.";
             for (auto& fnc : module)
             {
                 std::unordered_map<String, String> to_keep;
                 auto                               name = static_cast<std::string>(fnc.getName());
 
                 // Skipping any LLVM function
-                if (name.size() >= LLVM_FUNC_NAME.size() && name.substr(0, LLVM_FUNC_NAME.size()) == LLVM_FUNC_NAME)
+                if (fnc.isIntrinsic())
                 {
                     continue;
                 }

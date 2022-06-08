@@ -52,12 +52,6 @@ namespace quantum
 
         bool unrollForgeScev() const;
 
-        /// Whether or not to use a full opt pipeline.
-        bool useLlvmOptPipeline() const;
-
-        /// Opt pipeline configuration string.
-        String optPipelineConfig() const;
-
         /// Whether or not to add a pass to eliminate constants.
         bool eliminateConstants() const;
 
@@ -99,9 +93,6 @@ namespace quantum
         bool eliminate_constants_{true};
         bool eliminate_dead_code_{true};
         bool eliminate_memory_{true};
-
-        bool   use_llvm_opt_pipeline_{false};
-        String opt_pipeline_config_{""};
     };
 
 } // namespace quantum
