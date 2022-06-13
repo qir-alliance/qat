@@ -143,120 +143,35 @@ namespace quantum
         bool hadWarnings() const;
 
         /// Standard messages
-        virtual void errorCouldNotDeleteNode(llvm::Value* ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            error("Could not delete node.");
-        }
+        virtual void errorCouldNotDeleteNode(llvm::Value* ptr = nullptr);
 
-        virtual void errorExpectedStraightLineCodeMultipleFunctions(llvm::Value* ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            error("Expected straight line code, but multiple functions present.");
-        }
+        virtual void errorExpectedStraightLineCodeMultipleFunctions(llvm::Value* ptr = nullptr);
 
-        virtual void errorExpectedStraightLineCodeMultipleBlocks(llvm::Value* ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            error("Expected straight line code, but multiple blocks present.");
-        }
+        virtual void errorExpectedStraightLineCodeMultipleBlocks(llvm::Value* ptr = nullptr);
 
-        virtual void errorReleaseFailNonStandardAlloc(llvm::Value* ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            error("Cannot release qubit from non-standard allocation.");
-        }
+        virtual void errorReleaseFailNonStandardAlloc(llvm::Value* ptr = nullptr);
 
-        virtual void warningReleasePhiNodeQubit(llvm::Value* ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            warning("Cannot release qubit arising from phi node.");
-        }
+        virtual void warningReleasePhiNodeQubit(llvm::Value* ptr = nullptr);
 
-        virtual void errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            error("Function inlining exceeded maximum recursion depth of " + std::to_string(n));
-        }
+        virtual void errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr = nullptr);
 
-        virtual void errorNoQubitsPresent(llvm::Value* ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            error("No qubits present in function (required by profile).");
-        }
+        virtual void errorNoQubitsPresent(llvm::Value* ptr = nullptr);
 
-        virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            error("No results present in function (required by profile).");
-        }
+        virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr);
 
-        virtual void errorOpcodeNotAllowed(String const& code, String const& profile_name, llvm::Value* ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
+        virtual void errorOpcodeNotAllowed(String const& code, String const& profile_name, llvm::Value* ptr = nullptr);
 
-            error("Opcode '" + code + "' is not allowed for this profile (" + profile_name + ").");
-        }
-
-        virtual void errorCustomFunctionsNotAllowed(llvm::Value* ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            error("Calls to custom defined functions not allowed.");
-        }
+        virtual void errorCustomFunctionsNotAllowed(llvm::Value* ptr = nullptr);
 
         virtual void errorExternalCallsNotAllowed(
             String const& function_name,
             String const& profile_name,
-            llvm::Value*  ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            error("External call '" + function_name + "' is not allowed for this profile (" + profile_name + ").");
-        }
+            llvm::Value*  ptr = nullptr);
 
         virtual void errorTypeNotAllowed(
             String const& type_name,
             String const& profile_name,
-            llvm::Value*  ptr = nullptr)
-        {
-            if (ptr)
-            {
-                setLocationFromValue(ptr);
-            }
-            error("Type '" + type_name + "' is not allowed for this profile (" + profile_name + ").");
-        }
+            llvm::Value*  ptr = nullptr);
 
       protected:
         bool had_errors_{false};   ///< Variable to indicate whether or not errors were reported.
