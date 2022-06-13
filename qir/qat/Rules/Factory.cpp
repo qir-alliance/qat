@@ -426,8 +426,7 @@ namespace quantum
 
                      if (logger)
                      {
-                         logger->setLocationFromValue(val);
-                         logger->warning("Cannot release qubit arising from phi node.");
+                         logger->warningReleasePhiNodeQubit(val);
                      }
                      else
                      {
@@ -439,8 +438,7 @@ namespace quantum
 
                  if (logger)
                  {
-                     logger->setLocationFromValue(val);
-                     logger->error("Cannot release qubit from non-standard allocation.");
+                     logger->errorReleaseFailNonStandardAlloc(val);
                  }
                  else
                  {

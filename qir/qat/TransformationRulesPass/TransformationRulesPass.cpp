@@ -289,9 +289,7 @@ namespace quantum
         if (depth_ >= config_.maxRecursion())
         {
             requireLogger();
-            logger_->setLocationFromValue(&function);
-            logger_->error(
-                "Function inlining exceeded maximum recursion depth of " + std::to_string(config_.maxRecursion()));
+            logger_->errorFunctionInliningMaxRecursion(config_.maxRecursion(), &function);
 
             return false;
         }

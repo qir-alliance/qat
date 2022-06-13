@@ -312,8 +312,7 @@ namespace quantum
             {
                 if (logger_)
                 {
-                    logger_->setLocationFromValue(ptr);
-                    logger_->error("Could not delete node.");
+                    logger_->errorCouldNotDeleteNode(ptr);
                 }
                 else
                 {

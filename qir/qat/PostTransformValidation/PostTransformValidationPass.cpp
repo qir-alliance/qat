@@ -41,8 +41,7 @@ namespace quantum
                 {
                     if (logger_)
                     {
-                        logger_->setLocationFromValue(&function.getEntryBlock());
-                        logger_->error("Expected straight line code, but multiple functions present.");
+                        logger_->errorExpectedStraightLineCodeMultipleFunctions(&function.getEntryBlock());
                     }
                     else
                     {
@@ -58,8 +57,7 @@ namespace quantum
                     {
                         if (logger_)
                         {
-                            logger_->setLocationFromValue(&block);
-                            logger_->error("Expected straight line code, but multiple blocks present.");
+                            logger_->errorExpectedStraightLineCodeMultipleBlocks(&block);
                         }
                         else
                         {

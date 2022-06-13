@@ -30,14 +30,12 @@ namespace quantum
 
         if (config_.requiresQubits() && function_details.usage_qubit_counts == 0)
         {
-            logger_->setLocationFromValue(&function);
-            logger_->error("no qubits present in function (required by profile).");
+            logger_->errorNoQubitsPresent(&function);
         }
 
         if (config_.requiresResults() && function_details.usage_result_counts == 0)
         {
-            logger_->setLocationFromValue(&function);
-            logger_->error("no results present in function (required by profile).");
+            logger_->errorNoResultsPresent(&function);
         }
 
         return llvm::PreservedAnalyses::all();
