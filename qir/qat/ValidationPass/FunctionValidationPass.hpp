@@ -27,13 +27,6 @@ namespace quantum
         using Location    = ILogger::Location;
         using StringRef   = llvm::StringRef;
 
-        enum ResourceType
-        {
-            None,
-            Qubit,
-            Result
-        };
-
         // Construction and destruction configuration.
         //
 

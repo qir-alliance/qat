@@ -62,40 +62,29 @@ namespace quantum
         return had_warnings_;
     }
 
+    void ILogger::errorWithLocation(String const& message, llvm::Value* ptr)
+    {
+        errorWithLocation(message, ptr);
+    }
+
     void ILogger::errorCouldNotDeleteNode(llvm::Value* ptr)
     {
-        if (ptr)
-        {
-            setLocationFromValue(ptr);
-        }
-        error("Could not delete node.");
+        errorWithLocation("Could not delete node.", ptr);
     }
 
     void ILogger::errorExpectedStraightLineCodeMultipleFunctions(llvm::Value* ptr)
     {
-        if (ptr)
-        {
-            setLocationFromValue(ptr);
-        }
-        error("Expected straight line code, but multiple functions present.");
+        errorWithLocation("Expected straight line code, but multiple functions present.", ptr);
     }
 
     void ILogger::errorExpectedStraightLineCodeMultipleBlocks(llvm::Value* ptr)
     {
-        if (ptr)
-        {
-            setLocationFromValue(ptr);
-        }
-        error("Expected straight line code, but multiple blocks present.");
+        errorWithLocation("Expected straight line code, but multiple blocks present.", ptr);
     }
 
     void ILogger::errorReleaseFailNonStandardAlloc(llvm::Value* ptr)
     {
-        if (ptr)
-        {
-            setLocationFromValue(ptr);
-        }
-        error("Cannot release qubit from non-standard allocation.");
+        errorWithLocation("Cannot release qubit from non-standard allocation.", ptr);
     }
 
     void ILogger::warningReleasePhiNodeQubit(llvm::Value* ptr)
@@ -109,29 +98,17 @@ namespace quantum
 
     void ILogger::errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr)
     {
-        if (ptr)
-        {
-            setLocationFromValue(ptr);
-        }
-        error("Function inlining exceeded maximum recursion depth of " + std::to_string(n));
+        errorWithLocation("Function inlining exceeded maximum recursion depth of " + std::to_string(n), ptr);
     }
 
     void ILogger::errorNoQubitsPresent(llvm::Value* ptr)
     {
-        if (ptr)
-        {
-            setLocationFromValue(ptr);
-        }
-        error("No qubits present in function (required by profile).");
+        errorWithLocation("No qubits present in function (required by profile).", ptr);
     }
 
     void ILogger::errorNoResultsPresent(llvm::Value* ptr)
     {
-        if (ptr)
-        {
-            setLocationFromValue(ptr);
-        }
-        error("No results present in function (required by profile).");
+        errorWithLocation("No results present in function (required by profile).", ptr);
     }
 
     void ILogger::errorOpcodeNotAllowed(String const& code, String const& profile_name, llvm::Value* ptr)
@@ -146,11 +123,7 @@ namespace quantum
 
     void ILogger::errorCustomFunctionsNotAllowed(llvm::Value* ptr)
     {
-        if (ptr)
-        {
-            setLocationFromValue(ptr);
-        }
-        error("Calls to custom defined functions not allowed.");
+        errorWithLocation("Calls to custom defined functions not allowed.", ptr);
     }
 
     void ILogger::errorExternalCallsNotAllowed(
@@ -158,20 +131,13 @@ namespace quantum
         String const& profile_name,
         llvm::Value*  ptr)
     {
-        if (ptr)
-        {
-            setLocationFromValue(ptr);
-        }
-        error("External call '" + function_name + "' is not allowed for this profile (" + profile_name + ").");
+        errorWithLocation(
+            "External call '" + function_name + "' is not allowed for this profile (" + profile_name + ").", ptr);
     }
 
     void ILogger::errorTypeNotAllowed(String const& type_name, String const& profile_name, llvm::Value* ptr)
     {
-        if (ptr)
-        {
-            setLocationFromValue(ptr);
-        }
-        error("Type '" + type_name + "' is not allowed for this profile (" + profile_name + ").");
+        errorWithLocation("Type '" + type_name + "' is not allowed for this profile (" + profile_name + ").", ptr);
     }
 } // namespace quantum
 } // namespace microsoft

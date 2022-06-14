@@ -142,6 +142,8 @@ namespace quantum
         /// Whether or not warnings were logged.
         bool hadWarnings() const;
 
+        void errorWithLocation(String const& message, llvm::Value* ptr = nullptr);
+
         /// Standard messages
         virtual void errorCouldNotDeleteNode(llvm::Value* ptr = nullptr);
 

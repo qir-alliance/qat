@@ -31,7 +31,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
     ir_manip->declareOpaque("String");
 
     ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
-    ir_manip->declareFunction("void @__quantum__reset__result(%Result*)");
+    ir_manip->declareFunction("void @test_reset_result(%Result*)");
 
     if (!ir_manip->fromBodyString(script))
     {
@@ -132,7 +132,7 @@ TEST(FunctionValidationPass, FailMissingQubits)
     auto logger = std::make_shared<MockLogger>();
     testSkeleton(
         R"script(  
-  tail call void @__quantum__reset__result(%Result* nonnull inttoptr (i64 2 to %Result*))    
+  tail call void @test_reset_result(%Result* nonnull inttoptr (i64 2 to %Result*))    
   )script",
         logger);
     EXPECT_TRUE(logger->raiseNoQubitsError());
@@ -144,7 +144,7 @@ TEST(FunctionValidationPass, NothingMissing)
     auto logger = std::make_shared<MockLogger>();
     testSkeleton(
         R"script(  
-  tail call void @__quantum__reset__result(%Result* nonnull inttoptr (i64 2 to %Result*))    
+  tail call void @test_reset_result(%Result* nonnull inttoptr (i64 2 to %Result*))    
   tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))
   )script",
         logger);
