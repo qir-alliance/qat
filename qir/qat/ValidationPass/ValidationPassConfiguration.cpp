@@ -18,6 +18,9 @@ namespace quantum
 
         config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
         config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
+
+        config.addParameter(allow_poison_, "allow-poison", "Whether or not to allow poison values.");
+        config.addParameter(allow_undef_, "allow-undef", "Whether or not to allow undef values.");
     }
 
     String ValidationPassConfiguration::profileName() const
@@ -288,6 +291,16 @@ namespace quantum
     bool ValidationPassConfiguration::requiresResults() const
     {
         return requires_results_;
+    }
+
+    bool ValidationPassConfiguration::allowPoison() const
+    {
+        return allow_poison_;
+    }
+
+    bool ValidationPassConfiguration::allowUndef() const
+    {
+        return allow_undef_;
     }
 
 } // namespace quantum
