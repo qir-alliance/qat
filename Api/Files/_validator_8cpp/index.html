@@ -582,6 +582,8 @@
 #include &quot;Logging/CommentLogger.hpp&quot;
 #include &quot;Logging/ILogger.hpp&quot;
 #include &quot;Logging/LogCollection.hpp&quot;
+#include &quot;StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
+#include &quot;ValidationPass/FunctionValidationPass.hpp&quot;
 #include &quot;ValidationPass/ValidationPass.hpp&quot;
 #include &quot;Validator/Validator.hpp&quot;
 
@@ -615,12 +617,20 @@ namespace quantum
         // Checking if we need to use provided logger or install one
         if (logger_)
         {
+            function_analysis_manager_.registerPass([&amp;] { return AllocationAnalysisPass(logger_); });
+
+            module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger_)));
             module_pass_manager_.addPass(ValidationPass(cfg, logger_));
         }
         else
         {
             // Our default is a pass that logs errors via comments
-            module_pass_manager_.addPass(ValidationPass(cfg, std::make_shared&lt;CommentLogger&gt;()));
+            auto logger = std::make_shared&lt;CommentLogger&gt;();
+            function_analysis_manager_.registerPass([&amp;] { return AllocationAnalysisPass(logger); });
+
+            module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger)));
+
+            module_pass_manager_.addPass(ValidationPass(cfg, logger));
         }
     }
 
@@ -690,7 +700,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  7 June 2022 at 22:20:12 UTC</p></div>
+<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
 </div>
           </div>
         </main>

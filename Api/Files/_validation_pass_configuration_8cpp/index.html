@@ -593,6 +593,9 @@ namespace quantum
         config.setSectionName(&quot;Validation configuration&quot;, &quot;&quot;);
         config.addParameter(
             allow_internal_calls_, &quot;allow-internal-calls&quot;, &quot;Whether or not internal calls are allowed.&quot;);
+
+        config.addParameter(requires_qubits_, &quot;requires-qubits&quot;, &quot;Whether or not qubits are required in the IR.&quot;);
+        config.addParameter(requires_results_, &quot;requires-results&quot;, &quot;Whether or not results are required in the IR.&quot;);
     }
 
     String ValidationPassConfiguration::profileName() const
@@ -855,11 +858,21 @@ namespace quantum
         allowed_pointer_types_.insert(name);
     }
 
+    bool ValidationPassConfiguration::requiresQubits() const
+    {
+        return requires_qubits_;
+    }
+
+    bool ValidationPassConfiguration::requiresResults() const
+    {
+        return requires_results_;
+    }
+
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
+<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
 </div>
           </div>
         </main>

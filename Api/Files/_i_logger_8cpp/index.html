@@ -640,11 +640,92 @@ namespace quantum
         return had_warnings_;
     }
 
+    void ILogger::errorWithLocation(String const&amp; message, llvm::Value* ptr)
+    {
+        if (ptr)
+        {
+            setLocationFromValue(ptr);
+        }
+        error(message);
+    }
+
+    void ILogger::errorCouldNotDeleteNode(llvm::Value* ptr)
+    {
+        errorWithLocation(&quot;Could not delete node.&quot;, ptr);
+    }
+
+    void ILogger::errorExpectedStraightLineCodeMultipleFunctions(llvm::Value* ptr)
+    {
+        errorWithLocation(&quot;Expected straight line code, but multiple functions present.&quot;, ptr);
+    }
+
+    void ILogger::errorExpectedStraightLineCodeMultipleBlocks(llvm::Value* ptr)
+    {
+        errorWithLocation(&quot;Expected straight line code, but multiple blocks present.&quot;, ptr);
+    }
+
+    void ILogger::errorReleaseFailNonStandardAlloc(llvm::Value* ptr)
+    {
+        errorWithLocation(&quot;Cannot release qubit from non-standard allocation.&quot;, ptr);
+    }
+
+    void ILogger::warningReleasePhiNodeQubit(llvm::Value* ptr)
+    {
+        if (ptr)
+        {
+            setLocationFromValue(ptr);
+        }
+        warning(&quot;Cannot release qubit arising from phi node.&quot;);
+    }
+
+    void ILogger::errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr)
+    {
+        errorWithLocation(&quot;Function inlining exceeded maximum recursion depth of &quot; + std::to_string(n), ptr);
+    }
+
+    void ILogger::errorNoQubitsPresent(llvm::Value* ptr)
+    {
+        errorWithLocation(&quot;No qubits present in function (required by profile).&quot;, ptr);
+    }
+
+    void ILogger::errorNoResultsPresent(llvm::Value* ptr)
+    {
+        errorWithLocation(&quot;No results present in function (required by profile).&quot;, ptr);
+    }
+
+    void ILogger::errorOpcodeNotAllowed(String const&amp; code, String const&amp; profile_name, llvm::Value* ptr)
+    {
+        if (ptr)
+        {
+            setLocationFromValue(ptr);
+        }
+
+        error(&quot;Opcode '&quot; + code + &quot;' is not allowed for this profile (&quot; + profile_name + &quot;).&quot;);
+    }
+
+    void ILogger::errorCustomFunctionsNotAllowed(llvm::Value* ptr)
+    {
+        errorWithLocation(&quot;Calls to custom defined functions not allowed.&quot;, ptr);
+    }
+
+    void ILogger::errorExternalCallsNotAllowed(
+        String const&amp; function_name,
+        String const&amp; profile_name,
+        llvm::Value*  ptr)
+    {
+        errorWithLocation(
+            &quot;External call '&quot; + function_name + &quot;' is not allowed for this profile (&quot; + profile_name + &quot;).&quot;, ptr);
+    }
+
+    void ILogger::errorTypeNotAllowed(String const&amp; type_name, String const&amp; profile_name, llvm::Value* ptr)
+    {
+        errorWithLocation(&quot;Type '&quot; + type_name + &quot;' is not allowed for this profile (&quot; + profile_name + &quot;).&quot;, ptr);
+    }
 } // namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
+<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
 </div>
           </div>
         </main>

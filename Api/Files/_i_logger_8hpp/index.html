@@ -721,6 +721,38 @@ namespace quantum
 
         bool hadWarnings() const;
 
+        void errorWithLocation(String const&amp; message, llvm::Value* ptr = nullptr);
+
+        virtual void errorCouldNotDeleteNode(llvm::Value* ptr = nullptr);
+
+        virtual void errorExpectedStraightLineCodeMultipleFunctions(llvm::Value* ptr = nullptr);
+
+        virtual void errorExpectedStraightLineCodeMultipleBlocks(llvm::Value* ptr = nullptr);
+
+        virtual void errorReleaseFailNonStandardAlloc(llvm::Value* ptr = nullptr);
+
+        virtual void warningReleasePhiNodeQubit(llvm::Value* ptr = nullptr);
+
+        virtual void errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr = nullptr);
+
+        virtual void errorNoQubitsPresent(llvm::Value* ptr = nullptr);
+
+        virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr);
+
+        virtual void errorOpcodeNotAllowed(String const&amp; code, String const&amp; profile_name, llvm::Value* ptr = nullptr);
+
+        virtual void errorCustomFunctionsNotAllowed(llvm::Value* ptr = nullptr);
+
+        virtual void errorExternalCallsNotAllowed(
+            String const&amp; function_name,
+            String const&amp; profile_name,
+            llvm::Value*  ptr = nullptr);
+
+        virtual void errorTypeNotAllowed(
+            String const&amp; type_name,
+            String const&amp; profile_name,
+            llvm::Value*  ptr = nullptr);
+
       protected:
         bool had_errors_{false};   
         bool had_warnings_{false}; 
@@ -733,7 +765,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
+<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
 </div>
           </div>
         </main>

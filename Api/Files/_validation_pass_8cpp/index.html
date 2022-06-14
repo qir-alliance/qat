@@ -579,6 +579,7 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include &quot;StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
 #include &quot;ValidationPass/ValidationPass.hpp&quot;
 
 #include &quot;Llvm/Llvm.hpp&quot;
@@ -833,9 +834,7 @@ namespace quantum
                                 {current_location_.name, current_location_.line, current_location_.column});
                             logger_-&gt;setLlvmHint(current_location_.llvm_hint);
 
-                            logger_-&gt;error(
-                                &quot;Opcode '&quot; + code + &quot;' is not allowed for this profile (&quot; + config_.profileName() +
-                                &quot;).&quot;);
+                            logger_-&gt;errorOpcodeNotAllowed(code, config_.profileName());
                             ret = false;
                         }
                     }
@@ -854,7 +853,7 @@ namespace quantum
             // TODO(issue-60): Add location
 
             // Emitting error
-            logger_-&gt;error(&quot;Calls to custom defined functions not allowed.&quot;);
+            logger_-&gt;errorCustomFunctionsNotAllowed();
 
             return false;
         }
@@ -889,9 +888,7 @@ namespace quantum
                     }
 
                     // Emitting error
-                    logger_-&gt;error(
-                        &quot;External call '&quot; + k.first + &quot;' is not allowed for this profile (&quot; + config_.profileName() +
-                        &quot;).&quot;);
+                    logger_-&gt;errorExternalCallsNotAllowed(k.first, config_.profileName());
                     ret = false;
                 }
             }
@@ -926,8 +923,7 @@ namespace quantum
                     }
 
                     // Emitting error
-                    logger_-&gt;error(
-                        &quot;Type '&quot; + k.first + &quot;' is not allowed for this profile (&quot; + config_.profileName() + &quot;).&quot;);
+                    logger_-&gt;errorTypeNotAllowed(k.first, config_.profileName());
                     ret = false;
                 }
             }
@@ -985,7 +981,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
+<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
 </div>
           </div>
         </main>

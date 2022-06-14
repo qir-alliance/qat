@@ -619,8 +619,7 @@ namespace quantum
                 {
                     if (logger_)
                     {
-                        logger_-&gt;setLocationFromValue(&amp;function.getEntryBlock());
-                        logger_-&gt;error(&quot;Expected straight line code, but multiple functions present.&quot;);
+                        logger_-&gt;errorExpectedStraightLineCodeMultipleFunctions(&amp;function.getEntryBlock());
                     }
                     else
                     {
@@ -636,8 +635,7 @@ namespace quantum
                     {
                         if (logger_)
                         {
-                            logger_-&gt;setLocationFromValue(&amp;block);
-                            logger_-&gt;error(&quot;Expected straight line code, but multiple blocks present.&quot;);
+                            logger_-&gt;errorExpectedStraightLineCodeMultipleBlocks(&amp;block);
                         }
                         else
                         {
@@ -660,7 +658,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
+<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
 </div>
           </div>
         </main>

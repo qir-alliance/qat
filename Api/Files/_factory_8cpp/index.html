@@ -992,8 +992,7 @@ namespace quantum
 
                      if (logger)
                      {
-                         logger-&gt;setLocationFromValue(val);
-                         logger-&gt;warning(&quot;Cannot release qubit arising from phi node.&quot;);
+                         logger-&gt;warningReleasePhiNodeQubit(val);
                      }
                      else
                      {
@@ -1005,8 +1004,7 @@ namespace quantum
 
                  if (logger)
                  {
-                     logger-&gt;setLocationFromValue(val);
-                     logger-&gt;error(&quot;Cannot release qubit from non-standard allocation.&quot;);
+                     logger-&gt;errorReleaseFailNonStandardAlloc(val);
                  }
                  else
                  {
@@ -1357,7 +1355,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
+<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
 </div>
           </div>
         </main>

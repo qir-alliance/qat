@@ -668,9 +668,8 @@ namespace quantum
         // Construction and destruction configuration.
         //
 
-        explicit AllocationAnalysisPass(StaticResourceComponentConfiguration const&amp; cfg, ILoggerPtr const&amp; logger)
-          : config_{cfg}
-          , logger_{logger}
+        explicit AllocationAnalysisPass(ILoggerPtr const&amp; logger)
+          : logger_{logger}
         {
         }
 
@@ -686,8 +685,6 @@ namespace quantum
 
       private:
         bool extractResourceId(llvm::Value* value, uint64_t&amp; return_value, ResourceType&amp; type) const;
-
-        StaticResourceComponentConfiguration config_{};
 
         ILoggerPtr logger_{nullptr};
 
@@ -710,7 +707,7 @@ namespace quantum
 } // namespace microsoft
 </code></pre>
 <hr />
-<p>Updated on  7 June 2022 at 22:20:13 UTC</p></div>
+<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
 </div>
           </div>
         </main>
