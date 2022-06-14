@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
 #include "ValidationPass/ValidationPass.hpp"
 
 #include "Llvm/Llvm.hpp"
@@ -255,9 +256,7 @@ namespace quantum
                                 {current_location_.name, current_location_.line, current_location_.column});
                             logger_->setLlvmHint(current_location_.llvm_hint);
 
-                            logger_->error(
-                                "Opcode '" + code + "' is not allowed for this profile (" + config_.profileName() +
-                                ").");
+                            logger_->errorOpcodeNotAllowed(code, config_.profileName());
                             ret = false;
                         }
                     }
@@ -276,7 +275,7 @@ namespace quantum
             // TODO(issue-60): Add location
 
             // Emitting error
-            logger_->error("Calls to custom defined functions not allowed.");
+            logger_->errorCustomFunctionsNotAllowed();
 
             return false;
         }
@@ -311,9 +310,7 @@ namespace quantum
                     }
 
                     // Emitting error
-                    logger_->error(
-                        "External call '" + k.first + "' is not allowed for this profile (" + config_.profileName() +
-                        ").");
+                    logger_->errorExternalCallsNotAllowed(k.first, config_.profileName());
                     ret = false;
                 }
             }
@@ -348,8 +345,7 @@ namespace quantum
                     }
 
                     // Emitting error
-                    logger_->error(
-                        "Type '" + k.first + "' is not allowed for this profile (" + config_.profileName() + ").");
+                    logger_->errorTypeNotAllowed(k.first, config_.profileName());
                     ret = false;
                 }
             }

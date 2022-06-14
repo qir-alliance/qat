@@ -3,28 +3,14 @@
 
 namespace QATSample {
     open Microsoft.Quantum.Intrinsic;
-    open Microsoft.Quantum.Canon;
-    open Microsoft.Quantum.Arrays;
     open Microsoft.Quantum.Measurement;
 
-    operation OffsetBySix(q: Qubit[]): Qubit[]
-    {
-      let z = q[3...];
-      return z[3...];
-    }
-
     @EntryPoint()
-    operation Main(): Result
+    operation Main(x: Int): Bool[]
     {
-      use qubits = Qubit[4];  
-      use control2 = Qubit();
-      use target = Qubit();
-      let controls = OffsetBySix(qubits);
+        use q1 = Qubit();
+        let r1 = [MResetZ(q1) == One, MResetZ(q1) == Zero, MResetZ(q1) == One, MResetZ(q1) == Zero];
 
-      Adjoint Controlled CX(controls, (control2, target));
-      ResetAll(controls);
-
-      return Zero;
+        return r1;
     }
 }
-

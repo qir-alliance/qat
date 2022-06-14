@@ -142,6 +142,39 @@ namespace quantum
         /// Whether or not warnings were logged.
         bool hadWarnings() const;
 
+        void errorWithLocation(String const& message, llvm::Value* ptr = nullptr);
+
+        /// Standard messages
+        virtual void errorCouldNotDeleteNode(llvm::Value* ptr = nullptr);
+
+        virtual void errorExpectedStraightLineCodeMultipleFunctions(llvm::Value* ptr = nullptr);
+
+        virtual void errorExpectedStraightLineCodeMultipleBlocks(llvm::Value* ptr = nullptr);
+
+        virtual void errorReleaseFailNonStandardAlloc(llvm::Value* ptr = nullptr);
+
+        virtual void warningReleasePhiNodeQubit(llvm::Value* ptr = nullptr);
+
+        virtual void errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr = nullptr);
+
+        virtual void errorNoQubitsPresent(llvm::Value* ptr = nullptr);
+
+        virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr);
+
+        virtual void errorOpcodeNotAllowed(String const& code, String const& profile_name, llvm::Value* ptr = nullptr);
+
+        virtual void errorCustomFunctionsNotAllowed(llvm::Value* ptr = nullptr);
+
+        virtual void errorExternalCallsNotAllowed(
+            String const& function_name,
+            String const& profile_name,
+            llvm::Value*  ptr = nullptr);
+
+        virtual void errorTypeNotAllowed(
+            String const& type_name,
+            String const& profile_name,
+            llvm::Value*  ptr = nullptr);
+
       protected:
         bool had_errors_{false};   ///< Variable to indicate whether or not errors were reported.
         bool had_warnings_{false}; ///< Variable to indicate whether or not warnings were reported.

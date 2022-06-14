@@ -15,6 +15,9 @@ namespace quantum
         config.setSectionName("Validation configuration", "");
         config.addParameter(
             allow_internal_calls_, "allow-internal-calls", "Whether or not internal calls are allowed.");
+
+        config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
+        config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
     }
 
     String ValidationPassConfiguration::profileName() const
@@ -275,6 +278,16 @@ namespace quantum
     void ValidationPassConfiguration::addAllowedPointerType(String const& name)
     {
         allowed_pointer_types_.insert(name);
+    }
+
+    bool ValidationPassConfiguration::requiresQubits() const
+    {
+        return requires_qubits_;
+    }
+
+    bool ValidationPassConfiguration::requiresResults() const
+    {
+        return requires_results_;
     }
 
 } // namespace quantum

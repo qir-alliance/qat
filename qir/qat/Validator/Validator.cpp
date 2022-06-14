@@ -4,6 +4,8 @@
 #include "Logging/CommentLogger.hpp"
 #include "Logging/ILogger.hpp"
 #include "Logging/LogCollection.hpp"
+#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "ValidationPass/FunctionValidationPass.hpp"
 #include "ValidationPass/ValidationPass.hpp"
 #include "Validator/Validator.hpp"
 
@@ -37,12 +39,20 @@ namespace quantum
         // Checking if we need to use provided logger or install one
         if (logger_)
         {
+            function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(logger_); });
+
+            module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger_)));
             module_pass_manager_.addPass(ValidationPass(cfg, logger_));
         }
         else
         {
             // Our default is a pass that logs errors via comments
-            module_pass_manager_.addPass(ValidationPass(cfg, std::make_shared<CommentLogger>()));
+            auto logger = std::make_shared<CommentLogger>();
+            function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(logger); });
+
+            module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger)));
+
+            module_pass_manager_.addPass(ValidationPass(cfg, logger));
         }
     }
 

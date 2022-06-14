@@ -286,7 +286,7 @@ namespace quantum
             [logger](StaticResourceComponentConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
             {
                 auto& fam = profile.functionAnalysisManager();
-                fam.registerPass([&] { return AllocationAnalysisPass(cfg, logger); });
+                fam.registerPass([&] { return AllocationAnalysisPass(logger); });
 
                 auto& fpm = ptr->functionPassManager();
 
