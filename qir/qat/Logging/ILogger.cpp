@@ -64,7 +64,11 @@ namespace quantum
 
     void ILogger::errorWithLocation(String const& message, llvm::Value* ptr)
     {
-        error(message, ptr);
+        if (ptr)
+        {
+            setLocationFromValue(ptr);
+        }
+        error(message);
     }
 
     void ILogger::errorCouldNotDeleteNode(llvm::Value* ptr)
