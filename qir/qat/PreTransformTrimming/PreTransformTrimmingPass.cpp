@@ -8,55 +8,52 @@
 #include <fstream>
 #include <iostream>
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    PreTransformTrimmingPass::PreTransformTrimmingPass(
-        PreTransformTrimmingPassConfiguration const& cfg,
-        ILoggerPtr const&                            logger)
-      : config_{cfg}
-      , logger_{logger}
-    {
-    }
+PreTransformTrimmingPass::PreTransformTrimmingPass(
+    PreTransformTrimmingPassConfiguration const& cfg,
+    ILoggerPtr const&                            logger)
+  : config_{cfg}
+  , logger_{logger}
+{
+}
 
-    llvm::PreservedAnalyses PreTransformTrimmingPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
+llvm::PreservedAnalyses PreTransformTrimmingPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
+{
+
+    std::vector<llvm::Function*> deletables;
+    auto                         entry_point_attr = config_.entryPointAttr();
+    for (auto& function : module)
     {
 
-        std::vector<llvm::Function*> deletables;
-        auto                         entry_point_attr = config_.entryPointAttr();
-        for (auto& function : module)
+        if (function.isDeclaration())
         {
-
-            if (function.isDeclaration())
-            {
-                continue;
-            }
-
-            if (function.hasFnAttribute(entry_point_attr))
-            {
-                continue;
-            }
-
-            deletables.push_back(&function);
+            continue;
         }
 
-        for (auto& x : deletables)
+        if (function.hasFnAttribute(entry_point_attr))
         {
-            if (x->use_empty())
-            {
-                x->eraseFromParent();
-            }
+            continue;
         }
 
-        return llvm::PreservedAnalyses::none();
+        deletables.push_back(&function);
     }
 
-    bool PreTransformTrimmingPass::isRequired()
+    for (auto& x : deletables)
     {
-        return true;
+        if (x->use_empty())
+        {
+            x->eraseFromParent();
+        }
     }
 
-} // namespace quantum
-} // namespace microsoft
+    return llvm::PreservedAnalyses::none();
+}
+
+bool PreTransformTrimmingPass::isRequired()
+{
+    return true;
+}
+
+} // namespace microsoft::quantum

@@ -4,175 +4,172 @@
 #include "Rules/IOperandPrototype.hpp"
 #include "Rules/Patterns/Instruction.hpp"
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    bool StorePattern::match(Value* instr, Captures& captures) const
+bool StorePattern::match(Value* instr, Captures& captures) const
+{
+    auto* load_instr = llvm::dyn_cast<llvm::StoreInst>(instr);
+    if (load_instr == nullptr)
     {
-        auto* load_instr = llvm::dyn_cast<llvm::StoreInst>(instr);
-        if (load_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
-
-        return success(instr, captures);
+        return fail(instr, captures);
     }
 
-    StorePattern::Child StorePattern::copy() const
+    return success(instr, captures);
+}
+
+StorePattern::Child StorePattern::copy() const
+{
+    auto ret = std::make_shared<StorePattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+bool LoadPattern::match(Value* instr, Captures& captures) const
+{
+    auto* load_instr = llvm::dyn_cast<llvm::LoadInst>(instr);
+    if (load_instr == nullptr)
     {
-        auto ret = std::make_shared<StorePattern>();
-        ret->copyPropertiesFrom(*this);
-        return std::move(ret);
+        return fail(instr, captures);
     }
 
-    bool LoadPattern::match(Value* instr, Captures& captures) const
-    {
-        auto* load_instr = llvm::dyn_cast<llvm::LoadInst>(instr);
-        if (load_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
+    return success(instr, captures);
+}
 
-        return success(instr, captures);
+LoadPattern::Child LoadPattern::copy() const
+{
+    auto ret = std::make_shared<LoadPattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+bool BitCastPattern::match(Value* instr, Captures& captures) const
+{
+    auto* load_instr = llvm::dyn_cast<llvm::BitCastInst>(instr);
+    if (load_instr == nullptr)
+    {
+        return fail(instr, captures);
     }
 
-    LoadPattern::Child LoadPattern::copy() const
+    return success(instr, captures);
+}
+
+BitCastPattern::Child BitCastPattern::copy() const
+{
+    auto ret = std::make_shared<BitCastPattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+bool IntToPtrPattern::match(Value* instr, Captures& captures) const
+{
+    auto* a = llvm::dyn_cast<llvm::IntToPtrInst>(instr);
+    auto* b = llvm::dyn_cast<llvm::ConcreteOperator<llvm::Operator, llvm::Instruction::IntToPtr>>(instr);
+
+    if (a == nullptr && b == nullptr)
     {
-        auto ret = std::make_shared<LoadPattern>();
-        ret->copyPropertiesFrom(*this);
-        return std::move(ret);
+        return fail(instr, captures);
     }
 
-    bool BitCastPattern::match(Value* instr, Captures& captures) const
-    {
-        auto* load_instr = llvm::dyn_cast<llvm::BitCastInst>(instr);
-        if (load_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
+    auto ret = success(instr, captures);
+    return ret;
+}
 
-        return success(instr, captures);
+IntToPtrPattern::Child IntToPtrPattern::copy() const
+{
+    auto ret = std::make_shared<IntToPtrPattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+bool ConstIntPattern::match(Value* instr, Captures& captures) const
+{
+    auto* load_instr = llvm::dyn_cast<llvm::ConstantInt>(instr);
+    if (load_instr == nullptr)
+    {
+        return fail(instr, captures);
     }
 
-    BitCastPattern::Child BitCastPattern::copy() const
+    return success(instr, captures);
+}
+
+ConstIntPattern::Child ConstIntPattern::copy() const
+{
+    auto ret = std::make_shared<ConstIntPattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+bool BranchPattern::match(Value* instr, Captures& captures) const
+{
+    auto* load_instr = llvm::dyn_cast<llvm::BranchInst>(instr);
+    if (load_instr == nullptr)
     {
-        auto ret = std::make_shared<BitCastPattern>();
-        ret->copyPropertiesFrom(*this);
-        return std::move(ret);
+        return fail(instr, captures);
     }
 
-    bool IntToPtrPattern::match(Value* instr, Captures& captures) const
+    return success(instr, captures);
+}
+
+BranchPattern::Child BranchPattern::copy() const
+{
+    auto ret = std::make_shared<BranchPattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+bool SelectPattern::match(Value* instr, Captures& captures) const
+{
+    auto* load_instr = llvm::dyn_cast<llvm::SelectInst>(instr);
+    if (load_instr == nullptr)
     {
-        auto* a = llvm::dyn_cast<llvm::IntToPtrInst>(instr);
-        auto* b = llvm::dyn_cast<llvm::ConcreteOperator<llvm::Operator, llvm::Instruction::IntToPtr>>(instr);
-
-        if (a == nullptr && b == nullptr)
-        {
-            return fail(instr, captures);
-        }
-
-        auto ret = success(instr, captures);
-        return ret;
+        return fail(instr, captures);
     }
 
-    IntToPtrPattern::Child IntToPtrPattern::copy() const
+    return success(instr, captures);
+}
+
+SelectPattern::Child SelectPattern::copy() const
+{
+    auto ret = std::make_shared<SelectPattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+bool BasicBlockPattern::match(Value* instr, Captures& captures) const
+{
+    auto* load_instr = llvm::dyn_cast<llvm::BasicBlock>(instr);
+    if (load_instr == nullptr)
     {
-        auto ret = std::make_shared<IntToPtrPattern>();
-        ret->copyPropertiesFrom(*this);
-        return std::move(ret);
+        return fail(instr, captures);
     }
 
-    bool ConstIntPattern::match(Value* instr, Captures& captures) const
-    {
-        auto* load_instr = llvm::dyn_cast<llvm::ConstantInt>(instr);
-        if (load_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
+    return success(instr, captures);
+}
 
-        return success(instr, captures);
+BasicBlockPattern::Child BasicBlockPattern::copy() const
+{
+    auto ret = std::make_shared<BasicBlockPattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+bool SwitchPattern::match(Value* instr, Captures& captures) const
+{
+    auto* load_instr = llvm::dyn_cast<llvm::SwitchInst>(instr);
+    if (load_instr == nullptr)
+    {
+        return fail(instr, captures);
     }
 
-    ConstIntPattern::Child ConstIntPattern::copy() const
-    {
-        auto ret = std::make_shared<ConstIntPattern>();
-        ret->copyPropertiesFrom(*this);
-        return std::move(ret);
-    }
+    return success(instr, captures);
+}
 
-    bool BranchPattern::match(Value* instr, Captures& captures) const
-    {
-        auto* load_instr = llvm::dyn_cast<llvm::BranchInst>(instr);
-        if (load_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
+SwitchPattern::Child SwitchPattern::copy() const
+{
+    auto ret = std::make_shared<SwitchPattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
 
-        return success(instr, captures);
-    }
-
-    BranchPattern::Child BranchPattern::copy() const
-    {
-        auto ret = std::make_shared<BranchPattern>();
-        ret->copyPropertiesFrom(*this);
-        return std::move(ret);
-    }
-
-    bool SelectPattern::match(Value* instr, Captures& captures) const
-    {
-        auto* load_instr = llvm::dyn_cast<llvm::SelectInst>(instr);
-        if (load_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
-
-        return success(instr, captures);
-    }
-
-    SelectPattern::Child SelectPattern::copy() const
-    {
-        auto ret = std::make_shared<SelectPattern>();
-        ret->copyPropertiesFrom(*this);
-        return std::move(ret);
-    }
-
-    bool BasicBlockPattern::match(Value* instr, Captures& captures) const
-    {
-        auto* load_instr = llvm::dyn_cast<llvm::BasicBlock>(instr);
-        if (load_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
-
-        return success(instr, captures);
-    }
-
-    BasicBlockPattern::Child BasicBlockPattern::copy() const
-    {
-        auto ret = std::make_shared<BasicBlockPattern>();
-        ret->copyPropertiesFrom(*this);
-        return std::move(ret);
-    }
-
-    bool SwitchPattern::match(Value* instr, Captures& captures) const
-    {
-        auto* load_instr = llvm::dyn_cast<llvm::SwitchInst>(instr);
-        if (load_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
-
-        return success(instr, captures);
-    }
-
-    SwitchPattern::Child SwitchPattern::copy() const
-    {
-        auto ret = std::make_shared<SwitchPattern>();
-        ret->copyPropertiesFrom(*this);
-        return std::move(ret);
-    }
-
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
