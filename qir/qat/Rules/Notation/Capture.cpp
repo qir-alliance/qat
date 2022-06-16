@@ -11,32 +11,29 @@
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft
+namespace microsoft::quantum
 {
-namespace quantum
+namespace notation
 {
-    namespace notation
+
+    using IOperandPrototypePtr = std::shared_ptr<IOperandPrototype>;
+
+    Capture::Capture(std::string const& name)
+      : name_{name}
     {
+    }
 
-        using IOperandPrototypePtr = std::shared_ptr<IOperandPrototype>;
+    IOperandPrototypePtr Capture::operator=(IOperandPrototypePtr const& other) // NOLINT
+    {
+        auto ret = other->copy();
+        ret->captureAs(name_);
+        return ret;
+    }
 
-        Capture::Capture(std::string const& name)
-          : name_{name}
-        {
-        }
+    Capture operator""_cap(char const* name, std::size_t)
+    {
+        return Capture(name);
+    }
 
-        IOperandPrototypePtr Capture::operator=(IOperandPrototypePtr const& other) // NOLINT
-        {
-            auto ret = other->copy();
-            ret->captureAs(name_);
-            return ret;
-        }
-
-        Capture operator""_cap(char const* name, std::size_t)
-        {
-            return Capture(name);
-        }
-
-    } // namespace notation
-} // namespace quantum
-} // namespace microsoft
+} // namespace notation
+} // namespace microsoft::quantum

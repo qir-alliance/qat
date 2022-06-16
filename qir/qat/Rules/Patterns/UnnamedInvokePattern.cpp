@@ -4,30 +4,27 @@
 #include "Rules/IOperandPrototype.hpp"
 #include "Rules/Patterns/UnnamedInvokePattern.hpp"
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    UnnamedInvokePattern::~UnnamedInvokePattern() = default;
+UnnamedInvokePattern::~UnnamedInvokePattern() = default;
 
-    bool UnnamedInvokePattern::match(Value* instr, Captures& captures) const
+bool UnnamedInvokePattern::match(Value* instr, Captures& captures) const
+{
+    auto* call_instr = llvm::dyn_cast<llvm::InvokeInst>(instr);
+    if (call_instr == nullptr)
     {
-        auto* call_instr = llvm::dyn_cast<llvm::InvokeInst>(instr);
-        if (call_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
-
-        return success(instr, captures);
+        return fail(instr, captures);
     }
 
-    UnnamedInvokePattern::Child UnnamedInvokePattern::copy() const
-    {
-        auto ret = std::make_shared<UnnamedInvokePattern>();
-        ret->copyPropertiesFrom(*this);
-        return std::move(ret);
-    }
+    return success(instr, captures);
+}
 
-} // namespace quantum
-} // namespace microsoft
+UnnamedInvokePattern::Child UnnamedInvokePattern::copy() const
+{
+    auto ret = std::make_shared<UnnamedInvokePattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+} // namespace microsoft::quantum

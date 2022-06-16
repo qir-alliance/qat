@@ -4,22 +4,19 @@
 #include "Rules/IOperandPrototype.hpp"
 #include "Rules/Patterns/AnyPattern.hpp"
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    AnyPattern::AnyPattern()  = default;
-    AnyPattern::~AnyPattern() = default;
-    bool AnyPattern::match(Value* instr, Captures& captures) const
-    {
-        return success(instr, captures);
-    }
+AnyPattern::AnyPattern()  = default;
+AnyPattern::~AnyPattern() = default;
+bool AnyPattern::match(Value* instr, Captures& captures) const
+{
+    return success(instr, captures);
+}
 
-    AnyPattern::Child AnyPattern::copy() const
-    {
-        return std::make_shared<AnyPattern>();
-    }
+AnyPattern::Child AnyPattern::copy() const
+{
+    return std::make_shared<AnyPattern>();
+}
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum

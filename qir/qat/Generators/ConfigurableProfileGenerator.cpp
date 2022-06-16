@@ -11,55 +11,52 @@
 
 #include <iostream>
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    ConfigurableProfileGenerator::ConfigurableProfileGenerator()
-    {
-        configurationManager().addConfig<ValidationPassConfiguration>();
+ConfigurableProfileGenerator::ConfigurableProfileGenerator()
+{
+    configurationManager().addConfig<ValidationPassConfiguration>();
 
-        setupDefaultComponentPipeline();
-    }
+    setupDefaultComponentPipeline();
+}
 
-    ConfigurableProfileGenerator::ConfigurableProfileGenerator(
-        ConfigureFunction const&                    configure,
-        TransformationRulesPassConfiguration const& profile_pass_config,
-        LlvmPassesConfiguration const&              llvm_config)
-    {
-        configurationManager().addConfig<ValidationPassConfiguration>();
-        setupDefaultComponentPipeline();
+ConfigurableProfileGenerator::ConfigurableProfileGenerator(
+    ConfigureFunction const&                    configure,
+    TransformationRulesPassConfiguration const& profile_pass_config,
+    LlvmPassesConfiguration const&              llvm_config)
+{
+    configurationManager().addConfig<ValidationPassConfiguration>();
+    setupDefaultComponentPipeline();
 
-        replaceProfileComponent<TransformationRulesPassConfiguration>(
-            "transformation-rules",
-            [configure](TransformationRulesPassConfiguration const& config, ProfileGenerator* ptr, Profile& profile)
-            {
-                auto& ret = ptr->modulePassManager();
+    replaceProfileComponent<TransformationRulesPassConfiguration>(
+        "transformation-rules",
+        [configure](TransformationRulesPassConfiguration const& config, ProfileGenerator* ptr, Profile& profile)
+        {
+            auto& ret = ptr->modulePassManager();
 
-                // Defining the mapping
-                RuleSet rule_set;
-                auto    factory = RuleFactory(
-                       rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), nullptr);
-                configure(rule_set);
+            // Defining the mapping
+            RuleSet rule_set;
+            auto    factory = RuleFactory(
+                   rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), nullptr);
+            configure(rule_set);
 
-                // Creating profile pass
-                ret.addPass(TransformationRulesPass(std::move(rule_set), config, &profile));
-            });
+            // Creating profile pass
+            ret.addPass(TransformationRulesPass(std::move(rule_set), config, &profile));
+        });
 
-        configurationManager().setConfig(profile_pass_config);
-        configurationManager().setConfig(llvm_config);
-    }
+    configurationManager().setConfig(profile_pass_config);
+    configurationManager().setConfig(llvm_config);
+}
 
-    TransformationRulesPassConfiguration const& ConfigurableProfileGenerator::ruleTransformationConfig() const
-    {
-        return configurationManager().get<TransformationRulesPassConfiguration>();
-    }
+TransformationRulesPassConfiguration const& ConfigurableProfileGenerator::ruleTransformationConfig() const
+{
+    return configurationManager().get<TransformationRulesPassConfiguration>();
+}
 
-    LlvmPassesConfiguration const& ConfigurableProfileGenerator::llvmPassesConfig() const
-    {
-        return configurationManager().get<LlvmPassesConfiguration>();
-    }
+LlvmPassesConfiguration const& ConfigurableProfileGenerator::llvmPassesConfig() const
+{
+    return configurationManager().get<LlvmPassesConfiguration>();
+}
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum

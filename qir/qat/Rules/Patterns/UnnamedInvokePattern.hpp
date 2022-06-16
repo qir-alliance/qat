@@ -9,41 +9,38 @@
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class UnnamedInvokePattern : public IOperandPrototype
-    {
-      public:
-        using String = std::string;
+class UnnamedInvokePattern : public IOperandPrototype
+{
+  public:
+    using String = std::string;
 
-        // Construction
-        //
+    // Construction
+    //
 
-        UnnamedInvokePattern() = default;
+    UnnamedInvokePattern() = default;
 
-        /// Copy construction prohibited.
-        UnnamedInvokePattern(UnnamedInvokePattern const& other) = delete;
+    /// Copy construction prohibited.
+    UnnamedInvokePattern(UnnamedInvokePattern const& other) = delete;
 
-        /// Move construction allowed.
-        UnnamedInvokePattern(UnnamedInvokePattern&& other) = default;
+    /// Move construction allowed.
+    UnnamedInvokePattern(UnnamedInvokePattern&& other) = default;
 
-        /// Destructor implementation.
-        ~UnnamedInvokePattern() override;
+    /// Destructor implementation.
+    ~UnnamedInvokePattern() override;
 
-        // Call implementation of the member functions in IOperandPrototype.
-        //
+    // Call implementation of the member functions in IOperandPrototype.
+    //
 
-        /// Matches the callee by name.
-        bool match(Value* instr, Captures& captures) const override;
+    /// Matches the callee by name.
+    bool match(Value* instr, Captures& captures) const override;
 
-        /// Creates a copy of itself.
-        Child copy() const override;
+    /// Creates a copy of itself.
+    Child copy() const override;
 
-      private:
-    };
+  private:
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
