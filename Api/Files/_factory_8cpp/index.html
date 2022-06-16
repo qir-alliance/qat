@@ -650,6 +650,11 @@ void RuleFactory::usingConfiguration(FactoryConfiguration const&amp; config)
         optimizeResultZero();
     }
 
+    if (config.optimizeResultComparison())
+    {
+        optimizeResultComparison();
+    }
+
     if (config.useStaticQubitArrayAllocation())
     {
         useStaticQubitArrayAllocation();
@@ -1282,6 +1287,81 @@ void RuleFactory::optimizeConstantResult()
     addRule({call(&quot;__quantum__rt__result_equal&quot;, &quot;1&quot;_cap = get_one, &quot;2&quot;_cap = get_one), replace_constant_result});
 }
 
+void RuleFactory::optimizeResultComparison()
+{
+    auto replace_comparison = [](Builder&amp; builder, Value* val, Captures&amp; cap, Replacements&amp; replacements)
+    {
+        auto cond = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
+        if (cond == nullptr)
+        {
+            return false;
+        }
+        auto m1 = cap[&quot;m1&quot;];
+        auto m2 = cap[&quot;m2&quot;];
+
+        if (m1 == nullptr || m2 == nullptr)
+        {
+            return false;
+        }
+
+        auto orig_instr = llvm::dyn_cast&lt;llvm::Instruction&gt;(val);
+        if (orig_instr == nullptr)
+        {
+            return false;
+        }
+
+        auto module = orig_instr-&gt;getModule();
+        auto fnc    = module-&gt;getFunction(&quot;__quantum__qis__read_result__body&quot;);
+
+        if (!fnc)
+        {
+            std::vector&lt;llvm::Type*&gt; types;
+            types.resize(1);
+            types[0] = m1-&gt;getType();
+
+            auto return_type = llvm::Type::getInt1Ty(val-&gt;getContext());
+
+            llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
+            fnc                          = llvm::Function::Create(
+                                         fnc_type, llvm::Function::ExternalLinkage, &quot;__quantum__qis__read_result__body&quot;, module);
+        }
+
+        builder.SetInsertPoint(llvm::dyn_cast&lt;llvm::Instruction&gt;(val));
+        auto c1       = builder.CreateCall(fnc, {m1});
+        auto c2       = builder.CreateCall(fnc, {m2});
+        auto new_cond = builder.CreateICmpEQ(c1, c2);
+
+        new_cond-&gt;takeName(cond);
+
+        for (auto&amp; use : cond-&gt;uses())
+        {
+            llvm::User* user = use.getUser();
+            user-&gt;setOperand(use.getOperandNo(), new_cond);
+        }
+
+        cond-&gt;replaceAllUsesWith(new_cond);
+
+        // Deleting the previous condition and function to fetch one
+
+        replacements.push_back({cond, nullptr});
+
+        return true;
+    };
+
+    /*
+      Here is an example IR for which we want to make a match:
+
+        %result1 = call %Result* @__quantum__qis__m__body(%Qubit* %q0)
+        %result2 = call %Result* @__quantum__qis__m__body(%Qubit* %q1)
+        %0 = call i1 @__quantum__rt__result_equal(%Result* %result1, %Result* %result2)
+    */
+
+    auto m1 = call(&quot;__quantum__qis__m__body&quot;, &quot;q1&quot;_cap = _);
+    auto m2 = call(&quot;__quantum__qis__m__body&quot;, &quot;q2&quot;_cap = _);
+
+    addRule({call(&quot;__quantum__rt__result_equal&quot;, &quot;m1&quot;_cap = m1, &quot;m2&quot;_cap = m2), replace_comparison});
+}
+
 void RuleFactory::disableReferenceCounting()
 {
     removeFunctionCall(&quot;__quantum__rt__array_update_reference_count&quot;);
@@ -1348,7 +1428,7 @@ void RuleFactory::setDefaultIntegerWidth(uint32_t v)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 16 June 2022 at 10:53:00 UTC</p></div>
+<p>Updated on 16 June 2022 at 21:37:23 UTC</p></div>
 </div>
           </div>
         </main>
