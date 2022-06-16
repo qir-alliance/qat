@@ -21,7 +21,10 @@ class FactoryConfiguration
             optimize_result_zero_, true, "optimize-result-zero",
             "Maps branching based on quantum measurements compared to zero to base profile "
             "type measurement.");
-
+        config.addParameter(
+            optimize_result_comparison_, true, "optimize-result-comparison",
+            "Maps branching based on quantum measurements compared to each other to base profile "
+            "type measurement.");
         config.addParameter(
             use_static_qubit_array_allocation_, "use-static-qubit-array-allocation",
             "Maps allocation of qubit arrays to static array allocation.");
@@ -52,6 +55,7 @@ class FactoryConfiguration
         ret.disable_record_output_support_     = false;
         ret.optimize_result_one_               = false;
         ret.optimize_result_zero_              = false;
+        ret.optimize_result_comparison_        = false;
         ret.optimize_qauntum_constants_        = false;
         ret.remove_get_one_or_zero_            = false;
         ret.use_static_qubit_array_allocation_ = false;
@@ -95,6 +99,11 @@ class FactoryConfiguration
         return optimize_qauntum_constants_;
     }
 
+    bool optimizeResultComparison() const
+    {
+        return optimize_result_comparison_;
+    }
+
     bool removeGetZeroOrOne() const
     {
         return remove_get_one_or_zero_;
@@ -126,8 +135,9 @@ class FactoryConfiguration
             disable_reference_counting_ == false && disable_alias_counting_ == false &&
             disable_string_support_ == false && disable_record_output_support_ == false &&
             optimize_result_one_ == false && optimize_result_zero_ == false && optimize_qauntum_constants_ == false &&
-            remove_get_one_or_zero_ == false && use_static_qubit_array_allocation_ == false &&
-            use_static_qubit_allocation_ == false && use_static_result_allocation_ == false);
+            optimize_result_comparison_ == false && remove_get_one_or_zero_ == false &&
+            use_static_qubit_array_allocation_ == false && use_static_qubit_allocation_ == false &&
+            use_static_result_allocation_ == false);
     }
 
     bool isDefault() const
@@ -140,6 +150,7 @@ class FactoryConfiguration
             disable_string_support_ == ref.disable_string_support_ &&
             disable_record_output_support_ == ref.disable_record_output_support_ &&
             optimize_result_one_ == ref.optimize_result_one_ && optimize_result_zero_ == ref.optimize_result_zero_ &&
+            optimize_result_comparison_ == ref.optimize_result_comparison_ &&
             remove_get_one_or_zero_ == ref.remove_get_one_or_zero_ &&
             optimize_qauntum_constants_ == ref.optimize_qauntum_constants_ &&
             use_static_qubit_array_allocation_ == ref.use_static_qubit_array_allocation_ &&
@@ -160,6 +171,7 @@ class FactoryConfiguration
     /// @{
     bool optimize_result_one_{true};
     bool optimize_result_zero_{true};
+    bool optimize_result_comparison_{true};
     bool optimize_qauntum_constants_{true};
     bool remove_get_one_or_zero_{true};
     /// @}
