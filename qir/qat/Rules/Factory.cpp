@@ -72,7 +72,7 @@ void RuleFactory::usingConfiguration(FactoryConfiguration const& config)
         optimizeResultZero();
     }
 
-    optimizeResultComparison();
+    // optimizeResultComparison();
 
     if (config.useStaticQubitArrayAllocation())
     {
