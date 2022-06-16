@@ -13,53 +13,50 @@
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class ReplaceQubitOnResetPass : public llvm::PassInfoMixin<ReplaceQubitOnResetPass>
+class ReplaceQubitOnResetPass : public llvm::PassInfoMixin<ReplaceQubitOnResetPass>
+{
+  public:
+    using Instruction = llvm::Instruction;
+    using Value       = llvm::Value;
+    using ILoggerPtr  = ILogger::ILoggerPtr;
+    using Location    = ILogger::Location;
+    using StringRef   = llvm::StringRef;
+
+    enum ResourceType
     {
-      public:
-        using Instruction = llvm::Instruction;
-        using Value       = llvm::Value;
-        using ILoggerPtr  = ILogger::ILoggerPtr;
-        using Location    = ILogger::Location;
-        using StringRef   = llvm::StringRef;
-
-        enum ResourceType
-        {
-            None,
-            Qubit,
-            Result
-        };
-
-        // Construction and destruction configuration.
-        //
-
-        explicit ReplaceQubitOnResetPass(
-            StaticResourceComponentConfiguration const& cfg,
-            ILoggerPtr const&                           logger = nullptr);
-
-        /// Copy construction is banned.
-        ReplaceQubitOnResetPass(ReplaceQubitOnResetPass const&) = delete;
-
-        /// We allow move semantics.
-        ReplaceQubitOnResetPass(ReplaceQubitOnResetPass&&) = default;
-
-        /// Default destruction.
-        ~ReplaceQubitOnResetPass() = default;
-
-        llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& mam);
-
-        /// Whether or not this pass is required to run.
-        static bool isRequired();
-
-      private:
-        StaticResourceComponentConfiguration config_{};
-
-        ILoggerPtr logger_{nullptr};
+        None,
+        Qubit,
+        Result
     };
 
-} // namespace quantum
-} // namespace microsoft
+    // Construction and destruction configuration.
+    //
+
+    explicit ReplaceQubitOnResetPass(
+        StaticResourceComponentConfiguration const& cfg,
+        ILoggerPtr const&                           logger = nullptr);
+
+    /// Copy construction is banned.
+    ReplaceQubitOnResetPass(ReplaceQubitOnResetPass const&) = delete;
+
+    /// We allow move semantics.
+    ReplaceQubitOnResetPass(ReplaceQubitOnResetPass&&) = default;
+
+    /// Default destruction.
+    ~ReplaceQubitOnResetPass() = default;
+
+    llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& mam);
+
+    /// Whether or not this pass is required to run.
+    static bool isRequired();
+
+  private:
+    StaticResourceComponentConfiguration config_{};
+
+    ILoggerPtr logger_{nullptr};
+};
+
+} // namespace microsoft::quantum

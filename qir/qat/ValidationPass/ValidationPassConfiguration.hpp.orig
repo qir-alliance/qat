@@ -76,10 +76,14 @@ class ValidationPassConfiguration
     bool requiresQubits() const;
     bool requiresResults() const;
 
-    bool allowPoison() const;
-    bool allowUndef() const;
+<<<<<<< HEAD
+        bool allowPoison() const;
+        bool allowUndef() const;
 
+        String profileName() const;
+=======
     String profileName() const;
+>>>>>>> main
 
   private:
     void addAllowedExternalCall(String const& name);
@@ -101,11 +105,17 @@ class ValidationPassConfiguration
     bool allow_struct_return_{true};
     bool allow_pointer_return_{true};
 
+<<<<<<< HEAD
+        bool requires_qubits_{false};
+        bool requires_results_{false};
+
+        bool allow_poison_{true};
+        bool allow_undef_{true};
+    };
+=======
     bool requires_qubits_{false};
     bool requires_results_{false};
-
-    bool allow_poison_{true};
-    bool allow_undef_{true};
 };
+>>>>>>> main
 
 } // namespace microsoft::quantum

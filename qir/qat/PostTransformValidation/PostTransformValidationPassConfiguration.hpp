@@ -6,43 +6,40 @@
 
 #include <limits>
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class PostTransformValidationPassConfiguration
+class PostTransformValidationPassConfiguration
+{
+  public:
+    using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+
+    void setup(ConfigurationManager& config)
     {
-      public:
-        using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+        config.setSectionName("Pre-transform validation", "");
+        replace_qubits_on_reset_ = config.getParameter("replace-qubit-on-reset");
+    }
 
-        void setup(ConfigurationManager& config)
+    static PostTransformValidationPassConfiguration createDisabled()
+    {
+        PostTransformValidationPassConfiguration ret;
+        ret.disable_straightline_code_requirement_ = true;
+        return ret;
+    }
+
+    bool requireStraightLineCode() const
+    {
+        if (disable_straightline_code_requirement_)
         {
-            config.setSectionName("Pre-transform validation", "");
-            replace_qubits_on_reset_ = config.getParameter("replace-qubit-on-reset");
+            return false;
         }
 
-        static PostTransformValidationPassConfiguration createDisabled()
-        {
-            PostTransformValidationPassConfiguration ret;
-            ret.disable_straightline_code_requirement_ = true;
-            return ret;
-        }
+        return replace_qubits_on_reset_->value<bool>();
+    }
 
-        bool requireStraightLineCode() const
-        {
-            if (disable_straightline_code_requirement_)
-            {
-                return false;
-            }
+  private:
+    bool             disable_straightline_code_requirement_{false};
+    DeferredValuePtr replace_qubits_on_reset_{nullptr};
+};
 
-            return replace_qubits_on_reset_->value<bool>();
-        }
-
-      private:
-        bool             disable_straightline_code_requirement_{false};
-        DeferredValuePtr replace_qubits_on_reset_{nullptr};
-    };
-
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum

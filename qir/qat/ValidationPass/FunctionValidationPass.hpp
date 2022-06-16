@@ -13,44 +13,41 @@
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class FunctionValidationPass : public llvm::PassInfoMixin<FunctionValidationPass>
-    {
-      public:
-        using Instruction = llvm::Instruction;
-        using Value       = llvm::Value;
-        using ILoggerPtr  = ILogger::ILoggerPtr;
-        using Location    = ILogger::Location;
-        using StringRef   = llvm::StringRef;
+class FunctionValidationPass : public llvm::PassInfoMixin<FunctionValidationPass>
+{
+  public:
+    using Instruction = llvm::Instruction;
+    using Value       = llvm::Value;
+    using ILoggerPtr  = ILogger::ILoggerPtr;
+    using Location    = ILogger::Location;
+    using StringRef   = llvm::StringRef;
 
-        // Construction and destruction configuration.
-        //
+    // Construction and destruction configuration.
+    //
 
-        explicit FunctionValidationPass(ValidationPassConfiguration const& cfg, ILoggerPtr const& logger = nullptr);
+    explicit FunctionValidationPass(ValidationPassConfiguration const& cfg, ILoggerPtr const& logger = nullptr);
 
-        /// Copy construction is banned.
-        FunctionValidationPass(FunctionValidationPass const&) = delete;
+    /// Copy construction is banned.
+    FunctionValidationPass(FunctionValidationPass const&) = delete;
 
-        /// We allow move semantics.
-        FunctionValidationPass(FunctionValidationPass&&) = default;
+    /// We allow move semantics.
+    FunctionValidationPass(FunctionValidationPass&&) = default;
 
-        /// Default destruction.
-        ~FunctionValidationPass() = default;
+    /// Default destruction.
+    ~FunctionValidationPass() = default;
 
-        llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& fam);
+    llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& fam);
 
-        /// Whether or not this pass is required to run.
-        static bool isRequired();
+    /// Whether or not this pass is required to run.
+    static bool isRequired();
 
-      private:
-        ValidationPassConfiguration config_{};
+  private:
+    ValidationPassConfiguration config_{};
 
-        ILoggerPtr logger_{nullptr};
-    };
+    ILoggerPtr logger_{nullptr};
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum

@@ -11,29 +11,26 @@
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft
+namespace microsoft::quantum
 {
-namespace quantum
+namespace notation
 {
-    namespace notation
+
+    using IOperandPrototypePtr = std::shared_ptr<IOperandPrototype>;
+
+    IOperandPrototypePtr branch(
+        IOperandPrototypePtr const& cond,
+        IOperandPrototypePtr const& arg1,
+        IOperandPrototypePtr const& arg2)
     {
+        auto branch_pattern = std::make_shared<BranchPattern>();
 
-        using IOperandPrototypePtr = std::shared_ptr<IOperandPrototype>;
+        branch_pattern->addChild(cond);
+        branch_pattern->addChild(arg1);
+        branch_pattern->addChild(arg2);
 
-        IOperandPrototypePtr branch(
-            IOperandPrototypePtr const& cond,
-            IOperandPrototypePtr const& arg1,
-            IOperandPrototypePtr const& arg2)
-        {
-            auto branch_pattern = std::make_shared<BranchPattern>();
+        return static_cast<IOperandPrototypePtr>(branch_pattern);
+    }
 
-            branch_pattern->addChild(cond);
-            branch_pattern->addChild(arg1);
-            branch_pattern->addChild(arg2);
-
-            return static_cast<IOperandPrototypePtr>(branch_pattern);
-        }
-
-    } // namespace notation
-} // namespace quantum
-} // namespace microsoft
+} // namespace notation
+} // namespace microsoft::quantum

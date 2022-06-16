@@ -9,22 +9,19 @@
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft
+namespace microsoft::quantum
 {
-namespace quantum
+namespace notation
 {
-    namespace notation
+
+    using IOperandPrototypePtr = std::shared_ptr<IOperandPrototype>;
+
+    IOperandPrototypePtr unnamedInvoke()
     {
+        auto ret = std::make_shared<UnnamedInvokePattern>();
 
-        using IOperandPrototypePtr = std::shared_ptr<IOperandPrototype>;
+        return static_cast<IOperandPrototypePtr>(ret);
+    }
 
-        IOperandPrototypePtr unnamedInvoke()
-        {
-            auto ret = std::make_shared<UnnamedInvokePattern>();
-
-            return static_cast<IOperandPrototypePtr>(ret);
-        }
-
-    } // namespace notation
-} // namespace quantum
-} // namespace microsoft
+} // namespace notation
+} // namespace microsoft::quantum

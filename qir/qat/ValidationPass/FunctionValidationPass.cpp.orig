@@ -33,28 +33,44 @@ llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function& function, ll
 
     if (config_.requiresResults() && function_details.usage_result_counts == 0)
     {
-        logger_->errorNoResultsPresent(&function);
-    }
+<<<<<<< HEAD
+        auto& function_details = fam.getResult<AllocationAnalysisPass>(function);
 
-    for (auto& block : function)
-    {
-        for (auto& instr : block)
+        if (config_.requiresQubits() && function_details.usage_qubit_counts == 0)
         {
-            for (auto& op : instr.operands())
-            {
-                auto poison = llvm::dyn_cast<llvm::PoisonValue>(op);
-                auto undef  = llvm::dyn_cast<llvm::UndefValue>(op);
+            logger_->errorNoQubitsPresent(&function);
+        }
 
-                if (poison && !config_.allowPoison())
+        if (config_.requiresResults() && function_details.usage_result_counts == 0)
+        {
+            logger_->errorNoResultsPresent(&function);
+        }
+
+        for (auto& block : function)
+        {
+            for (auto& instr : block)
+            {
+                for (auto& op : instr.operands())
                 {
-                    logger_->errorPoisonNotAllowed(config_.profileName(), &instr);
-                }
-                else if (undef && !config_.allowUndef())
-                {
-                    logger_->errorUndefNotAllowed(config_.profileName(), &instr);
+                    auto poison = llvm::dyn_cast<llvm::PoisonValue>(op);
+                    auto undef  = llvm::dyn_cast<llvm::UndefValue>(op);
+
+                    if (poison && !config_.allowPoison())
+                    {
+                        logger_->errorPoisonNotAllowed(config_.profileName(), &instr);
+                    }
+                    else if (undef && !config_.allowUndef())
+                    {
+                        logger_->errorUndefNotAllowed(config_.profileName(), &instr);
+                    }
                 }
             }
         }
+
+        return llvm::PreservedAnalyses::all();
+=======
+        logger_->errorNoResultsPresent(&function);
+>>>>>>> main
     }
 
     return llvm::PreservedAnalyses::all();

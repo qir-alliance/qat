@@ -8,145 +8,142 @@
 #include <string>
 #include <unordered_map>
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    void ParameterParser::parseArgs(int argc, char** argv)
+void ParameterParser::parseArgs(int argc, char** argv)
+{
+    uint64_t                 i = 1;
+    std::vector<ParsedValue> values;
+    while (i < static_cast<uint64_t>(argc))
     {
-        uint64_t                 i = 1;
-        std::vector<ParsedValue> values;
-        while (i < static_cast<uint64_t>(argc))
+        values.push_back(parseSingleArg(argv[i]));
+        ++i;
+    }
+
+    i = 0;
+    while (i < values.size())
+    {
+        auto& v = values[i];
+        ++i;
+
+        if (!v.is_key)
         {
-            values.push_back(parseSingleArg(argv[i]));
-            ++i;
+            arguments_.push_back(v.value);
+            continue;
         }
 
-        i = 0;
-        while (i < values.size())
+        unused_properties_.insert(v.value);
+        if (i >= values.size())
         {
-            auto& v = values[i];
-            ++i;
-
-            if (!v.is_key)
-            {
-                arguments_.push_back(v.value);
-                continue;
-            }
-
-            unused_properties_.insert(v.value);
-            if (i >= values.size())
-            {
-
-                settings_[v.value] = "true";
-                continue;
-            }
-
-            auto& v2 = values[i];
-            if (!v2.is_key && isOption(v.value))
-            {
-                settings_[v.value] = v2.value;
-                ++i;
-                continue;
-            }
 
             settings_[v.value] = "true";
+            continue;
         }
-    }
 
-    void ParameterParser::addFlag(String const& v)
-    {
-        flags_.insert(v);
-    }
-
-    String const& ParameterParser::get(String const& name, String const& default_value) noexcept
-    {
-        auto it = settings_.find(name);
-        if (it == settings_.end())
+        auto& v2 = values[i];
+        if (!v2.is_key && isOption(v.value))
         {
-            return default_value;
+            settings_[v.value] = v2.value;
+            ++i;
+            continue;
         }
 
-        markAsUsed(name);
-        return it->second;
+        settings_[v.value] = "true";
     }
+}
 
-    String const& ParameterParser::get(String const& name)
+void ParameterParser::addFlag(String const& v)
+{
+    flags_.insert(v);
+}
+
+String const& ParameterParser::get(String const& name, String const& default_value) noexcept
+{
+    auto it = settings_.find(name);
+    if (it == settings_.end())
     {
-        auto it = settings_.find(name);
-        if (it == settings_.end())
-        {
-            throw std::runtime_error("Could not find setting '" + name + "'.");
-        }
-
-        markAsUsed(name);
-
-        return it->second;
+        return default_value;
     }
 
-    void ParameterParser::markAsUsed(String const& name)
+    markAsUsed(name);
+    return it->second;
+}
+
+String const& ParameterParser::get(String const& name)
+{
+    auto it = settings_.find(name);
+    if (it == settings_.end())
     {
-        auto it = unused_properties_.find(name);
-        if (it != unused_properties_.end())
-        {
-            unused_properties_.erase(it);
-        }
+        throw std::runtime_error("Could not find setting '" + name + "'.");
     }
 
-    ParameterParser::UnusedSettings const& ParameterParser::unusedSettings() const
+    markAsUsed(name);
+
+    return it->second;
+}
+
+void ParameterParser::markAsUsed(String const& name)
+{
+    auto it = unused_properties_.find(name);
+    if (it != unused_properties_.end())
     {
-        return unused_properties_;
+        unused_properties_.erase(it);
     }
+}
 
-    bool ParameterParser::has(String const& name) const noexcept
+ParameterParser::UnusedSettings const& ParameterParser::unusedSettings() const
+{
+    return unused_properties_;
+}
+
+bool ParameterParser::has(String const& name) const noexcept
+{
+    auto it = settings_.find(name);
+    return (it != settings_.end());
+}
+
+ParameterParser::Arguments const& ParameterParser::arguments() const
+{
+    return arguments_;
+}
+
+String const& ParameterParser::getArg(Arguments::size_type const& n) const
+{
+    return arguments_[n];
+}
+
+ParameterParser::ParsedValue ParameterParser::parseSingleArg(String key)
+{
+    bool is_key = false;
+    if (key.size() > 2 && key.substr(0, 2) == "--")
     {
-        auto it = settings_.find(name);
-        return (it != settings_.end());
+        is_key = true;
+        key    = key.substr(2);
     }
-
-    ParameterParser::Arguments const& ParameterParser::arguments() const
+    else if (key.size() > 1 && key.substr(0, 1) == "-")
     {
-        return arguments_;
+        is_key = true;
+        key    = key.substr(1);
     }
+    return {is_key, key};
+}
 
-    String const& ParameterParser::getArg(Arguments::size_type const& n) const
+bool ParameterParser::isOption(String const& key)
+{
+    if (flags_.find(key) != flags_.end())
     {
-        return arguments_[n];
+        return false;
     }
 
-    ParameterParser::ParsedValue ParameterParser::parseSingleArg(String key)
-    {
-        bool is_key = false;
-        if (key.size() > 2 && key.substr(0, 2) == "--")
-        {
-            is_key = true;
-            key    = key.substr(2);
-        }
-        else if (key.size() > 1 && key.substr(0, 1) == "-")
-        {
-            is_key = true;
-            key    = key.substr(1);
-        }
-        return {is_key, key};
-    }
+    return true;
+}
 
-    bool ParameterParser::isOption(String const& key)
-    {
-        if (flags_.find(key) != flags_.end())
-        {
-            return false;
-        }
+void ParameterParser::reset()
+{
+    arguments_.clear();
+    settings_.clear();
+    flags_.clear();
+}
 
-        return true;
-    }
-
-    void ParameterParser::reset()
-    {
-        arguments_.clear();
-        settings_.clear();
-        flags_.clear();
-    }
-
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum

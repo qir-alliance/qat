@@ -13,11 +13,15 @@ void ValidationPassConfiguration::setup(ConfigurationManager& config)
     config.setSectionName("Validation configuration", "");
     config.addParameter(allow_internal_calls_, "allow-internal-calls", "Whether or not internal calls are allowed.");
 
+<<<<<<< HEAD
+        config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
+        config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
+
+        config.addParameter(allow_poison_, "allow-poison", "Whether or not to allow poison values.");
+        config.addParameter(allow_undef_, "allow-undef", "Whether or not to allow undef values.");
+=======
     config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
     config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
-
-    config.addParameter(allow_poison_, "allow-poison", "Whether or not to allow poison values.");
-    config.addParameter(allow_undef_, "allow-undef", "Whether or not to allow undef values.");
 }
 
 String ValidationPassConfiguration::profileName() const
@@ -221,6 +225,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
     else
     {
         throw std::runtime_error("Invalid profile " + name);
+>>>>>>> main
     }
 
     profile.profile_name_ = name;
@@ -288,14 +293,63 @@ bool ValidationPassConfiguration::requiresResults() const
     return requires_results_;
 }
 
-bool ValidationPassConfiguration::allowPoison() const
-{
-    return allow_poison_;
-}
+<<<<<<< HEAD
+    bool ValidationPassConfiguration::allowlistOpcodes() const
+    {
+        return allowlist_opcodes_;
+    }
 
-bool ValidationPassConfiguration::allowUndef() const
-{
-    return allow_undef_;
-}
+    bool ValidationPassConfiguration::allowlistExternalCalls() const
+    {
+        return allowlist_external_calls_;
+    }
+
+    bool ValidationPassConfiguration::allowlistPointerTypes() const
+    {
+        return allowlist_pointer_types_;
+    }
+
+    ValidationPassConfiguration::Set const& ValidationPassConfiguration::allowedPointerTypes() const
+    {
+        return allowed_pointer_types_;
+    }
+
+    void ValidationPassConfiguration::addAllowedExternalCall(String const& name)
+    {
+        external_calls_.insert(name);
+    }
+
+    void ValidationPassConfiguration::addAllowedOpcode(String const& name)
+    {
+        opcodes_.insert(name);
+    }
+
+    void ValidationPassConfiguration::addAllowedPointerType(String const& name)
+    {
+        allowed_pointer_types_.insert(name);
+    }
+
+    bool ValidationPassConfiguration::requiresQubits() const
+    {
+        return requires_qubits_;
+    }
+
+    bool ValidationPassConfiguration::requiresResults() const
+    {
+        return requires_results_;
+    }
+
+    bool ValidationPassConfiguration::allowPoison() const
+    {
+        return allow_poison_;
+    }
+
+    bool ValidationPassConfiguration::allowUndef() const
+    {
+        return allow_undef_;
+    }
 
 } // namespace microsoft::quantum
+=======
+} // namespace microsoft::quantum
+>>>>>>> main
