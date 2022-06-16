@@ -602,56 +602,53 @@
 #include &lt;memory&gt;
 #include &lt;unordered_map&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class InstructionLocationTable : public llvm::AssemblyAnnotationWriter
-    {
-      public:
-        using Position = SourceLocation;
+class InstructionLocationTable : public llvm::AssemblyAnnotationWriter
+{
+  public:
+    using Position = SourceLocation;
 
-        using StringRef                   = llvm::StringRef;
-        using BasicBlock                  = llvm::BasicBlock;
-        using Function                    = llvm::Function;
-        using Value                       = llvm::Value;
-        using Module                      = llvm::Module;
-        using Positions                   = std::unordered_map&lt;Value const*, Position&gt;;
-        using InstructionLocationTablePtr = std::shared_ptr&lt;InstructionLocationTable&gt;;
+    using StringRef                   = llvm::StringRef;
+    using BasicBlock                  = llvm::BasicBlock;
+    using Function                    = llvm::Function;
+    using Value                       = llvm::Value;
+    using Module                      = llvm::Module;
+    using Positions                   = std::unordered_map&lt;Value const*, Position&gt;;
+    using InstructionLocationTablePtr = std::shared_ptr&lt;InstructionLocationTable&gt;;
 
-        static InstructionLocationTablePtr create();
+    static InstructionLocationTablePtr create();
 
-        // Debug table interface
-        //
+    // Debug table interface
+    //
 
-        Position getPosition(Value const* value) const;
+    Position getPosition(Value const* value) const;
 
-        void registerModule(StringRef const&amp; filename, Module const* module);
+    void registerModule(StringRef const&amp; filename, Module const* module);
 
-      protected:
-        // AssemblyAnnotationWriter interface implementations
-        //
+  protected:
+    // AssemblyAnnotationWriter interface implementations
+    //
 
-        void printInfoComment(Value const&amp; value, llvm::formatted_raw_ostream&amp; outstream) override;
-        void emitBasicBlockStartAnnot(BasicBlock const* block, llvm::formatted_raw_ostream&amp; outstream) override;
-        void emitFunctionAnnot(Function const* function, llvm::formatted_raw_ostream&amp; outstream) override;
+    void printInfoComment(Value const&amp; value, llvm::formatted_raw_ostream&amp; outstream) override;
+    void emitBasicBlockStartAnnot(BasicBlock const* block, llvm::formatted_raw_ostream&amp; outstream) override;
+    void emitFunctionAnnot(Function const* function, llvm::formatted_raw_ostream&amp; outstream) override;
 
-      private:
-        Positions positions_;
-        StringRef current_filename_{};
+  private:
+    Positions positions_;
+    StringRef current_filename_{};
 
-        InstructionLocationTable() = default;
-        void registerValuePosition(Value const* value, llvm::formatted_raw_ostream&amp; outstream);
-    };
+    InstructionLocationTable() = default;
+    void registerValuePosition(Value const* value, llvm::formatted_raw_ostream&amp; outstream);
+};
 
-    using InstructionLocationTablePtr = InstructionLocationTable::InstructionLocationTablePtr;
+using InstructionLocationTablePtr = InstructionLocationTable::InstructionLocationTablePtr;
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

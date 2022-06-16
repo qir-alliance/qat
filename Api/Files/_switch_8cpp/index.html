@@ -592,36 +592,33 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
+namespace microsoft::quantum
 {
-namespace quantum
+namespace notation
 {
-    namespace notation
+
+    using IOperandPrototypePtr = std::shared_ptr&lt;IOperandPrototype&gt;;
+
+    IOperandPrototypePtr switchOp(
+        IOperandPrototypePtr const&amp; /*cond*/,
+        IOperandPrototypePtr const&amp; /*arg1*/,
+        IOperandPrototypePtr const&amp; /*arg2*/)
     {
+        auto switch_pattern = std::make_shared&lt;SwitchPattern&gt;();
 
-        using IOperandPrototypePtr = std::shared_ptr&lt;IOperandPrototype&gt;;
+        // TODO(issue-17): finish switch pattern
+        //  switch_pattern-&gt;addChild(cond);
+        // switch_pattern-&gt;addChild(arg1);
+        //  switch_pattern-&gt;addChild(arg2);
 
-        IOperandPrototypePtr switchOp(
-            IOperandPrototypePtr const&amp; /*cond*/,
-            IOperandPrototypePtr const&amp; /*arg1*/,
-            IOperandPrototypePtr const&amp; /*arg2*/)
-        {
-            auto switch_pattern = std::make_shared&lt;SwitchPattern&gt;();
+        return static_cast&lt;IOperandPrototypePtr&gt;(switch_pattern);
+    }
 
-            // TODO(issue-17): finish switch pattern
-            //  switch_pattern-&gt;addChild(cond);
-            // switch_pattern-&gt;addChild(arg1);
-            //  switch_pattern-&gt;addChild(arg2);
-
-            return static_cast&lt;IOperandPrototypePtr&gt;(switch_pattern);
-        }
-
-    } // namespace notation
-} // namespace quantum
-} // namespace microsoft
+} // namespace notation
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

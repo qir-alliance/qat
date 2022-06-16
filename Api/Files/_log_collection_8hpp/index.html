@@ -600,47 +600,44 @@
 
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class LogCollection : public ILogger
-    {
-      public:
-        // Interface implementation
-        //
+class LogCollection : public ILogger
+{
+  public:
+    // Interface implementation
+    //
 
-        void debug(String const&amp; message) override;
+    void debug(String const&amp; message) override;
 
-        void info(String const&amp; message) override;
+    void info(String const&amp; message) override;
 
-        void warning(String const&amp; message) override;
+    void warning(String const&amp; message) override;
 
-        void error(String const&amp; message) override;
+    void error(String const&amp; message) override;
 
-        void internalError(String const&amp; message) override;
+    void internalError(String const&amp; message) override;
 
-        void setLocation(SourceLocation const&amp; loc) override;
+    void setLocation(SourceLocation const&amp; loc) override;
 
-        void setLlvmHint(String const&amp; value) override;
+    void setLlvmHint(String const&amp; value) override;
 
-        void setFrontendHint(String const&amp; value) override;
+    void setFrontendHint(String const&amp; value) override;
 
-        Messages const&amp; messages() const override;
+    Messages const&amp; messages() const override;
 
-        void dump(std::ostream&amp; out) const override;
+    void dump(std::ostream&amp; out) const override;
 
-      private:
-        Location current_location_{}; 
-        Messages messages_;           
-    };
+  private:
+    Location current_location_{}; 
+    Messages messages_;           
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

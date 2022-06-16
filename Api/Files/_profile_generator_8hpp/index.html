@@ -602,169 +602,166 @@
 
 #include &quot;Llvm/Llvm.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class ProfileGenerator
+class ProfileGenerator
+{
+  public:
+    // LLVM types
+    //
+    using PassBuilder             = llvm::PassBuilder;
+    using OptimizationLevel       = PassBuilder::OptimizationLevel;
+    using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
+
+    template &lt;typename R&gt; using SetupFunction = std::function&lt;void(R const&amp;, ProfileGenerator*, Profile&amp;)&gt;;
+
+    using SetupFunctionWrapper = std::function&lt;void(ProfileGenerator*, Profile&amp;)&gt;;
+
+    using Components = std::vector&lt;std::pair&lt;String, SetupFunctionWrapper&gt;&gt;;
+
+    using ILoggerPtr = ILogger::ILoggerPtr;
+
+    // Construction, moves and copies
+    //
+
+    ProfileGenerator()                        = default;
+    ~ProfileGenerator()                       = default;
+    ProfileGenerator(ProfileGenerator const&amp;) = delete;
+    ProfileGenerator(ProfileGenerator&amp;&amp;)      = delete;
+    ProfileGenerator&amp; operator=(ProfileGenerator const&amp;) = delete;
+    ProfileGenerator&amp; operator=(ProfileGenerator&amp;&amp;) = delete;
+
+    // Profile generation interface
+    //
+
+    ConfigurationManager&amp; configurationManager();
+
+    ConfigurationManager const&amp; configurationManager() const;
+
+    Profile newProfile(String const&amp; name, OptimizationLevel const&amp; optimization_level, bool debug);
+
+    // Defining the generator
+
+    //
+
+    template &lt;typename R&gt; void registerProfileComponent(String const&amp; id, SetupFunction&lt;R&gt; setup);
+
+    template &lt;typename R&gt; void replaceProfileComponent(String const&amp; id, SetupFunction&lt;R&gt; setup);
+
+    template &lt;typename R&gt; void registerAnonymousProfileComponent(SetupFunction&lt;R&gt; setup);
+
+    void replicateProfileComponent(String const&amp; id);
+
+    // Support properties for generators
+    //
+
+    llvm::ModulePassManager&amp; modulePassManager();
+
+    llvm::FunctionPassManager&amp; functionPassManager();
+
+    llvm::PassBuilder&amp; passBuilder();
+
+    OptimizationLevel optimizationLevel() const;
+
+    bool isDebugMode() const;
+
+    void setupDefaultComponentPipeline();
+
+    void setLogger(ILoggerPtr const&amp; logger = nullptr);
+
+  protected:
+    llvm::ModulePassManager createGenerationModulePassManager(
+        Profile&amp;                 profile,
+        OptimizationLevel const&amp; optimization_level,
+        bool                     debug);
+
+    llvm::ModulePassManager createValidationModulePass(
+        PassBuilder&amp;             pass_builder,
+        OptimizationLevel const&amp; optimization_level,
+        bool                     debug);
+
+  private:
+    ILoggerPtr           logger_{nullptr};       
+    ConfigurationManager configuration_manager_; 
+    Components           components_;            
+
+    llvm::ModulePassManager* module_pass_manager_{nullptr};
+
+    llvm::FunctionPassManager* function_pass_manager_{nullptr};
+
+    llvm::PassBuilder* pass_builder_{nullptr};
+
+    OptimizationLevel optimization_level_{OptimizationLevel::O0};
+
+    bool debug_{false};
+};
+
+template &lt;typename R&gt; void ProfileGenerator::registerProfileComponent(String const&amp; id, SetupFunction&lt;R&gt; setup)
+{
+    configuration_manager_.addConfig&lt;R&gt;(id);
+
+    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
     {
-      public:
-        // LLVM types
-        //
-        using PassBuilder             = llvm::PassBuilder;
-        using OptimizationLevel       = PassBuilder::OptimizationLevel;
-        using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
+        if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
+        {
+            auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
 
-        template &lt;typename R&gt; using SetupFunction = std::function&lt;void(R const&amp;, ProfileGenerator*, Profile&amp;)&gt;;
-
-        using SetupFunctionWrapper = std::function&lt;void(ProfileGenerator*, Profile&amp;)&gt;;
-
-        using Components = std::vector&lt;std::pair&lt;String, SetupFunctionWrapper&gt;&gt;;
-
-        using ILoggerPtr = ILogger::ILoggerPtr;
-
-        // Construction, moves and copies
-        //
-
-        ProfileGenerator()                        = default;
-        ~ProfileGenerator()                       = default;
-        ProfileGenerator(ProfileGenerator const&amp;) = delete;
-        ProfileGenerator(ProfileGenerator&amp;&amp;)      = delete;
-        ProfileGenerator&amp; operator=(ProfileGenerator const&amp;) = delete;
-        ProfileGenerator&amp; operator=(ProfileGenerator&amp;&amp;) = delete;
-
-        // Profile generation interface
-        //
-
-        ConfigurationManager&amp; configurationManager();
-
-        ConfigurationManager const&amp; configurationManager() const;
-
-        Profile newProfile(String const&amp; name, OptimizationLevel const&amp; optimization_level, bool debug);
-
-        // Defining the generator
-
-        //
-
-        template &lt;typename R&gt; void registerProfileComponent(String const&amp; id, SetupFunction&lt;R&gt; setup);
-
-        template &lt;typename R&gt; void replaceProfileComponent(String const&amp; id, SetupFunction&lt;R&gt; setup);
-
-        template &lt;typename R&gt; void registerAnonymousProfileComponent(SetupFunction&lt;R&gt; setup);
-
-        void replicateProfileComponent(String const&amp; id);
-
-        // Support properties for generators
-        //
-
-        llvm::ModulePassManager&amp; modulePassManager();
-
-        llvm::FunctionPassManager&amp; functionPassManager();
-
-        llvm::PassBuilder&amp; passBuilder();
-
-        OptimizationLevel optimizationLevel() const;
-
-        bool isDebugMode() const;
-
-        void setupDefaultComponentPipeline();
-
-        void setLogger(ILoggerPtr const&amp; logger = nullptr);
-
-      protected:
-        llvm::ModulePassManager createGenerationModulePassManager(
-            Profile&amp;                 profile,
-            OptimizationLevel const&amp; optimization_level,
-            bool                     debug);
-
-        llvm::ModulePassManager createValidationModulePass(
-            PassBuilder&amp;             pass_builder,
-            OptimizationLevel const&amp; optimization_level,
-            bool                     debug);
-
-      private:
-        ILoggerPtr           logger_{nullptr};       
-        ConfigurationManager configuration_manager_; 
-        Components           components_;            
-
-        llvm::ModulePassManager* module_pass_manager_{nullptr};
-
-        llvm::FunctionPassManager* function_pass_manager_{nullptr};
-
-        llvm::PassBuilder* pass_builder_{nullptr};
-
-        OptimizationLevel optimization_level_{OptimizationLevel::O0};
-
-        bool debug_{false};
+            setup(config, ptr, profile);
+        }
     };
 
-    template &lt;typename R&gt; void ProfileGenerator::registerProfileComponent(String const&amp; id, SetupFunction&lt;R&gt; setup)
+    components_.push_back({id, std::move(setup_wrapper)});
+}
+
+template &lt;typename R&gt; void ProfileGenerator::replaceProfileComponent(String const&amp; id, SetupFunction&lt;R&gt; setup)
+{
+    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
     {
-        configuration_manager_.addConfig&lt;R&gt;(id);
-
-        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
+        if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
         {
-            if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
-            {
-                auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
+            auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
 
-                setup(config, ptr, profile);
-            }
-        };
-
-        components_.push_back({id, std::move(setup_wrapper)});
-    }
-
-    template &lt;typename R&gt; void ProfileGenerator::replaceProfileComponent(String const&amp; id, SetupFunction&lt;R&gt; setup)
-    {
-        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
-        {
-            if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
-            {
-                auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
-
-                setup(config, ptr, profile);
-            }
-        };
-
-        for (auto&amp; component : components_)
-        {
-            if (component.first == id)
-            {
-                component.second = std::move(setup_wrapper);
-                return;
-            }
+            setup(config, ptr, profile);
         }
+    };
 
-        throw std::runtime_error(&quot;Could not find component &quot; + id);
-    }
-
-    template &lt;typename R&gt; void ProfileGenerator::registerAnonymousProfileComponent(SetupFunction&lt;R&gt; setup)
+    for (auto&amp; component : components_)
     {
-        if (!configuration_manager_.configWasRegistered&lt;R&gt;())
+        if (component.first == id)
         {
-            throw std::runtime_error(&quot;Configuration '&quot; + static_cast&lt;String&gt;(typeid(R).name()) + &quot;' does not exist.&quot;);
+            component.second = std::move(setup_wrapper);
+            return;
         }
-
-        auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
-        {
-            if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
-            {
-                auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
-
-                setup(config, ptr, profile);
-            }
-        };
-
-        components_.push_back({&quot;__unnamed__&quot;, std::move(setup_wrapper)});
     }
 
-} // namespace quantum
-} // namespace microsoft
+    throw std::runtime_error(&quot;Could not find component &quot; + id);
+}
+
+template &lt;typename R&gt; void ProfileGenerator::registerAnonymousProfileComponent(SetupFunction&lt;R&gt; setup)
+{
+    if (!configuration_manager_.configWasRegistered&lt;R&gt;())
+    {
+        throw std::runtime_error(&quot;Configuration '&quot; + static_cast&lt;String&gt;(typeid(R).name()) + &quot;' does not exist.&quot;);
+    }
+
+    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
+    {
+        if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
+        {
+            auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
+
+            setup(config, ptr, profile);
+        }
+    };
+
+    components_.push_back({&quot;__unnamed__&quot;, std::move(setup_wrapper)});
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

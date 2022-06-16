@@ -600,56 +600,53 @@
 #include &lt;memory&gt;
 #include &lt;string&gt;
 
-namespace microsoft
+namespace microsoft::quantum
 {
-namespace quantum
+class IAllocationManager
 {
-    class IAllocationManager
-    {
-      public:
-        using Address              = uint64_t; 
-        using Index                = uint64_t; 
-        using AllocationManagerPtr = std::shared_ptr&lt;IAllocationManager&gt;; 
+  public:
+    using Address              = uint64_t;                            
+    using Index                = uint64_t;                            
+    using AllocationManagerPtr = std::shared_ptr&lt;IAllocationManager&gt;; 
 
-        // Construction, moves and copies
-        //
-        IAllocationManager(IAllocationManager const&amp;) = delete;
-        IAllocationManager(IAllocationManager&amp;&amp;)      = delete;
-        IAllocationManager&amp; operator=(IAllocationManager const&amp;) = delete;
-        IAllocationManager&amp; operator=(IAllocationManager&amp;&amp;) = delete;
+    // Construction, moves and copies
+    //
+    IAllocationManager(IAllocationManager const&amp;) = delete;
+    IAllocationManager(IAllocationManager&amp;&amp;)      = delete;
+    IAllocationManager&amp; operator=(IAllocationManager const&amp;) = delete;
+    IAllocationManager&amp; operator=(IAllocationManager&amp;&amp;) = delete;
 
-        virtual ~IAllocationManager();
+    virtual ~IAllocationManager();
 
-        // Interface
-        //
+    // Interface
+    //
 
-        virtual Address allocate(String const&amp; name = &quot;&quot;, Index const&amp; count = 1) = 0;
+    virtual Address allocate(String const&amp; name = &quot;&quot;, Index const&amp; count = 1) = 0;
 
-        virtual void release(Address const&amp; address) = 0;
+    virtual void release(Address const&amp; address) = 0;
 
-        virtual void reset() = 0;
+    virtual void reset() = 0;
 
-        // Statistics
-        //
+    // Statistics
+    //
 
-        uint64_t allocationsInUse() const;
+    uint64_t allocationsInUse() const;
 
-        uint64_t maxAllocationsUsed() const;
+    uint64_t maxAllocationsUsed() const;
 
-      protected:
-        IAllocationManager() = default;
-        void updateRegistersInUse(uint64_t n);
+  protected:
+    IAllocationManager() = default;
+    void updateRegistersInUse(uint64_t n);
 
-      private:
-        uint64_t registers_in_use_{0};   
-        uint64_t max_registers_used_{0}; 
-    };
+  private:
+    uint64_t registers_in_use_{0};   
+    uint64_t max_registers_used_{0}; 
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:13 UTC</p></div>
 </div>
           </div>
         </main>

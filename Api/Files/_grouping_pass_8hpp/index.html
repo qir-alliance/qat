@@ -607,99 +607,96 @@
 #include &lt;unordered_set&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
 
-    class GroupingPass : public llvm::PassInfoMixin&lt;GroupingPass&gt;
+class GroupingPass : public llvm::PassInfoMixin&lt;GroupingPass&gt;
+{
+  public:
+    using Instruction   = llvm::Instruction;
+    using Value         = llvm::Value;
+    using ILoggerPtr    = ILogger::ILoggerPtr;
+    using BlockSet      = std::unordered_set&lt;llvm::BasicBlock*&gt;;
+    using SharedBuilder = std::shared_ptr&lt;llvm::IRBuilder&lt;&gt;&gt;;
+    // Construction and destruction configuration.
+    //
+
+    enum
     {
-      public:
-        using Instruction   = llvm::Instruction;
-        using Value         = llvm::Value;
-        using ILoggerPtr    = ILogger::ILoggerPtr;
-        using BlockSet      = std::unordered_set&lt;llvm::BasicBlock*&gt;;
-        using SharedBuilder = std::shared_ptr&lt;llvm::IRBuilder&lt;&gt;&gt;;
-        // Construction and destruction configuration.
-        //
+        PURE_CLASSICAL                = 0,
+        SOURCE_QUANTUM                = 1,
+        DEST_QUANTUM                  = 2,
+        PURE_QUANTUM                  = SOURCE_QUANTUM | DEST_QUANTUM,
+        TRANSFER_CLASSICAL_TO_QUANTUM = DEST_QUANTUM,
+        TRANSFER_QUANTUM_TO_CLASSICAL = SOURCE_QUANTUM,
 
-        enum
-        {
-            PURE_CLASSICAL                = 0,
-            SOURCE_QUANTUM                = 1,
-            DEST_QUANTUM                  = 2,
-            PURE_QUANTUM                  = SOURCE_QUANTUM | DEST_QUANTUM,
-            TRANSFER_CLASSICAL_TO_QUANTUM = DEST_QUANTUM,
-            TRANSFER_QUANTUM_TO_CLASSICAL = SOURCE_QUANTUM,
-
-            INVALID_MIXED_LOCATION = -1
-        };
-
-        explicit GroupingPass(GroupingPassConfiguration const&amp; cfg)
-          : config_{cfg}
-        {
-        }
-
-        GroupingPass(GroupingPass const&amp;) = delete;
-
-        GroupingPass(GroupingPass&amp;&amp;) = default;
-
-        ~GroupingPass() = default;
-
-        //
-        void prepareSourceSeparation(llvm::Module&amp; module, llvm::BasicBlock* block);
-        void nextQuantumCycle(llvm::Module&amp; module, llvm::BasicBlock* block);
-        void expandBasedOnSource(llvm::Module&amp; module, llvm::BasicBlock* block);
-
-        void expandBasedOnDest(llvm::Module&amp; module, llvm::BasicBlock* block, bool move_quatum, String const&amp; name);
-
-        //
-        bool    isQuantumRegister(llvm::Type const* type);
-        int64_t classifyInstruction(llvm::Instruction const* instr);
-
-        llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
-
-        void runBlockAnalysis(llvm::Module&amp; module);
-
-        static bool isRequired();
-
-        void setLogger(ILoggerPtr logger);
-
-      private:
-        void deleteInstructions();
-
-        GroupingPassConfiguration config_{};
-
-        // Basic blocks used to build
-
-        llvm::BasicBlock* post_classical_block_{nullptr};
-        llvm::BasicBlock* quantum_block_{nullptr};
-        llvm::BasicBlock* pre_classical_block_{nullptr};
-
-        // Builders
-        //
-
-        SharedBuilder pre_classical_builder_{};
-        SharedBuilder quantum_builder_{};
-        SharedBuilder post_classical_builder_{};
-
-        std::vector&lt;llvm::BasicBlock*&gt; quantum_blocks_{};
-        std::vector&lt;llvm::BasicBlock*&gt; classical_blocks_{};
-
-        BlockSet   visited_blocks_;
-        ILoggerPtr logger_{nullptr};
-
-        std::unordered_set&lt;String&gt; quantum_register_types_ = {&quot;Qubit&quot;, &quot;Result&quot;};
-
-        std::vector&lt;llvm::Instruction*&gt; to_delete_;
+        INVALID_MIXED_LOCATION = -1
     };
 
-} // namespace quantum
-} // namespace microsoft
+    explicit GroupingPass(GroupingPassConfiguration const&amp; cfg)
+      : config_{cfg}
+    {
+    }
+
+    GroupingPass(GroupingPass const&amp;) = delete;
+
+    GroupingPass(GroupingPass&amp;&amp;) = default;
+
+    ~GroupingPass() = default;
+
+    //
+    void prepareSourceSeparation(llvm::Module&amp; module, llvm::BasicBlock* block);
+    void nextQuantumCycle(llvm::Module&amp; module, llvm::BasicBlock* block);
+    void expandBasedOnSource(llvm::Module&amp; module, llvm::BasicBlock* block);
+
+    void expandBasedOnDest(llvm::Module&amp; module, llvm::BasicBlock* block, bool move_quatum, String const&amp; name);
+
+    //
+    bool    isQuantumRegister(llvm::Type const* type);
+    int64_t classifyInstruction(llvm::Instruction const* instr);
+
+    llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
+
+    void runBlockAnalysis(llvm::Module&amp; module);
+
+    static bool isRequired();
+
+    void setLogger(ILoggerPtr logger);
+
+  private:
+    void deleteInstructions();
+
+    GroupingPassConfiguration config_{};
+
+    // Basic blocks used to build
+
+    llvm::BasicBlock* post_classical_block_{nullptr};
+    llvm::BasicBlock* quantum_block_{nullptr};
+    llvm::BasicBlock* pre_classical_block_{nullptr};
+
+    // Builders
+    //
+
+    SharedBuilder pre_classical_builder_{};
+    SharedBuilder quantum_builder_{};
+    SharedBuilder post_classical_builder_{};
+
+    std::vector&lt;llvm::BasicBlock*&gt; quantum_blocks_{};
+    std::vector&lt;llvm::BasicBlock*&gt; classical_blocks_{};
+
+    BlockSet   visited_blocks_;
+    ILoggerPtr logger_{nullptr};
+
+    std::unordered_set&lt;String&gt; quantum_register_types_ = {&quot;Qubit&quot;, &quot;Result&quot;};
+
+    std::vector&lt;llvm::Instruction*&gt; to_delete_;
+};
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

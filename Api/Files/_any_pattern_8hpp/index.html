@@ -602,31 +602,28 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class AnyPattern : public IOperandPrototype
-    {
-      public:
-        // Constructors.
-        //
-        AnyPattern();
-        ~AnyPattern() override;
+class AnyPattern : public IOperandPrototype
+{
+  public:
+    // Constructors.
+    //
+    AnyPattern();
+    ~AnyPattern() override;
 
-        // &quot;Any&quot; implementation of the member functions in IOperandPrototype.
+    // &quot;Any&quot; implementation of the member functions in IOperandPrototype.
 
-        bool match(Value* instr, Captures&amp; captures) const override;
+    bool match(Value* instr, Captures&amp; captures) const override;
 
-        Child copy() const override;
-    };
+    Child copy() const override;
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

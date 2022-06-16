@@ -591,116 +591,113 @@
 
 #include &lt;fstream&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    Validator::Validator(
-        ValidationPassConfiguration const&amp; cfg,
-        ILoggerPtr const&amp;                  logger,
-        bool /*debug*/,
-        llvm::TargetMachine* target_machine)
-      : logger_{logger}
+Validator::Validator(
+    ValidationPassConfiguration const&amp; cfg,
+    ILoggerPtr const&amp;                  logger,
+    bool /*debug*/,
+    llvm::TargetMachine* target_machine)
+  : logger_{logger}
+{
+
+    pass_builder_ = std::make_unique&lt;llvm::PassBuilder&gt;(target_machine);
+
+    pass_builder_-&gt;registerModuleAnalyses(module_analysis_manager_);
+    pass_builder_-&gt;registerCGSCCAnalyses(gscc_analysis_manager_);
+    pass_builder_-&gt;registerFunctionAnalyses(function_analysis_manager_);
+    pass_builder_-&gt;registerLoopAnalyses(loop_analysis_manager_);
+
+    pass_builder_-&gt;crossRegisterProxies(
+        loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
+
+    // Checking if we need to use provided logger or install one
+    if (logger_)
     {
+        function_analysis_manager_.registerPass([&amp;] { return AllocationAnalysisPass(logger_); });
 
-        pass_builder_ = std::make_unique&lt;llvm::PassBuilder&gt;(target_machine);
+        module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger_)));
+        module_pass_manager_.addPass(ValidationPass(cfg, logger_));
+    }
+    else
+    {
+        // Our default is a pass that logs errors via comments
+        auto logger = std::make_shared&lt;CommentLogger&gt;();
+        function_analysis_manager_.registerPass([&amp;] { return AllocationAnalysisPass(logger); });
 
-        pass_builder_-&gt;registerModuleAnalyses(module_analysis_manager_);
-        pass_builder_-&gt;registerCGSCCAnalyses(gscc_analysis_manager_);
-        pass_builder_-&gt;registerFunctionAnalyses(function_analysis_manager_);
-        pass_builder_-&gt;registerLoopAnalyses(loop_analysis_manager_);
+        module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger)));
 
-        pass_builder_-&gt;crossRegisterProxies(
-            loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
+        module_pass_manager_.addPass(ValidationPass(cfg, logger));
+    }
+}
 
-        // Checking if we need to use provided logger or install one
+bool Validator::validate(llvm::Module&amp; module)
+{
+    llvm::VerifierAnalysis verifier;
+    auto                   result = verifier.run(module, module_analysis_manager_);
+
+    if (result.IRBroken)
+    {
         if (logger_)
         {
-            function_analysis_manager_.registerPass([&amp;] { return AllocationAnalysisPass(logger_); });
-
-            module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger_)));
-            module_pass_manager_.addPass(ValidationPass(cfg, logger_));
+            logger_-&gt;error(&quot;Fatal error: Invalid IR.&quot;);
         }
-        else
+
+        return false;
+    }
+
+    try
+    {
+        module_pass_manager_.run(module, module_analysis_manager_);
+    }
+    catch (std::exception const&amp; e)
+    {
+        if (logger_)
         {
-            // Our default is a pass that logs errors via comments
-            auto logger = std::make_shared&lt;CommentLogger&gt;();
-            function_analysis_manager_.registerPass([&amp;] { return AllocationAnalysisPass(logger); });
-
-            module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger)));
-
-            module_pass_manager_.addPass(ValidationPass(cfg, logger));
-        }
-    }
-
-    bool Validator::validate(llvm::Module&amp; module)
-    {
-        llvm::VerifierAnalysis verifier;
-        auto                   result = verifier.run(module, module_analysis_manager_);
-
-        if (result.IRBroken)
-        {
-            if (logger_)
-            {
-                logger_-&gt;error(&quot;Fatal error: Invalid IR.&quot;);
-            }
-
-            return false;
+            logger_-&gt;error(&quot;Fatal error: &quot; + static_cast&lt;std::string&gt;(e.what()));
         }
 
-        try
-        {
-            module_pass_manager_.run(module, module_analysis_manager_);
-        }
-        catch (std::exception const&amp; e)
-        {
-            if (logger_)
-            {
-                logger_-&gt;error(&quot;Fatal error: &quot; + static_cast&lt;std::string&gt;(e.what()));
-            }
-
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
-    llvm::PassBuilder&amp; Validator::passBuilder()
-    {
-        return *pass_builder_;
-    }
+    return true;
+}
 
-    llvm::LoopAnalysisManager&amp; Validator::loopAnalysisManager()
-    {
-        return loop_analysis_manager_;
-    }
+llvm::PassBuilder&amp; Validator::passBuilder()
+{
+    return *pass_builder_;
+}
 
-    llvm::FunctionAnalysisManager&amp; Validator::functionAnalysisManager()
-    {
-        return function_analysis_manager_;
-    }
+llvm::LoopAnalysisManager&amp; Validator::loopAnalysisManager()
+{
+    return loop_analysis_manager_;
+}
 
-    llvm::CGSCCAnalysisManager&amp; Validator::gsccAnalysisManager()
-    {
-        return gscc_analysis_manager_;
-    }
+llvm::FunctionAnalysisManager&amp; Validator::functionAnalysisManager()
+{
+    return function_analysis_manager_;
+}
 
-    llvm::ModuleAnalysisManager&amp; Validator::moduleAnalysisManager()
-    {
-        return module_analysis_manager_;
-    }
+llvm::CGSCCAnalysisManager&amp; Validator::gsccAnalysisManager()
+{
+    return gscc_analysis_manager_;
+}
 
-    Validator::ILoggerPtr Validator::logger() const
-    {
-        return logger_;
-    }
+llvm::ModuleAnalysisManager&amp; Validator::moduleAnalysisManager()
+{
+    return module_analysis_manager_;
+}
 
-} // namespace quantum
-} // namespace microsoft
+Validator::ILoggerPtr Validator::logger() const
+{
+    return logger_;
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

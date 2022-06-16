@@ -606,55 +606,52 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class QubitRemapPass : public llvm::PassInfoMixin&lt;QubitRemapPass&gt;
+class QubitRemapPass : public llvm::PassInfoMixin&lt;QubitRemapPass&gt;
+{
+  public:
+    using Instruction = llvm::Instruction;
+    using Value       = llvm::Value;
+    using ILoggerPtr  = ILogger::ILoggerPtr;
+    using Location    = ILogger::Location;
+    using StringRef   = llvm::StringRef;
+
+    enum ResourceType
     {
-      public:
-        using Instruction = llvm::Instruction;
-        using Value       = llvm::Value;
-        using ILoggerPtr  = ILogger::ILoggerPtr;
-        using Location    = ILogger::Location;
-        using StringRef   = llvm::StringRef;
-
-        enum ResourceType
-        {
-            None,
-            Qubit,
-            Result
-        };
-
-        // Construction and destruction configuration.
-        //
-
-        explicit QubitRemapPass(StaticResourceComponentConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr);
-
-        QubitRemapPass(QubitRemapPass const&amp;) = delete;
-
-        QubitRemapPass(QubitRemapPass&amp;&amp;) = default;
-
-        ~QubitRemapPass() = default;
-
-        llvm::PreservedAnalyses run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; mam);
-
-        static bool isRequired();
-
-      private:
-        bool extractResourceId(llvm::Value* value, uint64_t&amp; return_value, ResourceType&amp; type) const;
-
-        StaticResourceComponentConfiguration config_{};
-
-        ILoggerPtr logger_{nullptr};
+        None,
+        Qubit,
+        Result
     };
 
-} // namespace quantum
-} // namespace microsoft
+    // Construction and destruction configuration.
+    //
+
+    explicit QubitRemapPass(StaticResourceComponentConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr);
+
+    QubitRemapPass(QubitRemapPass const&amp;) = delete;
+
+    QubitRemapPass(QubitRemapPass&amp;&amp;) = default;
+
+    ~QubitRemapPass() = default;
+
+    llvm::PreservedAnalyses run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; mam);
+
+    static bool isRequired();
+
+  private:
+    bool extractResourceId(llvm::Value* value, uint64_t&amp; return_value, ResourceType&amp; type) const;
+
+    StaticResourceComponentConfiguration config_{};
+
+    ILoggerPtr logger_{nullptr};
+};
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

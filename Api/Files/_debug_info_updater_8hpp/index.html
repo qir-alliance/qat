@@ -599,65 +599,62 @@
 
 #include &quot;Llvm/Llvm.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class DebugInfoUpdater : public llvm::InstVisitor&lt;DebugInfoUpdater&gt;
-    {
-      public:
-        using DIBuilder   = llvm::DIBuilder;
-        using DataLayout  = llvm::DataLayout;
-        using Module      = llvm::Module;
-        using Function    = llvm::Function;
-        using Instruction = llvm::Instruction;
-        using DIType      = llvm::DIType;
-        using StringRef   = llvm::StringRef;
+class DebugInfoUpdater : public llvm::InstVisitor&lt;DebugInfoUpdater&gt;
+{
+  public:
+    using DIBuilder   = llvm::DIBuilder;
+    using DataLayout  = llvm::DataLayout;
+    using Module      = llvm::Module;
+    using Function    = llvm::Function;
+    using Instruction = llvm::Instruction;
+    using DIType      = llvm::DIType;
+    using StringRef   = llvm::StringRef;
 
-        DebugInfoUpdater(
-            InstructionLocationTablePtr const&amp; debug_info,
-            Module&amp;                            module,
-            StringRef const&amp;                   directory,
-            StringRef const&amp;                   filename);
+    DebugInfoUpdater(
+        InstructionLocationTablePtr const&amp; debug_info,
+        Module&amp;                            module,
+        StringRef const&amp;                   directory,
+        StringRef const&amp;                   filename);
 
-        void update();
+    void update();
 
-        // Visitor implementation
-        //
+    // Visitor implementation
+    //
 
-        void visitFunction(Function&amp; function);
-        void visitInstruction(Instruction&amp; instr);
+    void visitFunction(Function&amp; function);
+    void visitInstruction(Instruction&amp; instr);
 
-      protected:
-        // Creating and getting types
-        //
+  protected:
+    // Creating and getting types
+    //
 
-        llvm::DISubroutineType* createFunctionType(Function const* function);
-        DIType*                 createVoidType(llvm::Type* type);
-        DIType*                 createPointerType(llvm::Type* type);
-        DIType*                 createOpaqueType(llvm::Type* type);
-        DIType*                 getOrCreateType(llvm::Type* type);
-        DIType*                 getType(llvm::Type* type);
+    llvm::DISubroutineType* createFunctionType(Function const* function);
+    DIType*                 createVoidType(llvm::Type* type);
+    DIType*                 createPointerType(llvm::Type* type);
+    DIType*                 createOpaqueType(llvm::Type* type);
+    DIType*                 getOrCreateType(llvm::Type* type);
+    DIType*                 getType(llvm::Type* type);
 
-      public:
-        InstructionLocationTablePtr debug_info_{nullptr};
-        llvm::Module&amp;               module_;
-        llvm::DIBuilder             builder_;
-        llvm::DebugInfoFinder       finder_{};
+  public:
+    InstructionLocationTablePtr debug_info_{nullptr};
+    llvm::Module&amp;               module_;
+    llvm::DIBuilder             builder_;
+    llvm::DebugInfoFinder       finder_{};
 
-        llvm::DICompileUnit* compile_unit_;
-        llvm::DIFile*        file_unit_;
+    llvm::DICompileUnit* compile_unit_;
+    llvm::DIFile*        file_unit_;
 
-        llvm::ValueMap&lt;llvm::Function const*, llvm::DISubprogram*&gt; function_debug_info_{};
-        llvm::DenseMap&lt;llvm::Type const*, llvm::DIType*&gt;           type_debug_info_{};
-    };
+    llvm::ValueMap&lt;llvm::Function const*, llvm::DISubprogram*&gt; function_debug_info_{};
+    llvm::DenseMap&lt;llvm::Type const*, llvm::DIType*&gt;           type_debug_info_{};
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

@@ -583,33 +583,29 @@
 #include &lt;algorithm&gt;
 #include &lt;string&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    inline void ltrim(std::string&amp; str)
-    {
-        str.erase(str.begin(), std::find_if(str.begin(), str.end(), [](uint8_t ch) { return !std::isspace(ch); }));
-    }
+inline void ltrim(std::string&amp; str)
+{
+    str.erase(str.begin(), std::find_if(str.begin(), str.end(), [](uint8_t ch) { return !std::isspace(ch); }));
+}
 
-    inline void rtrim(std::string&amp; str)
-    {
-        str.erase(
-            std::find_if(str.rbegin(), str.rend(), [](uint8_t ch) { return !std::isspace(ch); }).base(), str.end());
-    }
+inline void rtrim(std::string&amp; str)
+{
+    str.erase(std::find_if(str.rbegin(), str.rend(), [](uint8_t ch) { return !std::isspace(ch); }).base(), str.end());
+}
 
-    inline void trim(std::string&amp; s)
-    {
-        ltrim(s);
-        rtrim(s);
-    }
+inline void trim(std::string&amp; s)
+{
+    ltrim(s);
+    rtrim(s);
+}
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

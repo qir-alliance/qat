@@ -586,79 +586,76 @@
 #include &lt;fstream&gt;
 #include &lt;iostream&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    PostTransformValidationPass::PostTransformValidationPass(
-        PostTransformValidationPassConfiguration const&amp; cfg,
-        ILoggerPtr const&amp;                               logger)
-      : config_{cfg}
-      , logger_{logger}
-    {
-    }
+PostTransformValidationPass::PostTransformValidationPass(
+    PostTransformValidationPassConfiguration const&amp; cfg,
+    ILoggerPtr const&amp;                               logger)
+  : config_{cfg}
+  , logger_{logger}
+{
+}
 
-    llvm::PreservedAnalyses PostTransformValidationPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+llvm::PreservedAnalyses PostTransformValidationPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+{
+    if (config_.requireStraightLineCode())
     {
-        if (config_.requireStraightLineCode())
+        uint64_t function_count{0};
+
+        for (auto&amp; function : module)
         {
-            uint64_t function_count{0};
 
-            for (auto&amp; function : module)
+            if (function.isDeclaration())
             {
+                continue;
+            }
 
-                if (function.isDeclaration())
+            ++function_count;
+
+            if (function_count &gt; 1)
+            {
+                if (logger_)
                 {
-                    continue;
+                    logger_-&gt;errorExpectedStraightLineCodeMultipleFunctions(&amp;function.getEntryBlock());
                 }
+                else
+                {
+                    throw std::runtime_error(&quot;Expected straight line code, but multiple functions present.&quot;);
+                }
+            }
 
-                ++function_count;
-
-                if (function_count &gt; 1)
+            uint64_t block_count{0};
+            for (auto&amp; block : function)
+            {
+                ++block_count;
+                if (block_count &gt; 1)
                 {
                     if (logger_)
                     {
-                        logger_-&gt;errorExpectedStraightLineCodeMultipleFunctions(&amp;function.getEntryBlock());
+                        logger_-&gt;errorExpectedStraightLineCodeMultipleBlocks(&amp;block);
                     }
                     else
                     {
-                        throw std::runtime_error(&quot;Expected straight line code, but multiple functions present.&quot;);
-                    }
-                }
-
-                uint64_t block_count{0};
-                for (auto&amp; block : function)
-                {
-                    ++block_count;
-                    if (block_count &gt; 1)
-                    {
-                        if (logger_)
-                        {
-                            logger_-&gt;errorExpectedStraightLineCodeMultipleBlocks(&amp;block);
-                        }
-                        else
-                        {
-                            throw std::runtime_error(&quot;Expected straight line code, but multiple blocks present.&quot;);
-                        }
+                        throw std::runtime_error(&quot;Expected straight line code, but multiple blocks present.&quot;);
                     }
                 }
             }
         }
-
-        return llvm::PreservedAnalyses::all();
     }
 
-    bool PostTransformValidationPass::isRequired()
-    {
-        return true;
-    }
+    return llvm::PreservedAnalyses::all();
+}
 
-} // namespace quantum
-} // namespace microsoft
+bool PostTransformValidationPass::isRequired()
+{
+    return true;
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

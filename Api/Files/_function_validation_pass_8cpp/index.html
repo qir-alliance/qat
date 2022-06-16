@@ -591,43 +591,40 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    FunctionValidationPass::FunctionValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger)
-      : config_{cfg}
-      , logger_{logger}
+FunctionValidationPass::FunctionValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger)
+  : config_{cfg}
+  , logger_{logger}
+{
+}
+
+llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; fam)
+{
+    auto&amp; function_details = fam.getResult&lt;AllocationAnalysisPass&gt;(function);
+
+    if (config_.requiresQubits() &amp;&amp; function_details.usage_qubit_counts == 0)
     {
+        logger_-&gt;errorNoQubitsPresent(&amp;function);
     }
 
-    llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; fam)
+    if (config_.requiresResults() &amp;&amp; function_details.usage_result_counts == 0)
     {
-        auto&amp; function_details = fam.getResult&lt;AllocationAnalysisPass&gt;(function);
-
-        if (config_.requiresQubits() &amp;&amp; function_details.usage_qubit_counts == 0)
-        {
-            logger_-&gt;errorNoQubitsPresent(&amp;function);
-        }
-
-        if (config_.requiresResults() &amp;&amp; function_details.usage_result_counts == 0)
-        {
-            logger_-&gt;errorNoResultsPresent(&amp;function);
-        }
-
-        return llvm::PreservedAnalyses::all();
+        logger_-&gt;errorNoResultsPresent(&amp;function);
     }
 
-    bool FunctionValidationPass::isRequired()
-    {
-        return true;
-    }
-} // namespace quantum
-} // namespace microsoft
+    return llvm::PreservedAnalyses::all();
+}
+
+bool FunctionValidationPass::isRequired()
+{
+    return true;
+}
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

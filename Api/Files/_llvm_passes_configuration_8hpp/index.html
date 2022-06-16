@@ -599,81 +599,78 @@
 
 #include &lt;limits&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class LlvmPassesConfiguration
-    {
-      public:
-        void setup(ConfigurationManager&amp; config);
+class LlvmPassesConfiguration
+{
+  public:
+    void setup(ConfigurationManager&amp; config);
 
-        bool alwaysInline() const;
+    bool alwaysInline() const;
 
-        bool unrollLoops() const;
+    bool unrollLoops() const;
 
-        int32_t inlineParameter() const;
+    int32_t inlineParameter() const;
 
-        bool unrollAllowPartial() const;
+    bool unrollAllowPartial() const;
 
-        bool unrollAllowPeeling() const;
+    bool unrollAllowPeeling() const;
 
-        bool unrollAllowRuntime() const;
+    bool unrollAllowRuntime() const;
 
-        bool unrollAllowUpperBound() const;
+    bool unrollAllowUpperBound() const;
 
-        bool unrollAllowProfilBasedPeeling() const;
+    bool unrollAllowProfilBasedPeeling() const;
 
-        uint64_t unrolFullUnrollCount() const;
+    uint64_t unrolFullUnrollCount() const;
 
-        int32_t unrollOptLevel() const;
+    int32_t unrollOptLevel() const;
 
-        bool unrollOnlyWhenForced() const;
+    bool unrollOnlyWhenForced() const;
 
-        bool unrollForgeScev() const;
+    bool unrollForgeScev() const;
 
-        bool eliminateConstants() const;
+    bool eliminateConstants() const;
 
-        bool eliminateDeadCode() const;
+    bool eliminateDeadCode() const;
 
-        bool eliminateMemory() const;
+    bool eliminateMemory() const;
 
-        // Configuration classification
+    // Configuration classification
 
-        bool isDisabled() const;
+    bool isDisabled() const;
 
-        bool operator==(LlvmPassesConfiguration const&amp; o) const = default;
+    bool operator==(LlvmPassesConfiguration const&amp; o) const = default;
 
-        static LlvmPassesConfiguration createDisabled();
+    static LlvmPassesConfiguration createDisabled();
 
-        static LlvmPassesConfiguration createUnrollInline();
+    static LlvmPassesConfiguration createUnrollInline();
 
-      private:
-        bool    always_inline_{false};
-        int32_t inline_parameter_{std::numeric_limits&lt;int32_t&gt;::max()};
+  private:
+    bool    always_inline_{false};
+    int32_t inline_parameter_{std::numeric_limits&lt;int32_t&gt;::max()};
 
-        bool     unroll_loops_{false};
-        bool     unroll_allow_partial_{true};
-        bool     unroll_allow_peeling_{true};
-        bool     unroll_allow_runtime_{true};
-        bool     unroll_allow_upper_bound_{true};
-        bool     unroll_allow_profile_based_peeling_{true};
-        uint64_t unroll_full_unroll_count_{1024};
-        int32_t  unroll_opt_level_{3};
-        bool     unroll_only_when_forced_{false};
-        bool     unroll_forget_scev_{false};
+    bool     unroll_loops_{false};
+    bool     unroll_allow_partial_{true};
+    bool     unroll_allow_peeling_{true};
+    bool     unroll_allow_runtime_{true};
+    bool     unroll_allow_upper_bound_{true};
+    bool     unroll_allow_profile_based_peeling_{true};
+    uint64_t unroll_full_unroll_count_{1024};
+    int32_t  unroll_opt_level_{3};
+    bool     unroll_only_when_forced_{false};
+    bool     unroll_forget_scev_{false};
 
-        bool eliminate_constants_{true};
-        bool eliminate_dead_code_{true};
-        bool eliminate_memory_{true};
-    };
+    bool eliminate_constants_{true};
+    bool eliminate_dead_code_{true};
+    bool eliminate_memory_{true};
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

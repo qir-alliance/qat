@@ -583,202 +583,198 @@
 
 #include &quot;Llvm/Llvm.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    Profile::Profile(
-        String const&amp;        name,
-        ILoggerPtr const&amp;    logger,
-        bool                 debug,
-        llvm::TargetMachine* target_machine,
-        AllocationManagerPtr qubit_allocation_manager,
-        AllocationManagerPtr result_allocation_manager)
-      : name_{name}
-      , logger_{logger}
-      , pass_instrumentation_callbacks_{std::make_unique&lt;llvm::PassInstrumentationCallbacks&gt;()}
-      , standard_instrumentations_{std::make_unique&lt;llvm::StandardInstrumentations&gt;(debug)}
-      , qubit_allocation_manager_{std::move(qubit_allocation_manager)}
-      , result_allocation_manager_{std::move(result_allocation_manager)}
-      , validator_{std::make_unique&lt;Validator&gt;(ValidationPassConfiguration(), logger, debug)}
+Profile::Profile(
+    String const&amp;        name,
+    ILoggerPtr const&amp;    logger,
+    bool                 debug,
+    llvm::TargetMachine* target_machine,
+    AllocationManagerPtr qubit_allocation_manager,
+    AllocationManagerPtr result_allocation_manager)
+  : name_{name}
+  , logger_{logger}
+  , pass_instrumentation_callbacks_{std::make_unique&lt;llvm::PassInstrumentationCallbacks&gt;()}
+  , standard_instrumentations_{std::make_unique&lt;llvm::StandardInstrumentations&gt;(debug)}
+  , qubit_allocation_manager_{std::move(qubit_allocation_manager)}
+  , result_allocation_manager_{std::move(result_allocation_manager)}
+  , validator_{std::make_unique&lt;Validator&gt;(ValidationPassConfiguration(), logger, debug)}
+{
+
+    standard_instrumentations_-&gt;registerCallbacks(*pass_instrumentation_callbacks_);
+
+    // TODO(issue-13): Parameterize
+    // pipeline_tuning_options_.LoopUnrolling = !DisableLoopUnrolling;
+    // pipeline_tuning_options_.Coroutines = Coroutines;
+
+    pass_builder_ = std::make_unique&lt;llvm::PassBuilder&gt;(
+        target_machine, pipeline_tuning_options_, pgo_options_, pass_instrumentation_callbacks_.get());
+
+    registerEPCallbacks();
+
+    // Creating a full pass builder and registering each of the
+    // components to make them accessible to the developer.
+    pass_builder_-&gt;registerModuleAnalyses(module_analysis_manager_);
+    pass_builder_-&gt;registerCGSCCAnalyses(gscc_analysis_manager_);
+    pass_builder_-&gt;registerFunctionAnalyses(function_analysis_manager_);
+    pass_builder_-&gt;registerLoopAnalyses(loop_analysis_manager_);
+
+    pass_builder_-&gt;crossRegisterProxies(
+        loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
+}
+
+void Profile::registerEPCallbacks()
+{
+
+    if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, peephole_ep_pipeline_))
     {
-
-        standard_instrumentations_-&gt;registerCallbacks(*pass_instrumentation_callbacks_);
-
-        // TODO(issue-13): Parameterize
-        // pipeline_tuning_options_.LoopUnrolling = !DisableLoopUnrolling;
-        // pipeline_tuning_options_.Coroutines = Coroutines;
-
-        pass_builder_ = std::make_unique&lt;llvm::PassBuilder&gt;(
-            target_machine, pipeline_tuning_options_, pgo_options_, pass_instrumentation_callbacks_.get());
-
-        registerEPCallbacks();
-
-        // Creating a full pass builder and registering each of the
-        // components to make them accessible to the developer.
-        pass_builder_-&gt;registerModuleAnalyses(module_analysis_manager_);
-        pass_builder_-&gt;registerCGSCCAnalyses(gscc_analysis_manager_);
-        pass_builder_-&gt;registerFunctionAnalyses(function_analysis_manager_);
-        pass_builder_-&gt;registerLoopAnalyses(loop_analysis_manager_);
-
-        pass_builder_-&gt;crossRegisterProxies(
-            loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
+        pass_builder_-&gt;registerPeepholeEPCallback(
+            [this](llvm::FunctionPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            {
+                llvm::ExitOnError error_safeguard(&quot;Unable to parse PeepholeEP pipeline: &quot;);
+                error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, peephole_ep_pipeline_));
+            });
     }
 
-    void Profile::registerEPCallbacks()
+    if (tryParsePipelineText&lt;llvm::LoopPassManager&gt;(*pass_builder_, late_loop_optimizations_ep_pipeline_))
     {
-
-        if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, peephole_ep_pipeline_))
-        {
-            pass_builder_-&gt;registerPeepholeEPCallback(
-                [this](llvm::FunctionPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
-                {
-                    llvm::ExitOnError error_safeguard(&quot;Unable to parse PeepholeEP pipeline: &quot;);
-                    error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, peephole_ep_pipeline_));
-                });
-        }
-
-        if (tryParsePipelineText&lt;llvm::LoopPassManager&gt;(*pass_builder_, late_loop_optimizations_ep_pipeline_))
-        {
-            pass_builder_-&gt;registerLateLoopOptimizationsEPCallback(
-                [this](llvm::LoopPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
-                {
-                    llvm::ExitOnError error_safeguard(&quot;Unable to parse LateLoopOptimizationsEP pipeline: &quot;);
-                    error_safeguard(
-                        pass_builder_-&gt;parsePassPipeline(pass_manager, late_loop_optimizations_ep_pipeline_));
-                });
-        }
-
-        if (tryParsePipelineText&lt;llvm::LoopPassManager&gt;(*pass_builder_, loop_optimizer_end_ep_pipeline_))
-        {
-            pass_builder_-&gt;registerLoopOptimizerEndEPCallback(
-                [this](llvm::LoopPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
-                {
-                    llvm::ExitOnError error_safeguard(&quot;Unable to parse LoopOptimizerEndEP pipeline: &quot;);
-                    error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, loop_optimizer_end_ep_pipeline_));
-                });
-        }
-
-        if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, scalar_optimizer_late_ep_pipeline_))
-        {
-            pass_builder_-&gt;registerScalarOptimizerLateEPCallback(
-                [this](llvm::FunctionPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
-                {
-                    llvm::ExitOnError error_safeguard(&quot;Unable to parse ScalarOptimizerLateEP pipeline: &quot;);
-                    error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, scalar_optimizer_late_ep_pipeline_));
-                });
-        }
-
-        if (tryParsePipelineText&lt;llvm::CGSCCPassManager&gt;(*pass_builder_, cgscc_optimizer_late_ep_pipeline_))
-        {
-            pass_builder_-&gt;registerCGSCCOptimizerLateEPCallback(
-                [this](llvm::CGSCCPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
-                {
-                    llvm::ExitOnError error_safeguard(&quot;Unable to parse CGSCCOptimizerLateEP pipeline: &quot;);
-                    error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, cgscc_optimizer_late_ep_pipeline_));
-                });
-        }
-
-        if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, vectorizer_start_ep_pipeline_))
-        {
-            pass_builder_-&gt;registerVectorizerStartEPCallback(
-                [this](llvm::FunctionPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
-                {
-                    llvm::ExitOnError error_safeguard(&quot;Unable to parse VectorizerStartEP pipeline: &quot;);
-                    error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, vectorizer_start_ep_pipeline_));
-                });
-        }
-
-        if (tryParsePipelineText&lt;llvm::ModulePassManager&gt;(*pass_builder_, pipeline_start_ep_pipeline_))
-        {
-            pass_builder_-&gt;registerPipelineStartEPCallback(
-                [this](llvm::ModulePassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
-                {
-                    llvm::ExitOnError error_safeguard(&quot;Unable to parse PipelineStartEP pipeline: &quot;);
-                    error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, pipeline_start_ep_pipeline_));
-                });
-        }
-
-        if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, optimizer_last_ep_pipeline_))
-        {
-            pass_builder_-&gt;registerOptimizerLastEPCallback(
-                [this](llvm::ModulePassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
-                {
-                    llvm::ExitOnError error_safeguard(&quot;Unable to parse OptimizerLastEP pipeline: &quot;);
-                    error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, optimizer_last_ep_pipeline_));
-                });
-        }
+        pass_builder_-&gt;registerLateLoopOptimizationsEPCallback(
+            [this](llvm::LoopPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            {
+                llvm::ExitOnError error_safeguard(&quot;Unable to parse LateLoopOptimizationsEP pipeline: &quot;);
+                error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, late_loop_optimizations_ep_pipeline_));
+            });
     }
 
-    void Profile::apply(llvm::Module&amp; module)
+    if (tryParsePipelineText&lt;llvm::LoopPassManager&gt;(*pass_builder_, loop_optimizer_end_ep_pipeline_))
     {
-        module_pass_manager_.run(module, module_analysis_manager_);
+        pass_builder_-&gt;registerLoopOptimizerEndEPCallback(
+            [this](llvm::LoopPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            {
+                llvm::ExitOnError error_safeguard(&quot;Unable to parse LoopOptimizerEndEP pipeline: &quot;);
+                error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, loop_optimizer_end_ep_pipeline_));
+            });
     }
 
-    bool Profile::verify(llvm::Module&amp; module)
+    if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, scalar_optimizer_late_ep_pipeline_))
     {
-        llvm::VerifierAnalysis verifier;
-        auto                   result = verifier.run(module, module_analysis_manager_);
-        return !result.IRBroken;
+        pass_builder_-&gt;registerScalarOptimizerLateEPCallback(
+            [this](llvm::FunctionPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            {
+                llvm::ExitOnError error_safeguard(&quot;Unable to parse ScalarOptimizerLateEP pipeline: &quot;);
+                error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, scalar_optimizer_late_ep_pipeline_));
+            });
     }
 
-    bool Profile::validate(llvm::Module&amp; module)
+    if (tryParsePipelineText&lt;llvm::CGSCCPassManager&gt;(*pass_builder_, cgscc_optimizer_late_ep_pipeline_))
     {
-        return validator_-&gt;validate(module);
+        pass_builder_-&gt;registerCGSCCOptimizerLateEPCallback(
+            [this](llvm::CGSCCPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            {
+                llvm::ExitOnError error_safeguard(&quot;Unable to parse CGSCCOptimizerLateEP pipeline: &quot;);
+                error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, cgscc_optimizer_late_ep_pipeline_));
+            });
     }
 
-    String const&amp; Profile::name() const
+    if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, vectorizer_start_ep_pipeline_))
     {
-        return name_;
+        pass_builder_-&gt;registerVectorizerStartEPCallback(
+            [this](llvm::FunctionPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            {
+                llvm::ExitOnError error_safeguard(&quot;Unable to parse VectorizerStartEP pipeline: &quot;);
+                error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, vectorizer_start_ep_pipeline_));
+            });
     }
 
-    Profile::AllocationManagerPtr Profile::getQubitAllocationManager()
+    if (tryParsePipelineText&lt;llvm::ModulePassManager&gt;(*pass_builder_, pipeline_start_ep_pipeline_))
     {
-        return qubit_allocation_manager_;
+        pass_builder_-&gt;registerPipelineStartEPCallback(
+            [this](llvm::ModulePassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            {
+                llvm::ExitOnError error_safeguard(&quot;Unable to parse PipelineStartEP pipeline: &quot;);
+                error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, pipeline_start_ep_pipeline_));
+            });
     }
 
-    Profile::AllocationManagerPtr Profile::getResultAllocationManager()
+    if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, optimizer_last_ep_pipeline_))
     {
-        return result_allocation_manager_;
+        pass_builder_-&gt;registerOptimizerLastEPCallback(
+            [this](llvm::ModulePassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            {
+                llvm::ExitOnError error_safeguard(&quot;Unable to parse OptimizerLastEP pipeline: &quot;);
+                error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, optimizer_last_ep_pipeline_));
+            });
     }
+}
 
-    void Profile::setModulePassManager(llvm::ModulePassManager&amp;&amp; manager)
-    {
-        module_pass_manager_ = std::move(manager);
-    }
+void Profile::apply(llvm::Module&amp; module)
+{
+    module_pass_manager_.run(module, module_analysis_manager_);
+}
 
-    void Profile::setValidator(ValidatorPtr&amp;&amp; validator)
-    {
-        validator_ = std::move(validator);
-    }
+bool Profile::verify(llvm::Module&amp; module)
+{
+    llvm::VerifierAnalysis verifier;
+    auto                   result = verifier.run(module, module_analysis_manager_);
+    return !result.IRBroken;
+}
 
-    llvm::PassBuilder&amp; Profile::passBuilder()
-    {
-        return *pass_builder_;
-    }
-    llvm::LoopAnalysisManager&amp; Profile::loopAnalysisManager()
-    {
-        return loop_analysis_manager_;
-    }
-    llvm::FunctionAnalysisManager&amp; Profile::functionAnalysisManager()
-    {
-        return function_analysis_manager_;
-    }
-    llvm::CGSCCAnalysisManager&amp; Profile::gsccAnalysisManager()
-    {
-        return gscc_analysis_manager_;
-    }
-    llvm::ModuleAnalysisManager&amp; Profile::moduleAnalysisManager()
-    {
-        return module_analysis_manager_;
-    }
+bool Profile::validate(llvm::Module&amp; module)
+{
+    return validator_-&gt;validate(module);
+}
 
-} // namespace quantum
-} // namespace microsoft
+String const&amp; Profile::name() const
+{
+    return name_;
+}
+
+Profile::AllocationManagerPtr Profile::getQubitAllocationManager()
+{
+    return qubit_allocation_manager_;
+}
+
+Profile::AllocationManagerPtr Profile::getResultAllocationManager()
+{
+    return result_allocation_manager_;
+}
+
+void Profile::setModulePassManager(llvm::ModulePassManager&amp;&amp; manager)
+{
+    module_pass_manager_ = std::move(manager);
+}
+
+void Profile::setValidator(ValidatorPtr&amp;&amp; validator)
+{
+    validator_ = std::move(validator);
+}
+
+llvm::PassBuilder&amp; Profile::passBuilder()
+{
+    return *pass_builder_;
+}
+llvm::LoopAnalysisManager&amp; Profile::loopAnalysisManager()
+{
+    return loop_analysis_manager_;
+}
+llvm::FunctionAnalysisManager&amp; Profile::functionAnalysisManager()
+{
+    return function_analysis_manager_;
+}
+llvm::CGSCCAnalysisManager&amp; Profile::gsccAnalysisManager()
+{
+    return gscc_analysis_manager_;
+}
+llvm::ModuleAnalysisManager&amp; Profile::moduleAnalysisManager()
+{
+    return module_analysis_manager_;
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

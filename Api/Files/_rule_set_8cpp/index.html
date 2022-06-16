@@ -586,74 +586,71 @@
 
 #include &lt;iostream&gt;
 #include &lt;vector&gt;
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    bool RuleSet::matchAndReplace(Instruction* value, Replacements&amp; replacements, ReplaceDirection const&amp; dir)
+bool RuleSet::matchAndReplace(Instruction* value, Replacements&amp; replacements, ReplaceDirection const&amp; dir)
+{
+    Rules* rules = &amp;rules_;
+    if (dir == ReplaceDirection::ReplaceBackwards)
     {
-        Rules* rules = &amp;rules_;
-        if (dir == ReplaceDirection::ReplaceBackwards)
-        {
-            rules = &amp;rules_backwards_;
-        }
+        rules = &amp;rules_backwards_;
+    }
 
-        Captures captures;
-        for (auto const&amp; rule : *rules)
+    Captures captures;
+    for (auto const&amp; rule : *rules)
+    {
+        // Checking if the rule is matched and keep track of captured nodes
+        if (rule-&gt;match(value, captures))
         {
-            // Checking if the rule is matched and keep track of captured nodes
-            if (rule-&gt;match(value, captures))
+
+            // If it is matched, we attempt to replace it
+            llvm::IRBuilder&lt;&gt; builder{value};
+            if (rule-&gt;replace(builder, value, captures, replacements))
             {
-
-                // If it is matched, we attempt to replace it
-                llvm::IRBuilder&lt;&gt; builder{value};
-                if (rule-&gt;replace(builder, value, captures, replacements))
-                {
-                    return true;
-                }
-                else
-                {
-                    captures.clear();
-                }
+                return true;
+            }
+            else
+            {
+                captures.clear();
             }
         }
-        return false;
     }
+    return false;
+}
 
-    void RuleSet::addRule(ReplacementRulePtr const&amp; rule, ReplaceDirection const&amp; dir)
+void RuleSet::addRule(ReplacementRulePtr const&amp; rule, ReplaceDirection const&amp; dir)
+{
+    switch (dir)
     {
-        switch (dir)
-        {
-        case ReplaceDirection::ReplaceForwards:
-            rules_.push_back(rule);
-            break;
-        case ReplaceDirection::ReplaceBackwards:
-            rules_backwards_.push_back(rule);
-            break;
-        }
+    case ReplaceDirection::ReplaceForwards:
+        rules_.push_back(rule);
+        break;
+    case ReplaceDirection::ReplaceBackwards:
+        rules_backwards_.push_back(rule);
+        break;
     }
+}
 
-    void RuleSet::addRule(ReplacementRule&amp;&amp; rule, ReplaceDirection const&amp; dir)
-    {
-        addRule(std::make_shared&lt;ReplacementRule&gt;(std::move(rule)), dir);
-    }
+void RuleSet::addRule(ReplacementRule&amp;&amp; rule, ReplaceDirection const&amp; dir)
+{
+    addRule(std::make_shared&lt;ReplacementRule&gt;(std::move(rule)), dir);
+}
 
-    void RuleSet::clear()
-    {
-        rules_.clear();
-        rules_backwards_.clear();
-    }
+void RuleSet::clear()
+{
+    rules_.clear();
+    rules_backwards_.clear();
+}
 
-    uint64_t RuleSet::size() const
-    {
-        return rules_.size() + rules_backwards_.size();
-    }
-} // namespace quantum
-} // namespace microsoft
+uint64_t RuleSet::size() const
+{
+    return rules_.size() + rules_backwards_.size();
+}
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

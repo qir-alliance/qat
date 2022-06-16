@@ -599,42 +599,39 @@
 
 #include &lt;limits&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class PreTransformTrimmingPassConfiguration
+class PreTransformTrimmingPassConfiguration
+{
+  public:
+    using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+
+    void setup(ConfigurationManager&amp; config)
     {
-      public:
-        using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+        config.setSectionName(&quot;Pre-transform trimming&quot;, &quot;&quot;);
+        entry_point_attr_ = config.getParameter(&quot;entry-point-attr&quot;);
+    }
 
-        void setup(ConfigurationManager&amp; config)
-        {
-            config.setSectionName(&quot;Pre-transform trimming&quot;, &quot;&quot;);
-            entry_point_attr_ = config.getParameter(&quot;entry-point-attr&quot;);
-        }
+    static PreTransformTrimmingPassConfiguration createDisabled()
+    {
+        PreTransformTrimmingPassConfiguration ret;
+        return ret;
+    }
 
-        static PreTransformTrimmingPassConfiguration createDisabled()
-        {
-            PreTransformTrimmingPassConfiguration ret;
-            return ret;
-        }
+    std::string entryPointAttr() const
+    {
+        return entry_point_attr_-&gt;value&lt;std::string&gt;();
+    }
 
-        std::string entryPointAttr() const
-        {
-            return entry_point_attr_-&gt;value&lt;std::string&gt;();
-        }
+  private:
+    DeferredValuePtr entry_point_attr_{nullptr};
+};
 
-      private:
-        DeferredValuePtr entry_point_attr_{nullptr};
-    };
-
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

@@ -582,126 +582,122 @@
 #include &quot;Commandline/ConfigurationManager.hpp&quot;
 #include &quot;TransformationRulesPass/TransformationRulesPassConfiguration.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    void TransformationRulesPassConfiguration::setup(ConfigurationManager&amp; config)
-    {
-        config.setSectionName(&quot;Pass configuration&quot;, &quot;Configuration of the pass and its corresponding optimizations.&quot;);
+void TransformationRulesPassConfiguration::setup(ConfigurationManager&amp; config)
+{
+    config.setSectionName(&quot;Pass configuration&quot;, &quot;Configuration of the pass and its corresponding optimizations.&quot;);
 
-        // Experimental settings
-        config.addExperimentalParameter(delete_dead_code_, true, false, &quot;delete-dead-code&quot;, &quot;Deleted dead code.&quot;);
-        config.addExperimentalParameter(
-            clone_functions_, true, false, &quot;clone-functions&quot;, &quot;Clone functions to ensure correct qubit allocation.&quot;);
-        config.addExperimentalParameter(
-            transform_execution_path_only_, true, false, &quot;transform-execution-path-only&quot;,
-            &quot;Transform execution paths only.&quot;);
+    // Experimental settings
+    config.addExperimentalParameter(delete_dead_code_, true, false, &quot;delete-dead-code&quot;, &quot;Deleted dead code.&quot;);
+    config.addExperimentalParameter(
+        clone_functions_, true, false, &quot;clone-functions&quot;, &quot;Clone functions to ensure correct qubit allocation.&quot;);
+    config.addExperimentalParameter(
+        transform_execution_path_only_, true, false, &quot;transform-execution-path-only&quot;,
+        &quot;Transform execution paths only.&quot;);
 
-        config.addExperimentalParameter(
-            max_recursion_, max_recursion_, uint64_t(1), &quot;max-recursion&quot;,
-            &quot;Defines the maximum recursion when unrolling the execution path&quot;);
+    config.addExperimentalParameter(
+        max_recursion_, max_recursion_, uint64_t(1), &quot;max-recursion&quot;,
+        &quot;Defines the maximum recursion when unrolling the execution path&quot;);
 
-        config.addExperimentalParameter(
-            assume_no_exceptions_, false, false, &quot;assume-no-except&quot;,
-            &quot;Assumes that no exception will occur during runtime.&quot;);
+    config.addExperimentalParameter(
+        assume_no_exceptions_, false, false, &quot;assume-no-except&quot;,
+        &quot;Assumes that no exception will occur during runtime.&quot;);
 
-        config.addParameter(reuse_qubits_, false, &quot;reuse-qubits&quot;, &quot;Use to define whether or not to reuse qubits.&quot;);
-        config.addParameter(reuse_results_, false, &quot;reuse-results&quot;, &quot;Use to define whether or not to reuse results.&quot;);
+    config.addParameter(reuse_qubits_, false, &quot;reuse-qubits&quot;, &quot;Use to define whether or not to reuse qubits.&quot;);
+    config.addParameter(reuse_results_, false, &quot;reuse-results&quot;, &quot;Use to define whether or not to reuse results.&quot;);
 
-        // Ready settings
+    // Ready settings
 
-        config.addParameter(
-            entry_point_attr_, &quot;entry-point-attr&quot;, &quot;Specifies the attribute indicating the entry point.&quot;);
-    }
+    config.addParameter(entry_point_attr_, &quot;entry-point-attr&quot;, &quot;Specifies the attribute indicating the entry point.&quot;);
+}
 
-    TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createDisabled()
-    {
-        TransformationRulesPassConfiguration ret;
-        ret.delete_dead_code_              = false;
-        ret.clone_functions_               = false;
-        ret.transform_execution_path_only_ = false;
-        ret.max_recursion_                 = 512;
-        ret.reuse_qubits_                  = false;
-        ret.reuse_results_                 = false;
+TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createDisabled()
+{
+    TransformationRulesPassConfiguration ret;
+    ret.delete_dead_code_              = false;
+    ret.clone_functions_               = false;
+    ret.transform_execution_path_only_ = false;
+    ret.max_recursion_                 = 512;
+    ret.reuse_qubits_                  = false;
+    ret.reuse_results_                 = false;
 
-        return ret;
-    }
+    return ret;
+}
 
-    TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createReuseQubitsOnly()
-    {
-        TransformationRulesPassConfiguration ret;
-        ret.delete_dead_code_              = false;
-        ret.clone_functions_               = false;
-        ret.transform_execution_path_only_ = false;
-        ret.max_recursion_                 = 512;
-        ret.reuse_qubits_                  = true;
-        ret.reuse_results_                 = false;
+TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createReuseQubitsOnly()
+{
+    TransformationRulesPassConfiguration ret;
+    ret.delete_dead_code_              = false;
+    ret.clone_functions_               = false;
+    ret.transform_execution_path_only_ = false;
+    ret.max_recursion_                 = 512;
+    ret.reuse_qubits_                  = true;
+    ret.reuse_results_                 = false;
 
-        return ret;
-    }
+    return ret;
+}
 
-    bool TransformationRulesPassConfiguration::shouldDeleteDeadCode() const
-    {
-        return delete_dead_code_;
-    }
+bool TransformationRulesPassConfiguration::shouldDeleteDeadCode() const
+{
+    return delete_dead_code_;
+}
 
-    bool TransformationRulesPassConfiguration::shouldCloneFunctions() const
-    {
-        return clone_functions_;
-    }
+bool TransformationRulesPassConfiguration::shouldCloneFunctions() const
+{
+    return clone_functions_;
+}
 
-    bool TransformationRulesPassConfiguration::shouldTransformExecutionPathOnly() const
-    {
-        return transform_execution_path_only_;
-    }
+bool TransformationRulesPassConfiguration::shouldTransformExecutionPathOnly() const
+{
+    return transform_execution_path_only_;
+}
 
-    uint64_t TransformationRulesPassConfiguration::maxRecursion() const
-    {
-        return max_recursion_;
-    }
+uint64_t TransformationRulesPassConfiguration::maxRecursion() const
+{
+    return max_recursion_;
+}
 
-    bool TransformationRulesPassConfiguration::shouldReuseQubits() const
-    {
-        return reuse_qubits_;
-    }
+bool TransformationRulesPassConfiguration::shouldReuseQubits() const
+{
+    return reuse_qubits_;
+}
 
-    bool TransformationRulesPassConfiguration::shouldReuseResults() const
-    {
-        return reuse_results_;
-    }
+bool TransformationRulesPassConfiguration::shouldReuseResults() const
+{
+    return reuse_results_;
+}
 
-    std::string TransformationRulesPassConfiguration::entryPointAttr() const
-    {
-        return entry_point_attr_;
-    }
+std::string TransformationRulesPassConfiguration::entryPointAttr() const
+{
+    return entry_point_attr_;
+}
 
-    bool TransformationRulesPassConfiguration::assumeNoExceptions() const
-    {
-        return assume_no_exceptions_;
-    }
+bool TransformationRulesPassConfiguration::assumeNoExceptions() const
+{
+    return assume_no_exceptions_;
+}
 
-    bool TransformationRulesPassConfiguration::isDisabled() const
-    {
-        return (
-            delete_dead_code_ == false &amp;&amp; clone_functions_ == false &amp;&amp; transform_execution_path_only_ == false &amp;&amp;
-            reuse_qubits_ == false);
-    }
+bool TransformationRulesPassConfiguration::isDisabled() const
+{
+    return (
+        delete_dead_code_ == false &amp;&amp; clone_functions_ == false &amp;&amp; transform_execution_path_only_ == false &amp;&amp;
+        reuse_qubits_ == false);
+}
 
-    bool TransformationRulesPassConfiguration::operator==(TransformationRulesPassConfiguration const&amp; ref) const
-    {
+bool TransformationRulesPassConfiguration::operator==(TransformationRulesPassConfiguration const&amp; ref) const
+{
 
-        return (
-            delete_dead_code_ == ref.delete_dead_code_ &amp;&amp; clone_functions_ == ref.clone_functions_ &amp;&amp;
-            transform_execution_path_only_ == ref.transform_execution_path_only_ &amp;&amp; reuse_qubits_ == ref.reuse_qubits_);
-    }
+    return (
+        delete_dead_code_ == ref.delete_dead_code_ &amp;&amp; clone_functions_ == ref.clone_functions_ &amp;&amp;
+        transform_execution_path_only_ == ref.transform_execution_path_only_ &amp;&amp; reuse_qubits_ == ref.reuse_qubits_);
+}
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

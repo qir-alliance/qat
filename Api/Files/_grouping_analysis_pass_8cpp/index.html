@@ -586,149 +586,145 @@
 #include &lt;fstream&gt;
 #include &lt;iostream&gt;
 
-namespace microsoft
+namespace microsoft::quantum
 {
-namespace quantum
+String const      GroupingAnalysisPass::QIS_START        = &quot;__quantum&quot;
+                                                           &quot;__qis_&quot;;
+String const      GroupingAnalysisPass::READ_INSTR_START = &quot;__quantum&quot;
+                                                           &quot;__qis__read_&quot;;
+llvm::AnalysisKey GroupingAnalysisPass::Key;
+
+void GroupingAnalysisPass::runBlockAnalysis(llvm::Module&amp; module)
 {
-    String const      GroupingAnalysisPass::QIS_START        = &quot;__quantum&quot;
-                                                               &quot;__qis_&quot;;
-    String const      GroupingAnalysisPass::READ_INSTR_START = &quot;__quantum&quot;
-                                                               &quot;__qis__read_&quot;;
-    llvm::AnalysisKey GroupingAnalysisPass::Key;
-
-    void GroupingAnalysisPass::runBlockAnalysis(llvm::Module&amp; module)
+    for (auto&amp; function : module)
     {
-        for (auto&amp; function : module)
+        for (auto&amp; block : function)
         {
-            for (auto&amp; block : function)
+            bool pure_quantum     = true;
+            bool pure_measurement = true;
+
+            // Classifying the blocks
+            for (auto&amp; instr : block)
             {
-                bool pure_quantum     = true;
-                bool pure_measurement = true;
-
-                // Classifying the blocks
-                for (auto&amp; instr : block)
+                auto call_instr = llvm::dyn_cast&lt;llvm::CallBase&gt;(&amp;instr);
+                if (call_instr != nullptr)
                 {
-                    auto call_instr = llvm::dyn_cast&lt;llvm::CallBase&gt;(&amp;instr);
-                    if (call_instr != nullptr)
+                    auto f = call_instr-&gt;getCalledFunction();
+                    if (f == nullptr)
                     {
-                        auto f = call_instr-&gt;getCalledFunction();
-                        if (f == nullptr)
-                        {
-                            continue;
-                        }
-
-                        auto name = static_cast&lt;std::string&gt;(f-&gt;getName());
-                        bool is_quantum =
-                            (name.size() &gt;= QIS_START.size() &amp;&amp; name.substr(0, QIS_START.size()) == QIS_START);
-                        bool is_measurement =
-                            (name.size() &gt;= READ_INSTR_START.size() &amp;&amp;
-                             name.substr(0, READ_INSTR_START.size()) == READ_INSTR_START);
-
-                        if (is_measurement)
-                        {
-                            contains_quantum_measurement_.insert(&amp;block);
-                        }
-
-                        if (is_quantum)
-                        {
-                            contains_quantum_circuit_.insert(&amp;block);
-                        }
-
-                        pure_measurement = pure_measurement &amp;&amp; is_measurement;
-                        pure_quantum     = pure_quantum &amp;&amp; is_quantum &amp;&amp; !is_measurement;
+                        continue;
                     }
-                    else
+
+                    auto name = static_cast&lt;std::string&gt;(f-&gt;getName());
+                    bool is_quantum =
+                        (name.size() &gt;= QIS_START.size() &amp;&amp; name.substr(0, QIS_START.size()) == QIS_START);
+                    bool is_measurement =
+                        (name.size() &gt;= READ_INSTR_START.size() &amp;&amp;
+                         name.substr(0, READ_INSTR_START.size()) == READ_INSTR_START);
+
+                    if (is_measurement)
                     {
-                        // Any other instruction is makes the block non-pure
-                        pure_quantum     = false;
-                        pure_measurement = false;
+                        contains_quantum_measurement_.insert(&amp;block);
                     }
-                }
 
-                if (pure_quantum)
-                {
-                    pure_quantum_instructions_.insert(&amp;block);
-                }
+                    if (is_quantum)
+                    {
+                        contains_quantum_circuit_.insert(&amp;block);
+                    }
 
-                if (pure_measurement)
-                {
-                    pure_quantum_measurement_.insert(&amp;block);
-                }
-            }
-        }
-    }
-
-    GroupingAnalysisPass::Result GroupingAnalysisPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
-    {
-        // Preparing analysis
-        contains_quantum_circuit_.clear();
-        contains_quantum_measurement_.clear();
-        pure_quantum_instructions_.clear();
-        pure_quantum_measurement_.clear();
-
-        // Classifying each of the blocks
-        runBlockAnalysis(module);
-
-        GroupAnalysis ret;
-
-        for (auto&amp; function : module)
-        {
-            for (auto&amp; block : function)
-            {
-                bool is_pure_quantum     = pure_quantum_instructions_.find(&amp;block) != pure_quantum_instructions_.end();
-                bool is_pure_measurement = pure_quantum_measurement_.find(&amp;block) != pure_quantum_measurement_.end();
-
-                // Pure blocks are ignored
-                if (is_pure_quantum || is_pure_measurement)
-                {
-                    continue;
-                }
-
-                bool has_quantum = contains_quantum_circuit_.find(&amp;block) != contains_quantum_circuit_.end();
-
-                // Pure classical blocks are also ignored
-                if (!has_quantum)
-                {
-                    continue;
-                }
-
-                bool has_measurement =
-                    contains_quantum_measurement_.find(&amp;block) != contains_quantum_measurement_.end();
-
-                // Differentiating between blocks that has measurements and those that has not
-                if (!has_measurement)
-                {
-                    ret.qc_cc_blocks.push_back(&amp;block);
+                    pure_measurement = pure_measurement &amp;&amp; is_measurement;
+                    pure_quantum     = pure_quantum &amp;&amp; is_quantum &amp;&amp; !is_measurement;
                 }
                 else
                 {
-                    ret.qc_mc_cc_blocks.push_back(&amp;block);
+                    // Any other instruction is makes the block non-pure
+                    pure_quantum     = false;
+                    pure_measurement = false;
                 }
             }
+
+            if (pure_quantum)
+            {
+                pure_quantum_instructions_.insert(&amp;block);
+            }
+
+            if (pure_measurement)
+            {
+                pure_quantum_measurement_.insert(&amp;block);
+            }
         }
-
-        return ret;
     }
+}
 
-    bool GroupingAnalysisPass::isRequired()
+GroupingAnalysisPass::Result GroupingAnalysisPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+{
+    // Preparing analysis
+    contains_quantum_circuit_.clear();
+    contains_quantum_measurement_.clear();
+    pure_quantum_instructions_.clear();
+    pure_quantum_measurement_.clear();
+
+    // Classifying each of the blocks
+    runBlockAnalysis(module);
+
+    GroupAnalysis ret;
+
+    for (auto&amp; function : module)
     {
-        return true;
+        for (auto&amp; block : function)
+        {
+            bool is_pure_quantum     = pure_quantum_instructions_.find(&amp;block) != pure_quantum_instructions_.end();
+            bool is_pure_measurement = pure_quantum_measurement_.find(&amp;block) != pure_quantum_measurement_.end();
+
+            // Pure blocks are ignored
+            if (is_pure_quantum || is_pure_measurement)
+            {
+                continue;
+            }
+
+            bool has_quantum = contains_quantum_circuit_.find(&amp;block) != contains_quantum_circuit_.end();
+
+            // Pure classical blocks are also ignored
+            if (!has_quantum)
+            {
+                continue;
+            }
+
+            bool has_measurement = contains_quantum_measurement_.find(&amp;block) != contains_quantum_measurement_.end();
+
+            // Differentiating between blocks that has measurements and those that has not
+            if (!has_measurement)
+            {
+                ret.qc_cc_blocks.push_back(&amp;block);
+            }
+            else
+            {
+                ret.qc_mc_cc_blocks.push_back(&amp;block);
+            }
+        }
     }
 
-    llvm::PreservedAnalyses GroupingAnalysisPassPrinter::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam)
-    {
-        auto&amp; result = mam.getResult&lt;GroupingAnalysisPass&gt;(module);
-        llvm::errs() &lt;&lt; result.qc_cc_blocks.size() &lt;&lt; &quot; qc cc blocks.\n&quot;;
-        llvm::errs() &lt;&lt; result.qc_mc_cc_blocks.size() &lt;&lt; &quot; qc mc cc blocks.\n&quot;;
+    return ret;
+}
 
-        return llvm::PreservedAnalyses::all();
-    }
+bool GroupingAnalysisPass::isRequired()
+{
+    return true;
+}
 
-} // namespace quantum
-} // namespace microsoft
+llvm::PreservedAnalyses GroupingAnalysisPassPrinter::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam)
+{
+    auto&amp; result = mam.getResult&lt;GroupingAnalysisPass&gt;(module);
+    llvm::errs() &lt;&lt; result.qc_cc_blocks.size() &lt;&lt; &quot; qc cc blocks.\n&quot;;
+    llvm::errs() &lt;&lt; result.qc_mc_cc_blocks.size() &lt;&lt; &quot; qc mc cc blocks.\n&quot;;
+
+    return llvm::PreservedAnalyses::all();
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

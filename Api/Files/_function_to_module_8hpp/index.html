@@ -596,58 +596,55 @@
 // Licensed under the MIT License.
 
 #include &quot;Llvm/Llvm.hpp&quot;
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class FunctionToModule : public llvm::PassInfoMixin&lt;FunctionToModule&gt;
+class FunctionToModule : public llvm::PassInfoMixin&lt;FunctionToModule&gt;
+{
+  public:
+    // Construction and destruction configuration.
+    //
+
+    explicit FunctionToModule(llvm::FunctionPassManager&amp;&amp; manager)
+      : manager_{std::move(manager)}
     {
-      public:
-        // Construction and destruction configuration.
-        //
+    }
 
-        explicit FunctionToModule(llvm::FunctionPassManager&amp;&amp; manager)
-          : manager_{std::move(manager)}
+    FunctionToModule(FunctionToModule const&amp;) = delete;
+
+    FunctionToModule(FunctionToModule&amp;&amp;) = default;
+
+    ~FunctionToModule() = default;
+    llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam)
+    {
+        llvm::FunctionAnalysisManager&amp; fam =
+            mam.getResult&lt;llvm::FunctionAnalysisManagerModuleProxy&gt;(module).getManager();
+
+        for (auto&amp; f : module)
         {
-        }
-
-        FunctionToModule(FunctionToModule const&amp;) = delete;
-
-        FunctionToModule(FunctionToModule&amp;&amp;) = default;
-
-        ~FunctionToModule() = default;
-        llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam)
-        {
-            llvm::FunctionAnalysisManager&amp; fam =
-                mam.getResult&lt;llvm::FunctionAnalysisManagerModuleProxy&gt;(module).getManager();
-
-            for (auto&amp; f : module)
+            if (f.isDeclaration())
             {
-                if (f.isDeclaration())
-                {
-                    continue;
-                }
-
-                auto ret = manager_.run(f, fam);
-                fam.invalidate(f, ret);
+                continue;
             }
 
-            return llvm::PreservedAnalyses::none();
-        }
-        static bool isRequired()
-        {
-            return true;
+            auto ret = manager_.run(f, fam);
+            fam.invalidate(f, ret);
         }
 
-      private:
-        llvm::FunctionPassManager manager_;
-    };
-} // namespace quantum
-} // namespace microsoft
+        return llvm::PreservedAnalyses::none();
+    }
+    static bool isRequired()
+    {
+        return true;
+    }
+
+  private:
+    llvm::FunctionPassManager manager_;
+};
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

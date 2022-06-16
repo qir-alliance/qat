@@ -582,36 +582,33 @@
 #include &quot;Rules/IOperandPrototype.hpp&quot;
 #include &quot;Rules/Patterns/UnnamedInvokePattern.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    UnnamedInvokePattern::~UnnamedInvokePattern() = default;
+UnnamedInvokePattern::~UnnamedInvokePattern() = default;
 
-    bool UnnamedInvokePattern::match(Value* instr, Captures&amp; captures) const
+bool UnnamedInvokePattern::match(Value* instr, Captures&amp; captures) const
+{
+    auto* call_instr = llvm::dyn_cast&lt;llvm::InvokeInst&gt;(instr);
+    if (call_instr == nullptr)
     {
-        auto* call_instr = llvm::dyn_cast&lt;llvm::InvokeInst&gt;(instr);
-        if (call_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
-
-        return success(instr, captures);
+        return fail(instr, captures);
     }
 
-    UnnamedInvokePattern::Child UnnamedInvokePattern::copy() const
-    {
-        auto ret = std::make_shared&lt;UnnamedInvokePattern&gt;();
-        ret-&gt;copyPropertiesFrom(*this);
-        return std::move(ret);
-    }
+    return success(instr, captures);
+}
 
-} // namespace quantum
-} // namespace microsoft
+UnnamedInvokePattern::Child UnnamedInvokePattern::copy() const
+{
+    auto ret = std::make_shared&lt;UnnamedInvokePattern&gt;();
+    ret-&gt;copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

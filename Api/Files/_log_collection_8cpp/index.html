@@ -586,114 +586,111 @@
 #include &lt;iostream&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    void LogCollection::debug(String const&amp; message)
-    {
-        messages_.push_back({Type::Debug, current_location_, message});
-    }
+void LogCollection::debug(String const&amp; message)
+{
+    messages_.push_back({Type::Debug, current_location_, message});
+}
 
-    void LogCollection::info(String const&amp; message)
-    {
-        messages_.push_back({Type::Info, current_location_, message});
-    }
+void LogCollection::info(String const&amp; message)
+{
+    messages_.push_back({Type::Info, current_location_, message});
+}
 
-    void LogCollection::warning(String const&amp; message)
-    {
-        had_warnings_ = true;
-        messages_.push_back({Type::Warning, current_location_, message});
-    }
+void LogCollection::warning(String const&amp; message)
+{
+    had_warnings_ = true;
+    messages_.push_back({Type::Warning, current_location_, message});
+}
 
-    void LogCollection::error(String const&amp; message)
-    {
-        had_errors_ = true;
-        messages_.push_back({Type::Error, current_location_, message});
-    }
+void LogCollection::error(String const&amp; message)
+{
+    had_errors_ = true;
+    messages_.push_back({Type::Error, current_location_, message});
+}
 
-    void LogCollection::internalError(String const&amp; message)
-    {
-        had_errors_ = true;
-        messages_.push_back({Type::InternalError, current_location_, message});
-    }
+void LogCollection::internalError(String const&amp; message)
+{
+    had_errors_ = true;
+    messages_.push_back({Type::InternalError, current_location_, message});
+}
 
-    void LogCollection::setLocation(SourceLocation const&amp; loc)
-    {
-        current_location_.name   = loc.name;
-        current_location_.line   = loc.line;
-        current_location_.column = loc.column;
-    }
+void LogCollection::setLocation(SourceLocation const&amp; loc)
+{
+    current_location_.name   = loc.name;
+    current_location_.line   = loc.line;
+    current_location_.column = loc.column;
+}
 
-    ILogger::Messages const&amp; LogCollection::messages() const
-    {
-        return messages_;
-    }
+ILogger::Messages const&amp; LogCollection::messages() const
+{
+    return messages_;
+}
 
-    void LogCollection::setLlvmHint(String const&amp; value)
-    {
-        current_location_.llvm_hint = value;
-        trim(current_location_.llvm_hint);
-    }
+void LogCollection::setLlvmHint(String const&amp; value)
+{
+    current_location_.llvm_hint = value;
+    trim(current_location_.llvm_hint);
+}
 
-    void LogCollection::setFrontendHint(String const&amp; value)
-    {
-        current_location_.frontend_hint = value;
-        trim(current_location_.frontend_hint);
-    }
+void LogCollection::setFrontendHint(String const&amp; value)
+{
+    current_location_.frontend_hint = value;
+    trim(current_location_.frontend_hint);
+}
 
-    void LogCollection::dump(std::ostream&amp; out) const
+void LogCollection::dump(std::ostream&amp; out) const
+{
+    bool not_first = false;
+    out &lt;&lt; &quot;[&quot;;
+    for (auto&amp; message : messages_)
     {
-        bool not_first = false;
-        out &lt;&lt; &quot;[&quot;;
-        for (auto&amp; message : messages_)
+        if (not_first)
         {
-            if (not_first)
-            {
-                out &lt;&lt; &quot;,&quot;;
-            }
-            out &lt;&lt; &quot;\n&quot;;
-            out &lt;&lt; &quot;  {\n&quot;;
-
-            switch (message.type)
-            {
-            case LogCollection::Type::Debug:
-                out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;debug\&quot;,\n&quot;;
-                break;
-            case LogCollection::Type::Info:
-                out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;info\&quot;,\n&quot;;
-                break;
-            case LogCollection::Type::Warning:
-                out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;warning\&quot;,\n&quot;;
-                break;
-            case LogCollection::Type::Error:
-                out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;error\&quot;,\n&quot;;
-                break;
-            case LogCollection::Type::InternalError:
-                out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;internalError\&quot;,\n&quot;;
-                break;
-            }
-
-            out &lt;&lt; &quot;    \&quot;message\&quot;: \&quot;&quot; &lt;&lt; message.message &lt;&lt; &quot;\&quot;,\n&quot;;
-            out &lt;&lt; &quot;    \&quot;location\&quot;: {\n&quot;;
-            out &lt;&lt; &quot;      \&quot;filename\&quot;: \&quot;&quot; &lt;&lt; static_cast&lt;std::string&gt;(message.location.name) &lt;&lt; &quot;\&quot;,\n&quot;;
-            out &lt;&lt; &quot;      \&quot;line\&quot;: &quot; &lt;&lt; message.location.line &lt;&lt; &quot;,\n&quot;;
-            out &lt;&lt; &quot;      \&quot;column\&quot;: &quot; &lt;&lt; message.location.column &lt;&lt; &quot;,\n&quot;;
-            out &lt;&lt; &quot;      \&quot;llvm_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\&quot;,\n&quot;;
-            out &lt;&lt; &quot;      \&quot;frontend_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.frontend_hint &lt;&lt; &quot;\&quot;\n&quot;;
-            out &lt;&lt; &quot;    }\n&quot;;
-            out &lt;&lt; &quot;  }&quot;;
-            not_first = true;
+            out &lt;&lt; &quot;,&quot;;
         }
-        out &lt;&lt; &quot;\n]\n&quot;;
-    }
+        out &lt;&lt; &quot;\n&quot;;
+        out &lt;&lt; &quot;  {\n&quot;;
 
-} // namespace quantum
-} // namespace microsoft
+        switch (message.type)
+        {
+        case LogCollection::Type::Debug:
+            out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;debug\&quot;,\n&quot;;
+            break;
+        case LogCollection::Type::Info:
+            out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;info\&quot;,\n&quot;;
+            break;
+        case LogCollection::Type::Warning:
+            out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;warning\&quot;,\n&quot;;
+            break;
+        case LogCollection::Type::Error:
+            out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;error\&quot;,\n&quot;;
+            break;
+        case LogCollection::Type::InternalError:
+            out &lt;&lt; &quot;    \&quot;type\&quot;: \&quot;internalError\&quot;,\n&quot;;
+            break;
+        }
+
+        out &lt;&lt; &quot;    \&quot;message\&quot;: \&quot;&quot; &lt;&lt; message.message &lt;&lt; &quot;\&quot;,\n&quot;;
+        out &lt;&lt; &quot;    \&quot;location\&quot;: {\n&quot;;
+        out &lt;&lt; &quot;      \&quot;filename\&quot;: \&quot;&quot; &lt;&lt; static_cast&lt;std::string&gt;(message.location.name) &lt;&lt; &quot;\&quot;,\n&quot;;
+        out &lt;&lt; &quot;      \&quot;line\&quot;: &quot; &lt;&lt; message.location.line &lt;&lt; &quot;,\n&quot;;
+        out &lt;&lt; &quot;      \&quot;column\&quot;: &quot; &lt;&lt; message.location.column &lt;&lt; &quot;,\n&quot;;
+        out &lt;&lt; &quot;      \&quot;llvm_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\&quot;,\n&quot;;
+        out &lt;&lt; &quot;      \&quot;frontend_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.frontend_hint &lt;&lt; &quot;\&quot;\n&quot;;
+        out &lt;&lt; &quot;    }\n&quot;;
+        out &lt;&lt; &quot;  }&quot;;
+        not_first = true;
+    }
+    out &lt;&lt; &quot;\n]\n&quot;;
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

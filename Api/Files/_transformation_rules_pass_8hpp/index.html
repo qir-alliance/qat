@@ -607,150 +607,144 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class TransformationRulesPass : public llvm::PassInfoMixin&lt;TransformationRulesPass&gt;
-    {
-      public:
-        using Replacements         = ReplacementRule::Replacements;
-        using Instruction          = llvm::Instruction;
-        using Rules                = std::vector&lt;ReplacementRule&gt;;
-        using Value                = llvm::Value;
-        using Builder              = ReplacementRule::Builder;
-        using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
-        using Captures             = RuleSet::Captures;
-        using ConstantArguments    = std::unordered_map&lt;std::string, llvm::ConstantInt*&gt;;
-        using ILoggerPtr           = ILogger::ILoggerPtr;
+class TransformationRulesPass : public llvm::PassInfoMixin&lt;TransformationRulesPass&gt;
+{
+  public:
+    using Replacements         = ReplacementRule::Replacements;
+    using Instruction          = llvm::Instruction;
+    using Rules                = std::vector&lt;ReplacementRule&gt;;
+    using Value                = llvm::Value;
+    using Builder              = ReplacementRule::Builder;
+    using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
+    using Captures             = RuleSet::Captures;
+    using ConstantArguments    = std::unordered_map&lt;std::string, llvm::ConstantInt*&gt;;
+    using ILoggerPtr           = ILogger::ILoggerPtr;
 
-        // Construction and destruction configuration.
-        //
+    // Construction and destruction configuration.
+    //
 
-        TransformationRulesPass(
-            RuleSet&amp;&amp;                                   rule_set,
-            TransformationRulesPassConfiguration const&amp; config,
-            Profile*                                    profile);
+    TransformationRulesPass(RuleSet&amp;&amp; rule_set, TransformationRulesPassConfiguration const&amp; config, Profile* profile);
 
-        TransformationRulesPass(TransformationRulesPass const&amp;) = delete;
+    TransformationRulesPass(TransformationRulesPass const&amp;) = delete;
 
-        TransformationRulesPass(TransformationRulesPass&amp;&amp;) = default;
+    TransformationRulesPass(TransformationRulesPass&amp;&amp;) = default;
 
-        ~TransformationRulesPass() = default;
+    ~TransformationRulesPass() = default;
 
-        // Operators
-        //
+    // Operators
+    //
 
-        TransformationRulesPass&amp; operator=(TransformationRulesPass const&amp;) = delete;
+    TransformationRulesPass&amp; operator=(TransformationRulesPass const&amp;) = delete;
 
-        TransformationRulesPass&amp; operator=(TransformationRulesPass&amp;&amp;) = default;
+    TransformationRulesPass&amp; operator=(TransformationRulesPass&amp;&amp;) = default;
 
-        llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
+    llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
 
-        using DeletableInstructions = std::vector&lt;llvm::Instruction*&gt;;
-        using InstructionModifier   = std::function&lt;llvm::Value*(llvm::Value*, DeletableInstructions&amp;)&gt;;
+    using DeletableInstructions = std::vector&lt;llvm::Instruction*&gt;;
+    using InstructionModifier   = std::function&lt;llvm::Value*(llvm::Value*, DeletableInstructions&amp;)&gt;;
 
-        // Generic helper functions
-        //
+    // Generic helper functions
+    //
 
-        bool runOnFunction(llvm::Function&amp; function, InstructionModifier const&amp; modifier);
+    bool runOnFunction(llvm::Function&amp; function, InstructionModifier const&amp; modifier);
 
-        void processReplacements();
+    void processReplacements();
 
-        // Copy and expand
-        //
+    // Copy and expand
+    //
 
-        void setupCopyAndExpand();
+    void setupCopyAndExpand();
 
-        void runCopyAndExpand(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
+    void runCopyAndExpand(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
 
-        llvm::Value* copyAndExpand(llvm::Value* input, DeletableInstructions&amp;);
+    llvm::Value* copyAndExpand(llvm::Value* input, DeletableInstructions&amp;);
 
-        llvm::Function* expandFunctionCall(llvm::Function&amp; callee, ConstantArguments const&amp; const_args = {});
+    llvm::Function* expandFunctionCall(llvm::Function&amp; callee, ConstantArguments const&amp; const_args = {});
 
-        void constantFoldFunction(llvm::Function&amp; callee);
+    void constantFoldFunction(llvm::Function&amp; callee);
 
-        void addConstExprRule(ReplacementRule&amp;&amp; rule);
+    void addConstExprRule(ReplacementRule&amp;&amp; rule);
 
-        // Dead code detection
-        //
-        void         runDetectActiveCode(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
-        void         runDeleteDeadCode(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
-        llvm::Value* detectActiveCode(llvm::Value* input, DeletableInstructions&amp;);
-        llvm::Value* deleteDeadCode(llvm::Value* input, DeletableInstructions&amp;);
-        bool         isActive(llvm::Value* value) const;
+    // Dead code detection
+    //
+    void         runDetectActiveCode(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
+    void         runDeleteDeadCode(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
+    llvm::Value* detectActiveCode(llvm::Value* input, DeletableInstructions&amp;);
+    llvm::Value* deleteDeadCode(llvm::Value* input, DeletableInstructions&amp;);
+    bool         isActive(llvm::Value* value) const;
 
-        void followUsers(llvm::Value* value);
+    void followUsers(llvm::Value* value);
 
-        // Phi replacement
-        //
+    // Phi replacement
+    //
 
-        void runReplacePhi(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
+    void runReplacePhi(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
 
-        // Rules
-        //
+    // Rules
+    //
 
-        void runApplyRules(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
-        bool onQubitRelease(llvm::Instruction* instruction, Captures&amp; captures);
-        bool onQubitAllocate(llvm::Instruction* instruction, Captures&amp; captures);
+    void runApplyRules(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
+    bool onQubitRelease(llvm::Instruction* instruction, Captures&amp; captures);
+    bool onQubitAllocate(llvm::Instruction* instruction, Captures&amp; captures);
 
-        static bool isRequired();
+    static bool isRequired();
 
-        // Logger
-        //
-        void setLogger(ILoggerPtr logger);
+    // Logger
+    //
+    void setLogger(ILoggerPtr logger);
 
-      private:
-        void requireLogger();
+  private:
+    void requireLogger();
 
-        // Pass configuration
-        //
+    // Pass configuration
+    //
 
-        RuleSet rule_set_{};
+    RuleSet rule_set_{};
 
-        TransformationRulesPassConfiguration config_{};
+    TransformationRulesPassConfiguration config_{};
 
-        // Logging and data collection
-        //
+    // Logging and data collection
+    //
 
-        ILoggerPtr logger_{nullptr};
+    ILoggerPtr logger_{nullptr};
 
-        // Execution path unrolling
-        //
+    // Execution path unrolling
+    //
 
-        uint64_t depth_{0};
+    uint64_t depth_{0};
 
-        // Copy and expand
-        //
+    // Copy and expand
+    //
 
-        RuleSet const_expr_replacements_{};
+    RuleSet const_expr_replacements_{};
 
-        // Dead code elimination
-        //
+    // Dead code elimination
+    //
 
-        std::unordered_set&lt;Value*&gt; active_pieces_{};
+    std::unordered_set&lt;Value*&gt; active_pieces_{};
 
-        std::vector&lt;llvm::BasicBlock*&gt; blocks_to_delete_{};
+    std::vector&lt;llvm::BasicBlock*&gt; blocks_to_delete_{};
 
-        std::vector&lt;llvm::Function*&gt; functions_to_delete_{};
+    std::vector&lt;llvm::Function*&gt; functions_to_delete_{};
 
-        // Phi detection
-        //
+    // Phi detection
+    //
 
-        Replacements replacements_;
+    Replacements replacements_;
 
-        // Profile
-        //
+    // Profile
+    //
 
-        Profile* profile_{nullptr};
-    };
+    Profile* profile_{nullptr};
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

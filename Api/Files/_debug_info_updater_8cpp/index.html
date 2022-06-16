@@ -584,204 +584,201 @@
 
 #include &quot;Llvm/Llvm.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    DebugInfoUpdater::DebugInfoUpdater(
-        InstructionLocationTablePtr const&amp; debug_info,
-        Module&amp;                            module,
-        StringRef const&amp;                   directory,
-        StringRef const&amp;                   filename)
-      : debug_info_{debug_info}
-      , module_{module}
-      , builder_(module)
+DebugInfoUpdater::DebugInfoUpdater(
+    InstructionLocationTablePtr const&amp; debug_info,
+    Module&amp;                            module,
+    StringRef const&amp;                   directory,
+    StringRef const&amp;                   filename)
+  : debug_info_{debug_info}
+  , module_{module}
+  , builder_(module)
+{
+    file_unit_    = builder_.createFile(filename, directory);
+    compile_unit_ = builder_.createCompileUnit(llvm::dwarf::DW_LANG_C, file_unit_, &quot;qat&quot;, false, &quot;&quot;, 0);
+}
+
+void DebugInfoUpdater::update()
+{
+    finder_.processModule(module_);
+    visit(&amp;module_);
+    builder_.finalize();
+}
+
+llvm::DISubroutineType* DebugInfoUpdater::createFunctionType(Function const* function)
+{
+    llvm::SmallVector&lt;llvm::Metadata*, 4&gt; parameters;
+    llvm::DIType*                         return_type = getOrCreateType(function-&gt;getReturnType());
+    parameters.push_back(return_type);
+
+    for (auto const&amp; arg : function-&gt;args())
     {
-        file_unit_    = builder_.createFile(filename, directory);
-        compile_unit_ = builder_.createCompileUnit(llvm::dwarf::DW_LANG_C, file_unit_, &quot;qat&quot;, false, &quot;&quot;, 0);
+        parameters.push_back(getOrCreateType(arg.getType()));
     }
 
-    void DebugInfoUpdater::update()
+    auto params_array = builder_.getOrCreateTypeArray(parameters);
+    return builder_.createSubroutineType(params_array);
+}
+
+llvm::DIType* DebugInfoUpdater::getType(llvm::Type* type)
+{
+
+    auto it = type_debug_info_.find(type);
+    if (it != type_debug_info_.end())
     {
-        finder_.processModule(module_);
-        visit(&amp;module_);
-        builder_.finalize();
+        return it-&gt;second;
     }
 
-    llvm::DISubroutineType* DebugInfoUpdater::createFunctionType(Function const* function)
+    return nullptr;
+}
+
+llvm::DIType* DebugInfoUpdater::createVoidType(llvm::Type* type)
+{
+    auto ret               = builder_.createUnspecifiedType(&quot;void&quot;);
+    type_debug_info_[type] = ret;
+    return ret;
+}
+
+llvm::DIType* DebugInfoUpdater::createPointerType(llvm::Type* type)
+{
+    auto pointee_type = type-&gt;getPointerElementType();
+    auto element_type = getOrCreateType(pointee_type);
+    auto ret          = builder_.createPointerType(element_type, 64);
+
+    type_debug_info_[type] = ret;
+    return ret;
+}
+
+llvm::DIType* DebugInfoUpdater::createOpaqueType(llvm::Type* type)
+{
+    auto ret               = builder_.createUnspecifiedType(&quot;opaque&quot;);
+    type_debug_info_[type] = ret;
+    return ret;
+}
+
+llvm::DIType* DebugInfoUpdater::getOrCreateType(llvm::Type* type)
+{
+    DIType* di_type = getType(type);
+    if (di_type != nullptr)
     {
-        llvm::SmallVector&lt;llvm::Metadata*, 4&gt; parameters;
-        llvm::DIType*                         return_type = getOrCreateType(function-&gt;getReturnType());
-        parameters.push_back(return_type);
-
-        for (auto const&amp; arg : function-&gt;args())
-        {
-            parameters.push_back(getOrCreateType(arg.getType()));
-        }
-
-        auto params_array = builder_.getOrCreateTypeArray(parameters);
-        return builder_.createSubroutineType(params_array);
+        return di_type;
     }
 
-    llvm::DIType* DebugInfoUpdater::getType(llvm::Type* type)
+    if (type-&gt;isVoidTy())
     {
-
-        auto it = type_debug_info_.find(type);
-        if (it != type_debug_info_.end())
-        {
-            return it-&gt;second;
-        }
-
-        return nullptr;
+        return createVoidType(type);
     }
 
-    llvm::DIType* DebugInfoUpdater::createVoidType(llvm::Type* type)
+    if (type-&gt;isStructTy() || type-&gt;isArrayTy())
     {
-        auto ret               = builder_.createUnspecifiedType(&quot;void&quot;);
-        type_debug_info_[type] = ret;
-        return ret;
+        // TODO(tfr): Consider more comprehensive support for structs and arrays
+        return createOpaqueType(type);
     }
 
-    llvm::DIType* DebugInfoUpdater::createPointerType(llvm::Type* type)
+    if (type-&gt;isPointerTy())
     {
-        auto pointee_type = type-&gt;getPointerElementType();
-        auto element_type = getOrCreateType(pointee_type);
-        auto ret          = builder_.createPointerType(element_type, 64);
-
-        type_debug_info_[type] = ret;
-        return ret;
+        return createPointerType(type);
     }
 
-    llvm::DIType* DebugInfoUpdater::createOpaqueType(llvm::Type* type)
+    auto encoding = llvm::dwarf::DW_ATE_signed;
+
+    if (type-&gt;isIntegerTy())
     {
-        auto ret               = builder_.createUnspecifiedType(&quot;opaque&quot;);
-        type_debug_info_[type] = ret;
-        return ret;
+        encoding = llvm::dwarf::DW_ATE_unsigned;
+    }
+    else if (type-&gt;isFloatingPointTy())
+    {
+        encoding = llvm::dwarf::DW_ATE_float;
     }
 
-    llvm::DIType* DebugInfoUpdater::getOrCreateType(llvm::Type* type)
+    auto ret = builder_.createBasicType(&quot;PrimitiveType&quot;, type-&gt;getPrimitiveSizeInBits(), encoding);
+
+    type_debug_info_[type] = ret;
+    return ret;
+}
+
+void DebugInfoUpdater::visitFunction(Function&amp; function)
+{
+    // Skipping declarations and already annotated functions
+    if (function.isDeclaration() || function_debug_info_.find(&amp;function) != function_debug_info_.end())
     {
-        DIType* di_type = getType(type);
-        if (di_type != nullptr)
-        {
-            return di_type;
-        }
-
-        if (type-&gt;isVoidTy())
-        {
-            return createVoidType(type);
-        }
-
-        if (type-&gt;isStructTy() || type-&gt;isArrayTy())
-        {
-            // TODO(tfr): Consider more comprehensive support for structs and arrays
-            return createOpaqueType(type);
-        }
-
-        if (type-&gt;isPointerTy())
-        {
-            return createPointerType(type);
-        }
-
-        auto encoding = llvm::dwarf::DW_ATE_signed;
-
-        if (type-&gt;isIntegerTy())
-        {
-            encoding = llvm::dwarf::DW_ATE_unsigned;
-        }
-        else if (type-&gt;isFloatingPointTy())
-        {
-            encoding = llvm::dwarf::DW_ATE_float;
-        }
-
-        auto ret = builder_.createBasicType(&quot;PrimitiveType&quot;, type-&gt;getPrimitiveSizeInBits(), encoding);
-
-        type_debug_info_[type] = ret;
-        return ret;
+        return;
     }
 
-    void DebugInfoUpdater::visitFunction(Function&amp; function)
+    // Preserving existing subprograms
+    if (function.getSubprogram() != nullptr)
     {
-        // Skipping declarations and already annotated functions
-        if (function.isDeclaration() || function_debug_info_.find(&amp;function) != function_debug_info_.end())
+        function_debug_info_[&amp;function] = function.getSubprogram();
+        return;
+    }
+
+    // Creating new subprogram
+    auto position      = debug_info_-&gt;getPosition(&amp;function);
+    auto program_flags = llvm::DISubprogram::SPFlagDefinition;
+
+    if (function.hasPrivateLinkage() || function.hasInternalLinkage())
+    {
+        program_flags |= llvm::DISubprogram::SPFlagLocalToUnit;
+    }
+
+    auto subprogram = builder_.createFunction(
+        file_unit_, function.getName(), StringRef(), file_unit_, position.line, createFunctionType(&amp;function),
+        position.line, llvm::DINode::FlagZero, program_flags);
+    function.setSubprogram(subprogram);
+
+    function_debug_info_[&amp;function] = subprogram;
+}
+
+void DebugInfoUpdater::visitInstruction(Instruction&amp; instr)
+{
+    auto position = debug_info_-&gt;getPosition(&amp;instr);
+    if (position)
+    {
+        auto location = instr.getDebugLoc();
+
+        // Skipping instructions with existing debug locations
+        if (location)
         {
             return;
         }
 
-        // Preserving existing subprograms
-        if (function.getSubprogram() != nullptr)
+        // Copying scope and inlined at if possible
+        llvm::DILocalScope* scope{nullptr};
+        llvm::DILocation*   inlined_at{nullptr};
+
+        auto block    = instr.getParent();
+        auto function = block-&gt;getParent();
+        auto it       = function_debug_info_.find(function);
+
+        // Sanity check
+        if (it == function_debug_info_.end())
         {
-            function_debug_info_[&amp;function] = function.getSubprogram();
-            return;
+            throw std::runtime_error(&quot;Could not find parent function - this is not supposed to happen.&quot;);
         }
 
-        // Creating new subprogram
-        auto position      = debug_info_-&gt;getPosition(&amp;function);
-        auto program_flags = llvm::DISubprogram::SPFlagDefinition;
+        auto subprogram = it-&gt;second;
+        scope           = subprogram;
 
-        if (function.hasPrivateLinkage() || function.hasInternalLinkage())
+        // Sanity check
+        if (scope == nullptr)
         {
-            program_flags |= llvm::DISubprogram::SPFlagLocalToUnit;
+            throw std::runtime_error(&quot;Could not determine scope - this is not supposed to happen.&quot;);
         }
 
-        auto subprogram = builder_.createFunction(
-            file_unit_, function.getName(), StringRef(), file_unit_, position.line, createFunctionType(&amp;function),
-            position.line, llvm::DINode::FlagZero, program_flags);
-        function.setSubprogram(subprogram);
+        // Updating the debug location
+        auto new_debug_loc = llvm::DebugLoc(
+            llvm::DILocation::get(module_.getContext(), position.line, position.column, scope, inlined_at));
 
-        function_debug_info_[&amp;function] = subprogram;
+        instr.setDebugLoc(new_debug_loc);
     }
+}
 
-    void DebugInfoUpdater::visitInstruction(Instruction&amp; instr)
-    {
-        auto position = debug_info_-&gt;getPosition(&amp;instr);
-        if (position)
-        {
-            auto location = instr.getDebugLoc();
-
-            // Skipping instructions with existing debug locations
-            if (location)
-            {
-                return;
-            }
-
-            // Copying scope and inlined at if possible
-            llvm::DILocalScope* scope{nullptr};
-            llvm::DILocation*   inlined_at{nullptr};
-
-            auto block    = instr.getParent();
-            auto function = block-&gt;getParent();
-            auto it       = function_debug_info_.find(function);
-
-            // Sanity check
-            if (it == function_debug_info_.end())
-            {
-                throw std::runtime_error(&quot;Could not find parent function - this is not supposed to happen.&quot;);
-            }
-
-            auto subprogram = it-&gt;second;
-            scope           = subprogram;
-
-            // Sanity check
-            if (scope == nullptr)
-            {
-                throw std::runtime_error(&quot;Could not determine scope - this is not supposed to happen.&quot;);
-            }
-
-            // Updating the debug location
-            auto new_debug_loc = llvm::DebugLoc(
-                llvm::DILocation::get(module_.getContext(), position.line, position.column, scope, inlined_at));
-
-            instr.setDebugLoc(new_debug_loc);
-        }
-    }
-
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

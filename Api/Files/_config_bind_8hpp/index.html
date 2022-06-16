@@ -606,224 +606,221 @@
 #include &lt;type_traits&gt;
 #include &lt;typeindex&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    template &lt;typename T&gt; class ConfigBind : public IConfigBind
+template &lt;typename T&gt; class ConfigBind : public IConfigBind
+{
+  public:
+    using Type = T;
+
+    template &lt;typename A, typename B, typename R&gt;
+    using EnableIf = typename std::enable_if&lt;std::is_same&lt;A, B&gt;::value, R&gt;::type;
+
+    // Constructors, operators and destructor
+    //
+
+    ConfigBind()                  = delete;
+    ConfigBind(ConfigBind const&amp;) = delete;
+    ConfigBind(ConfigBind&amp;&amp;)      = delete;
+    ConfigBind&amp; operator=(ConfigBind const&amp;) = delete;
+    ConfigBind&amp; operator=(ConfigBind&amp;&amp;) = delete;
+    ~ConfigBind() override              = default;
+
+    ConfigBind(Type&amp; bind, T default_value, String const&amp; name, String const&amp; description);
+
+    // Marks the configuration as being experimental.
+    void markAsExperimental(Type const&amp; off_value);
+
+    // Interface implementation
+    //
+
+    bool setupArguments(ParameterParser&amp; parser) override;
+
+    bool configure(ParameterParser&amp; parser, bool experimental_mode) override;
+
+    String value() override;
+
+    void* pointer() const override;
+
+    std::type_index valueType() const override;
+
+  private:
+    template &lt;typename R&gt; bool setupArguments(ParameterParser&amp;, R const&amp;);
+
+    bool setupArguments(ParameterParser&amp; parser, bool const&amp;);
+
+    template &lt;typename R&gt; void alterNameBasedOnType(R const&amp; default_value);
+
+    void alterNameBasedOnType(bool const&amp; default_value);
+
+    template &lt;typename A&gt; String valueAsString(A const&amp;);
+
+    template &lt;typename A&gt; String valueAsString(EnableIf&lt;A, bool, A&gt; const&amp;);
+
+    template &lt;typename R&gt; void loadValue(ParameterParser&amp; parser, R const&amp; default_value);
+
+    template &lt;typename A&gt; void loadValue(ParameterParser&amp; parser, EnableIf&lt;A, bool, A&gt; const&amp; default_value);
+
+    template &lt;typename A&gt; void loadValue(ParameterParser&amp; parser, EnableIf&lt;A, String, A&gt; const&amp; default_value);
+
+    Type&amp; bind_;                   
+    Type  default_value_;          
+    Type  experimental_off_value_; 
+};
+
+template &lt;typename T&gt;
+ConfigBind&lt;T&gt;::ConfigBind(Type&amp; bind, T default_value, String const&amp; name, String const&amp; description)
+  : IConfigBind(name, description)
+  , bind_{bind}
+  , default_value_{std::move(default_value)}
+{
+    alterNameBasedOnType(default_value_);
+}
+
+template &lt;typename T&gt; template &lt;typename R&gt; void ConfigBind&lt;T&gt;::alterNameBasedOnType(R const&amp; default_value)
+{
+    std::stringstream ss{&quot;&quot;};
+    ss &lt;&lt; default_value;
+    setDefault(static_cast&lt;String&gt;(ss.str()));
+}
+
+template &lt;typename T&gt; void ConfigBind&lt;T&gt;::alterNameBasedOnType(bool const&amp; default_value)
+{
+    markAsFlag();
+
+    if (default_value)
     {
-      public:
-        using Type = T;
-
-        template &lt;typename A, typename B, typename R&gt;
-        using EnableIf = typename std::enable_if&lt;std::is_same&lt;A, B&gt;::value, R&gt;::type;
-
-        // Constructors, operators and destructor
-        //
-
-        ConfigBind()                  = delete;
-        ConfigBind(ConfigBind const&amp;) = delete;
-        ConfigBind(ConfigBind&amp;&amp;)      = delete;
-        ConfigBind&amp; operator=(ConfigBind const&amp;) = delete;
-        ConfigBind&amp; operator=(ConfigBind&amp;&amp;) = delete;
-        ~ConfigBind() override              = default;
-
-        ConfigBind(Type&amp; bind, T default_value, String const&amp; name, String const&amp; description);
-
-        // Marks the configuration as being experimental.
-        void markAsExperimental(Type const&amp; off_value);
-
-        // Interface implementation
-        //
-
-        bool setupArguments(ParameterParser&amp; parser) override;
-
-        bool configure(ParameterParser&amp; parser, bool experimental_mode) override;
-
-        String value() override;
-
-        void* pointer() const override;
-
-        std::type_index valueType() const override;
-
-      private:
-        template &lt;typename R&gt; bool setupArguments(ParameterParser&amp;, R const&amp;);
-
-        bool setupArguments(ParameterParser&amp; parser, bool const&amp;);
-
-        template &lt;typename R&gt; void alterNameBasedOnType(R const&amp; default_value);
-
-        void alterNameBasedOnType(bool const&amp; default_value);
-
-        template &lt;typename A&gt; String valueAsString(A const&amp;);
-
-        template &lt;typename A&gt; String valueAsString(EnableIf&lt;A, bool, A&gt; const&amp;);
-
-        template &lt;typename R&gt; void loadValue(ParameterParser&amp; parser, R const&amp; default_value);
-
-        template &lt;typename A&gt; void loadValue(ParameterParser&amp; parser, EnableIf&lt;A, bool, A&gt; const&amp; default_value);
-
-        template &lt;typename A&gt; void loadValue(ParameterParser&amp; parser, EnableIf&lt;A, String, A&gt; const&amp; default_value);
-
-        Type&amp; bind_;                   
-        Type  default_value_;          
-        Type  experimental_off_value_; 
-    };
-
-    template &lt;typename T&gt;
-    ConfigBind&lt;T&gt;::ConfigBind(Type&amp; bind, T default_value, String const&amp; name, String const&amp; description)
-      : IConfigBind(name, description)
-      , bind_{bind}
-      , default_value_{std::move(default_value)}
-    {
-        alterNameBasedOnType(default_value_);
+        setDefault(&quot;true&quot;);
     }
-
-    template &lt;typename T&gt; template &lt;typename R&gt; void ConfigBind&lt;T&gt;::alterNameBasedOnType(R const&amp; default_value)
+    else
     {
-        std::stringstream ss{&quot;&quot;};
-        ss &lt;&lt; default_value;
-        setDefault(static_cast&lt;String&gt;(ss.str()));
+        setDefault(&quot;false&quot;);
     }
+}
 
-    template &lt;typename T&gt; void ConfigBind&lt;T&gt;::alterNameBasedOnType(bool const&amp; default_value)
+template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::setupArguments(ParameterParser&amp; parser)
+{
+    return setupArguments(parser, default_value_);
+}
+
+template &lt;typename T&gt; template &lt;typename R&gt; bool ConfigBind&lt;T&gt;::setupArguments(ParameterParser&amp;, R const&amp;)
+{
+    return true;
+}
+
+template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::setupArguments(ParameterParser&amp; parser, bool const&amp;)
+{
+    parser.addFlag(name());
+    return true;
+}
+
+template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::configure(ParameterParser&amp; parser, bool experimental_mode)
+{
+    if (!isExperimental())
     {
-        markAsFlag();
-
-        if (default_value)
+        // For non-experimental parameters we load the default value
+        loadValue&lt;Type&gt;(parser, default_value_);
+    }
+    else
+    {
+        // If the parameter is experimental and we are in experimental mode
+        if (experimental_mode)
         {
-            setDefault(&quot;true&quot;);
-        }
-        else
-        {
-            setDefault(&quot;false&quot;);
-        }
-    }
-
-    template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::setupArguments(ParameterParser&amp; parser)
-    {
-        return setupArguments(parser, default_value_);
-    }
-
-    template &lt;typename T&gt; template &lt;typename R&gt; bool ConfigBind&lt;T&gt;::setupArguments(ParameterParser&amp;, R const&amp;)
-    {
-        return true;
-    }
-
-    template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::setupArguments(ParameterParser&amp; parser, bool const&amp;)
-    {
-        parser.addFlag(name());
-        return true;
-    }
-
-    template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::configure(ParameterParser&amp; parser, bool experimental_mode)
-    {
-        if (!isExperimental())
-        {
-            // For non-experimental parameters we load the default value
+            // ... we load the default value
             loadValue&lt;Type&gt;(parser, default_value_);
         }
         else
         {
-            // If the parameter is experimental and we are in experimental mode
-            if (experimental_mode)
-            {
-                // ... we load the default value
-                loadValue&lt;Type&gt;(parser, default_value_);
-            }
-            else
-            {
-                // ... and else we load the experimental off value
-                bind_ = experimental_off_value_;
-            }
-        }
-        return true;
-    }
-
-    template &lt;typename T&gt; void ConfigBind&lt;T&gt;::markAsExperimental(Type const&amp; off_value)
-    {
-        experimental_off_value_ = off_value;
-
-        makeSettingExperimental();
-    }
-
-    template &lt;typename T&gt; String ConfigBind&lt;T&gt;::value()
-    {
-        return valueAsString&lt;Type&gt;(default_value_);
-    }
-
-    template &lt;typename T&gt; template &lt;typename A&gt; String ConfigBind&lt;T&gt;::valueAsString(A const&amp;)
-    {
-        std::stringstream ss{&quot;&quot;};
-        ss &lt;&lt; bind_;
-        return static_cast&lt;String&gt;(ss.str());
-    }
-
-    template &lt;typename T&gt; template &lt;typename A&gt; String ConfigBind&lt;T&gt;::valueAsString(EnableIf&lt;A, bool, A&gt; const&amp;)
-    {
-        std::stringstream ss{&quot;&quot;};
-        ss &lt;&lt; (bind_ ? &quot;true&quot; : &quot;false&quot;);
-        return static_cast&lt;String&gt;(ss.str());
-    }
-
-    template &lt;typename T&gt;
-    template &lt;typename R&gt;
-    void ConfigBind&lt;T&gt;::loadValue(ParameterParser&amp; parser, R const&amp; default_value)
-    {
-        bind_ = default_value;
-
-        if (parser.has(name()))
-        {
-            std::stringstream ss{parser.get(name())};
-            ss &gt;&gt; bind_;
+            // ... and else we load the experimental off value
+            bind_ = experimental_off_value_;
         }
     }
+    return true;
+}
 
-    template &lt;typename T&gt;
-    template &lt;typename A&gt;
-    void ConfigBind&lt;T&gt;::loadValue(ParameterParser&amp; parser, EnableIf&lt;A, bool, A&gt; const&amp; default_value)
+template &lt;typename T&gt; void ConfigBind&lt;T&gt;::markAsExperimental(Type const&amp; off_value)
+{
+    experimental_off_value_ = off_value;
+
+    makeSettingExperimental();
+}
+
+template &lt;typename T&gt; String ConfigBind&lt;T&gt;::value()
+{
+    return valueAsString&lt;Type&gt;(default_value_);
+}
+
+template &lt;typename T&gt; template &lt;typename A&gt; String ConfigBind&lt;T&gt;::valueAsString(A const&amp;)
+{
+    std::stringstream ss{&quot;&quot;};
+    ss &lt;&lt; bind_;
+    return static_cast&lt;String&gt;(ss.str());
+}
+
+template &lt;typename T&gt; template &lt;typename A&gt; String ConfigBind&lt;T&gt;::valueAsString(EnableIf&lt;A, bool, A&gt; const&amp;)
+{
+    std::stringstream ss{&quot;&quot;};
+    ss &lt;&lt; (bind_ ? &quot;true&quot; : &quot;false&quot;);
+    return static_cast&lt;String&gt;(ss.str());
+}
+
+template &lt;typename T&gt;
+template &lt;typename R&gt;
+void ConfigBind&lt;T&gt;::loadValue(ParameterParser&amp; parser, R const&amp; default_value)
+{
+    bind_ = default_value;
+
+    if (parser.has(name()))
     {
-        bind_ = default_value;
-        if (parser.has(name()))
-        {
-            parser.markAsUsed(name());
-            bind_ = true;
-        }
-        else if (parser.has(&quot;no-&quot; + name()))
-        {
-            parser.markAsUsed(&quot;no-&quot; + name());
-            bind_ = false;
-        }
+        std::stringstream ss{parser.get(name())};
+        ss &gt;&gt; bind_;
     }
+}
 
-    template &lt;typename T&gt;
-    template &lt;typename A&gt;
-    void ConfigBind&lt;T&gt;::loadValue(ParameterParser&amp; parser, EnableIf&lt;A, String, A&gt; const&amp; default_value)
+template &lt;typename T&gt;
+template &lt;typename A&gt;
+void ConfigBind&lt;T&gt;::loadValue(ParameterParser&amp; parser, EnableIf&lt;A, bool, A&gt; const&amp; default_value)
+{
+    bind_ = default_value;
+    if (parser.has(name()))
     {
-        bind_ = default_value;
-
-        if (parser.has(name()))
-        {
-            bind_ = parser.get(name());
-        }
+        parser.markAsUsed(name());
+        bind_ = true;
     }
-
-    template &lt;typename T&gt; void* ConfigBind&lt;T&gt;::pointer() const
+    else if (parser.has(&quot;no-&quot; + name()))
     {
-        return static_cast&lt;void*&gt;(&amp;bind_);
+        parser.markAsUsed(&quot;no-&quot; + name());
+        bind_ = false;
     }
+}
 
-    template &lt;typename T&gt; std::type_index ConfigBind&lt;T&gt;::valueType() const
+template &lt;typename T&gt;
+template &lt;typename A&gt;
+void ConfigBind&lt;T&gt;::loadValue(ParameterParser&amp; parser, EnableIf&lt;A, String, A&gt; const&amp; default_value)
+{
+    bind_ = default_value;
+
+    if (parser.has(name()))
     {
-        return std::type_index(typeid(T));
+        bind_ = parser.get(name());
     }
+}
 
-} // namespace quantum
-} // namespace microsoft
+template &lt;typename T&gt; void* ConfigBind&lt;T&gt;::pointer() const
+{
+    return static_cast&lt;void*&gt;(&amp;bind_);
+}
+
+template &lt;typename T&gt; std::type_index ConfigBind&lt;T&gt;::valueType() const
+{
+    return std::type_index(typeid(T));
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

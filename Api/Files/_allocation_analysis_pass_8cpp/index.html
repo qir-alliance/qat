@@ -586,156 +586,151 @@
 #include &lt;fstream&gt;
 #include &lt;iostream&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    llvm::AnalysisKey AllocationAnalysisPass::Key;
+llvm::AnalysisKey AllocationAnalysisPass::Key;
 
-    bool AllocationAnalysisPass::extractResourceId(llvm::Value* value, uint64_t&amp; return_value, ResourceType&amp; type) const
+bool AllocationAnalysisPass::extractResourceId(llvm::Value* value, uint64_t&amp; return_value, ResourceType&amp; type) const
+{
+    auto* instruction_ptr = llvm::dyn_cast&lt;llvm::IntToPtrInst&gt;(value);
+    auto* operator_ptr    = llvm::dyn_cast&lt;llvm::ConcreteOperator&lt;llvm::Operator, llvm::Instruction::IntToPtr&gt;&gt;(value);
+
+    auto* nullptr_cast = llvm::dyn_cast&lt;llvm::ConstantPointerNull&gt;(value);
+
+    if (instruction_ptr || operator_ptr || nullptr_cast)
     {
-        auto* instruction_ptr = llvm::dyn_cast&lt;llvm::IntToPtrInst&gt;(value);
-        auto* operator_ptr = llvm::dyn_cast&lt;llvm::ConcreteOperator&lt;llvm::Operator, llvm::Instruction::IntToPtr&gt;&gt;(value);
 
-        auto* nullptr_cast = llvm::dyn_cast&lt;llvm::ConstantPointerNull&gt;(value);
-
-        if (instruction_ptr || operator_ptr || nullptr_cast)
+        auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(value-&gt;getType());
+        if (!pointer_type)
         {
+            return false;
+        }
 
-            auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(value-&gt;getType());
-            if (!pointer_type)
+        llvm::Type* element_type = pointer_type-&gt;getElementType();
+
+        if (!element_type-&gt;isStructTy())
+        {
+            return false;
+        }
+
+        type           = ResourceType::NotResource;
+        auto type_name = static_cast&lt;String&gt;(element_type-&gt;getStructName());
+        if (type_name == &quot;Qubit&quot;)
+        {
+            type = ResourceType::QubitResource;
+        }
+
+        if (type_name == &quot;Result&quot;)
+        {
+            type = ResourceType::ResultResource;
+        }
+
+        if (type == ResourceType::NotResource)
+        {
+            return false;
+        }
+
+        bool     is_constant_int = nullptr_cast != nullptr;
+        uint64_t n               = 0;
+
+        auto user = llvm::dyn_cast&lt;llvm::User&gt;(value);
+
+        // In case there exists a user, it must have exactly one argument
+        // which should be an integer. In case of deferred integers, the mapping
+        // will not work
+        if (user &amp;&amp; user-&gt;getNumOperands() == 1)
+        {
+            auto cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(user-&gt;getOperand(0));
+
+            if (cst)
             {
-                return false;
-            }
-
-            llvm::Type* element_type = pointer_type-&gt;getElementType();
-
-            if (!element_type-&gt;isStructTy())
-            {
-                return false;
-            }
-
-            type           = ResourceType::NotResource;
-            auto type_name = static_cast&lt;String&gt;(element_type-&gt;getStructName());
-            if (type_name == &quot;Qubit&quot;)
-            {
-                type = ResourceType::QubitResource;
-            }
-
-            if (type_name == &quot;Result&quot;)
-            {
-                type = ResourceType::ResultResource;
-            }
-
-            if (type == ResourceType::NotResource)
-            {
-                return false;
-            }
-
-            bool     is_constant_int = nullptr_cast != nullptr;
-            uint64_t n               = 0;
-
-            auto user = llvm::dyn_cast&lt;llvm::User&gt;(value);
-
-            // In case there exists a user, it must have exactly one argument
-            // which should be an integer. In case of deferred integers, the mapping
-            // will not work
-            if (user &amp;&amp; user-&gt;getNumOperands() == 1)
-            {
-                auto cst = llvm::dyn_cast&lt;llvm::ConstantInt&gt;(user-&gt;getOperand(0));
-
-                if (cst)
-                {
-                    is_constant_int = true;
-                    n               = cst-&gt;getValue().getZExtValue();
-                }
-            }
-
-            if (is_constant_int)
-            {
-                return_value = n;
-                return true;
+                is_constant_int = true;
+                n               = cst-&gt;getValue().getZExtValue();
             }
         }
 
-        return false;
+        if (is_constant_int)
+        {
+            return_value = n;
+            return true;
+        }
     }
 
-    AllocationAnalysisPass::Result AllocationAnalysisPass::run(
-        llvm::Function&amp; function,
-        llvm::FunctionAnalysisManager&amp; /*fam*/)
+    return false;
+}
+
+AllocationAnalysisPass::Result AllocationAnalysisPass::run(
+    llvm::Function&amp; function,
+    llvm::FunctionAnalysisManager&amp; /*fam*/)
+{
+    AllocationAnalysis ret;
+
+    std::unordered_set&lt;uint64_t&gt; qubits_used{};
+    std::unordered_set&lt;uint64_t&gt; results_used{};
+
+    for (auto&amp; block : function)
     {
-        AllocationAnalysis ret;
-
-        std::unordered_set&lt;uint64_t&gt; qubits_used{};
-        std::unordered_set&lt;uint64_t&gt; results_used{};
-
-        for (auto&amp; block : function)
+        for (auto&amp; instr : block)
         {
-            for (auto&amp; instr : block)
+            for (uint64_t i = 0; i &lt; instr.getNumOperands(); ++i)
             {
-                for (uint64_t i = 0; i &lt; instr.getNumOperands(); ++i)
+                auto         op   = instr.getOperand(i);
+                ResourceType type = ResourceType::NotResource;
+                uint64_t     n    = 0;
+
+                // Checking if it is a qubit resource reference and extracting the corresponding
+                // id and type. Otherwise, we skip to the next operand.
+                if (!extractResourceId(op, n, type))
                 {
-                    auto         op   = instr.getOperand(i);
-                    ResourceType type = ResourceType::NotResource;
-                    uint64_t     n    = 0;
+                    continue;
+                }
 
-                    // Checking if it is a qubit resource reference and extracting the corresponding
-                    // id and type. Otherwise, we skip to the next operand.
-                    if (!extractResourceId(op, n, type))
-                    {
-                        continue;
-                    }
+                ResourceAccessLocation value{op, type, n, &amp;instr, i};
+                ret.access_map[op] = value;
+                ret.resource_access.push_back(value);
 
-                    ResourceAccessLocation value{op, type, n, &amp;instr, i};
-                    ret.access_map[op] = value;
-                    ret.resource_access.push_back(value);
+                switch (type)
+                {
+                case ResourceType::QubitResource:
+                    qubits_used.insert(n);
+                    ret.largest_qubit_index = ret.largest_qubit_index &lt; n ? n : ret.largest_qubit_index;
 
-                    switch (type)
-                    {
-                    case ResourceType::QubitResource:
-                        qubits_used.insert(n);
-                        ret.largest_qubit_index = ret.largest_qubit_index &lt; n ? n : ret.largest_qubit_index;
-
-                        break;
-                    case ResourceType::ResultResource:
-                        results_used.insert(n);
-                        ret.largest_result_index = ret.largest_result_index &lt; n ? n : ret.largest_result_index;
-                        break;
-                    case ResourceType::NotResource:
-                    default:
-                        break;
-                    }
+                    break;
+                case ResourceType::ResultResource:
+                    results_used.insert(n);
+                    ret.largest_result_index = ret.largest_result_index &lt; n ? n : ret.largest_result_index;
+                    break;
+                case ResourceType::NotResource:
+                default:
+                    break;
                 }
             }
         }
-
-        ret.usage_qubit_counts  = qubits_used.size();
-        ret.usage_result_counts = results_used.size();
-
-        return ret;
     }
 
-    bool AllocationAnalysisPass::isRequired()
-    {
-        return true;
-    }
+    ret.usage_qubit_counts  = qubits_used.size();
+    ret.usage_result_counts = results_used.size();
 
-    llvm::PreservedAnalyses AllocationAnalysisPassPrinter::run(
-        llvm::Function&amp;                module,
-        llvm::FunctionAnalysisManager&amp; fam)
-    {
-        auto&amp; result = fam.getResult&lt;AllocationAnalysisPass&gt;(module);
+    return ret;
+}
 
-        return llvm::PreservedAnalyses::all();
-    }
+bool AllocationAnalysisPass::isRequired()
+{
+    return true;
+}
 
-} // namespace quantum
-} // namespace microsoft
+llvm::PreservedAnalyses AllocationAnalysisPassPrinter::run(llvm::Function&amp; module, llvm::FunctionAnalysisManager&amp; fam)
+{
+    auto&amp; result = fam.getResult&lt;AllocationAnalysisPass&gt;(module);
+
+    return llvm::PreservedAnalyses::all();
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

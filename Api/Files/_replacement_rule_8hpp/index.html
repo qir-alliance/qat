@@ -605,60 +605,57 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class ReplacementRule
-    {
-      public:
-        using Captures = IOperandPrototype::Captures;
+class ReplacementRule
+{
+  public:
+    using Captures = IOperandPrototype::Captures;
 
-        using Value = llvm::Value;
+    using Value = llvm::Value;
 
-        using IOperandPrototypePtr = std::shared_ptr&lt;IOperandPrototype&gt;;
+    using IOperandPrototypePtr = std::shared_ptr&lt;IOperandPrototype&gt;;
 
-        using Builder = llvm::IRBuilder&lt;&gt;;
+    using Builder = llvm::IRBuilder&lt;&gt;;
 
-        using Replacements = std::vector&lt;std::pair&lt;Value*, Value*&gt;&gt;;
+    using Replacements = std::vector&lt;std::pair&lt;Value*, Value*&gt;&gt;;
 
-        using ReplaceFunction = std::function&lt;bool(Builder&amp;, Value*, Captures&amp;, Replacements&amp;)&gt;;
+    using ReplaceFunction = std::function&lt;bool(Builder&amp;, Value*, Captures&amp;, Replacements&amp;)&gt;;
 
-        // Constructors and destructors
-        //
+    // Constructors and destructors
+    //
 
-        ReplacementRule() = default;
-        ReplacementRule(String const&amp; name, IOperandPrototypePtr&amp;&amp; pattern, ReplaceFunction&amp;&amp; replacer);
-        ReplacementRule(IOperandPrototypePtr&amp;&amp; pattern, ReplaceFunction&amp;&amp; replacer);
+    ReplacementRule() = default;
+    ReplacementRule(String const&amp; name, IOperandPrototypePtr&amp;&amp; pattern, ReplaceFunction&amp;&amp; replacer);
+    ReplacementRule(IOperandPrototypePtr&amp;&amp; pattern, ReplaceFunction&amp;&amp; replacer);
 
-        // Rule configuration
-        //
+    // Rule configuration
+    //
 
-        void setPattern(IOperandPrototypePtr&amp;&amp; pattern);
+    void setPattern(IOperandPrototypePtr&amp;&amp; pattern);
 
-        void setReplacer(ReplaceFunction const&amp; replacer);
+    void setReplacer(ReplaceFunction const&amp; replacer);
 
-        // Operation
-        //
+    // Operation
+    //
 
-        bool match(Value* value, Captures&amp; captures) const;
+    bool match(Value* value, Captures&amp; captures) const;
 
-        bool replace(Builder&amp; builder, Value* value, Captures&amp; captures, Replacements&amp; replacements) const;
+    bool replace(Builder&amp; builder, Value* value, Captures&amp; captures, Replacements&amp; replacements) const;
 
-        String name() const;
+    String name() const;
 
-      private:
-        IOperandPrototypePtr pattern_{nullptr};  
-        ReplaceFunction      replacer_{nullptr}; 
-        String               name_{&quot;unnamed&quot;};   
-    };
+  private:
+    IOperandPrototypePtr pattern_{nullptr};  
+    ReplaceFunction      replacer_{nullptr}; 
+    String               name_{&quot;unnamed&quot;};   
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

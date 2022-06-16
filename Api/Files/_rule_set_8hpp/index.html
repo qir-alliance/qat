@@ -604,70 +604,64 @@
 #include &lt;memory&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class RuleSet
+class RuleSet
+{
+  public:
+    using ReplacementRulePtr   = std::shared_ptr&lt;ReplacementRule&gt;;
+    using Rules                = std::vector&lt;ReplacementRulePtr&gt;;
+    using Replacements         = ReplacementRule::Replacements;
+    using Captures             = IOperandPrototype::Captures;
+    using Instruction          = llvm::Instruction;
+    using Value                = llvm::Value;
+    using Builder              = ReplacementRule::Builder;
+    using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
+
+    enum ReplaceDirection
     {
-      public:
-        using ReplacementRulePtr   = std::shared_ptr&lt;ReplacementRule&gt;;
-        using Rules                = std::vector&lt;ReplacementRulePtr&gt;;
-        using Replacements         = ReplacementRule::Replacements;
-        using Captures             = IOperandPrototype::Captures;
-        using Instruction          = llvm::Instruction;
-        using Value                = llvm::Value;
-        using Builder              = ReplacementRule::Builder;
-        using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
-
-        enum ReplaceDirection
-        {
-            ReplaceForwards,
-            ReplaceBackwards
-        };
-
-        // Constructors
-        //
-        RuleSet()               = default;
-        RuleSet(RuleSet const&amp;) = default;
-        RuleSet(RuleSet&amp;&amp;)      = default;
-        ~RuleSet()              = default;
-
-        // Operators
-        //
-
-        RuleSet&amp; operator=(RuleSet const&amp;) = default;
-        RuleSet&amp; operator=(RuleSet&amp;&amp;) = default;
-
-        // Operating rule sets
-        //
-
-        bool matchAndReplace(
-            Instruction*            value,
-            Replacements&amp;           replacements,
-            ReplaceDirection const&amp; dir = ReplaceForwards);
-
-        // Set up and configuration
-        //
-
-        void addRule(ReplacementRulePtr const&amp; rule, ReplaceDirection const&amp; dir = ReplaceForwards);
-        void addRule(ReplacementRule&amp;&amp; rule, ReplaceDirection const&amp; dir = ReplaceForwards);
-
-        void clear();
-
-        uint64_t size() const;
-
-      private:
-        Rules rules_;           
-        Rules rules_backwards_; 
+        ReplaceForwards,
+        ReplaceBackwards
     };
 
-} // namespace quantum
-} // namespace microsoft
+    // Constructors
+    //
+    RuleSet()               = default;
+    RuleSet(RuleSet const&amp;) = default;
+    RuleSet(RuleSet&amp;&amp;)      = default;
+    ~RuleSet()              = default;
+
+    // Operators
+    //
+
+    RuleSet&amp; operator=(RuleSet const&amp;) = default;
+    RuleSet&amp; operator=(RuleSet&amp;&amp;) = default;
+
+    // Operating rule sets
+    //
+
+    bool matchAndReplace(Instruction* value, Replacements&amp; replacements, ReplaceDirection const&amp; dir = ReplaceForwards);
+
+    // Set up and configuration
+    //
+
+    void addRule(ReplacementRulePtr const&amp; rule, ReplaceDirection const&amp; dir = ReplaceForwards);
+    void addRule(ReplacementRule&amp;&amp; rule, ReplaceDirection const&amp; dir = ReplaceForwards);
+
+    void clear();
+
+    uint64_t size() const;
+
+  private:
+    Rules rules_;           
+    Rules rules_backwards_; 
+};
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

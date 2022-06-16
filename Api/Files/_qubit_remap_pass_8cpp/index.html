@@ -592,124 +592,121 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    QubitRemapPass::QubitRemapPass(StaticResourceComponentConfiguration const&amp; cfg, ILoggerPtr const&amp; logger)
-      : config_{cfg}
-      , logger_{logger}
+QubitRemapPass::QubitRemapPass(StaticResourceComponentConfiguration const&amp; cfg, ILoggerPtr const&amp; logger)
+  : config_{cfg}
+  , logger_{logger}
+{
+}
+
+llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; fam)
+{
+    if (!config_.shouldReindexQubits())
     {
+        return llvm::PreservedAnalyses::all();
     }
 
-    llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; fam)
+    auto&amp; function_details = fam.getResult&lt;AllocationAnalysisPass&gt;(function);
+
+    llvm::IRBuilder&lt;&gt; builder{function.getContext()};
+
+    std::unordered_map&lt;uint64_t, uint64_t&gt; qubits_mapping{};
+    std::unordered_map&lt;uint64_t, uint64_t&gt; results_mapping{};
+
+    // Re-indexing
+    for (auto const&amp; value : function_details.resource_access)
     {
-        if (!config_.shouldReindexQubits())
+        auto const&amp; index = value.index;
+        switch (value.type)
         {
-            return llvm::PreservedAnalyses::all();
+        case AllocationAnalysis::QubitResource:
+            if (qubits_mapping.find(index) == qubits_mapping.end())
+            {
+                qubits_mapping[index] = qubits_mapping.size();
+            }
+            break;
+        case AllocationAnalysis::ResultResource:
+            if (results_mapping.find(index) == results_mapping.end())
+            {
+                results_mapping[index] = results_mapping.size();
+            }
+
+            break;
         }
-
-        auto&amp; function_details = fam.getResult&lt;AllocationAnalysisPass&gt;(function);
-
-        llvm::IRBuilder&lt;&gt; builder{function.getContext()};
-
-        std::unordered_map&lt;uint64_t, uint64_t&gt; qubits_mapping{};
-        std::unordered_map&lt;uint64_t, uint64_t&gt; results_mapping{};
-
-        // Re-indexing
-        for (auto const&amp; value : function_details.resource_access)
-        {
-            auto const&amp; index = value.index;
-            switch (value.type)
-            {
-            case AllocationAnalysis::QubitResource:
-                if (qubits_mapping.find(index) == qubits_mapping.end())
-                {
-                    qubits_mapping[index] = qubits_mapping.size();
-                }
-                break;
-            case AllocationAnalysis::ResultResource:
-                if (results_mapping.find(index) == results_mapping.end())
-                {
-                    results_mapping[index] = results_mapping.size();
-                }
-
-                break;
-            }
-        }
-
-        // Updating values
-        for (auto const&amp; value : function_details.resource_access)
-        {
-            auto const&amp; index = value.index;
-            auto        op    = value.operand;
-
-            auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(op-&gt;getType());
-            if (!pointer_type)
-            {
-                continue;
-            }
-
-            uint64_t remapped_index = value.index;
-
-            switch (value.type)
-            {
-            case AllocationAnalysis::QubitResource:
-                if (qubits_mapping.find(index) != qubits_mapping.end())
-                {
-                    remapped_index = qubits_mapping[index];
-                }
-                break;
-            case AllocationAnalysis::ResultResource:
-                if (results_mapping.find(index) != results_mapping.end())
-                {
-                    remapped_index = results_mapping[index];
-                }
-
-                break;
-            case AllocationAnalysis::NotResource:
-            default:
-                continue;
-            }
-
-            builder.SetInsertPoint(value.used_by);
-
-            // Removing non-null attribute if it exists as remapping may change this
-            auto call_instr = llvm::dyn_cast&lt;llvm::CallInst&gt;(value.used_by);
-            if (call_instr)
-            {
-                auto attrs = call_instr-&gt;getAttributes();
-                auto newlist =
-                    attrs.removeParamAttribute(function.getContext(), value.operand_id, llvm::Attribute::NonNull);
-                call_instr-&gt;setAttributes(newlist);
-            }
-
-            // Creating replacement instruction
-            auto idx = llvm::APInt(64, remapped_index);
-
-            auto         new_index = llvm::ConstantInt::get(function.getContext(), idx);
-            llvm::Value* new_instr = nullptr;
-            new_instr              = nullptr;
-
-            new_instr = new llvm::IntToPtrInst(new_index, pointer_type);
-            builder.Insert(new_instr);
-
-            value.used_by-&gt;setOperand(value.operand_id, new_instr);
-        }
-
-        return llvm::PreservedAnalyses::none();
     }
 
-    bool QubitRemapPass::isRequired()
+    // Updating values
+    for (auto const&amp; value : function_details.resource_access)
     {
-        return true;
+        auto const&amp; index = value.index;
+        auto        op    = value.operand;
+
+        auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(op-&gt;getType());
+        if (!pointer_type)
+        {
+            continue;
+        }
+
+        uint64_t remapped_index = value.index;
+
+        switch (value.type)
+        {
+        case AllocationAnalysis::QubitResource:
+            if (qubits_mapping.find(index) != qubits_mapping.end())
+            {
+                remapped_index = qubits_mapping[index];
+            }
+            break;
+        case AllocationAnalysis::ResultResource:
+            if (results_mapping.find(index) != results_mapping.end())
+            {
+                remapped_index = results_mapping[index];
+            }
+
+            break;
+        case AllocationAnalysis::NotResource:
+        default:
+            continue;
+        }
+
+        builder.SetInsertPoint(value.used_by);
+
+        // Removing non-null attribute if it exists as remapping may change this
+        auto call_instr = llvm::dyn_cast&lt;llvm::CallInst&gt;(value.used_by);
+        if (call_instr)
+        {
+            auto attrs = call_instr-&gt;getAttributes();
+            auto newlist =
+                attrs.removeParamAttribute(function.getContext(), value.operand_id, llvm::Attribute::NonNull);
+            call_instr-&gt;setAttributes(newlist);
+        }
+
+        // Creating replacement instruction
+        auto idx = llvm::APInt(64, remapped_index);
+
+        auto         new_index = llvm::ConstantInt::get(function.getContext(), idx);
+        llvm::Value* new_instr = nullptr;
+        new_instr              = nullptr;
+
+        new_instr = new llvm::IntToPtrInst(new_index, pointer_type);
+        builder.Insert(new_instr);
+
+        value.used_by-&gt;setOperand(value.operand_id, new_instr);
     }
-} // namespace quantum
-} // namespace microsoft
+
+    return llvm::PreservedAnalyses::none();
+}
+
+bool QubitRemapPass::isRequired()
+{
+    return true;
+}
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

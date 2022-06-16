@@ -634,79 +634,76 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class StorePattern : public IOperandPrototype
-    {
-      public:
-        bool  match(Value* instr, Captures&amp; captures) const override;
-        Child copy() const override;
-    };
+class StorePattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures&amp; captures) const override;
+    Child copy() const override;
+};
 
-    class LoadPattern : public IOperandPrototype
-    {
-      public:
-        bool  match(Value* instr, Captures&amp; captures) const override;
-        Child copy() const override;
-    };
+class LoadPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures&amp; captures) const override;
+    Child copy() const override;
+};
 
-    class BitCastPattern : public IOperandPrototype
-    {
-      public:
-        bool  match(Value* instr, Captures&amp; captures) const override;
-        Child copy() const override;
-    };
+class BitCastPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures&amp; captures) const override;
+    Child copy() const override;
+};
 
-    class IntToPtrPattern : public IOperandPrototype
-    {
-      public:
-        bool  match(Value* instr, Captures&amp; captures) const override;
-        Child copy() const override;
-    };
+class IntToPtrPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures&amp; captures) const override;
+    Child copy() const override;
+};
 
-    class ConstIntPattern : public IOperandPrototype
-    {
-      public:
-        bool  match(Value* instr, Captures&amp; captures) const override;
-        Child copy() const override;
-    };
+class ConstIntPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures&amp; captures) const override;
+    Child copy() const override;
+};
 
-    class BranchPattern : public IOperandPrototype
-    {
-      public:
-        bool  match(Value* instr, Captures&amp; captures) const override;
-        Child copy() const override;
-    };
+class BranchPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures&amp; captures) const override;
+    Child copy() const override;
+};
 
-    class SelectPattern : public IOperandPrototype
-    {
-      public:
-        bool  match(Value* instr, Captures&amp; captures) const override;
-        Child copy() const override;
-    };
+class SelectPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures&amp; captures) const override;
+    Child copy() const override;
+};
 
-    class BasicBlockPattern : public IOperandPrototype
-    {
-      public:
-        bool  match(Value* instr, Captures&amp; captures) const override;
-        Child copy() const override;
-    };
+class BasicBlockPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures&amp; captures) const override;
+    Child copy() const override;
+};
 
-    class SwitchPattern : public IOperandPrototype
-    {
-      public:
-        bool  match(Value* instr, Captures&amp; captures) const override;
-        Child copy() const override;
-    };
+class SwitchPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures&amp; captures) const override;
+    Child copy() const override;
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

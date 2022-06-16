@@ -617,350 +617,341 @@
 #include &lt;typeindex&gt;
 #include &lt;typeinfo&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class ConfigurationManager;
+class ConfigurationManager;
 
-    class DeferredValue
+class DeferredValue
+{
+  public:
+    using DeferredValuePtr = std::shared_ptr&lt;DeferredValue&gt;;
+    using IConfigBindPtr   = std::shared_ptr&lt;IConfigBind&gt;;
+
+    static DeferredValuePtr create()
     {
-      public:
-        using DeferredValuePtr = std::shared_ptr&lt;DeferredValue&gt;;
-        using IConfigBindPtr   = std::shared_ptr&lt;IConfigBind&gt;;
-
-        static DeferredValuePtr create()
-        {
-            DeferredValuePtr ret;
-            ret.reset(new DeferredValue());
-            return ret;
-        }
-
-        void setReference(IConfigBindPtr const&amp; value)
-        {
-            value_ref_ = value;
-        }
-
-        bool isDereferenceable() const
-        {
-            return value_ref_ != nullptr;
-        }
-
-        template &lt;typename T&gt; T value() const
-        {
-            if (!isDereferenceable())
-            {
-                throw std::runtime_error(&quot;Deferred command line parameter is not dereferenceable.&quot;);
-            }
-
-            if (value_ref_-&gt;valueType() != std::type_index(typeid(T)))
-            {
-                throw std::runtime_error(&quot;Type mismatch for deferred command line parameter.&quot;);
-            }
-
-            auto ptr = static_cast&lt;T*&gt;(value_ref_-&gt;pointer());
-
-            return *ptr;
-        }
-
-      private:
-        DeferredValue() = default;
-        IConfigBindPtr value_ref_{nullptr};
-    };
-
-    class ConfigurationManager
-    {
-      public:
-        using IConfigBindPtr   = std::shared_ptr&lt;IConfigBind&gt;; 
-        using ConfigList       = std::vector&lt;IConfigBindPtr&gt;;  
-        using VoidPtr          = std::shared_ptr&lt;void&gt;;        
-        using TypeId           = std::type_index;              
-        using BoolPtr          = std::shared_ptr&lt;bool&gt;;
-        using Parameters       = std::unordered_map&lt;String, IConfigBindPtr&gt;;
-        using DeferredValuePtr = DeferredValue::DeferredValuePtr;
-        using DeferredRefs     = std::unordered_map&lt;String, DeferredValuePtr&gt;;
-
-        struct Section
-        {
-            TypeId     type{TypeId(typeid(std::nullptr_t))}; 
-            String     name{};                               
-            String     description{};                        
-            bool       enabled_by_default{true};             
-            VoidPtr    configuration{};                      
-            ConfigList settings{};                           
-            BoolPtr    active{nullptr};                      
-            String     id{};                                 
-        };
-        using Sections = std::vector&lt;Section&gt;; 
-
-        // Constructors, copy and move operators, destructor
-        //
-
-        ConfigurationManager()                            = default;
-        ConfigurationManager(ConfigurationManager const&amp;) = delete;
-        ConfigurationManager(ConfigurationManager&amp;&amp;)      = delete;
-        ConfigurationManager&amp; operator=(ConfigurationManager const&amp;) = delete;
-        ConfigurationManager&amp; operator=(ConfigurationManager&amp;&amp;) = delete;
-
-        ~ConfigurationManager()
-        {
-            for (auto&amp; s : config_sections_)
-            {
-                s.configuration.reset();
-            }
-        }
-
-        // Configuration setup
-        //
-
-        void setupArguments(ParameterParser&amp; parser);
-
-        void configure(ParameterParser&amp; parser, bool experimental_mode = false);
-
-        // Managing configuration
-        //
-
-        template &lt;typename T&gt; inline void setConfig(T const&amp; value);
-
-        template &lt;typename T&gt; inline T const&amp; get() const;
-
-        // Support functions
-        //
-
-        void printHelp(bool experimental_mode) const;
-
-        void printConfiguration() const;
-
-        // Configuration functions
-        //
-
-        template &lt;typename T&gt; inline void addConfig(String const&amp; id = &quot;&quot;, T const&amp; default_value = T());
-
-        template &lt;typename T&gt; inline bool configWasRegistered();
-
-        template &lt;typename T&gt; inline bool isActive();
-
-        void setSectionName(String const&amp; name, String const&amp; description);
-
-        void disableSectionByDefault();
-
-        template &lt;typename T&gt;
-        inline void addParameter(T&amp; bind, T default_value, String const&amp; name, String const&amp; description);
-
-        template &lt;typename T&gt;
-        inline void addExperimentalParameter(
-            T&amp;            bind,
-            T             default_value,
-            T             off_value,
-            String const&amp; name,
-            String const&amp; description);
-
-        template &lt;typename T&gt;
-        inline void addExperimentalParameter(T&amp; bind, T default_value, String const&amp; name, String const&amp; description);
-
-        template &lt;typename T&gt;
-        inline void addExperimentalParameter(T&amp; bind, String const&amp; name, String const&amp; description);
-
-        template &lt;typename T&gt; inline void addParameter(T&amp; bind, String const&amp; name, String const&amp; description);
-
-        DeferredValuePtr getParameter(String const&amp; name);
-
-      private:
-        template &lt;typename T&gt; inline T&amp; getInternal() const;
-
-        template &lt;typename T&gt;
-        std::shared_ptr&lt;ConfigBind&lt;T&gt;&gt; newParameter(
-            T&amp;            bind,
-            T             default_value,
-            String const&amp; name,
-            String const&amp; description);
-
-        Sections     config_sections_{}; 
-        Parameters   parameters_{};      
-        DeferredRefs deferred_refs_{};   
-    };
-
-    template &lt;typename T&gt; inline void ConfigurationManager::addConfig(String const&amp; id, T const&amp; default_value)
-    {
-        Section new_section{std::type_index(typeid(T))};
-
-        // Checking whether the section exists
-        auto type = std::type_index(typeid(T));
-        for (auto&amp; section : config_sections_)
-        {
-            if (section.type == type)
-            {
-                throw std::runtime_error(
-                    &quot;Configuration section for type '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) +
-                    &quot;' already exists&quot;);
-            }
-        }
-
-        // If not we create it.
-        auto ptr = std::make_shared&lt;T&gt;(default_value);
-
-        new_section.configuration = ptr;
-        new_section.active        = std::make_shared&lt;bool&gt;(true);
-        new_section.id            = id;
-
-        config_sections_.emplace_back(std::move(new_section));
-
-        ptr-&gt;setup(*this);
+        DeferredValuePtr ret;
+        ret.reset(new DeferredValue());
+        return ret;
     }
 
-    template &lt;typename T&gt; inline bool ConfigurationManager::configWasRegistered()
+    void setReference(IConfigBindPtr const&amp; value)
     {
-        auto type = std::type_index(typeid(T));
-        for (auto&amp; section : config_sections_)
-        {
-            if (section.type == type)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        value_ref_ = value;
     }
 
-    template &lt;typename T&gt; inline T&amp; ConfigurationManager::getInternal() const
+    bool isDereferenceable() const
     {
-        VoidPtr ptr{nullptr};
-        auto    type = std::type_index(typeid(T));
-
-        for (auto&amp; section : config_sections_)
-        {
-            if (section.type == type)
-            {
-                ptr = section.configuration;
-                break;
-            }
-        }
-
-        if (ptr == nullptr)
-        {
-            throw std::runtime_error(
-                &quot;Could not find configuration class '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;'.&quot;);
-        }
-
-        return *static_cast&lt;T*&gt;(ptr.get());
+        return value_ref_ != nullptr;
     }
 
-    template &lt;typename T&gt; inline void ConfigurationManager::setConfig(T const&amp; value)
+    template &lt;typename T&gt; T value() const
     {
-        auto&amp; config = getInternal&lt;T&gt;();
-        config       = value;
-    }
-
-    template &lt;typename T&gt; inline T const&amp; ConfigurationManager::get() const
-    {
-        return getInternal&lt;T&gt;();
-    }
-
-    template &lt;typename T&gt; inline bool ConfigurationManager::isActive()
-    {
-        BoolPtr ptr{nullptr};
-        auto    type = std::type_index(typeid(T));
-
-        for (auto&amp; section : config_sections_)
+        if (!isDereferenceable())
         {
-            if (section.type == type)
-            {
-                ptr = section.active;
-                break;
-            }
+            throw std::runtime_error(&quot;Deferred command line parameter is not dereferenceable.&quot;);
         }
 
-        if (ptr == nullptr)
+        if (value_ref_-&gt;valueType() != std::type_index(typeid(T)))
         {
-            throw std::runtime_error(
-                &quot;Could not find configuration class '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;'.&quot;);
+            throw std::runtime_error(&quot;Type mismatch for deferred command line parameter.&quot;);
         }
+
+        auto ptr = static_cast&lt;T*&gt;(value_ref_-&gt;pointer());
 
         return *ptr;
     }
 
-    template &lt;typename T&gt;
-    inline std::shared_ptr&lt;ConfigBind&lt;T&gt;&gt; ConfigurationManager::newParameter(
-        T&amp;            bind,
-        T             default_value,
-        String const&amp; name,
-        String const&amp; description)
+  private:
+    DeferredValue() = default;
+    IConfigBindPtr value_ref_{nullptr};
+};
+
+class ConfigurationManager
+{
+  public:
+    using IConfigBindPtr   = std::shared_ptr&lt;IConfigBind&gt;; 
+    using ConfigList       = std::vector&lt;IConfigBindPtr&gt;;  
+    using VoidPtr          = std::shared_ptr&lt;void&gt;;        
+    using TypeId           = std::type_index;              
+    using BoolPtr          = std::shared_ptr&lt;bool&gt;;
+    using Parameters       = std::unordered_map&lt;String, IConfigBindPtr&gt;;
+    using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+    using DeferredRefs     = std::unordered_map&lt;String, DeferredValuePtr&gt;;
+
+    struct Section
     {
-        if (parameters_.find(name) != parameters_.end())
+        TypeId     type{TypeId(typeid(std::nullptr_t))}; 
+        String     name{};                               
+        String     description{};                        
+        bool       enabled_by_default{true};             
+        VoidPtr    configuration{};                      
+        ConfigList settings{};                           
+        BoolPtr    active{nullptr};                      
+        String     id{};                                 
+    };
+    using Sections = std::vector&lt;Section&gt;; 
+
+    // Constructors, copy and move operators, destructor
+    //
+
+    ConfigurationManager()                            = default;
+    ConfigurationManager(ConfigurationManager const&amp;) = delete;
+    ConfigurationManager(ConfigurationManager&amp;&amp;)      = delete;
+    ConfigurationManager&amp; operator=(ConfigurationManager const&amp;) = delete;
+    ConfigurationManager&amp; operator=(ConfigurationManager&amp;&amp;) = delete;
+
+    ~ConfigurationManager()
+    {
+        for (auto&amp; s : config_sections_)
         {
-            throw std::runtime_error(&quot;Parameter '&quot; + name + &quot;' already exists.&quot;);
+            s.configuration.reset();
         }
-
-        auto ret          = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, default_value, name, description);
-        parameters_[name] = ret;
-
-        auto it = deferred_refs_.find(name);
-        if (it != deferred_refs_.end())
-        {
-            it-&gt;second-&gt;setReference(ret);
-        }
-
-        return ret;
     }
 
-    template &lt;typename T&gt;
-    inline void ConfigurationManager::addParameter(
-        T&amp;            bind,
-        T             default_value,
-        String const&amp; name,
-        String const&amp; description)
-    {
-        auto ptr = newParameter&lt;T&gt;(bind, default_value, name, description);
-        config_sections_.back().settings.push_back(ptr);
-    }
+    // Configuration setup
+    //
+
+    void setupArguments(ParameterParser&amp; parser);
+
+    void configure(ParameterParser&amp; parser, bool experimental_mode = false);
+
+    // Managing configuration
+    //
+
+    template &lt;typename T&gt; inline void setConfig(T const&amp; value);
+
+    template &lt;typename T&gt; inline T const&amp; get() const;
+
+    // Support functions
+    //
+
+    void printHelp(bool experimental_mode) const;
+
+    void printConfiguration() const;
+
+    // Configuration functions
+    //
+
+    template &lt;typename T&gt; inline void addConfig(String const&amp; id = &quot;&quot;, T const&amp; default_value = T());
+
+    template &lt;typename T&gt; inline bool configWasRegistered();
+
+    template &lt;typename T&gt; inline bool isActive();
+
+    void setSectionName(String const&amp; name, String const&amp; description);
+
+    void disableSectionByDefault();
 
     template &lt;typename T&gt;
-    inline void ConfigurationManager::addExperimentalParameter(
+    inline void addParameter(T&amp; bind, T default_value, String const&amp; name, String const&amp; description);
+
+    template &lt;typename T&gt;
+    inline void addExperimentalParameter(
         T&amp;            bind,
         T             default_value,
         T             off_value,
         String const&amp; name,
-        String const&amp; description)
-    {
-        auto ptr = newParameter&lt;T&gt;(bind, default_value, name, description);
-        ptr-&gt;markAsExperimental(off_value);
-        config_sections_.back().settings.push_back(ptr);
-    }
+        String const&amp; description);
 
     template &lt;typename T&gt;
-    inline void ConfigurationManager::addParameter(T&amp; bind, String const&amp; name, String const&amp; description)
-    {
-        auto ptr = newParameter&lt;T&gt;(bind, T(bind), name, description);
-        config_sections_.back().settings.push_back(ptr);
-    }
+    inline void addExperimentalParameter(T&amp; bind, T default_value, String const&amp; name, String const&amp; description);
+
+    template &lt;typename T&gt; inline void addExperimentalParameter(T&amp; bind, String const&amp; name, String const&amp; description);
+
+    template &lt;typename T&gt; inline void addParameter(T&amp; bind, String const&amp; name, String const&amp; description);
+
+    DeferredValuePtr getParameter(String const&amp; name);
+
+  private:
+    template &lt;typename T&gt; inline T&amp; getInternal() const;
 
     template &lt;typename T&gt;
-    inline void ConfigurationManager::addExperimentalParameter(
+    std::shared_ptr&lt;ConfigBind&lt;T&gt;&gt; newParameter(
         T&amp;            bind,
         T             default_value,
         String const&amp; name,
-        String const&amp; description)
-    {
+        String const&amp; description);
 
-        auto ptr = newParameter&lt;T&gt;(bind, T(default_value), name, description);
-        ptr-&gt;markAsExperimental(T(bind));
-        config_sections_.back().settings.push_back(ptr);
+    Sections     config_sections_{}; 
+    Parameters   parameters_{};      
+    DeferredRefs deferred_refs_{};   
+};
+
+template &lt;typename T&gt; inline void ConfigurationManager::addConfig(String const&amp; id, T const&amp; default_value)
+{
+    Section new_section{std::type_index(typeid(T))};
+
+    // Checking whether the section exists
+    auto type = std::type_index(typeid(T));
+    for (auto&amp; section : config_sections_)
+    {
+        if (section.type == type)
+        {
+            throw std::runtime_error(
+                &quot;Configuration section for type '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;' already exists&quot;);
+        }
     }
 
-    template &lt;typename T&gt;
-    inline void ConfigurationManager::addExperimentalParameter(T&amp; bind, String const&amp; name, String const&amp; description)
-    {
+    // If not we create it.
+    auto ptr = std::make_shared&lt;T&gt;(default_value);
 
-        auto ptr = newParameter&lt;T&gt;(bind, T(bind), name, description);
-        ptr-&gt;markAsExperimental(T(bind));
-        config_sections_.back().settings.push_back(ptr);
+    new_section.configuration = ptr;
+    new_section.active        = std::make_shared&lt;bool&gt;(true);
+    new_section.id            = id;
+
+    config_sections_.emplace_back(std::move(new_section));
+
+    ptr-&gt;setup(*this);
+}
+
+template &lt;typename T&gt; inline bool ConfigurationManager::configWasRegistered()
+{
+    auto type = std::type_index(typeid(T));
+    for (auto&amp; section : config_sections_)
+    {
+        if (section.type == type)
+        {
+            return true;
+        }
     }
-} // namespace quantum
-} // namespace microsoft
+
+    return false;
+}
+
+template &lt;typename T&gt; inline T&amp; ConfigurationManager::getInternal() const
+{
+    VoidPtr ptr{nullptr};
+    auto    type = std::type_index(typeid(T));
+
+    for (auto&amp; section : config_sections_)
+    {
+        if (section.type == type)
+        {
+            ptr = section.configuration;
+            break;
+        }
+    }
+
+    if (ptr == nullptr)
+    {
+        throw std::runtime_error(
+            &quot;Could not find configuration class '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;'.&quot;);
+    }
+
+    return *static_cast&lt;T*&gt;(ptr.get());
+}
+
+template &lt;typename T&gt; inline void ConfigurationManager::setConfig(T const&amp; value)
+{
+    auto&amp; config = getInternal&lt;T&gt;();
+    config       = value;
+}
+
+template &lt;typename T&gt; inline T const&amp; ConfigurationManager::get() const
+{
+    return getInternal&lt;T&gt;();
+}
+
+template &lt;typename T&gt; inline bool ConfigurationManager::isActive()
+{
+    BoolPtr ptr{nullptr};
+    auto    type = std::type_index(typeid(T));
+
+    for (auto&amp; section : config_sections_)
+    {
+        if (section.type == type)
+        {
+            ptr = section.active;
+            break;
+        }
+    }
+
+    if (ptr == nullptr)
+    {
+        throw std::runtime_error(
+            &quot;Could not find configuration class '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;'.&quot;);
+    }
+
+    return *ptr;
+}
+
+template &lt;typename T&gt;
+inline std::shared_ptr&lt;ConfigBind&lt;T&gt;&gt; ConfigurationManager::newParameter(
+    T&amp;            bind,
+    T             default_value,
+    String const&amp; name,
+    String const&amp; description)
+{
+    if (parameters_.find(name) != parameters_.end())
+    {
+        throw std::runtime_error(&quot;Parameter '&quot; + name + &quot;' already exists.&quot;);
+    }
+
+    auto ret          = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, default_value, name, description);
+    parameters_[name] = ret;
+
+    auto it = deferred_refs_.find(name);
+    if (it != deferred_refs_.end())
+    {
+        it-&gt;second-&gt;setReference(ret);
+    }
+
+    return ret;
+}
+
+template &lt;typename T&gt;
+inline void ConfigurationManager::addParameter(T&amp; bind, T default_value, String const&amp; name, String const&amp; description)
+{
+    auto ptr = newParameter&lt;T&gt;(bind, default_value, name, description);
+    config_sections_.back().settings.push_back(ptr);
+}
+
+template &lt;typename T&gt;
+inline void ConfigurationManager::addExperimentalParameter(
+    T&amp;            bind,
+    T             default_value,
+    T             off_value,
+    String const&amp; name,
+    String const&amp; description)
+{
+    auto ptr = newParameter&lt;T&gt;(bind, default_value, name, description);
+    ptr-&gt;markAsExperimental(off_value);
+    config_sections_.back().settings.push_back(ptr);
+}
+
+template &lt;typename T&gt;
+inline void ConfigurationManager::addParameter(T&amp; bind, String const&amp; name, String const&amp; description)
+{
+    auto ptr = newParameter&lt;T&gt;(bind, T(bind), name, description);
+    config_sections_.back().settings.push_back(ptr);
+}
+
+template &lt;typename T&gt;
+inline void ConfigurationManager::addExperimentalParameter(
+    T&amp;            bind,
+    T             default_value,
+    String const&amp; name,
+    String const&amp; description)
+{
+
+    auto ptr = newParameter&lt;T&gt;(bind, T(default_value), name, description);
+    ptr-&gt;markAsExperimental(T(bind));
+    config_sections_.back().settings.push_back(ptr);
+}
+
+template &lt;typename T&gt;
+inline void ConfigurationManager::addExperimentalParameter(T&amp; bind, String const&amp; name, String const&amp; description)
+{
+
+    auto ptr = newParameter&lt;T&gt;(bind, T(bind), name, description);
+    ptr-&gt;markAsExperimental(T(bind));
+    config_sections_.back().settings.push_back(ptr);
+}
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:13 UTC</p></div>
 </div>
           </div>
         </main>

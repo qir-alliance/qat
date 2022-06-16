@@ -602,119 +602,116 @@
 #include &lt;unordered_set&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class IrManipulationTestHelper
-    {
-      public:
-        using String            = std::string;
-        using Strings           = std::vector&lt;String&gt;;
-        using LLVMContext       = llvm::LLVMContext;
-        using SMDiagnostic      = llvm::SMDiagnostic;
-        using Module            = llvm::Module;
-        using ModulePtr         = std::unique_ptr&lt;Module&gt;;
-        using OptimizationLevel = llvm::PassBuilder::OptimizationLevel;
-        using GeneratorPtr      = std::shared_ptr&lt;ProfileGenerator&gt;;
+class IrManipulationTestHelper
+{
+  public:
+    using String            = std::string;
+    using Strings           = std::vector&lt;String&gt;;
+    using LLVMContext       = llvm::LLVMContext;
+    using SMDiagnostic      = llvm::SMDiagnostic;
+    using Module            = llvm::Module;
+    using ModulePtr         = std::unique_ptr&lt;Module&gt;;
+    using OptimizationLevel = llvm::PassBuilder::OptimizationLevel;
+    using GeneratorPtr      = std::shared_ptr&lt;ProfileGenerator&gt;;
 
-        // IrManipulationTestHelper is default constructible with no ability to move
-        // or copy.
-        //
+    // IrManipulationTestHelper is default constructible with no ability to move
+    // or copy.
+    //
 
-        IrManipulationTestHelper();
-        IrManipulationTestHelper(IrManipulationTestHelper const&amp;) = delete;
-        IrManipulationTestHelper&amp; operator=(IrManipulationTestHelper const&amp;) = delete;
-        IrManipulationTestHelper(IrManipulationTestHelper&amp;&amp;)                 = delete;
-        IrManipulationTestHelper&amp; operator=(IrManipulationTestHelper&amp;&amp;) = delete;
+    IrManipulationTestHelper();
+    IrManipulationTestHelper(IrManipulationTestHelper const&amp;) = delete;
+    IrManipulationTestHelper&amp; operator=(IrManipulationTestHelper const&amp;) = delete;
+    IrManipulationTestHelper(IrManipulationTestHelper&amp;&amp;)                 = delete;
+    IrManipulationTestHelper&amp; operator=(IrManipulationTestHelper&amp;&amp;) = delete;
 
-        // Output functions
-        //
+    // Output functions
+    //
 
-        String toString() const;
+    String toString() const;
 
-        Strings toBodyInstructions();
+    Strings toBodyInstructions();
 
-        // Test functions
-        //
+    // Test functions
+    //
 
-        bool hasInstructionSequence(Strings const&amp; instructions);
+    bool hasInstructionSequence(Strings const&amp; instructions);
 
-        void applyProfile(
-            GeneratorPtr const&amp;      generator,
-            OptimizationLevel const&amp; optimization_level = OptimizationLevel::O0,
-            bool                     debug              = false);
+    void applyProfile(
+        GeneratorPtr const&amp;      generator,
+        OptimizationLevel const&amp; optimization_level = OptimizationLevel::O0,
+        bool                     debug              = false);
 
-        bool validateProfile(GeneratorPtr const&amp; generator, String const&amp; profile_name = &quot;generic&quot;, bool debug = false);
+    bool validateProfile(GeneratorPtr const&amp; generator, String const&amp; profile_name = &quot;generic&quot;, bool debug = false);
 
-        bool containsValidationErrors(
-            GeneratorPtr const&amp; generator,
-            String const&amp;       profile_name,
-            Strings const&amp;      errors,
-            bool                debug = false) const;
+    bool containsValidationErrors(
+        GeneratorPtr const&amp; generator,
+        String const&amp;       profile_name,
+        Strings const&amp;      errors,
+        bool                debug = false) const;
 
-        bool containsExactValidationErrors(
-            GeneratorPtr const&amp; generator,
-            String const&amp;       profile_name,
-            Strings const&amp;      errors,
-            bool                debug = false) const;
+    bool containsExactValidationErrors(
+        GeneratorPtr const&amp; generator,
+        String const&amp;       profile_name,
+        Strings const&amp;      errors,
+        bool                debug = false) const;
 
-        // Declaration of partial or full IR
-        //
+    // Declaration of partial or full IR
+    //
 
-        void declareOpaque(String const&amp; name);
+    void declareOpaque(String const&amp; name);
 
-        void declareFunction(String const&amp; declaration);
+    void declareFunction(String const&amp; declaration);
 
-        bool fromBodyString(String const&amp; body, String const&amp; args = &quot;&quot;);
+    bool fromBodyString(String const&amp; body, String const&amp; args = &quot;&quot;);
 
-        String generateScript(String const&amp; body, String const&amp; args = &quot;&quot;) const;
+    String generateScript(String const&amp; body, String const&amp; args = &quot;&quot;) const;
 
-        bool fromString(String const&amp; data);
+    bool fromString(String const&amp; data);
 
-        String getErrorMessage() const;
+    String getErrorMessage() const;
 
-        bool isModuleBroken();
+    bool isModuleBroken();
 
-        // Acccess member functions
-        //
+    // Acccess member functions
+    //
 
-        ModulePtr&amp; module();
+    ModulePtr&amp; module();
 
-      private:
-        // Declarations
-        //
+  private:
+    // Declarations
+    //
 
-        std::unordered_set&lt;std::string&gt; opaque_declarations_{};
+    std::unordered_set&lt;std::string&gt; opaque_declarations_{};
 
-        std::unordered_set&lt;std::string&gt; function_declarations_{};
+    std::unordered_set&lt;std::string&gt; function_declarations_{};
 
-        // Compilation state
-        //
+    // Compilation state
+    //
 
-        bool compilation_failed_{false};
+    bool compilation_failed_{false};
 
-        SMDiagnostic error_;
+    SMDiagnostic error_;
 
-        LLVMContext context_;
+    LLVMContext context_;
 
-        ModulePtr module_;
+    ModulePtr module_;
 
-        // Objects used to run a set of passes
-        //
-        llvm::PassBuilder             pass_builder_;
-        llvm::LoopAnalysisManager     loop_analysis_manager_;
-        llvm::FunctionAnalysisManager function_analysis_manager_;
-        llvm::CGSCCAnalysisManager    gscc_analysis_manager_;
-        llvm::ModuleAnalysisManager   module_analysis_manager_;
-    };
+    // Objects used to run a set of passes
+    //
+    llvm::PassBuilder             pass_builder_;
+    llvm::LoopAnalysisManager     loop_analysis_manager_;
+    llvm::FunctionAnalysisManager function_analysis_manager_;
+    llvm::CGSCCAnalysisManager    gscc_analysis_manager_;
+    llvm::ModuleAnalysisManager   module_analysis_manager_;
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

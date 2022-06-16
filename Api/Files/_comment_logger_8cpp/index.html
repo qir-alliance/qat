@@ -585,59 +585,56 @@
 
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    void CommentLogger::debug(String const&amp; message)
-    {
-        llvm::errs() &lt;&lt; &quot;debug - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
-                     &lt;&lt; message &lt;&lt; &quot;\n&quot;;
-    }
+void CommentLogger::debug(String const&amp; message)
+{
+    llvm::errs() &lt;&lt; &quot;debug - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot; &lt;&lt; message
+                 &lt;&lt; &quot;\n&quot;;
+}
 
-    void CommentLogger::info(String const&amp; message)
-    {
-        llvm::errs() &lt;&lt; &quot;info - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
-                     &lt;&lt; message &lt;&lt; &quot;\n&quot;;
-    }
+void CommentLogger::info(String const&amp; message)
+{
+    llvm::errs() &lt;&lt; &quot;info - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot; &lt;&lt; message
+                 &lt;&lt; &quot;\n&quot;;
+}
 
-    void CommentLogger::warning(String const&amp; message)
-    {
-        had_warnings_ = true;
+void CommentLogger::warning(String const&amp; message)
+{
+    had_warnings_ = true;
 
-        llvm::errs() &lt;&lt; &quot;warning - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
-                     &lt;&lt; message &lt;&lt; &quot;\n&quot;;
-    }
+    llvm::errs() &lt;&lt; &quot;warning - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
+                 &lt;&lt; message &lt;&lt; &quot;\n&quot;;
+}
 
-    void CommentLogger::error(String const&amp; message)
-    {
-        had_errors_ = true;
-        llvm::errs() &lt;&lt; &quot;error - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
-                     &lt;&lt; message &lt;&lt; &quot;\n&quot;;
-    }
+void CommentLogger::error(String const&amp; message)
+{
+    had_errors_ = true;
+    llvm::errs() &lt;&lt; &quot;error - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot; &lt;&lt; message
+                 &lt;&lt; &quot;\n&quot;;
+}
 
-    void CommentLogger::internalError(String const&amp; message)
-    {
-        had_errors_ = true;
-        llvm::errs() &lt;&lt; &quot;internal error - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column
-                     &lt;&lt; &quot; - &quot; &lt;&lt; message &lt;&lt; &quot;\n&quot;;
-    }
+void CommentLogger::internalError(String const&amp; message)
+{
+    had_errors_ = true;
+    llvm::errs() &lt;&lt; &quot;internal error - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
+                 &lt;&lt; message &lt;&lt; &quot;\n&quot;;
+}
 
-    void CommentLogger::setLocation(SourceLocation const&amp; loc)
-    {
-        location_ = loc;
-    }
+void CommentLogger::setLocation(SourceLocation const&amp; loc)
+{
+    location_ = loc;
+}
 
-    void CommentLogger::setLlvmHint(String const&amp;) {}
+void CommentLogger::setLlvmHint(String const&amp;) {}
 
-    void CommentLogger::setFrontendHint(String const&amp;) {}
+void CommentLogger::setFrontendHint(String const&amp;) {}
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

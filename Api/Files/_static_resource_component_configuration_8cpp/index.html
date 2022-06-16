@@ -583,96 +583,91 @@
 #include &quot;QatTypes/QatTypes.hpp&quot;
 #include &quot;StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    void StaticResourceComponentConfiguration::setup(ConfigurationManager&amp; config)
-    {
-        config.setSectionName(&quot;Static resource manipulation&quot;, &quot;&quot;);
-        config.addParameter(annotate_qubit_use_, &quot;annotate-qubit-use&quot;, &quot;Annotate the number of qubits used&quot;);
+void StaticResourceComponentConfiguration::setup(ConfigurationManager&amp; config)
+{
+    config.setSectionName(&quot;Static resource manipulation&quot;, &quot;&quot;);
+    config.addParameter(annotate_qubit_use_, &quot;annotate-qubit-use&quot;, &quot;Annotate the number of qubits used&quot;);
 
-        config.addParameter(annotate_result_use_, &quot;annotate-result-use&quot;, &quot;Annotate the number of results used&quot;);
+    config.addParameter(annotate_result_use_, &quot;annotate-result-use&quot;, &quot;Annotate the number of results used&quot;);
 
-        config.addParameter(
-            annotate_max_qubit_index_, &quot;annotate-max-qubit-index&quot;, &quot;Annotate the maximum qubit index used&quot;);
+    config.addParameter(annotate_max_qubit_index_, &quot;annotate-max-qubit-index&quot;, &quot;Annotate the maximum qubit index used&quot;);
 
-        config.addParameter(
-            annotate_max_result_index_, &quot;annotate-max-result-index&quot;, &quot;Annotate the maximum result index used&quot;);
+    config.addParameter(
+        annotate_max_result_index_, &quot;annotate-max-result-index&quot;, &quot;Annotate the maximum result index used&quot;);
 
-        config.addParameter(
-            reindex_qubits_, &quot;reindex-qubits&quot;,
-            &quot;Re-indexes statically allocated qubits with sequential ids starting from 0&quot;);
+    config.addParameter(
+        reindex_qubits_, &quot;reindex-qubits&quot;,
+        &quot;Re-indexes statically allocated qubits with sequential ids starting from 0&quot;);
 
-        config.addParameter(
-            replace_qubit_on_reset_, &quot;replace-qubit-on-reset&quot;, &quot;Replaces a qubit with new qubit if the qubit is reset&quot;);
+    config.addParameter(
+        replace_qubit_on_reset_, &quot;replace-qubit-on-reset&quot;, &quot;Replaces a qubit with new qubit if the qubit is reset&quot;);
 
-        config.addParameter(
-            inline_after_id_change_, &quot;inline-after-id-change&quot;, &quot;Inlines instructions after id was changed&quot;);
-    }
+    config.addParameter(inline_after_id_change_, &quot;inline-after-id-change&quot;, &quot;Inlines instructions after id was changed&quot;);
+}
 
-    bool StaticResourceComponentConfiguration::shouldAnnotateQubitUse() const
-    {
-        return annotate_qubit_use_;
-    }
+bool StaticResourceComponentConfiguration::shouldAnnotateQubitUse() const
+{
+    return annotate_qubit_use_;
+}
 
-    bool StaticResourceComponentConfiguration::shouldAnnotateResultUse() const
-    {
-        return annotate_result_use_;
-    }
+bool StaticResourceComponentConfiguration::shouldAnnotateResultUse() const
+{
+    return annotate_result_use_;
+}
 
-    bool StaticResourceComponentConfiguration::shouldAnnotateMaxQubitIndex() const
-    {
-        return annotate_max_qubit_index_;
-    }
+bool StaticResourceComponentConfiguration::shouldAnnotateMaxQubitIndex() const
+{
+    return annotate_max_qubit_index_;
+}
 
-    bool StaticResourceComponentConfiguration::shouldAnnotateMaxResultIndex() const
-    {
-        return annotate_max_result_index_;
-    }
+bool StaticResourceComponentConfiguration::shouldAnnotateMaxResultIndex() const
+{
+    return annotate_max_result_index_;
+}
 
-    bool StaticResourceComponentConfiguration::shouldReplaceQubitsOnReset() const
-    {
-        return replace_qubit_on_reset_;
-    }
+bool StaticResourceComponentConfiguration::shouldReplaceQubitsOnReset() const
+{
+    return replace_qubit_on_reset_;
+}
 
-    bool StaticResourceComponentConfiguration::shouldReindexQubits() const
-    {
-        return reindex_qubits_;
-    }
+bool StaticResourceComponentConfiguration::shouldReindexQubits() const
+{
+    return reindex_qubits_;
+}
 
-    bool StaticResourceComponentConfiguration::shouldInlineAfterIdChange() const
-    {
-        return inline_after_id_change_;
-    }
+bool StaticResourceComponentConfiguration::shouldInlineAfterIdChange() const
+{
+    return inline_after_id_change_;
+}
 
-    bool StaticResourceComponentConfiguration::isChangingIds() const
-    {
-        return reindex_qubits_ || replace_qubit_on_reset_;
-    }
+bool StaticResourceComponentConfiguration::isChangingIds() const
+{
+    return reindex_qubits_ || replace_qubit_on_reset_;
+}
 
-    StaticResourceComponentConfiguration StaticResourceComponentConfiguration::createDisabled()
-    {
-        StaticResourceComponentConfiguration ret;
-        ret.annotate_qubit_use_  = false;
-        ret.annotate_result_use_ = false;
+StaticResourceComponentConfiguration StaticResourceComponentConfiguration::createDisabled()
+{
+    StaticResourceComponentConfiguration ret;
+    ret.annotate_qubit_use_  = false;
+    ret.annotate_result_use_ = false;
 
-        ret.annotate_max_qubit_index_  = false;
-        ret.annotate_max_result_index_ = false;
+    ret.annotate_max_qubit_index_  = false;
+    ret.annotate_max_result_index_ = false;
 
-        ret.replace_qubit_on_reset_ = false;
-        ret.reindex_qubits_         = false;
-        ret.inline_after_id_change_ = false;
+    ret.replace_qubit_on_reset_ = false;
+    ret.reindex_qubits_         = false;
+    ret.inline_after_id_change_ = false;
 
-        return ret;
-    }
+    return ret;
+}
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

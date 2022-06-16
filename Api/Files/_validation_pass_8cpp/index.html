@@ -587,353 +587,128 @@
 #include &lt;fstream&gt;
 #include &lt;iostream&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    ValidationPass::ValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger)
-      : config_{cfg}
-      , logger_{logger}
-    {
-    }
+ValidationPass::ValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger)
+  : config_{cfg}
+  , logger_{logger}
+{
+}
 
-    void ValidationPass::callChecks(Instruction&amp; instr)
+void ValidationPass::callChecks(Instruction&amp; instr)
+{
+    auto call_instr = llvm::dyn_cast&lt;llvm::CallBase&gt;(&amp;instr);
+    if (call_instr != nullptr)
     {
-        auto call_instr = llvm::dyn_cast&lt;llvm::CallBase&gt;(&amp;instr);
-        if (call_instr != nullptr)
+        auto f = call_instr-&gt;getCalledFunction();
+
+        if (f == nullptr)
         {
-            auto f = call_instr-&gt;getCalledFunction();
+            return;
+        }
 
-            if (f == nullptr)
+        String                   signature;
+        llvm::raw_string_ostream ostream(signature);
+        ostream &lt;&lt; f-&gt;getName() &lt;&lt; &quot;:&quot;;
+        ostream &lt;&lt; *f-&gt;getFunctionType();
+
+        if (f-&gt;isDeclaration())
+        {
+            if (external_calls_.find(signature) != external_calls_.end())
             {
-                return;
-            }
-
-            String                   signature;
-            llvm::raw_string_ostream ostream(signature);
-            ostream &lt;&lt; f-&gt;getName() &lt;&lt; &quot;:&quot;;
-            ostream &lt;&lt; *f-&gt;getFunctionType();
-
-            if (f-&gt;isDeclaration())
-            {
-                if (external_calls_.find(signature) != external_calls_.end())
-                {
-                    ++external_calls_[signature];
-                }
-                else
-                {
-                    external_calls_[signature] = 1;
-                }
-
-                external_call_location_[signature].push_back(current_location_);
+                ++external_calls_[signature];
             }
             else
             {
-                if (internal_calls_.find(signature) != internal_calls_.end())
-                {
-                    ++internal_calls_[signature];
-                }
-                else
-                {
-                    internal_calls_[signature] = 1;
-                }
-
-                internal_call_location_[signature].push_back(current_location_);
+                external_calls_[signature] = 1;
             }
+
+            external_call_location_[signature].push_back(current_location_);
         }
-    }
-
-    void ValidationPass::pointerChecks(Instruction&amp; instr)
-    {
-        for (auto&amp; op : instr.operands())
+        else
         {
-            // Skipping function pointers
-            auto function_pointer = llvm::dyn_cast&lt;llvm::Function&gt;(op);
-            if (function_pointer)
+            if (internal_calls_.find(signature) != internal_calls_.end())
             {
-                continue;
-            }
-
-            // Skipping non-pointer types
-            auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(op-&gt;getType());
-            if (!pointer_type)
-            {
-                continue;
-            }
-
-            uint64_t    n            = 1;
-            llvm::Type* element_type = pointer_type-&gt;getElementType();
-            while (pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(element_type))
-            {
-                element_type = pointer_type-&gt;getElementType();
-                ++n;
-            }
-
-            String name{};
-
-            if (element_type-&gt;isStructTy())
-            {
-                name = static_cast&lt;String&gt;(element_type-&gt;getStructName());
+                ++internal_calls_[signature];
             }
             else
             {
-                llvm::raw_string_ostream rso(name);
-                element_type-&gt;print(rso);
+                internal_calls_[signature] = 1;
             }
 
-            // Adding indirection to the name
-            while (n != 0)
-            {
-                name += &quot;*&quot;;
-                --n;
-            }
-
-            auto it = pointers_.find(name);
-            if (it == pointers_.end())
-            {
-                pointers_[name] = 1;
-            }
-            else
-            {
-                ++it-&gt;second;
-            }
-
-            pointer_location_[name].push_back(current_location_);
+            internal_call_location_[signature].push_back(current_location_);
         }
     }
+}
 
-    bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module&amp; module)
+void ValidationPass::pointerChecks(Instruction&amp; instr)
+{
+    for (auto&amp; op : instr.operands())
     {
-        auto ret = true;
-        if (config_.allowlistOpcodes())
+        // Skipping function pointers
+        auto function_pointer = llvm::dyn_cast&lt;llvm::Function&gt;(op);
+        if (function_pointer)
         {
-
-            auto const&amp; allowed_ops = config_.allowedOpcodes();
-
-            for (auto&amp; function : module)
-            {
-                for (auto&amp; block : function)
-                {
-                    for (auto&amp; instr : block)
-                    {
-                        auto loc          = logger_-&gt;resolveLocation(&amp;instr);
-                        current_location_ = Location{loc};
-                        llvm::DebugLoc dl = instr.getDebugLoc();
-                        if (dl)
-                        {
-                            current_location_ = Location{
-                                static_cast&lt;String&gt;(dl-&gt;getFilename()), dl-&gt;getLine(), dl-&gt;getColumn(), &quot;&quot;, &quot;&quot;};
-                        }
-                        llvm::raw_string_ostream rso(current_location_.llvm_hint);
-                        instr.print(rso);
-
-                        String opname = static_cast&lt;String&gt;(instr.getOpcodeName());
-                        String first_arg{&quot;&quot;};
-                        String code = opname;
-
-                        auto cmp = llvm::dyn_cast&lt;llvm::CmpInst&gt;(&amp;instr);
-                        if (cmp)
-                        {
-                            switch (cmp-&gt;getPredicate())
-                            {
-                            case llvm::CmpInst::Predicate::FCMP_FALSE:
-                                first_arg = &quot;false&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_OEQ:
-                                first_arg = &quot;oeq&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_OGT:
-                                first_arg = &quot;ogt&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_OGE:
-                                first_arg = &quot;oge&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_OLT:
-                                first_arg = &quot;olt&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_OLE:
-                                first_arg = &quot;ole&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_ONE:
-                                first_arg = &quot;one&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_ORD:
-                                first_arg = &quot;ord&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_UNO:
-                                first_arg = &quot;uno&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_UEQ:
-                                first_arg = &quot;ueq&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_UGT:
-                                first_arg = &quot;ugt&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_UGE:
-                                first_arg = &quot;uge&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_ULT:
-                                first_arg = &quot;ult&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_ULE:
-                                first_arg = &quot;ule&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_UNE:
-                                first_arg = &quot;une&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::FCMP_TRUE:
-                                first_arg = &quot;true&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::ICMP_EQ:
-                                first_arg = &quot;eq&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::ICMP_NE:
-                                first_arg = &quot;ne&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::ICMP_UGT:
-                                first_arg = &quot;ugt&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::ICMP_UGE:
-                                first_arg = &quot;uge&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::ICMP_ULT:
-                                first_arg = &quot;ult&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::ICMP_ULE:
-                                first_arg = &quot;ule&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::ICMP_SGT:
-                                first_arg = &quot;sgt&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::ICMP_SGE:
-                                first_arg = &quot;sge&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::ICMP_SLT:
-                                first_arg = &quot;slt&quot;;
-                                break;
-                            case llvm::CmpInst::Predicate::ICMP_SLE:
-                                first_arg = &quot;sle&quot;;
-                                break;
-                            }
-                        }
-
-                        if (!first_arg.empty())
-                        {
-                            code += &quot; &quot; + first_arg;
-                        }
-
-                        OpcodeValue opcode1{opname};
-                        OpcodeValue opcode2{opname, first_arg};
-
-                        if (allowed_ops.find(opcode1) == allowed_ops.end() &amp;&amp;
-                            allowed_ops.find(opcode2) == allowed_ops.end())
-                        {
-
-                            logger_-&gt;setLocation(
-                                {current_location_.name, current_location_.line, current_location_.column});
-                            logger_-&gt;setLlvmHint(current_location_.llvm_hint);
-
-                            logger_-&gt;errorOpcodeNotAllowed(code, config_.profileName());
-                            ret = false;
-                        }
-                    }
-                }
-            }
+            continue;
         }
 
-        return ret;
-    }
-
-    bool ValidationPass::satisfyingInternalCallRequirements()
-    {
-        if (!config_.allowInternalCalls() &amp;&amp; !internal_calls_.empty())
+        // Skipping non-pointer types
+        auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(op-&gt;getType());
+        if (!pointer_type)
         {
-            logger_-&gt;setLlvmHint(&quot;&quot;);
-            // TODO(issue-60): Add location
-
-            // Emitting error
-            logger_-&gt;errorCustomFunctionsNotAllowed();
-
-            return false;
+            continue;
         }
 
-        return true;
-    }
-
-    bool ValidationPass::satisfyingExternalCallRequirements()
-    {
-        auto ret = true;
-
-        if (config_.allowlistExternalCalls())
+        uint64_t    n            = 1;
+        llvm::Type* element_type = pointer_type-&gt;getElementType();
+        while (pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(element_type))
         {
-            auto const&amp; allowed_functions = config_.allowedExternalCallNames();
-            for (auto const&amp; k : external_calls_)
-            {
-                if (allowed_functions.find(k.first) == allowed_functions.end())
-                {
-                    logger_-&gt;setLlvmHint(&quot;&quot;);
-
-                    // Adding debug location
-                    if (external_call_location_.find(k.first) != external_call_location_.end())
-                    {
-                        auto const&amp; locs = external_call_location_[k.first];
-
-                        if (!locs.empty())
-                        {
-                            auto const&amp; loc = locs.front();
-                            logger_-&gt;setLocation({loc.name, loc.line, loc.column});
-                            logger_-&gt;setLlvmHint(loc.llvm_hint);
-                        }
-                    }
-
-                    // Emitting error
-                    logger_-&gt;errorExternalCallsNotAllowed(k.first, config_.profileName());
-                    ret = false;
-                }
-            }
+            element_type = pointer_type-&gt;getElementType();
+            ++n;
         }
 
-        return ret;
-    }
+        String name{};
 
-    bool ValidationPass::satisfyingPointerRequirements()
-    {
-        auto ret = true;
-
-        if (config_.allowlistPointerTypes())
+        if (element_type-&gt;isStructTy())
         {
-            auto const&amp; allowed = config_.allowedPointerTypes();
-            for (auto const&amp; k : pointers_)
-            {
-                if (allowed.find(k.first) == allowed.end())
-                {
-                    logger_-&gt;setLlvmHint(&quot;&quot;);
-
-                    // Adding debug location
-                    if (pointer_location_.find(k.first) != pointer_location_.end())
-                    {
-                        auto const&amp; locs = pointer_location_[k.first];
-                        if (!locs.empty())
-                        {
-                            auto const&amp; loc = locs.front();
-                            logger_-&gt;setLocation({loc.name, loc.line, loc.column});
-                            logger_-&gt;setLlvmHint(loc.llvm_hint);
-                        }
-                    }
-
-                    // Emitting error
-                    logger_-&gt;errorTypeNotAllowed(k.first, config_.profileName());
-                    ret = false;
-                }
-            }
+            name = static_cast&lt;String&gt;(element_type-&gt;getStructName());
+        }
+        else
+        {
+            llvm::raw_string_ostream rso(name);
+            element_type-&gt;print(rso);
         }
 
-        return ret;
-    }
+        // Adding indirection to the name
+        while (n != 0)
+        {
+            name += &quot;*&quot;;
+            --n;
+        }
 
-    llvm::PreservedAnalyses ValidationPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+        auto it = pointers_.find(name);
+        if (it == pointers_.end())
+        {
+            pointers_[name] = 1;
+        }
+        else
+        {
+            ++it-&gt;second;
+        }
+
+        pointer_location_[name].push_back(current_location_);
+    }
+}
+
+bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module&amp; module)
+{
+    auto ret = true;
+    if (config_.allowlistOpcodes())
     {
+
+        auto const&amp; allowed_ops = config_.allowedOpcodes();
+
         for (auto&amp; function : module)
         {
             for (auto&amp; block : function)
@@ -951,37 +726,259 @@ namespace quantum
                     llvm::raw_string_ostream rso(current_location_.llvm_hint);
                     instr.print(rso);
 
-                    callChecks(instr);
-                    pointerChecks(instr);
+                    String opname = static_cast&lt;String&gt;(instr.getOpcodeName());
+                    String first_arg{&quot;&quot;};
+                    String code = opname;
+
+                    auto cmp = llvm::dyn_cast&lt;llvm::CmpInst&gt;(&amp;instr);
+                    if (cmp)
+                    {
+                        switch (cmp-&gt;getPredicate())
+                        {
+                        case llvm::CmpInst::Predicate::FCMP_FALSE:
+                            first_arg = &quot;false&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_OEQ:
+                            first_arg = &quot;oeq&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_OGT:
+                            first_arg = &quot;ogt&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_OGE:
+                            first_arg = &quot;oge&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_OLT:
+                            first_arg = &quot;olt&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_OLE:
+                            first_arg = &quot;ole&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_ONE:
+                            first_arg = &quot;one&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_ORD:
+                            first_arg = &quot;ord&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_UNO:
+                            first_arg = &quot;uno&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_UEQ:
+                            first_arg = &quot;ueq&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_UGT:
+                            first_arg = &quot;ugt&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_UGE:
+                            first_arg = &quot;uge&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_ULT:
+                            first_arg = &quot;ult&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_ULE:
+                            first_arg = &quot;ule&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_UNE:
+                            first_arg = &quot;une&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::FCMP_TRUE:
+                            first_arg = &quot;true&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::ICMP_EQ:
+                            first_arg = &quot;eq&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::ICMP_NE:
+                            first_arg = &quot;ne&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::ICMP_UGT:
+                            first_arg = &quot;ugt&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::ICMP_UGE:
+                            first_arg = &quot;uge&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::ICMP_ULT:
+                            first_arg = &quot;ult&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::ICMP_ULE:
+                            first_arg = &quot;ule&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::ICMP_SGT:
+                            first_arg = &quot;sgt&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::ICMP_SGE:
+                            first_arg = &quot;sge&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::ICMP_SLT:
+                            first_arg = &quot;slt&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::ICMP_SLE:
+                            first_arg = &quot;sle&quot;;
+                            break;
+                        }
+                    }
+
+                    if (!first_arg.empty())
+                    {
+                        code += &quot; &quot; + first_arg;
+                    }
+
+                    OpcodeValue opcode1{opname};
+                    OpcodeValue opcode2{opname, first_arg};
+
+                    if (allowed_ops.find(opcode1) == allowed_ops.end() &amp;&amp;
+                        allowed_ops.find(opcode2) == allowed_ops.end())
+                    {
+
+                        logger_-&gt;setLocation(
+                            {current_location_.name, current_location_.line, current_location_.column});
+                        logger_-&gt;setLlvmHint(current_location_.llvm_hint);
+
+                        logger_-&gt;errorOpcodeNotAllowed(code, config_.profileName());
+                        ret = false;
+                    }
                 }
             }
         }
-
-        bool raise_exception = false;
-
-        raise_exception |= !satisfyingOpcodeRequirements(module);
-        raise_exception |= !satisfyingExternalCallRequirements();
-        raise_exception |= !satisfyingInternalCallRequirements();
-        raise_exception |= !satisfyingPointerRequirements();
-
-        if (raise_exception)
-        {
-            throw std::runtime_error(&quot;QIR is not valid within the defined profile&quot;);
-        }
-
-        return llvm::PreservedAnalyses::all();
     }
 
-    bool ValidationPass::isRequired()
+    return ret;
+}
+
+bool ValidationPass::satisfyingInternalCallRequirements()
+{
+    if (!config_.allowInternalCalls() &amp;&amp; !internal_calls_.empty())
     {
-        return true;
+        logger_-&gt;setLlvmHint(&quot;&quot;);
+        // TODO(issue-60): Add location
+
+        // Emitting error
+        logger_-&gt;errorCustomFunctionsNotAllowed();
+
+        return false;
     }
 
-} // namespace quantum
-} // namespace microsoft
+    return true;
+}
+
+bool ValidationPass::satisfyingExternalCallRequirements()
+{
+    auto ret = true;
+
+    if (config_.allowlistExternalCalls())
+    {
+        auto const&amp; allowed_functions = config_.allowedExternalCallNames();
+        for (auto const&amp; k : external_calls_)
+        {
+            if (allowed_functions.find(k.first) == allowed_functions.end())
+            {
+                logger_-&gt;setLlvmHint(&quot;&quot;);
+
+                // Adding debug location
+                if (external_call_location_.find(k.first) != external_call_location_.end())
+                {
+                    auto const&amp; locs = external_call_location_[k.first];
+
+                    if (!locs.empty())
+                    {
+                        auto const&amp; loc = locs.front();
+                        logger_-&gt;setLocation({loc.name, loc.line, loc.column});
+                        logger_-&gt;setLlvmHint(loc.llvm_hint);
+                    }
+                }
+
+                // Emitting error
+                logger_-&gt;errorExternalCallsNotAllowed(k.first, config_.profileName());
+                ret = false;
+            }
+        }
+    }
+
+    return ret;
+}
+
+bool ValidationPass::satisfyingPointerRequirements()
+{
+    auto ret = true;
+
+    if (config_.allowlistPointerTypes())
+    {
+        auto const&amp; allowed = config_.allowedPointerTypes();
+        for (auto const&amp; k : pointers_)
+        {
+            if (allowed.find(k.first) == allowed.end())
+            {
+                logger_-&gt;setLlvmHint(&quot;&quot;);
+
+                // Adding debug location
+                if (pointer_location_.find(k.first) != pointer_location_.end())
+                {
+                    auto const&amp; locs = pointer_location_[k.first];
+                    if (!locs.empty())
+                    {
+                        auto const&amp; loc = locs.front();
+                        logger_-&gt;setLocation({loc.name, loc.line, loc.column});
+                        logger_-&gt;setLlvmHint(loc.llvm_hint);
+                    }
+                }
+
+                // Emitting error
+                logger_-&gt;errorTypeNotAllowed(k.first, config_.profileName());
+                ret = false;
+            }
+        }
+    }
+
+    return ret;
+}
+
+llvm::PreservedAnalyses ValidationPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+{
+    for (auto&amp; function : module)
+    {
+        for (auto&amp; block : function)
+        {
+            for (auto&amp; instr : block)
+            {
+                auto loc          = logger_-&gt;resolveLocation(&amp;instr);
+                current_location_ = Location{loc};
+                llvm::DebugLoc dl = instr.getDebugLoc();
+                if (dl)
+                {
+                    current_location_ =
+                        Location{static_cast&lt;String&gt;(dl-&gt;getFilename()), dl-&gt;getLine(), dl-&gt;getColumn(), &quot;&quot;, &quot;&quot;};
+                }
+                llvm::raw_string_ostream rso(current_location_.llvm_hint);
+                instr.print(rso);
+
+                callChecks(instr);
+                pointerChecks(instr);
+            }
+        }
+    }
+
+    bool raise_exception = false;
+
+    raise_exception |= !satisfyingOpcodeRequirements(module);
+    raise_exception |= !satisfyingExternalCallRequirements();
+    raise_exception |= !satisfyingInternalCallRequirements();
+    raise_exception |= !satisfyingPointerRequirements();
+
+    if (raise_exception)
+    {
+        throw std::runtime_error(&quot;QIR is not valid within the defined profile&quot;);
+    }
+
+    return llvm::PreservedAnalyses::all();
+}
+
+bool ValidationPass::isRequired()
+{
+    return true;
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

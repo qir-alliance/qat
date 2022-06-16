@@ -604,37 +604,34 @@
 
 #include &quot;Llvm/Llvm.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class ConfigurableProfileGenerator : public ProfileGenerator
-    {
-      public:
-        using ConfigureFunction = std::function&lt;void(RuleSet&amp;)&gt;; 
+class ConfigurableProfileGenerator : public ProfileGenerator
+{
+  public:
+    using ConfigureFunction = std::function&lt;void(RuleSet&amp;)&gt;; 
 
-        ConfigurableProfileGenerator();
+    ConfigurableProfileGenerator();
 
-        explicit ConfigurableProfileGenerator(
-            ConfigureFunction const&amp;                    configure,
-            TransformationRulesPassConfiguration const&amp; profile_pass_config =
-                TransformationRulesPassConfiguration::createDisabled(),
-            LlvmPassesConfiguration const&amp; llvm_config = LlvmPassesConfiguration::createDisabled());
+    explicit ConfigurableProfileGenerator(
+        ConfigureFunction const&amp;                    configure,
+        TransformationRulesPassConfiguration const&amp; profile_pass_config =
+            TransformationRulesPassConfiguration::createDisabled(),
+        LlvmPassesConfiguration const&amp; llvm_config = LlvmPassesConfiguration::createDisabled());
 
-        // Shorthand notation to access configurations
-        //
+    // Shorthand notation to access configurations
+    //
 
-        TransformationRulesPassConfiguration const&amp; ruleTransformationConfig() const;
+    TransformationRulesPassConfiguration const&amp; ruleTransformationConfig() const;
 
-        LlvmPassesConfiguration const&amp; llvmPassesConfig() const;
-    };
+    LlvmPassesConfiguration const&amp; llvmPassesConfig() const;
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

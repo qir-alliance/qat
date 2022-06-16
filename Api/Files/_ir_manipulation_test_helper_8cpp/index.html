@@ -584,355 +584,349 @@
 
 #include &quot;Llvm/Llvm.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    IrManipulationTestHelper::IrManipulationTestHelper()
-    {
-        pass_builder_.registerModuleAnalyses(module_analysis_manager_);
-        pass_builder_.registerCGSCCAnalyses(gscc_analysis_manager_);
-        pass_builder_.registerFunctionAnalyses(function_analysis_manager_);
-        pass_builder_.registerLoopAnalyses(loop_analysis_manager_);
+IrManipulationTestHelper::IrManipulationTestHelper()
+{
+    pass_builder_.registerModuleAnalyses(module_analysis_manager_);
+    pass_builder_.registerCGSCCAnalyses(gscc_analysis_manager_);
+    pass_builder_.registerFunctionAnalyses(function_analysis_manager_);
+    pass_builder_.registerLoopAnalyses(loop_analysis_manager_);
 
-        pass_builder_.crossRegisterProxies(
-            loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
+    pass_builder_.crossRegisterProxies(
+        loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
+}
+
+bool IrManipulationTestHelper::fromString(String const&amp; data)
+{
+    module_             = llvm::parseIR(llvm::MemoryBufferRef(data, &quot;IrManipulationTestHelper&quot;), error_, context_);
+    compilation_failed_ = (module_ == nullptr);
+    return !compilation_failed_;
+}
+
+String IrManipulationTestHelper::toString() const
+{
+    String                   str;
+    llvm::raw_string_ostream ostream(str);
+    ostream &lt;&lt; *module_;
+    ostream.flush();
+    return str;
+}
+
+IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
+{
+    if (isModuleBroken())
+    {
+        return {};
     }
 
-    bool IrManipulationTestHelper::fromString(String const&amp; data)
+    String  data = toString();
+    Strings ret;
+
+    auto pos = data.find(&quot;define i8 @Main() local_unnamed_addr&quot;);
+
+    if (pos == String::npos)
     {
-        module_             = llvm::parseIR(llvm::MemoryBufferRef(data, &quot;IrManipulationTestHelper&quot;), error_, context_);
-        compilation_failed_ = (module_ == nullptr);
-        return !compilation_failed_;
+        return {};
     }
 
-    String IrManipulationTestHelper::toString() const
+    // Skipping entry
+    pos = data.find(&quot;entry:&quot;, pos);
+    if (pos == String::npos)
     {
-        String                   str;
-        llvm::raw_string_ostream ostream(str);
-        ostream &lt;&lt; *module_;
-        ostream.flush();
-        return str;
+        return {};
     }
 
-    IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
+    auto last_pos = data.find('\n', pos);
+    assert(last_pos != String::npos);
+
+    auto next_pos   = data.find('\n', last_pos + 1);
+    auto terminator = data.find('}', pos);
+
+    while ((next_pos != String::npos) &amp;&amp; (next_pos &lt; terminator))
     {
-        if (isModuleBroken())
+        auto val = data.substr(last_pos, next_pos - last_pos);
+        trim(val);
+
+        if (val != &quot;&quot;)
         {
-            return {};
+            ret.emplace_back(std::move(val));
         }
 
-        String  data = toString();
-        Strings ret;
+        last_pos = next_pos;
+        next_pos = data.find('\n', last_pos + 1);
+    }
 
-        auto pos = data.find(&quot;define i8 @Main() local_unnamed_addr&quot;);
+    return ret;
+}
 
-        if (pos == String::npos)
+bool IrManipulationTestHelper::hasInstructionSequence(Strings const&amp; instructions)
+{
+    auto     body_instructions = toBodyInstructions();
+    uint64_t i                 = 0;
+    uint64_t j                 = 0;
+
+    while (i &lt; instructions.size() &amp;&amp; j &lt; body_instructions.size())
+    {
+        auto&amp; a = instructions[i];
+        auto&amp; b = body_instructions[j];
+        if (a == b)
         {
-            return {};
+            ++i;
         }
 
-        // Skipping entry
-        pos = data.find(&quot;entry:&quot;, pos);
-        if (pos == String::npos)
+        ++j;
+    }
+
+    if (i &lt; instructions.size())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void IrManipulationTestHelper::applyProfile(
+    GeneratorPtr const&amp;      generator,
+    OptimizationLevel const&amp; optimization_level,
+    bool                     debug)
+{
+    auto profile = generator-&gt;newProfile(&quot;generic&quot;, optimization_level, debug);
+    profile.apply(*module_);
+
+    // Verifying that the module is valid
+    if (isModuleBroken())
+    {
+        throw std::runtime_error(&quot;Module was broken after applying result&quot;);
+    }
+}
+
+bool IrManipulationTestHelper::validateProfile(GeneratorPtr const&amp; generator, String const&amp; profile_name, bool debug)
+{
+    auto profile = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
+
+    return profile.validate(*module_);
+}
+
+bool IrManipulationTestHelper::containsValidationErrors(
+    GeneratorPtr const&amp; generator,
+    String const&amp;       profile_name,
+    Strings const&amp;      errors,
+    bool                debug) const
+{
+
+    auto  profile               = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
+    auto&amp; configuration_manager = generator-&gt;configurationManager();
+    auto  logger                = std::make_shared&lt;LogCollection&gt;();
+    auto  validator =
+        std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), logger, debug);
+    validator-&gt;validate(*module_);
+
+    if (!logger)
+    {
+        throw std::runtime_error(&quot;Logger not present. Cannot test the presence of errors without a logger.&quot;);
+    }
+
+    std::unordered_set&lt;String&gt; hints;
+
+    for (auto&amp; message : logger-&gt;messages())
+    {
+        hints.insert(message.location.llvm_hint);
+    }
+
+    auto ret = true;
+    for (auto const&amp; error : errors)
+    {
+        if (hints.find(error) == hints.end())
         {
-            return {};
-        }
-
-        auto last_pos = data.find('\n', pos);
-        assert(last_pos != String::npos);
-
-        auto next_pos   = data.find('\n', last_pos + 1);
-        auto terminator = data.find('}', pos);
-
-        while ((next_pos != String::npos) &amp;&amp; (next_pos &lt; terminator))
-        {
-            auto val = data.substr(last_pos, next_pos - last_pos);
-            trim(val);
-
-            if (val != &quot;&quot;)
+            ret = false;
+            if (debug)
             {
-                ret.emplace_back(std::move(val));
+                llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; error &lt;&lt; &quot;' in LLVM output.\n&quot;;
             }
-
-            last_pos = next_pos;
-            next_pos = data.find('\n', last_pos + 1);
-        }
-
-        return ret;
-    }
-
-    bool IrManipulationTestHelper::hasInstructionSequence(Strings const&amp; instructions)
-    {
-        auto     body_instructions = toBodyInstructions();
-        uint64_t i                 = 0;
-        uint64_t j                 = 0;
-
-        while (i &lt; instructions.size() &amp;&amp; j &lt; body_instructions.size())
-        {
-            auto&amp; a = instructions[i];
-            auto&amp; b = body_instructions[j];
-            if (a == b)
-            {
-                ++i;
-            }
-
-            ++j;
-        }
-
-        if (i &lt; instructions.size())
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    void IrManipulationTestHelper::applyProfile(
-        GeneratorPtr const&amp;      generator,
-        OptimizationLevel const&amp; optimization_level,
-        bool                     debug)
-    {
-        auto profile = generator-&gt;newProfile(&quot;generic&quot;, optimization_level, debug);
-        profile.apply(*module_);
-
-        // Verifying that the module is valid
-        if (isModuleBroken())
-        {
-            throw std::runtime_error(&quot;Module was broken after applying result&quot;);
         }
     }
 
-    bool IrManipulationTestHelper::validateProfile(
-        GeneratorPtr const&amp; generator,
-        String const&amp;       profile_name,
-        bool                debug)
+    if (!ret &amp;&amp; debug)
     {
-        auto profile = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
-
-        return profile.validate(*module_);
-    }
-
-    bool IrManipulationTestHelper::containsValidationErrors(
-        GeneratorPtr const&amp; generator,
-        String const&amp;       profile_name,
-        Strings const&amp;      errors,
-        bool                debug) const
-    {
-
-        auto  profile               = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
-        auto&amp; configuration_manager = generator-&gt;configurationManager();
-        auto  logger                = std::make_shared&lt;LogCollection&gt;();
-        auto  validator =
-            std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), logger, debug);
-        validator-&gt;validate(*module_);
-
-        if (!logger)
-        {
-            throw std::runtime_error(&quot;Logger not present. Cannot test the presence of errors without a logger.&quot;);
-        }
-
-        std::unordered_set&lt;String&gt; hints;
-
-        for (auto&amp; message : logger-&gt;messages())
-        {
-            hints.insert(message.location.llvm_hint);
-        }
-
-        auto ret = true;
+        llvm::errs() &lt;&lt; &quot;\nExpected errors: \n&quot;;
         for (auto const&amp; error : errors)
         {
-            if (hints.find(error) == hints.end())
-            {
-                ret = false;
-                if (debug)
-                {
-                    llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; error &lt;&lt; &quot;' in LLVM output.\n&quot;;
-                }
-            }
+            llvm::errs() &lt;&lt; error &lt;&lt; &quot;\n&quot;;
         }
-
-        if (!ret &amp;&amp; debug)
-        {
-            llvm::errs() &lt;&lt; &quot;\nExpected errors: \n&quot;;
-            for (auto const&amp; error : errors)
-            {
-                llvm::errs() &lt;&lt; error &lt;&lt; &quot;\n&quot;;
-            }
-            llvm::errs() &lt;&lt; &quot;\nActual errors: \n&quot;;
-            for (auto const&amp; message : logger-&gt;messages())
-            {
-                llvm::errs() &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\n&quot;;
-                llvm::errs() &lt;&lt; &quot;  - &quot; &lt;&lt; message.message &lt;&lt; &quot;\n&quot;;
-            }
-            llvm::errs() &lt;&lt; &quot;\n&quot;;
-        }
-
-        return ret;
-    }
-
-    bool IrManipulationTestHelper::containsExactValidationErrors(
-        GeneratorPtr const&amp; generator,
-        String const&amp;       profile_name,
-        Strings const&amp;      errors,
-        bool                debug) const
-    {
-        auto  profile               = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
-        auto&amp; configuration_manager = generator-&gt;configurationManager();
-        auto  logger                = std::make_shared&lt;LogCollection&gt;();
-
-        auto validator =
-            std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), logger, debug);
-        validator-&gt;validate(*module_);
-
-        if (!logger)
-        {
-            throw std::runtime_error(&quot;Logger not present. Cannot test the presence of errors without a logger.&quot;);
-        }
-
-        auto                       ret = true;
-        std::unordered_set&lt;String&gt; hints;
-        std::unordered_set&lt;String&gt; error_set{errors.begin(), errors.end()};
-
+        llvm::errs() &lt;&lt; &quot;\nActual errors: \n&quot;;
         for (auto const&amp; message : logger-&gt;messages())
         {
-            hints.insert(message.location.llvm_hint);
+            llvm::errs() &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\n&quot;;
+            llvm::errs() &lt;&lt; &quot;  - &quot; &lt;&lt; message.message &lt;&lt; &quot;\n&quot;;
+        }
+        llvm::errs() &lt;&lt; &quot;\n&quot;;
+    }
 
-            if (error_set.find(message.location.llvm_hint) == error_set.end())
+    return ret;
+}
+
+bool IrManipulationTestHelper::containsExactValidationErrors(
+    GeneratorPtr const&amp; generator,
+    String const&amp;       profile_name,
+    Strings const&amp;      errors,
+    bool                debug) const
+{
+    auto  profile               = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
+    auto&amp; configuration_manager = generator-&gt;configurationManager();
+    auto  logger                = std::make_shared&lt;LogCollection&gt;();
+
+    auto validator =
+        std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), logger, debug);
+    validator-&gt;validate(*module_);
+
+    if (!logger)
+    {
+        throw std::runtime_error(&quot;Logger not present. Cannot test the presence of errors without a logger.&quot;);
+    }
+
+    auto                       ret = true;
+    std::unordered_set&lt;String&gt; hints;
+    std::unordered_set&lt;String&gt; error_set{errors.begin(), errors.end()};
+
+    for (auto const&amp; message : logger-&gt;messages())
+    {
+        hints.insert(message.location.llvm_hint);
+
+        if (error_set.find(message.location.llvm_hint) == error_set.end())
+        {
+            ret = false;
+            if (debug)
             {
-                ret = false;
-                if (debug)
-                {
-                    llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;' in expected errors.\n&quot;;
-                }
+                llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;' in expected errors.\n&quot;;
             }
         }
+    }
 
+    for (auto const&amp; error : errors)
+    {
+        if (hints.find(error) == hints.end())
+        {
+            ret = false;
+            if (debug)
+            {
+                llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; error &lt;&lt; &quot;' in LLVM output.\n&quot;;
+            }
+        }
+    }
+
+    if (!ret &amp;&amp; debug)
+    {
+        llvm::errs() &lt;&lt; &quot;\nExpected errors: \n&quot;;
         for (auto const&amp; error : errors)
         {
-            if (hints.find(error) == hints.end())
-            {
-                ret = false;
-                if (debug)
-                {
-                    llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; error &lt;&lt; &quot;' in LLVM output.\n&quot;;
-                }
-            }
+            llvm::errs() &lt;&lt; error &lt;&lt; &quot;\n&quot;;
         }
-
-        if (!ret &amp;&amp; debug)
+        llvm::errs() &lt;&lt; &quot;\nActual errors: \n&quot;;
+        for (auto const&amp; message : logger-&gt;messages())
         {
-            llvm::errs() &lt;&lt; &quot;\nExpected errors: \n&quot;;
-            for (auto const&amp; error : errors)
-            {
-                llvm::errs() &lt;&lt; error &lt;&lt; &quot;\n&quot;;
-            }
-            llvm::errs() &lt;&lt; &quot;\nActual errors: \n&quot;;
-            for (auto const&amp; message : logger-&gt;messages())
-            {
-                llvm::errs() &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\n&quot;;
-                llvm::errs() &lt;&lt; &quot;  - &quot; &lt;&lt; message.message &lt;&lt; &quot;\n&quot;;
-            }
-            llvm::errs() &lt;&lt; &quot;\n&quot;;
+            llvm::errs() &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\n&quot;;
+            llvm::errs() &lt;&lt; &quot;  - &quot; &lt;&lt; message.message &lt;&lt; &quot;\n&quot;;
         }
-
-        return ret;
+        llvm::errs() &lt;&lt; &quot;\n&quot;;
     }
 
-    void IrManipulationTestHelper::declareOpaque(String const&amp; name)
-    {
-        opaque_declarations_.insert(name);
-    }
+    return ret;
+}
 
-    void IrManipulationTestHelper::declareFunction(String const&amp; declaration)
-    {
-        function_declarations_.insert(declaration);
-    }
+void IrManipulationTestHelper::declareOpaque(String const&amp; name)
+{
+    opaque_declarations_.insert(name);
+}
 
-    String IrManipulationTestHelper::generateScript(String const&amp; body, String const&amp; args) const
-    {
-        String script = R&quot;script(
+void IrManipulationTestHelper::declareFunction(String const&amp; declaration)
+{
+    function_declarations_.insert(declaration);
+}
+
+String IrManipulationTestHelper::generateScript(String const&amp; body, String const&amp; args) const
+{
+    String script = R&quot;script(
 ; ModuleID = 'IrManipulationTestHelper'
 source_filename = &quot;IrManipulationTestHelper.ll&quot;
 
 )script&quot;;
 
-        // Adding opaque types
-        for (auto const&amp; op : opaque_declarations_)
-        {
-            script += &quot;%&quot; + op + &quot; = type opaque\n&quot;;
-        }
-
-        script += &quot;define i8 @Main(&quot; + args + &quot;) local_unnamed_addr #0 {\nentry:\n&quot;;
-        script += body;
-        script += &quot;\n  ret i8 0\n&quot;;
-        script += &quot;\n}\n\n&quot;;
-
-        for (auto const&amp; op : function_declarations_)
-        {
-            script += &quot;declare &quot; + op + &quot;\n&quot;;
-        }
-        script += &quot;\nattributes #0 = { \&quot;EntryPoint\&quot; }\n&quot;;
-        return script;
-    }
-
-    String IrManipulationTestHelper::getErrorMessage() const
+    // Adding opaque types
+    for (auto const&amp; op : opaque_declarations_)
     {
-        String                   str;
-        llvm::raw_string_ostream ostream(str);
-        switch (error_.getKind())
-        {
-        case llvm::SourceMgr::DiagKind::DK_Error:
-            ostream &lt;&lt; &quot;Error at &quot;;
-            break;
-        case llvm::SourceMgr::DiagKind::DK_Warning:
-            ostream &lt;&lt; &quot;Warning at &quot;;
-            break;
-        case llvm::SourceMgr::DiagKind::DK_Remark:
-            ostream &lt;&lt; &quot;Remark at &quot;;
-            break;
-        case llvm::SourceMgr::DiagKind::DK_Note:
-            ostream &lt;&lt; &quot;Note at &quot;;
-            break;
-        }
-
-        ostream &lt;&lt; error_.getLineNo() &lt;&lt; &quot;:&quot; &lt;&lt; error_.getColumnNo() &lt;&lt; &quot;: &quot;;
-        ostream &lt;&lt; error_.getMessage() &lt;&lt; &quot;\n\n&quot;;
-        ostream &lt;&lt; error_.getLineContents();
-        ostream.flush();
-
-        return str;
+        script += &quot;%&quot; + op + &quot; = type opaque\n&quot;;
     }
 
-    bool IrManipulationTestHelper::fromBodyString(String const&amp; body, String const&amp; args)
+    script += &quot;define i8 @Main(&quot; + args + &quot;) local_unnamed_addr #0 {\nentry:\n&quot;;
+    script += body;
+    script += &quot;\n  ret i8 0\n&quot;;
+    script += &quot;\n}\n\n&quot;;
+
+    for (auto const&amp; op : function_declarations_)
     {
-        auto script = generateScript(body, args);
-        return fromString(script);
+        script += &quot;declare &quot; + op + &quot;\n&quot;;
     }
+    script += &quot;\nattributes #0 = { \&quot;EntryPoint\&quot; }\n&quot;;
+    return script;
+}
 
-    IrManipulationTestHelper::ModulePtr&amp; IrManipulationTestHelper::module()
+String IrManipulationTestHelper::getErrorMessage() const
+{
+    String                   str;
+    llvm::raw_string_ostream ostream(str);
+    switch (error_.getKind())
     {
-        return module_;
+    case llvm::SourceMgr::DiagKind::DK_Error:
+        ostream &lt;&lt; &quot;Error at &quot;;
+        break;
+    case llvm::SourceMgr::DiagKind::DK_Warning:
+        ostream &lt;&lt; &quot;Warning at &quot;;
+        break;
+    case llvm::SourceMgr::DiagKind::DK_Remark:
+        ostream &lt;&lt; &quot;Remark at &quot;;
+        break;
+    case llvm::SourceMgr::DiagKind::DK_Note:
+        ostream &lt;&lt; &quot;Note at &quot;;
+        break;
     }
 
-    bool IrManipulationTestHelper::isModuleBroken()
+    ostream &lt;&lt; error_.getLineNo() &lt;&lt; &quot;:&quot; &lt;&lt; error_.getColumnNo() &lt;&lt; &quot;: &quot;;
+    ostream &lt;&lt; error_.getMessage() &lt;&lt; &quot;\n\n&quot;;
+    ostream &lt;&lt; error_.getLineContents();
+    ostream.flush();
+
+    return str;
+}
+
+bool IrManipulationTestHelper::fromBodyString(String const&amp; body, String const&amp; args)
+{
+    auto script = generateScript(body, args);
+    return fromString(script);
+}
+
+IrManipulationTestHelper::ModulePtr&amp; IrManipulationTestHelper::module()
+{
+    return module_;
+}
+
+bool IrManipulationTestHelper::isModuleBroken()
+{
+    if (compilation_failed_)
     {
-        if (compilation_failed_)
-        {
-            return compilation_failed_;
-        }
-
-        llvm::VerifierAnalysis verifier;
-        auto                   result = verifier.run(*module_, module_analysis_manager_);
-        return result.IRBroken;
+        return compilation_failed_;
     }
 
-} // namespace quantum
-} // namespace microsoft
+    llvm::VerifierAnalysis verifier;
+    auto                   result = verifier.run(*module_, module_analysis_manager_);
+    return result.IRBroken;
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

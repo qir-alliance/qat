@@ -606,46 +606,43 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class FunctionValidationPass : public llvm::PassInfoMixin&lt;FunctionValidationPass&gt;
-    {
-      public:
-        using Instruction = llvm::Instruction;
-        using Value       = llvm::Value;
-        using ILoggerPtr  = ILogger::ILoggerPtr;
-        using Location    = ILogger::Location;
-        using StringRef   = llvm::StringRef;
+class FunctionValidationPass : public llvm::PassInfoMixin&lt;FunctionValidationPass&gt;
+{
+  public:
+    using Instruction = llvm::Instruction;
+    using Value       = llvm::Value;
+    using ILoggerPtr  = ILogger::ILoggerPtr;
+    using Location    = ILogger::Location;
+    using StringRef   = llvm::StringRef;
 
-        // Construction and destruction configuration.
-        //
+    // Construction and destruction configuration.
+    //
 
-        explicit FunctionValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr);
+    explicit FunctionValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr);
 
-        FunctionValidationPass(FunctionValidationPass const&amp;) = delete;
+    FunctionValidationPass(FunctionValidationPass const&amp;) = delete;
 
-        FunctionValidationPass(FunctionValidationPass&amp;&amp;) = default;
+    FunctionValidationPass(FunctionValidationPass&amp;&amp;) = default;
 
-        ~FunctionValidationPass() = default;
+    ~FunctionValidationPass() = default;
 
-        llvm::PreservedAnalyses run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; fam);
+    llvm::PreservedAnalyses run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; fam);
 
-        static bool isRequired();
+    static bool isRequired();
 
-      private:
-        ValidationPassConfiguration config_{};
+  private:
+    ValidationPassConfiguration config_{};
 
-        ILoggerPtr logger_{nullptr};
-    };
+    ILoggerPtr logger_{nullptr};
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

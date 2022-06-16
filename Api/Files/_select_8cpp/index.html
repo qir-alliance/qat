@@ -592,35 +592,32 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
+namespace microsoft::quantum
 {
-namespace quantum
+namespace notation
 {
-    namespace notation
+
+    using IOperandPrototypePtr = std::shared_ptr&lt;IOperandPrototype&gt;;
+
+    IOperandPrototypePtr select(
+        IOperandPrototypePtr const&amp; cond,
+        IOperandPrototypePtr const&amp; arg1,
+        IOperandPrototypePtr const&amp; arg2)
     {
+        auto select_pattern = std::make_shared&lt;SelectPattern&gt;();
 
-        using IOperandPrototypePtr = std::shared_ptr&lt;IOperandPrototype&gt;;
+        select_pattern-&gt;addChild(cond);
+        select_pattern-&gt;addChild(arg1);
+        select_pattern-&gt;addChild(arg2);
 
-        IOperandPrototypePtr select(
-            IOperandPrototypePtr const&amp; cond,
-            IOperandPrototypePtr const&amp; arg1,
-            IOperandPrototypePtr const&amp; arg2)
-        {
-            auto select_pattern = std::make_shared&lt;SelectPattern&gt;();
+        return static_cast&lt;IOperandPrototypePtr&gt;(select_pattern);
+    }
 
-            select_pattern-&gt;addChild(cond);
-            select_pattern-&gt;addChild(arg1);
-            select_pattern-&gt;addChild(arg2);
-
-            return static_cast&lt;IOperandPrototypePtr&gt;(select_pattern);
-        }
-
-    } // namespace notation
-} // namespace quantum
-} // namespace microsoft
+} // namespace notation
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

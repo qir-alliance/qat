@@ -582,55 +582,52 @@
 #include &quot;Rules/IOperandPrototype.hpp&quot;
 #include &quot;Rules/Patterns/CallPattern.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    CallPattern::CallPattern(String const&amp; name)
-      : name_{name}
+CallPattern::CallPattern(String const&amp; name)
+  : name_{name}
+{
+}
+
+CallPattern::~CallPattern() = default;
+
+bool CallPattern::match(Value* instr, Captures&amp; captures) const
+{
+    auto* call_instr = llvm::dyn_cast&lt;llvm::CallBase&gt;(instr);
+    if (call_instr == nullptr)
     {
+        return fail(instr, captures);
     }
 
-    CallPattern::~CallPattern() = default;
-
-    bool CallPattern::match(Value* instr, Captures&amp; captures) const
+    auto target_function = call_instr-&gt;getCalledFunction();
+    if (target_function == nullptr)
     {
-        auto* call_instr = llvm::dyn_cast&lt;llvm::CallBase&gt;(instr);
-        if (call_instr == nullptr)
-        {
-            return fail(instr, captures);
-        }
-
-        auto target_function = call_instr-&gt;getCalledFunction();
-        if (target_function == nullptr)
-        {
-            return fail(instr, captures);
-        }
-
-        auto name = target_function-&gt;getName();
-
-        if (name != name_)
-        {
-            return fail(instr, captures);
-        }
-
-        auto ret = success(instr, captures);
-        return ret;
+        return fail(instr, captures);
     }
 
-    CallPattern::Child CallPattern::copy() const
+    auto name = target_function-&gt;getName();
+
+    if (name != name_)
     {
-        auto ret = std::make_shared&lt;CallPattern&gt;(name_);
-        ret-&gt;copyPropertiesFrom(*this);
-        return std::move(ret);
+        return fail(instr, captures);
     }
 
-} // namespace quantum
-} // namespace microsoft
+    auto ret = success(instr, captures);
+    return ret;
+}
+
+CallPattern::Child CallPattern::copy() const
+{
+    auto ret = std::make_shared&lt;CallPattern&gt;(name_);
+    ret-&gt;copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

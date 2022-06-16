@@ -603,114 +603,111 @@
 #include &lt;unordered_set&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class RemoveDisallowedAttributesPass : public llvm::PassInfoMixin&lt;RemoveDisallowedAttributesPass&gt;
+class RemoveDisallowedAttributesPass : public llvm::PassInfoMixin&lt;RemoveDisallowedAttributesPass&gt;
+{
+  public:
+    RemoveDisallowedAttributesPass()
+      : allowed_attrs_{
+            static_cast&lt;String&gt;(&quot;EntryPoint&quot;), static_cast&lt;String&gt;(&quot;InteropFriendly&quot;),
+            static_cast&lt;String&gt;(&quot;requiredQubits&quot;), static_cast&lt;String&gt;(&quot;requiredResults&quot;)
+            /*
+            static_cast&lt;String&gt;(&quot;nofree&quot;)
+            static_cast&lt;String&gt;(&quot;nosync&quot;)
+            static_cast&lt;String&gt;(&quot;nounwind&quot;)
+            static_cast&lt;String&gt;(&quot;readnone&quot;)
+            static_cast&lt;String&gt;(&quot;speculatable&quot;)
+            static_cast&lt;String&gt;(&quot;willreturn&quot;)
+            */
+        }
     {
-      public:
-        RemoveDisallowedAttributesPass()
-          : allowed_attrs_{
-                static_cast&lt;String&gt;(&quot;EntryPoint&quot;), static_cast&lt;String&gt;(&quot;InteropFriendly&quot;),
-                static_cast&lt;String&gt;(&quot;requiredQubits&quot;), static_cast&lt;String&gt;(&quot;requiredResults&quot;)
-                /*
-                static_cast&lt;String&gt;(&quot;nofree&quot;)
-                static_cast&lt;String&gt;(&quot;nosync&quot;)
-                static_cast&lt;String&gt;(&quot;nounwind&quot;)
-                static_cast&lt;String&gt;(&quot;readnone&quot;)
-                static_cast&lt;String&gt;(&quot;speculatable&quot;)
-                static_cast&lt;String&gt;(&quot;willreturn&quot;)
-                */
-            }
-        {
-        }
+    }
 
-        llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+    llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+    {
+        for (auto&amp; fnc : module)
         {
-            for (auto&amp; fnc : module)
+            std::unordered_map&lt;String, String&gt; to_keep;
+            auto                               name = static_cast&lt;std::string&gt;(fnc.getName());
+
+            // Skipping any LLVM function
+            if (fnc.isIntrinsic())
             {
-                std::unordered_map&lt;String, String&gt; to_keep;
-                auto                               name = static_cast&lt;std::string&gt;(fnc.getName());
+                continue;
+            }
 
-                // Skipping any LLVM function
-                if (fnc.isIntrinsic())
+            // Finding all valid attributes
+            for (auto&amp; attrset : fnc.getAttributes())
+            {
+                for (auto&amp; attr : attrset)
                 {
-                    continue;
-                }
+                    auto        r = static_cast&lt;String&gt;(attr.getAsString());
+                    std::string value{};
 
-                // Finding all valid attributes
-                for (auto&amp; attrset : fnc.getAttributes())
-                {
-                    for (auto&amp; attr : attrset)
+                    auto p = r.find('=');
+                    if (p != std::string::npos)
                     {
-                        auto        r = static_cast&lt;String&gt;(attr.getAsString());
-                        std::string value{};
-
-                        auto p = r.find('=');
-                        if (p != std::string::npos)
-                        {
-                            value = r.substr(p + 1, r.size() - p - 1);
-                            r     = r.substr(0, p);
-                        }
-
-                        // Stripping quotes
-                        if (r.size() &gt;= 2 &amp;&amp; r[0] == '&quot;' &amp;&amp; r[r.size() - 1] == '&quot;')
-                        {
-                            r = r.substr(1, r.size() - 2);
-                        }
-
-                        if (value.size() &gt;= 2 &amp;&amp; value[0] == '&quot;' &amp;&amp; value[value.size() - 1] == '&quot;')
-                        {
-                            value = value.substr(1, value.size() - 2);
-                        }
-
-                        // Inserting if allowed
-                        if (allowed_attrs_.find(r) != allowed_attrs_.end())
-                        {
-                            to_keep.insert(std::make_pair(r, value));
-                        }
+                        value = r.substr(p + 1, r.size() - p - 1);
+                        r     = r.substr(0, p);
                     }
-                }
 
-                // Deleting every
-                fnc.setAttributes({});
-                for (auto&amp; attr : to_keep)
-                {
-                    if (attr.second.empty())
+                    // Stripping quotes
+                    if (r.size() &gt;= 2 &amp;&amp; r[0] == '&quot;' &amp;&amp; r[r.size() - 1] == '&quot;')
                     {
-                        fnc.addFnAttr(attr.first);
+                        r = r.substr(1, r.size() - 2);
                     }
-                    else
-                    {
-                        fnc.addFnAttr(attr.first, attr.second);
-                    }
-                }
 
-                // Updating all users attributes
-                for (auto user : fnc.users())
-                {
-                    auto call = llvm::dyn_cast&lt;llvm::CallInst&gt;(user);
-                    if (call != nullptr)
+                    if (value.size() &gt;= 2 &amp;&amp; value[0] == '&quot;' &amp;&amp; value[value.size() - 1] == '&quot;')
                     {
-                        call-&gt;setAttributes(fnc.getAttributes());
+                        value = value.substr(1, value.size() - 2);
+                    }
+
+                    // Inserting if allowed
+                    if (allowed_attrs_.find(r) != allowed_attrs_.end())
+                    {
+                        to_keep.insert(std::make_pair(r, value));
                     }
                 }
             }
 
-            return llvm::PreservedAnalyses::none();
+            // Deleting every
+            fnc.setAttributes({});
+            for (auto&amp; attr : to_keep)
+            {
+                if (attr.second.empty())
+                {
+                    fnc.addFnAttr(attr.first);
+                }
+                else
+                {
+                    fnc.addFnAttr(attr.first, attr.second);
+                }
+            }
+
+            // Updating all users attributes
+            for (auto user : fnc.users())
+            {
+                auto call = llvm::dyn_cast&lt;llvm::CallInst&gt;(user);
+                if (call != nullptr)
+                {
+                    call-&gt;setAttributes(fnc.getAttributes());
+                }
+            }
         }
 
-      private:
-        std::unordered_set&lt;String&gt; allowed_attrs_;
-    };
+        return llvm::PreservedAnalyses::none();
+    }
 
-} // namespace quantum
-} // namespace microsoft
+  private:
+    std::unordered_set&lt;String&gt; allowed_attrs_;
+};
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

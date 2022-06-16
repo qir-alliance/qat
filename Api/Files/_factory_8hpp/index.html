@@ -607,114 +607,111 @@
 
 #include &lt;memory&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class RuleFactory
-    {
-      public:
-        using ReplacementRulePtr = std::shared_ptr&lt;ReplacementRule&gt;;
+class RuleFactory
+{
+  public:
+    using ReplacementRulePtr = std::shared_ptr&lt;ReplacementRule&gt;;
 
-        using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
+    using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
 
-        using ILoggerPtr = ILogger::ILoggerPtr;
+    using ILoggerPtr = ILogger::ILoggerPtr;
 
-        // Constructor configuration. Explicit construction with
-        // rule set to be configured, which can be moved using move
-        // semantics. No copy allowed.
-        //
+    // Constructor configuration. Explicit construction with
+    // rule set to be configured, which can be moved using move
+    // semantics. No copy allowed.
+    //
 
-        RuleFactory(
-            RuleSet&amp;             rule_set,
-            AllocationManagerPtr qubit_alloc_manager,
-            AllocationManagerPtr result_alloc_manager,
-            ILoggerPtr           logger);
-        RuleFactory()                   = delete;
-        RuleFactory(RuleFactory const&amp;) = delete;
-        RuleFactory(RuleFactory&amp;&amp;)      = default;
-        ~RuleFactory()                  = default;
+    RuleFactory(
+        RuleSet&amp;             rule_set,
+        AllocationManagerPtr qubit_alloc_manager,
+        AllocationManagerPtr result_alloc_manager,
+        ILoggerPtr           logger);
+    RuleFactory()                   = delete;
+    RuleFactory(RuleFactory const&amp;) = delete;
+    RuleFactory(RuleFactory&amp;&amp;)      = default;
+    ~RuleFactory()                  = default;
 
-        //
-        //
+    //
+    //
 
-        void usingConfiguration(FactoryConfiguration const&amp; config);
+    void usingConfiguration(FactoryConfiguration const&amp; config);
 
-        // Generic rules
-        //
+    // Generic rules
+    //
 
-        void removeFunctionCall(String const&amp; name);
+    void removeFunctionCall(String const&amp; name);
 
-        // Conventions
-        //
+    // Conventions
+    //
 
-        void useStaticQubitArrayAllocation();
+    void useStaticQubitArrayAllocation();
 
-        void useStaticQubitAllocation();
+    void useStaticQubitAllocation();
 
-        void useStaticResultAllocation();
+    void useStaticResultAllocation();
 
-        void resolveConstantArraySizes();
+    void resolveConstantArraySizes();
 
-        void inlineCallables();
+    void inlineCallables();
 
-        // Optimizations
-        //
+    // Optimizations
+    //
 
-        void optimizeResultOne();
+    void optimizeResultOne();
 
-        void optimizeResultZero();
+    void optimizeResultZero();
 
-        void optimizeConstantResult();
+    void optimizeConstantResult();
 
-        void removeGetZeroOrOne();
+    void removeGetZeroOrOne();
 
-        // Disabling by feature
-        //
+    // Disabling by feature
+    //
 
-        void disableReferenceCounting();
+    void disableReferenceCounting();
 
-        void disableAliasCounting();
+    void disableAliasCounting();
 
-        void disableStringSupport();
+    void disableStringSupport();
 
-        void disableRecordOutputSupport();
+    void disableRecordOutputSupport();
 
-        // Configuration
-        //
+    // Configuration
+    //
 
-        void setDefaultIntegerWidth(uint32_t v);
+    void setDefaultIntegerWidth(uint32_t v);
 
-      private:
-        ReplacementRulePtr addRule(
-            ReplacementRule&amp;&amp;                rule,
-            RuleSet::ReplaceDirection const&amp; dir = RuleSet::ReplaceDirection::ReplaceForwards);
+  private:
+    ReplacementRulePtr addRule(
+        ReplacementRule&amp;&amp;                rule,
+        RuleSet::ReplaceDirection const&amp; dir = RuleSet::ReplaceDirection::ReplaceForwards);
 
-        // Affected artefacts
-        //
+    // Affected artefacts
+    //
 
-        RuleSet&amp; rule_set_; 
+    RuleSet&amp; rule_set_; 
 
-        // Allocation managers.
-        //
+    // Allocation managers.
+    //
 
-        AllocationManagerPtr qubit_alloc_manager_{nullptr};
+    AllocationManagerPtr qubit_alloc_manager_{nullptr};
 
-        AllocationManagerPtr result_alloc_manager_{nullptr};
+    AllocationManagerPtr result_alloc_manager_{nullptr};
 
-        ILoggerPtr logger_{nullptr};
+    ILoggerPtr logger_{nullptr};
 
-        //
+    //
 
-        uint32_t default_integer_width_{64};
-    };
+    uint32_t default_integer_width_{64};
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

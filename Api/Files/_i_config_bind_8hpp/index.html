@@ -606,84 +606,81 @@
 #include &lt;type_traits&gt;
 #include &lt;typeindex&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class IConfigBind
-    {
-      public:
-        // Deleted constructors and deleted operators
-        //
-        // Strictly speaking the code would remain correct if we allowed copy and/or move, but
-        // we have chosen to ban them by choice as potential bugs arising from allowing copy and/or
-        // move can be difficult to find. We consider this behaviour a part of the interface definition.
-        IConfigBind(IConfigBind const&amp;) = delete;
-        IConfigBind(IConfigBind&amp;&amp;)      = delete;
-        IConfigBind&amp; operator=(IConfigBind const&amp;) = delete;
-        IConfigBind&amp; operator=(IConfigBind&amp;&amp;) = delete;
+class IConfigBind
+{
+  public:
+    // Deleted constructors and deleted operators
+    //
+    // Strictly speaking the code would remain correct if we allowed copy and/or move, but
+    // we have chosen to ban them by choice as potential bugs arising from allowing copy and/or
+    // move can be difficult to find. We consider this behaviour a part of the interface definition.
+    IConfigBind(IConfigBind const&amp;) = delete;
+    IConfigBind(IConfigBind&amp;&amp;)      = delete;
+    IConfigBind&amp; operator=(IConfigBind const&amp;) = delete;
+    IConfigBind&amp; operator=(IConfigBind&amp;&amp;) = delete;
 
-        // Virtual destructor
-        //
-        virtual ~IConfigBind();
+    // Virtual destructor
+    //
+    virtual ~IConfigBind();
 
-        // Interface
-        //
+    // Interface
+    //
 
-        virtual bool setupArguments(ParameterParser&amp; parser) = 0;
+    virtual bool setupArguments(ParameterParser&amp; parser) = 0;
 
-        virtual bool configure(ParameterParser&amp; parser, bool experimental_mode) = 0;
+    virtual bool configure(ParameterParser&amp; parser, bool experimental_mode) = 0;
 
-        virtual String value() = 0;
+    virtual String value() = 0;
 
-        virtual void* pointer() const = 0;
+    virtual void* pointer() const = 0;
 
-        virtual std::type_index valueType() const = 0;
+    virtual std::type_index valueType() const = 0;
 
-        // Properties
-        //
+    // Properties
+    //
 
-        String name() const;
+    String name() const;
 
-        String description() const;
+    String description() const;
 
-        bool isFlag() const;
+    bool isFlag() const;
 
-        String defaultValue() const;
+    String defaultValue() const;
 
-        bool isExperimental() const;
+    bool isExperimental() const;
 
-      protected:
-        // Constructor
-        //
-        IConfigBind(String const&amp; name, String const&amp; description);
+  protected:
+    // Constructor
+    //
+    IConfigBind(String const&amp; name, String const&amp; description);
 
-        // Configuration
-        //
+    // Configuration
+    //
 
-        void setName(String const&amp; name);
+    void setName(String const&amp; name);
 
-        void markAsFlag();
+    void markAsFlag();
 
-        void setDefault(String const&amp; v);
+    void setDefault(String const&amp; v);
 
-        void makeSettingExperimental();
+    void makeSettingExperimental();
 
-      private:
-        String name_;                  
-        String description_;           
-        bool   is_flag_{false};        
-        String str_default_value_{&quot;&quot;}; 
+  private:
+    String name_;                  
+    String description_;           
+    bool   is_flag_{false};        
+    String str_default_value_{&quot;&quot;}; 
 
-        bool is_experimental_{false}; 
-    };
+    bool is_experimental_{false}; 
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:13 UTC</p></div>
 </div>
           </div>
         </main>

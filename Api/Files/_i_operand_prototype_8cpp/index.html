@@ -581,102 +581,99 @@
 
 #include &quot;Rules/IOperandPrototype.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    IOperandPrototype::~IOperandPrototype() = default;
-    bool IOperandPrototype::matchChildren(Value* value, Captures&amp; captures) const
+IOperandPrototype::~IOperandPrototype() = default;
+bool IOperandPrototype::matchChildren(Value* value, Captures&amp; captures) const
+{
+    if (!children_.empty())
     {
-        if (!children_.empty())
+        auto user = llvm::dyn_cast&lt;llvm::User&gt;(value);
+
+        if (user == nullptr)
         {
-            auto user = llvm::dyn_cast&lt;llvm::User&gt;(value);
-
-            if (user == nullptr)
-            {
-                return false;
-            }
-
-            if (user-&gt;getNumOperands() != children_.size())
-            {
-                return false;
-            }
-
-            uint64_t i = 0;
-            while (i &lt; children_.size())
-            {
-                auto v = user-&gt;getOperand(static_cast&lt;uint32_t&gt;(i));
-                if (!children_[i]-&gt;match(v, captures))
-                {
-                    return false;
-                }
-                ++i;
-            }
-
-            return true;
+            return false;
         }
 
-        // TODO(issue-16): value may be other type than llvm::User. Check other relevant types
-        // and deal with it.
+        if (user-&gt;getNumOperands() != children_.size())
+        {
+            return false;
+        }
+
+        uint64_t i = 0;
+        while (i &lt; children_.size())
+        {
+            auto v = user-&gt;getOperand(static_cast&lt;uint32_t&gt;(i));
+            if (!children_[i]-&gt;match(v, captures))
+            {
+                return false;
+            }
+            ++i;
+        }
 
         return true;
     }
 
-    void IOperandPrototype::addChild(Child const&amp; child)
+    // TODO(issue-16): value may be other type than llvm::User. Check other relevant types
+    // and deal with it.
+
+    return true;
+}
+
+void IOperandPrototype::addChild(Child const&amp; child)
+{
+    children_.push_back(child);
+}
+
+void IOperandPrototype::captureAs(std::string capture_name)
+{
+    capture_name_ = std::move(capture_name);
+}
+
+bool IOperandPrototype::fail(Value* /*value*/, Captures&amp; /*captures*/) const
+{
+    return false;
+}
+
+bool IOperandPrototype::success(Value* value, Captures&amp; captures) const
+{
+    capture(value, captures);
+
+    auto ret = matchChildren(value, captures);
+    if (!ret)
     {
-        children_.push_back(child);
+        uncapture(value, captures);
     }
+    return ret;
+}
 
-    void IOperandPrototype::captureAs(std::string capture_name)
+void IOperandPrototype::capture(Value* value, Captures&amp; captures) const
+{
+    if (!capture_name_.empty())
     {
-        capture_name_ = std::move(capture_name);
+        captures[capture_name_] = value;
     }
+}
 
-    bool IOperandPrototype::fail(Value* /*value*/, Captures&amp; /*captures*/) const
+void IOperandPrototype::uncapture(Value* /*value*/, Captures&amp; captures) const
+{
+    if (!capture_name_.empty())
     {
-        return false;
-    }
-
-    bool IOperandPrototype::success(Value* value, Captures&amp; captures) const
-    {
-        capture(value, captures);
-
-        auto ret = matchChildren(value, captures);
-        if (!ret)
+        auto it = captures.find(capture_name_);
+        if (it == captures.end())
         {
-            uncapture(value, captures);
+            throw std::runtime_error(&quot;Previously captured name &quot; + capture_name_ + &quot; not found in capture list.&quot;);
         }
-        return ret;
+
+        captures.erase(it);
     }
+}
 
-    void IOperandPrototype::capture(Value* value, Captures&amp; captures) const
-    {
-        if (!capture_name_.empty())
-        {
-            captures[capture_name_] = value;
-        }
-    }
-
-    void IOperandPrototype::uncapture(Value* /*value*/, Captures&amp; captures) const
-    {
-        if (!capture_name_.empty())
-        {
-            auto it = captures.find(capture_name_);
-            if (it == captures.end())
-            {
-                throw std::runtime_error(&quot;Previously captured name &quot; + capture_name_ + &quot; not found in capture list.&quot;);
-            }
-
-            captures.erase(it);
-        }
-    }
-
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

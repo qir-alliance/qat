@@ -590,30 +590,27 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
+namespace microsoft::quantum
 {
-namespace quantum
+namespace notation
 {
-    namespace notation
+
+    using IOperandPrototypePtr = std::shared_ptr&lt;IOperandPrototype&gt;;
+
+    IOperandPrototypePtr store(IOperandPrototypePtr const&amp; target, IOperandPrototypePtr const&amp; value)
     {
+        auto ret = std::make_shared&lt;StorePattern&gt;();
 
-        using IOperandPrototypePtr = std::shared_ptr&lt;IOperandPrototype&gt;;
+        ret-&gt;addChild(target);
+        ret-&gt;addChild(value);
+        return static_cast&lt;IOperandPrototypePtr&gt;(ret);
+    }
 
-        IOperandPrototypePtr store(IOperandPrototypePtr const&amp; target, IOperandPrototypePtr const&amp; value)
-        {
-            auto ret = std::make_shared&lt;StorePattern&gt;();
-
-            ret-&gt;addChild(target);
-            ret-&gt;addChild(value);
-            return static_cast&lt;IOperandPrototypePtr&gt;(ret);
-        }
-
-    } // namespace notation
-} // namespace quantum
-} // namespace microsoft
+} // namespace notation
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

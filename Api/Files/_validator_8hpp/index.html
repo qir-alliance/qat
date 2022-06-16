@@ -605,77 +605,74 @@
 
 #include &lt;memory&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class Validator
-    {
-      public:
-        using ValidatorPtr = std::unique_ptr&lt;Validator&gt;;
-        using ILoggerPtr   = ILogger::ILoggerPtr;
+class Validator
+{
+  public:
+    using ValidatorPtr = std::unique_ptr&lt;Validator&gt;;
+    using ILoggerPtr   = ILogger::ILoggerPtr;
 
-        // Constructors
-        //
+    // Constructors
+    //
 
-        explicit Validator(
-            ValidationPassConfiguration const&amp; cfg,
-            ILoggerPtr const&amp;                  logger,
-            bool                               debug,
-            llvm::TargetMachine*               target_machine = nullptr);
+    explicit Validator(
+        ValidationPassConfiguration const&amp; cfg,
+        ILoggerPtr const&amp;                  logger,
+        bool                               debug,
+        llvm::TargetMachine*               target_machine = nullptr);
 
-        // Default construction not allowed to ensure that LLVM modules and passes are set up correctly.
-        // Copy construction is prohibited due to restriction on classes held by Validator.
+    // Default construction not allowed to ensure that LLVM modules and passes are set up correctly.
+    // Copy construction is prohibited due to restriction on classes held by Validator.
 
-        Validator()                 = delete;
-        Validator(Validator const&amp;) = delete;
-        Validator(Validator&amp;&amp;)      = default;
-        Validator&amp; operator=(Validator const&amp;) = delete;
-        Validator&amp; operator=(Validator&amp;&amp;) = default;
-        ~Validator()                      = default;
+    Validator()                 = delete;
+    Validator(Validator const&amp;) = delete;
+    Validator(Validator&amp;&amp;)      = default;
+    Validator&amp; operator=(Validator const&amp;) = delete;
+    Validator&amp; operator=(Validator&amp;&amp;) = default;
+    ~Validator()                      = default;
 
-        // Validator methods
-        //
+    // Validator methods
+    //
 
-        bool validate(llvm::Module&amp; module);
+    bool validate(llvm::Module&amp; module);
 
-        ILoggerPtr logger() const;
+    ILoggerPtr logger() const;
 
-      protected:
-        using PassBuilderPtr = std::unique_ptr&lt;llvm::PassBuilder&gt;;
+  protected:
+    using PassBuilderPtr = std::unique_ptr&lt;llvm::PassBuilder&gt;;
 
-        llvm::PassBuilder&amp; passBuilder();
+    llvm::PassBuilder&amp; passBuilder();
 
-        llvm::LoopAnalysisManager&amp; loopAnalysisManager();
+    llvm::LoopAnalysisManager&amp; loopAnalysisManager();
 
-        llvm::FunctionAnalysisManager&amp; functionAnalysisManager();
+    llvm::FunctionAnalysisManager&amp; functionAnalysisManager();
 
-        llvm::CGSCCAnalysisManager&amp; gsccAnalysisManager();
+    llvm::CGSCCAnalysisManager&amp; gsccAnalysisManager();
 
-        llvm::ModuleAnalysisManager&amp; moduleAnalysisManager();
+    llvm::ModuleAnalysisManager&amp; moduleAnalysisManager();
 
-      private:
-        // LLVM logic to run the passes
-        //
+  private:
+    // LLVM logic to run the passes
+    //
 
-        llvm::LoopAnalysisManager     loop_analysis_manager_;
-        llvm::FunctionAnalysisManager function_analysis_manager_;
-        llvm::CGSCCAnalysisManager    gscc_analysis_manager_;
-        llvm::ModuleAnalysisManager   module_analysis_manager_;
+    llvm::LoopAnalysisManager     loop_analysis_manager_;
+    llvm::FunctionAnalysisManager function_analysis_manager_;
+    llvm::CGSCCAnalysisManager    gscc_analysis_manager_;
+    llvm::ModuleAnalysisManager   module_analysis_manager_;
 
-        PassBuilderPtr pass_builder_;
+    PassBuilderPtr pass_builder_;
 
-        llvm::ModulePassManager module_pass_manager_{};
+    llvm::ModulePassManager module_pass_manager_{};
 
-        ILoggerPtr logger_{nullptr}; 
-    };
+    ILoggerPtr logger_{nullptr}; 
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

@@ -598,48 +598,45 @@
 #include &quot;Commandline/ConfigurationManager.hpp&quot;
 #include &quot;QatTypes/QatTypes.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class GroupingPassConfiguration
+class GroupingPassConfiguration
+{
+  public:
+    using Set = std::unordered_set&lt;std::string&gt;;
+    // Setup and construction
+    //
+
+    void setup(ConfigurationManager&amp; config)
     {
-      public:
-        using Set = std::unordered_set&lt;std::string&gt;;
-        // Setup and construction
-        //
+        config.setSectionName(&quot;Grouping quantum instructions&quot;, &quot;&quot;);
+        config.addExperimentalParameter(
+            circuit_separation_, &quot;separate-circuits&quot;, &quot;Whether or not to separate quantum and classical circuits&quot;);
+    }
 
-        void setup(ConfigurationManager&amp; config)
-        {
-            config.setSectionName(&quot;Grouping quantum instructions&quot;, &quot;&quot;);
-            config.addExperimentalParameter(
-                circuit_separation_, &quot;separate-circuits&quot;, &quot;Whether or not to separate quantum and classical circuits&quot;);
-        }
+    static GroupingPassConfiguration createDisabled()
+    {
+        GroupingPassConfiguration ret;
 
-        static GroupingPassConfiguration createDisabled()
-        {
-            GroupingPassConfiguration ret;
+        ret.circuit_separation_ = false;
 
-            ret.circuit_separation_ = false;
+        return ret;
+    }
 
-            return ret;
-        }
+    bool circuitSeparation() const
+    {
+        return circuit_separation_;
+    }
 
-        bool circuitSeparation() const
-        {
-            return circuit_separation_;
-        }
+  private:
+    bool circuit_separation_{true};
+};
 
-      private:
-        bool circuit_separation_{true};
-    };
-
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

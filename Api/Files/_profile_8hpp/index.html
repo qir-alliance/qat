@@ -602,146 +602,143 @@
 
 #include &quot;Llvm/Llvm.hpp&quot;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class ProfileGenerator;
+class ProfileGenerator;
 
-    class Profile
+class Profile
+{
+  public:
+    using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
+
+    using ValidatorPtr = Validator::ValidatorPtr;
+
+    using ILoggerPtr = std::shared_ptr&lt;ILogger&gt;;
+
+    // Constructors
+    //
+
+    explicit Profile(
+        String const&amp;        name,
+        ILoggerPtr const&amp;    logger,
+        bool                 debug,
+        llvm::TargetMachine* target_machine            = nullptr,
+        AllocationManagerPtr qubit_allocation_manager  = BasicAllocationManager::createNew(),
+        AllocationManagerPtr result_allocation_manager = BasicAllocationManager::createNew());
+
+    // Default construction not allowed as this leads to invalid configuration of the allocation
+    // managers.
+
+    Profile()               = delete;
+    Profile(Profile const&amp;) = delete;
+    Profile(Profile&amp;&amp;)      = default;
+    Profile&amp; operator=(Profile const&amp;) = delete;
+    Profile&amp; operator=(Profile&amp;&amp;) = default;
+    ~Profile()                    = default;
+
+    // Profile methods
+    //
+
+    void apply(llvm::Module&amp; module);
+
+    bool verify(llvm::Module&amp; module);
+
+    bool validate(llvm::Module&amp; module);
+
+    AllocationManagerPtr getQubitAllocationManager();
+    AllocationManagerPtr getResultAllocationManager();
+
+    String const&amp; name() const;
+
+    llvm::PassBuilder&amp; passBuilder();
+
+    llvm::LoopAnalysisManager&amp; loopAnalysisManager();
+
+    llvm::FunctionAnalysisManager&amp; functionAnalysisManager();
+
+    llvm::CGSCCAnalysisManager&amp; gsccAnalysisManager();
+
+    llvm::ModuleAnalysisManager&amp; moduleAnalysisManager();
+
+  protected:
+    // Ensuring that ProfileGenerator has access to following protected functions.
+    friend class ProfileGenerator;
+
+    void setModulePassManager(llvm::ModulePassManager&amp;&amp; manager);
+
+    void setValidator(ValidatorPtr&amp;&amp; validator);
+
+  private:
+    using PassInstrumentationCallbacksPtr = std::unique_ptr&lt;llvm::PassInstrumentationCallbacks&gt;;
+    using StandardInstrumentationsPtr     = std::unique_ptr&lt;llvm::StandardInstrumentations&gt;;
+    using PassBuilderPtr                  = std::unique_ptr&lt;llvm::PassBuilder&gt;;
+
+    void registerEPCallbacks();
+
+    template &lt;typename PassManager&gt;
+    bool tryParsePipelineText(llvm::PassBuilder&amp; pass_builder, std::string const&amp; pipeline_options)
     {
-      public:
-        using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
-
-        using ValidatorPtr = Validator::ValidatorPtr;
-
-        using ILoggerPtr = std::shared_ptr&lt;ILogger&gt;;
-
-        // Constructors
-        //
-
-        explicit Profile(
-            String const&amp;        name,
-            ILoggerPtr const&amp;    logger,
-            bool                 debug,
-            llvm::TargetMachine* target_machine            = nullptr,
-            AllocationManagerPtr qubit_allocation_manager  = BasicAllocationManager::createNew(),
-            AllocationManagerPtr result_allocation_manager = BasicAllocationManager::createNew());
-
-        // Default construction not allowed as this leads to invalid configuration of the allocation
-        // managers.
-
-        Profile()               = delete;
-        Profile(Profile const&amp;) = delete;
-        Profile(Profile&amp;&amp;)      = default;
-        Profile&amp; operator=(Profile const&amp;) = delete;
-        Profile&amp; operator=(Profile&amp;&amp;) = default;
-        ~Profile()                    = default;
-
-        // Profile methods
-        //
-
-        void apply(llvm::Module&amp; module);
-
-        bool verify(llvm::Module&amp; module);
-
-        bool validate(llvm::Module&amp; module);
-
-        AllocationManagerPtr getQubitAllocationManager();
-        AllocationManagerPtr getResultAllocationManager();
-
-        String const&amp; name() const;
-
-        llvm::PassBuilder&amp; passBuilder();
-
-        llvm::LoopAnalysisManager&amp; loopAnalysisManager();
-
-        llvm::FunctionAnalysisManager&amp; functionAnalysisManager();
-
-        llvm::CGSCCAnalysisManager&amp; gsccAnalysisManager();
-
-        llvm::ModuleAnalysisManager&amp; moduleAnalysisManager();
-
-      protected:
-        // Ensuring that ProfileGenerator has access to following protected functions.
-        friend class ProfileGenerator;
-
-        void setModulePassManager(llvm::ModulePassManager&amp;&amp; manager);
-
-        void setValidator(ValidatorPtr&amp;&amp; validator);
-
-      private:
-        using PassInstrumentationCallbacksPtr = std::unique_ptr&lt;llvm::PassInstrumentationCallbacks&gt;;
-        using StandardInstrumentationsPtr     = std::unique_ptr&lt;llvm::StandardInstrumentations&gt;;
-        using PassBuilderPtr                  = std::unique_ptr&lt;llvm::PassBuilder&gt;;
-
-        void registerEPCallbacks();
-
-        template &lt;typename PassManager&gt;
-        bool tryParsePipelineText(llvm::PassBuilder&amp; pass_builder, std::string const&amp; pipeline_options)
+        if (pipeline_options.empty())
         {
-            if (pipeline_options.empty())
-            {
-                return false;
-            }
-
-            PassManager pass_manager;
-            if (auto err = pass_builder.parsePassPipeline(pass_manager, pipeline_options))
-            {
-                llvm::errs() &lt;&lt; &quot;Could not parse -&quot; &lt;&lt; pipeline_options &lt;&lt; &quot; pipeline: &quot; &lt;&lt; toString(std::move(err))
-                             &lt;&lt; &quot;\n&quot;;
-                return false;
-            }
-            return true;
+            return false;
         }
 
-        String name_{};
+        PassManager pass_manager;
+        if (auto err = pass_builder.parsePassPipeline(pass_manager, pipeline_options))
+        {
+            llvm::errs() &lt;&lt; &quot;Could not parse -&quot; &lt;&lt; pipeline_options &lt;&lt; &quot; pipeline: &quot; &lt;&lt; toString(std::move(err))
+                         &lt;&lt; &quot;\n&quot;;
+            return false;
+        }
+        return true;
+    }
 
-        ILoggerPtr logger_{nullptr};
+    String name_{};
 
-        // LLVM logic to run the passes
-        //
+    ILoggerPtr logger_{nullptr};
 
-        llvm::LoopAnalysisManager     loop_analysis_manager_;
-        llvm::FunctionAnalysisManager function_analysis_manager_;
-        llvm::CGSCCAnalysisManager    gscc_analysis_manager_;
-        llvm::ModuleAnalysisManager   module_analysis_manager_;
+    // LLVM logic to run the passes
+    //
 
-        llvm::Optional&lt;llvm::PGOOptions&gt; pgo_options_;
-        PassInstrumentationCallbacksPtr  pass_instrumentation_callbacks_;
-        StandardInstrumentationsPtr      standard_instrumentations_;
-        llvm::PipelineTuningOptions      pipeline_tuning_options_;
+    llvm::LoopAnalysisManager     loop_analysis_manager_;
+    llvm::FunctionAnalysisManager function_analysis_manager_;
+    llvm::CGSCCAnalysisManager    gscc_analysis_manager_;
+    llvm::ModuleAnalysisManager   module_analysis_manager_;
 
-        PassBuilderPtr pass_builder_;
+    llvm::Optional&lt;llvm::PGOOptions&gt; pgo_options_;
+    PassInstrumentationCallbacksPtr  pass_instrumentation_callbacks_;
+    StandardInstrumentationsPtr      standard_instrumentations_;
+    llvm::PipelineTuningOptions      pipeline_tuning_options_;
 
-        llvm::ModulePassManager   module_pass_manager_{};
-        llvm::FunctionPassManager function_pass_manager_{};
+    PassBuilderPtr pass_builder_;
 
-        // Allocation management
-        //
+    llvm::ModulePassManager   module_pass_manager_{};
+    llvm::FunctionPassManager function_pass_manager_{};
 
-        AllocationManagerPtr qubit_allocation_manager_{};
+    // Allocation management
+    //
 
-        AllocationManagerPtr result_allocation_manager_{};
+    AllocationManagerPtr qubit_allocation_manager_{};
 
-        ValidatorPtr validator_{};
+    AllocationManagerPtr result_allocation_manager_{};
 
-        std::string peephole_ep_pipeline_{&quot;&quot;};
-        std::string late_loop_optimizations_ep_pipeline_{&quot;&quot;};
-        std::string loop_optimizer_end_ep_pipeline_{&quot;&quot;};
-        std::string scalar_optimizer_late_ep_pipeline_{&quot;&quot;};
-        std::string cgscc_optimizer_late_ep_pipeline_{&quot;&quot;};
-        std::string vectorizer_start_ep_pipeline_{&quot;&quot;};
-        std::string pipeline_start_ep_pipeline_{&quot;&quot;};
-        std::string optimizer_last_ep_pipeline_{&quot;&quot;};
-    };
+    ValidatorPtr validator_{};
 
-} // namespace quantum
-} // namespace microsoft
+    std::string peephole_ep_pipeline_{&quot;&quot;};
+    std::string late_loop_optimizations_ep_pipeline_{&quot;&quot;};
+    std::string loop_optimizer_end_ep_pipeline_{&quot;&quot;};
+    std::string scalar_optimizer_late_ep_pipeline_{&quot;&quot;};
+    std::string cgscc_optimizer_late_ep_pipeline_{&quot;&quot;};
+    std::string vectorizer_start_ep_pipeline_{&quot;&quot;};
+    std::string pipeline_start_ep_pipeline_{&quot;&quot;};
+    std::string optimizer_last_ep_pipeline_{&quot;&quot;};
+};
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

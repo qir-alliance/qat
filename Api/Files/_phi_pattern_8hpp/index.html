@@ -602,40 +602,37 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class PhiPattern : public IOperandPrototype
-    {
-      public:
-        using String = std::string;
+class PhiPattern : public IOperandPrototype
+{
+  public:
+    using String = std::string;
 
-        // Construction of the call pattern by name or move only.
-        //
+    // Construction of the call pattern by name or move only.
+    //
 
-        PhiPattern() = default;
+    PhiPattern() = default;
 
-        PhiPattern(PhiPattern const&amp; other) = delete;
+    PhiPattern(PhiPattern const&amp; other) = delete;
 
-        PhiPattern(PhiPattern&amp;&amp; other) = default;
+    PhiPattern(PhiPattern&amp;&amp; other) = default;
 
-        ~PhiPattern() override;
+    ~PhiPattern() override;
 
-        // Phi implementation of the member functions in IOperandPrototype.
-        //
+    // Phi implementation of the member functions in IOperandPrototype.
+    //
 
-        bool match(Value* instr, Captures&amp; captures) const override;
+    bool match(Value* instr, Captures&amp; captures) const override;
 
-        Child copy() const override;
-    };
+    Child copy() const override;
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

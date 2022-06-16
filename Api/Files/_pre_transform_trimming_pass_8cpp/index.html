@@ -586,61 +586,58 @@
 #include &lt;fstream&gt;
 #include &lt;iostream&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    PreTransformTrimmingPass::PreTransformTrimmingPass(
-        PreTransformTrimmingPassConfiguration const&amp; cfg,
-        ILoggerPtr const&amp;                            logger)
-      : config_{cfg}
-      , logger_{logger}
-    {
-    }
+PreTransformTrimmingPass::PreTransformTrimmingPass(
+    PreTransformTrimmingPassConfiguration const&amp; cfg,
+    ILoggerPtr const&amp;                            logger)
+  : config_{cfg}
+  , logger_{logger}
+{
+}
 
-    llvm::PreservedAnalyses PreTransformTrimmingPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+llvm::PreservedAnalyses PreTransformTrimmingPass::run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; /*mam*/)
+{
+
+    std::vector&lt;llvm::Function*&gt; deletables;
+    auto                         entry_point_attr = config_.entryPointAttr();
+    for (auto&amp; function : module)
     {
 
-        std::vector&lt;llvm::Function*&gt; deletables;
-        auto                         entry_point_attr = config_.entryPointAttr();
-        for (auto&amp; function : module)
+        if (function.isDeclaration())
         {
-
-            if (function.isDeclaration())
-            {
-                continue;
-            }
-
-            if (function.hasFnAttribute(entry_point_attr))
-            {
-                continue;
-            }
-
-            deletables.push_back(&amp;function);
+            continue;
         }
 
-        for (auto&amp; x : deletables)
+        if (function.hasFnAttribute(entry_point_attr))
         {
-            if (x-&gt;use_empty())
-            {
-                x-&gt;eraseFromParent();
-            }
+            continue;
         }
 
-        return llvm::PreservedAnalyses::none();
+        deletables.push_back(&amp;function);
     }
 
-    bool PreTransformTrimmingPass::isRequired()
+    for (auto&amp; x : deletables)
     {
-        return true;
+        if (x-&gt;use_empty())
+        {
+            x-&gt;eraseFromParent();
+        }
     }
 
-} // namespace quantum
-} // namespace microsoft
+    return llvm::PreservedAnalyses::none();
+}
+
+bool PreTransformTrimmingPass::isRequired()
+{
+    return true;
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

@@ -602,88 +602,85 @@
 #include &lt;unordered_set&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class ParameterParser
+class ParameterParser
+{
+  public:
+    using Arguments      = std::vector&lt;String&gt;;
+    using Flags          = std::unordered_set&lt;String&gt;;
+    using SettingsMap    = std::unordered_map&lt;String, String&gt;;
+    using UnusedSettings = std::unordered_set&lt;String&gt;;
+
+    // Construction and deconstrution configuration
+    //
+
+    ParameterParser() = default;
+
+    // No copy construction.
+    ParameterParser(ParameterParser const&amp; other) = delete;
+
+    // Allow move semantics.
+    ParameterParser(ParameterParser&amp;&amp; other) = default;
+
+    // Default destruction.
+    ~ParameterParser() = default;
+
+    // Configuration
+    //
+
+    void addFlag(String const&amp; v);
+
+    // Operation
+    //
+
+    void parseArgs(int argc, char** argv);
+
+    Arguments const&amp; arguments() const;
+
+    String const&amp; getArg(Arguments::size_type const&amp; n) const;
+
+    String const&amp; get(String const&amp; name, String const&amp; default_value) noexcept;
+
+    String const&amp; get(String const&amp; name);
+
+    void markAsUsed(String const&amp; name);
+
+    bool has(String const&amp; name) const noexcept;
+
+    void reset();
+
+    UnusedSettings const&amp; unusedSettings() const;
+
+  private:
+    struct ParsedValue
     {
-      public:
-        using Arguments      = std::vector&lt;String&gt;;
-        using Flags          = std::unordered_set&lt;String&gt;;
-        using SettingsMap    = std::unordered_map&lt;String, String&gt;;
-        using UnusedSettings = std::unordered_set&lt;String&gt;;
-
-        // Construction and deconstrution configuration
-        //
-
-        ParameterParser() = default;
-
-        // No copy construction.
-        ParameterParser(ParameterParser const&amp; other) = delete;
-
-        // Allow move semantics.
-        ParameterParser(ParameterParser&amp;&amp; other) = default;
-
-        // Default destruction.
-        ~ParameterParser() = default;
-
-        // Configuration
-        //
-
-        void addFlag(String const&amp; v);
-
-        // Operation
-        //
-
-        void parseArgs(int argc, char** argv);
-
-        Arguments const&amp; arguments() const;
-
-        String const&amp; getArg(Arguments::size_type const&amp; n) const;
-
-        String const&amp; get(String const&amp; name, String const&amp; default_value) noexcept;
-
-        String const&amp; get(String const&amp; name);
-
-        void markAsUsed(String const&amp; name);
-
-        bool has(String const&amp; name) const noexcept;
-
-        void reset();
-
-        UnusedSettings const&amp; unusedSettings() const;
-
-      private:
-        struct ParsedValue
-        {
-            bool   is_key{false}; 
-            String value;         
-        };
-
-        // Helper functions
-        //
-
-        // Parses a single argument and returns the parsed value. This function
-        // determines if the string was specified to be a key or a value.
-        ParsedValue parseSingleArg(String key);
-
-        bool isOption(String const&amp; key);
-
-        // Storage of parsed data
-        //
-        Flags          flags_{};             
-        Arguments      arguments_{};         
-        SettingsMap    settings_;            
-        UnusedSettings unused_properties_{}; 
+        bool   is_key{false}; 
+        String value;         
     };
 
-} // namespace quantum
-} // namespace microsoft
+    // Helper functions
+    //
+
+    // Parses a single argument and returns the parsed value. This function
+    // determines if the string was specified to be a key or a value.
+    ParsedValue parseSingleArg(String key);
+
+    bool isOption(String const&amp; key);
+
+    // Storage of parsed data
+    //
+    Flags          flags_{};             
+    Arguments      arguments_{};         
+    SettingsMap    settings_;            
+    UnusedSettings unused_properties_{}; 
+};
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:13 UTC</p></div>
 </div>
           </div>
         </main>

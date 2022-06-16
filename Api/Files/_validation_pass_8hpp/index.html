@@ -606,69 +606,66 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class ValidationPass : public llvm::PassInfoMixin&lt;ValidationPass&gt;
-    {
-      public:
-        using Instruction = llvm::Instruction;
-        using Value       = llvm::Value;
-        using ILoggerPtr  = ILogger::ILoggerPtr;
-        using Location    = ILogger::Location;
-        using StringRef   = llvm::StringRef;
+class ValidationPass : public llvm::PassInfoMixin&lt;ValidationPass&gt;
+{
+  public:
+    using Instruction = llvm::Instruction;
+    using Value       = llvm::Value;
+    using ILoggerPtr  = ILogger::ILoggerPtr;
+    using Location    = ILogger::Location;
+    using StringRef   = llvm::StringRef;
 
-        // Construction and destruction configuration.
-        //
+    // Construction and destruction configuration.
+    //
 
-        explicit ValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr);
+    explicit ValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr);
 
-        ValidationPass(ValidationPass const&amp;) = delete;
+    ValidationPass(ValidationPass const&amp;) = delete;
 
-        ValidationPass(ValidationPass&amp;&amp;) = default;
+    ValidationPass(ValidationPass&amp;&amp;) = default;
 
-        ~ValidationPass() = default;
+    ~ValidationPass() = default;
 
-        llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
-        static bool isRequired();
+    llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
+    static bool isRequired();
 
-      private:
-        void callChecks(Instruction&amp; instr);
-        void pointerChecks(Instruction&amp; instr);
+  private:
+    void callChecks(Instruction&amp; instr);
+    void pointerChecks(Instruction&amp; instr);
 
-        bool satisfyingOpcodeRequirements(llvm::Module&amp; module);
-        bool satisfyingInternalCallRequirements();
-        bool satisfyingExternalCallRequirements();
-        bool satisfyingPointerRequirements();
+    bool satisfyingOpcodeRequirements(llvm::Module&amp; module);
+    bool satisfyingInternalCallRequirements();
+    bool satisfyingExternalCallRequirements();
+    bool satisfyingPointerRequirements();
 
-        using Locations = std::vector&lt;Location&gt;;
+    using Locations = std::vector&lt;Location&gt;;
 
-        ValidationPassConfiguration config_{};
+    ValidationPassConfiguration config_{};
 
-        Location current_location_{};
+    Location current_location_{};
 
-        std::unordered_map&lt;std::string, uint64_t&gt;  opcodes_;
-        std::unordered_map&lt;std::string, Locations&gt; opcode_location_;
+    std::unordered_map&lt;std::string, uint64_t&gt;  opcodes_;
+    std::unordered_map&lt;std::string, Locations&gt; opcode_location_;
 
-        std::unordered_map&lt;std::string, uint64_t&gt;  external_calls_;
-        std::unordered_map&lt;std::string, Locations&gt; external_call_location_;
+    std::unordered_map&lt;std::string, uint64_t&gt;  external_calls_;
+    std::unordered_map&lt;std::string, Locations&gt; external_call_location_;
 
-        std::unordered_map&lt;std::string, uint64_t&gt;  internal_calls_;
-        std::unordered_map&lt;std::string, Locations&gt; internal_call_location_;
+    std::unordered_map&lt;std::string, uint64_t&gt;  internal_calls_;
+    std::unordered_map&lt;std::string, Locations&gt; internal_call_location_;
 
-        std::unordered_map&lt;std::string, uint64_t&gt;  pointers_;
-        std::unordered_map&lt;std::string, Locations&gt; pointer_location_;
+    std::unordered_map&lt;std::string, uint64_t&gt;  pointers_;
+    std::unordered_map&lt;std::string, Locations&gt; pointer_location_;
 
-        ILoggerPtr logger_{nullptr};
-    };
+    ILoggerPtr logger_{nullptr};
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

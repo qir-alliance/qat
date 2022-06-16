@@ -612,32 +612,29 @@
 #include &lt;functional&gt;
 #include &lt;set&gt;
 
-namespace microsoft
+namespace microsoft::quantum
 {
-namespace quantum
+struct OpcodeValue
 {
-    struct OpcodeValue
+    String id{&quot;&quot;};
+    String predicate{&quot;&quot;};
+    OpcodeValue(String const&amp; name, String const&amp; fi = &quot;&quot;)
+      : id{name}
+      , predicate{fi}
     {
-        String id{&quot;&quot;};
-        String predicate{&quot;&quot;};
-        OpcodeValue(String const&amp; name, String const&amp; fi = &quot;&quot;)
-          : id{name}
-          , predicate{fi}
-        {
-        }
+    }
 
-        OpcodeValue()                   = default;
-        OpcodeValue(OpcodeValue&amp;&amp;)      = default;
-        OpcodeValue(OpcodeValue const&amp;) = default;
-        OpcodeValue&amp; operator=(OpcodeValue&amp;&amp;) = default;
-        OpcodeValue&amp; operator=(OpcodeValue const&amp;) = default;
-        bool         operator==(OpcodeValue const&amp; other) const
-        {
-            return id == other.id &amp;&amp; predicate == other.predicate;
-        }
-    };
-} // namespace quantum
-} // namespace microsoft
+    OpcodeValue()                   = default;
+    OpcodeValue(OpcodeValue&amp;&amp;)      = default;
+    OpcodeValue(OpcodeValue const&amp;) = default;
+    OpcodeValue&amp; operator=(OpcodeValue&amp;&amp;) = default;
+    OpcodeValue&amp; operator=(OpcodeValue const&amp;) = default;
+    bool         operator==(OpcodeValue const&amp; other) const
+    {
+        return id == other.id &amp;&amp; predicate == other.predicate;
+    }
+};
+} // namespace microsoft::quantum
 
 namespace std
 {
@@ -651,69 +648,66 @@ template &lt;&gt; struct hash&lt;microsoft::quantum::OpcodeValue&gt;
 };
 } // namespace std
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class ValidationPassConfiguration
-    {
-      public:
-        using Set       = std::unordered_set&lt;std::string&gt;;
-        using OpcodeSet = std::unordered_set&lt;OpcodeValue&gt;;
+class ValidationPassConfiguration
+{
+  public:
+    using Set       = std::unordered_set&lt;std::string&gt;;
+    using OpcodeSet = std::unordered_set&lt;OpcodeValue&gt;;
 
-        // Setup and construction
-        //
+    // Setup and construction
+    //
 
-        ValidationPassConfiguration() = default;
+    ValidationPassConfiguration() = default;
 
-        void setup(ConfigurationManager&amp; config);
+    void setup(ConfigurationManager&amp; config);
 
-        static ValidationPassConfiguration fromProfileName(String const&amp; name);
-        OpcodeSet const&amp;                   allowedOpcodes() const;
-        Set const&amp;                         allowedExternalCallNames() const;
+    static ValidationPassConfiguration fromProfileName(String const&amp; name);
+    OpcodeSet const&amp;                   allowedOpcodes() const;
+    Set const&amp;                         allowedExternalCallNames() const;
 
-        bool allowInternalCalls() const;
-        bool allowlistOpcodes() const;
-        bool allowlistExternalCalls() const;
+    bool allowInternalCalls() const;
+    bool allowlistOpcodes() const;
+    bool allowlistExternalCalls() const;
 
-        bool       allowlistPointerTypes() const;
-        Set const&amp; allowedPointerTypes() const;
+    bool       allowlistPointerTypes() const;
+    Set const&amp; allowedPointerTypes() const;
 
-        bool requiresQubits() const;
-        bool requiresResults() const;
+    bool requiresQubits() const;
+    bool requiresResults() const;
 
-        String profileName() const;
+    String profileName() const;
 
-      private:
-        void addAllowedExternalCall(String const&amp; name);
-        void addAllowedOpcode(String const&amp; name);
-        void addAllowedPointerType(String const&amp; name);
+  private:
+    void addAllowedExternalCall(String const&amp; name);
+    void addAllowedOpcode(String const&amp; name);
+    void addAllowedPointerType(String const&amp; name);
 
-        String profile_name_{&quot;null&quot;};
+    String profile_name_{&quot;null&quot;};
 
-        OpcodeSet opcodes_{};
-        Set       external_calls_{};
-        Set       allowed_pointer_types_{};
+    OpcodeSet opcodes_{};
+    Set       external_calls_{};
+    Set       allowed_pointer_types_{};
 
-        bool allowlist_opcodes_{true};
-        bool allowlist_external_calls_{true};
-        bool allow_internal_calls_{false};
-        bool allowlist_pointer_types_{false};
+    bool allowlist_opcodes_{true};
+    bool allowlist_external_calls_{true};
+    bool allow_internal_calls_{false};
+    bool allowlist_pointer_types_{false};
 
-        bool allow_primitive_return_{true};
-        bool allow_struct_return_{true};
-        bool allow_pointer_return_{true};
+    bool allow_primitive_return_{true};
+    bool allow_struct_return_{true};
+    bool allow_pointer_return_{true};
 
-        bool requires_qubits_{false};
-        bool requires_results_{false};
-    };
+    bool requires_qubits_{false};
+    bool requires_results_{false};
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

@@ -583,213 +583,210 @@
 
 using namespace microsoft::quantum;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    void ConfigurationManager::setupArguments(ParameterParser&amp; parser)
+void ConfigurationManager::setupArguments(ParameterParser&amp; parser)
+{
+    parameters_.clear();
+
+    for (auto&amp; section : config_sections_)
     {
-        parameters_.clear();
+        if (section.enabled_by_default)
+        {
+            parser.addFlag(&quot;disable-&quot; + section.id);
+        }
+        else
+        {
+            parser.addFlag(&quot;enable-&quot; + section.id);
+        }
+    }
 
-        for (auto&amp; section : config_sections_)
+    for (auto&amp; section : config_sections_)
+    {
+        for (auto&amp; c : section.settings)
+        {
+            if (!c-&gt;setupArguments(parser))
+            {
+                throw std::runtime_error(&quot;Failed to set parser arguments up.&quot;);
+            }
+        }
+    }
+}
+
+void ConfigurationManager::configure(ParameterParser&amp; parser, bool experimental_mode)
+{
+
+    for (auto&amp; section : config_sections_)
+    {
+        if (section.enabled_by_default)
+        {
+            *section.active = (parser.get(&quot;disable-&quot; + section.id, &quot;false&quot;) != &quot;true&quot;);
+        }
+        else
+        {
+            *section.active = (parser.get(&quot;enable-&quot; + section.id, &quot;false&quot;) == &quot;true&quot;);
+        }
+    }
+
+    for (auto&amp; section : config_sections_)
+    {
+        for (auto&amp; c : section.settings)
+        {
+            if (!c-&gt;configure(parser, experimental_mode))
+            {
+                throw std::runtime_error(&quot;Failed configure the section.&quot;);
+            }
+        }
+    }
+}
+
+void ConfigurationManager::printHelp(bool experimental_mode) const
+{
+    std::cout &lt;&lt; std::setfill(' ');
+
+    // Enable or disable components
+    std::cout &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;Component configuration&quot;
+              &lt;&lt; &quot; - &quot;;
+    std::cout &lt;&lt; &quot;Used to disable or enable components&quot; &lt;&lt; std::endl;
+    std::cout &lt;&lt; std::endl;
+    for (auto&amp; section : config_sections_)
+    {
+        if (!section.id.empty())
         {
             if (section.enabled_by_default)
             {
-                parser.addFlag(&quot;disable-&quot; + section.id);
+                std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--disable-&quot; + section.id) &lt;&lt; &quot;Disables &quot; &lt;&lt; section.name
+                          &lt;&lt; &quot;. &quot;;
+                std::cout &lt;&lt; &quot;Default: false&quot; &lt;&lt; std::endl;
             }
             else
             {
-                parser.addFlag(&quot;enable-&quot; + section.id);
-            }
-        }
-
-        for (auto&amp; section : config_sections_)
-        {
-            for (auto&amp; c : section.settings)
-            {
-                if (!c-&gt;setupArguments(parser))
-                {
-                    throw std::runtime_error(&quot;Failed to set parser arguments up.&quot;);
-                }
+                std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--enable-&quot; + section.id) &lt;&lt; &quot;Enables &quot; &lt;&lt; section.name
+                          &lt;&lt; &quot;. &quot;;
+                std::cout &lt;&lt; &quot;Default: false&quot; &lt;&lt; std::endl;
             }
         }
     }
 
-    void ConfigurationManager::configure(ParameterParser&amp; parser, bool experimental_mode)
+    // Component configuration
+    for (auto&amp; section : config_sections_)
     {
-
-        for (auto&amp; section : config_sections_)
-        {
-            if (section.enabled_by_default)
-            {
-                *section.active = (parser.get(&quot;disable-&quot; + section.id, &quot;false&quot;) != &quot;true&quot;);
-            }
-            else
-            {
-                *section.active = (parser.get(&quot;enable-&quot; + section.id, &quot;false&quot;) == &quot;true&quot;);
-            }
-        }
-
-        for (auto&amp; section : config_sections_)
-        {
-            for (auto&amp; c : section.settings)
-            {
-                if (!c-&gt;configure(parser, experimental_mode))
-                {
-                    throw std::runtime_error(&quot;Failed configure the section.&quot;);
-                }
-            }
-        }
-    }
-
-    void ConfigurationManager::printHelp(bool experimental_mode) const
-    {
-        std::cout &lt;&lt; std::setfill(' ');
-
-        // Enable or disable components
         std::cout &lt;&lt; std::endl;
-        std::cout &lt;&lt; &quot;Component configuration&quot;
-                  &lt;&lt; &quot; - &quot;;
-        std::cout &lt;&lt; &quot;Used to disable or enable components&quot; &lt;&lt; std::endl;
+        std::cout &lt;&lt; section.name &lt;&lt; &quot; - &quot;;
+        std::cout &lt;&lt; section.description &lt;&lt; std::endl;
         std::cout &lt;&lt; std::endl;
-        for (auto&amp; section : config_sections_)
+
+        for (auto&amp; c : section.settings)
         {
-            if (!section.id.empty())
+            if (c-&gt;isExperimental() &amp;&amp; !experimental_mode)
             {
-                if (section.enabled_by_default)
-                {
-                    std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--disable-&quot; + section.id) &lt;&lt; &quot;Disables &quot;
-                              &lt;&lt; section.name &lt;&lt; &quot;. &quot;;
-                    std::cout &lt;&lt; &quot;Default: false&quot; &lt;&lt; std::endl;
-                }
-                else
-                {
-                    std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--enable-&quot; + section.id) &lt;&lt; &quot;Enables &quot; &lt;&lt; section.name
-                              &lt;&lt; &quot;. &quot;;
-                    std::cout &lt;&lt; &quot;Default: false&quot; &lt;&lt; std::endl;
-                }
+                continue;
             }
-        }
 
-        // Component configuration
-        for (auto&amp; section : config_sections_)
-        {
-            std::cout &lt;&lt; std::endl;
-            std::cout &lt;&lt; section.name &lt;&lt; &quot; - &quot;;
-            std::cout &lt;&lt; section.description &lt;&lt; std::endl;
-            std::cout &lt;&lt; std::endl;
-
-            for (auto&amp; c : section.settings)
+            if (c-&gt;isFlag())
             {
-                if (c-&gt;isExperimental() &amp;&amp; !experimental_mode)
-                {
-                    continue;
-                }
-
-                if (c-&gt;isFlag())
-                {
-                    if (c-&gt;defaultValue() == &quot;false&quot;)
-                    {
-                        std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name());
-                    }
-                    else
-                    {
-                        std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--[no-]&quot; + c-&gt;name());
-                    }
-                }
-                else
+                if (c-&gt;defaultValue() == &quot;false&quot;)
                 {
                     std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name());
                 }
-
-                if (c-&gt;isExperimental())
+                else
                 {
-                    std::cout &lt;&lt; &quot;EXPERIMENTAL. &quot;;
+                    std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--[no-]&quot; + c-&gt;name());
                 }
-
-                std::cout &lt;&lt; c-&gt;description() &lt;&lt; &quot; &quot;;
-
-                std::cout &lt;&lt; &quot;Default: &quot; &lt;&lt; c-&gt;defaultValue() &lt;&lt; std::endl;
             }
+            else
+            {
+                std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name());
+            }
+
+            if (c-&gt;isExperimental())
+            {
+                std::cout &lt;&lt; &quot;EXPERIMENTAL. &quot;;
+            }
+
+            std::cout &lt;&lt; c-&gt;description() &lt;&lt; &quot; &quot;;
+
+            std::cout &lt;&lt; &quot;Default: &quot; &lt;&lt; c-&gt;defaultValue() &lt;&lt; std::endl;
         }
     }
+}
 
-    void ConfigurationManager::printConfiguration() const
+void ConfigurationManager::printConfiguration() const
+{
+    std::cout &lt;&lt; std::setfill('.');
+
+    std::cout &lt;&lt; &quot;; # &quot;
+              &lt;&lt; &quot;Components&quot;
+              &lt;&lt; &quot;\n&quot;;
+    for (auto&amp; section : config_sections_)
     {
-        std::cout &lt;&lt; std::setfill('.');
-
-        std::cout &lt;&lt; &quot;; # &quot;
-                  &lt;&lt; &quot;Components&quot;
-                  &lt;&lt; &quot;\n&quot;;
-        for (auto&amp; section : config_sections_)
+        if (!section.id.empty())
         {
-            if (!section.id.empty())
-            {
-                std::cout &lt;&lt; &quot;; &quot; &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;disable-&quot; + section.id) &lt;&lt; &quot;: &quot;
-                          &lt;&lt; (*section.active ? &quot;false&quot; : &quot;true&quot;) &lt;&lt; &quot;\n&quot;;
-            }
+            std::cout &lt;&lt; &quot;; &quot; &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;disable-&quot; + section.id) &lt;&lt; &quot;: &quot;
+                      &lt;&lt; (*section.active ? &quot;false&quot; : &quot;true&quot;) &lt;&lt; &quot;\n&quot;;
+        }
+    }
+    std::cout &lt;&lt; &quot;; \n&quot;;
+
+    for (auto&amp; section : config_sections_)
+    {
+        std::cout &lt;&lt; &quot;; # &quot; &lt;&lt; section.name &lt;&lt; &quot;\n&quot;;
+        for (auto&amp; c : section.settings)
+        {
+            std::cout &lt;&lt; &quot;; &quot; &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; c-&gt;name() &lt;&lt; &quot;: &quot; &lt;&lt; c-&gt;value() &lt;&lt; &quot;\n&quot;;
         }
         std::cout &lt;&lt; &quot;; \n&quot;;
-
-        for (auto&amp; section : config_sections_)
-        {
-            std::cout &lt;&lt; &quot;; # &quot; &lt;&lt; section.name &lt;&lt; &quot;\n&quot;;
-            for (auto&amp; c : section.settings)
-            {
-                std::cout &lt;&lt; &quot;; &quot; &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; c-&gt;name() &lt;&lt; &quot;: &quot; &lt;&lt; c-&gt;value() &lt;&lt; &quot;\n&quot;;
-            }
-            std::cout &lt;&lt; &quot;; \n&quot;;
-        }
     }
+}
 
-    void ConfigurationManager::setSectionName(String const&amp; name, String const&amp; description)
+void ConfigurationManager::setSectionName(String const&amp; name, String const&amp; description)
+{
+    if (config_sections_.empty())
     {
-        if (config_sections_.empty())
-        {
-            throw std::runtime_error(&quot;No section created yet.&quot;);
-        }
-        config_sections_.back().name        = name;
-        config_sections_.back().description = description;
+        throw std::runtime_error(&quot;No section created yet.&quot;);
     }
+    config_sections_.back().name        = name;
+    config_sections_.back().description = description;
+}
 
-    void ConfigurationManager::disableSectionByDefault()
+void ConfigurationManager::disableSectionByDefault()
+{
+    if (config_sections_.empty())
     {
-        if (config_sections_.empty())
-        {
-            throw std::runtime_error(&quot;No section created yet.&quot;);
-        }
-
-        config_sections_.back().enabled_by_default = false;
+        throw std::runtime_error(&quot;No section created yet.&quot;);
     }
 
-    DeferredValue::DeferredValuePtr ConfigurationManager::getParameter(String const&amp; name)
+    config_sections_.back().enabled_by_default = false;
+}
+
+DeferredValue::DeferredValuePtr ConfigurationManager::getParameter(String const&amp; name)
+{
+
+    auto it = deferred_refs_.find(name);
+    if (it != deferred_refs_.end())
     {
-
-        auto it = deferred_refs_.find(name);
-        if (it != deferred_refs_.end())
-        {
-            return it-&gt;second;
-        }
-
-        auto ret = DeferredValue::create();
-
-        deferred_refs_[name] = ret;
-
-        auto it2 = parameters_.find(name);
-        if (it2 != parameters_.end())
-        {
-            ret-&gt;setReference(it2-&gt;second);
-        }
-
-        return ret;
+        return it-&gt;second;
     }
 
-} // namespace quantum
-} // namespace microsoft
+    auto ret = DeferredValue::create();
+
+    deferred_refs_[name] = ret;
+
+    auto it2 = parameters_.find(name);
+    if (it2 != parameters_.end())
+    {
+        ret-&gt;setReference(it2-&gt;second);
+    }
+
+    return ret;
+}
+
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:13 UTC</p></div>
 </div>
           </div>
         </main>

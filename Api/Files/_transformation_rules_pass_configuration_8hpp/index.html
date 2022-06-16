@@ -597,80 +597,77 @@
 
 #include &quot;Commandline/ConfigurationManager.hpp&quot;
 
-namespace microsoft
+namespace microsoft::quantum
 {
-namespace quantum
+class TransformationRulesPassConfiguration
 {
-    class TransformationRulesPassConfiguration
-    {
-      public:
-        // Setup and construction
-        //
+  public:
+    // Setup and construction
+    //
 
-        void setup(ConfigurationManager&amp; config);
+    void setup(ConfigurationManager&amp; config);
 
-        static TransformationRulesPassConfiguration createDisabled();
+    static TransformationRulesPassConfiguration createDisabled();
 
-        static TransformationRulesPassConfiguration createReuseQubitsOnly();
+    static TransformationRulesPassConfiguration createReuseQubitsOnly();
 
-        // Configuration classes
-        //
+    // Configuration classes
+    //
 
-        bool isDisabled() const;
+    bool isDisabled() const;
 
-        bool operator==(TransformationRulesPassConfiguration const&amp; ref) const;
+    bool operator==(TransformationRulesPassConfiguration const&amp; ref) const;
 
-        // Properties
-        //
+    // Properties
+    //
 
-        bool shouldDeleteDeadCode() const;
+    bool shouldDeleteDeadCode() const;
 
-        bool shouldCloneFunctions() const;
+    bool shouldCloneFunctions() const;
 
-        bool assumeNoExceptions() const;
+    bool assumeNoExceptions() const;
 
-        bool shouldTransformExecutionPathOnly() const;
+    bool shouldTransformExecutionPathOnly() const;
 
-        uint64_t maxRecursion() const;
+    uint64_t maxRecursion() const;
 
-        bool shouldReuseQubits() const;
+    bool shouldReuseQubits() const;
 
-        bool shouldAnnotateQubitUse() const;
+    bool shouldAnnotateQubitUse() const;
 
-        bool shouldReuseResults() const;
+    bool shouldReuseResults() const;
 
-        bool shouldAnnotateResultUse() const;
+    bool shouldAnnotateResultUse() const;
 
-        bool shouldGroupMeasurements() const;
+    bool shouldGroupMeasurements() const;
 
-        bool oneShotMeasurement() const;
+    bool oneShotMeasurement() const;
 
-        std::string entryPointAttr() const;
+    std::string entryPointAttr() const;
 
-      private:
-        // Code expansion and trimming
-        //
+  private:
+    // Code expansion and trimming
+    //
 
-        bool        delete_dead_code_{true};
-        bool        clone_functions_{true};
-        bool        transform_execution_path_only_{true};
-        uint64_t    max_recursion_{512};
-        std::string entry_point_attr_{&quot;EntryPoint&quot;};
+    bool        delete_dead_code_{true};
+    bool        clone_functions_{true};
+    bool        transform_execution_path_only_{true};
+    uint64_t    max_recursion_{512};
+    std::string entry_point_attr_{&quot;EntryPoint&quot;};
 
-        // Branching
-        bool assume_no_exceptions_{false};
+    // Branching
+    bool assume_no_exceptions_{false};
 
-        // Allocation options
-        //
-        bool reuse_qubits_{true};
-        bool reuse_results_{true};
-    };
+    // Allocation options
+    //
+    bool reuse_qubits_{true};
+    bool reuse_results_{true};
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

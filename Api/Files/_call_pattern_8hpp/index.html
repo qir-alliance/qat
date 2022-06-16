@@ -602,43 +602,40 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class CallPattern : public IOperandPrototype
-    {
-      public:
-        using String = std::string;
+class CallPattern : public IOperandPrototype
+{
+  public:
+    using String = std::string;
 
-        // Construction of the call pattern by name or move only.
-        //
+    // Construction of the call pattern by name or move only.
+    //
 
-        explicit CallPattern(String const&amp; name);
+    explicit CallPattern(String const&amp; name);
 
-        CallPattern(CallPattern const&amp; other) = delete;
+    CallPattern(CallPattern const&amp; other) = delete;
 
-        CallPattern(CallPattern&amp;&amp; other) = default;
+    CallPattern(CallPattern&amp;&amp; other) = default;
 
-        ~CallPattern() override;
+    ~CallPattern() override;
 
-        // Call implmenetation of the member functions in IOperandPrototype.
-        //
+    // Call implmenetation of the member functions in IOperandPrototype.
+    //
 
-        bool match(Value* instr, Captures&amp; captures) const override;
+    bool match(Value* instr, Captures&amp; captures) const override;
 
-        Child copy() const override;
+    Child copy() const override;
 
-      private:
-        String name_{}; 
-    };
+  private:
+    String name_{}; 
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>

@@ -600,82 +600,79 @@
 #include &lt;unordered_map&gt;
 #include &lt;vector&gt;
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    class IOperandPrototype
+class IOperandPrototype
+{
+  public:
+    using Instruction = llvm::Instruction;
+    using String      = std::string;
+    using Value       = llvm::Value;
+    using Child       = std::shared_ptr&lt;IOperandPrototype&gt;;
+    using Children    = std::vector&lt;Child&gt;;
+    using Captures    = std::unordered_map&lt;std::string, Value*&gt;;
+
+    // Constructors and destructors
+    //
+
+    IOperandPrototype() = default;
+    virtual ~IOperandPrototype();
+
+    // Interface functions
+    //
+
+    virtual bool match(Value* value, Captures&amp; captures) const = 0;
+
+    virtual Child copy() const = 0;
+
+    // Shared functionality
+    //
+
+    void addChild(Child const&amp; child);
+
+    void captureAs(std::string capture_name);
+
+  protected:
+    // Function to indicate match success or failure. Either of these
+    // must be called prior to return from an implementation of
+    // IOperandPrototype::match.
+    //
+
+    bool fail(Value* value, Captures&amp; captures) const;
+
+    bool success(Value* value, Captures&amp; captures) const;
+
+    // Helper functions for the capture logic.
+    //
+
+    bool matchChildren(Value* value, Captures&amp; captures) const;
+
+    // Helper functions for operation
+    //
+
+    void copyPropertiesFrom(IOperandPrototype const&amp; other)
     {
-      public:
-        using Instruction = llvm::Instruction;
-        using String      = std::string;
-        using Value       = llvm::Value;
-        using Child       = std::shared_ptr&lt;IOperandPrototype&gt;;
-        using Children    = std::vector&lt;Child&gt;;
-        using Captures    = std::unordered_map&lt;std::string, Value*&gt;;
+        capture_name_ = other.capture_name_;
+        children_     = other.children_;
+    }
 
-        // Constructors and destructors
-        //
+  private:
+    void capture(Value* value, Captures&amp; captures) const;
 
-        IOperandPrototype() = default;
-        virtual ~IOperandPrototype();
+    void uncapture(Value* value, Captures&amp; captures) const;
 
-        // Interface functions
-        //
+    // Data variables for common matching functionality
+    //
 
-        virtual bool match(Value* value, Captures&amp; captures) const = 0;
+    std::string capture_name_{&quot;&quot;}; 
+    Children    children_{};       
+};
 
-        virtual Child copy() const = 0;
-
-        // Shared functionality
-        //
-
-        void addChild(Child const&amp; child);
-
-        void captureAs(std::string capture_name);
-
-      protected:
-        // Function to indicate match success or failure. Either of these
-        // must be called prior to return from an implementation of
-        // IOperandPrototype::match.
-        //
-
-        bool fail(Value* value, Captures&amp; captures) const;
-
-        bool success(Value* value, Captures&amp; captures) const;
-
-        // Helper functions for the capture logic.
-        //
-
-        bool matchChildren(Value* value, Captures&amp; captures) const;
-
-        // Helper functions for operation
-        //
-
-        void copyPropertiesFrom(IOperandPrototype const&amp; other)
-        {
-            capture_name_ = other.capture_name_;
-            children_     = other.children_;
-        }
-
-      private:
-        void capture(Value* value, Captures&amp; captures) const;
-
-        void uncapture(Value* value, Captures&amp; captures) const;
-
-        // Data variables for common matching functionality
-        //
-
-        std::string capture_name_{&quot;&quot;}; 
-        Children    children_{};       
-    };
-
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 14 June 2022 at 08:16:52 UTC</p></div>
+<p>Updated on 16 June 2022 at 05:28:12 UTC</p></div>
 </div>
           </div>
         </main>
