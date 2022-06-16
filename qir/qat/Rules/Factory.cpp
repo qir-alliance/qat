@@ -72,7 +72,10 @@ void RuleFactory::usingConfiguration(FactoryConfiguration const& config)
         optimizeResultZero();
     }
 
-    optimizeResultComparison();
+    if (config.optimizeResultComparison())
+    {
+        optimizeResultComparison();
+    }
 
     if (config.useStaticQubitArrayAllocation())
     {
@@ -787,7 +790,6 @@ void RuleFactory::optimizeResultComparison()
         %0 = call i1 @__quantum__rt__result_equal(%Result* %result1, %Result* %result2)
     */
 
-    // Variations of get_one
     auto m1 = call("__quantum__qis__m__body", "q1"_cap = _);
     auto m2 = call("__quantum__qis__m__body", "q2"_cap = _);
 
