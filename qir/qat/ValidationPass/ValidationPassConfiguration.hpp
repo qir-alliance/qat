@@ -76,6 +76,9 @@ class ValidationPassConfiguration
     bool requiresQubits() const;
     bool requiresResults() const;
 
+    bool allowPoison() const;
+    bool allowUndef() const;
+
     String profileName() const;
 
   private:
@@ -100,6 +103,9 @@ class ValidationPassConfiguration
 
     bool requires_qubits_{false};
     bool requires_results_{false};
+
+    bool allow_poison_{true};
+    bool allow_undef_{true};
 };
 
 } // namespace microsoft::quantum

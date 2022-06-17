@@ -165,6 +165,10 @@ class ILogger
 
     virtual void errorTypeNotAllowed(String const& type_name, String const& profile_name, llvm::Value* ptr = nullptr);
 
+    virtual void errorPoisonNotAllowed(String const& profile_name, llvm::Value* ptr = nullptr);
+
+    virtual void errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr = nullptr);
+
   protected:
     bool had_errors_{false};   ///< Variable to indicate whether or not errors were reported.
     bool had_warnings_{false}; ///< Variable to indicate whether or not warnings were reported.

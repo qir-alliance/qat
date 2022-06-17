@@ -36,6 +36,27 @@ llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function& function, ll
         logger_->errorNoResultsPresent(&function);
     }
 
+    for (auto& block : function)
+    {
+        for (auto& instr : block)
+        {
+            for (auto& op : instr.operands())
+            {
+                auto poison = llvm::dyn_cast<llvm::PoisonValue>(op);
+                auto undef  = llvm::dyn_cast<llvm::UndefValue>(op);
+
+                if (poison && !config_.allowPoison())
+                {
+                    logger_->errorPoisonNotAllowed(config_.profileName(), &instr);
+                }
+                else if (undef && !config_.allowUndef())
+                {
+                    logger_->errorUndefNotAllowed(config_.profileName(), &instr);
+                }
+            }
+        }
+    }
+
     return llvm::PreservedAnalyses::all();
 }
 

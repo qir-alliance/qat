@@ -138,4 +138,15 @@ void ILogger::errorTypeNotAllowed(String const& type_name, String const& profile
 {
     errorWithLocation("Type '" + type_name + "' is not allowed for this profile (" + profile_name + ").", ptr);
 }
+
+void ILogger::errorPoisonNotAllowed(String const& profile_name, llvm::Value* ptr)
+{
+    errorWithLocation("Poison value is not allowed for this profile (" + profile_name + ").", ptr);
+}
+
+void ILogger::errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr)
+{
+    errorWithLocation("Undef value is not allowed for this profile (" + profile_name + ").", ptr);
+}
+
 } // namespace microsoft::quantum
