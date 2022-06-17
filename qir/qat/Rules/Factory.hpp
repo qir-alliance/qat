@@ -152,6 +152,9 @@ class RuleFactory
     /// Replaces branching of quantum constant results.
     void optimizeConstantResult();
 
+    /// Replacing comparison between two results.
+    void optimizeResultComparison();
+
     /// Removes unused quantum zeros or ones
     void removeGetZeroOrOne();
 
