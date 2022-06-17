@@ -614,6 +614,27 @@ llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function&amp; function
         logger_-&gt;errorNoResultsPresent(&amp;function);
     }
 
+    for (auto&amp; block : function)
+    {
+        for (auto&amp; instr : block)
+        {
+            for (auto&amp; op : instr.operands())
+            {
+                auto poison = llvm::dyn_cast&lt;llvm::PoisonValue&gt;(op);
+                auto undef  = llvm::dyn_cast&lt;llvm::UndefValue&gt;(op);
+
+                if (poison &amp;&amp; !config_.allowPoison())
+                {
+                    logger_-&gt;errorPoisonNotAllowed(config_.profileName(), &amp;instr);
+                }
+                else if (undef &amp;&amp; !config_.allowUndef())
+                {
+                    logger_-&gt;errorUndefNotAllowed(config_.profileName(), &amp;instr);
+                }
+            }
+        }
+    }
+
     return llvm::PreservedAnalyses::all();
 }
 
@@ -624,7 +645,7 @@ bool FunctionValidationPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 16 June 2022 at 21:37:23 UTC</p></div>
+<p>Updated on 17 June 2022 at 07:20:21 UTC</p></div>
 </div>
           </div>
         </main>

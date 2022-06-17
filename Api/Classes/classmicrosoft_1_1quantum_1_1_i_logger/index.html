@@ -757,6 +757,14 @@
 <td>virtual void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errortypenotallowed">errorTypeNotAllowed</a></strong>(String const &amp; type_name, String const &amp; profile_name, llvm::Value * ptr =nullptr)</td>
 </tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errorpoisonnotallowed">errorPoisonNotAllowed</a></strong>(String const &amp; profile_name, llvm::Value * ptr =nullptr)</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errorundefnotallowed">errorUndefNotAllowed</a></strong>(String const &amp; profile_name, llvm::Value * ptr =nullptr)</td>
+</tr>
 </tbody>
 </table>
 <h2 id="protected-attributes">Protected Attributes</h2>
@@ -1027,6 +1035,18 @@
     llvm::Value * ptr =nullptr
 )
 </code></pre>
+<h3 id="function-errorpoisonnotallowed">function errorPoisonNotAllowed</h3>
+<pre><code class="language-cpp">virtual void errorPoisonNotAllowed(
+    String const &amp; profile_name,
+    llvm::Value * ptr =nullptr
+)
+</code></pre>
+<h3 id="function-errorundefnotallowed">function errorUndefNotAllowed</h3>
+<pre><code class="language-cpp">virtual void errorUndefNotAllowed(
+    String const &amp; profile_name,
+    llvm::Value * ptr =nullptr
+)
+</code></pre>
 <h2 id="protected-attributes-documentation">Protected Attributes Documentation</h2>
 <h3 id="variable-had_errors_">variable had_errors_</h3>
 <pre><code class="language-cpp">bool had_errors_ {false};
@@ -1037,7 +1057,7 @@
 </code></pre>
 <p>Variable to indicate whether or not warnings were reported. </p>
 <hr />
-<p>Updated on 16 June 2022 at 21:37:23 UTC</p></div>
+<p>Updated on 17 June 2022 at 07:20:21 UTC</p></div>
 </div>
           </div>
         </main>

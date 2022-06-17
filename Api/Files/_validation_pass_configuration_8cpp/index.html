@@ -593,6 +593,9 @@ void ValidationPassConfiguration::setup(ConfigurationManager&amp; config)
 
     config.addParameter(requires_qubits_, &quot;requires-qubits&quot;, &quot;Whether or not qubits are required in the IR.&quot;);
     config.addParameter(requires_results_, &quot;requires-results&quot;, &quot;Whether or not results are required in the IR.&quot;);
+
+    config.addParameter(allow_poison_, &quot;allow-poison&quot;, &quot;Whether or not to allow poison values.&quot;);
+    config.addParameter(allow_undef_, &quot;allow-undef&quot;, &quot;Whether or not to allow undef values.&quot;);
 }
 
 String ValidationPassConfiguration::profileName() const
@@ -863,10 +866,20 @@ bool ValidationPassConfiguration::requiresResults() const
     return requires_results_;
 }
 
+bool ValidationPassConfiguration::allowPoison() const
+{
+    return allow_poison_;
+}
+
+bool ValidationPassConfiguration::allowUndef() const
+{
+    return allow_undef_;
+}
+
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 16 June 2022 at 21:37:23 UTC</p></div>
+<p>Updated on 17 June 2022 at 07:20:21 UTC</p></div>
 </div>
           </div>
         </main>
