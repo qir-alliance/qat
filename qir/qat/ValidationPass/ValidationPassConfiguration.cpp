@@ -50,7 +50,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
         profile.allowlist_opcodes_        = true;
         profile.opcodes_                  = OpcodeSet{
             {"ret"},  {"call"}, {"inttoptr"}, {"br"},   {"add"}, {"sub"}, {"mul"},
-            {"fadd"}, {"fsub"}, {"fmul"},     {"ashr"}, {"and"}, {"or"},  {"xor"},
+            {"fadd"}, {"fsub"}, {"fmul"},     {"lshr"}, {"and"}, {"or"},  {"xor"},
             /*
             {"icmp", "eq"},  {"icmp", "ne"},  {"icmp", "ugt"}, {"icmp", "uge"}, {"icmp", "ult"},
             {"icmp", "ule"}, {"fcmp", "oeq"}, {"fcmp", "ogt"}, {"fcmp", "oge"}, {"fcmp", "olt"},
@@ -83,14 +83,14 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
     }
     else if (name == "provider_4bf9")
     {
-        // Supported LLVM instructions: ret, br, phi, add, sub, mul, fadd, fsub, fmul, ashr, and, or,
+        // Supported LLVM instructions: ret, br, phi, add, sub, mul, fadd, fsub, fmul, lshr, and, or,
         // xor, icmp eq, icmp ne, icmp ugt, icmp uge, icmp ult, icmp ule, fcmp oeq, fcmp ogt, fcmp oge,
         // fcmp olt, fcmp ole, fcmp one
         profile.allow_internal_calls_     = false;
         profile.allowlist_external_calls_ = true;
         profile.allowlist_opcodes_        = true;
         profile.opcodes_        = OpcodeSet{{"call"}, {"ret"},  {"inttoptr"}, {"br"},   {"phi"},    {"add"}, {"sub"},
-                                     {"mul"},  {"fadd"}, {"fsub"},     {"fmul"}, {"ashr"},   {"shl"}, {"and"},
+                                     {"mul"},  {"fadd"}, {"fsub"},     {"fmul"}, {"lshr"},   {"shl"}, {"and"},
                                      {"or"},   {"xor"},  {"icmp"},     {"fcmp"}, {"select"}, {"zext"}};
         profile.external_calls_ = Set{
             "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
