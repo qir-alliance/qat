@@ -83,6 +83,11 @@ bool Validator::validate(llvm::Module& module)
         return false;
     }
 
+    if (logger_)
+    {
+        return !(logger_->hadErrors() || logger_->hadWarnings());
+    }
+
     return true;
 }
 
