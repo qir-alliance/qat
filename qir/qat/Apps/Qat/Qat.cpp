@@ -335,13 +335,6 @@ int main(int argc, char** argv)
                 std::cerr << "IR is broken." << std::endl;
                 ret = -1;
             }
-
-            // Safety pre-caution to ensure that all errors and warnings reported
-            // results in failure.
-            if (logger && (logger->hadErrors() || logger->hadWarnings()))
-            {
-                ret = -1;
-            }
         }
 
         if (ret == 0 && config.shouldValidate())
@@ -351,6 +344,13 @@ int main(int argc, char** argv)
                 std::cerr << "IR did not validate to the profile constraints." << std::endl;
                 ret = -1;
             }
+        }
+
+        // Safety pre-caution to ensure that all errors and warnings reported
+        // results in failure.
+        if (logger && (logger->hadErrors() || logger->hadWarnings()))
+        {
+            ret = -1;
         }
 
         // Saving output
