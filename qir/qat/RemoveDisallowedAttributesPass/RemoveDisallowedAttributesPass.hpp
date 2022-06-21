@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "QatTypes/QatTypes.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <functional>
 #include <unordered_set>

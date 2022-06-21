@@ -2,11 +2,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "AllocationManager/IAllocationManager.hpp"
-#include "Rules/IOperandPrototype.hpp"
-#include "Rules/ReplacementRule.hpp"
+#include "qir/qat/AllocationManager/IAllocationManager.hpp"
+#include "qir/qat/Rules/IOperandPrototype.hpp"
+#include "qir/qat/Rules/ReplacementRule.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <memory>
 #include <vector>

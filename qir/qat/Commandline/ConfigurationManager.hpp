@@ -2,12 +2,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigBind.hpp"
-#include "Commandline/IConfigBind.hpp"
-#include "Commandline/ParameterParser.hpp"
-#include "QatTypes/QatTypes.hpp"
+#include "qir/qat/Commandline/ConfigBind.hpp"
+#include "qir/qat/Commandline/IConfigBind.hpp"
+#include "qir/qat/Commandline/ParameterParser.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <iomanip>
 #include <iostream>

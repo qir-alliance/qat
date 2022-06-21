@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
 
 #include <cstdint>
 #include <fstream>

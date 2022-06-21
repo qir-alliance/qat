@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Generators/LlvmPassesConfiguration.hpp"
-#include "Rules/FactoryConfig.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
-#include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "gtest/gtest.h"
 
 using namespace microsoft::quantum;

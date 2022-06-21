@@ -2,10 +2,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ParameterParser.hpp"
-#include "QatTypes/QatTypes.hpp"
+#include "qir/qat/Commandline/ParameterParser.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <iomanip>
 #include <iostream>

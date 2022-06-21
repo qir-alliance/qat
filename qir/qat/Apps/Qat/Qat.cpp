@@ -43,25 +43,25 @@
 ///
 ///
 
-#include "Apps/Qat/QatConfig.hpp"
-#include "Commandline/ConfigurationManager.hpp"
-#include "Commandline/ParameterParser.hpp"
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Generators/LlvmPassesConfiguration.hpp"
-#include "GroupingPass/GroupingAnalysisPass.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "GroupingPass/GroupingPassConfiguration.hpp"
-#include "Logging/CommentLogger.hpp"
-#include "ModuleLoader/ModuleLoader.hpp"
-#include "Profile/Profile.hpp"
-#include "Rules/Factory.hpp"
-#include "Rules/FactoryConfig.hpp"
-#include "TransformationRulesPass/TransformationRulesPass.hpp"
-#include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "ValidationPass/ValidationPassConfiguration.hpp"
-#include "Validator/Validator.hpp"
+#include "qir/qat/Apps/Qat/QatConfig.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Commandline/ParameterParser.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Logging/CommentLogger.hpp"
+#include "qir/qat/ModuleLoader/ModuleLoader.hpp"
+#include "qir/qat/Profile/Profile.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Validator/Validator.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <dlfcn.h>
 

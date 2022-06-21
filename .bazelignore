@@ -1,0 +1,5 @@
+vendor/googletest/
+.cache/
+.github/
+.vscode/
+.devcontainer/

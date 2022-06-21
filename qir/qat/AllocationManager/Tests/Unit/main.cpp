@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "AllocationManager/AllocationManager.hpp"
+#include "qir/qat/AllocationManager/AllocationManager.hpp"
 #include "gtest/gtest.h"
 
 TEST(AllocationManagerTestSuite, LinearAllocationTestReuse)

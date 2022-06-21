@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/LogCollection.hpp"
-#include "Utils/Trim.hpp"
+#include "qir/qat/Logging/LogCollection.hpp"
+#include "qir/qat/Utils/Trim.hpp"
 
 #include <fstream>
 #include <iostream>

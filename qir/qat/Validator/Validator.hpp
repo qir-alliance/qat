@@ -2,13 +2,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "AllocationManager/AllocationManager.hpp"
-#include "AllocationManager/IAllocationManager.hpp"
-#include "Logging/ILogger.hpp"
-#include "Logging/LogCollection.hpp"
-#include "ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/AllocationManager/AllocationManager.hpp"
+#include "qir/qat/AllocationManager/IAllocationManager.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/Logging/LogCollection.hpp"
+#include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <memory>
 

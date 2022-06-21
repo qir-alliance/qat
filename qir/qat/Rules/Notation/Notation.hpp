@@ -4,15 +4,15 @@
 
 /// @defgroup shorthandNotation Shorthand Notation
 
-#include "Rules/Notation/Call.hpp"
-#include "Rules/Notation/Call.ipp"
-#include "Rules/Notation/Phi.ipp"
-#include "Rules/Patterns/AnyPattern.hpp"
-#include "Rules/Patterns/CallPattern.hpp"
-#include "Rules/Patterns/Instruction.hpp"
-#include "Rules/Patterns/PhiPattern.hpp"
+#include "qir/qat/Rules/Notation/Call.hpp"
+#include "qir/qat/Rules/Notation/Call.ipp"
+#include "qir/qat/Rules/Notation/Phi.ipp"
+#include "qir/qat/Rules/Patterns/AnyPattern.hpp"
+#include "qir/qat/Rules/Patterns/CallPattern.hpp"
+#include "qir/qat/Rules/Patterns/Instruction.hpp"
+#include "qir/qat/Rules/Patterns/PhiPattern.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <unordered_map>
 #include <vector>

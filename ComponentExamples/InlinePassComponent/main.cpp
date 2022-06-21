@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
-#include "Generators/ProfileGenerator.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Generators/ProfileGenerator.hpp"
 using namespace microsoft::quantum;
 
 extern "C" void loadComponent(ProfileGenerator *generator);

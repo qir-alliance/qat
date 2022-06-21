@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 namespace microsoft::quantum
 {

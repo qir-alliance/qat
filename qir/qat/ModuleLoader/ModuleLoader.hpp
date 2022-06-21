@@ -2,12 +2,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ModuleLoader/DebugInfoUpdater.hpp"
-#include "ModuleLoader/InstructionLocationTable.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp"
+#include "qir/qat/ModuleLoader/DebugInfoUpdater.hpp"
+#include "qir/qat/ModuleLoader/InstructionLocationTable.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 namespace microsoft::quantum
 {

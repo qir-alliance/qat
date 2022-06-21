@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "AllocationManager/IAllocationManager.hpp"
+#include "qir/qat/AllocationManager/IAllocationManager.hpp"
 
 namespace microsoft::quantum
 {

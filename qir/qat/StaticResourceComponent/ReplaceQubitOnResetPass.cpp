@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
-#include "Profile/Profile.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
-#include "StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/Profile/Profile.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "qir/qat/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <functional>
 #include <unordered_map>

@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ModuleLoader/InstructionLocationTable.hpp"
+#include "qir/qat/ModuleLoader/InstructionLocationTable.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 namespace microsoft::quantum
 {

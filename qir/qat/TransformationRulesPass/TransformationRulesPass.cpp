@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/Factory.hpp"
-#include "Rules/Notation/Notation.hpp"
-#include "Rules/ReplacementRule.hpp"
-#include "TransformationRulesPass/TransformationRulesPass.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Rules/Notation/Notation.hpp"
+#include "qir/qat/Rules/ReplacementRule.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <fstream>
 #include <iostream>

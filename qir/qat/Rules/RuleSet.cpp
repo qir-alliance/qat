@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/ReplacementRule.hpp"
-#include "Rules/RuleSet.hpp"
+#include "qir/qat/Rules/ReplacementRule.hpp"
+#include "qir/qat/Rules/RuleSet.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <iostream>
 #include <vector>

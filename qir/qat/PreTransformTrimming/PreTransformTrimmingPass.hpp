@@ -2,13 +2,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
-#include "PreTransformTrimming/PreTransformTrimmingPass.hpp"
-#include "PreTransformTrimming/PreTransformTrimmingPassConfiguration.hpp"
-#include "Profile/Profile.hpp"
-#include "QatTypes/QatTypes.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/PreTransformTrimming/PreTransformTrimmingPass.hpp"
+#include "qir/qat/PreTransformTrimming/PreTransformTrimmingPassConfiguration.hpp"
+#include "qir/qat/Profile/Profile.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <functional>
 #include <unordered_map>
