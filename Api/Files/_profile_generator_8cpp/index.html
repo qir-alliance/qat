@@ -840,6 +840,11 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             {
                 fpm.addPass(llvm::SimplifyCFGPass());
             }
+
+            if (cfg.shouldLowerSwitch())
+            {
+                fpm.addPass(llvm::LowerSwitchPass());
+            }
         });
 
     registerProfileComponent&lt;PostTransformValidationPassConfiguration&gt;(
@@ -849,7 +854,6 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             /*profile*/)
         {
             auto&amp; mpm = ptr-&gt;modulePassManager();
-
             mpm.addPass(PostTransformValidationPass(cfg, logger));
         });
 
@@ -901,7 +905,7 @@ void ProfileGenerator::setLogger(ILoggerPtr const&amp; logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 20 June 2022 at 20:53:43 UTC</p></div>
+<p>Updated on 21 June 2022 at 13:54:01 UTC</p></div>
 </div>
           </div>
         </main>

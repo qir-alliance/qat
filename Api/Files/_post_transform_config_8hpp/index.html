@@ -606,6 +606,7 @@ struct PostTransformConfig
     void setup(ConfigurationManager&amp; config)
     {
         config.setSectionName(&quot;Post-transform optimisation&quot;, &quot;&quot;);
+        config.addParameter(lower_switch_, &quot;lower-switch&quot;, &quot;Lower switch statements.&quot;);
     }
 
     static PostTransformConfig createDisabled()
@@ -616,7 +617,7 @@ struct PostTransformConfig
         ret.aggressive_inst_combine_pass_ = false;
         ret.sccp_pass_                    = false;
         ret.simplify_cfg_pass_            = false;
-
+        ret.lower_switch_                 = false;
         return ret;
     }
 
@@ -640,17 +641,23 @@ struct PostTransformConfig
         return simplify_cfg_pass_;
     }
 
+    bool shouldLowerSwitch() const
+    {
+        return lower_switch_;
+    }
+
   private:
     bool inst_combine_pass_{true};
     bool aggressive_inst_combine_pass_{true};
     bool sccp_pass_{true};
     bool simplify_cfg_pass_{true};
+    bool lower_switch_{true};
 };
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 20 June 2022 at 20:53:43 UTC</p></div>
+<p>Updated on 21 June 2022 at 13:54:01 UTC</p></div>
 </div>
           </div>
         </main>
