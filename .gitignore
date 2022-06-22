@@ -347,4 +347,5 @@ ASALocalRun/
 MSBuild_Logs/
 
 # Bazel
+bazel-*
 bazel-*/
