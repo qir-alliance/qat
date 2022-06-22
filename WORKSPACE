@@ -56,26 +56,10 @@ llvm_disable_optional_support_deps()
 # Google
 # ================================================================
 
-
 http_archive(
     name = "googletest",
     url = "https://github.com/google/googletest/archive/release-1.10.0.zip",
     sha256 = "94c634d499558a76fa649edb13721dce6e98fb1e7018dfaeba3cd7a083945e91",
     strip_prefix = "googletest-release-1.10.0",
     build_file = "@//:config/BUILD.googletest",
-)
-
-
-# ================================================================
-# Toolchains used to build Docker images
-# ================================================================
-
-http_archive(
-    name = "bazel_toolchains",
-    sha256 = "89a053218639b1c5e3589a859bb310e0a402dedbe4ee369560e66026ae5ef1f2",
-    strip_prefix = "bazel-toolchains-3.5.0",
-    urls = [
-        "https://github.com/bazelbuild/bazel-toolchains/releases/download/3.5.0/bazel-toolchains-3.5.0.tar.gz",
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/releases/download/3.5.0/bazel-toolchains-3.5.0.tar.gz",
-    ],
 )
