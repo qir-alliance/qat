@@ -301,6 +301,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(llvm::AggressiveInstCombinePass());
                 fpm.addPass(llvm::SCCPPass());
                 fpm.addPass(llvm::SimplifyCFGPass());
+                fpm.addPass(llvm::LowerSwitchPass());
             }
 
             fpm.addPass(ResourceAnnotationPass(cfg, logger));
