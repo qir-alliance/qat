@@ -11,7 +11,7 @@ build --workspace_status_command "python config/workspace-status.py"
 
 build --cxxopt=-std=c++17
 build --host_cxxopt=-std=c++17
-# build --sandbox_debug
+build --disk_cache=~/.cache/bazel-disk-cache
 
 # Ideally these should be moved to user configuration
 build:release --cxxopt=-O3
@@ -28,6 +28,9 @@ build:debug --cxxopt=-O0
 build:debug --linkopt=-fsanitize=address,integer,undefined
 # build:debug --sandbox_debug
 build:debug --features asan
+build:debug --spawn_strategy=standalone
+build:debug --apple_enable_auto_dsym_dbg
+build:debug --apple_generate_dsym 
 
 # ## SEE https://github.com/RobotLocomotion/drake/tree/master/tools/dynamic_analysis
 # build --build_tests_only
