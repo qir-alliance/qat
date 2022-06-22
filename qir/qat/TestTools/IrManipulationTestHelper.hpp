@@ -21,7 +21,7 @@ class IrManipulationTestHelper
     using SMDiagnostic      = llvm::SMDiagnostic;
     using Module            = llvm::Module;
     using ModulePtr         = std::unique_ptr<Module>;
-    using OptimizationLevel = llvm::PassBuilder::OptimizationLevel;
+    using OptimizationLevel = llvm::OptimizationLevel;
     using GeneratorPtr      = std::shared_ptr<ProfileGenerator>;
 
     // IrManipulationTestHelper is default constructible with no ability to move

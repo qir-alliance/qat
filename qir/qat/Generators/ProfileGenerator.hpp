@@ -18,7 +18,7 @@ class ProfileGenerator
     // LLVM types
     //
     using PassBuilder             = llvm::PassBuilder;
-    using OptimizationLevel       = PassBuilder::OptimizationLevel;
+    using OptimizationLevel       = llvm::OptimizationLevel;
     using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
 
     /// Setup function that uses a configuration type R to

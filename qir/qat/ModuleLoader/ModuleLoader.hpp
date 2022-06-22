@@ -121,7 +121,7 @@ class ModuleLoader
     {
       public:
         using PassBuilder             = llvm::PassBuilder;
-        using OptimizationLevel       = PassBuilder::OptimizationLevel;
+        using OptimizationLevel       = llvm::OptimizationLevel;
         using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
 
         explicit SingleModuleTransformation(

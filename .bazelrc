@@ -11,14 +11,23 @@ build --workspace_status_command "python config/workspace-status.py"
 
 build --cxxopt=-std=c++17
 build --host_cxxopt=-std=c++17
-build --cxxopt=-DTROELS=1
 # build --sandbox_debug
 
 # Ideally these should be moved to user configuration
-build --cxxopt=-O0
-# build --cxxopt=-DNDEBUG
-build --cxxopt=-g 
-build --strip=never
+build:release --cxxopt=-O3
+build:release --cxxopt=-DNDEBUG
+build:debug -c dbg
+build:debug --copt=-g 
+build:debug --cxxopt=-g 
+build:debug --strip=never
+build:debug --cxxopt=-fsanitize=address,integer,undefined
+build:debug --cxxopt=-fno-omit-frame-pointer
+build:debug --cxxopt=-fno-sanitize-recover=all
+build:debug --copt=-O0
+build:debug --cxxopt=-O0
+build:debug --linkopt=-fsanitize=address,integer,undefined
+# build:debug --sandbox_debug
+build:debug --features asan
 
 # ## SEE https://github.com/RobotLocomotion/drake/tree/master/tools/dynamic_analysis
 # build --build_tests_only
@@ -26,12 +35,12 @@ build --strip=never
 # # https://github.com/google/sanitizers/wiki/AddressSanitizer#faq
 # build --copt=-Wno-macro-redefined
 # build --copt=-fno-common
-# build --copt=-fsanitize=address,integer,undefined
+
 # build --copt=-fsanitize-address-use-after-scope
 # build --copt=-fstandalone-debug
-# build --copt=-O0
+
 # build --copt=-fno-omit-frame-pointer
-# build --linkopt=-fsanitize=address,integer,undefined
+
 # build --linkopt=-fsanitize-address-use-after-scope
 # # ld.gold: warning: Cannot export local symbol __asan_extra_spill_area
 # build --linkopt=-fuse-ld=ld
@@ -79,6 +88,7 @@ build:windows --cxxopt=/std:c++17
 build:windows --host_cxxopt=/std:c++17
 
 build --apple_platform_type=macos
+build --cpu=darwin_arm64 --host_cpu=darwin_arm64
 # build --announce_rc
 
 

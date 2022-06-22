@@ -256,22 +256,22 @@ int main(int argc, char** argv)
 
         // Getting the optimization level
         //
-        auto optimization_level = llvm::PassBuilder::OptimizationLevel::O0;
+        auto optimization_level = llvm::OptimizationLevel::O0;
 
         // Setting the optimization level
         if (config.isOpt1Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O1;
+            optimization_level = llvm::OptimizationLevel::O1;
         }
 
         if (config.isOpt2Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O2;
+            optimization_level = llvm::OptimizationLevel::O2;
         }
 
         if (config.isOpt3Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O3;
+            optimization_level = llvm::OptimizationLevel::O3;
         }
 
         // Profile manipulation

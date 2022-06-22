@@ -12,8 +12,8 @@ cc_library(
       "@llvm-project//llvm:Scalar",
 
       # VM deps
-      "@llvm-project//llvm:X86CodeGen",      
-      "@llvm-project//llvm:X86AsmParser",            
+      "@llvm-project//llvm:ARMCodeGen",      
+      "@llvm-project//llvm:ARMAsmParser",            
       "@llvm-project//llvm:ExecutionEngine",
       "@llvm-project//llvm:OrcJIT",
       "@llvm-project//llvm:Interpreter"
@@ -21,12 +21,35 @@ cc_library(
 )
 
 cc_library(
-    name = "Logging",
-    srcs = glob(["Logging/*.cpp"]),
-    hdrs = glob(["Logging/*.hpp"]),   
+    name = "QatTypes",
+    srcs = glob(["QatTypes/*.cpp"]),
+    hdrs = glob(["QatTypes/*.hpp"]),   
     visibility = ["//visibility:public"],
     deps = [
       "//qir/qat:Llvm", 
+    ],
+)
+
+cc_library(
+    name = "Utils",
+    srcs = glob(["Utils/*.cpp"]),
+    hdrs = glob(["Utils/*.hpp", "Utils/**/*.hpp"]),
+    visibility = ["//visibility:public"],
+    deps = [
+      "//qir/qat:QatTypes", 
+    ],
+)
+
+
+cc_library(
+    name = "Logging",
+    srcs = glob(["Logging/*.cpp"]),
+    hdrs = glob(["Logging/*.hpp", "Logging/**/*.hpp"]),
+    visibility = ["//visibility:public"],
+    deps = [
+      "//qir/qat:Llvm",
+      "//qir/qat:QatTypes",
+      "//qir/qat:Utils",
     ],
 )
 
@@ -36,6 +59,7 @@ cc_library(
     hdrs = glob(["Commandline/*.hpp"]),   
     visibility = ["//visibility:public"],
     deps = [
+      "//qir/qat:QatTypes",       
     ],
 )
 
@@ -46,6 +70,9 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
       "//qir/qat:Llvm", 
+      "//qir/qat:QatTypes",       
+      "//qir/qat:Validator",      
+      "//qir/qat:AllocationManager", 
     ],
 )
 
@@ -56,18 +83,25 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
       "//qir/qat:Llvm", 
-      "//qir/qat:Logging",       
+      "//qir/qat:Logging",  
+      "//qir/qat:QatTypes",       
+      "//qir/qat:ValidationPass",         
+      "//qir/qat:StaticResourceComponent",          
+      "//qir/qat:AllocationManager",            
     ],
 )
 
 cc_library(
-    name = "ValidatorPass",
-    srcs = glob(["ValidatorPass/*.cpp"]),
-    hdrs = glob(["ValidatorPass/*.hpp"]),   
+    name = "ValidationPass",
+    srcs = glob(["ValidationPass/*.cpp"]),
+    hdrs = glob(["ValidationPass/*.hpp"]),   
     visibility = ["//visibility:public"],
     deps = [
       "//qir/qat:Llvm", 
       "//qir/qat:Logging", 
+      "//qir/qat:QatTypes",    
+      "//qir/qat:StaticResourceComponent",        
+      "//qir/qat:Commandline",            
     ],
 )
 
@@ -79,6 +113,8 @@ cc_library(
     deps = [
       "//qir/qat:Llvm", 
       "//qir/qat:Logging", 
+      "//qir/qat:QatTypes",       
+      "//qir/qat:Commandline",   
     ],
 )
 
@@ -91,6 +127,8 @@ cc_library(
     deps = [
       "//qir/qat:Llvm", 
       "//qir/qat:Logging", 
+      "//qir/qat:QatTypes",
+      "//qir/qat:Commandline",                
     ],
 )
 
@@ -102,6 +140,8 @@ cc_library(
     deps = [
       "//qir/qat:Llvm", 
       "//qir/qat:Logging", 
+      "//qir/qat:QatTypes",        
+      "//qir/qat:Commandline"
     ],
 )
 
@@ -113,8 +153,23 @@ cc_library(
     deps = [
       "//qir/qat:Llvm", 
       "//qir/qat:Logging", 
+      "//qir/qat:QatTypes",       
+      "//qir/qat:Commandline",           
     ],
 )
+
+cc_library(
+    name = "RemoveDisallowedAttributesPass",
+    srcs = glob(["RemoveDisallowedAttributesPass/*.cpp"]),
+    hdrs = glob(["RemoveDisallowedAttributesPass/*.hpp"]),   
+    visibility = ["//visibility:public"],
+    deps = [
+      "//qir/qat:Llvm", 
+      "//qir/qat:QatTypes",       
+      "//qir/qat:Logging",       
+    ],
+)
+
 
 cc_library(
     name = "ModuleLoader",
@@ -123,6 +178,9 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
       "//qir/qat:Llvm", 
+      "//qir/qat:QatTypes",       
+      "//qir/qat:Logging",       
+      "//qir/qat:RemoveDisallowedAttributesPass"
     ],
 )
 
@@ -134,17 +192,21 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
       "//qir/qat:Llvm", 
+      "//qir/qat:QatTypes",       
     ],
 )
 
 cc_library(
     name = "Rules",
-    srcs = glob(["Rules/*.cpp"]),
-    hdrs = glob(["Rules/*.hpp"]),   
+    srcs = glob(["Rules/*.cpp", "Rules/Patterns/*.cpp", "Rules/Notation/*.cpp"]),
+    hdrs = glob(["Rules/*.hpp", "Rules/**/*.hpp", "Rules/**/*.ipp"]),   
     visibility = ["//visibility:public"],
     deps = [
       "//qir/qat:Llvm", 
       "//qir/qat:Logging", 
+      "//qir/qat:QatTypes",       
+      "//qir/qat:AllocationManager",      
+      "//qir/qat:Commandline"        
     ],
 )
 
@@ -156,7 +218,10 @@ cc_library(
     deps = [
       "//qir/qat:Llvm", 
       "//qir/qat:Logging", 
-      "//qir/qat:Rules",       
+      "//qir/qat:Rules",    
+      "//qir/qat:QatTypes",       
+      "//qir/qat:Commandline",       
+      "//qir/qat:Profile",       
     ],
 )
 
@@ -177,7 +242,60 @@ cc_library(
       "//qir/qat:StaticResourceComponent",             
       "//qir/qat:ValidationPass",      
       "//qir/qat:PostTransformValidation",      
-      "//qir/qat:PreTransformTrimming",      
+      "//qir/qat:PreTransformTrimming",   
+      "//qir/qat:GroupingPass",
+      "//qir/qat:QatTypes",       
     ],
 )
 
+
+cc_library(
+    name = "QatConfig",
+    srcs = ["Apps/Qat/QatConfig.cpp"],
+    hdrs = ["Apps/Qat/QatConfig.hpp"],   
+    visibility = ["//visibility:public"],
+    deps = [
+      "//qir/qat:Llvm", 
+      "//qir/qat:Logging", 
+      "//qir/qat:Commandline",                 
+    ],
+)
+
+cc_binary(
+    name = "qat",
+    srcs = ["Apps/Qat/Qat.cpp"],
+    deps = [ 
+      "//qir/qat:Llvm", 
+      "//qir/qat:Logging", 
+      "//qir/qat:Rules",       
+      "//qir/qat:Commandline",             
+      "//qir/qat:AllocationManager",             
+      "//qir/qat:TransformationRulesPass",             
+      "//qir/qat:Profile",             
+      "//qir/qat:Validator",             
+      "//qir/qat:StaticResourceComponent",             
+      "//qir/qat:ValidationPass",      
+      "//qir/qat:PostTransformValidation",      
+      "//qir/qat:PreTransformTrimming",   
+      "//qir/qat:GroupingPass",
+      "//qir/qat:QatTypes",     
+      "//qir/qat:QatConfig",           
+      "//qir/qat:ModuleLoader", 
+      "//qir/qat:Generators",           
+
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+)
+
+
+cc_binary(
+    name = "test",
+    srcs = ["Apps/Qat/Test.cpp"],
+    deps = [   
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+)

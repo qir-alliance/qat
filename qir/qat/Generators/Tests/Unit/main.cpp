@@ -89,7 +89,7 @@ TEST(GeneratorsTestSuite, ConfigureFunction)
 
     TestAnalysis test;
 
-    generator->newProfile("test", llvm::PassBuilder::OptimizationLevel::O0, false);
+    generator->newProfile("test", llvm::OptimizationLevel::O0, false);
 
     EXPECT_EQ(call_count, 1);
     EXPECT_TRUE(generator->ruleTransformationConfig().isDisabled());
@@ -104,7 +104,7 @@ TEST(GeneratorsTestSuite, ConfigurationManager)
 
     TestAnalysis test;
 
-    generator->newProfile("test", llvm::PassBuilder::OptimizationLevel::O0, false);
+    generator->newProfile("test", llvm::OptimizationLevel::O0, false);
 
     EXPECT_EQ(generator->ruleTransformationConfig(), TransformationRulesPassConfiguration());
     EXPECT_EQ(generator->llvmPassesConfig(), LlvmPassesConfiguration());

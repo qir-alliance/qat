@@ -3,7 +3,6 @@
 // Licensed under the MIT License.
 
 #include "qir/qat/Logging/ILogger.hpp"
-#include "qir/qat/Profile/Profile.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 
