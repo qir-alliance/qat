@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 #include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "qir/qat/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
 #include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 #include <functional>

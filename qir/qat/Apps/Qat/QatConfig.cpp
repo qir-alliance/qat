@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "qir/qat/Apps/Qat/QatConfig.hpp"
-
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 
 namespace microsoft::quantum

@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Profile/Profile.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Profile/Profile.hpp"
 
 namespace microsoft::quantum
 {

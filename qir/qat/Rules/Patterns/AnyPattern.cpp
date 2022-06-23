@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Rules/Patterns/AnyPattern.hpp"
-
 #include "qir/qat/Rules/IOperandPrototype.hpp"
+#include "qir/qat/Rules/Patterns/AnyPattern.hpp"
 
 namespace microsoft::quantum
 {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/FactoryConfig.hpp"

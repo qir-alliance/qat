@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Commandline/IConfigBind.hpp"
-
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Commandline/IConfigBind.hpp"
 
 using namespace microsoft::quantum;
 

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "qir/qat/Logging/LogCollection.hpp"
-
 #include "qir/qat/Utils/Trim.hpp"
 
 #include <fstream>
