@@ -1,13 +1,10 @@
-from qsharp_tests import all_qsharp as CIRCUITS
-
-
-import subprocess
+import logging
 import os
+import subprocess
 import tempfile
 
 import pytest
-import logging
-
+from qsharp_tests import all_qsharp as CIRCUITS
 
 logger = logging.getLogger(__name__)
 
@@ -17,10 +14,10 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
     qat_binary = os.environ.get("QAT_BINARY")
 
     p = subprocess.Popen(
-        [qat_binary, "-S"] + args + ["--profile",
-                                     profile, filename],
+        [qat_binary, "-S"] + args + ["--profile", profile, filename],
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE)
+        stderr=subprocess.PIPE,
+    )
 
     out, errs = p.communicate()
     errs = errs.decode()
@@ -71,11 +68,16 @@ def test_qsharp_reduction(test_name, request):
             logger.warn("Q# program did not generate QIR file.")
             return
 
-        assert validate_circuit(test_name, "default", project.qir_filename, [
-                                "--unroll-loops", "--always-inline", "--apply"])
-        assert validate_circuit(test_name, "default", project.qir_filename, [
-                                "--unroll-loops", "--apply"])
-        assert validate_circuit(test_name, "default", project.qir_filename, [
-                                "--always-inline", "--apply"])
-        assert validate_circuit(test_name, "default", project.qir_filename, [
-                                "--apply"])
+        assert validate_circuit(
+            test_name,
+            "default",
+            project.qir_filename,
+            ["--unroll-loops", "--always-inline", "--apply"],
+        )
+        assert validate_circuit(
+            test_name, "default", project.qir_filename, ["--unroll-loops", "--apply"]
+        )
+        assert validate_circuit(
+            test_name, "default", project.qir_filename, ["--always-inline", "--apply"]
+        )
+        assert validate_circuit(test_name, "default", project.qir_filename, ["--apply"])
