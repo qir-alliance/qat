@@ -15,3 +15,11 @@ lint:
     - markdownlint@0.31.1
     - prettier@2.7.1
     - svgo@2.8.0
+  ignore:
+    - linters: [ALL]
+      paths:
+        - .trunk/*out/**
+        - node_js/**
+        - "**/node_js/**"
+        - develop_env/**
+        - "**/develop_env/**"
