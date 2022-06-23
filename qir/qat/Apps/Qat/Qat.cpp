@@ -51,6 +51,7 @@
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/CommentLogger.hpp"
 #include "qir/qat/ModuleLoader/ModuleLoader.hpp"
 #include "qir/qat/Profile/Profile.hpp"
@@ -60,8 +61,6 @@
 #include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 #include "qir/qat/Validator/Validator.hpp"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <dlfcn.h>
 

@@ -11,7 +11,7 @@ build --workspace_status_command "python config/workspace-status.py"
 
 build --cxxopt=-std=c++17
 build --host_cxxopt=-std=c++17
-build --disk_cache=~/.cache/bazel-disk-cache
+# build --disk_cache=~/.cache/bazel-disk-cache
 
 # Ideally these should be moved to user configuration
 build:release --cxxopt=-O3
@@ -20,17 +20,18 @@ build:debug -c dbg
 build:debug --copt=-g 
 build:debug --cxxopt=-g 
 build:debug --strip=never
-build:debug --cxxopt=-fsanitize=address,integer,undefined
+build:debug --cxxopt=-fsanitize=address,undefined # integer,
 build:debug --cxxopt=-fno-omit-frame-pointer
 build:debug --cxxopt=-fno-sanitize-recover=all
 build:debug --copt=-O0
 build:debug --cxxopt=-O0
-build:debug --linkopt=-fsanitize=address,integer,undefined
-# build:debug --sandbox_debug
+build:debug --linkopt=-fsanitize=address,undefined # integer,
 build:debug --features asan
 build:debug --spawn_strategy=standalone
 build:debug --apple_enable_auto_dsym_dbg
 build:debug --apple_generate_dsym 
+# Turns out that the stdlib is not compatible with unsigned-shift-base
+build:debug --cxxopt=-fno-sanitize=unsigned-shift-base
 
 # ## SEE https://github.com/RobotLocomotion/drake/tree/master/tools/dynamic_analysis
 # build --build_tests_only
@@ -63,13 +64,6 @@ build:debug --apple_generate_dsym
 # build --cxxopt=-fvisibility-inlines-hidden
 # other options that does not work on OS X, -fsanitize=leak,memory
 
-# To get debug symbols
-# build --sandbox_debug 
-# build --spawn_strategy=standalone
-# build --save_temps="true" 
-# build -c dbg 
-# build --strip never
-
 # Define the default systems lib location
 build:linux --define=PREFIX=/usr
 build:linux --define=LIBDIR=$(PREFIX)/lib
@@ -91,7 +85,7 @@ build:windows --cxxopt=/std:c++17
 build:windows --host_cxxopt=/std:c++17
 
 build --apple_platform_type=macos
-build --cpu=darwin --host_cpu=darwin
+build --cpu=darwin_arm64 --host_cpu=darwin_arm64
 # build --announce_rc
 
 

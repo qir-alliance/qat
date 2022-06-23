@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 #include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
 #include "qir/qat/ValidationPass/FunctionValidationPass.hpp"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <functional>
 #include <unordered_map>

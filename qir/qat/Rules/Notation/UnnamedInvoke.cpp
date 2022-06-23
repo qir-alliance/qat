@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/Patterns/UnnamedInvokePattern.hpp"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <unordered_map>
 #include <vector>

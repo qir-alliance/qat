@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 #include "qir/qat/Utils/Trim.hpp"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 namespace microsoft::quantum
 {

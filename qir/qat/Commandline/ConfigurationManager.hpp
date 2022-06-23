@@ -5,9 +5,8 @@
 #include "qir/qat/Commandline/ConfigBind.hpp"
 #include "qir/qat/Commandline/IConfigBind.hpp"
 #include "qir/qat/Commandline/ParameterParser.hpp"
-#include "qir/qat/QatTypes/QatTypes.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <iomanip>
 #include <iostream>

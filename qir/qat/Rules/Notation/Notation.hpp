@@ -4,6 +4,7 @@
 
 /// @defgroup shorthandNotation Shorthand Notation
 
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Notation/Call.hpp"
 #include "qir/qat/Rules/Notation/Call.ipp"
 #include "qir/qat/Rules/Notation/Phi.ipp"
@@ -11,8 +12,6 @@
 #include "qir/qat/Rules/Patterns/CallPattern.hpp"
 #include "qir/qat/Rules/Patterns/Instruction.hpp"
 #include "qir/qat/Rules/Patterns/PhiPattern.hpp"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <unordered_map>
 #include <vector>

@@ -5,11 +5,10 @@
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Generators/ProfileGenerator.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/FactoryConfig.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 #include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 namespace microsoft::quantum
 {

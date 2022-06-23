@@ -4,9 +4,8 @@
 
 /// @defgroup shorthandNotation Shorthand Notation
 
-#include "qir/qat/Rules/IOperandPrototype.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/IOperandPrototype.hpp"
 
 #include <unordered_map>
 #include <vector>

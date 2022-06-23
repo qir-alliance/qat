@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "gtest/gtest.h"
 #include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
 #include "qir/qat/Generators/PostTransformConfig.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
-#include "gtest/gtest.h"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <functional>
 

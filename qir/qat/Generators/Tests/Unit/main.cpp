@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "gtest/gtest.h"
 #include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
 #include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Rules/FactoryConfig.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 #include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "gtest/gtest.h"
 
 using namespace microsoft::quantum;
 using GeneratorPtr = std::shared_ptr<ConfigurableProfileGenerator>;

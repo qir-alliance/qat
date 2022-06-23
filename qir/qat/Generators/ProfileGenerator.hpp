@@ -3,11 +3,10 @@
 // Licensed under the MIT License.
 
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "qir/qat/Profile/Profile.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 namespace microsoft::quantum
 {

@@ -2,9 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Logging/SourceLocation.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/SourceLocation.hpp"
 
 #include <memory>
 #include <unordered_map>

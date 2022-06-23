@@ -3,7 +3,6 @@
 
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
 
 #include <fstream>

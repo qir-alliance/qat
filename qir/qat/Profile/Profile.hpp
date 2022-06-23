@@ -4,10 +4,9 @@
 
 #include "qir/qat/AllocationManager/AllocationManager.hpp"
 #include "qir/qat/AllocationManager/IAllocationManager.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 #include "qir/qat/Validator/Validator.hpp"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 namespace microsoft::quantum
 {

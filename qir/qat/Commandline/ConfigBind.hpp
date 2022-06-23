@@ -4,7 +4,6 @@
 
 #include "qir/qat/Commandline/IConfigBind.hpp"
 #include "qir/qat/Commandline/ParameterParser.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
 
 #include <iomanip>

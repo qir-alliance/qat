@@ -3,7 +3,6 @@
 // Licensed under the MIT License.
 
 #include "qir/qat/AllocationManager/IAllocationManager.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
 
 #include <memory>

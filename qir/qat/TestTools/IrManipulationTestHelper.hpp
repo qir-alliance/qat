@@ -3,7 +3,6 @@
 // Licensed under the MIT License.
 
 #include "qir/qat/Generators/ProfileGenerator.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
 
 #include <unordered_set>

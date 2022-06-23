@@ -4,13 +4,12 @@
 
 #include "qir/qat/AllocationManager/AllocationManager.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 #include "qir/qat/Rules/FactoryConfig.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <memory>
 

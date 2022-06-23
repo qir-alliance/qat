@@ -7,6 +7,7 @@
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPass.hpp"
 #include "qir/qat/PreTransformTrimming/PreTransformTrimmingPass.hpp"
 #include "qir/qat/Rules/Factory.hpp"
@@ -20,8 +21,6 @@
 #include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "qir/qat/Utils/FunctionToModule.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
-
-#include "qir/qat/Llvm/Llvm.hpp"
 
 namespace microsoft::quantum
 {
