@@ -18,15 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: "Debug build"
-        run: |
-          mkdir -p Debug
-          pushd Debug
-          cmake ..
-          make -j 
-          popd
-          ln -s $PWD/Debug/compile_commands.json $PWD/compile_commands.json
-
       - name: "Installing dependencies"
         run: |
           sudo apt-get update -y
@@ -50,6 +41,16 @@ jobs:
           PYTHON_BIN_PATH: /usr/bin/python3
           CC: clang-13
           CXX: clang++-13
+
+      - name: "Debug build"
+        run: |        
+          mkdir -p Debug
+          pushd Debug
+          cmake ..
+          make -j 
+          popd
+          ln -s $PWD/Debug/compile_commands.json $PWD/compile_commands.json
+
 
       - name: Trunk Check
         uses: trunk-io/trunk-action@v1
