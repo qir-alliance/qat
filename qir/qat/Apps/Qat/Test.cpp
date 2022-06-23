@@ -10,6 +10,7 @@ int main()
 #ifndef NDEBUG
     std::cerr << "Debugging!" << std::endl;
 #endif
+
     throw std::runtime_error("Hello world");
     return 0;
 }
