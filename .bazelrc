@@ -91,7 +91,7 @@ build:windows --cxxopt=/std:c++17
 build:windows --host_cxxopt=/std:c++17
 
 build --apple_platform_type=macos
-build --cpu=darwin_arm64 --host_cpu=darwin_arm64
+build --cpu=darwin --host_cpu=darwin
 # build --announce_rc
 
 

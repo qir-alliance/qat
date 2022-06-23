@@ -164,12 +164,6 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 set(llvm_libs 
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVM.dylib"
-  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64AsmParser.a"
-  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64CodeGen.a"
-  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64Desc.a"
-  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64Disassembler.a"
-  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64Info.a"
-  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64Utils.a"
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAggressiveInstCombine.a"
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAnalysis.a"
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAsmParser.a"
@@ -195,8 +189,6 @@ set(llvm_libs
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMDlltoolDriver.a"
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMExecutionEngine.a"
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMExegesis.a"
-  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMExegesisAArch64.a"
-#  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMExegesisX86.a"
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMExtensions.a"
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMFileCheck.a"
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMFrontendOpenACC.a"
@@ -244,13 +236,22 @@ set(llvm_libs
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMXRay.a"
   "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMipo.a"
   "${CMAKE_BINARY_DIR}/llvm/lib/libLTO.dylib"
+  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMExegesisX86.a"
+  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMX86AsmParser.a"
+  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMX86CodeGen.a"
+  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMX86Desc.a"
+  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMX86Disassembler.a"
+  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMX86Info.a"  
 )
+#  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64AsmParser.a"
+#  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64CodeGen.a"
+#  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64Desc.a"
+#  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64Disassembler.a"
+#  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64Info.a"
+#  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMAArch64Utils.a"
+##  "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMExegesisAArch64.a"
 
-# "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMX86AsmParser.a"
-# "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMX86CodeGen.a"
-# "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMX86Desc.a"
-# "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMX86Disassembler.a"
-# "${CMAKE_BINARY_DIR}/llvm/lib/libLLVMX86Info.a"
+
 
 message(STATUS "${llvm_libs}")
 # Adding the libraries

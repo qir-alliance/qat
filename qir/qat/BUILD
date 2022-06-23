@@ -292,7 +292,24 @@ cc_binary(
 cc_binary(
     name = "test",
     srcs = ["Apps/Qat/Test.cpp"],
-    deps = [   
+    deps = [  
+      "//qir/qat:Llvm", 
+      "//qir/qat:Logging", 
+      "//qir/qat:Rules",       
+      "//qir/qat:Commandline",             
+      "//qir/qat:AllocationManager",             
+      "//qir/qat:TransformationRulesPass",             
+      "//qir/qat:Profile",             
+      "//qir/qat:Validator",             
+      "//qir/qat:StaticResourceComponent",             
+      "//qir/qat:ValidationPass",      
+      "//qir/qat:PostTransformValidation",      
+      "//qir/qat:PreTransformTrimming",   
+      "//qir/qat:GroupingPass",
+      "//qir/qat:QatTypes",     
+      "//qir/qat:QatConfig",           
+      "//qir/qat:ModuleLoader", 
+      "//qir/qat:Generators",       
     ],
     visibility = [
         "//visibility:public",

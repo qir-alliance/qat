@@ -5,12 +5,16 @@ namespace QATSample {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Measurement;
 
-    @EntryPoint()
-    operation Main(x: Int): Bool[]
-    {
-        use q1 = Qubit();
-        let r1 = [MResetZ(q1) == One, MResetZ(q1) == Zero, MResetZ(q1) == One, MResetZ(q1) == Zero];
+ @EntryPoint()
+    operation Main() : Int {
+        use q = Qubit();
+        H(q);
 
-        return r1;
+        mutable i = 0;
+        if M(q) == One {
+            set i = 1;
+        }
+
+        return i;
     }
 }
