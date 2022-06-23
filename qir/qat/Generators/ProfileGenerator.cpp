@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Generators/ProfileGenerator.hpp"
+
 #include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Generators/PostTransformConfig.hpp"
-#include "qir/qat/Generators/ProfileGenerator.hpp"
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"

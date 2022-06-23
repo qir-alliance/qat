@@ -20,10 +20,10 @@ struct OpcodeValue
     {
     }
 
-    OpcodeValue()                   = default;
-    OpcodeValue(OpcodeValue&&)      = default;
-    OpcodeValue(OpcodeValue const&) = default;
-    OpcodeValue& operator=(OpcodeValue&&) = default;
+    OpcodeValue()                              = default;
+    OpcodeValue(OpcodeValue&&)                 = default;
+    OpcodeValue(OpcodeValue const&)            = default;
+    OpcodeValue& operator=(OpcodeValue&&)      = default;
     OpcodeValue& operator=(OpcodeValue const&) = default;
     bool         operator==(OpcodeValue const& other) const
     {

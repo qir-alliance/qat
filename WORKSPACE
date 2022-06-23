@@ -1,17 +1,18 @@
 workspace(name = "microsoft")
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 http_archive(
     name = "bazel_skylib",
+    sha256 = "97e70364e9249702246c0e9444bccdc4b847bed1eb03c5a3ece4f83dfe6abc44",
     urls = [
         "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.0.2/bazel-skylib-1.0.2.tar.gz",
         "https://github.com/bazelbuild/bazel-skylib/releases/download/1.0.2/bazel-skylib-1.0.2.tar.gz",
     ],
-    sha256 = "97e70364e9249702246c0e9444bccdc4b847bed1eb03c5a3ece4f83dfe6abc44",
 )
 
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+
 bazel_skylib_workspace()
 
 http_archive(
@@ -39,10 +40,10 @@ http_archive(
     name = "llvm-raw",
     build_file_content = "# empty",
     sha256 = LLVM_SHA256,
-#    patch_args = ["-p1"],
-#    patches = [
-#        "//patches:all.patch",
-#    ],    
+    #    patch_args = ["-p1"],
+    #    patches = [
+    #        "//patches:all.patch",
+    #    ],
     strip_prefix = "llvm-project-" + LLVM_COMMIT,
     urls = ["https://github.com/llvm/llvm-project/archive/{commit}.tar.gz".format(commit = LLVM_COMMIT)],
 )
@@ -62,8 +63,8 @@ llvm_disable_optional_support_deps()
 
 http_archive(
     name = "googletest",
-    url = "https://github.com/google/googletest/archive/release-1.10.0.zip",
+    build_file = "@//:config/BUILD.googletest",
     sha256 = "94c634d499558a76fa649edb13721dce6e98fb1e7018dfaeba3cd7a083945e91",
     strip_prefix = "googletest-release-1.10.0",
-    build_file = "@//:config/BUILD.googletest",
+    url = "https://github.com/google/googletest/archive/release-1.10.0.zip",
 )

@@ -46,7 +46,7 @@ class RuleSet
     //
 
     RuleSet& operator=(RuleSet const&) = default;
-    RuleSet& operator=(RuleSet&&) = default;
+    RuleSet& operator=(RuleSet&&)      = default;
 
     // Operating rule sets
     //

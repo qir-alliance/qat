@@ -21,10 +21,10 @@ class IAllocationManager
 
     // Construction, moves and copies
     //
-    IAllocationManager(IAllocationManager const&) = delete;
-    IAllocationManager(IAllocationManager&&)      = delete;
+    IAllocationManager(IAllocationManager const&)            = delete;
+    IAllocationManager(IAllocationManager&&)                 = delete;
     IAllocationManager& operator=(IAllocationManager const&) = delete;
-    IAllocationManager& operator=(IAllocationManager&&) = delete;
+    IAllocationManager& operator=(IAllocationManager&&)      = delete;
 
     virtual ~IAllocationManager();
 

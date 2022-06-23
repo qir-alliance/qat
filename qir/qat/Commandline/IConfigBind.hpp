@@ -26,10 +26,10 @@ class IConfigBind
     // Strictly speaking the code would remain correct if we allowed copy and/or move, but
     // we have chosen to ban them by choice as potential bugs arising from allowing copy and/or
     // move can be difficult to find. We consider this behaviour a part of the interface definition.
-    IConfigBind(IConfigBind const&) = delete;
-    IConfigBind(IConfigBind&&)      = delete;
+    IConfigBind(IConfigBind const&)            = delete;
+    IConfigBind(IConfigBind&&)                 = delete;
     IConfigBind& operator=(IConfigBind const&) = delete;
-    IConfigBind& operator=(IConfigBind&&) = delete;
+    IConfigBind& operator=(IConfigBind&&)      = delete;
 
     // Virtual destructor
     //

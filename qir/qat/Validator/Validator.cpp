@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Validator/Validator.hpp"
+
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/CommentLogger.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
@@ -8,7 +10,6 @@
 #include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
 #include "qir/qat/ValidationPass/FunctionValidationPass.hpp"
 #include "qir/qat/ValidationPass/ValidationPass.hpp"
-#include "qir/qat/Validator/Validator.hpp"
 
 #include <fstream>
 

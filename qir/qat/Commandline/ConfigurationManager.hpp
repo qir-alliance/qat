@@ -104,11 +104,11 @@ class ConfigurationManager
     //
 
     /// Configuration manager is default constructible, non-copyable and non-movable.
-    ConfigurationManager()                            = default;
-    ConfigurationManager(ConfigurationManager const&) = delete;
-    ConfigurationManager(ConfigurationManager&&)      = delete;
+    ConfigurationManager()                                       = default;
+    ConfigurationManager(ConfigurationManager const&)            = delete;
+    ConfigurationManager(ConfigurationManager&&)                 = delete;
     ConfigurationManager& operator=(ConfigurationManager const&) = delete;
-    ConfigurationManager& operator=(ConfigurationManager&&) = delete;
+    ConfigurationManager& operator=(ConfigurationManager&&)      = delete;
 
     ~ConfigurationManager()
     {

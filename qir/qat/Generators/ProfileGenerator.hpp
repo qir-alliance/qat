@@ -35,12 +35,12 @@ class ProfileGenerator
     // Construction, moves and copies
     //
 
-    ProfileGenerator()                        = default;
-    ~ProfileGenerator()                       = default;
-    ProfileGenerator(ProfileGenerator const&) = delete;
-    ProfileGenerator(ProfileGenerator&&)      = delete;
+    ProfileGenerator()                                   = default;
+    ~ProfileGenerator()                                  = default;
+    ProfileGenerator(ProfileGenerator const&)            = delete;
+    ProfileGenerator(ProfileGenerator&&)                 = delete;
     ProfileGenerator& operator=(ProfileGenerator const&) = delete;
-    ProfileGenerator& operator=(ProfileGenerator&&) = delete;
+    ProfileGenerator& operator=(ProfileGenerator&&)      = delete;
 
     // Profile generation interface
     //

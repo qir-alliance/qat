@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/StaticResourceComponent/ResourceAnnotationPass.hpp"
+
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
-#include "qir/qat/StaticResourceComponent/ResourceAnnotationPass.hpp"
 
 #include <fstream>
 #include <iostream>
