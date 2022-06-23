@@ -28,10 +28,10 @@ class IrManipulationTestHelper
     //
 
     IrManipulationTestHelper();
-    IrManipulationTestHelper(IrManipulationTestHelper const&)            = delete;
+    IrManipulationTestHelper(IrManipulationTestHelper const&) = delete;
     IrManipulationTestHelper& operator=(IrManipulationTestHelper const&) = delete;
     IrManipulationTestHelper(IrManipulationTestHelper&&)                 = delete;
-    IrManipulationTestHelper& operator=(IrManipulationTestHelper&&)      = delete;
+    IrManipulationTestHelper& operator=(IrManipulationTestHelper&&) = delete;
 
     // Output functions
     //

@@ -64,7 +64,7 @@ TEST(RuleSetTestSuite, IntToPtr)
                 {
                 matched = true;
                 return true;
-            });
+                });
         auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
         rule_set.addRule(ret);
@@ -100,7 +100,7 @@ TEST(RuleSetTestSuite, EmbeddedIntToPtr)
                 {
                 matched = true;
                 return true;
-            });
+                });
         auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
         rule_set.addRule(ret);
@@ -129,7 +129,7 @@ TEST(RuleSetTestSuite, ExpandedIntToPtr)
                 {
                 matched = true;
                 return true;
-            });
+                });
         auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
         rule_set.addRule(ret);
