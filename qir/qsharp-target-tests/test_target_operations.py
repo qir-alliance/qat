@@ -1,7 +1,6 @@
 import logging
 import os
 import subprocess
-import tempfile
 
 import pytest
 from TargetTestScripts import target1_tests, target3_tests, target4_tests

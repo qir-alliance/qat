@@ -1,7 +1,6 @@
 import logging
 import os
 import subprocess
-import tempfile
 
 import pytest
 from comparison_tests import all_comparison as COMPARISON_CIRCUITS

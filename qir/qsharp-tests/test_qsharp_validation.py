@@ -1,7 +1,6 @@
 import logging
 import os
 import subprocess
-import tempfile
 
 import pytest
 from qsharp_tests import all_qsharp as CIRCUITS

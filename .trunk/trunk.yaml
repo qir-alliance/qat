@@ -7,7 +7,7 @@ lint:
     - black@22.3.0
     - buildifier@5.1.0
     - clang-format@13.0.1
-    - clang-tidy@13.0.1
+#    - clang-tidy@13.0.1
     - flake8@4.0.1
     - gitleaks@8.8.8
     - hadolint@2.10.0
@@ -15,9 +15,13 @@ lint:
     - markdownlint@0.31.1
     - prettier@2.7.1
     - svgo@2.8.0
+  disabled:
+    - clang-tidy
   ignore:
     - linters: [ALL]
       paths:
+        - .devcontainer/*
+        - .devcontainer/**
         - .trunk/*out/**
         - node_js/**
         - "**/node_js/**"
