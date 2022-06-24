@@ -6,7 +6,7 @@
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 #include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
-#include "qir/qat/llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 using namespace microsoft::quantum;
 
