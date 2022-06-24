@@ -50,6 +50,9 @@ jobs:
           make -j 
           popd
           ln -s $PWD/Debug/compile_commands.json $PWD/compile_commands.json
+        env:
+          CC: clang-13
+          CXX: clang++-13
 
       - name: Trunk Check
         uses: trunk-io/trunk-action@v1
