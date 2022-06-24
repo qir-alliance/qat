@@ -102,8 +102,8 @@
 
 namespace llvm
 {
-#if 0
-    using OptimizationLevel       = PassBuilder::OptimizationLevel;
+#ifdef USE_LLVM13
+using OptimizationLevel = PassBuilder::OptimizationLevel;
 #endif
 } // namespace llvm
 
