@@ -266,6 +266,11 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             {
                 fpm.addPass(llvm::SimplifyCFGPass());
             }
+
+            if (cfg.shouldLowerSwitch())
+            {
+                fpm.addPass(llvm::LowerSwitchPass());
+            }
         });
 
     registerProfileComponent<PostTransformValidationPassConfiguration>(
@@ -275,7 +280,6 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             /*profile*/)
         {
             auto& mpm = ptr->modulePassManager();
-
             mpm.addPass(PostTransformValidationPass(cfg, logger));
         });
 
@@ -297,6 +301,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(llvm::AggressiveInstCombinePass());
                 fpm.addPass(llvm::SCCPPass());
                 fpm.addPass(llvm::SimplifyCFGPass());
+                fpm.addPass(llvm::LowerSwitchPass());
             }
 
             fpm.addPass(ResourceAnnotationPass(cfg, logger));

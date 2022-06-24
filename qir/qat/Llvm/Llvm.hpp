@@ -76,6 +76,7 @@
 #include "llvm/LinkAllPasses.h"
 #include "llvm/Transforms/Scalar/ADCE.h"
 #include "llvm/Transforms/Scalar/DCE.h"
+#include "llvm/Transforms/Utils/LowerSwitch.h"
 
 // Const folding
 #include "llvm/Analysis/ConstantFolding.h"
