@@ -6,3 +6,11 @@ docs/tailwind_theme/js/
 docs/tailwind_theme/js/*
 docs/tailwind_theme/js/**
 .devcontainer/**
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+**/develop_env
+bazel-*/
+.trunk/
+.trunk/**

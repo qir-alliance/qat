@@ -47,7 +47,6 @@ jobs:
           mkdir -p Debug
           pushd Debug
           cmake ..
-          make -j 
           popd
           ln -s $PWD/Debug/compile_commands.json $PWD/compile_commands.json
         env:
