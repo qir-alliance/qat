@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
 
 namespace microsoft::quantum
 {

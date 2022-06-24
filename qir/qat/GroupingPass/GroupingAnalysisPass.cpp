@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
+
 #include "qir/qat/Llvm/Llvm.hpp"
 
 #include <fstream>

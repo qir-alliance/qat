@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "gtest/gtest.h"
 #include "qir/qat/Rules/FactoryConfig.hpp"
+
+#include "gtest/gtest.h"
 
 #include <functional>
 

@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
+
+#include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Patterns/AnyPattern.hpp"
 #include "qir/qat/Rules/Patterns/CallPattern.hpp"
 #include "qir/qat/Rules/Patterns/Instruction.hpp"

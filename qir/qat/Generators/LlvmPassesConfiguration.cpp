@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
 
 namespace microsoft::quantum
 {
