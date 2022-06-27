@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/IOperandPrototype.hpp"
 #include "Rules/Patterns/Instruction.hpp"
+
+#include "Rules/IOperandPrototype.hpp"
 
 namespace microsoft::quantum
 {
@@ -168,6 +169,24 @@ bool SwitchPattern::match(Value* instr, Captures& captures) const
 SwitchPattern::Child SwitchPattern::copy() const
 {
     auto ret = std::make_shared<SwitchPattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
+bool ZExtPattern::match(Value* instr, Captures& captures) const
+{
+    auto* cast_instr = llvm::dyn_cast<llvm::ZExtInst>(instr);
+    if (cast_instr == nullptr)
+    {
+        return fail(instr, captures);
+    }
+
+    return success(instr, captures);
+}
+
+ZExtPattern::Child ZExtPattern::copy() const
+{
+    auto ret = std::make_shared<ZExtPattern>();
     ret->copyPropertiesFrom(*this);
     return std::move(ret);
 }

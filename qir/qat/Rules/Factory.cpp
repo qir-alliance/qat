@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "Rules/Factory.hpp"
+
 #include "Rules/Notation/Notation.hpp"
 
 #include "Llvm/Llvm.hpp"
@@ -96,6 +97,35 @@ void RuleFactory::usingConfiguration(FactoryConfiguration const& config)
     {
         removeGetZeroOrOne();
     }
+}
+
+void RuleFactory::replaceZextForI1()
+{
+    auto const replaceIfI1 = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements)
+    {
+        // Get the index and testing that it is a constant int
+        auto arg        = cap["value"];
+        auto input_type = arg->getType();
+        if (!input_type->isIntegerTy(1))
+        {
+            return false;
+        }
+
+        uint64_t width      = 64;
+        auto     one        = llvm::APInt(width, 1);
+        auto     one_value  = llvm::ConstantInt::get(builder.getContext(), one);
+        auto     zero       = llvm::APInt(width, 0);
+        auto     zero_value = llvm::ConstantInt::get(builder.getContext(), zero);
+
+        auto new_val = builder.CreateSelect(arg, one_value, zero_value);
+        new_val->takeName(val);
+
+        val->replaceAllUsesWith(new_val);
+        replacements.push_back({llvm::dyn_cast<Instruction>(val), nullptr});
+
+        return true;
+    };
+    addRule({zExt("value"_cap = _), replaceIfI1});
 }
 
 void RuleFactory::removeFunctionCall(String const& name)
