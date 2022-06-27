@@ -20,49 +20,18 @@ build:debug -c dbg
 build:debug --copt=-g 
 build:debug --cxxopt=-g 
 build:debug --strip=never
-build:debug --cxxopt=-fsanitize=address,undefined # integer,
+build:debug --cxxopt=-fsanitize=address,undefined
 build:debug --cxxopt=-fno-omit-frame-pointer
 build:debug --cxxopt=-fno-sanitize-recover=all
 build:debug --copt=-O0
 build:debug --cxxopt=-O0
-build:debug --linkopt=-fsanitize=address,undefined # integer,
-build:debug --features asan
+build:debug --linkopt=-fsanitize=address,undefined
+build:debug --features asan,usan
 build:debug --spawn_strategy=standalone
 build:debug --apple_enable_auto_dsym_dbg
 build:debug --apple_generate_dsym 
-# Turns out that the stdlib is not compatible with unsigned-shift-base
-build:debug --cxxopt=-fno-sanitize=unsigned-shift-base
 
 # ## SEE https://github.com/RobotLocomotion/drake/tree/master/tools/dynamic_analysis
-# build --build_tests_only
-# build --copt=-g
-# # https://github.com/google/sanitizers/wiki/AddressSanitizer#faq
-# build --copt=-Wno-macro-redefined
-# build --copt=-fno-common
-
-# build --copt=-fsanitize-address-use-after-scope
-# build --copt=-fstandalone-debug
-
-# build --copt=-fno-omit-frame-pointer
-
-# build --linkopt=-fsanitize-address-use-after-scope
-# # ld.gold: warning: Cannot export local symbol __asan_extra_spill_area
-# build --linkopt=-fuse-ld=ld
-# build --start_end_lib=no
-# build --test_env=ASAN_OPTIONS
-# build --test_env=LSAN_OPTIONS
-# build --test_env=ASAN_SYMBOLIZER_PATH
-# build --test_env=LSAN_SYMBOLIZER_PATH
-# # LSan is run with ASan by default
-# build --test_tag_filters=-gurobi,-mosek,-snopt,-no_asan,-no_lsan
-# build --test_lang_filters=-sh,-py
-# # Typical slowdown introduced by AddressSanitizer is 2x.
-# # See https://clang.llvm.org/docs/AddressSanitizer.html
-# build --test_timeout=150,750,2250,9000  # 2.5x
-
-# build --cxxopt=-fvisibility=hidden
-# build --cxxopt=-fvisibility-inlines-hidden
-# other options that does not work on OS X, -fsanitize=leak,memory
 
 # Define the default systems lib location
 build:linux --define=PREFIX=/usr
@@ -72,22 +41,9 @@ build:macos --define=PREFIX=/usr
 build:macos --define=LIBDIR=$(PREFIX)/lib
 build:macos --define=INCLUDEDIR=$(PREFIX)/include
 
-# By default we use C++17
-build:android --cxxopt=-std=c++17
-build:android --host_cxxopt=-std=c++17
-build:ios --cxxopt=-std=c++17
-build:ios --host_cxxopt=-std=c++17
-build:linux --cxxopt=-std=c++17
-build:linux --host_cxxopt=-std=c++17
-build:macos --cxxopt=-std=c++17
-build:macos --host_cxxopt=-std=c++17
-build:windows --cxxopt=/std:c++17
-build:windows --host_cxxopt=/std:c++17
-
-build --apple_platform_type=macos
-build --cpu=darwin_arm64 --host_cpu=darwin_arm64
-# build --announce_rc
-
+# To manually set the target CPU, use
+# build --apple_platform_type=macos
+# build --cpu=darwin_arm64 --host_cpu=darwin_arm64
 
 # Tries to import additional config
 try-import %workspace%/.bazelrc.configure

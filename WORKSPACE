@@ -40,10 +40,6 @@ http_archive(
     name = "llvm-raw",
     build_file_content = "# empty",
     sha256 = LLVM_SHA256,
-    #    patch_args = ["-p1"],
-    #    patches = [
-    #        "//patches:all.patch",
-    #    ],
     strip_prefix = "llvm-project-" + LLVM_COMMIT,
     urls = ["https://github.com/llvm/llvm-project/archive/{commit}.tar.gz".format(commit = LLVM_COMMIT)],
 )
