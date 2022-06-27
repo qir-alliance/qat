@@ -25,7 +25,7 @@ readout21:                                        ; preds = %quantum19
 
 post-classical18:                                 ; preds = %readout21
   %2 = select i1 %0, i2 -2, i2 0
-  %3 = select i1 %1, i2 1, i2 0
+  %3 = zext i1 %1 to i2
   %4 = or i2 %2, %3
   br label %exit_quantum_grouping20
 
