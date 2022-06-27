@@ -297,3 +297,4 @@ cc_binary(
         "//qir/qat:Validator",
     ],
 )
+
