@@ -158,7 +158,6 @@ class RuleFactory
     /// Removes unused quantum zeros or ones
     void removeGetZeroOrOne();
 
-
     /// Replaces Zext for I1
     void replaceZextForI1();
 
