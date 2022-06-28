@@ -42,7 +42,7 @@ jobs:
           CC: clang-13
           CXX: clang++-13
 
-      - name: "Debug build"
+      - name: "Generating Compile Commands"
         run: |
           mkdir -p Debug
           pushd Debug
