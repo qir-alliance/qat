@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libTransformationRulesPass.a CMakeFiles/TransformationRulesPass.dir/TransformationRulesPass/TransformationRulesPass.cpp.o CMakeFiles/TransformationRulesPass.dir/TransformationRulesPass/TransformationRulesPassConfiguration.cpp.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libTransformationRulesPass.a

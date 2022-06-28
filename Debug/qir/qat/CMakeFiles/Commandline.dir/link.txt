@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libCommandline.a CMakeFiles/Commandline.dir/Commandline/ConfigurationManager.cpp.o CMakeFiles/Commandline.dir/Commandline/IConfigBind.cpp.o CMakeFiles/Commandline.dir/Commandline/ParameterParser.cpp.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libCommandline.a

@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libLogging.a CMakeFiles/Logging.dir/Logging/CommentLogger.cpp.o CMakeFiles/Logging.dir/Logging/ILogger.cpp.o CMakeFiles/Logging.dir/Logging/LogCollection.cpp.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libLogging.a

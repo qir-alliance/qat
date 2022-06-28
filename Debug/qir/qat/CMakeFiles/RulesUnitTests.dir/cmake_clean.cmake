@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/BasicRuleSetOps.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/BasicRuleSetOps.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/BranchOnConstant.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/BranchOnConstant.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/BranchOnOne.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/BranchOnOne.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/BranchOnZero.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/BranchOnZero.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/DisableAliasCounting.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/DisableAliasCounting.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/DisableRecordOutput.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/DisableRecordOutput.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/DisableReferenceCounting.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/DisableReferenceCounting.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/DisableStrings.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/DisableStrings.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/FactoryConfiguration.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/FactoryConfiguration.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/IntToPtr.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/IntToPtr.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/RemoveFunctionCall.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/RemoveFunctionCall.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/RemoveZeroOrOne.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/RemoveZeroOrOne.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/ResultResultComparison.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/ResultResultComparison.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/SelectOnOne.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/SelectOnOne.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/SingleQubitAllocation.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/SingleQubitAllocation.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/StaticQubitArrayAllocation.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/StaticQubitArrayAllocation.cpp.o.d"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/StaticResultAllocation.cpp.o"
+  "CMakeFiles/RulesUnitTests.dir/Rules/Tests/Unit/StaticResultAllocation.cpp.o.d"
+  "RulesUnitTests"
+  "RulesUnitTests.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/RulesUnitTests.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

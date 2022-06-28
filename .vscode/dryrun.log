@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/tfr/Documents/Projects/qat'
+echo "Preventing the user from accidentality running the first command."
+make: Leaving directory `/Users/tfr/Documents/Projects/qat'
+ 
