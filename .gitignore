@@ -345,3 +345,6 @@ ASALocalRun/
 
 # MSBuild logs
 MSBuild_Logs/
+
+.cache/
+.trunk/
