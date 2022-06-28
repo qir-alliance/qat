@@ -14,7 +14,7 @@
 namespace microsoft::quantum
 {
 
-llvm::PreservedAnalyses ZExtTransformPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*fam*/)
+llvm::PreservedAnalyses ZExtTransformPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& fam)
 {
     std::vector<llvm::Instruction*> to_delete;
     auto                            builder = llvm::IRBuilder<>(function.getContext());
