@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
+
 #include "Rules/Factory.hpp"
 #include "Rules/FactoryConfig.hpp"
 #include "Rules/RuleSet.hpp"
@@ -14,11 +15,14 @@
 namespace microsoft::quantum
 {
 
-ConfigurableProfileGenerator::ConfigurableProfileGenerator()
+ConfigurableProfileGenerator::ConfigurableProfileGenerator(SetupMode const& mode)
 {
     configurationManager().addConfig<ValidationPassConfiguration>();
 
-    setupDefaultComponentPipeline();
+    if (mode == SetupMode::SetupPipeline)
+    {
+        setupDefaultComponentPipeline();
+    }
 }
 
 ConfigurableProfileGenerator::ConfigurableProfileGenerator(

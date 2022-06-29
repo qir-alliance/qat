@@ -200,6 +200,9 @@ class ConfigurationManager
 
     DeferredValuePtr getParameter(String const& name);
 
+    /// Checks whether a configuration section exists
+    template <typename T> inline bool has() const;
+
   private:
     /// Helper function to get a reference to the configuration of type T.
     template <typename T> inline T& getInternal() const;
@@ -257,6 +260,21 @@ template <typename T> inline bool ConfigurationManager::configWasRegistered()
     return false;
 }
 
+template <typename T> inline bool ConfigurationManager::has() const
+{
+    auto type = std::type_index(typeid(T));
+
+    for (auto& section : config_sections_)
+    {
+        if (section.type == type)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 template <typename T> inline T& ConfigurationManager::getInternal() const
 {
     VoidPtr ptr{nullptr};
@@ -274,7 +292,7 @@ template <typename T> inline T& ConfigurationManager::getInternal() const
     if (ptr == nullptr)
     {
         throw std::runtime_error(
-            "Could not find configuration class '" + static_cast<std::string>(typeid(T).name()) + "'.");
+            "(getInternal) Could not find configuration class '" + static_cast<std::string>(typeid(T).name()) + "'.");
     }
 
     return *static_cast<T*>(ptr.get());
@@ -308,7 +326,7 @@ template <typename T> inline bool ConfigurationManager::isActive()
     if (ptr == nullptr)
     {
         throw std::runtime_error(
-            "Could not find configuration class '" + static_cast<std::string>(typeid(T).name()) + "'.");
+            "(isActive)  Could not find configuration class '" + static_cast<std::string>(typeid(T).name()) + "'.");
     }
 
     return *ptr;

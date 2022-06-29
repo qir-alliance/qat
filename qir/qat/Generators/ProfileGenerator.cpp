@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "Generators/ProfileGenerator.hpp"
+
 #include "Generators/LlvmPassesConfiguration.hpp"
 #include "Generators/PostTransformConfig.hpp"
-#include "Generators/ProfileGenerator.hpp"
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "GroupingPass/GroupingPassConfiguration.hpp"
@@ -30,9 +31,12 @@ Profile ProfileGenerator::newProfile(String const& name, OptimizationLevel const
     auto qubit_allocation_manager  = BasicAllocationManager::createNew();
     auto result_allocation_manager = BasicAllocationManager::createNew();
 
-    auto cfg = configuration_manager_.get<TransformationRulesPassConfiguration>();
-    qubit_allocation_manager->setReuseRegisters(cfg.shouldReuseQubits());
-    result_allocation_manager->setReuseRegisters(cfg.shouldReuseResults());
+    if (configuration_manager_.has<TransformationRulesPassConfiguration>())
+    {
+        auto cfg = configuration_manager_.get<TransformationRulesPassConfiguration>();
+        qubit_allocation_manager->setReuseRegisters(cfg.shouldReuseQubits());
+        result_allocation_manager->setReuseRegisters(cfg.shouldReuseResults());
+    }
 
     // Creating profile
     // TODO(issue-12): Set target machine

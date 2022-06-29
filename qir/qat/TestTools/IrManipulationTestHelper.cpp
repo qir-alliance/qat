@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "TestTools/IrManipulationTestHelper.hpp"
+
 #include "Utils/Trim.hpp"
 
 #include "Llvm/Llvm.hpp"
@@ -115,6 +116,7 @@ void IrManipulationTestHelper::applyProfile(
     bool                     debug)
 {
     auto profile = generator->newProfile("generic", optimization_level, debug);
+
     profile.apply(*module_);
 
     // Verifying that the module is valid
