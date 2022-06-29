@@ -620,6 +620,10 @@
 <td>class</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_switch_pattern/">microsoft::quantum::SwitchPattern</a></strong></td>
 </tr>
+<tr>
+<td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_z_ext_pattern/">microsoft::quantum::ZExtPattern</a></strong></td>
+</tr>
 </tbody>
 </table>
 <h2 id="source-code">Source code</h2>
@@ -700,10 +704,17 @@ class SwitchPattern : public IOperandPrototype
     Child copy() const override;
 };
 
+class ZExtPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures&amp; captures) const override;
+    Child copy() const override;
+};
+
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 June 2022 at 16:58:54 UTC</p></div>
+<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
 </div>
           </div>
         </main>

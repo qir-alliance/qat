@@ -623,6 +623,10 @@
 </tr>
 <tr>
 <td>IOperandPrototypePtr</td>
+<td><strong><a href="/qat/Api/Modules/group__shorthand_notation/#function-zext">zExt</a></strong>(IOperandPrototypePtr const &amp; value)<br>Matches a ZExt instruction with one argument.</td>
+</tr>
+<tr>
+<td>IOperandPrototypePtr</td>
 <td><strong><a href="/qat/Api/Modules/group__shorthand_notation/#function-store">store</a></strong>(IOperandPrototypePtr const &amp; target, IOperandPrototypePtr const &amp; value)</td>
 </tr>
 <tr>
@@ -779,6 +783,12 @@ IOperandPrototypePtr phi(
 )
 </code></pre>
 <p>Matches a load instruction with one argument. </p>
+<h3 id="function-zext">function zExt</h3>
+<pre><code class="language-cpp">IOperandPrototypePtr zExt(
+    IOperandPrototypePtr const &amp; value
+)
+</code></pre>
+<p>Matches a ZExt instruction with one argument. </p>
 <h3 id="function-store">function store</h3>
 <pre><code class="language-cpp">IOperandPrototypePtr store(
     IOperandPrototypePtr const &amp; target,
@@ -823,7 +833,7 @@ call void @foo(%Type* %2, %Type* %3)
 </code></pre>
 <p>Shorthand notation for a wildcard which matches anything. This value is useful when for instance capturing the arguments of a function call where the origin of the value does not matter to the pattern. </p>
 <hr />
-<p>Updated on 27 June 2022 at 16:58:54 UTC</p></div>
+<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
 </div>
           </div>
         </main>

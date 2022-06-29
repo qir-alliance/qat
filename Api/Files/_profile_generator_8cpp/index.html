@@ -598,6 +598,7 @@
 #include &quot;TransformationRulesPass/TransformationRulesPassConfiguration.hpp&quot;
 #include &quot;Utils/FunctionToModule.hpp&quot;
 #include &quot;ValidationPass/ValidationPassConfiguration.hpp&quot;
+#include &quot;ZExtTransformPass/ZExtTransformPass.hpp&quot;
 
 #include &quot;Llvm/Llvm.hpp&quot;
 
@@ -845,6 +846,11 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             {
                 fpm.addPass(llvm::LowerSwitchPass());
             }
+
+            if (cfg.shouldEliminateZExtI1())
+            {
+                fpm.addPass(ZExtTransformPass());
+            }
         });
 
     registerProfileComponent&lt;PostTransformValidationPassConfiguration&gt;(
@@ -876,6 +882,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(llvm::SCCPPass());
                 fpm.addPass(llvm::SimplifyCFGPass());
                 fpm.addPass(llvm::LowerSwitchPass());
+                fpm.addPass(ZExtTransformPass());
             }
 
             fpm.addPass(ResourceAnnotationPass(cfg, logger));
@@ -906,7 +913,7 @@ void ProfileGenerator::setLogger(ILoggerPtr const&amp; logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 June 2022 at 16:58:54 UTC</p></div>
+<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
 </div>
           </div>
         </main>
