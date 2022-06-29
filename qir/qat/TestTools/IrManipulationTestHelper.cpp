@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "TestTools/IrManipulationTestHelper.hpp"
-
 #include "Utils/Trim.hpp"
 
 #include "Llvm/Llvm.hpp"

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "Generators/ConfigurableProfileGenerator.hpp"
-
 #include "Rules/Factory.hpp"
 #include "Rules/FactoryConfig.hpp"
 #include "Rules/RuleSet.hpp"

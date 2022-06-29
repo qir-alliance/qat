@@ -43,10 +43,13 @@ class DivisionByZeroPass : public llvm::PassInfoMixin<DivisionByZeroPass>
     /// Whether or not this pass is required to run.
     static bool isRequired();
 
+    void raiseError(int64_t error_code, llvm::Module& module, llvm::Instruction* instr);
+
   private:
     ValidationPassConfiguration config_{};
 
-    ILoggerPtr logger_{nullptr};
+    ILoggerPtr            logger_{nullptr};
+    llvm::GlobalVariable* error_variable_{nullptr};
 };
 
 } // namespace microsoft::quantum

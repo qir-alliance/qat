@@ -44,12 +44,8 @@ struct DummyConfig
 
 std::shared_ptr<ConfigurableProfileGenerator> newProfile()
 {
-    llvm::errs() << "A\n";
-
     auto profile = std::make_shared<ConfigurableProfileGenerator>(ConfigurableProfileGenerator::SetupMode::DoNothing);
     ConfigurationManager& configuration_manager = profile->configurationManager();
-    llvm::errs() << "B\n";
-
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
 
@@ -59,7 +55,6 @@ std::shared_ptr<ConfigurableProfileGenerator> newProfile()
             auto& mpm = ptr->modulePassManager();
             mpm.addPass(DivisionByZeroPass());
         });
-    llvm::errs() << "C\n";
 
     return profile;
 }
@@ -71,6 +66,10 @@ TEST(DivideByZeroTests, InjectionTest)
   %x = alloca i64, align 8
   store i64 0, i64* %x, align 4
   store i64 20, i64* %y, align 4
+  %0 = load i64, i64* %x, align 4
+  %1 = load i64, i64* %y, align 4
+  %2 = sdiv i64 %0, %1
+  call void @print_i64(i64 %2)
   )script");
 
     auto profile = newProfile();
@@ -79,6 +78,13 @@ TEST(DivideByZeroTests, InjectionTest)
     ir_manip->applyProfile(profile);
     llvm::errs() << *ir_manip->module() << "\n";
 
-    EXPECT_TRUE(ir_manip->hasInstructionSequence({"%1 = select i1 %0, i64 1, i64 0", "%3 = zext i2 %2 to i64"}));
-    EXPECT_FALSE(ir_manip->hasInstructionSequence({"%1 = zext i1 %0 to i64"}));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence({
+        "br i1 %2, label %if_denominator_is_zero, label %after_zero_check",
+        "%3 = load i64, i64* @__qir__error_code, align 4",
+        "%4 = icmp eq i64 %3, 0",
+        "br i1 %4, label %if_ecc_not_set, label %ecc_set_finally",
+        "store i64 1338, i64* @__qir__error_code, align 4",
+        "br label %ecc_set_finally",
+        "br label %after_zero_check",
+    }));
 }

@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ProfileGenerator.hpp"
-
 #include "Generators/LlvmPassesConfiguration.hpp"
 #include "Generators/PostTransformConfig.hpp"
+#include "Generators/ProfileGenerator.hpp"
 #include "GroupingPass/GroupingAnalysisPass.hpp"
 #include "GroupingPass/GroupingPass.hpp"
 #include "GroupingPass/GroupingPassConfiguration.hpp"
