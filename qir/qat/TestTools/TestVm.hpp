@@ -1,0 +1,131 @@
+#pragma once
+#include "QatTypes/QatTypes.hpp"
+
+#include "Llvm/Llvm.hpp"
+
+#include <stdexcept>
+#include <unordered_map>
+namespace microsoft::quantum
+{
+class TestProgram
+{
+  public:
+    void parseFromScript(String const& name, String const& script)
+    {
+        context_ = std::make_unique<llvm::LLVMContext>();
+        llvm::SMDiagnostic error;
+        module_ = llvm::parseIR(llvm::MemoryBufferRef(script, name), error, *context_);
+        if (!module_)
+        {
+            throw std::runtime_error("Failed to parse script");
+        }
+    }
+
+  private:
+    friend class TestVM;
+    std::unique_ptr<llvm::Module>      module_;
+    std::unique_ptr<llvm::LLVMContext> context_;
+};
+
+class TestVM
+{
+  public:
+    TestVM(TestProgram& program)
+      : program_{program}
+    {
+    }
+
+    template <typename T> void                   attachGlobalPointer(String const& name, T* pointer);
+    template <typename R, typename X> void       attachRuntimeFunction(String const& name, R (*pointer)(X));
+    template <typename R, typename... Args> void attachRuntimeFunction(String const& name, R (*pointer)(Args...));
+    template <typename R> void                   attachRuntimeFunction(String const& name, R (*pointer)());
+
+    template <typename R, typename... Args> R run(String const& name, Args&&... args);
+    template <typename R> R                   run(String const& name);
+
+  private:
+    void buildVm()
+    {
+        llvm::ExitOnError exit_on_error;
+
+        // TODO: remove exit_on_error
+        lljit_ = exit_on_error(llvm::orc::LLJITBuilder().create());
+
+        // TODO: Copy module and context to avoid destructive behaviour
+        exit_on_error(lljit_->addIRModule(
+            llvm::orc::ThreadSafeModule(std::move(program_.module_), std::move(program_.context_))));
+
+        llvm::orc::SymbolMap symbols_map;
+        for (auto const& p : symbols_map_)
+        {
+            symbols_map.insert({lljit_->mangleAndIntern(p.first), p.second});
+        }
+
+        exit_on_error(lljit_->getMainJITDylib().define(absoluteSymbols(std::move(symbols_map))));
+    }
+
+    TestProgram&                                         program_;
+    std::unique_ptr<llvm::orc::LLJIT>                    lljit_;
+    std::unordered_map<String, llvm::JITEvaluatedSymbol> symbols_map_;
+};
+
+template <typename T> void TestVM::attachGlobalPointer(String const& name, T* pointer)
+{
+    symbols_map_.insert({name, llvm::JITEvaluatedSymbol::fromPointer(pointer)});
+}
+
+template <typename R, typename... Args> void TestVM::attachRuntimeFunction(String const& name, R (*pointer)(Args...))
+{
+    symbols_map_.insert({name, llvm::JITEvaluatedSymbol::fromPointer(pointer)});
+}
+
+template <typename R, typename X> void TestVM::attachRuntimeFunction(String const& name, R (*pointer)(X))
+{
+    symbols_map_.insert({name, llvm::JITEvaluatedSymbol::fromPointer(pointer)});
+}
+template <typename R> void TestVM::attachRuntimeFunction(String const& name, R (*pointer)())
+{
+    symbols_map_.insert({name, llvm::JITEvaluatedSymbol::fromPointer(pointer)});
+}
+
+template <typename R, typename... Args> R TestVM::run(String const& name, Args&&... args)
+{
+    buildVm();
+
+    llvm::ExitOnError exit_on_error;
+
+    // Calling object constructors
+    exit_on_error(lljit_->initialize(lljit_->getMainJITDylib()));
+
+    auto function_symbol = exit_on_error(lljit_->lookup(name));
+    using FunctionPtr    = R (*)(Args...);
+    auto* function       = (FunctionPtr)(function_symbol.getAddress());
+    auto  ret            = function(std::forward<Args>(args)...);
+
+    // Calling object destructors
+    exit_on_error(lljit_->deinitialize(lljit_->getMainJITDylib()));
+
+    return ret;
+}
+
+template <typename R> R TestVM::run(String const& name)
+{
+    buildVm();
+
+    llvm::ExitOnError exit_on_error;
+
+    // Calling object constructors
+    exit_on_error(lljit_->initialize(lljit_->getMainJITDylib()));
+
+    auto function_symbol = exit_on_error(lljit_->lookup(name));
+    using FunctionPtr    = R (*)();
+    auto* function       = (FunctionPtr)(function_symbol.getAddress());
+    auto  ret            = function();
+
+    // Calling object destructors
+    exit_on_error(lljit_->deinitialize(lljit_->getMainJITDylib()));
+
+    return ret;
+}
+
+} // namespace microsoft::quantum
