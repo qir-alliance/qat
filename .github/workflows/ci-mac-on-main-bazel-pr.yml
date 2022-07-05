@@ -25,14 +25,9 @@ jobs:
         with:
           dotnet-version: "6.0.x"
 
-      - name: "Installing dependencies"
-        run: |
-          brew install bazel
-          exec -l $SHELL
-
       - name: "Running unit tests"
         run: |
-          bazel test //qir/...
+          bazelisk test //qir/...
         env:
           CC: clang
           CXX: clang++
