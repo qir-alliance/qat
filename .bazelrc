@@ -8,6 +8,7 @@ build --workspace_status_command "python config/workspace-status.py"
 # build --cxxopt=-Wconversion
 # build --cxxopt=-Wpedantic
 # build --cxxopt=-Werror
+build --disk_cache=~/.cache/bazel/
 
 # C++ 17
 build:clang --cxxopt=-std=c++17
@@ -18,7 +19,6 @@ build:msvc --host_cxxopt=/std:c++17
 # Other MSVC specific config
 build:msvc --verbose_failures
 build:msvc --copt=/W0
-build:msvc --config=monolithic
 
 # Ideally these should be moved to user configuration
 build:release --cxxopt=-O3

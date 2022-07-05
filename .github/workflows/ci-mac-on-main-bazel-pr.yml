@@ -25,6 +25,13 @@ jobs:
         with:
           dotnet-version: "6.0.x"
 
+      - name: "Running debug unit tests"
+        run: |
+          bazelisk test --config clang --config debug --feature asan --feature ubsan //qir/...
+        env:
+          CC: clang
+          CXX: clang++
+
       - name: "Running unit tests"
         run: |
           bazelisk test --config clang //qir/...
