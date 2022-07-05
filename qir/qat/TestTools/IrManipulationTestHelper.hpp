@@ -3,6 +3,7 @@
 // Licensed under the MIT License.
 
 #include "Generators/ProfileGenerator.hpp"
+#include "TestTools/TestVm.hpp"
 
 #include "Llvm/Llvm.hpp"
 
@@ -21,6 +22,7 @@ class IrManipulationTestHelper
     using SMDiagnostic      = llvm::SMDiagnostic;
     using Module            = llvm::Module;
     using ModulePtr         = std::unique_ptr<Module>;
+    using ContextPtr        = std::unique_ptr<LLVMContext>;
     using OptimizationLevel = llvm::PassBuilder::OptimizationLevel;
     using GeneratorPtr      = std::shared_ptr<ProfileGenerator>;
 
@@ -42,6 +44,8 @@ class IrManipulationTestHelper
 
     /// Generates a list of instructions for the main function in the module.
     Strings toBodyInstructions();
+
+    TestProgram toProgram();
 
     // Test functions
     //
@@ -155,7 +159,7 @@ class IrManipulationTestHelper
     SMDiagnostic error_;
 
     /// The LLVM context.
-    LLVMContext context_;
+    ContextPtr context_;
 
     /// Pointer to the module obtained from the compilation process.
     ModulePtr module_;

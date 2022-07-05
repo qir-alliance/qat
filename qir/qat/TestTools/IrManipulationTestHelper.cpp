@@ -22,7 +22,8 @@ IrManipulationTestHelper::IrManipulationTestHelper()
 
 bool IrManipulationTestHelper::fromString(String const& data)
 {
-    module_             = llvm::parseIR(llvm::MemoryBufferRef(data, "IrManipulationTestHelper"), error_, context_);
+    context_ = std::make_unique<llvm::LLVMContext>();
+    module_  = llvm::parseIR(llvm::MemoryBufferRef(data, "IrManipulationTestHelper"), error_, *context_.get());
     compilation_failed_ = (module_ == nullptr);
     return !compilation_failed_;
 }
@@ -34,6 +35,12 @@ String IrManipulationTestHelper::toString() const
     ostream << *module_;
     ostream.flush();
     return str;
+}
+
+TestProgram IrManipulationTestHelper::toProgram()
+{
+    TestProgram ret{std::move(module_), std::move(context_)};
+    return ret;
 }
 
 IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()

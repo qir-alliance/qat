@@ -24,6 +24,10 @@ class DivisionByZeroPass : public llvm::PassInfoMixin<DivisionByZeroPass>
     using Location    = ILogger::Location;
     using StringRef   = llvm::StringRef;
 
+    static const char*   EC_VARIABLE_NAME;
+    static const char*   EC_REPORT_FUNCTION;
+    static const int64_t EC_QIR_DIVISION_BY_ZERO = 1100;
+
     // Construction and destruction configuration.
     //
 

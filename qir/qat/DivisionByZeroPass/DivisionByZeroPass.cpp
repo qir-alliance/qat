@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "DivisionByZeroPass.hpp"
+
 #include "DivisionByZeroPass/DivisionByZeroPass.hpp"
 #include "Logging/ILogger.hpp"
 #include "QatTypes/QatTypes.hpp"
@@ -13,14 +15,15 @@
 
 namespace microsoft::quantum
 {
+const char* DivisionByZeroPass::EC_REPORT_FUNCTION = "__qir__report_error_value";
+const char* DivisionByZeroPass::EC_VARIABLE_NAME   = "__qir__error_code";
 
 llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
 {
     llvm::IRBuilder<> builder(module.getContext());
-    module.getOrInsertGlobal("__qir__error_code", builder.getInt64Ty());
-    error_variable_ = module.getNamedGlobal("__qir__error_code");
+    module.getOrInsertGlobal(EC_VARIABLE_NAME, builder.getInt64Ty());
+    error_variable_ = module.getNamedGlobal(EC_VARIABLE_NAME);
     error_variable_->setLinkage(llvm::GlobalValue::InternalLinkage);
-    error_variable_->setAlignment(llvm::Align(8));
     error_variable_->setInitializer(builder.getInt64(0));
     error_variable_->setConstant(false);
 
@@ -39,9 +42,10 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::Modu
             }
         }
     }
+
+    // Injecting error code updates
     for (auto instr : instructions)
     {
-
         auto op2 = instr->getOperand(1);
 
         auto const& final_block = instr->getParent();
@@ -50,18 +54,74 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::Modu
         start_block->takeName(final_block);
         final_block->setName("after_zero_check");
 
-        llvm::errs() << *op2 << "\n";
-
         builder.SetInsertPoint(start_block->getTerminator());
         auto cmp            = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_EQ, op2, builder.getInt64(0));
         auto old_terminator = start_block->getTerminator();
         auto new_terminator = llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
         old_terminator->eraseFromParent();
 
-        raiseError(1338, module, if_block->getTerminator());
+        raiseError(EC_QIR_DIVISION_BY_ZERO, module, if_block->getTerminator());
     }
 
-    llvm::errs() << module << "\n";
+    // Checking error codes at end of
+    llvm::Function*                entry = nullptr;
+    std::vector<llvm::BasicBlock*> exit_blocks;
+    for (auto& function : module)
+    {
+        if (function.hasFnAttribute("EntryPoint"))
+        {
+            entry = &function;
+            for (auto& block : function)
+            {
+                auto last = block.getTerminator();
+                if (last && llvm::dyn_cast<llvm::ReturnInst>(last))
+                {
+                    exit_blocks.push_back(&block);
+                }
+            }
+            break;
+        }
+    }
+
+    if (entry)
+    {
+        for (auto start_block : exit_blocks)
+        {
+            auto if_block    = start_block->splitBasicBlock(start_block->getTerminator(), "if_error_occured", false);
+            auto final_block = if_block->splitBasicBlock(if_block->getTerminator(), "exit_block", false);
+
+            builder.SetInsertPoint(start_block->getTerminator());
+            llvm::LoadInst* load = builder.CreateLoad(error_variable_);
+            auto            cmp  = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_NE, load, builder.getInt64(0));
+            auto            old_terminator = start_block->getTerminator();
+            auto            new_terminator = llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
+            old_terminator->eraseFromParent();
+
+            builder.SetInsertPoint(if_block->getTerminator());
+
+            auto                      fnc = module.getFunction(EC_REPORT_FUNCTION);
+            std::vector<llvm::Value*> arguments;
+            arguments.push_back(load);
+
+            if (!fnc)
+            {
+                std::vector<llvm::Type*> types;
+                types.resize(arguments.size());
+                for (uint64_t i = 0; i < types.size(); ++i)
+                {
+                    types[i] = arguments[i]->getType();
+                }
+
+                auto return_type = llvm::Type::getVoidTy(module.getContext());
+
+                llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
+                fnc = llvm::Function::Create(fnc_type, llvm::Function::ExternalLinkage, EC_REPORT_FUNCTION, module);
+            }
+
+            builder.CreateCall(fnc, arguments);
+        }
+    }
+
     return llvm::PreservedAnalyses::none();
 }
 
