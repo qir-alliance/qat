@@ -15,8 +15,9 @@
 
 namespace microsoft::quantum
 {
-const char* DivisionByZeroPass::EC_REPORT_FUNCTION = "__qir__report_error_value";
-const char* DivisionByZeroPass::EC_VARIABLE_NAME   = "__qir__error_code";
+const char*   DivisionByZeroPass::EC_REPORT_FUNCTION      = "__qir__report_error_value";
+const char*   DivisionByZeroPass::EC_VARIABLE_NAME        = "__qir__error_code";
+const int64_t DivisionByZeroPass::EC_QIR_DIVISION_BY_ZERO = 1100;
 
 llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
 {

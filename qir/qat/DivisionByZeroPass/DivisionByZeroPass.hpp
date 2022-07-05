@@ -26,7 +26,7 @@ class DivisionByZeroPass : public llvm::PassInfoMixin<DivisionByZeroPass>
 
     static const char*   EC_VARIABLE_NAME;
     static const char*   EC_REPORT_FUNCTION;
-    static const int64_t EC_QIR_DIVISION_BY_ZERO = 1100;
+    static const int64_t EC_QIR_DIVISION_BY_ZERO;
 
     // Construction and destruction configuration.
     //
