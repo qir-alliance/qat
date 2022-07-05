@@ -57,7 +57,7 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::Modu
         builder.SetInsertPoint(start_block->getTerminator());
         auto cmp            = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_EQ, op2, builder.getInt64(0));
         auto old_terminator = start_block->getTerminator();
-        auto new_terminator = llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
+        llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
         old_terminator->eraseFromParent();
 
         raiseError(EC_QIR_DIVISION_BY_ZERO, module, if_block->getTerminator());
@@ -139,11 +139,11 @@ void DivisionByZeroPass::raiseError(int64_t error_code, llvm::Module& module, ll
     auto            cmp  = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_EQ, load, builder.getInt64(0));
 
     auto old_terminator = start_block->getTerminator();
-    auto new_terminator = llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
+    llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
     old_terminator->eraseFromParent();
 
     builder.SetInsertPoint(if_block->getTerminator());
-    llvm::StoreInst* store = builder.CreateStore(builder.getInt64(error_code), error_variable_);
+    builder.CreateStore(builder.getInt64(error_code), error_variable_);
 }
 
 bool DivisionByZeroPass::isRequired()
