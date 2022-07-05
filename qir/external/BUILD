@@ -2,7 +2,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
     name = "gtest",
-    hdrs = glob(["gtest.hpp"]),
+    hdrs = ["gtest.hpp"],
     copts = [
         "-Iexternal/googletest/googletest/include",
         "-Iexternal/googlemock/googlemock/include",
@@ -17,9 +17,10 @@ cc_library(
 
 cc_library(
     name = "gmock",
-    hdrs = glob([
-        "g*.hpp",
-    ]),
+    hdrs = [
+        "gtest.hpp",
+        "gmock.hpp",
+    ],
     copts = [
         "-Iexternal/googletest/googletest/include",
         "-Iexternal/googlemock/googlemock/include",
