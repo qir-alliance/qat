@@ -268,7 +268,7 @@ TEST(StaticResourceComponent, AllocateOnMeasureWithInline)
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         "call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)",
-        "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* "
+        "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* " // NOLINT
         "nonnull inttoptr (i64 1 to %Result*))",
         "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* "
         "nonnull inttoptr (i64 2 to %Result*))",
