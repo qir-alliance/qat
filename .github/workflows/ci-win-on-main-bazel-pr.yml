@@ -24,7 +24,7 @@ jobs:
 
       - name: Bazel cache
         id: cache-bazel
-        uses: actions/cache@v3
+        uses: actions/cache@v3.0.4
         with:
           path: ~/.cache/bazel/
           key: ${{ runner.os }}-bazel
