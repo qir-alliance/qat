@@ -26,7 +26,7 @@ jobs:
         id: cache-bazel
         uses: actions/cache@v3
         with:
-          path: cache-bazel
+          path: ~/.cache/bazel/
           key: ${{ runner.os }}-bazel
 
       - uses: actions/setup-dotnet@v2
@@ -35,7 +35,7 @@ jobs:
 
       - name: "Running unit tests"
         run: |
-          bazelisk test --config msvc --disk_cache=cache-bazel //qir/...
+          bazelisk test --config msvc --disk_cache=~/.cache/bazel/ //qir/...
         env:
           CC: clang.exe
           CXX: clang++

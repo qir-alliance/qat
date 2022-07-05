@@ -26,26 +26,26 @@ jobs:
         id: cache-bazel
         uses: actions/cache@v3
         with:
-          path: cache-bazel
+          path: ~/.cache/bazel/
           key: ${{ runner.os }}-bazel
 
       - name: "Running debug unit tests with address sanitation"
         run: |
-          bazelisk test --disk_cache=cache-bazel --config clang --config debug --features asan //qir/...
+          bazelisk test --disk_cache=~/.cache/bazel/ --config clang --config debug --features asan //qir/...
         env:
           CC: clang
           CXX: clang++
 
       - name: "Running unit tests"
         run: |
-          bazelisk test --disk_cache=cache-bazel --config clang //qir/...
+          bazelisk test --disk_cache=~/.cache/bazel/ --config clang //qir/...
         env:
           CC: clang
           CXX: clang++
 
       - name: "Testing build"
         run: |
-          bazelisk build --disk_cache=cache-bazel --config clang //qir/...
+          bazelisk build --disk_cache=~/.cache/bazel/ --config clang //qir/...
         env:
           CC: clang
           CXX: clang++
