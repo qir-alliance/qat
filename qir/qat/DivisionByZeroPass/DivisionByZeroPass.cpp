@@ -95,7 +95,7 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::Modu
             llvm::LoadInst* load = builder.CreateLoad(error_variable_);
             auto            cmp  = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_NE, load, builder.getInt64(0));
             auto            old_terminator = start_block->getTerminator();
-            auto            new_terminator = llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
+            llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
             old_terminator->eraseFromParent();
 
             builder.SetInsertPoint(if_block->getTerminator());
