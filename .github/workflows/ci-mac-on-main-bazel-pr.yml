@@ -25,7 +25,7 @@ jobs:
         with:
           dotnet-version: "6.0.x"
 
-      - name: "Running debug unit tests"
+      - name: "Running debug unit tests with address sanitation"
         run: |
           bazelisk test --config clang --config debug --features asan //qir/...
         env:
