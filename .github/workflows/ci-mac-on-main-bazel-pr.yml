@@ -21,20 +21,31 @@ jobs:
         with:
           ref: ${{github.event.pull_request.head.ref}}
           repository: ${{github.event.pull_request.head.repo.full_name}}
-      - uses: actions/setup-dotnet@v2
+
+      - name: Bazel cache
+        id: cache-bazel
+        uses: actions/cache@v3
         with:
-          dotnet-version: "6.0.x"
+          path: cache-bazel
+          key: ${{ runner.os }}-bazel
 
       - name: "Running debug unit tests with address sanitation"
         run: |
-          bazelisk test --config clang --config debug --features asan //qir/...
+          bazelisk test --disk_cache=cache-bazel --config clang --config debug --features asan //qir/...
         env:
           CC: clang
           CXX: clang++
 
       - name: "Running unit tests"
         run: |
-          bazelisk test --config clang //qir/...
+          bazelisk test --disk_cache=cache-bazel --config clang //qir/...
+        env:
+          CC: clang
+          CXX: clang++
+
+      - name: "Testing build"
+        run: |
+          bazelisk build --disk_cache=cache-bazel --config clang //qir/...
         env:
           CC: clang
           CXX: clang++
