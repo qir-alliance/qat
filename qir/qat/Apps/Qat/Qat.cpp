@@ -62,7 +62,9 @@
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 #include "qir/qat/Validator/Validator.hpp"
 
+#ifndef _WIN32
 #include <dlfcn.h>
+#endif
 
 #include <fstream>
 #include <iomanip>
@@ -167,6 +169,7 @@ int main(int argc, char** argv)
 
         if (!config.load().empty())
         {
+#ifndef _WIN32
             // TODO (issue-47): Add support for multiple loads
             void* handle = dlopen(config.load().c_str(), RTLD_LAZY);
 
@@ -182,6 +185,9 @@ int main(int argc, char** argv)
 
                 load_component(generator.get());
             }
+#else
+            throw std::runtime_error("Dynamic modules not supported on the Windows platform.")
+#endif
         }
 
         // Reconfiguring to get all the arguments of the passes registered
