@@ -27,10 +27,7 @@ jobs:
 
       - name: "Installing dependencies"
         run: |
-          rm '/usr/local/bin/2to3'
-          brew install bazel@5.0.0
-          echo "/usr/local/bin/$HOME/bin" >> $GITHUB_PATH
-          dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.24.201332
+          brew install bazel
           exec -l $SHELL
 
       - name: "Running unit tests"

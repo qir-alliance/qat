@@ -18,8 +18,8 @@ cc_library(
 cc_library(
     name = "gmock",
     hdrs = [
-        "gtest.hpp",
         "gmock.hpp",
+        "gtest.hpp",
     ],
     copts = [
         "-Iexternal/googletest/googletest/include",
