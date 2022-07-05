@@ -1,0 +1,41 @@
+name: "macOS CI Bazel"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    runs-on: macos-12
+    name: "Mac CI Bazel"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.pull_request.head.ref}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: "Installing dependencies"
+        run: |
+          rm '/usr/local/bin/2to3'
+          brew install bazel@5.0.0
+          echo "/usr/local/bin/$HOME/bin" >> $GITHUB_PATH
+          dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.24.201332
+          exec -l $SHELL
+
+      - name: "Running unit tests"
+        run: |
+          bazel test //qir/...
+        env:
+          CC: clang
+          CXX: clang++
