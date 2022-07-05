@@ -27,7 +27,7 @@ jobs:
 
       - name: "Running debug unit tests"
         run: |
-          bazelisk test --config clang --config debug --feature asan --feature ubsan //qir/...
+          bazelisk test --config clang --config debug --features asan --features ubsan //qir/...
         env:
           CC: clang
           CXX: clang++
