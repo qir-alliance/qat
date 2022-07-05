@@ -72,7 +72,7 @@ class GroupingAnalysisPass : public llvm::AnalysisInfoMixin<GroupingAnalysisPass
 
     ILoggerPtr logger_{nullptr};
 
-    static llvm::AnalysisKey Key;
+    static llvm::AnalysisKey Key; // NOLINT
     friend struct llvm::AnalysisInfoMixin<GroupingAnalysisPass>;
 };
 

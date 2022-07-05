@@ -59,14 +59,14 @@ class GroupingPass : public llvm::PassInfoMixin<GroupingPass>
 
     enum
     {
-        PURE_CLASSICAL                = 0,
-        SOURCE_QUANTUM                = 1,
-        DEST_QUANTUM                  = 2,
-        PURE_QUANTUM                  = SOURCE_QUANTUM | DEST_QUANTUM,
-        TRANSFER_CLASSICAL_TO_QUANTUM = DEST_QUANTUM,
-        TRANSFER_QUANTUM_TO_CLASSICAL = SOURCE_QUANTUM,
+        PureClassical              = 0,
+        SourceQuantum              = 1,
+        DestQuantum                = 2,
+        PureQuantum                = SourceQuantum | DestQuantum,
+        TransferClassicalToQuantum = DestQuantum,
+        TransferQuantumToClassical = SourceQuantum,
 
-        INVALID_MIXED_LOCATION = -1
+        InvalidMixedLocation = -1
     };
 
     explicit GroupingPass(GroupingPassConfiguration const& cfg)

@@ -14,7 +14,7 @@ struct OpcodeValue
 {
     String id{""};
     String predicate{""};
-    OpcodeValue(String const& name, String const& fi = "")
+    explicit OpcodeValue(String const& name, String const& fi = "")
       : id{name}
       , predicate{fi}
     {

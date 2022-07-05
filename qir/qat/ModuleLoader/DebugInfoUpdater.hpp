@@ -44,7 +44,7 @@ class DebugInfoUpdater : public llvm::InstVisitor<DebugInfoUpdater>
     DIType*                 getOrCreateType(llvm::Type* type);
     DIType*                 getType(llvm::Type* type);
 
-  public:
+  private:
     InstructionLocationTablePtr debug_info_{nullptr};
     llvm::Module&               module_;
     llvm::DIBuilder             builder_;

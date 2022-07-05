@@ -27,7 +27,7 @@ class ILogger
     struct Location : public SourceLocation
     {
         Location() = default;
-        Location(SourceLocation const& source)
+        explicit Location(SourceLocation const& source)
           : SourceLocation(source)
         {
         }

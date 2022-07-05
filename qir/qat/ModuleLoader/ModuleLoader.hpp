@@ -126,11 +126,7 @@ class ModuleLoader
         explicit SingleModuleTransformation(
             OptimizationLevel const& optimization_level = OptimizationLevel::O0,
             bool                     debug              = false)
-          : loop_analysis_manager_{}
-          , function_analysis_manager_{}
-          , gscc_analysis_manager_{}
-          , module_analysis_manager_{}
-          , optimization_level_{optimization_level}
+          : optimization_level_{optimization_level}
           , debug_{debug}
         {
 

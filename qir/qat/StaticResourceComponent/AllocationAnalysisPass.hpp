@@ -81,9 +81,8 @@ class AllocationAnalysisPass : public llvm::AnalysisInfoMixin<AllocationAnalysis
   private:
     bool extractResourceId(llvm::Value* value, uint64_t& return_value, ResourceType& type) const;
 
-    ILoggerPtr logger_{nullptr};
-
-    static llvm::AnalysisKey Key;
+    ILoggerPtr               logger_{nullptr};
+    static llvm::AnalysisKey Key; // NOLINT
     friend struct llvm::AnalysisInfoMixin<AllocationAnalysisPass>;
 };
 

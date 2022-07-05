@@ -64,7 +64,7 @@ struct DummyConfig
 class AnalysisReadoutPass : public llvm::PassInfoMixin<AnalysisReadoutPass>
 {
   public:
-    AnalysisReadoutPass(AllocationAnalysis& analysis_result)
+    explicit AnalysisReadoutPass(AllocationAnalysis& analysis_result)
       : analysis_result_{analysis_result}
     {
     }
@@ -138,7 +138,7 @@ std::shared_ptr<ConfigurableProfileGenerator> newProfile(
     configuration_manager.addConfig<DummyConfig>();
 
     profile->registerAnonymousProfileComponent<DummyConfig>(
-        [&analysis_result](DummyConfig const& config, ProfileGenerator* ptr, Profile& profile)
+        [&analysis_result](DummyConfig const&, ProfileGenerator* ptr, Profile&)
         {
             auto& fpm = ptr->functionPassManager();
             fpm.addPass(AnalysisReadoutPass(analysis_result));

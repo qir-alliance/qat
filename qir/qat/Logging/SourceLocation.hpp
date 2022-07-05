@@ -24,17 +24,17 @@ struct SourceLocation
 
     enum
     {
-        INVALID_POSITION = -1
+        InvalidPosition = -1
     };
 
     operator bool() const
     {
-        return line != INVALID_POSITION && column != INVALID_POSITION;
+        return line != InvalidPosition && column != InvalidPosition;
     }
 
     static SourceLocation InvalidPosition()
     {
-        return {"", INVALID_POSITION, INVALID_POSITION};
+        return {"", InvalidPosition, InvalidPosition};
     }
 
     String  name{};
