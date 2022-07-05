@@ -154,7 +154,7 @@ bool IrManipulationTestHelper::containsValidationErrors(
 
     for (auto& message : logger->messages())
     {
-        hints.insert(message.location.llvm_hint);
+        hints.insert(message.location.llvmHint());
     }
 
     auto ret = true;
@@ -180,7 +180,7 @@ bool IrManipulationTestHelper::containsValidationErrors(
         llvm::errs() << "\nActual errors: \n";
         for (auto const& message : logger->messages())
         {
-            llvm::errs() << message.location.llvm_hint << "\n";
+            llvm::errs() << message.location.llvmHint() << "\n";
             llvm::errs() << "  - " << message.message << "\n";
         }
         llvm::errs() << "\n";
@@ -214,14 +214,14 @@ bool IrManipulationTestHelper::containsExactValidationErrors(
 
     for (auto const& message : logger->messages())
     {
-        hints.insert(message.location.llvm_hint);
+        hints.insert(message.location.llvmHint());
 
-        if (error_set.find(message.location.llvm_hint) == error_set.end())
+        if (error_set.find(message.location.llvmHint()) == error_set.end())
         {
             ret = false;
             if (debug)
             {
-                llvm::errs() << "Missing '" << message.location.llvm_hint << "' in expected errors.\n";
+                llvm::errs() << "Missing '" << message.location.llvmHint() << "' in expected errors.\n";
             }
         }
     }
@@ -248,7 +248,7 @@ bool IrManipulationTestHelper::containsExactValidationErrors(
         llvm::errs() << "\nActual errors: \n";
         for (auto const& message : logger->messages())
         {
-            llvm::errs() << message.location.llvm_hint << "\n";
+            llvm::errs() << message.location.llvmHint() << "\n";
             llvm::errs() << "  - " << message.message << "\n";
         }
         llvm::errs() << "\n";

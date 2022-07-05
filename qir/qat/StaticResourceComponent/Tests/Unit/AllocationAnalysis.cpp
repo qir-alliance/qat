@@ -83,50 +83,6 @@ class AnalysisReadoutPass : public llvm::PassInfoMixin<AnalysisReadoutPass>
     AllocationAnalysis& analysis_result_;
 };
 
-class Configuration : public StaticResourceComponentConfiguration
-{
-  public:
-    Configuration()
-      : StaticResourceComponentConfiguration(StaticResourceComponentConfiguration::createDisabled())
-    {
-    }
-
-    void enableAnnotateQubitUse()
-    {
-        annotate_qubit_use_ = true;
-    }
-
-    void enableAnnotateResultUse()
-    {
-        annotate_result_use_ = true;
-    }
-
-    void enableAnnotateMaxQubitIndex()
-    {
-        annotate_max_qubit_index_ = true;
-    }
-
-    void enableAnnotateMaxResultIndex()
-    {
-        annotate_max_result_index_ = true;
-    }
-
-    void enableReplaceQubitOnReset()
-    {
-        replace_qubit_on_reset_ = true;
-    }
-
-    void enableReindexQubits()
-    {
-        reindex_qubits_ = true;
-    }
-
-    void enableInlineAfterIdChange()
-    {
-        inline_after_id_change_ = true;
-    }
-};
-
 std::shared_ptr<ConfigurableProfileGenerator> newProfile(
     AllocationAnalysis&                         analysis_result,
     StaticResourceComponentConfiguration const& cfg)
@@ -138,7 +94,7 @@ std::shared_ptr<ConfigurableProfileGenerator> newProfile(
     configuration_manager.addConfig<DummyConfig>();
 
     profile->registerAnonymousProfileComponent<DummyConfig>(
-        [&analysis_result](DummyConfig const&, ProfileGenerator* ptr, Profile&)
+        [&analysis_result](DummyConfig const& config, ProfileGenerator* ptr, Profile& profile)
         {
             auto& fpm = ptr->functionPassManager();
             fpm.addPass(AnalysisReadoutPass(analysis_result));
@@ -176,7 +132,7 @@ TEST(StaticResourceComponent, AllocationAnalysisPass)
   )script");
     AllocationAnalysis analysis_result{0};
 
-    auto profile = newProfile(analysis_result, Configuration());
+    auto profile = newProfile(analysis_result, StaticResourceComponentConfiguration::createDisabled());
     ir_manip->applyProfile(profile);
 
     EXPECT_EQ(analysis_result.usage_qubit_counts, 3);
@@ -210,7 +166,7 @@ TEST(StaticResourceComponent, RemapTest)
   )script");
     AllocationAnalysis analysis_result{0};
 
-    Configuration config;
+    auto config = StaticResourceComponentConfiguration::createDisabled();
     config.enableReindexQubits();
     auto profile = newProfile(analysis_result, config);
     ir_manip->applyProfile(profile);
@@ -241,7 +197,8 @@ TEST(StaticResourceComponent, AllocateOnMeasure)
   )script");
     AllocationAnalysis analysis_result{0};
 
-    Configuration config;
+    auto config = StaticResourceComponentConfiguration::createDisabled();
+
     config.enableReplaceQubitOnReset();
 
     auto profile = newProfile(analysis_result, config);
@@ -297,7 +254,7 @@ TEST(StaticResourceComponent, AllocateOnMeasureWithInline)
   )script");
     AllocationAnalysis analysis_result{0};
 
-    Configuration config;
+    auto config = StaticResourceComponentConfiguration::createDisabled();
     config.enableReplaceQubitOnReset();
     config.enableInlineAfterIdChange();
 

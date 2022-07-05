@@ -33,17 +33,48 @@ class ILogger
         {
         }
 
-        Location(String v_name, int64_t v_line, int64_t v_column, String v_llvm_hint = "", String v_frontend_hint = "")
+        Location(String v_name, int64_t v_line, int64_t v_column, String llvm_hint = "", String frontend_hint = "")
           : SourceLocation(std::move(v_name), v_line, v_column)
-          , llvm_hint{std::move(v_llvm_hint)}
-          , frontend_hint{std::move(v_frontend_hint)}
+          , llvm_hint_{std::move(llvm_hint)}
+          , frontend_hint_{std::move(frontend_hint)}
         {
         }
 
         Location(Location const& source) = default;
 
-        String llvm_hint{""};
-        String frontend_hint{""};
+        String& llvmHint()
+        {
+            return llvm_hint_;
+        }
+
+        String const& llvmHint() const
+        {
+            return llvm_hint_;
+        }
+
+        void setLlvmHint(String const& v)
+        {
+            llvm_hint_ = v;
+        }
+
+        String& frontendHint()
+        {
+            return frontend_hint_;
+        }
+
+        String const& frontendHint() const
+        {
+            return frontend_hint_;
+        }
+
+        void setFrontendHint(String const& v)
+        {
+            frontend_hint_ = v;
+        }
+
+      private:
+        String llvm_hint_{""};
+        String frontend_hint_{""};
     };
 
     /// Enum description what type of information we are conveying.

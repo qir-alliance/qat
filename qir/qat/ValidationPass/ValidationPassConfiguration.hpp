@@ -10,14 +10,12 @@
 
 namespace microsoft::quantum
 {
-struct OpcodeValue
+class OpcodeValue
 {
-    String id{""};
-    String predicate{""};
-
+  public:
     OpcodeValue(String const& name, String const& fi = "") // NOLINT
-      : id{name}
-      , predicate{fi}
+      : id_{name}
+      , predicate_{fi}
     {
     }
 
@@ -28,8 +26,31 @@ struct OpcodeValue
     OpcodeValue& operator=(OpcodeValue const&) = default;
     bool         operator==(OpcodeValue const& other) const
     {
-        return id == other.id && predicate == other.predicate;
+        return id_ == other.id_ && predicate_ == other.predicate_;
     }
+
+    String& id()
+    {
+        return id_;
+    }
+    String const& id() const
+    {
+        return id_;
+    }
+
+    String& predicate()
+    {
+        return predicate_;
+    }
+
+    String const& predicate() const
+    {
+        return predicate_;
+    }
+
+  private:
+    String id_{""};
+    String predicate_{""};
 };
 } // namespace microsoft::quantum
 
@@ -40,7 +61,7 @@ template <> struct hash<microsoft::quantum::OpcodeValue>
     size_t operator()(microsoft::quantum::OpcodeValue const& x) const
     {
         hash<std::string> hasher;
-        return hasher(x.id + "." + x.predicate);
+        return hasher(x.id() + "." + x.predicate());
     }
 };
 } // namespace std

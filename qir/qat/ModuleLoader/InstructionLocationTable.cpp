@@ -57,9 +57,9 @@ void InstructionLocationTable::registerValuePosition(Value const* value, llvm::f
     outstream.flush();
 
     Position pos;
-    pos.name   = static_cast<String>(current_filename_);
-    pos.line   = outstream.getLine() + 1;
-    pos.column = outstream.getColumn() + 1;
+    pos.setName(static_cast<String>(current_filename_));
+    pos.setLine(outstream.getLine() + 1);
+    pos.setColumn(outstream.getColumn() + 1);
 
     positions_.insert(std::make_pair(value, pos));
 }

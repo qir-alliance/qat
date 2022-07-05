@@ -48,7 +48,15 @@ class StaticResourceComponentConfiguration
     /// Creates a configuration where all features are disabled
     static StaticResourceComponentConfiguration createDisabled();
 
-  protected:
+    void enableAnnotateQubitUse();
+    void enableAnnotateResultUse();
+    void enableAnnotateMaxQubitIndex();
+    void enableAnnotateMaxResultIndex();
+    void enableReplaceQubitOnReset();
+    void enableReindexQubits();
+    void enableInlineAfterIdChange();
+
+  private:
     bool annotate_qubit_use_{true};
     bool annotate_result_use_{true};
 

@@ -87,4 +87,39 @@ StaticResourceComponentConfiguration StaticResourceComponentConfiguration::creat
     return ret;
 }
 
+void StaticResourceComponentConfiguration::enableAnnotateQubitUse()
+{
+    annotate_qubit_use_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableAnnotateResultUse()
+{
+    annotate_result_use_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableAnnotateMaxQubitIndex()
+{
+    annotate_max_qubit_index_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableAnnotateMaxResultIndex()
+{
+    annotate_max_result_index_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableReplaceQubitOnReset()
+{
+    replace_qubit_on_reset_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableReindexQubits()
+{
+    reindex_qubits_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableInlineAfterIdChange()
+{
+    inline_after_id_change_ = true;
+}
+
 } // namespace microsoft::quantum

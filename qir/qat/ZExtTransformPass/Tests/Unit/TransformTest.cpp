@@ -49,7 +49,7 @@ std::shared_ptr<ConfigurableProfileGenerator> newProfile()
     configuration_manager.addConfig<DummyConfig>();
 
     profile->registerAnonymousProfileComponent<DummyConfig>(
-        [](DummyConfig const& config, ProfileGenerator* ptr, Profile& profile)
+        [](DummyConfig const& /*config*/, ProfileGenerator* ptr, Profile& /*profile*/)
         {
             auto& fpm = ptr->functionPassManager();
             fpm.addPass(ZExtTransformPass());
