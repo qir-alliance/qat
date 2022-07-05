@@ -74,4 +74,11 @@ class SwitchPattern : public IOperandPrototype
     Child copy() const override;
 };
 
+class ZExtPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures& captures) const override;
+    Child copy() const override;
+};
+
 } // namespace microsoft::quantum

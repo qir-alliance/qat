@@ -14,6 +14,8 @@ struct PostTransformConfig
     {
         config.setSectionName("Post-transform optimisation", "");
         config.addParameter(lower_switch_, "lower-switch", "Lower switch statements.");
+        config.addParameter(
+            should_eleminate_zext_i1_, "should-eleminate-zext-i1", "Replace zext instruction for i1 with select.");
     }
 
     static PostTransformConfig createDisabled()
@@ -25,6 +27,7 @@ struct PostTransformConfig
         ret.sccp_pass_                    = false;
         ret.simplify_cfg_pass_            = false;
         ret.lower_switch_                 = false;
+        ret.should_eleminate_zext_i1_     = false;
         return ret;
     }
 
@@ -53,12 +56,18 @@ struct PostTransformConfig
         return lower_switch_;
     }
 
+    bool shouldEliminateZExtI1() const
+    {
+        return should_eleminate_zext_i1_;
+    }
+
   private:
     bool inst_combine_pass_{true};
     bool aggressive_inst_combine_pass_{true};
     bool sccp_pass_{true};
     bool simplify_cfg_pass_{true};
     bool lower_switch_{true};
+    bool should_eleminate_zext_i1_{true};
 };
 
 } // namespace microsoft::quantum

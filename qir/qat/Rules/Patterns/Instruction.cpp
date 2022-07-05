@@ -173,4 +173,22 @@ SwitchPattern::Child SwitchPattern::copy() const
     return std::move(ret);
 }
 
+bool ZExtPattern::match(Value* instr, Captures& captures) const
+{
+    auto* cast_instr = llvm::dyn_cast<llvm::ZExtInst>(instr);
+    if (cast_instr == nullptr)
+    {
+        return fail(instr, captures);
+    }
+
+    return success(instr, captures);
+}
+
+ZExtPattern::Child ZExtPattern::copy() const
+{
+    auto ret = std::make_shared<ZExtPattern>();
+    ret->copyPropertiesFrom(*this);
+    return std::move(ret);
+}
+
 } // namespace microsoft::quantum

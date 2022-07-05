@@ -135,6 +135,9 @@ namespace notation
     /// Matches a load instruction with one argument.
     IOperandPrototypePtr load(IOperandPrototypePtr const& arg);
 
+    /// Matches a ZExt instruction with one argument.
+    IOperandPrototypePtr zExt(IOperandPrototypePtr const& value);
+
     /// Matches a store instruction with a target and a value.
     /// ```
     /// addRule({store("target"_cap = _, "value"_cap = _), replaceConstExpr});

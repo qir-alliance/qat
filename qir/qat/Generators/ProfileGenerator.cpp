@@ -5,6 +5,7 @@
 
 #include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Generators/PostTransformConfig.hpp"
+#include "qir/qat/Generators/ZExtTransformPass/ZExtTransformPass.hpp"
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
@@ -271,6 +272,11 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             {
                 fpm.addPass(llvm::LowerSwitchPass());
             }
+
+            if (cfg.shouldEliminateZExtI1())
+            {
+                fpm.addPass(ZExtTransformPass());
+            }
         });
 
     registerProfileComponent<PostTransformValidationPassConfiguration>(
@@ -302,6 +308,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(llvm::SCCPPass());
                 fpm.addPass(llvm::SimplifyCFGPass());
                 fpm.addPass(llvm::LowerSwitchPass());
+                fpm.addPass(ZExtTransformPass());
             }
 
             fpm.addPass(ResourceAnnotationPass(cfg, logger));
