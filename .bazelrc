@@ -14,7 +14,11 @@ build:clang --cxxopt=-std=c++17
 build:clang --host_cxxopt=-std=c++17
 build:msvc --cxxopt=/std:c++17
 build:msvc --host_cxxopt=/std:c++17
+
+# Other MSVC specific config
 build:msvc --verbose_failures
+build:msvc --copt=/W0
+build:msvc --config=monolithic
 
 # Ideally these should be moved to user configuration
 build:release --cxxopt=-O3
