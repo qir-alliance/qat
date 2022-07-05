@@ -28,7 +28,7 @@ struct AllocationAnalysis
     {
         llvm::Value*       operand{nullptr};
         ResourceType       type{ResourceType::NotResource};
-        uint64_t           index{-1};
+        uint64_t           index{static_cast<uint64_t>(-1)};
         llvm::Instruction* used_by{nullptr};
         uint64_t           operand_id{0};
     };
