@@ -288,7 +288,7 @@ cc_library(
     name = "TestTools",
     srcs = glob(["TestTools/*.cpp"]),
     hdrs = glob(["TestTools/*.hpp"]),
-    visibility = ["//visibility:public"],    
+    visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
