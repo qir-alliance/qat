@@ -20,6 +20,7 @@
 #include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "Utils/FunctionToModule.hpp"
 #include "ValidationPass/ValidationPassConfiguration.hpp"
+#include "ZExtTransformPass/ZExtTransformPass.hpp"
 
 #include "Llvm/Llvm.hpp"
 
@@ -274,6 +275,11 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             {
                 fpm.addPass(llvm::LowerSwitchPass());
             }
+
+            if (cfg.shouldEliminateZExtI1())
+            {
+                fpm.addPass(ZExtTransformPass());
+            }
         });
 
     registerProfileComponent<PostTransformValidationPassConfiguration>(
@@ -305,6 +311,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(llvm::SCCPPass());
                 fpm.addPass(llvm::SimplifyCFGPass());
                 fpm.addPass(llvm::LowerSwitchPass());
+                fpm.addPass(ZExtTransformPass());
             }
 
             fpm.addPass(ResourceAnnotationPass(cfg, logger));
