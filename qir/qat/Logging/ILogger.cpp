@@ -149,4 +149,14 @@ void ILogger::errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr)
     errorWithLocation("Undef value is not allowed for this profile (" + profile_name + ").", ptr);
 }
 
+void ILogger::setHasErrors(bool value)
+{
+    had_errors_ = value;
+}
+
+void ILogger::setHasWarnings(bool value)
+{
+    had_warnings_ = value;
+}
+
 } // namespace microsoft::quantum

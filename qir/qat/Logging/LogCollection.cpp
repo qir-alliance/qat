@@ -24,19 +24,19 @@ void LogCollection::info(String const& message)
 
 void LogCollection::warning(String const& message)
 {
-    had_warnings_ = true;
+    setHasWarnings(true);
     messages_.push_back({Type::Warning, current_location_, message});
 }
 
 void LogCollection::error(String const& message)
 {
-    had_errors_ = true;
+    setHasErrors(true);
     messages_.push_back({Type::Error, current_location_, message});
 }
 
 void LogCollection::internalError(String const& message)
 {
-    had_errors_ = true;
+    setHasErrors(true);
     messages_.push_back({Type::InternalError, current_location_, message});
 }
 

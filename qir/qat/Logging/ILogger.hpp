@@ -196,10 +196,13 @@ class ILogger
     virtual void errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr = nullptr);
 
   protected:
+    void setHasErrors(bool value);
+    void setHasWarnings(bool value);
+
+  private:
     bool had_errors_{false};   ///< Variable to indicate whether or not errors were reported.
     bool had_warnings_{false}; ///< Variable to indicate whether or not warnings were reported.
 
-  private:
     LocationResolver location_resolver_{nullptr};
 };
 

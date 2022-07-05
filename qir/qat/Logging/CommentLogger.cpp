@@ -24,7 +24,7 @@ void CommentLogger::info(String const& message)
 
 void CommentLogger::warning(String const& message)
 {
-    had_warnings_ = true;
+    setHasWarnings(true);
 
     llvm::errs() << "warning - " << location_.name() << ":" << location_.line() << "," << location_.column() << " - "
                  << message << "\n";
@@ -32,14 +32,14 @@ void CommentLogger::warning(String const& message)
 
 void CommentLogger::error(String const& message)
 {
-    had_errors_ = true;
+    setHasErrors(true);
     llvm::errs() << "error - " << location_.name() << ":" << location_.line() << "," << location_.column() << " - "
                  << message << "\n";
 }
 
 void CommentLogger::internalError(String const& message)
 {
-    had_errors_ = true;
+    setHasErrors(true);
     llvm::errs() << "internal error - " << location_.name() << ":" << location_.line() << "," << location_.column()
                  << " - " << message << "\n";
 }
