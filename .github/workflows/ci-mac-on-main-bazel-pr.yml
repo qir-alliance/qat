@@ -27,7 +27,7 @@ jobs:
 
       - name: "Running unit tests"
         run: |
-          bazelisk test //qir/...
+          bazelisk test --config clang //qir/...
         env:
           CC: clang
           CXX: clang++

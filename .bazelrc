@@ -9,9 +9,12 @@ build --workspace_status_command "python config/workspace-status.py"
 # build --cxxopt=-Wpedantic
 # build --cxxopt=-Werror
 
-build --cxxopt=-std=c++17
-build --host_cxxopt=-std=c++17
-# build --disk_cache=~/.cache/bazel-disk-cache
+# C++ 17
+build:clang --cxxopt=-std=c++17
+build:clang --host_cxxopt=-std=c++17
+build:msvc --cxxopt=/std:c++17
+build:msvc --host_cxxopt=/std:c++17
+build:msvc --verbose_failures
 
 # Ideally these should be moved to user configuration
 build:release --cxxopt=-O3
@@ -33,13 +36,7 @@ build:debug --apple_generate_dsym
 
 # ## SEE https://github.com/RobotLocomotion/drake/tree/master/tools/dynamic_analysis
 
-# Define the default systems lib location
-build:linux --define=PREFIX=/usr
-build:linux --define=LIBDIR=$(PREFIX)/lib
-build:linux --define=INCLUDEDIR=$(PREFIX)/include
-build:macos --define=PREFIX=/usr
-build:macos --define=LIBDIR=$(PREFIX)/lib
-build:macos --define=INCLUDEDIR=$(PREFIX)/include
+
 
 # To manually set the target CPU, use
 # build --apple_platform_type=macos
