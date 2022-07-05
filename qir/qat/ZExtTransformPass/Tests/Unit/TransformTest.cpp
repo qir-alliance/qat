@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "Rules/Factory.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
-#include "ZExtTransformPass/ZExtTransformPass.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
+#include "qir/qat/ZExtTransformPass/ZExtTransformPass.hpp"
 
 #include <functional>
 

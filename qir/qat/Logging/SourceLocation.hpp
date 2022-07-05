@@ -5,6 +5,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
+#include <utility>
 #include <vector>
 
 namespace microsoft::quantum
@@ -16,7 +17,7 @@ struct SourceLocation
 
     SourceLocation() = default;
     SourceLocation(String v_name, int64_t v_line, int64_t v_column)
-      : name{v_name}
+      : name{std::move(v_name)}
       , line{v_line}
       , column{v_column}
     {
@@ -27,12 +28,12 @@ struct SourceLocation
         InvalidPosition = -1
     };
 
-    operator bool() const
+    explicit operator bool() const
     {
         return line != InvalidPosition && column != InvalidPosition;
     }
 
-    static SourceLocation InvalidPosition()
+    static SourceLocation invalidPosition()
     {
         return {"", InvalidPosition, InvalidPosition};
     }

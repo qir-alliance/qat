@@ -14,7 +14,8 @@ struct OpcodeValue
 {
     String id{""};
     String predicate{""};
-    explicit OpcodeValue(String const& name, String const& fi = "")
+
+    OpcodeValue(String const& name, String const& fi = "") // NOLINT
       : id{name}
       , predicate{fi}
     {

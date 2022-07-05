@@ -176,6 +176,18 @@ cc_library(
 )
 
 cc_library(
+    name = "ZExtTransformPass",
+    srcs = glob(["ZExtTransformPass/*.cpp"]),
+    hdrs = glob(["ZExtTransformPass/*.hpp"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//qir/qat:Llvm",
+        "//qir/qat:Logging",
+        "//qir/qat:QatTypes",
+    ],
+)
+
+cc_library(
     name = "ModuleLoader",
     srcs = glob(["ModuleLoader/*.cpp"]),
     hdrs = glob(["ModuleLoader/*.hpp"]),

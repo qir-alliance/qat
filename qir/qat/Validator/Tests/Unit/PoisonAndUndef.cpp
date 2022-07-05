@@ -45,12 +45,12 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 class MockLogger : public LogCollection
 {
   public:
-    void errorPoisonNotAllowed(String const& profile_name, llvm::Value* ptr) override
+    void errorPoisonNotAllowed(String const& /*profile_name*/, llvm::Value* /*ptr*/) override
     {
         raised_poison_not_allowed_ = true;
     }
 
-    void errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr) override
+    void errorUndefNotAllowed(String const& /*profile_name*/, llvm::Value* /*ptr*/) override
     {
         raised_undef_not_allowed_ = true;
     }

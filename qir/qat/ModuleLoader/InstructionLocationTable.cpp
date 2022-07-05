@@ -39,7 +39,7 @@ InstructionLocationTable::Position InstructionLocationTable::getPosition(Value c
         return it->second;
     }
 
-    return Position::InvalidPosition();
+    return Position::invalidPosition();
 }
 
 void InstructionLocationTable::registerModule(StringRef const& filename, Module const* module)

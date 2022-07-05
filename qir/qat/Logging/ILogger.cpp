@@ -47,7 +47,7 @@ SourceLocation ILogger::resolveLocation(llvm::Value const* value)
     {
         return location_resolver_(value);
     }
-    return SourceLocation::InvalidPosition();
+    return SourceLocation::invalidPosition();
 }
 
 bool ILogger::hadErrors() const

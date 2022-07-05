@@ -10,6 +10,7 @@
 #include <fstream>
 #include <memory>
 #include <string>
+#include <utility>
 
 namespace microsoft::quantum
 {
@@ -33,18 +34,13 @@ class ILogger
         }
 
         Location(String v_name, int64_t v_line, int64_t v_column, String v_llvm_hint = "", String v_frontend_hint = "")
-          : SourceLocation(v_name, v_line, v_column)
-          , llvm_hint{v_llvm_hint}
-          , frontend_hint{v_frontend_hint}
+          : SourceLocation(std::move(v_name), v_line, v_column)
+          , llvm_hint{std::move(v_llvm_hint)}
+          , frontend_hint{std::move(v_frontend_hint)}
         {
         }
 
-        Location(Location const& source)
-          : SourceLocation(source)
-          , llvm_hint{source.llvm_hint}
-          , frontend_hint{source.frontend_hint}
-        {
-        }
+        Location(Location const& source) = default;
 
         String llvm_hint{""};
         String frontend_hint{""};

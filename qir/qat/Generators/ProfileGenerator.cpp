@@ -5,7 +5,6 @@
 
 #include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Generators/PostTransformConfig.hpp"
-#include "qir/qat/Generators/ZExtTransformPass/ZExtTransformPass.hpp"
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
@@ -23,6 +22,7 @@
 #include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "qir/qat/Utils/FunctionToModule.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/ZExtTransformPass/ZExtTransformPass.hpp"
 
 namespace microsoft::quantum
 {
