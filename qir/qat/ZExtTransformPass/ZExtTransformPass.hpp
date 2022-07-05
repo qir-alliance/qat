@@ -4,9 +4,7 @@
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
-#include "qir/qat/Profile/Profile.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
-#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -44,8 +42,6 @@ class ZExtTransformPass : public llvm::PassInfoMixin<ZExtTransformPass>
     static bool isRequired();
 
   private:
-    ValidationPassConfiguration config_{};
-
     ILoggerPtr logger_{nullptr};
 };
 

@@ -268,6 +268,7 @@ cc_library(
         "//qir/qat:TransformationRulesPass",
         "//qir/qat:ValidationPass",
         "//qir/qat:Validator",
+        "//qir/qat:ZExtTransformPass",
     ],
 )
 
@@ -280,6 +281,32 @@ cc_library(
         "//qir/qat:Commandline",
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
+    ],
+)
+
+cc_library(
+    name = "TestTools",
+    srcs = glob(["TestTools/*.cpp"]),
+    hdrs = glob(["TestTools/*.hpp"]),
+    visibility = ["//visibility:public"],    
+    deps = [
+        "//qir/qat:AllocationManager",
+        "//qir/qat:Commandline",
+        "//qir/qat:Generators",
+        "//qir/qat:GroupingPass",
+        "//qir/qat:Llvm",
+        "//qir/qat:Logging",
+        "//qir/qat:ModuleLoader",
+        "//qir/qat:PostTransformValidation",
+        "//qir/qat:PreTransformTrimming",
+        "//qir/qat:Profile",
+        "//qir/qat:QatConfig",
+        "//qir/qat:QatTypes",
+        "//qir/qat:Rules",
+        "//qir/qat:StaticResourceComponent",
+        "//qir/qat:TransformationRulesPass",
+        "//qir/qat:ValidationPass",
+        "//qir/qat:Validator",
     ],
 )
 
