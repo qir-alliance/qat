@@ -24,7 +24,7 @@ llvm::PreservedAnalyses ResourceAnnotationPass::run(llvm::Function& function, ll
 {
     if (!config_.shouldAnnotateResultUse() && !config_.shouldAnnotateQubitUse())
     {
-        return;
+        return llvm::PreservedAnalyses::all();
     }
 
     auto stats = fam.getResult<AllocationAnalysisPass>(function);

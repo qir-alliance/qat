@@ -35,7 +35,7 @@ jobs:
 
       - name: "Running unit tests"
         run: |
-          bazelisk test --config msvc --disk_cache=~/.cache/bazel/ //qir/...
+          bazelisk test --keep_going --config msvc --disk_cache=~/.cache/bazel/ //qir/...
         env:
           CC: clang.exe
           CXX: clang++
