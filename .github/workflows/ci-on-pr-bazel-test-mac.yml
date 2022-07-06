@@ -14,7 +14,7 @@ on:
 jobs:
   build-debug:
     runs-on: macos-12
-    name: "Bazel Build"
+    name: "Bazel Debug Build"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -38,7 +38,7 @@ jobs:
 
   build-release:
     runs-on: macos-12
-    name: "Bazel Build"
+    name: "Bazel Release Build"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
