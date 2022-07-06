@@ -186,7 +186,7 @@ int main(int argc, char** argv)
                 load_component(generator.get());
             }
 #else
-            throw std::runtime_error("Dynamic modules not supported on the Windows platform.")
+            throw std::runtime_error("Dynamic modules not supported on the Windows platform.");
 #endif
         }
 
