@@ -150,22 +150,23 @@ class IrManipulationTestHelper
     /// Whether the compilation failed.
     bool compilation_failed_{false};
 
-    /// The LLVM error encountered.
-    SMDiagnostic error_;
-
     /// The LLVM context.
     LLVMContext context_;
 
     /// Pointer to the module obtained from the compilation process.
     ModulePtr module_;
 
+    /// The LLVM error encountered.
+    SMDiagnostic error_;
+
     // Objects used to run a set of passes
     //
-    llvm::PassBuilder             pass_builder_;
     llvm::LoopAnalysisManager     loop_analysis_manager_;
     llvm::FunctionAnalysisManager function_analysis_manager_;
     llvm::CGSCCAnalysisManager    gscc_analysis_manager_;
     llvm::ModuleAnalysisManager   module_analysis_manager_;
+
+    llvm::PassBuilder pass_builder_;
 };
 
 } // namespace microsoft::quantum
