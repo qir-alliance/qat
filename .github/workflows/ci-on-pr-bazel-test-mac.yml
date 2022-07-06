@@ -31,14 +31,14 @@ jobs:
 
       - name: "Building debug"
         run: |
-          bazelisk build --keep_going --disk_cache=~/.cache/bazel/ --config clang --config debug --features asan //qir/...
+          bazelisk build --keep_going --disk_cache=~/.cache/bazel/ --config generic_clang --config debug --features asan //qir/...
         env:
           CC: clang
           CXX: clang++
 
       - name: "Building release"
         run: |
-          bazelisk build --keep_going --disk_cache=~/.cache/bazel/ --config clang //qir/...
+          bazelisk build --keep_going --disk_cache=~/.cache/bazel/ --config generic_clang //qir/...
         env:
           CC: clang
           CXX: clang++
@@ -63,14 +63,14 @@ jobs:
 
       - name: "Running debug unit tests with address sanitation"
         run: |
-          bazelisk test --test_output=all --keep_going --disk_cache=~/.cache/bazel/ --config clang --config debug --features asan //qir/...
+          bazelisk test --test_output=all --keep_going --disk_cache=~/.cache/bazel/ --config generic_clang --config debug --features asan //qir/...
         env:
           CC: clang
           CXX: clang++
 
       - name: "Running release tests"
         run: |
-          bazelisk test --test_output=all --keep_going --disk_cache=~/.cache/bazel/ --config clang //qir/...
+          bazelisk test --test_output=all --keep_going --disk_cache=~/.cache/bazel/ --config generic_clang //qir/...
         env:
           CC: clang
           CXX: clang++
