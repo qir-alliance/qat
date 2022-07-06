@@ -9,6 +9,7 @@ build --workspace_status_command "python config/workspace-status.py"
 # build --cxxopt=-Wpedantic
 # build --cxxopt=-Werror
 build --disk_cache=~/.cache/bazel/
+build --features=external_include_paths
 
 # C++ 17
 build:clang --cxxopt=-std=c++17
