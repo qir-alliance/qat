@@ -20,6 +20,8 @@ build:msvc --host_cxxopt=/std:c++17
 # Other MSVC specific config
 build:msvc --copt=/w
 build:msvc --cxxopt=/w
+build:msvc --host_copt=/w
+build:msvc --host_cxxopt=/w
 
 # Ideally these should be moved to user configuration
 build:release --cxxopt=-O3
