@@ -46,6 +46,7 @@ jobs:
   test:
     runs-on: macos-12
     name: "Bazel Test"
+    needs: [build]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

@@ -25,6 +25,7 @@ jobs:
           sudo apt-get remove -y llvm-14 clang-format-14 clang-tidy-14 llvm-12 llvm-11 clang-11 clang-format-11 clang-tidy-11
           sudo apt-get install -y curl pkg-config findutils  wget
           sudo apt install -y clang-13 cmake clang-format-13 clang-tidy-13
+          git submodule update --init --recursive
         env:
           CC: clang-13
           CXX: clang++-13

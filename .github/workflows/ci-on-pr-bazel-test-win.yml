@@ -40,6 +40,7 @@ jobs:
   test:
     runs-on: windows-2022
     name: "Bazel Test"
+    needs: [build]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
