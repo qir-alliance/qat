@@ -29,10 +29,6 @@ jobs:
           path: ~/.cache/bazel/
           key: ${{ runner.os }}-bazel
 
-      - name: "Building debug"
-        run: |
-          bazelisk build --config debug --config msvc --disk_cache=~/.cache/bazel/ //qir/...
-
       - name: "Building release"
         run: |
           bazelisk build --config msvc --disk_cache=~/.cache/bazel/ //qir/...
@@ -54,10 +50,6 @@ jobs:
         with:
           path: ~/.cache/bazel/
           key: ${{ runner.os }}-bazel
-
-      - uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: "6.0.x"
 
       - name: "Running unit tests"
         run: |
