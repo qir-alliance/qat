@@ -14,7 +14,32 @@ on:
 jobs:
   build:
     runs-on: windows-2022
-    name: "Windows CI Bazel"
+    name: "Bazel Build"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.pull_request.head.ref}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+
+      - name: Bazel cache
+        id: cache-bazel
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~/.cache/bazel/
+          key: ${{ runner.os }}-bazel
+
+      - name: "Building debug"
+        run: |
+          bazelisk build --config debug --config msvc --disk_cache=~/.cache/bazel/ //qir/...
+
+      - name: "Building release"
+        run: |
+          bazelisk build --config msvc --disk_cache=~/.cache/bazel/ //qir/...
+
+  test:
+    runs-on: windows-2022
+    name: "Bazel Test"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
