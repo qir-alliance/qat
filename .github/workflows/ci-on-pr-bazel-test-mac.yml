@@ -60,7 +60,6 @@ jobs:
           CC: clang
           CXX: clang++
 
-
   test-debug:
     runs-on: macos-12
     name: "Bazel Debug Test"
@@ -109,4 +108,4 @@ jobs:
           bazelisk test --test_output=all --keep_going --disk_cache=~/.cache/bazel/ --config generic_clang //qir/...
         env:
           CC: clang
-          CXX: clang++          
+          CXX: clang++
