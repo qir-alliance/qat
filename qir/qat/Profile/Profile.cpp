@@ -162,11 +162,6 @@ Profile::AllocationManagerPtr Profile::getResultAllocationManager()
     return result_allocation_manager_;
 }
 
-void Profile::setModulePassManager(llvm::ModulePassManager&& manager)
-{
-    module_pass_manager_ = std::move(manager);
-}
-
 void Profile::setValidator(ValidatorPtr&& validator)
 {
     validator_ = std::move(validator);

@@ -88,10 +88,6 @@ class Profile
     // Ensuring that ProfileGenerator has access to following protected functions.
     friend class ProfileGenerator;
 
-    /// Sets the module pass manager used for the transformation of the IR.
-    // TODO: Deprecated
-    void setModulePassManager(llvm::ModulePassManager&& manager);
-
     /// Sets the validator
     void setValidator(ValidatorPtr&& validator);
 
