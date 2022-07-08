@@ -81,12 +81,12 @@ class Profile
     /// Returns a reference to the module analysis manager.
     llvm::ModuleAnalysisManager& moduleAnalysisManager();
 
+    /// Returns the module pass manager associated with the profile
+    llvm::ModulePassManager& modulePassManager();
+
   protected:
     // Ensuring that ProfileGenerator has access to following protected functions.
     friend class ProfileGenerator;
-
-    /// Sets the module pass manager used for the transformation of the IR.
-    void setModulePassManager(llvm::ModulePassManager&& manager);
 
     /// Sets the validator
     void setValidator(ValidatorPtr&& validator);

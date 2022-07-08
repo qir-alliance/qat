@@ -22,10 +22,10 @@ class ProfileGenerator
 
     /// Setup function that uses a configuration type R to
     /// configure the profile and/or generator.
-    template <typename R> using SetupFunction = std::function<void(R const&, ProfileGenerator*, Profile&)>;
+    template <typename R> using SetupFunction = std::function<void(R const&, ProfileGenerator&, Profile&)>;
 
     /// Wrapper function type for invoking the profile setup function
-    using SetupFunctionWrapper = std::function<void(ProfileGenerator*, Profile&)>;
+    using SetupFunctionWrapper = std::function<void(ProfileGenerator&, Profile&)>;
 
     /// List of components to be configured.
     using Components = std::vector<std::pair<String, SetupFunctionWrapper>>;
@@ -56,7 +56,7 @@ class ProfileGenerator
     /// Creates a new profile based on the registered components, optimization level and debug
     /// requirements. The returned profile can be applied to an IR to transform it in accordance with
     /// the configurations given.
-    Profile newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug);
+    std::shared_ptr<Profile> newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug);
 
     // Defining the generator
 
@@ -107,10 +107,7 @@ class ProfileGenerator
   protected:
     /// Internal function that creates a module pass for QIR transformation. The module pass is
     /// defined through the profile, the optimization level and whether or not we are in debug mode.
-    llvm::ModulePassManager createGenerationModulePassManager(
-        Profile&                 profile,
-        OptimizationLevel const& optimization_level,
-        bool                     debug);
+    void configureGeneratorFromProfile(Profile& profile, OptimizationLevel const& optimization_level, bool debug);
 
     /// Internal function that creates a module pass for QIR validation. At the moment, this function
     /// is a placeholder for future functionality.
@@ -144,13 +141,13 @@ template <typename R> void ProfileGenerator::registerProfileComponent(String con
 {
     configuration_manager_.addConfig<R>(id);
 
-    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile)
+    auto setup_wrapper = [setup](ProfileGenerator& generator, Profile& profile)
     {
-        if (ptr->configuration_manager_.isActive<R>())
+        if (generator.configuration_manager_.isActive<R>())
         {
-            auto& config = ptr->configuration_manager_.get<R>();
+            auto& config = generator.configuration_manager_.get<R>();
 
-            setup(config, ptr, profile);
+            setup(config, generator, profile);
         }
     };
 
@@ -159,13 +156,13 @@ template <typename R> void ProfileGenerator::registerProfileComponent(String con
 
 template <typename R> void ProfileGenerator::replaceProfileComponent(String const& id, SetupFunction<R> setup)
 {
-    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile)
+    auto setup_wrapper = [setup](ProfileGenerator& generator, Profile& profile)
     {
-        if (ptr->configuration_manager_.isActive<R>())
+        if (generator.configuration_manager_.isActive<R>())
         {
-            auto& config = ptr->configuration_manager_.get<R>();
+            auto& config = generator.configuration_manager_.get<R>();
 
-            setup(config, ptr, profile);
+            setup(config, generator, profile);
         }
     };
 
@@ -188,13 +185,13 @@ template <typename R> void ProfileGenerator::registerAnonymousProfileComponent(S
         throw std::runtime_error("Configuration '" + static_cast<String>(typeid(R).name()) + "' does not exist.");
     }
 
-    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile)
+    auto setup_wrapper = [setup](ProfileGenerator& generation, Profile& profile)
     {
-        if (ptr->configuration_manager_.isActive<R>())
+        if (generation.configuration_manager_.isActive<R>())
         {
-            auto& config = ptr->configuration_manager_.get<R>();
+            auto& config = generation.configuration_manager_.get<R>();
 
-            setup(config, ptr, profile);
+            setup(config, generation, profile);
         }
     };
 

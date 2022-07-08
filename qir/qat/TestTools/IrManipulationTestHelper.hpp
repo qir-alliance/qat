@@ -27,7 +27,7 @@ class IrManipulationTestHelper
     // or copy.
     //
 
-    IrManipulationTestHelper();
+    IrManipulationTestHelper()                                = default;
     IrManipulationTestHelper(IrManipulationTestHelper const&) = delete;
     IrManipulationTestHelper& operator=(IrManipulationTestHelper const&) = delete;
     IrManipulationTestHelper(IrManipulationTestHelper&&)                 = delete;
@@ -158,15 +158,6 @@ class IrManipulationTestHelper
 
     /// The LLVM error encountered.
     SMDiagnostic error_;
-
-    // Objects used to run a set of passes
-    //
-    llvm::LoopAnalysisManager     loop_analysis_manager_;
-    llvm::FunctionAnalysisManager function_analysis_manager_;
-    llvm::CGSCCAnalysisManager    gscc_analysis_manager_;
-    llvm::ModuleAnalysisManager   module_analysis_manager_;
-
-    llvm::PassBuilder pass_builder_;
 };
 
 } // namespace microsoft::quantum

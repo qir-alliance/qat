@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.4.3)
 
 project(QirPasses)
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Release")
+  set(CMAKE_BUILD_TYPE "Debug")
 endif()
+
 option(MICROSOFT_ENABLE_TESTS               "Enable test targets"   ON)
 option(MICROSOFT_ENABLE_DYNAMIC_LOADING     "Use dynamic loading"   ON)
 option(MICROSOFT_GENERATE_COVERAGE          "Generate coverage"     OFF)
@@ -16,8 +17,8 @@ message(STATUS "Vendor dir: ${MICROSOFT_ROOT_VENDOR_DIR}")
 
 include(CheckCXXCompilerFlag)
 
-set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
-set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -g -O0")
+set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address,undefined -g -O0 -fno-sanitize-recover=all")
+set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address,undefined  -g -O0 -fno-sanitize-recover=all")
 set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set (CMAKE_LINKER_FLAGS_RELEASE "${CMAKE_LINKER_FLAGS_RELEASE} -O3")
 

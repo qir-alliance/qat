@@ -31,9 +31,9 @@ ConfigurableProfileGenerator::ConfigurableProfileGenerator(
 
     replaceProfileComponent<TransformationRulesPassConfiguration>(
         "transformation-rules",
-        [configure](TransformationRulesPassConfiguration const& config, ProfileGenerator* ptr, Profile& profile)
+        [configure](TransformationRulesPassConfiguration const& config, ProfileGenerator& generator, Profile& profile)
         {
-            auto& ret = ptr->modulePassManager();
+            auto& ret = generator.modulePassManager();
 
             // Defining the mapping
             RuleSet rule_set;

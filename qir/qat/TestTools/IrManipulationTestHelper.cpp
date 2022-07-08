@@ -4,21 +4,11 @@
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Utils/FunctionToModule.hpp"
 #include "qir/qat/Utils/Trim.hpp"
 
 namespace microsoft::quantum
 {
-
-IrManipulationTestHelper::IrManipulationTestHelper()
-{
-    pass_builder_.registerModuleAnalyses(module_analysis_manager_);
-    pass_builder_.registerCGSCCAnalyses(gscc_analysis_manager_);
-    pass_builder_.registerFunctionAnalyses(function_analysis_manager_);
-    pass_builder_.registerLoopAnalyses(loop_analysis_manager_);
-
-    pass_builder_.crossRegisterProxies(
-        loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
-}
 
 bool IrManipulationTestHelper::fromString(String const& data)
 {
@@ -114,8 +104,9 @@ void IrManipulationTestHelper::applyProfile(
     OptimizationLevel const& optimization_level,
     bool                     debug)
 {
+
     auto profile = generator->newProfile("generic", optimization_level, debug);
-    profile.apply(*module_);
+    profile->apply(*module_);
 
     // Verifying that the module is valid
     if (isModuleBroken())
@@ -128,7 +119,7 @@ bool IrManipulationTestHelper::validateProfile(GeneratorPtr const& generator, St
 {
     auto profile = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
 
-    return profile.validate(*module_);
+    return profile->validate(*module_);
 }
 
 bool IrManipulationTestHelper::containsValidationErrors(
@@ -340,8 +331,23 @@ bool IrManipulationTestHelper::isModuleBroken()
         return compilation_failed_;
     }
 
+    llvm::LoopAnalysisManager     loop_analysis_manager;
+    llvm::FunctionAnalysisManager function_analysis_manager;
+    llvm::CGSCCAnalysisManager    gscc_analysis_manager;
+    llvm::ModuleAnalysisManager   module_analysis_manager;
+
+    auto pass_builder = std::make_unique<llvm::PassBuilder>();
+
+    pass_builder->registerModuleAnalyses(module_analysis_manager);
+    pass_builder->registerCGSCCAnalyses(gscc_analysis_manager);
+    pass_builder->registerFunctionAnalyses(function_analysis_manager);
+    pass_builder->registerLoopAnalyses(loop_analysis_manager);
+
+    pass_builder->crossRegisterProxies(
+        loop_analysis_manager, function_analysis_manager, gscc_analysis_manager, module_analysis_manager);
+
     llvm::VerifierAnalysis verifier;
-    auto                   result = verifier.run(*module_, module_analysis_manager_);
+    auto                   result = verifier.run(*module_, module_analysis_manager);
     return result.IRBroken;
 }
 

@@ -288,7 +288,7 @@ int main(int argc, char** argv)
 
         if (config.shouldGenerate())
         {
-            profile.apply(*module);
+            profile->apply(*module);
 
             //  Preventing subsequent routines to run if errors occurred.
             if (logger && (logger->hadErrors() || logger->hadWarnings()))
@@ -335,7 +335,7 @@ int main(int argc, char** argv)
 
         if (ret == 0 && config.verifyModule())
         {
-            if (!profile.verify(*module))
+            if (!profile->verify(*module))
             {
                 std::cerr << "IR is broken." << std::endl;
                 ret = -1;
@@ -344,7 +344,7 @@ int main(int argc, char** argv)
 
         if (ret == 0 && config.shouldValidate())
         {
-            if (!profile.validate(*module))
+            if (!profile->validate(*module))
             {
                 std::cerr << "IR did not validate to the profile constraints." << std::endl;
                 ret = -1;
