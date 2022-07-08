@@ -81,9 +81,9 @@ class Profile
     /// Returns a reference to the module analysis manager.
     llvm::ModuleAnalysisManager& moduleAnalysisManager();
 
-
     /// Returns the module pass manager associated with the profile
-    llvm::ModulePassManager&   modulePassManager();
+    llvm::ModulePassManager& modulePassManager();
+
   protected:
     // Ensuring that ProfileGenerator has access to following protected functions.
     friend class ProfileGenerator;

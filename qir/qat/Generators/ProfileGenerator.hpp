@@ -107,10 +107,7 @@ class ProfileGenerator
   protected:
     /// Internal function that creates a module pass for QIR transformation. The module pass is
     /// defined through the profile, the optimization level and whether or not we are in debug mode.
-    void configureGeneratorFromProfile(
-        Profile&                 profile,
-        OptimizationLevel const& optimization_level,
-        bool                     debug);
+    void configureGeneratorFromProfile(Profile& profile, OptimizationLevel const& optimization_level, bool debug);
 
     /// Internal function that creates a module pass for QIR validation. At the moment, this function
     /// is a placeholder for future functionality.

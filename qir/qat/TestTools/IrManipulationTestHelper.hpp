@@ -27,7 +27,7 @@ class IrManipulationTestHelper
     // or copy.
     //
 
-    IrManipulationTestHelper() = default;
+    IrManipulationTestHelper()                                = default;
     IrManipulationTestHelper(IrManipulationTestHelper const&) = delete;
     IrManipulationTestHelper& operator=(IrManipulationTestHelper const&) = delete;
     IrManipulationTestHelper(IrManipulationTestHelper&&)                 = delete;

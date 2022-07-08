@@ -4,13 +4,11 @@
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include "qir/qat/Llvm/Llvm.hpp"
-#include "qir/qat/Utils/Trim.hpp"
 #include "qir/qat/Utils/FunctionToModule.hpp"
+#include "qir/qat/Utils/Trim.hpp"
 
 namespace microsoft::quantum
 {
-
-
 
 bool IrManipulationTestHelper::fromString(String const& data)
 {
@@ -106,7 +104,7 @@ void IrManipulationTestHelper::applyProfile(
     OptimizationLevel const& optimization_level,
     bool                     debug)
 {
-       
+
     auto profile = generator->newProfile("generic", optimization_level, debug);
     profile->apply(*module_);
 

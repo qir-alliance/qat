@@ -76,7 +76,7 @@ TEST(ZExtTransformPassTests, ReplacementTest)
 
     auto profile = newProfile();
     ir_manip->applyProfile(profile);
-    
+
     // EXPECT_TRUE(ir_manip->hasInstructionSequence({"%1 = select i1 %0, i64 1, i64 0", "%3 = zext i2 %2 to i64"}));
     // EXPECT_FALSE(ir_manip->hasInstructionSequence({"%1 = zext i1 %0 to i64"}));
 }

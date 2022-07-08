@@ -193,9 +193,8 @@ llvm::ModuleAnalysisManager& Profile::moduleAnalysisManager()
     return module_analysis_manager_;
 }
 
-
-    llvm::ModulePassManager&   Profile::modulePassManager()
-    {
-        return module_pass_manager_;
-    }
+llvm::ModulePassManager& Profile::modulePassManager()
+{
+    return module_pass_manager_;
+}
 } // namespace microsoft::quantum

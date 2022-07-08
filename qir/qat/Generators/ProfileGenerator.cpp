@@ -26,7 +26,10 @@
 
 namespace microsoft::quantum
 {
-std::shared_ptr<Profile> ProfileGenerator::newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug)
+std::shared_ptr<Profile> ProfileGenerator::newProfile(
+    String const&            name,
+    OptimizationLevel const& optimization_level,
+    bool                     debug)
 {
 
     auto qubit_allocation_manager  = BasicAllocationManager::createNew();
@@ -38,7 +41,8 @@ std::shared_ptr<Profile> ProfileGenerator::newProfile(String const& name, Optimi
 
     // Creating profile
     // TODO(issue-12): Set target machine
-    auto ret = std::make_shared<Profile>(name, logger_, debug, nullptr, qubit_allocation_manager, result_allocation_manager);   
+    auto ret =
+        std::make_shared<Profile>(name, logger_, debug, nullptr, qubit_allocation_manager, result_allocation_manager);
 
     configureGeneratorFromProfile(*ret, optimization_level, debug);
 
@@ -61,7 +65,7 @@ std::shared_ptr<Profile> ProfileGenerator::newProfile(String const& name, Optimi
 
     ret->setValidator(std::move(validator));
 
-    return ret;    
+    return ret;
 }
 
 void ProfileGenerator::configureGeneratorFromProfile(
@@ -69,13 +73,12 @@ void ProfileGenerator::configureGeneratorFromProfile(
     OptimizationLevel const& optimization_level,
     bool                     debug)
 {
-    auto&                   pass_builder = profile.passBuilder();
-    
+    auto& pass_builder = profile.passBuilder();
+
     module_pass_manager_ = &profile.modulePassManager();
     pass_builder_        = &pass_builder;
     optimization_level_  = optimization_level;
     debug_               = debug;
-
 }
 
 llvm::ModulePassManager ProfileGenerator::createValidationModulePass(PassBuilder&, OptimizationLevel const&, bool)
