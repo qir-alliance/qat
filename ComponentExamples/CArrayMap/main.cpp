@@ -205,9 +205,9 @@ extern "C" void loadComponent(ProfileGenerator* generator)
 {
     generator->registerProfileComponent<CArrayMapConfig>(
         "c-array-map",
-        [](CArrayMapConfig const& cfg, ProfileGenerator* ptr, Profile& profile)
+        [](CArrayMapConfig const& cfg, ProfileGenerator& generator, Profile& profile)
         {
-            auto& ret = ptr->modulePassManager();
+            auto& ret = generator.modulePassManager();
 
             if (cfg.removeArrayCopies())
             {

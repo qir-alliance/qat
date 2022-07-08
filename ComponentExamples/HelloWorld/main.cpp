@@ -31,6 +31,6 @@ class HelloWorldConfig
 extern "C" void loadComponent(ProfileGenerator* generator)
 {
     generator->registerProfileComponent<HelloWorldConfig>(
-        "hello-world", [](HelloWorldConfig const& cfg, ProfileGenerator* /*ptr*/, Profile& /*profile*/)
+        "hello-world", [](HelloWorldConfig const& cfg, ProfileGenerator& /*ptr*/, Profile& /*profile*/)
         { std::cout << "Message: " << cfg.message() << std::endl; });
 }

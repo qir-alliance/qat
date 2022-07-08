@@ -22,10 +22,10 @@ class ProfileGenerator
 
     /// Setup function that uses a configuration type R to
     /// configure the profile and/or generator.
-    template <typename R> using SetupFunction = std::function<void(R const&, ProfileGenerator*, Profile&)>;
+    template <typename R> using SetupFunction = std::function<void(R const&, ProfileGenerator&, Profile&)>;
 
     /// Wrapper function type for invoking the profile setup function
-    using SetupFunctionWrapper = std::function<void(ProfileGenerator*, Profile&)>;
+    using SetupFunctionWrapper = std::function<void(ProfileGenerator&, Profile&)>;
 
     /// List of components to be configured.
     using Components = std::vector<std::pair<String, SetupFunctionWrapper>>;
@@ -141,13 +141,13 @@ template <typename R> void ProfileGenerator::registerProfileComponent(String con
 {
     configuration_manager_.addConfig<R>(id);
 
-    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile)
+    auto setup_wrapper = [setup](ProfileGenerator& generator, Profile& profile)
     {
-        if (ptr->configuration_manager_.isActive<R>())
+        if (generator.configuration_manager_.isActive<R>())
         {
-            auto& config = ptr->configuration_manager_.get<R>();
+            auto& config = generator.configuration_manager_.get<R>();
 
-            setup(config, ptr, profile);
+            setup(config, generator, profile);
         }
     };
 
@@ -156,13 +156,13 @@ template <typename R> void ProfileGenerator::registerProfileComponent(String con
 
 template <typename R> void ProfileGenerator::replaceProfileComponent(String const& id, SetupFunction<R> setup)
 {
-    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile)
+    auto setup_wrapper = [setup](ProfileGenerator& generator, Profile& profile)
     {
-        if (ptr->configuration_manager_.isActive<R>())
+        if (generator.configuration_manager_.isActive<R>())
         {
-            auto& config = ptr->configuration_manager_.get<R>();
+            auto& config = generator.configuration_manager_.get<R>();
 
-            setup(config, ptr, profile);
+            setup(config, generator, profile);
         }
     };
 
@@ -185,13 +185,13 @@ template <typename R> void ProfileGenerator::registerAnonymousProfileComponent(S
         throw std::runtime_error("Configuration '" + static_cast<String>(typeid(R).name()) + "' does not exist.");
     }
 
-    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile& profile)
+    auto setup_wrapper = [setup](ProfileGenerator& generation, Profile& profile)
     {
-        if (ptr->configuration_manager_.isActive<R>())
+        if (generation.configuration_manager_.isActive<R>())
         {
-            auto& config = ptr->configuration_manager_.get<R>();
+            auto& config = generation.configuration_manager_.get<R>();
 
-            setup(config, ptr, profile);
+            setup(config, generation, profile);
         }
     };
 

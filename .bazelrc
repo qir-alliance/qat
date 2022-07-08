@@ -42,11 +42,11 @@ build:msvc --host_copt=/w
 build:msvc --host_cxxopt=/w
 
 
-build:msvc -c dbg
-build:msvc --strip=never
-build:msvc --copt=/UNDEBUG 
-build:msvc --copt=/Z7
-# build:msvc --copt=/Zi
+# build:msvc -c dbg
+# build:msvc --strip=never
+# build:msvc --copt=/UNDEBUG 
+# build:msvc --copt=/Z7
+# # build:msvc --copt=/Zi
 
 
 # build:msvc --copt=/WX --host_copt=/WX    # Treat warnings as errors...

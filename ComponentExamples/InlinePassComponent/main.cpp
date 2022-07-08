@@ -31,16 +31,17 @@ extern "C" void loadComponent(ProfileGenerator* generator)
 {
     generator->registerProfileComponent<InlinerConfig>(
         "inliner",
-        [](InlinerConfig const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+        [](InlinerConfig const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
         {
             if (cfg.shouldInline())
             {
-                auto& module_pass_manager = ptr->modulePassManager();
+                auto& module_pass_manager = generator.modulePassManager();
 
                 // Adds the inline pipeline
-                auto& pass_builder = ptr->passBuilder();
+                auto& pass_builder = generator.passBuilder();
                 auto  inliner_pass =
-                    pass_builder.buildInlinerPipeline(ptr->optimizationLevel(), llvm::ThinOrFullLTOPhase::None);
+                    pass_builder.buildInlinerPipeline(generator.optimizationLevel(), llvm::ThinOrFullLTOPhase::None);
+
                 module_pass_manager.addPass(std::move(inliner_pass));
             }
         });

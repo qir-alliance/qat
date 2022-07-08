@@ -31,7 +31,6 @@ std::shared_ptr<Profile> ProfileGenerator::newProfile(
     OptimizationLevel const& optimization_level,
     bool                     debug)
 {
-
     auto qubit_allocation_manager  = BasicAllocationManager::createNew();
     auto result_allocation_manager = BasicAllocationManager::createNew();
 
@@ -55,8 +54,11 @@ std::shared_ptr<Profile> ProfileGenerator::newProfile(
             llvm::outs() << "Setting " << c.first << " up\n";
         }
 
-        c.second(this, *ret);
+        llvm::outs() << "Setting " << c.first << " up\n";
+        c.second(*this, *ret);
+        llvm::errs() << "After\n";
         module_pass_manager_->addPass(llvm::createModuleToFunctionPassAdaptor(std::move(function_pass_manager)));
+        // module_pass_manager_->addPass(FunctionToModule(std::move(function_pass_manager)));
     }
 
     // Creating validator
@@ -145,9 +147,9 @@ void ProfileGenerator::setupDefaultComponentPipeline()
 
     registerProfileComponent<LlvmPassesConfiguration>(
         "llvm-optimization",
-        [](LlvmPassesConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+        [](LlvmPassesConfiguration const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
         {
-            auto& mpm = ptr->modulePassManager();
+            auto& mpm = generator.modulePassManager();
 
             // Eliminating intrinsic functions
             if (cfg.eliminateConstants())
@@ -161,13 +163,13 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 mpm.addPass(FunctionToModule(std::move(early_fpm)));
             }
 
-            auto& fpm = ptr->functionPassManager();
+            auto& fpm = generator.functionPassManager();
 
             // Always inline
             if (cfg.alwaysInline())
             {
 
-                auto& pass_builder = ptr->passBuilder();
+                auto& pass_builder = generator.passBuilder();
                 mpm.addPass(llvm::AlwaysInlinerPass());
                 auto                           inline_param = getInlineParams(cfg.inlineParameter());
                 llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
@@ -177,7 +179,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             // Unroll loop
             if (cfg.unrollLoops())
             {
-                auto& pass_builder = ptr->passBuilder();
+                auto& pass_builder = generator.passBuilder();
 
                 /// More unroll parameters
                 /// https://llvm.org/doxygen/LoopUnrollPass_8cpp.html
@@ -216,24 +218,24 @@ void ProfileGenerator::setupDefaultComponentPipeline()
 
     registerProfileComponent<PreTransformTrimmingPassConfiguration>(
         "pre-transform-trimming",
-        [logger](PreTransformTrimmingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+        [logger](PreTransformTrimmingPassConfiguration const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
         {
-            auto& mpm = ptr->modulePassManager();
+            auto& mpm = generator.modulePassManager();
 
             mpm.addPass(PreTransformTrimmingPass(cfg, logger));
         });
 
     registerProfileComponent<TransformationRulesPassConfiguration>(
         "transformation-rules",
-        [logger](TransformationRulesPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
+        [logger](TransformationRulesPassConfiguration const& cfg, ProfileGenerator& generator, Profile& profile)
         {
-            auto& ret = ptr->modulePassManager();
+            auto& ret = generator.modulePassManager();
 
             // Defining the mapping
             RuleSet rule_set;
             auto    factory = RuleFactory(
                    rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), logger);
-            factory.usingConfiguration(ptr->configurationManager().get<FactoryConfiguration>());
+            factory.usingConfiguration(generator.configurationManager().get<FactoryConfiguration>());
 
             // Creating profile pass
             auto pass = TransformationRulesPass(std::move(rule_set), cfg, &profile);
@@ -243,10 +245,10 @@ void ProfileGenerator::setupDefaultComponentPipeline()
 
     registerProfileComponent<PostTransformConfig>(
         "post-transform",
-        [logger](PostTransformConfig const& cfg, ProfileGenerator* ptr, Profile& /*profile*/)
+        [logger](PostTransformConfig const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
         {
-            auto& mpm = ptr->modulePassManager();
-            auto& fpm = ptr->functionPassManager();
+            auto& mpm = generator.modulePassManager();
+            auto& fpm = generator.functionPassManager();
 
             if (cfg.shouldAddInstCombinePass())
             {
@@ -282,21 +284,21 @@ void ProfileGenerator::setupDefaultComponentPipeline()
     registerProfileComponent<PostTransformValidationPassConfiguration>(
         "post-transform-validation",
         [logger](
-            PostTransformValidationPassConfiguration const& cfg, ProfileGenerator* ptr, Profile&
+            PostTransformValidationPassConfiguration const& cfg, ProfileGenerator& generator, Profile&
             /*profile*/)
         {
-            auto& mpm = ptr->modulePassManager();
+            auto& mpm = generator.modulePassManager();
             mpm.addPass(PostTransformValidationPass(cfg, logger));
         });
 
     registerProfileComponent<StaticResourceComponentConfiguration>(
         "static-resource",
-        [logger](StaticResourceComponentConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
+        [logger](StaticResourceComponentConfiguration const& cfg, ProfileGenerator& generator, Profile& profile)
         {
             auto& fam = profile.functionAnalysisManager();
             fam.registerPass([&] { return AllocationAnalysisPass(logger); });
 
-            auto& fpm = ptr->functionPassManager();
+            auto& fpm = generator.functionPassManager();
 
             fpm.addPass(ReplaceQubitOnResetPass(cfg, logger));
             fpm.addPass(QubitRemapPass(cfg, logger));
@@ -316,13 +318,13 @@ void ProfileGenerator::setupDefaultComponentPipeline()
 
     registerProfileComponent<GroupingPassConfiguration>(
         "grouping",
-        [logger](GroupingPassConfiguration const& cfg, ProfileGenerator* ptr, Profile& profile)
+        [logger](GroupingPassConfiguration const& cfg, ProfileGenerator& generator, Profile& profile)
         {
             if (cfg.circuitSeparation())
             {
                 auto& mam = profile.moduleAnalysisManager();
                 mam.registerPass([&] { return GroupingAnalysisPass(cfg, logger); });
-                auto& ret = ptr->modulePassManager();
+                auto& ret = generator.modulePassManager();
 
                 auto pass = GroupingPass(cfg);
                 pass.setLogger(logger);
