@@ -54,9 +54,7 @@ std::shared_ptr<Profile> ProfileGenerator::newProfile(
             llvm::outs() << "Setting " << c.first << " up\n";
         }
 
-        llvm::outs() << "Setting " << c.first << " up\n";
         c.second(*this, *ret);
-        llvm::errs() << "After\n";
         module_pass_manager_->addPass(llvm::createModuleToFunctionPassAdaptor(std::move(function_pass_manager)));
         // module_pass_manager_->addPass(FunctionToModule(std::move(function_pass_manager)));
     }
