@@ -56,7 +56,7 @@ class ProfileGenerator
     /// Creates a new profile based on the registered components, optimization level and debug
     /// requirements. The returned profile can be applied to an IR to transform it in accordance with
     /// the configurations given.
-    Profile newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug);
+    std::shared_ptr<Profile> newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug);
 
     // Defining the generator
 
@@ -107,7 +107,7 @@ class ProfileGenerator
   protected:
     /// Internal function that creates a module pass for QIR transformation. The module pass is
     /// defined through the profile, the optimization level and whether or not we are in debug mode.
-    llvm::ModulePassManager createGenerationModulePassManager(
+    void configureGeneratorFromProfile(
         Profile&                 profile,
         OptimizationLevel const& optimization_level,
         bool                     debug);

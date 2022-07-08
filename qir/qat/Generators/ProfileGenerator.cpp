@@ -26,8 +26,9 @@
 
 namespace microsoft::quantum
 {
-Profile ProfileGenerator::newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug)
+std::shared_ptr<Profile> ProfileGenerator::newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug)
 {
+
     auto qubit_allocation_manager  = BasicAllocationManager::createNew();
     auto result_allocation_manager = BasicAllocationManager::createNew();
 
@@ -37,9 +38,9 @@ Profile ProfileGenerator::newProfile(String const& name, OptimizationLevel const
 
     // Creating profile
     // TODO(issue-12): Set target machine
-    Profile ret{name, logger_, debug, nullptr, qubit_allocation_manager, result_allocation_manager};
+    auto ret = std::make_shared<Profile>(name, logger_, debug, nullptr, qubit_allocation_manager, result_allocation_manager);   
 
-    auto module_pass_manager = createGenerationModulePassManager(ret, optimization_level, debug);
+    configureGeneratorFromProfile(*ret, optimization_level, debug);
 
     for (auto& c : components_)
     {
@@ -50,35 +51,31 @@ Profile ProfileGenerator::newProfile(String const& name, OptimizationLevel const
             llvm::outs() << "Setting " << c.first << " up\n";
         }
 
-        c.second(this, ret);
-        module_pass_manager.addPass(FunctionToModule(std::move(function_pass_manager)));
+        c.second(this, *ret);
+        module_pass_manager_->addPass(llvm::createModuleToFunctionPassAdaptor(std::move(function_pass_manager)));
     }
-
-    ret.setModulePassManager(std::move(module_pass_manager));
 
     // Creating validator
     auto validator =
         std::make_unique<Validator>(configuration_manager_.get<ValidationPassConfiguration>(), logger_, debug);
 
-    ret.setValidator(std::move(validator));
+    ret->setValidator(std::move(validator));
 
-    return ret;
+    return ret;    
 }
 
-llvm::ModulePassManager ProfileGenerator::createGenerationModulePassManager(
+void ProfileGenerator::configureGeneratorFromProfile(
     Profile&                 profile,
     OptimizationLevel const& optimization_level,
     bool                     debug)
 {
     auto&                   pass_builder = profile.passBuilder();
-    llvm::ModulePassManager ret{};
-
-    module_pass_manager_ = &ret;
+    
+    module_pass_manager_ = &profile.modulePassManager();
     pass_builder_        = &pass_builder;
     optimization_level_  = optimization_level;
     debug_               = debug;
 
-    return ret;
 }
 
 llvm::ModulePassManager ProfileGenerator::createValidationModulePass(PassBuilder&, OptimizationLevel const&, bool)

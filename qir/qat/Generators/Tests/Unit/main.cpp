@@ -16,7 +16,6 @@ class ExposedConfigurableProfileGenerator : public ConfigurableProfileGenerator
 {
   public:
     using ConfigurableProfileGenerator::ConfigurableProfileGenerator;
-    using ConfigurableProfileGenerator::createGenerationModulePassManager;
     using ConfigurableProfileGenerator::createValidationModulePass;
 };
 
