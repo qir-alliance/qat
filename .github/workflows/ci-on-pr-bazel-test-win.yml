@@ -40,6 +40,10 @@ jobs:
     name: "Bazel Test"
     needs: [build]
     steps:
+      - name: Get Timestamp
+        id: timestamp
+        run: Write-Host "::set-output name=timestamp::$([DateTime]::UtcNow.ToString('o'))"
+        shell: pwsh
       - name: Checkout code
         uses: actions/checkout@v2
         with:
