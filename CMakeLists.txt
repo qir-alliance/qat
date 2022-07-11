@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.4.3)
 
 project(QirPasses)
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Debug")
+  set(CMAKE_BUILD_TYPE "Release")
 endif()
 
 option(MICROSOFT_ENABLE_TESTS               "Enable test targets"   ON)

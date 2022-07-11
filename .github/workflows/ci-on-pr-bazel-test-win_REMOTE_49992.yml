@@ -26,12 +26,12 @@ jobs:
         id: cache-bazel
         uses: actions/cache@v3.0.4
         with:
-          path: ~/.cache/bazel/
-          key: ${{ matrix.config.os }}-${{ matrix.config.target }}-bazel
+          path: bazel-cache/
+          key: ${{ runner.os }}-bazel
 
       - name: "Building release"
         run: |
-          bazelisk build --config msvc --disk_cache=~/.cache/bazel/ //qir/...
+          bazelisk build --config msvc --disk_cache=bazel-cache/ //qir/...
 
   test:
     runs-on: windows-2022
@@ -48,12 +48,12 @@ jobs:
         id: cache-bazel
         uses: actions/cache@v3.0.4
         with:
-          path: ~/.cache/bazel/
-          key: ${{ matrix.config.os }}-${{ matrix.config.target }}-bazel
+          path: bazel-cache/
+          key: ${{ runner.os }}-bazel
 
       - name: "Running unit tests"
         run: |
-          bazelisk test --test_output=all --keep_going --config msvc --disk_cache=~/.cache/bazel/ //qir/...
+          bazelisk test --test_output=all --keep_going --config msvc --disk_cache=bazel-cache/ //qir/...
         env:
           CC: clang.exe
           CXX: clang++

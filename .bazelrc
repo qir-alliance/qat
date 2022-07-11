@@ -8,7 +8,7 @@ build --workspace_status_command "python config/workspace-status.py"
 # build --cxxopt=-Wconversion
 # build --cxxopt=-Wpedantic
 # build --cxxopt=-Werror
-build --disk_cache=~/.cache/bazel/
+# build --disk_cache=~/.cache/bazel/
 build --features=external_include_paths
 
 
@@ -67,6 +67,15 @@ build:msvc --copt=/wd4805 --host_copt=/wd4805 # comparisons between bool and int
 # Ideally these should be moved to user configuration
 build:release --copt=-O3
 build:release --copt=-DNDEBUG
+build:release --copt=-Os 
+build:release --copt=-fno-unroll-loops
+build:release --copt=-fno-rtti
+build:release --copt=-mllvm 
+# build:release --copt=-inline-threshold=n
+build:release --copt=-flto
+build:release --copt=-flto=thin
+build:release --copt=-fmerge-functions
+
 build:debug -c dbg
 build:debug --copt=-g 
 build:debug --strip=never
