@@ -211,6 +211,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             if (cfg.eliminateDeadCode())
             {
                 fpm.addPass(llvm::ADCEPass());
+                mpm.addPass(llvm::GlobalDCEPass());
             }
         });
 
