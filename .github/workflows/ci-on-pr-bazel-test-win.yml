@@ -16,6 +16,11 @@ jobs:
     runs-on: windows-2022
     name: "Bazel Build"
     steps:
+      - name: Get Timestamp
+        id: timestamp
+        run: Write-Host "::set-output name=timestamp::$([DateTime]::UtcNow.ToString('o'))"
+        shell: pwsh
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -44,6 +49,7 @@ jobs:
         id: timestamp
         run: Write-Host "::set-output name=timestamp::$([DateTime]::UtcNow.ToString('o'))"
         shell: pwsh
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
