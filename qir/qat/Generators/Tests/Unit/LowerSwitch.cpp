@@ -46,7 +46,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 }
 } // namespace
 
-TEST(GeneratorsPostTransformLower, DISABLED_PostTransformLowerSwitch)
+TEST(GeneratorsPostTransformLower, PostTransformLowerSwitch)
 {
     auto                  ir_manip              = newIrManip(R"script(
   %0 = call i1 @get_value()

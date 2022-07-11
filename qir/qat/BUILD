@@ -2,8 +2,8 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 cc_library(
     name = "Llvm",
-    srcs = glob(["Llvm/*.cpp"]),
-    hdrs = glob(["Llvm/*.hpp"]),
+    srcs = [],
+    hdrs = ["Llvm/Llvm.hpp"],
     visibility = ["//visibility:public"],
     deps = [
         "@llvm-project//llvm:IRReader",
@@ -11,13 +11,14 @@ cc_library(
         "@llvm-project//llvm:TransformUtils",
         "@llvm-project//llvm:InstCombine",
         "@llvm-project//llvm:Scalar",
+        "@llvm-project//llvm:Passes",
 
         # VM deps
         "@llvm-project//llvm:ARMCodeGen",
         "@llvm-project//llvm:ARMAsmParser",
         "@llvm-project//llvm:ExecutionEngine",
         "@llvm-project//llvm:OrcJIT",
-        "@llvm-project//llvm:Interpreter",
+        "@llvm-project//llvm:Interpreter",        
     ],
 )
 

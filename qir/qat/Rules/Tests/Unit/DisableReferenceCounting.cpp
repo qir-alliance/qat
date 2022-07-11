@@ -42,7 +42,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 } // namespace
 
 // Single allocation with action and then release
-TEST(RuleSetTestSuite, DISABLED_DisablingArrayhReferenceCounting)
+TEST(RuleSetTestSuite, DisablingArrayhReferenceCounting)
 {
     auto ir_manip = newIrManip(R"script(
     %0 = call %Array* @__quantum__rt__array_create_1d(i32 8, i64 2)

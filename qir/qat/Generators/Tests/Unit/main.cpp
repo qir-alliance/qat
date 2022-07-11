@@ -76,7 +76,7 @@ class TestAnalysis
 };
 } // namespace
 
-TEST(GeneratorsTestSuite, DISABLED_ConfigureFunction)
+TEST(GeneratorsTestSuite, ConfigureFunction)
 {
     uint64_t call_count{0};
     auto     configure = [&call_count](RuleSet&) { ++call_count; };
