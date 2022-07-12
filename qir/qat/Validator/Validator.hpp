@@ -35,12 +35,12 @@ class Validator
     // Default construction not allowed to ensure that LLVM modules and passes are set up correctly.
     // Copy construction is prohibited due to restriction on classes held by Validator.
 
-    Validator()                 = delete;
-    Validator(Validator const&) = delete;
-    Validator(Validator&&)      = default;
+    Validator()                            = delete;
+    Validator(Validator const&)            = delete;
+    Validator(Validator&&)                 = delete;
     Validator& operator=(Validator const&) = delete;
-    Validator& operator=(Validator&&) = default;
-    ~Validator()                      = default;
+    Validator& operator=(Validator&&)      = delete;
+    ~Validator()                           = default;
 
     // Validator methods
     //

@@ -101,11 +101,11 @@ class ILogger
     // Constructors, copy and move operators and destructors
     //
 
-    ILogger()               = default;
-    ILogger(ILogger const&) = default;
-    ILogger(ILogger&&)      = default;
-    ILogger& operator=(ILogger const&) = default;
-    ILogger& operator=(ILogger&&) = default;
+    ILogger()                          = default;
+    ILogger(ILogger const&)            = delete;
+    ILogger(ILogger&&)                 = delete;
+    ILogger& operator=(ILogger const&) = delete;
+    ILogger& operator=(ILogger&&)      = delete;
 
     virtual ~ILogger();
 
