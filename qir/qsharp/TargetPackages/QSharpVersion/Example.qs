@@ -2,28 +2,15 @@
 // Licensed under the MIT License.
 
 namespace QATSample {
-open Microsoft.Quantum.Intrinsic;
-open Microsoft.Quantum.Measurement;
+    open Microsoft.Quantum.Intrinsic;
+    open Microsoft.Quantum.Measurement;
 
-@EntryPoint()
-operation BernsteinVazirani() : Result[] {
-    use register = Qubit[5];
-    use auxiliary = Qubit();
-    for q in register {
-        H(q);
+    @EntryPoint()
+    operation Main(x: Int): Bool[]
+    {
+        use q1 = Qubit();
+        let r1 = [MResetZ(q1) == One, MResetZ(q1) == Zero, MResetZ(q1) == One, MResetZ(q1) == Zero];
+
+        return r1;        
     }
-    H(auxiliary);
-    Z(auxiliary);
-    SecretFunction(register, auxiliary);
-    for q in register {
-        H(q);
-    }
-    let results = MeasureEachZ(register);
-    return results;
-}
-operation SecretFunction(register : Qubit[], auxiliary : Qubit) : Unit {
-    CNOT(register[0], auxiliary);
-    CNOT(register[2], auxiliary);
-    CNOT(register[4], auxiliary);
-}
 }
