@@ -279,11 +279,8 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(ZExtTransformPass());
             }
 
-            llvm::errs() << "---- xxxxx ----\n";
-
             if (cfg.shouldPullRecordsBack())
             {
-                llvm::errs() << "Added pass\n";
                 fpm.addPass(RecordPullBackPass());
             }
         });

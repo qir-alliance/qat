@@ -18,6 +18,10 @@ namespace microsoft::quantum
 {
 
 std::string const RecordPullBackPass::RECORD_INSTR_END = "_record_output";
+RecordPullBackPass::RecordPullBackPass() noexcept
+  : readout_names_{{"__quantum__qis__m__body", "__quantum__qis__mz__body", "__quantum__qis__reset__body"}}
+{
+}
 
 llvm::PreservedAnalyses RecordPullBackPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
 {
@@ -42,7 +46,7 @@ llvm::PreservedAnalyses RecordPullBackPass::run(llvm::Function& function, llvm::
                          name.substr(name.size() - RECORD_INSTR_END.size(), RECORD_INSTR_END.size()) ==
                              RECORD_INSTR_END);
 
-                    if (is_readout)
+                    if (is_readout || readout_names_.find(name) != readout_names_.end())
                     {
                         records.push_back(&instr);
                     }

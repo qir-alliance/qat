@@ -28,7 +28,7 @@ class RecordPullBackPass : public llvm::PassInfoMixin<RecordPullBackPass>
     // Construction and destruction configuration.
     //
 
-    RecordPullBackPass() = default;
+    RecordPullBackPass() noexcept;
 
     /// Copy construction is banned.
     RecordPullBackPass(RecordPullBackPass const&) = delete;
@@ -45,6 +45,7 @@ class RecordPullBackPass : public llvm::PassInfoMixin<RecordPullBackPass>
     static bool isRequired();
 
   private:
+    std::unordered_set<String> readout_names_{};
 };
 
 } // namespace microsoft::quantum
