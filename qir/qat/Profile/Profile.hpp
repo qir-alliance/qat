@@ -42,12 +42,12 @@ class Profile
     // Default construction not allowed as this leads to invalid configuration of the allocation
     // managers.
 
-    Profile()                          = delete;
-    Profile(Profile const&)            = delete;
-    Profile(Profile&&)                 = delete;
+    Profile()               = delete;
+    Profile(Profile const&) = delete;
+    Profile(Profile&&)      = delete;
     Profile& operator=(Profile const&) = delete;
-    Profile& operator=(Profile&&)      = delete;
-    ~Profile()                         = default;
+    Profile& operator=(Profile&&) = delete;
+    ~Profile()                    = default;
 
     // Profile methods
     //
