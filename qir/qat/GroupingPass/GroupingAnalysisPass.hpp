@@ -35,7 +35,7 @@ class GroupingAnalysisPass : public llvm::AnalysisInfoMixin<GroupingAnalysisPass
 
     static String const QIS_START;
     static String const READ_INSTR_START;
-
+    static String const RECORD_INSTR_END;
     // Construction and destruction configuration.
     //
 

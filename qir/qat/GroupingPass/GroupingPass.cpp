@@ -45,6 +45,24 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
     auto call = llvm::dyn_cast<llvm::CallBase>(instr);
     if (call != nullptr)
     {
+        auto f = call->getCalledFunction();
+        if (f != nullptr)
+        {
+            auto name = static_cast<std::string>(f->getName());
+            bool is_readout =
+                (name.size() >= GroupingAnalysisPass::RECORD_INSTR_END.size() &&
+                 name.substr(
+                     name.size() - GroupingAnalysisPass::RECORD_INSTR_END.size(),
+                     GroupingAnalysisPass::RECORD_INSTR_END.size()) == GroupingAnalysisPass::RECORD_INSTR_END);
+
+            // Returning early if it is readout type function
+            if (is_readout)
+            {
+                ret |= SOURCE_QUANTUM;
+                return ret;
+            }
+        }
+
         for (auto& arg : call->args())
         {
             auto q = isQuantumRegister(arg->getType());

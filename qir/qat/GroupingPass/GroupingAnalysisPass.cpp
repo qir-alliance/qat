@@ -10,10 +10,12 @@
 
 namespace microsoft::quantum
 {
-String const      GroupingAnalysisPass::QIS_START        = "__quantum"
-                                                           "__qis_";
-String const      GroupingAnalysisPass::READ_INSTR_START = "__quantum"
-                                                           "__qis__read_";
+String const GroupingAnalysisPass::QIS_START        = "__quantum"
+                                                      "__qis_";
+String const GroupingAnalysisPass::READ_INSTR_START = "__quantum"
+                                                      "__qis__read_";
+String const GroupingAnalysisPass::RECORD_INSTR_END = "_record_output";
+
 llvm::AnalysisKey GroupingAnalysisPass::Key;
 
 void GroupingAnalysisPass::runBlockAnalysis(llvm::Module& module)
