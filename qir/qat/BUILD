@@ -14,11 +14,11 @@ cc_library(
         "@llvm-project//llvm:Passes",
 
         # VM deps
-        "@llvm-project//llvm:ARMCodeGen",
-        "@llvm-project//llvm:ARMAsmParser",
-        "@llvm-project//llvm:ExecutionEngine",
-        "@llvm-project//llvm:OrcJIT",
-        "@llvm-project//llvm:Interpreter",        
+#        "@llvm-project//llvm:ARMCodeGen",
+#        "@llvm-project//llvm:ARMAsmParser",
+#        "@llvm-project//llvm:ExecutionEngine",
+#        "@llvm-project//llvm:OrcJIT",
+#        "@llvm-project//llvm:Interpreter",        
     ],
 )
 
