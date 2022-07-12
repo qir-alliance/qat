@@ -3,49 +3,83 @@
 
 #include "RecordPullBackPass.hpp"
 
-#include "Llvm/Llvm.hpp"
 #include "Logging/ILogger.hpp"
 #include "QatTypes/QatTypes.hpp"
 #include "RecordPullBackPass/RecordPullBackPass.hpp"
 
+#include "Llvm/Llvm.hpp"
+
 #include <functional>
+#include <stdexcept>
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft::quantum {
-
-llvm::PreservedAnalyses RecordPullBackPass::run(llvm::Function &module,
-                                                llvm::FunctionAnalysisManager & /*mam*/)
+namespace microsoft::quantum
 {
 
-  llvm::errs() << "xxx\n";
-  return llvm::PreservedAnalyses::none();
-}
-/*
-void RecordPullBackPass::raiseError(int64_t error_code, llvm::Module &module,
-                                    llvm::Instruction *instr)
+std::string const RecordPullBackPass::RECORD_INSTR_END = "_record_output";
+
+llvm::PreservedAnalyses RecordPullBackPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
 {
-  llvm::IRBuilder<> builder(module.getContext());
-  auto const       &final_block = instr->getParent();
-  auto              if_block    = final_block->splitBasicBlock(instr, "if_ecc_not_set", true);
-  auto start_block = if_block->splitBasicBlock(if_block->getTerminator(), "-INTERMEDIATE-", true);
-  start_block->takeName(final_block);
-  final_block->setName("ecc_set_finally");
 
-  builder.SetInsertPoint(start_block->getTerminator());
-  llvm::LoadInst *load = builder.CreateLoad(error_variable_);
-  auto cmp = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_EQ, load, builder.getInt64(0));
+    llvm::BasicBlock* last_block = nullptr;
 
-  auto old_terminator = start_block->getTerminator();
-  llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
-  old_terminator->eraseFromParent();
+    for (auto& block : function)
+    {
+        // Identifying record functions
+        std::vector<llvm::Instruction*> records;
+        for (auto& instr : block)
+        {
+            auto call = llvm::dyn_cast<llvm::CallBase>(&instr);
+            if (call != nullptr)
+            {
+                auto f = call->getCalledFunction();
+                if (f != nullptr)
+                {
+                    auto name = static_cast<std::string>(f->getName());
+                    bool is_readout =
+                        (name.size() >= RECORD_INSTR_END.size() &&
+                         name.substr(name.size() - RECORD_INSTR_END.size(), RECORD_INSTR_END.size()) ==
+                             RECORD_INSTR_END);
 
-  builder.SetInsertPoint(if_block->getTerminator());
-  builder.CreateStore(builder.getInt64(error_code), error_variable_);
+                    if (is_readout)
+                    {
+                        records.push_back(&instr);
+                    }
+                }
+            }
+        }
+
+        // Moving function calls
+        if (!records.empty())
+        {
+            llvm::IRBuilder<> builder(function.getContext());
+            builder.SetInsertPoint(block.getTerminator());
+
+            for (auto instr : records)
+            {
+                auto new_instr = instr->clone();
+                new_instr->takeName(instr);
+                builder.Insert(new_instr);
+                instr->replaceAllUsesWith(new_instr);
+                if (instr->use_empty())
+                {
+                    instr->eraseFromParent();
+                }
+                else
+                {
+                    throw std::runtime_error(
+                        "Unexpected uses of instruction while moving records to the bottom of the block");
+                }
+            }
+        }
+    }
+
+    return llvm::PreservedAnalyses::none();
 }
-*/
+
 bool RecordPullBackPass::isRequired()
 {
-  return true;
+    return true;
 }
-}  // namespace microsoft::quantum
+} // namespace microsoft::quantum
