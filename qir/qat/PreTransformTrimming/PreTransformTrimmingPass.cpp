@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "PreTransformTrimming/PreTransformTrimmingPass.hpp"
+#include "qir/qat/PreTransformTrimming/PreTransformTrimmingPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <fstream>
 #include <iostream>

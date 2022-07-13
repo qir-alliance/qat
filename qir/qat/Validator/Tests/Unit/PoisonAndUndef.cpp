@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
-#include "Rules/Factory.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 
@@ -46,12 +45,12 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 class MockLogger : public LogCollection
 {
   public:
-    void errorPoisonNotAllowed(String const& profile_name, llvm::Value* ptr) override
+    void errorPoisonNotAllowed(String const& /*profile_name*/, llvm::Value* /*ptr*/) override
     {
         raised_poison_not_allowed_ = true;
     }
 
-    void errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr) override
+    void errorUndefNotAllowed(String const& /*profile_name*/, llvm::Value* /*ptr*/) override
     {
         raised_undef_not_allowed_ = true;
     }

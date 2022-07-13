@@ -2,15 +2,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/SourceLocation.hpp"
-#include "QatTypes/QatTypes.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/SourceLocation.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <cstdint>
 #include <fstream>
 #include <memory>
 #include <string>
+#include <utility>
 
 namespace microsoft::quantum
 {
@@ -28,27 +28,53 @@ class ILogger
     struct Location : public SourceLocation
     {
         Location() = default;
-        Location(SourceLocation const& source)
+        explicit Location(SourceLocation const& source)
           : SourceLocation(source)
         {
         }
 
-        Location(String v_name, int64_t v_line, int64_t v_column, String v_llvm_hint = "", String v_frontend_hint = "")
-          : SourceLocation(v_name, v_line, v_column)
-          , llvm_hint{v_llvm_hint}
-          , frontend_hint{v_frontend_hint}
+        Location(String v_name, int64_t v_line, int64_t v_column, String llvm_hint = "", String frontend_hint = "")
+          : SourceLocation(std::move(v_name), v_line, v_column)
+          , llvm_hint_{std::move(llvm_hint)}
+          , frontend_hint_{std::move(frontend_hint)}
         {
         }
 
-        Location(Location const& source)
-          : SourceLocation(source)
-          , llvm_hint{source.llvm_hint}
-          , frontend_hint{source.frontend_hint}
+        Location(Location const& source) = default;
+
+        String& llvmHint()
         {
+            return llvm_hint_;
         }
 
-        String llvm_hint{""};
-        String frontend_hint{""};
+        String const& llvmHint() const
+        {
+            return llvm_hint_;
+        }
+
+        void setLlvmHint(String const& v)
+        {
+            llvm_hint_ = v;
+        }
+
+        String& frontendHint()
+        {
+            return frontend_hint_;
+        }
+
+        String const& frontendHint() const
+        {
+            return frontend_hint_;
+        }
+
+        void setFrontendHint(String const& v)
+        {
+            frontend_hint_ = v;
+        }
+
+      private:
+        String llvm_hint_{""};
+        String frontend_hint_{""};
     };
 
     /// Enum description what type of information we are conveying.
@@ -76,10 +102,10 @@ class ILogger
     //
 
     ILogger()               = default;
-    ILogger(ILogger const&) = default;
-    ILogger(ILogger&&)      = default;
-    ILogger& operator=(ILogger const&) = default;
-    ILogger& operator=(ILogger&&) = default;
+    ILogger(ILogger const&) = delete;
+    ILogger(ILogger&&)      = delete;
+    ILogger& operator=(ILogger const&) = delete;
+    ILogger& operator=(ILogger&&) = delete;
 
     virtual ~ILogger();
 
@@ -170,10 +196,13 @@ class ILogger
     virtual void errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr = nullptr);
 
   protected:
+    void setHasErrors(bool value);
+    void setHasWarnings(bool value);
+
+  private:
     bool had_errors_{false};   ///< Variable to indicate whether or not errors were reported.
     bool had_warnings_{false}; ///< Variable to indicate whether or not warnings were reported.
 
-  private:
     LocationResolver location_resolver_{nullptr};
 };
 

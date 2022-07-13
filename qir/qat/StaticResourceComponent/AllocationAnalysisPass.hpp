@@ -2,12 +2,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
-#include "Profile/Profile.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -30,7 +28,7 @@ struct AllocationAnalysis
     {
         llvm::Value*       operand{nullptr};
         ResourceType       type{ResourceType::NotResource};
-        uint64_t           index{-1};
+        uint64_t           index{static_cast<uint64_t>(-1)};
         llvm::Instruction* used_by{nullptr};
         uint64_t           operand_id{0};
     };
@@ -83,9 +81,8 @@ class AllocationAnalysisPass : public llvm::AnalysisInfoMixin<AllocationAnalysis
   private:
     bool extractResourceId(llvm::Value* value, uint64_t& return_value, ResourceType& type) const;
 
-    ILoggerPtr logger_{nullptr};
-
-    static llvm::AnalysisKey Key;
+    ILoggerPtr               logger_{nullptr};
+    static llvm::AnalysisKey Key; // NOLINT
     friend struct llvm::AnalysisInfoMixin<AllocationAnalysisPass>;
 };
 

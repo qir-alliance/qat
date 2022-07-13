@@ -2,12 +2,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
-#include "Profile/Profile.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -45,8 +42,6 @@ class ZExtTransformPass : public llvm::PassInfoMixin<ZExtTransformPass>
     static bool isRequired();
 
   private:
-    ValidationPassConfiguration config_{};
-
     ILoggerPtr logger_{nullptr};
 };
 

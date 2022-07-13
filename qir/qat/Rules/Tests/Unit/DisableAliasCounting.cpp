@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Rules/Factory.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 
@@ -43,7 +42,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 } // namespace
 
 // Single allocation with action and then release
-TEST(RuleSetTestSuite, DISABLED_DisablingArrayhAliasCounting)
+TEST(RuleSetTestSuite, DisablingArrayhAliasCounting)
 {
     auto ir_manip = newIrManip(R"script(
     %0 = call %Array* @__quantum__rt__array_create_1d(i32 8, i64 2)

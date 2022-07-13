@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "QatTypes/QatTypes.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <string>
 #include <unordered_map>

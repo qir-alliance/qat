@@ -2,12 +2,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "AllocationManager/AllocationManager.hpp"
-#include "AllocationManager/IAllocationManager.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "Validator/Validator.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/AllocationManager/AllocationManager.hpp"
+#include "qir/qat/AllocationManager/IAllocationManager.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/Validator/Validator.hpp"
 
 namespace microsoft::quantum
 {
@@ -45,9 +44,9 @@ class Profile
 
     Profile()               = delete;
     Profile(Profile const&) = delete;
-    Profile(Profile&&)      = default;
+    Profile(Profile&&)      = delete;
     Profile& operator=(Profile const&) = delete;
-    Profile& operator=(Profile&&) = default;
+    Profile& operator=(Profile&&) = delete;
     ~Profile()                    = default;
 
     // Profile methods
@@ -82,12 +81,12 @@ class Profile
     /// Returns a reference to the module analysis manager.
     llvm::ModuleAnalysisManager& moduleAnalysisManager();
 
+    /// Returns the module pass manager associated with the profile
+    llvm::ModulePassManager& modulePassManager();
+
   protected:
     // Ensuring that ProfileGenerator has access to following protected functions.
     friend class ProfileGenerator;
-
-    /// Sets the module pass manager used for the transformation of the IR.
-    void setModulePassManager(llvm::ModulePassManager&& manager);
 
     /// Sets the validator
     void setValidator(ValidatorPtr&& validator);

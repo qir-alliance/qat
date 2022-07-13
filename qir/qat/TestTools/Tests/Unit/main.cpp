@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 using namespace microsoft::quantum;
 TEST(TestToolsTestSuite, IrParitalConstruction)

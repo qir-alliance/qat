@@ -1,10 +1,9 @@
 import os
 import shutil
+import subprocess
 import tempfile
 
-import subprocess
 import pytest
-
 
 SCRIPT_DIR = os.path.dirname(__file__)
 # TODO(issue-93): Activate remaining codeblock examples.
@@ -122,8 +121,6 @@ available1 = [
     "Decompositions/ZControlled.qs",
     "Decompositions/ZAdjointControlled.qs",
     "Decompositions/ZControlledAdjoint.qs",
-
-
     "CodeBlocks/ArrayConcatenation.qs",
     "CodeBlocks/ArrayConcatenation2.qs",
     "CodeBlocks/Branching1.qs",
@@ -256,8 +253,6 @@ available3 = [
     "Decompositions/ZControlled.qs",
     "Decompositions/ZAdjointControlled.qs",
     "Decompositions/ZControlledAdjoint.qs",
-
-
     "CodeBlocks/ArrayConcatenation.qs",
     "CodeBlocks/ArrayConcatenation2.qs",
     "CodeBlocks/Branching1.qs",
@@ -390,8 +385,6 @@ available4 = [
     "Decompositions/ZControlled.qs",
     "Decompositions/ZAdjointControlled.qs",
     "Decompositions/ZControlledAdjoint.qs",
-
-
     # "CodeBlocks/ArrayConcatenation.qs",
     # "CodeBlocks/ArrayConcatenation2.qs",
     # "CodeBlocks/Branching1.qs",
@@ -436,7 +429,9 @@ class QsharpProject(object):
             project_template = fb.read()
 
         with open(os.path.join(self.project_dir, "Example.csproj"), "w") as fb:
-            project_template = project_template.replace("{{executionTarget}}", self.execution_target)
+            project_template = project_template.replace(
+                "{{executionTarget}}", self.execution_target
+            )
             project_template = project_template.replace("{{version}}", self.version)
             project_template = project_template.replace("{{channel}}", self.channel)
 
@@ -454,7 +449,7 @@ class QsharpProject(object):
         if not os.path.isfile(self.project_file):
             raise BaseException("{} does not exist".format(self.project_file))
 
-        self.qir_filename = os.path.join(self.project_dir, "qir",  "Example.ll")
+        self.qir_filename = os.path.join(self.project_dir, "qir", "Example.ll")
 
         return self
 
@@ -468,7 +463,8 @@ class QsharpProject(object):
             " ".join(["dotnet", "build", "."]),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            shell=True)
+            shell=True,
+        )
 
         out, errs = p.communicate()
         errs = errs.decode()
@@ -506,6 +502,7 @@ def generate_test(project_file: str):
     def response():
         def x(type, version, channel):
             return QsharpProject(project_file, type, version, channel)
+
         return x
 
     return response

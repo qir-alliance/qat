@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ParameterParser.hpp"
+#include "qir/qat/Commandline/ParameterParser.hpp"
 
 #include <iostream>
 #include <stdexcept>
