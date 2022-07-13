@@ -250,6 +250,20 @@ cc_library(
 )
 
 cc_library(
+    name = "RecordPullBackPass",
+    srcs = glob(["RecordPullBackPass/*.cpp"]),
+    hdrs = glob(["RecordPullBackPass/*.hpp"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//qir/qat:Commandline",
+        "//qir/qat:Llvm",
+        "//qir/qat:Logging",
+        "//qir/qat:QatTypes",
+    ],
+)
+
+
+cc_library(
     name = "Generators",
     srcs = glob(["Generators/*.cpp"]),
     hdrs = glob(["Generators/*.hpp"]),
@@ -269,6 +283,7 @@ cc_library(
         "//qir/qat:TransformationRulesPass",
         "//qir/qat:ValidationPass",
         "//qir/qat:Validator",
+        "//qir/qat:RecordPullBackPass",
         "//qir/qat:ZExtTransformPass",
     ],
 )
@@ -333,6 +348,7 @@ cc_binary(
         "//qir/qat:Rules",
         "//qir/qat:StaticResourceComponent",
         "//qir/qat:TransformationRulesPass",
+        "//qir/qat:RecordPullBackPass",
         "//qir/qat:ValidationPass",
         "//qir/qat:Validator",
     ],

@@ -78,7 +78,7 @@ struct PostTransformConfig
     bool simplify_cfg_pass_{true};
     bool lower_switch_{true};
     bool should_eleminate_zext_i1_{true};
-    bool should_pull_records_back_{true};
+    bool should_pull_records_back_{false};
 };
 
 } // namespace microsoft::quantum
