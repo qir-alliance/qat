@@ -55,8 +55,7 @@ std::shared_ptr<Profile> ProfileGenerator::newProfile(
         }
 
         c.second(*this, *ret);
-        module_pass_manager_->addPass(llvm::createModuleToFunctionPassAdaptor(std::move(function_pass_manager)));
-        // module_pass_manager_->addPass(FunctionToModule(std::move(function_pass_manager)));
+        module_pass_manager_->addPass(FunctionToModule(std::move(function_pass_manager)));
     }
 
     // Creating validator
