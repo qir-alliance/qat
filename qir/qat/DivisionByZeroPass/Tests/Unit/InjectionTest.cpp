@@ -50,7 +50,7 @@ std::shared_ptr<ConfigurableProfileGenerator> newProfile()
     configuration_manager.addConfig<DummyConfig>();
 
     profile->registerAnonymousProfileComponent<DummyConfig>(
-        [](DummyConfig const& config, ProfileGenerator& generator, Profile& profile)
+        [](DummyConfig const& /*config*/, ProfileGenerator& generator, Profile& /*profile*/)
         {
             auto& mpm = generator.modulePassManager();
             mpm.addPass(DivisionByZeroPass());

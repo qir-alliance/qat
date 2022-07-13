@@ -63,7 +63,7 @@ class TestProgram
 class TestVM
 {
   public:
-    TestVM(TestProgram& program)
+    explicit TestVM(TestProgram& program)
       : program_{program}
     {
         details::initFramework();
@@ -82,10 +82,10 @@ class TestVM
     {
         llvm::ExitOnError exit_on_error;
 
-        // TODO: remove exit_on_error
+        // TODO(unknown): remove exit_on_error
         lljit_ = exit_on_error(llvm::orc::LLJITBuilder().create());
 
-        // TODO: Copy module and context to avoid destructive behaviour
+        // TODO(unknown): Copy module and context to avoid destructive behaviour
         exit_on_error(lljit_->addIRModule(
             llvm::orc::ThreadSafeModule(std::move(program_.module_), std::move(program_.context_))));
 
@@ -143,7 +143,7 @@ template <typename R, typename... Args> R TestVM::run(String const& name, Args&&
 
     auto function_symbol = exit_on_error(lljit_->lookup(name));
     using FunctionPtr    = R (*)(Args...);
-    auto* function       = (FunctionPtr)(function_symbol.getAddress());
+    auto* function       = static_cast<FunctionPtr>(function_symbol.getAddress());
     auto  ret            = function(std::forward<Args>(args)...);
 
     // Calling object destructors
@@ -163,7 +163,7 @@ template <typename R> R TestVM::run(String const& name)
 
     auto function_symbol = exit_on_error(lljit_->lookup(name));
     using FunctionPtr    = R (*)();
-    auto* function       = (FunctionPtr)(function_symbol.getAddress());
+    auto* function       = reinterpret_cast<FunctionPtr>(function_symbol.getAddress()); // NOLINT
     auto  ret            = function();
 
     // Calling object destructors

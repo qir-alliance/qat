@@ -7,9 +7,9 @@
 using namespace microsoft::quantum;
 
 int8_t print_call_value = 0;
-void   internal_print_name(int32_t x)
+void   internalPrintName(int32_t x)
 {
-    print_call_value += x;
+    print_call_value = static_cast<int8_t>(print_call_value + x);
 }
 
 TEST(TestToolsTestSuite, TestVmBasic)
@@ -37,8 +37,9 @@ entry:
     int32_t global_value = 4;
 
     test_vm.attachGlobalExternalVariable("global_value", &global_value);
-    test_vm.attachRuntimeFunction<void, int32_t>("print_lambda", [](int32_t x) -> void { print_call_value += 2 * x; });
-    test_vm.attachRuntimeFunction<void, int32_t>("print_fptr", internal_print_name);
+    test_vm.attachRuntimeFunction<void, int32_t>(
+        "print_lambda", [](int32_t x) -> void { print_call_value = static_cast<int8_t>(print_call_value + 2 * x); });
+    test_vm.attachRuntimeFunction<void, int32_t>("print_fptr", internalPrintName);
 
     auto val = test_vm.run<int8_t>("TheMain");
     EXPECT_EQ(print_call_value, 12);

@@ -106,7 +106,7 @@ include_directories(${LLVM_INCLUDE_DIRS})
 link_directories(${LLVM_LIBRARY_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 include_directories(${CMAKE_SOURCE_DIR})
-llvm_map_components_to_libnames(llvm_libs support core irreader passes orcjit x86asmparser x86codegen x86desc x86disassembler x86info interpreter objcarcopts aarch64asmparser aarch64codegen aarch64desc aarch64disassembler aarch64info)
+llvm_map_components_to_libnames(llvm_libs support core irreader passes orcjit mcjit x86asmparser x86codegen x86desc x86disassembler x86info interpreter objcarcopts aarch64asmparser aarch64codegen aarch64desc aarch64disassembler aarch64info)
 
 # Future placeholder for adding LLVM from source in CMake.
 add_custom_target(llvm) 

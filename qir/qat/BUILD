@@ -11,7 +11,8 @@ cc_library(
         "@llvm-project//llvm:TransformUtils",
         "@llvm-project//llvm:InstCombine",
         "@llvm-project//llvm:Scalar",
-
+        "@llvm-project//llvm:Passes",
+        
         # VM deps
         "@llvm-project//llvm:ARMCodeGen",
         "@llvm-project//llvm:ARMAsmParser",
@@ -19,7 +20,7 @@ cc_library(
         "@llvm-project//llvm:X86AsmParser",
         "@llvm-project//llvm:ExecutionEngine",
         "@llvm-project//llvm:OrcJIT",
-        "@llvm-project//llvm:MCJIT",        
+        "@llvm-project//llvm:MCJIT",
         "@llvm-project//llvm:Interpreter",
     ],
 )
