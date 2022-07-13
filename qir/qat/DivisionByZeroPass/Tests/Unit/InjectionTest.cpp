@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "DivisionByZeroPass/DivisionByZeroPass.hpp"
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "Rules/Factory.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/DivisionByZeroPass/DivisionByZeroPass.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 
@@ -51,9 +50,9 @@ std::shared_ptr<ConfigurableProfileGenerator> newProfile()
     configuration_manager.addConfig<DummyConfig>();
 
     profile->registerAnonymousProfileComponent<DummyConfig>(
-        [](DummyConfig const& config, ProfileGenerator* ptr, Profile& profile)
+        [](DummyConfig const& config, ProfileGenerator& generator, Profile& profile)
         {
-            auto& mpm = ptr->modulePassManager();
+            auto& mpm = generator.modulePassManager();
             mpm.addPass(DivisionByZeroPass());
         });
 

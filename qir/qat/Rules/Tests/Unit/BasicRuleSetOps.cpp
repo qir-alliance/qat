@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Rules/Notation/Notation.hpp"
-#include "Rules/ReplacementRule.hpp"
-#include "Rules/RuleSet.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Rules/Notation/Notation.hpp"
+#include "qir/qat/Rules/ReplacementRule.hpp"
+#include "qir/qat/Rules/RuleSet.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 #include <memory>

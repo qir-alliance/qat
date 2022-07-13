@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.4.3)
 
 project(QirPasses)
-set(CMAKE_BUILD_TYPE "Debug")
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Release")
+endif()
+
 option(MICROSOFT_ENABLE_TESTS               "Enable test targets"   ON)
 option(MICROSOFT_ENABLE_DYNAMIC_LOADING     "Use dynamic loading"   ON)
 option(MICROSOFT_GENERATE_COVERAGE          "Generate coverage"     OFF)
@@ -12,16 +15,13 @@ set(MICROSOFT_ROOT_VENDOR_DIR ${MICROSOFT_ROOT_PASSES_DIR}/vendors)
 message(STATUS "Passes dir: ${MICROSOFT_ROOT_PASSES_DIR}")
 message(STATUS "Vendor dir: ${MICROSOFT_ROOT_VENDOR_DIR}")
 
-find_package(LLVM REQUIRED CONFIG)
 include(CheckCXXCompilerFlag)
-
-message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
-message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address,undefined -g -O0 -fno-sanitize-recover=all")
 set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address,undefined  -g -O0 -fno-sanitize-recover=all")
 set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set (CMAKE_LINKER_FLAGS_RELEASE "${CMAKE_LINKER_FLAGS_RELEASE} -O3")
+
 
 # -fvisibility-inlines-hidden is set when building LLVM and on Darwin warnings
 # are triggered if the passes library is built without this flag (though otherwise it
@@ -70,11 +70,6 @@ endif(MICROSOFT_ENABLE_TESTS)
 
 
 # Setting the standard configuration for the C++ compiler
-# Rather than allowing C++17, we restrict ourselves to 
-# C++14 as this is the standard currently used by the LLVM 
-# project for compilation of the framework. While there is 
-# a very small chance that the difference in standard 
-# would break things, it is a possibility nonetheless.
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -84,10 +79,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wno-documentation-unknown-comma
 include(${MICROSOFT_ROOT_PASSES_DIR}/cmake/Testing.cmake)
 include(${MICROSOFT_ROOT_PASSES_DIR}/cmake/Library.cmake)
 
-
-
+# We export the compile commands which are needed by clang-tidy 
+# to run the static analysis
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # LLVM is normally built without RTTI. Be consistent with that.
+find_package(LLVM REQUIRED CONFIG)
+message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
+message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_LLVM13")
+
 if(NOT LLVM_ENABLE_RTTI)
   message(STATUS "RTTI is off")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
@@ -96,20 +97,19 @@ else()
 endif()
 
 
-# We export the compile commands which are needed by clang-tidy 
-# to run the static analysis
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
 # Adding LLVM include directories. We may choose
 # to move this to a module level at a later point
+include_directories(${CMAKE_BINARY_DIR}/llvm/include)
+link_directories(${CMAKE_BINARY_DIR}/llvm/lib)
+
 include_directories(${LLVM_INCLUDE_DIRS})
 link_directories(${LLVM_LIBRARY_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
-include_directories(${CMAKE_SOURCE_DIR}/qir/qat)
-llvm_map_components_to_libnames(llvm_libs support core irreader passes orcjit x86asmparser x86codegen x86desc x86disassembler x86info aarch64asmparser aarch64codegen aarch64desc aarch64disassembler aarch64info interpreter objcarcopts )
+include_directories(${CMAKE_SOURCE_DIR})
+llvm_map_components_to_libnames(llvm_libs support core irreader passes orcjit x86asmparser x86codegen x86desc x86disassembler x86info interpreter objcarcopts aarch64asmparser aarch64codegen aarch64desc aarch64disassembler aarch64info)
 
-message(STATUS "${llvm_libs}")
-
+# Future placeholder for adding LLVM from source in CMake.
+add_custom_target(llvm) 
 
 # Adding the libraries
 add_subdirectory(qir/qat)

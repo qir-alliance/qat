@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "TestTools/TestVm.hpp"
 #include "gtest/gtest.h"
+#include "qir/qat/TestTools/TestVm.hpp"
 
 using namespace microsoft::quantum;
 
@@ -14,6 +14,7 @@ void   internal_print_name(int32_t x)
 
 TEST(TestToolsTestSuite, TestVmBasic)
 {
+
     TestProgram program;
     program.parseFromScript("test.ll", R"(
 @global_value = external global i32

@@ -2,10 +2,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ProfileGenerator.hpp"
-#include "TestTools/TestVm.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ProfileGenerator.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/TestTools/TestVm.hpp"
 
 #include <unordered_set>
 #include <vector>
@@ -21,16 +20,16 @@ class IrManipulationTestHelper
     using LLVMContext       = llvm::LLVMContext;
     using SMDiagnostic      = llvm::SMDiagnostic;
     using Module            = llvm::Module;
-    using ModulePtr         = std::unique_ptr<Module>;
     using ContextPtr        = std::unique_ptr<LLVMContext>;
-    using OptimizationLevel = llvm::PassBuilder::OptimizationLevel;
+    using ModulePtr         = std::unique_ptr<Module>;
+    using OptimizationLevel = llvm::OptimizationLevel;
     using GeneratorPtr      = std::shared_ptr<ProfileGenerator>;
 
     // IrManipulationTestHelper is default constructible with no ability to move
     // or copy.
     //
 
-    IrManipulationTestHelper();
+    IrManipulationTestHelper()                                = default;
     IrManipulationTestHelper(IrManipulationTestHelper const&) = delete;
     IrManipulationTestHelper& operator=(IrManipulationTestHelper const&) = delete;
     IrManipulationTestHelper(IrManipulationTestHelper&&)                 = delete;
@@ -155,22 +154,14 @@ class IrManipulationTestHelper
     /// Whether the compilation failed.
     bool compilation_failed_{false};
 
-    /// The LLVM error encountered.
-    SMDiagnostic error_;
-
     /// The LLVM context.
     ContextPtr context_;
 
     /// Pointer to the module obtained from the compilation process.
     ModulePtr module_;
 
-    // Objects used to run a set of passes
-    //
-    llvm::PassBuilder             pass_builder_;
-    llvm::LoopAnalysisManager     loop_analysis_manager_;
-    llvm::FunctionAnalysisManager function_analysis_manager_;
-    llvm::CGSCCAnalysisManager    gscc_analysis_manager_;
-    llvm::ModuleAnalysisManager   module_analysis_manager_;
+    /// The LLVM error encountered.
+    SMDiagnostic error_;
 };
 
 } // namespace microsoft::quantum

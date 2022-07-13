@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "ZExtTransformPass/ZExtTransformPass.hpp"
+#include "qir/qat/ZExtTransformPass/ZExtTransformPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
 #include <unordered_map>

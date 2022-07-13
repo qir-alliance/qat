@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
-#include "StaticResourceComponent/ResourceAnnotationPass.hpp"
+#include "qir/qat/StaticResourceComponent/ResourceAnnotationPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -24,7 +24,7 @@ llvm::PreservedAnalyses ResourceAnnotationPass::run(llvm::Function& function, ll
 {
     if (!config_.shouldAnnotateResultUse() && !config_.shouldAnnotateQubitUse())
     {
-        return;
+        return llvm::PreservedAnalyses::all();
     }
 
     auto stats = fam.getResult<AllocationAnalysisPass>(function);

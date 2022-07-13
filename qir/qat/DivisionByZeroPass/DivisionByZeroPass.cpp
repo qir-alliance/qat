@@ -1,13 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "DivisionByZeroPass.hpp"
+#include "qir/qat/DivisionByZeroPass/DivisionByZeroPass.hpp"
 
-#include "DivisionByZeroPass/DivisionByZeroPass.hpp"
-#include "Logging/ILogger.hpp"
-#include "QatTypes/QatTypes.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
 #include <unordered_map>

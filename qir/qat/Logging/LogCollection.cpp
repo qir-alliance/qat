@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/LogCollection.hpp"
-#include "Utils/Trim.hpp"
+#include "qir/qat/Logging/LogCollection.hpp"
+
+#include "qir/qat/Utils/Trim.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -23,27 +24,27 @@ void LogCollection::info(String const& message)
 
 void LogCollection::warning(String const& message)
 {
-    had_warnings_ = true;
+    setHasWarnings(true);
     messages_.push_back({Type::Warning, current_location_, message});
 }
 
 void LogCollection::error(String const& message)
 {
-    had_errors_ = true;
+    setHasErrors(true);
     messages_.push_back({Type::Error, current_location_, message});
 }
 
 void LogCollection::internalError(String const& message)
 {
-    had_errors_ = true;
+    setHasErrors(true);
     messages_.push_back({Type::InternalError, current_location_, message});
 }
 
 void LogCollection::setLocation(SourceLocation const& loc)
 {
-    current_location_.name   = loc.name;
-    current_location_.line   = loc.line;
-    current_location_.column = loc.column;
+    current_location_.setName(loc.name());
+    current_location_.setLine(loc.line());
+    current_location_.setColumn(loc.column());
 }
 
 ILogger::Messages const& LogCollection::messages() const
@@ -53,14 +54,14 @@ ILogger::Messages const& LogCollection::messages() const
 
 void LogCollection::setLlvmHint(String const& value)
 {
-    current_location_.llvm_hint = value;
-    trim(current_location_.llvm_hint);
+    current_location_.setLlvmHint(value);
+    trim(current_location_.llvmHint());
 }
 
 void LogCollection::setFrontendHint(String const& value)
 {
-    current_location_.frontend_hint = value;
-    trim(current_location_.frontend_hint);
+    current_location_.setFrontendHint(value);
+    trim(current_location_.frontendHint());
 }
 
 void LogCollection::dump(std::ostream& out) const
@@ -97,11 +98,11 @@ void LogCollection::dump(std::ostream& out) const
 
         out << "    \"message\": \"" << message.message << "\",\n";
         out << "    \"location\": {\n";
-        out << "      \"filename\": \"" << static_cast<std::string>(message.location.name) << "\",\n";
-        out << "      \"line\": " << message.location.line << ",\n";
-        out << "      \"column\": " << message.location.column << ",\n";
-        out << "      \"llvm_hint\": \"" << message.location.llvm_hint << "\",\n";
-        out << "      \"frontend_hint\": \"" << message.location.frontend_hint << "\"\n";
+        out << "      \"filename\": \"" << static_cast<std::string>(message.location.name()) << "\",\n";
+        out << "      \"line\": " << message.location.line() << ",\n";
+        out << "      \"column\": " << message.location.column() << ",\n";
+        out << "      \"llvm_hint\": \"" << message.location.llvmHint() << "\",\n";
+        out << "      \"frontend_hint\": \"" << message.location.frontendHint() << "\"\n";
         out << "    }\n";
         out << "  }";
         not_first = true;

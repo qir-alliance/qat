@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "AllocationManager/AllocationManager.hpp"
-#include "Commandline/ConfigurationManager.hpp"
 #include "gtest/gtest.h"
+#include "qir/qat/AllocationManager/AllocationManager.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
 
 using namespace microsoft::quantum;
 

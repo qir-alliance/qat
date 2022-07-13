@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/IOperandPrototype.hpp"
-#include "Rules/Patterns/PhiPattern.hpp"
+#include "qir/qat/Rules/Patterns/PhiPattern.hpp"
+
+#include "qir/qat/Rules/IOperandPrototype.hpp"
 
 namespace microsoft::quantum
 {

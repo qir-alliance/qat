@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <unordered_map>
 #include <vector>

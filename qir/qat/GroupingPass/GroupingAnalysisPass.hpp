@@ -2,12 +2,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "GroupingPass/GroupingPassConfiguration.hpp"
-#include "Logging/ILogger.hpp"
-#include "Profile/Profile.hpp"
-#include "QatTypes/QatTypes.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -74,7 +72,7 @@ class GroupingAnalysisPass : public llvm::AnalysisInfoMixin<GroupingAnalysisPass
 
     ILoggerPtr logger_{nullptr};
 
-    static llvm::AnalysisKey Key;
+    static llvm::AnalysisKey Key; // NOLINT
     friend struct llvm::AnalysisInfoMixin<GroupingAnalysisPass>;
 };
 

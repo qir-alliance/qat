@@ -1,0 +1,39 @@
+version: 0.1
+cli:
+  version: 0.13.2-beta
+lint:
+  compile_commands: json  
+  linters:
+    - name: clang-tidy
+      environment:
+        - name: DEVELOPER_DIR
+          value: ${env.DEVELOPER_DIR}
+          optional: true
+        - name: PATH
+          value: ${linter}/bin 
+  enabled:
+    - actionlint@1.6.13
+    - black@22.3.0
+    - buildifier@5.1.0
+    - clang-format@13.0.1
+    - clang-tidy@13.0.1
+    - flake8@4.0.1
+    - gitleaks@8.8.8
+    - hadolint@2.10.0
+    - isort@5.10.1
+    - markdownlint@0.31.1
+    - prettier@2.7.1
+    - svgo@2.8.0
+#  disabled:
+#    - clang-tidy
+  ignore:
+    - linters: [ALL]
+      paths:
+        - .devcontainer/*
+        - .devcontainer/**
+        - .trunk/*out/**
+        - node_js/**
+        - "**/node_js/**"
+        - develop_env/**
+        - "**/develop_env/**"
+        - "bazel-*/**"

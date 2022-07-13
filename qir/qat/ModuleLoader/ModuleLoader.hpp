@@ -2,12 +2,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ModuleLoader/DebugInfoUpdater.hpp"
-#include "ModuleLoader/InstructionLocationTable.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/ModuleLoader/DebugInfoUpdater.hpp"
+#include "qir/qat/ModuleLoader/InstructionLocationTable.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp"
 
 namespace microsoft::quantum
 {
@@ -121,17 +120,13 @@ class ModuleLoader
     {
       public:
         using PassBuilder             = llvm::PassBuilder;
-        using OptimizationLevel       = PassBuilder::OptimizationLevel;
+        using OptimizationLevel       = llvm::OptimizationLevel;
         using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
 
         explicit SingleModuleTransformation(
             OptimizationLevel const& optimization_level = OptimizationLevel::O0,
             bool                     debug              = false)
-          : loop_analysis_manager_{}
-          , function_analysis_manager_{}
-          , gscc_analysis_manager_{}
-          , module_analysis_manager_{}
-          , optimization_level_{optimization_level}
+          : optimization_level_{optimization_level}
           , debug_{debug}
         {
 

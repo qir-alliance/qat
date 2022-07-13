@@ -2,13 +2,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
-#include "Profile/Profile.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "Rules/RuleSet.hpp"
-#include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/Profile/Profile.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/Rules/RuleSet.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 
 #include <functional>
 #include <unordered_map>

@@ -2,9 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "QatTypes/QatTypes.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <stdexcept>
 #include <unordered_map>
@@ -12,7 +11,7 @@ namespace microsoft::quantum
 {
 namespace details
 {
-    inline void InitFramework()
+    inline void initFramework()
     {
         static bool was_initialized{false};
         if (was_initialized)
@@ -20,6 +19,7 @@ namespace details
             return;
         }
         was_initialized = true;
+
         llvm::InitializeNativeTarget();
         llvm::InitializeNativeTargetAsmPrinter();
     }
@@ -66,7 +66,7 @@ class TestVM
     TestVM(TestProgram& program)
       : program_{program}
     {
-        details::InitFramework();
+        details::initFramework();
     }
 
     template <typename T> void                   attachGlobalExternalVariable(String const& name, T* pointer);
