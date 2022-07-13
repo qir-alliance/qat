@@ -12,7 +12,7 @@ cc_library(
         "@llvm-project//llvm:InstCombine",
         "@llvm-project//llvm:Scalar",
         "@llvm-project//llvm:Passes",
-        
+
         # VM deps
         "@llvm-project//llvm:ARMCodeGen",
         "@llvm-project//llvm:ARMAsmParser",
