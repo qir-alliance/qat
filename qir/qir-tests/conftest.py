@@ -1,9 +1,8 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 #
-from validation_tests import *
-from comparison_tests import *
-from reduction_tests import *
+from comparison_tests import *  # noqa: F403
+from reduction_tests import *  # noqa: F403
+from validation_tests import *  # noqa: F403
 
-
-__all__ = all_comparison + all_reduction + all_validation
+__all__ = all_comparison + all_reduction + all_validation  # noqa: F405

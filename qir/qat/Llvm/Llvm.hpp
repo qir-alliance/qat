@@ -102,6 +102,13 @@
 // Debugging
 #include "llvm/IR/DebugInfoMetadata.h"
 
+namespace llvm
+{
+#ifdef USE_LLVM13
+using OptimizationLevel = PassBuilder::OptimizationLevel;
+#endif
+} // namespace llvm
+
 #if defined(__clang__)
 #pragma Clang diagnostic pop
 #endif

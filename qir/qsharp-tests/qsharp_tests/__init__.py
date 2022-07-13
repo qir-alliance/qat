@@ -1,10 +1,10 @@
-
-import os
 import glob
+import os
 import shutil
+import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
-import subprocess
+
 import pytest
 
 BASE_DIR = os.path.dirname(__file__)
@@ -33,17 +33,17 @@ class QsharpProject(object):
         root = tree.getroot()
 
         # Updating to QIR generation
-        for group in root.iter('PropertyGroup'):
+        for group in root.iter("PropertyGroup"):
             qir_generation = group.find("QirGeneration")
             if qir_generation is None:
-                qir_generation = ET.SubElement(group, 'QirGeneration')
+                qir_generation = ET.SubElement(group, "QirGeneration")
             qir_generation.text = "true"
 
             library_type = group.find("OutputType")
             if library_type is not None:
                 library_type.text = "Exe"
 
-        for group in root.iter('ItemGroup'):
+        for group in root.iter("ItemGroup"):
             if group.find("ProjectReference") is not None:
                 self.has_relative_dependencies = True
                 self.skip = True
@@ -71,7 +71,8 @@ class QsharpProject(object):
             " ".join(["dotnet", "build", self.filename]),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            shell=True)
+            shell=True,
+        )
 
         out, errs = p.communicate()
         errs = errs.decode()
@@ -109,15 +110,13 @@ def generate_test(project_file: str):
     return response
 
 
-all_qsharp = [
+all_qsharp = []
 
-]
+ignore_files = ["CHSHGame.csproj"]  # TODO(tfr): debug this example
 
-ignore_files = [
-    "CHSHGame.csproj"  # TODO(tfr): debug this example
-]
-
-for project_file in glob.glob(os.path.join(QSHARP_SAMPLES, "**", "*.csproj"), recursive=True):
+for project_file in glob.glob(
+    os.path.join(QSHARP_SAMPLES, "**", "*.csproj"), recursive=True
+):
     project_dir, name = project_file.rsplit("/", 1)
     filename = name
 
@@ -132,7 +131,7 @@ for project_file in glob.glob(os.path.join(QSHARP_SAMPLES, "**", "*.csproj"), re
         if project.skip:
             continue
 
-    name = "qsharp_"+name.replace("-", "_").replace(".", "_")
+    name = "qsharp_" + name.replace("-", "_").replace(".", "_")
     locals()[name] = generate_test(project_file)
 
     all_qsharp.append(name)

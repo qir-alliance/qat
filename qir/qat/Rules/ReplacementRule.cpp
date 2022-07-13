@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/ReplacementRule.hpp"
+#include "qir/qat/Rules/ReplacementRule.hpp"
 
 namespace microsoft::quantum
 {

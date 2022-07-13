@@ -43,27 +43,28 @@
 ///
 ///
 
-#include "Apps/Qat/QatConfig.hpp"
-#include "Commandline/ConfigurationManager.hpp"
-#include "Commandline/ParameterParser.hpp"
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Generators/LlvmPassesConfiguration.hpp"
-#include "GroupingPass/GroupingAnalysisPass.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "GroupingPass/GroupingPassConfiguration.hpp"
-#include "Logging/CommentLogger.hpp"
-#include "ModuleLoader/ModuleLoader.hpp"
-#include "Profile/Profile.hpp"
-#include "Rules/Factory.hpp"
-#include "Rules/FactoryConfig.hpp"
-#include "TransformationRulesPass/TransformationRulesPass.hpp"
-#include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "ValidationPass/ValidationPassConfiguration.hpp"
-#include "Validator/Validator.hpp"
+#include "qir/qat/Apps/Qat/QatConfig.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Commandline/ParameterParser.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/CommentLogger.hpp"
+#include "qir/qat/ModuleLoader/ModuleLoader.hpp"
+#include "qir/qat/Profile/Profile.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Validator/Validator.hpp"
 
-#include "Llvm/Llvm.hpp"
-
+#ifndef _WIN32
 #include <dlfcn.h>
+#endif
 
 #include <fstream>
 #include <iomanip>
@@ -168,6 +169,7 @@ int main(int argc, char** argv)
 
         if (!config.load().empty())
         {
+#ifndef _WIN32
             // TODO (issue-47): Add support for multiple loads
             void* handle = dlopen(config.load().c_str(), RTLD_LAZY);
 
@@ -183,6 +185,9 @@ int main(int argc, char** argv)
 
                 load_component(generator.get());
             }
+#else
+            throw std::runtime_error("Dynamic modules not supported on the Windows platform.");
+#endif
         }
 
         // Reconfiguring to get all the arguments of the passes registered
@@ -256,22 +261,22 @@ int main(int argc, char** argv)
 
         // Getting the optimization level
         //
-        auto optimization_level = llvm::PassBuilder::OptimizationLevel::O0;
+        auto optimization_level = llvm::OptimizationLevel::O0;
 
         // Setting the optimization level
         if (config.isOpt1Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O1;
+            optimization_level = llvm::OptimizationLevel::O1;
         }
 
         if (config.isOpt2Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O2;
+            optimization_level = llvm::OptimizationLevel::O2;
         }
 
         if (config.isOpt3Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O3;
+            optimization_level = llvm::OptimizationLevel::O3;
         }
 
         // Profile manipulation
@@ -283,7 +288,7 @@ int main(int argc, char** argv)
 
         if (config.shouldGenerate())
         {
-            profile.apply(*module);
+            profile->apply(*module);
 
             //  Preventing subsequent routines to run if errors occurred.
             if (logger && (logger->hadErrors() || logger->hadWarnings()))
@@ -330,7 +335,7 @@ int main(int argc, char** argv)
 
         if (ret == 0 && config.verifyModule())
         {
-            if (!profile.verify(*module))
+            if (!profile->verify(*module))
             {
                 std::cerr << "IR is broken." << std::endl;
                 ret = -1;
@@ -339,7 +344,7 @@ int main(int argc, char** argv)
 
         if (ret == 0 && config.shouldValidate())
         {
-            if (!profile.validate(*module))
+            if (!profile->validate(*module))
             {
                 std::cerr << "IR did not validate to the profile constraints." << std::endl;
                 ret = -1;

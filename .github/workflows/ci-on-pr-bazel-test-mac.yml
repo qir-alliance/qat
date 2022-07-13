@@ -1,0 +1,111 @@
+name: "macOS CI"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types:
+      - created
+
+jobs:
+  build-debug:
+    runs-on: macos-12
+    name: "Bazel Debug Build"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.pull_request.head.ref}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+
+      - name: Bazel cache
+        id: cache-bazel-debug
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~/.cache/bazel/
+          key: ${{ runner.os }}-bazel-debug
+
+      - name: "Building debug"
+        run: |
+          bazelisk build --keep_going --disk_cache=~/.cache/bazel/ --config generic_clang --config debug --features asan //qir/...
+        env:
+          CC: clang
+          CXX: clang++
+
+  build-release:
+    runs-on: macos-12
+    name: "Bazel Release Build"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.pull_request.head.ref}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+
+      - name: Bazel cache
+        id: cache-bazel-release
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~/.cache/bazel/
+          key: ${{ runner.os }}-bazel-release
+
+      - name: "Building release"
+        run: |
+          bazelisk build --keep_going --disk_cache=~/.cache/bazel/ --config generic_clang //qir/...
+        env:
+          CC: clang
+          CXX: clang++
+
+  test-debug:
+    runs-on: macos-12
+    name: "Bazel Debug Test"
+    needs: [build-debug]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.pull_request.head.ref}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+
+      - name: Bazel cache
+        id: cache-bazel-debug
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~/.cache/bazel/
+          key: ${{ runner.os }}-bazel-debug
+
+      - name: "Running debug unit tests with address sanitation"
+        run: |
+          bazelisk test --test_output=all --keep_going --disk_cache=~/.cache/bazel/ --config generic_clang --config debug --features asan //qir/...
+        env:
+          CC: clang
+          CXX: clang++
+
+  test-release:
+    runs-on: macos-12
+    name: "Bazel Release Test"
+    needs: [build-release]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.pull_request.head.ref}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+
+      - name: Bazel cache
+        id: cache-bazel-release
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~/.cache/bazel/
+          key: ${{ runner.os }}-bazel-release
+
+      - name: "Running release tests"
+        run: |
+          bazelisk test --test_output=all --keep_going --disk_cache=~/.cache/bazel/ --config generic_clang //qir/...
+        env:
+          CC: clang
+          CXX: clang++

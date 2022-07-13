@@ -1,0 +1,1722 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"curr",
+				"currentAction"
+			],
+			[
+				"ac",
+				"actions"
+			],
+			[
+				"lin",
+				"lineChanges"
+			],
+			[
+				"bg-",
+				"bg-gray-900"
+			],
+			[
+				"no",
+				"noExpand"
+			],
+			[
+				"le",
+				"length"
+			],
+			[
+				"Route",
+				"Route>"
+			],
+			[
+				"mod",
+				"module_"
+			],
+			[
+				"se",
+				"section"
+			],
+			[
+				"SE",
+				"SECTION_ID_TO_TEXT"
+			],
+			[
+				"fl",
+				"flex-col"
+			],
+			[
+				"border",
+				"border-dashed"
+			],
+			[
+				"border-",
+				"border-gray-300"
+			],
+			[
+				"class",
+				"className"
+			],
+			[
+				"setIma",
+				"setImageUrl"
+			],
+			[
+				"get",
+				"getAttribute"
+			],
+			[
+				"candi",
+				"candidate_color"
+			],
+			[
+				"const",
+				"contents"
+			],
+			[
+				"cate",
+				"category"
+			],
+			[
+				"catego",
+				"categorySlug"
+			],
+			[
+				"clas",
+				"className"
+			],
+			[
+				"ease-",
+				"ease-out"
+			],
+			[
+				"Prod",
+				"ProductCard>"
+			],
+			[
+				"elem",
+				"eliminateConstants"
+			],
+			[
+				"Function",
+				"FunctionToModule"
+			],
+			[
+				"ava",
+				"available4"
+			],
+			[
+				"avail",
+				"available3"
+			],
+			[
+				"Dumm",
+				"DummyTest"
+			],
+			[
+				"req",
+				"requires_qubits_"
+			],
+			[
+				"An",
+				"AllocationAnalysisPass"
+			],
+			[
+				"availab",
+				"available3"
+			],
+			[
+				"getA",
+				"getAttributes"
+			],
+			[
+				"Call",
+				"CallInst"
+			],
+			[
+				"Grou",
+				"GroupingPass"
+			],
+			[
+				"qu",
+				"qubits2"
+			],
+			[
+				"qi",
+				"qubits1"
+			],
+			[
+				"qub",
+				"qubits2"
+			],
+			[
+				"COM",
+				"COMPONENT_LICENSE"
+			],
+			[
+				"res",
+				"restrictHeight"
+			],
+			[
+				"compo",
+				"component"
+			],
+			[
+				"SPLIT",
+				"SPLIT_EDITOR_ONLY"
+			],
+			[
+				"bg-gr",
+				"bg-gray-100"
+			],
+			[
+				"flex",
+				"flex-col"
+			],
+			[
+				"clip",
+				"clipboard"
+			],
+			[
+				"sear",
+				"searchParameters"
+			],
+			[
+				"Compo",
+				"ComponentDetails"
+			],
+			[
+				"slug",
+				"categorySlug"
+			],
+			[
+				"base",
+				"baseUrl"
+			],
+			[
+				"space",
+				"space-x-2"
+			],
+			[
+				"bor",
+				"border-l"
+			],
+			[
+				"trans",
+				"translate-x-0"
+			],
+			[
+				"border-gr",
+				"border-gray-200"
+			],
+			[
+				"Pre",
+				"PreviewComponent"
+			],
+			[
+				"onC",
+				"onClick"
+			],
+			[
+				"bg",
+				"bg-gray-200"
+			],
+			[
+				"Compon",
+				"ComponentCategory"
+			],
+			[
+				"un",
+				"unordered_set"
+			],
+			[
+				"func",
+				"function_details"
+			],
+			[
+				"pro",
+				"product"
+			],
+			[
+				"Component",
+				"ComponentCategory"
+			],
+			[
+				"compon",
+				"componentCategories"
+			],
+			[
+				"unord",
+				"unordered_map"
+			],
+			[
+				"replace",
+				"replace_qubit_on_reset_"
+			],
+			[
+				"shoul",
+				"shouldReplaceQubitsOnReset"
+			],
+			[
+				"Res",
+				"ResourceType"
+			],
+			[
+				"call",
+				"call_instr"
+			],
+			[
+				"al",
+				"already_replaced"
+			],
+			[
+				"null",
+				"nullptr_cast"
+			],
+			[
+				"logg",
+				"logger_"
+			],
+			[
+				"add",
+				"add_ir_debug_info_"
+			],
+			[
+				"align",
+				"align-center"
+			],
+			[
+				"grid",
+				"grid-cols"
+			],
+			[
+				"just",
+				"justify-end"
+			],
+			[
+				"redir",
+				"redirect_to"
+			],
+			[
+				"bg-indigo",
+				"bg-indigo-600"
+			],
+			[
+				"cont",
+				"content"
+			],
+			[
+				"set",
+				"setTemplate"
+			],
+			[
+				"star",
+				"startswith"
+			],
+			[
+				"test_ci",
+				"test_circuit"
+			],
+			[
+				"test",
+				"test_circuits"
+			],
+			[
+				"TES",
+				"TEST_CIRCUITS"
+			],
+			[
+				"Su",
+				"SubdomainName"
+			],
+			[
+				"prof",
+				"profile_name_"
+			],
+			[
+				"allow",
+				"allowlist_pointer_types_"
+			],
+			[
+				"pointer",
+				"pointer_location_"
+			],
+			[
+				"op",
+				"opcodes_"
+			],
+			[
+				"type",
+				"type_register_"
+			],
+			[
+				"ini",
+				"initiator"
+			],
+			[
+				"script_bu",
+				"script_builder_"
+			],
+			[
+				"_qubit",
+				"_qubit_to_req"
+			],
+			[
+				"Type",
+				"TypedValuePrototype"
+			],
+			[
+				"px-",
+				"px-8"
+			],
+			[
+				"available",
+				"available_apps"
+			],
+			[
+				"valid",
+				"validated_data"
+			],
+			[
+				"Project",
+				"ProjectSettingsSerializer"
+			],
+			[
+				"is",
+				"is_superuser"
+			],
+			[
+				"c_",
+				"c_void_p"
+			],
+			[
+				"ar",
+				"arg_types"
+			],
+			[
+				"TypeDeclar",
+				"typeDeclaration"
+			],
+			[
+				"type_id",
+				"type_id_to_native_type_"
+			],
+			[
+				"argumen",
+				"argument"
+			],
+			[
+				"int",
+				"int8_t"
+			],
+			[
+				"free",
+				"free_functions_"
+			],
+			[
+				"Ll",
+				"LlvmContext"
+			],
+			[
+				"runt",
+				"runtime"
+			],
+			[
+				"Qir",
+				"QirProgram"
+			],
+			[
+				"arrr",
+				"arrayInitializer"
+			],
+			[
+				"TypedV",
+				"TypedValuePrototypePtr"
+			],
+			[
+				"getFucn",
+				"getFunctionByLlvmName"
+			],
+			[
+				"argu",
+				"argumentInstances"
+			],
+			[
+				"TypedValu",
+				"TypedValuePrototypePtr"
+			],
+			[
+				"arg",
+				"arg_ref"
+			],
+			[
+				"parent",
+				"parent_"
+			],
+			[
+				"TypedValue",
+				"TypedValuePrototypePtr"
+			],
+			[
+				"par",
+				"parent"
+			],
+			[
+				"ena",
+				"enable_shared_from_this"
+			],
+			[
+				"Qi",
+				"QirScope"
+			],
+			[
+				"function",
+				"function_builders_"
+			],
+			[
+				"funcion",
+				"function_declaration_cache_"
+			],
+			[
+				"unorr",
+				"unordered_set"
+			],
+			[
+				"if",
+				"ifStatement"
+			],
+			[
+				"final",
+				"final_block_"
+			],
+			[
+				"Else",
+				"ElseStatement"
+			],
+			[
+				"block",
+				"final_block"
+			],
+			[
+				"fina",
+				"final_block_"
+			],
+			[
+				"IfState",
+				"IfStatementPtr"
+			],
+			[
+				"getExt",
+				"getExtractValue"
+			],
+			[
+				"ll",
+				"llvm_arr"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": ".github/workflows/ci-on-pr-bazel-test-win.yml",
+			"settings":
+			{
+				"buffer_size": 2091,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					4,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAE0CAAAAAAAATgIAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAATQIAAAAAAABNAgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					5,
+					1,
+					"sbp_yank",
+					null,
+					"AQAAAE4CAAAAAAAAjgIAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAATgIAAAAAAABOAgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					6,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAI4CAAAAAAAAjwIAAAAAAAAAAAAAjwIAAAAAAACRAgAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAjgIAAAAAAACOAgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					10,
+					3,
+					"indent",
+					null,
+					"BgAAAE4CAAAAAAAAUAIAAAAAAAAAAAAAbAIAAAAAAABuAgAAAAAAAAAAAABOAgAAAAAAAFACAAAAAAAAAAAAAG4CAAAAAAAAcAIAAAAAAAAAAAAATgIAAAAAAABQAgAAAAAAAAAAAABwAgAAAAAAAHICAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAATgIAAAAAAACPAgAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					20,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAPMFAAAAAAAA9AUAAAAAAAAAAAAAmwIAAAAAAACbAgAAAAAAAAIAAAAgIA",
+					"AQAAAAAAAAABAAAA8wUAAAAAAADzBQAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					22,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAPEFAAAAAAAA8gUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA8QUAAAAAAADxBQAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					23,
+					1,
+					"sbp_yank",
+					null,
+					"AQAAAPIFAAAAAAAAPwYAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA8gUAAAAAAADyBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					24,
+					1,
+					"left_delete",
+					null,
+					"AQAAAD4GAAAAAAAAPgYAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAAPwYAAAAAAAA/BgAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\nDebugger\n--------\n\n  For getting set up see https://github.com/daveleroy/sublime_debugger\n\n  For a full list of changes see https://github.com/daveleroy/sublime_debugger/commits\n\n\n  Version 0.6.8\n\n  - python: fixes issue with installing adapter\n  - python: allow specifying the python interpreter with `python`\n\n\n  Version 0.6.7\n\n  - Fixes an issue with the latest version of vscode lldb\n\n\n  Version 0.6.6\n\n  - Allow inputing debugger commands directly into the debugger console\n  - Auto complete for debugger commands (not all adapters support this)\n  - A number of performance/usability improvements for the debugger console\n\n\n  Version 0.6.4\n\n  - Added support for vscode-js-debug for chrome/node/edge adapters\n  - Improved snippet support\n\n\n  Version 0.6.3\n\n  - Adjusted the calculation for determining a good value for ui_rem_width_scale\n  - Added setting ui_rem_width_scale_adjust_automatically for disabling automatic calculation of ui_rem_width_scale\n\n\n  Version 0.6.2\n\n  - Fixes a layout issue on Linux\n\n\n  Version 0.6.1\n\n  - Fixes an issue with the debugger panel not being correctly sized on Windows/Linux #121\n  - Fixes an issue with hover evaluation #152 (@ta946)\n\n\n  Version 0.6.0\n\n  - This update changes how the output is handled. Instead of showing up as a tab in the debugger UI the layout is changed to a split view and the output is created in a standard view. This isn't perfect but it at least allows copy/paste/scrolling etc. The output view now also supports some ansi escape codes. You can customize the layout/placement of the view in the settings.\n  - Adds dissasembly syntax for LLDB\n  - Elixer support (@timfjord)\n\n\n  Version 0.5.4\n\n  - Resolve the`$workspaceFolder` variable to first folder project instead of being an alias of `$project_path`  (@rchl)\n  - Fix layout positioning in latest ST dev builds (@rchl)\n  - lldb: Fixes an issue with the integrated terminal handling\n\n\n  Version 0.5.3\n\n  - Tool tips when hovering over debugger controls\n  - Moved Debugger menu item into tools -> Debugger\n  - Improved json schema support for auto completeing adapter configurations (requires LSP-json)\n  - Fixes node json schema contributions\n  - Fixes issue with installing the php adapter\n  - Fixes issues with localized pacakages and json schema/snippets\n  - Fixes issue with external terminal on mac\n\n\n  Version 0.5.2\n\n  - Disable winpty on Windows (needs to be rebuilt for python 3.8)\n\n\n  Version 0.5.1\n\n  - Fixes 64/32 bit windows importing the wrong winpyty versions\n\n\n  Version 0.5.0\n\n  - python: Allow module launch configurations (@anergictcell)\n  - lldb: fixes issue with toggle disassembly\n  - ruby: added adapter (requires readapt)\n\n  - The install adapter menu now checks installed adapters for updates (for most adapters)\n  - The install adapter menu now has a link to each adapters documentations\n\n  - Added 'Debugger: Clear Breakpoints' command that clears all breakpoints\n\n  - Support for exception breakpoint filter conditions (not all adapters support this)\n  - Support for debug session hierarchies which is going to be required for some complex adapter setups such as vscode-debug-js\n  - Support the \"clipboard\" context when copying a variables value\n\n  - When expanding a variable display a loading indicator when the variables children are fetched.\n  - Show error message inline when expanding a variable fails\n  - Allow expanding/collapsing a debug session\n  - Improved handling of stack frames that marked as labels\n  - Improved handling of stack frames that are marked as deemphasized or their source is deemphasized\n  - Fixes integrated terminal\n\n\n  Version 0.4.1\n\n  - Adds explicit font setting for debugger panel\n\n\n  Version 0.4.0\n\n  - debugger_configuration replaces debug.configurations and is now defined at the root of the .sublime-project instead of inside settings\n  - Adds support for tasks see https://github.com/daveleroy/sublime_debugger#tasks\n  - Adds support for pre_debug_task and post_debug_task which can be used to build etc\n  - Adds schema support for LSP-json for auto completeing adapter configurations (see https://github.com/sublimelsp/LSP-json)\n  - Improvements to lldb adapter adding toggle disassembly, display options, dereference options\n  - Clicking a terminal panel when already selected now shows an output panel with the entire contents\n  - Renamed a bunch of commands (so if you bound any commands check them)\n  - Node adapter now has snippets\n  - Fixes issues with latest release of lldb adapter\n  - Fixes default ui scale accross platforms\n\n\n  Version 0.3.1\n\n  - Fixes issue with sizing and alignment of panels on windows\n  - Fixes path of go adapter\n\n\n  Version 0.3.0\n\n  - Initial support for multiple debug sessions\n  - Use debugpy instead of ptvsd for python adapter\n  - Right align line numbers in variables/callstack panel\n  - Improved layout of panels\n\n\n  Version 0.2.3\n\n  - Updates path for lldb\n\n\n  Version 0.2.3\n\n  - Updates path for lldb\n\n\n  Version 0.2.2\n\n  - Show dialog with error message when launching fails (to match vscode)\n  - In multi-threaded programs the reason for why a specific thread was stopped is now only displayed on that thread even if all threads were stopped\n  - If running a build with `sublime_build` in the configuration don't start debugging if the build fails with an exit code\n  - Fixes issue with pause not working\n  - Fixes rendering performance regression\n  - Fixes gutter icons on windows\n\n\n  Version 0.2.1\n\n  - Debugging with a single thread now just displays the stack frames without the thread header\n  - When launching a configuration and the adapter is not installed offer to install it\n  - When auto selecting a stack frame prefer the first none subtle stack frame\n  - Fixes call stack layout when encountering long stack frame names\n  - Fixes various issues with multi threaded debugging\n  - Fixes hover providers\n\n\n  Version 0.2.0\n\n  - Support for column breakpoints (requires adapter support)\n  - Support for data breakpoints (requires adapter support, currently only lldb?)\n  - Left-click gutter now toggles breakpoints, right-clicking a breakpoint allows editing/advanced options\n  - Watch expressions\n  - Loaded Modules/Sources panels\n  - Adds Node debug adapter (@appelgriebsch)\n  - External terminal support. Terminal on Mac (Needs support for Windows/Linux) or Sublime's Terminus package.\n  - Integrated terminal now strips ascii control sequences \n  - Settings button\n  - Show currently installed version of an adapter, show download progress when installing an adapter\n  - Fixes issues that sometimes occurred installing/reinstalling adapters\n  - Fixes issues with reloading plugin\n\n\n  Version 0.1.8\n\n  - Fixes core not defined error\n\n\n  Version 0.1.7\n\n  - Allow setting logging options in settings\n  - Updated url for vscode-firefox-debugger (@appelgriebsch)\n  - Fixes issue preventing Debugger: Install Adapters from being run from the command palette\n  - Fixes issue where some debug adapters were failing to be fully unzipped on Windows because of long paths\n\n\n  Version 0.1.6\n\n  - Adds run to cursor command\n  - Fixes issue preventing installing debug adapters\n\n\n  Version 0.1.5\n\n  - Fixes issue that prevented debugging on windows\n\n\n  Version 0.1.4\n\n  - New styling of panels and updated layout to better support temporary panels created for build results/integrated terminal (and in the future allow customizing the layout of the panels)\n  - New console rendering code to support text wrapping and build results/integrated terminal\n  - Support internal terminal requests to allow program input. Requires configuration changes to use this feature which depends on the adapter in question. (LLVM uses \"terminal\": \"integrated\")\n  - Allow defining platform specific configuration settings with a top level object called \"linux\", \"osx\", or \"windows\" in your configuration. Same as vscode \n  - Fixes issue where hover providers/autocomplete/run command was not working for some debug adapters \n  - Fixes issue where using $file and other variables in a configuration had their values expanded when the debugger was opened not when the debugger was started\n  - Fixes some wonkiness that occurred when stepping the debugger that caused it to not update correctly\n\n\n  Version 0.1.3\n\n  - When attempting to open the debugger in a window without a sublime project prompt the user to create one.\n  - Fixes some other minor bugs and configuration issues\n\n\n  Version 0.1.0\n\n  - Adds package control support",
+			"settings":
+			{
+				"buffer_size": 8494,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"read_only": true,
+				"scratch": true
+			},
+			"undo_stack":
+			[
+				[
+					1,
+					1,
+					"insert",
+					{
+						"characters": "Package Control Messages\n========================\n\nDebugger\n--------\n\n  For getting set up see https://github.com/daveleroy/sublime_debugger\n\n  For a full list of changes see https://github.com/daveleroy/sublime_debugger/commits\n\n\n  Version 0.6.8\n\n  - python: fixes issue with installing adapter\n  - python: allow specifying the python interpreter with `python`\n\n\n  Version 0.6.7\n\n  - Fixes an issue with the latest version of vscode lldb\n\n\n  Version 0.6.6\n\n  - Allow inputing debugger commands directly into the debugger console\n  - Auto complete for debugger commands (not all adapters support this)\n  - A number of performance/usability improvements for the debugger console\n\n\n  Version 0.6.4\n\n  - Added support for vscode-js-debug for chrome/node/edge adapters\n  - Improved snippet support\n\n\n  Version 0.6.3\n\n  - Adjusted the calculation for determining a good value for ui_rem_width_scale\n  - Added setting ui_rem_width_scale_adjust_automatically for disabling automatic calculation of ui_rem_width_scale\n\n\n  Version 0.6.2\n\n  - Fixes a layout issue on Linux\n\n\n  Version 0.6.1\n\n  - Fixes an issue with the debugger panel not being correctly sized on Windows/Linux #121\n  - Fixes an issue with hover evaluation #152 (@ta946)\n\n\n  Version 0.6.0\n\n  - This update changes how the output is handled. Instead of showing up as a tab in the debugger UI the layout is changed to a split view and the output is created in a standard view. This isn't perfect but it at least allows copy/paste/scrolling etc. The output view now also supports some ansi escape codes. You can customize the layout/placement of the view in the settings.\n  - Adds dissasembly syntax for LLDB\n  - Elixer support (@timfjord)\n\n\n  Version 0.5.4\n\n  - Resolve the`$workspaceFolder` variable to first folder project instead of being an alias of `$project_path`  (@rchl)\n  - Fix layout positioning in latest ST dev builds (@rchl)\n  - lldb: Fixes an issue with the integrated terminal handling\n\n\n  Version 0.5.3\n\n  - Tool tips when hovering over debugger controls\n  - Moved Debugger menu item into tools -> Debugger\n  - Improved json schema support for auto completeing adapter configurations (requires LSP-json)\n  - Fixes node json schema contributions\n  - Fixes issue with installing the php adapter\n  - Fixes issues with localized pacakages and json schema/snippets\n  - Fixes issue with external terminal on mac\n\n\n  Version 0.5.2\n\n  - Disable winpty on Windows (needs to be rebuilt for python 3.8)\n\n\n  Version 0.5.1\n\n  - Fixes 64/32 bit windows importing the wrong winpyty versions\n\n\n  Version 0.5.0\n\n  - python: Allow module launch configurations (@anergictcell)\n  - lldb: fixes issue with toggle disassembly\n  - ruby: added adapter (requires readapt)\n\n  - The install adapter menu now checks installed adapters for updates (for most adapters)\n  - The install adapter menu now has a link to each adapters documentations\n\n  - Added 'Debugger: Clear Breakpoints' command that clears all breakpoints\n\n  - Support for exception breakpoint filter conditions (not all adapters support this)\n  - Support for debug session hierarchies which is going to be required for some complex adapter setups such as vscode-debug-js\n  - Support the \"clipboard\" context when copying a variables value\n\n  - When expanding a variable display a loading indicator when the variables children are fetched.\n  - Show error message inline when expanding a variable fails\n  - Allow expanding/collapsing a debug session\n  - Improved handling of stack frames that marked as labels\n  - Improved handling of stack frames that are marked as deemphasized or their source is deemphasized\n  - Fixes integrated terminal\n\n\n  Version 0.4.1\n\n  - Adds explicit font setting for debugger panel\n\n\n  Version 0.4.0\n\n  - debugger_configuration replaces debug.configurations and is now defined at the root of the .sublime-project instead of inside settings\n  - Adds support for tasks see https://github.com/daveleroy/sublime_debugger#tasks\n  - Adds support for pre_debug_task and post_debug_task which can be used to build etc\n  - Adds schema support for LSP-json for auto completeing adapter configurations (see https://github.com/sublimelsp/LSP-json)\n  - Improvements to lldb adapter adding toggle disassembly, display options, dereference options\n  - Clicking a terminal panel when already selected now shows an output panel with the entire contents\n  - Renamed a bunch of commands (so if you bound any commands check them)\n  - Node adapter now has snippets\n  - Fixes issues with latest release of lldb adapter\n  - Fixes default ui scale accross platforms\n\n\n  Version 0.3.1\n\n  - Fixes issue with sizing and alignment of panels on windows\n  - Fixes path of go adapter\n\n\n  Version 0.3.0\n\n  - Initial support for multiple debug sessions\n  - Use debugpy instead of ptvsd for python adapter\n  - Right align line numbers in variables/callstack panel\n  - Improved layout of panels\n\n\n  Version 0.2.3\n\n  - Updates path for lldb\n\n\n  Version 0.2.3\n\n  - Updates path for lldb\n\n\n  Version 0.2.2\n\n  - Show dialog with error message when launching fails (to match vscode)\n  - In multi-threaded programs the reason for why a specific thread was stopped is now only displayed on that thread even if all threads were stopped\n  - If running a build with `sublime_build` in the configuration don't start debugging if the build fails with an exit code\n  - Fixes issue with pause not working\n  - Fixes rendering performance regression\n  - Fixes gutter icons on windows\n\n\n  Version 0.2.1\n\n  - Debugging with a single thread now just displays the stack frames without the thread header\n  - When launching a configuration and the adapter is not installed offer to install it\n  - When auto selecting a stack frame prefer the first none subtle stack frame\n  - Fixes call stack layout when encountering long stack frame names\n  - Fixes various issues with multi threaded debugging\n  - Fixes hover providers\n\n\n  Version 0.2.0\n\n  - Support for column breakpoints (requires adapter support)\n  - Support for data breakpoints (requires adapter support, currently only lldb?)\n  - Left-click gutter now toggles breakpoints, right-clicking a breakpoint allows editing/advanced options\n  - Watch expressions\n  - Loaded Modules/Sources panels\n  - Adds Node debug adapter (@appelgriebsch)\n  - External terminal support. Terminal on Mac (Needs support for Windows/Linux) or Sublime's Terminus package.\n  - Integrated terminal now strips ascii control sequences \n  - Settings button\n  - Show currently installed version of an adapter, show download progress when installing an adapter\n  - Fixes issues that sometimes occurred installing/reinstalling adapters\n  - Fixes issues with reloading plugin\n\n\n  Version 0.1.8\n\n  - Fixes core not defined error\n\n\n  Version 0.1.7\n\n  - Allow setting logging options in settings\n  - Updated url for vscode-firefox-debugger (@appelgriebsch)\n  - Fixes issue preventing Debugger: Install Adapters from being run from the command palette\n  - Fixes issue where some debug adapters were failing to be fully unzipped on Windows because of long paths\n\n\n  Version 0.1.6\n\n  - Adds run to cursor command\n  - Fixes issue preventing installing debug adapters\n\n\n  Version 0.1.5\n\n  - Fixes issue that prevented debugging on windows\n\n\n  Version 0.1.4\n\n  - New styling of panels and updated layout to better support temporary panels created for build results/integrated terminal (and in the future allow customizing the layout of the panels)\n  - New console rendering code to support text wrapping and build results/integrated terminal\n  - Support internal terminal requests to allow program input. Requires configuration changes to use this feature which depends on the adapter in question. (LLVM uses \"terminal\": \"integrated\")\n  - Allow defining platform specific configuration settings with a top level object called \"linux\", \"osx\", or \"windows\" in your configuration. Same as vscode \n  - Fixes issue where hover providers/autocomplete/run command was not working for some debug adapters \n  - Fixes issue where using $file and other variables in a configuration had their values expanded when the debugger was opened not when the debugger was started\n  - Fixes some wonkiness that occurred when stepping the debugger that caused it to not update correctly\n\n\n  Version 0.1.3\n\n  - When attempting to open the debugger in a window without a sublime project prompt the user to create one.\n  - Fixes some other minor bugs and configuration issues\n\n\n  Version 0.1.0\n\n  - Adds package control support"
+					},
+					"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AAAAAK8GAAAAAAAAsAYAAAAAAAAAAAAAsAYAAAAAAACxBgAAAAAAAAAAAACxBgAAAAAAACkHAAAAAAAAAAAAACkHAAAAAAAAKgcAAAAAAAAAAAAAKgcAAAAAAABkBwAAAAAAAAAAAABkBwAAAAAAAGUHAAAAAAAAAAAAAGUHAAAAAAAAowcAAAAAAAAAAAAAowcAAAAAAACkBwAAAAAAAAAAAACkBwAAAAAAAKUHAAAAAAAAAAAAAKUHAAAAAAAApgcAAAAAAAAAAAAApgcAAAAAAAC1BwAAAAAAAAAAAAC1BwAAAAAAALYHAAAAAAAAAAAAALYHAAAAAAAAtwcAAAAAAAAAAAAAtwcAAAAAAADpBwAAAAAAAAAAAADpBwAAAAAAAOoHAAAAAAAAAAAAAOoHAAAAAAAAHQgAAAAAAAAAAAAAHQgAAAAAAAAeCAAAAAAAAAAAAAAeCAAAAAAAAH4IAAAAAAAAAAAAAH4IAAAAAAAAfwgAAAAAAAAAAAAAfwgAAAAAAACnCAAAAAAAAAAAAACnCAAAAAAAAKgIAAAAAAAAAAAAAKgIAAAAAAAA1wgAAAAAAAAAAAAA1wgAAAAAAADYCAAAAAAAAAAAAADYCAAAAAAAABoJAAAAAAAAAAAAABoJAAAAAAAAGwkAAAAAAAAAAAAAGwkAAAAAAABICQAAAAAAAAAAAABICQAAAAAAAEkJAAAAAAAAAAAAAEkJAAAAAAAASgkAAAAAAAAAAAAASgkAAAAAAABLCQAAAAAAAAAAAABLCQAAAAAAAFoJAAAAAAAAAAAAAFoJAAAAAAAAWwkAAAAAAAAAAAAAWwkAAAAAAABcCQAAAAAAAAAAAABcCQAAAAAAAJ4JAAAAAAAAAAAAAJ4JAAAAAAAAnwkAAAAAAAAAAAAAnwkAAAAAAACgCQAAAAAAAAAAAACgCQAAAAAAAKEJAAAAAAAAAAAAAKEJAAAAAAAAsAkAAAAAAAAAAAAAsAkAAAAAAACxCQAAAAAAAAAAAACxCQAAAAAAALIJAAAAAAAAAAAAALIJAAAAAAAA8gkAAAAAAAAAAAAA8gkAAAAAAADzCQAAAAAAAAAAAADzCQAAAAAAAPQJAAAAAAAAAAAAAPQJAAAAAAAA9QkAAAAAAAAAAAAA9QkAAAAAAAAECgAAAAAAAAAAAAAECgAAAAAAAAUKAAAAAAAAAAAAAAUKAAAAAAAABgoAAAAAAAAAAAAABgoAAAAAAABECgAAAAAAAAAAAABECgAAAAAAAEUKAAAAAAAAAAAAAEUKAAAAAAAAcgoAAAAAAAAAAAAAcgoAAAAAAABzCgAAAAAAAAAAAABzCgAAAAAAAJ0KAAAAAAAAAAAAAJ0KAAAAAAAAngoAAAAAAAAAAAAAngoAAAAAAACfCgAAAAAAAAAAAACfCgAAAAAAAPkKAAAAAAAAAAAAAPkKAAAAAAAA+goAAAAAAAAAAAAA+goAAAAAAABFCwAAAAAAAAAAAABFCwAAAAAAAEYLAAAAAAAAAAAAAEYLAAAAAAAARwsAAAAAAAAAAAAARwsAAAAAAACSCwAAAAAAAAAAAACSCwAAAAAAAJMLAAAAAAAAAAAAAJMLAAAAAAAAlAsAAAAAAAAAAAAAlAsAAAAAAADqCwAAAAAAAAAAAADqCwAAAAAAAOsLAAAAAAAAAAAAAOsLAAAAAAAAagwAAAAAAAAAAAAAagwAAAAAAABrDAAAAAAAAAAAAABrDAAAAAAAAK0MAAAAAAAAAAAAAK0MAAAAAAAArgwAAAAAAAAAAAAArgwAAAAAAACvDAAAAAAAAAAAAACvDAAAAAAAABENAAAAAAAAAAAAABENAAAAAAAAEg0AAAAAAAAAAAAAEg0AAAAAAABPDQAAAAAAAAAAAABPDQAAAAAAAFANAAAAAAAAAAAAAFANAAAAAAAAfg0AAAAAAAAAAAAAfg0AAAAAAAB/DQAAAAAAAAAAAAB/DQAAAAAAALoNAAAAAAAAAAAAALoNAAAAAAAAuw0AAAAAAAAAAAAAuw0AAAAAAAAgDgAAAAAAAAAAAAAgDgAAAAAAACEOAAAAAAAAAAAAACEOAAAAAAAAPg4AAAAAAAAAAAAAPg4AAAAAAAA/DgAAAAAAAAAAAAA/DgAAAAAAAEAOAAAAAAAAAAAAAEAOAAAAAAAAQQ4AAAAAAAAAAAAAQQ4AAAAAAABQDgAAAAAAAAAAAABQDgAAAAAAAFEOAAAAAAAAAAAAAFEOAAAAAAAAUg4AAAAAAAAAAAAAUg4AAAAAAACDDgAAAAAAAAAAAACDDgAAAAAAAIQOAAAAAAAAAAAAAIQOAAAAAAAAhQ4AAAAAAAAAAAAAhQ4AAAAAAACGDgAAAAAAAAAAAACGDgAAAAAAAJUOAAAAAAAAAAAAAJUOAAAAAAAAlg4AAAAAAAAAAAAAlg4AAAAAAACXDgAAAAAAAAAAAACXDgAAAAAAACEPAAAAAAAAAAAAACEPAAAAAAAAIg8AAAAAAAAAAAAAIg8AAAAAAAB0DwAAAAAAAAAAAAB0DwAAAAAAAHUPAAAAAAAAAAAAAHUPAAAAAAAAyw8AAAAAAAAAAAAAyw8AAAAAAADMDwAAAAAAAAAAAADMDwAAAAAAAEkQAAAAAAAAAAAAAEkQAAAAAAAAShAAAAAAAAAAAAAAShAAAAAAAACqEAAAAAAAAAAAAACqEAAAAAAAAKsQAAAAAAAAAAAAAKsQAAAAAAAAEREAAAAAAAAAAAAAEREAAAAAAAASEQAAAAAAAAAAAAASEQAAAAAAAFsRAAAAAAAAAAAAAFsRAAAAAAAAXBEAAAAAAAAAAAAAXBEAAAAAAAB9EQAAAAAAAAAAAAB9EQAAAAAAAH4RAAAAAAAAAAAAAH4RAAAAAAAAshEAAAAAAAAAAAAAshEAAAAAAACzEQAAAAAAAAAAAACzEQAAAAAAAN8RAAAAAAAAAAAAAN8RAAAAAAAA4BEAAAAAAAAAAAAA4BEAAAAAAADhEQAAAAAAAAAAAADhEQAAAAAAAOIRAAAAAAAAAAAAAOIRAAAAAAAA8REAAAAAAAAAAAAA8REAAAAAAADyEQAAAAAAAAAAAADyEQAAAAAAAPMRAAAAAAAAAAAAAPMRAAAAAAAAMRIAAAAAAAAAAAAAMRIAAAAAAAAyEgAAAAAAAAAAAAAyEgAAAAAAAE4SAAAAAAAAAAAAAE4SAAAAAAAATxIAAAAAAAAAAAAATxIAAAAAAABQEgAAAAAAAAAAAABQEgAAAAAAAFESAAAAAAAAAAAAAFESAAAAAAAAYBIAAAAAAAAAAAAAYBIAAAAAAABhEgAAAAAAAAAAAABhEgAAAAAAAGISAAAAAAAAAAAAAGISAAAAAAAAkRIAAAAAAAAAAAAAkRIAAAAAAACSEgAAAAAAAAAAAACSEgAAAAAAAMUSAAAAAAAAAAAAAMUSAAAAAAAAxhIAAAAAAAAAAAAAxhIAAAAAAAD/EgAAAAAAAAAAAAD/EgAAAAAAAAATAAAAAAAAAAAAAAATAAAAAAAAHRMAAAAAAAAAAAAAHRMAAAAAAAAeEwAAAAAAAAAAAAAeEwAAAAAAAB8TAAAAAAAA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"
+				]
+			]
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"debugger: insta",
+				"Debugger: Install Adapters"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove pa",
+				"Package Control: Remove Package"
+			],
+			[
+				"pac remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack inst",
+				"Package Control: Install Package"
+			],
+			[
+				"pack re",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"install pack",
+				"Package Control: Install Package"
+			],
+			[
+				"package isntall",
+				"Package Control: Install Package"
+			],
+			[
+				"package install",
+				"Package Control: Install Package"
+			],
+			[
+				"package remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"package remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"open",
+				"Open IPython Notebook"
+			],
+			[
+				"package instal",
+				"Package Control: Install Package"
+			],
+			[
+				"python",
+				"Set Syntax: Python"
+			],
+			[
+				"package inst",
+				"Package Control: Install Package"
+			],
+			[
+				"clanf",
+				"Clang Format: Format Selection"
+			],
+			[
+				"package ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"format",
+				"Clang Format: Format Selection"
+			],
+			[
+				"Package Control: install ",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"clang",
+				"Set Syntax: ClangErrorPanel"
+			],
+			[
+				"Cla",
+				"Clang Format: Format Selection"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				" package install ",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"package remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"list packag",
+				"Package Control: List Packages"
+			],
+			[
+				"packacge install",
+				"Package Control: Install Package"
+			],
+			[
+				"package control: remoe",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: re",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: un",
+				"Package Control: List Unmanaged Packages"
+			],
+			[
+				"package control insta",
+				"Package Control: Install Package"
+			],
+			[
+				"packag",
+				"Package Control: List Packages"
+			],
+			[
+				"color sc",
+				"UI: Select Color Scheme"
+			],
+			[
+				"packaage control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: emacs",
+				"Package Control: List Unmanaged Packages"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 472.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/tfr/Documents/Projects/qat",
+		"/Users/tfr/Documents/Projects/qat/.github",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows",
+		"/Users/tfr/Documents/Projects/qat/qir",
+		"/Users/tfr/Documents/Projects/qat/qir/qat",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Apps",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Generators",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/GroupingPass",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp"
+	],
+	"file_history":
+	[
+		"/Users/tfr/Documents/Projects/qat/qir/qat/RecordPullBackPass/RecordPullBackPass.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/RecordPullBackPass/RecordPullBackPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Generators/ProfileGenerator.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Generators/PostTransformConfig.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/CMakeLists.txt",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Apps/CMakeLists.txt",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/GroupingPass/GroupingPass.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/GroupingPass/GroupingPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/GroupingPass/GroupingAnalysisPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/GroupingPass/GroupingAnalysisPass.hpp",
+		"/Users/tfr/Documents/Projects/qat/.bazelversion",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/BUILD",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp/TargetPackages/QSharpVersion/qir/Example.ll",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp/TargetPackages/Makefile",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp/TargetPackages/QSharpVersion/Example.csproj",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/ci-linting.yml",
+		"/Users/tfr/Documents/Projects/qat/.bazelrc",
+		"/Users/tfr/Documents/Projects/qat/CMakeLists.txt",
+		"/Users/tfr/Documents/Projects/qat/Docker/Alpine.dockerfile",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp/TargetPackages/QSharpVersion/Example.qs",
+		"/Users/tfr/Documents/Projects/qat/Docker/DebianSlim.dockerfile",
+		"/Users/tfr/Documents/Projects/qat/Docker/Builder.dockerfile",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/ci-on-pr-bazel-test-win.yml",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/ci-on-pr-bazel-test-mac.yml",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/ci-mac-on-main-bazel-pr.yml",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/ci-win-on-main-bazel-pr.yml",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Apps/Qat/Qat.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Generators/LlvmPassesConfiguration.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/StaticResourceComponent/ResourceAnnotationPass.cpp",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/src/timeline/index.ts",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/src/timeline/timeline.tsx",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/src/timeline/timeline-frames.tsx",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/src/timeline/timeline-ruler.tsx",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/src/timeline/interfaces.ts",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/src/timeline/timeline-frame.tsx",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/electron/preload.ts",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/package-lock.json",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/electron/main.ts",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/src/timeline/pad-function.ts",
+		"/Users/tfr/Documents/Projects/wonop/wonop/typescript/edit-simulator/package.json",
+		"/Users/tfr/Documents/Projects/wonop/wonop/cc/vm/BUILD",
+		"/Users/tfr/Documents/Projects/wonop/wonop/cc/vm/vm.hpp",
+		"/Users/tfr/Documents/Projects/wonop/.bazelrc",
+		"/Users/tfr/Documents/Projects/wonop/wonop/cc/vm/vm-tool.cpp",
+		"/Users/tfr/Documents/Projects/wonop/wonop/antlr/rocklang/tests/subtree.py",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-ng-backend/apps/template_components/management/commands/import_merakiui.py",
+		"/Users/tfr/Desktop/ProgressBar",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-ng-backend/apps/template_components/management/commands/load_components.py",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/containers/playground/index.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/containers/browser/index.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-packages/public-api/src/lib/api.ts",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/store/components/reducers.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/containers/playground/thumbnailCreator.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-ng-backend/apps/template_components/serializers.py",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-ng-backend/apps/template_components/filters.py",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-ng-backend/apps/template_components/models.py",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/containers/browser/productCard.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/containers/playground/cropImage.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/components/editor/editor/htmlLoader.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/containers/browser/preview.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/package.json",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/store/components/types.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/store/components/saga.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/components/rating/index.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-packages/ui/src/index.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/store/components/actions.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-ng-backend/apps/template_components/management/commands/update_component_slug.py",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/components/editor/editor/renderNode.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/App.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/components/layout/index.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/components/layout/logo.svg",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-ng-backend/manage_main.py",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/containers/logo.svg",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/containers/playground/logo.svg",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/containers/details/index.tsx",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-components-frontend/src/containers/browser/toast.css",
+		"/Users/tfr/Documents/Projects/wonop/components/tailord-packages/ui/src/toast.css",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/target-testing.yml",
+		"/Users/tfr/Documents/TestArea/FpmMemIssue/test.ll",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Rules/Factory.cpp",
+		"/Users/tfr/Downloads/gate_crz_src.ll",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp-target-tests/TargetTestScripts/__init__.py",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/ci-mac-on-main-pr.yml",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Generators/ProfileGenerator.hpp",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/ci-linux-on-main-pr.yml",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Rules/Tests/Unit/IntToPtr.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Llvm/Llvm.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/ModuleLoader/ModuleLoader.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Generators/LlvmPassesConfiguration.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp-target-tests/test_target_operations.py",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/trusted-cd-mac-release.yml",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/trusted-ci-mac-on-main-pr.disabled",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Utils/FunctionToModule.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/PostTransformValidation/PostTransformValidationPass.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/PostTransformValidation/PostTransformValidationPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/TransformationRulesPass/TransformationRulesPass.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/TransformationRulesPass/TransformationRulesPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/PreTransformTrimming/PreTransformTrimmingPass.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Profile/Profile.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Profile/Profile.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/ValidationPass/ValidationPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/ValidationPass/ValidationPassConfiguration.cpp",
+		"/Users/tfr/Documents/Projects/qat/.github/workflows/trusted-cd-linux-release.yml",
+		"/Users/tfr/Documents/Projects/qat/Docker/CI.Ubuntu22.dockerfile",
+		"/Users/tfr/Documents/Projects/qat/site-packages/tasks_ci/toolchain.py",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/ValidationPass/FunctionValidationPass.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/ValidationPass/FunctionValidationPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/ValidationPass/ValidationPassConfiguration.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/Validator/Validator.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp-target-tests/TargetTestScripts/Decompositions/MeasureEachZ.qs",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp-target-tests/template/Example.csproj",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/StaticResourceComponent/QubitRemapPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/StaticResourceComponent/Tests/Unit/AllocationAnalysis.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/RemoveNonNullPass/PreTransformTrimmingPass.hpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/RemoveNonNullPass/PreTransformTrimmingPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/StaticResourceComponent/ReplaceQubitOnResetPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/TestTools/IrManipulationTestHelper.cpp",
+		"/Users/tfr/Documents/Projects/qat/.clang-tidy",
+		"/Users/tfr/Documents/Projects/qat/qir/qat/StaticResourceComponent/AllocationAnalysisPass.cpp",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp/Atomics/AdvancedConstantFolding/QSharpVersion/Example.csproj",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp/Atomics/BlockFolding/QSharpVersion/Example.csproj",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp/Atomics/ConstantFolding/QSharpVersion/Example.csproj",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp/Atomics/Inlining/QSharpVersion/Example.csproj",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp/Atomics/Loop/QSharpVersion/Example.csproj",
+		"/Users/tfr/Documents/Projects/qat/qir/qsharp/Atomics/QubitAllocation/QSharpVersion/Example.csproj"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 131.0,
+		"where_history":
+		[
+			"/Users/tfr/Documents/Projects/qat/qir/qat,<project filters>"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"ZExtTransformPass",
+			"Module",
+			"DivisionByZeroPass",
+			"%r",
+			"%result",
+			"result",
+			"%result",
+			"name =",
+			"register[",
+			"One",
+			"bazel"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": ".github/workflows/ci-on-pr-bazel-test-win.yml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2091,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1556,
+								1556
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/YAML/YAML.sublime-syntax",
+							"tab_size": 2,
+							"touched": 1657634503.92,
+							"translate_tabs_to_spaces": true,
+							"typescript_plugin_format_options":
+							{
+								"convertTabsToSpaces": true,
+								"indentSize": 2,
+								"tabSize": 2
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 306.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8494,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8494,
+								8494
+							]
+						],
+						"settings":
+						{
+							"auto_indent": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_width": 2,
+							"typescript_plugin_format_options":
+							{
+								"convertTabsToSpaces": true,
+								"indentSize": 2,
+								"tabSize": 2
+							},
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 49.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 163.0
+	},
+	"output.SublimeLinter Messages":
+	{
+		"height": 163.0
+	},
+	"output.autopep8":
+	{
+		"height": 144.0
+	},
+	"output.cc":
+	{
+		"height": 109.0
+	},
+	"output.doc":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "qat.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"profilegene",
+				"qir/qat/Generators/ProfileGenerator.cpp"
+			],
+			[
+				"qat.cpp",
+				"qir/qat/Apps/Qat/Qat.cpp"
+			],
+			[
+				"StaticResourceComponent/ResourceAnnotationPass.cpp",
+				"qir/qat/StaticResourceComponent/ResourceAnnotationPass.cpp"
+			],
+			[
+				"LlvmPassesConfiguration.hpp",
+				"qir/qat/Generators/LlvmPassesConfiguration.hpp"
+			],
+			[
+				"api.ts",
+				"components/tailord-packages/public-api/src/lib/api.ts"
+			],
+			[
+				"manage_main.py",
+				"components/tailord-ng-backend/manage_main.py"
+			],
+			[
+				"factory",
+				"qir/qat/Rules/Factory.cpp"
+			],
+			[
+				"Generators/ProfileGenerator.hpp",
+				"qir/qat/Generators/ProfileGenerator.hpp"
+			],
+			[
+				"Int",
+				"qir/qat/Rules/Tests/Unit/IntToPtr.cpp"
+			],
+			[
+				"Rules/Tests/Unit/IntToPtr.cpp",
+				"qir/qat/Rules/Tests/Unit/IntToPtr.cpp"
+			],
+			[
+				"lvmPassesConfiguration.hpp",
+				"qir/qat/Generators/LlvmPassesConfiguration.hpp"
+			],
+			[
+				"lvmPassesConfiguration.cpp",
+				"qir/qat/Generators/LlvmPassesConfiguration.cpp"
+			],
+			[
+				"qat/Generators/LlvmPassesConfiguration.cpp",
+				"qir/qat/Generators/LlvmPassesConfiguration.cpp"
+			],
+			[
+				"PostTransformValidationPass",
+				"qir/qat/PostTransformValidation/PostTransformValidationPass.hpp"
+			],
+			[
+				"profilegener",
+				"qir/qat/Generators/ProfileGenerator.cpp"
+			],
+			[
+				"PostTransformValidationPassConfiguration.hpp",
+				"qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+			],
+			[
+				"ProfileGenerat",
+				"qir/qat/Generators/ProfileGenerator.cpp"
+			],
+			[
+				"ProfileGenerator.hpp",
+				"qir/qat/Generators/ProfileGenerator.hpp"
+			],
+			[
+				"validationPass/ValidationPass.cpp",
+				"qir/qat/ValidationPass/ValidationPass.cpp"
+			],
+			[
+				"qat/Profile/Profile.cpp",
+				"qir/qat/Profile/Profile.cpp"
+			],
+			[
+				"Profile.hpp",
+				"qir/qat/Profile/Profile.hpp"
+			],
+			[
+				"qir/qat/Validator/Validator.cpp",
+				"qir/qat/Validator/Validator.cpp"
+			],
+			[
+				"StaticResourceComponent/Tests/Unit/AllocationAnalysis.cpp",
+				"qir/qat/StaticResourceComponent/Tests/Unit/AllocationAnalysis.cpp"
+			],
+			[
+				"qat/TestTools/IrManipulationTestHelper",
+				"qir/qat/TestTools/IrManipulationTestHelper.cpp"
+			],
+			[
+				"ConstArray/QSharpVersion/Example.csproj",
+				"qir/qsharp/ConstArray/QSharpVersion/Example.csproj"
+			],
+			[
+				"qir/qat/Profile/Profile.cpp",
+				"qir/qat/Profile/Profile.cpp"
+			],
+			[
+				"qat/Rules/Tests/Unit/BasicRuleSetOps.cpp",
+				"qir/qat/Rules/Tests/Unit/BasicRuleSetOps.cpp"
+			],
+			[
+				"tailord-components-frontend/src/components/editor/index.tsx",
+				"components/tailord-components-frontend/src/components/editor/index.tsx"
+			],
+			[
+				"src/components/editor/editor/viewCodeGenerator.tsx",
+				"components/tailord-components-frontend/src/components/editor/editor/viewCodeGenerator.tsx"
+			],
+			[
+				"tailord-components-frontend/src/components/editor/editor/topbar.tsx",
+				"components/tailord-components-frontend/src/components/editor/editor/topbar.tsx"
+			],
+			[
+				"themeConf",
+				"components/tailord-components-frontend/src/components/editor/editor/themeConfigurator.tsx"
+			],
+			[
+				"src/components/editor/editor/themeConfigurator.tsx",
+				"components/tailord-frontend/src/components/editor/editor/themeConfigurator.tsx"
+			],
+			[
+				"src/components/editor/editor/selectDeviceSize.tsx",
+				"components/tailord-components-frontend/src/components/editor/editor/selectDeviceSize.tsx"
+			],
+			[
+				"tailord-components-frontend/src/components/editor/editor/layout.tsx",
+				"components/tailord-components-frontend/src/components/editor/editor/layout.tsx"
+			],
+			[
+				"tailord-components-frontend/src/components/editor/editor/elements.tsx",
+				"components/tailord-components-frontend/src/components/editor/editor/elements.tsx"
+			],
+			[
+				"compnentCreator",
+				"components/tailord-components-frontend/src/components/editor/editor/componentCreator.tsx"
+			],
+			[
+				"componentCreator.tsx",
+				"components/tailord-frontend/src/components/editor/editor/componentCreator.tsx"
+			],
+			[
+				"src/components/editor/components/forms/form.tsx",
+				"components/tailord-components-frontend/src/components/editor/components/forms/form.tsx"
+			],
+			[
+				"",
+				".clang-format"
+			],
+			[
+				"components/tailord-components-frontend/src/store/components/saga.tsx",
+				"components/tailord-components-frontend/src/store/components/saga.tsx"
+			],
+			[
+				"src/routes.tsx",
+				"components/nlp-frontend/src/routes.tsx"
+			],
+			[
+				"tailord-components-frontend/src/page404.tsx",
+				"components/tailord-components-frontend/src/page404.tsx"
+			],
+			[
+				"tailord-components-frontend/src/App.tsx",
+				"components/tailord-components-frontend/src/App.tsx"
+			],
+			[
+				"tailord-frontend/src/store/users/saga.ts",
+				"components/tailord-frontend/src/store/users/saga.ts"
+			],
+			[
+				"src/containers/onboard/componentBrowser.tsx",
+				"components/tailord-frontend/src/containers/onboard/componentBrowser.tsx"
+			],
+			[
+				"components/editor/editor/elements.tsx",
+				"components/tailord-frontend/src/components/editor/editor/elements.tsx"
+			],
+			[
+				"AllocationAnalysisPass.cpp",
+				"qir/qat/StaticResourcePass/AllocationAnalysisPass.cpp"
+			],
+			[
+				"TransformationRulesPass/Tests/Unit/PhiElimination.cpp",
+				"qir/qat/TransformationRulesPass/Tests/Unit/PhiElimination.cpp"
+			],
+			[
+				"TransformationRulesPass/Tests/Unit/ArrayIndex.cpp",
+				"qir/qat/TransformationRulesPass/Tests/Unit/ArrayIndex.cpp"
+			],
+			[
+				"TransformationRulesPass/Tests/Unit/LoopUnrolling.cpp",
+				"qir/qat/TransformationRulesPass/Tests/Unit/LoopUnrolling.cpp"
+			],
+			[
+				"qir/qat/TransformationRulesPass/TransformationRulesPass.cpp",
+				"qir/qat/TransformationRulesPass/TransformationRulesPass.cpp"
+			],
+			[
+				"qir/qat/Generators/ProfileGenerator.cpp",
+				"qir/qat/Generators/ProfileGenerator.cpp"
+			],
+			[
+				"./README.md",
+				"qir/qir-tests/.pytest_cache/README.md"
+			],
+			[
+				"loop-out",
+				"qir/qir-tests/comparison_tests/loop-output.ll"
+			],
+			[
+				"loop-input.",
+				"qir/qir-tests/comparison_tests/loop-input.ll"
+			],
+			[
+				"inlining",
+				"qir/qir-tests/comparison_tests/inlining-output.ll"
+			],
+			[
+				"comparison_tests/loop-input.ll",
+				"qir/qir-tests/comparison_tests/loop-input.ll"
+			],
+			[
+				"NegativeBaseProfiles/IfStatement/Makefile",
+				"qir/qsharp/NegativeBaseProfiles/IfStatement/Makefile"
+			],
+			[
+				"Generators/ProfileGenerator.cpp",
+				"qir/qat/Generators/ProfileGenerator.cpp"
+			],
+			[
+				"qat/Rules/Tests/Unit/StaticResultAllocation.cpp",
+				"qir/qat/Rules/Tests/Unit/StaticResultAllocation.cpp"
+			],
+			[
+				"qat/Rules/Tests/Unit/SingleQubitAllocation.cpp",
+				"qir/qat/Rules/Tests/Unit/SingleQubitAllocation.cpp"
+			],
+			[
+				"Tests/Unit/StaticResultAllocation.cpp",
+				"qir/qat/Rules/Tests/Unit/StaticResultAllocation.cpp"
+			],
+			[
+				"Debuggin",
+				"docs/src/UserGuide/DebuggingIR.md"
+			],
+			[
+				"qsharp/NegativeBaseProfiles/ExternalCall/optimized.ll",
+				"qir/qsharp/NegativeBaseProfiles/ExternalCall/optimized.ll"
+			],
+			[
+				"alidationPass.cpp",
+				"qir/qat/ValidationPass/ValidationPass.cpp"
+			],
+			[
+				"ModuleLoader/InstructionLocationTable.cpp",
+				"qir/qat/ModuleLoader/InstructionLocationTable.cpp"
+			],
+			[
+				"ValidationPass/ValidationPass.cpp",
+				"qir/qat/ValidationPass/ValidationPass.cpp"
+			],
+			[
+				"Logging/ILogger.cpp",
+				"qir/qat/Logging/ILogger.cpp"
+			],
+			[
+				"ValidationPass/ValidationPassConfiguration.cpp",
+				"qir/qat/ValidationPass/ValidationPassConfiguration.cpp"
+			],
+			[
+				"qir/qat/TestTools/IrManipulationTestHelper.cpp",
+				"qir/qat/TestTools/IrManipulationTestHelper.cpp"
+			],
+			[
+				"qat/ModuleLoader/InstructionLocationTable.cpp",
+				"qir/qat/ModuleLoader/InstructionLocationTable.cpp"
+			],
+			[
+				"ModuleLoader/DebugTable.hpp",
+				"qir/qat/ModuleLoader/DebugTable.hpp"
+			],
+			[
+				"Validator/Validator.cpp",
+				"qir/qat/Validator/Validator.cpp"
+			],
+			[
+				"Logging/CommentLogger.cpp",
+				"qir/qat/Logging/CommentLogger.cpp"
+			],
+			[
+				"src/components/editor/editor/topbar.tsx",
+				"components/tailord-frontend/src/components/editor/editor/topbar.tsx"
+			],
+			[
+				"editor/editor/settingsPanel.tsx",
+				"components/tailord-frontend/src/components/editor/editor/settingsPanel.tsx"
+			],
+			[
+				"layout.tsx",
+				"components/tailord-frontend/src/components/editor/editor/layout.tsx"
+			],
+			[
+				"editor/components/styleSection.tsx",
+				"components/tailord-frontend/src/components/editor/components/styleSection.tsx"
+			],
+			[
+				"editor/editor/viewCodeGenerator.tsx",
+				"components/tailord-frontend/src/components/editor/editor/viewCodeGenerator.tsx"
+			],
+			[
+				"components/editor/editor/layout.tsx",
+				"components/tailord-frontend/src/components/editor/editor/layout.tsx"
+			],
+			[
+				"editor/editor/layout.tsx",
+				"components/tailord-frontend/src/components/editor/editor/layout.tsx"
+			],
+			[
+				"customers/views",
+				"components/tailord-ng-backend/apps/customers/views.py"
+			],
+			[
+				"containers/onboard/designList.tsx",
+				"components/tailord-frontend/src/containers/onboard/designList.tsx"
+			],
+			[
+				"/containers/projectSettings/index.",
+				"components/tailord-frontend/src/containers/projectSettings/index.tsx"
+			],
+			[
+				"containers/userTemplates/index",
+				"components/tailord-frontend/src/containers/userTemplates/index.tsx"
+			],
+			[
+				"TestTools/IrManipulationTestHelper.cp",
+				"qir/qat/TestTools/IrManipulationTestHelper.cpp"
+			],
+			[
+				"IrManipulationTestHelper.hpp",
+				"qir/qat/TestTools/IrManipulationTestHelper.hpp"
+			],
+			[
+				"TestTools/IrManipulationTestHelper.hpp",
+				"qir/qat/TestTools/IrManipulationTestHelper.hpp"
+			],
+			[
+				"TransformationRulesPas/Tests/Unit",
+				"qir/qat/TransformationRulesPass/Tests/Unit/MiniTeleChain.cpp"
+			],
+			[
+				"docs/src/UserGuide/IntroductionToProfiles.md",
+				"docs/src/UserGuide/IntroductionToProfiles.md"
+			],
+			[
+				"DeveloperGuide/ArchitectureOverview.md",
+				"docs/src/DeveloperGuide/ArchitectureOverview.md"
+			],
+			[
+				"scope-builder.cpp",
+				"svadilfari/cc/script-builder/scope-builder.cpp"
+			],
+			[
+				"scope",
+				"svadilfari/cc/script-builder/scope-builder.hpp"
+			],
+			[
+				"apps/user_templates/loaders.py",
+				"components/tailord-ng-backend/apps/user_templates/loaders.py"
+			],
+			[
+				"/apps/customers/admin.py",
+				"components/tailord-ng-backend/apps/customers/admin.py"
+			],
+			[
+				"apps/user_templates/models.py",
+				"components/tailord-ng-backend/apps/user_templates/models.py"
+			],
+			[
+				"src/containers/userTemplates/index.tsx",
+				"components/tailord-frontend/src/containers/userTemplates/index.tsx"
+			],
+			[
+				"/src/routes.tsx",
+				"components/tailord-frontend/src/routes.tsx"
+			],
+			[
+				"containers/projects/projectList.tsx",
+				"components/tailord-frontend/src/containers/projects/projectList.tsx"
+			],
+			[
+				"apps/users/utils.py",
+				"components/tailord-ng-backend/apps/users/utils.py"
+			],
+			[
+				"tailord-ng-backend/apps/users/views.py",
+				"components/tailord-ng-backend/apps/users/views.py"
+			],
+			[
+				"editor/editor/themeConfigurator.tsx",
+				"components/tailord-frontend/src/components/editor/editor/themeConfigurator.tsx"
+			],
+			[
+				"src/store/projects/saga.ts",
+				"components/tailord-frontend/src/store/projects/saga.ts"
+			],
+			[
+				"src/store/app/actions.ts",
+				"components/tailord-frontend/src/store/app/actions.ts"
+			],
+			[
+				"projects/projectList.tsx",
+				"components/tailord-frontend/src/containers/projects/projectList.tsx"
+			],
+			[
+				"migrations/0001_initial.py",
+				"components/tailord-ng-backend/apps/customers/migrations/0001_initial.py"
+			],
+			[
+				"src/store/userTemplates/types.ts",
+				"components/tailord-frontend/src/store/userTemplates/types.ts"
+			],
+			[
+				"src/store/userTemplates/saga.ts",
+				"components/tailord-frontend/src/store/userTemplates/saga.ts"
+			],
+			[
+				"containers/userTemplates/index.tsx",
+				"components/tailord-frontend/src/containers/userTemplates/index.tsx"
+			],
+			[
+				"src/containers/projects/users.ts",
+				"components/tailord-frontend/src/containers/projects/users.tsx"
+			],
+			[
+				"src/store/users/saga.ts",
+				"components/tailord-frontend/src/store/users/saga.ts"
+			],
+			[
+				"src/store/projects/actions.ts",
+				"components/tailord-frontend/src/store/projects/actions.ts"
+			],
+			[
+				"src/store/index.ts",
+				"components/tailord-frontend/src/store/index.ts"
+			],
+			[
+				"store/components/saga.tsx",
+				"components/tailord-frontend/src/store/components/saga.tsx"
+			],
+			[
+				"/userTemplates/index.tsx",
+				"components/tailord-frontend/src/containers/userTemplates/index.tsx"
+			],
+			[
+				"containers/projects/userTemplates.tsx",
+				"components/tailord-frontend/src/containers/projects/userTemplates.tsx"
+			],
+			[
+				"projects/userTemplates.tsx",
+				"components/tailord-frontend/src/containers/projects/userTemplates.tsx"
+			],
+			[
+				"containers/projects/users.tsx",
+				"components/tailord-frontend/src/containers/projects/users.tsx"
+			],
+			[
+				"projects/stripeConfig.tsx",
+				"components/tailord-frontend/src/containers/projects/stripeConfig.tsx"
+			],
+			[
+				"projects/memberships.tsx",
+				"components/tailord-frontend/src/containers/projects/memberships.tsx"
+			],
+			[
+				"containers/projects/analyticsIntegration.tsx",
+				"components/tailord-frontend/src/containers/projects/analyticsIntegration.tsx"
+			],
+			[
+				"forms/userSettings.tsx",
+				"components/tailord-frontend/src/components/forms/userSettings.tsx"
+			],
+			[
+				"components/forms/userProfile.tsx",
+				"components/tailord-frontend/src/components/forms/userProfile.tsx"
+			],
+			[
+				"components/forms/userLogin.tsx",
+				"components/tailord-frontend/src/components/forms/userLogin.tsx"
+			],
+			[
+				"editor/viewCodeGenerator.tsx",
+				"components/tailord-frontend/src/components/editor/editor/viewCodeGenerator.tsx"
+			],
+			[
+				"src/components/editor/editor/layout.tsx",
+				"components/tailord-frontend/src/components/editor/editor/layout.tsx"
+			],
+			[
+				"editor/editor/elements.tsx",
+				"components/tailord-frontend/src/components/editor/editor/elements.tsx"
+			],
+			[
+				"editor/draftSelector.tsx",
+				"components/tailord-frontend/src/components/editor/editor/draftSelector.tsx"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 948.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 298.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

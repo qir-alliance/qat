@@ -2,14 +2,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
-#include "Generators/LlvmPassesConfiguration.hpp"
-#include "Generators/ProfileGenerator.hpp"
-#include "Rules/FactoryConfig.hpp"
-#include "Rules/RuleSet.hpp"
-#include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/Generators/ProfileGenerator.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/Rules/RuleSet.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 
 namespace microsoft::quantum
 {

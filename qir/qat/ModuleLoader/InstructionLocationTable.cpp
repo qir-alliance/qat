@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ModuleLoader/InstructionLocationTable.hpp"
+#include "qir/qat/ModuleLoader/InstructionLocationTable.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <memory>
 
@@ -39,7 +39,7 @@ InstructionLocationTable::Position InstructionLocationTable::getPosition(Value c
         return it->second;
     }
 
-    return Position::InvalidPosition();
+    return Position::invalidPosition();
 }
 
 void InstructionLocationTable::registerModule(StringRef const& filename, Module const* module)
@@ -57,9 +57,9 @@ void InstructionLocationTable::registerValuePosition(Value const* value, llvm::f
     outstream.flush();
 
     Position pos;
-    pos.name   = static_cast<String>(current_filename_);
-    pos.line   = outstream.getLine() + 1;
-    pos.column = outstream.getColumn() + 1;
+    pos.setName(static_cast<String>(current_filename_));
+    pos.setLine(outstream.getLine() + 1);
+    pos.setColumn(outstream.getColumn() + 1);
 
     positions_.insert(std::make_pair(value, pos));
 }
