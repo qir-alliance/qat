@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "RecordPullBackPass.hpp"
+#include "qir/qat/RecordPullBackPass/RecordPullBackPass.hpp"
 
-#include "Logging/ILogger.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "RecordPullBackPass/RecordPullBackPass.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/RecordPullBackPass/RecordPullBackPass.hpp"
 
 #include <functional>
 #include <stdexcept>
