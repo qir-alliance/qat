@@ -593,7 +593,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-moduleptr">ModulePtr</a></strong></td>
 </tr>
 <tr>
-<td>using llvm::PassBuilder::OptimizationLevel</td>
+<td>using llvm::OptimizationLevel</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-optimizationlevel">OptimizationLevel</a></strong></td>
 </tr>
 <tr>
@@ -613,7 +613,7 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-irmanipulationtesthelper">IrManipulationTestHelper</a></strong>()</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-irmanipulationtesthelper">IrManipulationTestHelper</a></strong>() =default</td>
 </tr>
 <tr>
 <td></td>
@@ -713,14 +713,14 @@
 <pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::ModulePtr =  std::unique_ptr&lt;Module&gt;;
 </code></pre>
 <h3 id="using-optimizationlevel">using OptimizationLevel</h3>
-<pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::OptimizationLevel =  llvm::PassBuilder::OptimizationLevel;
+<pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::OptimizationLevel =  llvm::OptimizationLevel;
 </code></pre>
 <h3 id="using-generatorptr">using GeneratorPtr</h3>
 <pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::GeneratorPtr =  std::shared_ptr&lt;ProfileGenerator&gt;;
 </code></pre>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-irmanipulationtesthelper">function IrManipulationTestHelper</h3>
-<pre><code class="language-cpp">IrManipulationTestHelper()
+<pre><code class="language-cpp">IrManipulationTestHelper() =default
 </code></pre>
 <h3 id="function-irmanipulationtesthelper_1">function IrManipulationTestHelper</h3>
 <pre><code class="language-cpp">IrManipulationTestHelper(
@@ -846,7 +846,7 @@ call void @__quantum__qis__h__body(%Qubit* %leftMessage)
 </code></pre>
 <p>Returns a reference to the module. </p>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

@@ -595,12 +595,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;AllocationManager/AllocationManager.hpp&quot;
-#include &quot;AllocationManager/IAllocationManager.hpp&quot;
-#include &quot;QatTypes/QatTypes.hpp&quot;
-#include &quot;Validator/Validator.hpp&quot;
-
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/AllocationManager/AllocationManager.hpp&quot;
+#include &quot;qir/qat/AllocationManager/IAllocationManager.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
+#include &quot;qir/qat/Validator/Validator.hpp&quot;
 
 namespace microsoft::quantum
 {
@@ -632,9 +631,9 @@ class Profile
 
     Profile()               = delete;
     Profile(Profile const&amp;) = delete;
-    Profile(Profile&amp;&amp;)      = default;
+    Profile(Profile&amp;&amp;)      = delete;
     Profile&amp; operator=(Profile const&amp;) = delete;
-    Profile&amp; operator=(Profile&amp;&amp;) = default;
+    Profile&amp; operator=(Profile&amp;&amp;) = delete;
     ~Profile()                    = default;
 
     // Profile methods
@@ -661,11 +660,11 @@ class Profile
 
     llvm::ModuleAnalysisManager&amp; moduleAnalysisManager();
 
+    llvm::ModulePassManager&amp; modulePassManager();
+
   protected:
     // Ensuring that ProfileGenerator has access to following protected functions.
     friend class ProfileGenerator;
-
-    void setModulePassManager(llvm::ModulePassManager&amp;&amp; manager);
 
     void setValidator(ValidatorPtr&amp;&amp; validator);
 
@@ -738,7 +737,7 @@ class Profile
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

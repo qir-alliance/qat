@@ -563,7 +563,7 @@
   <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumiloggerlocation">microsoft::quantum::ILogger::Location</h1>
 <p>Class that holds the location of where the incident happened. </p>
 <p><code>#include &lt;Logging/ILogger.hpp&gt;</code></p>
-<p>Inherits from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></p>
+<p>Inherits from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></p>
 <h2 id="public-functions">Public Functions</h2>
 <table>
 <thead>
@@ -579,39 +579,44 @@
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-location">Location</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a> const &amp; source)</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-location">Location</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a> const &amp; source)</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-location">Location</a></strong>(String v_name, int64_t v_line, int64_t v_column, String v_llvm_hint ="", String v_frontend_hint ="")</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-location">Location</a></strong>(String v_name, int64_t v_line, int64_t v_column, String llvm_hint ="", String frontend_hint ="")</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-location">Location</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">Location</a> const &amp; source)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="public-attributes">Public Attributes</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>String</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#variable-llvm_hint">llvm_hint</a></strong></td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-location">Location</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">Location</a> const &amp; source) =default</td>
 </tr>
 <tr>
-<td>String</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#variable-frontend_hint">frontend_hint</a></strong></td>
+<td>String &amp;</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-llvmhint">llvmHint</a></strong>()</td>
+</tr>
+<tr>
+<td>String const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-llvmhint">llvmHint</a></strong>() const</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-setllvmhint">setLlvmHint</a></strong>(String const &amp; v)</td>
+</tr>
+<tr>
+<td>String &amp;</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-frontendhint">frontendHint</a></strong>()</td>
+</tr>
+<tr>
+<td>String const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-frontendhint">frontendHint</a></strong>() const</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/#function-setfrontendhint">setFrontendHint</a></strong>(String const &amp; v)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="additional-inherited-members">Additional inherited members</h2>
-<p><strong>Public Types inherited from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
+<p><strong>Public Types inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
 <table>
 <thead>
 <tr>
@@ -622,15 +627,15 @@
 <tbody>
 <tr>
 <td>enum</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#enum-@1">@1</a></strong> { INVALID_POSITION}</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#enum-@1">@1</a></strong> { InvalidPosition}</td>
 </tr>
 <tr>
 <td>using llvm::StringRef</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#using-stringref">StringRef</a></strong></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#using-stringref">StringRef</a></strong></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Public Functions inherited from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
+<p><strong>Public Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
 <table>
 <thead>
 <tr>
@@ -641,42 +646,55 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#function-sourcelocation">SourceLocation</a></strong>() =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-sourcelocation">SourceLocation</a></strong>() =default</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#function-sourcelocation">SourceLocation</a></strong>(String v_name, int64_t v_line, int64_t v_column)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-sourcelocation">SourceLocation</a></strong>(String v_name, int64_t v_line, int64_t v_column)</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#function-operator-bool">operator bool</a></strong>() const</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-operator-bool">operator bool</a></strong>() const</td>
 </tr>
 <tr>
-<td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#function-invalidposition">InvalidPosition</a></strong>()</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Public Attributes inherited from <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>String</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#variable-name">name</a></strong></td>
+<td>String &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-name">name</a></strong>()</td>
 </tr>
 <tr>
-<td>int64_t</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#variable-line">line</a></strong></td>
+<td>String const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-name">name</a></strong>() const</td>
 </tr>
 <tr>
-<td>int64_t</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/#variable-column">column</a></strong></td>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-setname">setName</a></strong>(String const &amp; name)</td>
+</tr>
+<tr>
+<td>int64_t &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-line">line</a></strong>()</td>
+</tr>
+<tr>
+<td>int64_t const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-line">line</a></strong>() const</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-setline">setLine</a></strong>(int64_t line)</td>
+</tr>
+<tr>
+<td>int64_t &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-column">column</a></strong>()</td>
+</tr>
+<tr>
+<td>int64_t const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-column">column</a></strong>() const</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-setcolumn">setColumn</a></strong>(int64_t column)</td>
+</tr>
+<tr>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-invalidposition">invalidPosition</a></strong>()</td>
 </tr>
 </tbody>
 </table>
@@ -685,7 +703,7 @@
 <pre><code class="language-cpp">Location() =default
 </code></pre>
 <h3 id="function-location_1">function Location</h3>
-<pre><code class="language-cpp">inline Location(
+<pre><code class="language-cpp">inline explicit Location(
     SourceLocation const &amp; source
 )
 </code></pre>
@@ -694,24 +712,39 @@
     String v_name,
     int64_t v_line,
     int64_t v_column,
-    String v_llvm_hint =&quot;&quot;,
-    String v_frontend_hint =&quot;&quot;
+    String llvm_hint =&quot;&quot;,
+    String frontend_hint =&quot;&quot;
 )
 </code></pre>
 <h3 id="function-location_3">function Location</h3>
-<pre><code class="language-cpp">inline Location(
+<pre><code class="language-cpp">Location(
     Location const &amp; source
+) =default
+</code></pre>
+<h3 id="function-llvmhint">function llvmHint</h3>
+<pre><code class="language-cpp">inline String &amp; llvmHint()
+</code></pre>
+<h3 id="function-llvmhint_1">function llvmHint</h3>
+<pre><code class="language-cpp">inline String const  &amp; llvmHint() const
+</code></pre>
+<h3 id="function-setllvmhint">function setLlvmHint</h3>
+<pre><code class="language-cpp">inline void setLlvmHint(
+    String const &amp; v
 )
 </code></pre>
-<h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
-<h3 id="variable-llvm_hint">variable llvm_hint</h3>
-<pre><code class="language-cpp">String llvm_hint {&quot;&quot;};
+<h3 id="function-frontendhint">function frontendHint</h3>
+<pre><code class="language-cpp">inline String &amp; frontendHint()
 </code></pre>
-<h3 id="variable-frontend_hint">variable frontend_hint</h3>
-<pre><code class="language-cpp">String frontend_hint {&quot;&quot;};
+<h3 id="function-frontendhint_1">function frontendHint</h3>
+<pre><code class="language-cpp">inline String const  &amp; frontendHint() const
+</code></pre>
+<h3 id="function-setfrontendhint">function setFrontendHint</h3>
+<pre><code class="language-cpp">inline void setFrontendHint(
+    String const &amp; v
+)
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

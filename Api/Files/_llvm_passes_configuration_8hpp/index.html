@@ -595,7 +595,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Commandline/ConfigurationManager.hpp&quot;
+#include &quot;qir/qat/Commandline/ConfigurationManager.hpp&quot;
 
 #include &lt;limits&gt;
 
@@ -641,7 +641,18 @@ class LlvmPassesConfiguration
 
     bool isDisabled() const;
 
-    bool operator==(LlvmPassesConfiguration const&amp; o) const = default;
+    bool operator==(LlvmPassesConfiguration const&amp; o) const
+    {
+        return always_inline_ == o.always_inline_ &amp;&amp; inline_parameter_ == o.inline_parameter_ &amp;&amp;
+               unroll_loops_ == o.unroll_loops_ &amp;&amp; unroll_allow_partial_ == o.unroll_allow_partial_ &amp;&amp;
+               unroll_allow_peeling_ == o.unroll_allow_peeling_ &amp;&amp; unroll_allow_runtime_ == o.unroll_allow_runtime_ &amp;&amp;
+               unroll_allow_upper_bound_ == o.unroll_allow_upper_bound_ &amp;&amp;
+               unroll_allow_profile_based_peeling_ == o.unroll_allow_profile_based_peeling_ &amp;&amp;
+               unroll_full_unroll_count_ == o.unroll_full_unroll_count_ &amp;&amp; unroll_opt_level_ == o.unroll_opt_level_ &amp;&amp;
+               unroll_only_when_forced_ == o.unroll_only_when_forced_ &amp;&amp; unroll_forget_scev_ == o.unroll_forget_scev_ &amp;&amp;
+               eliminate_constants_ == o.eliminate_constants_ &amp;&amp; eliminate_dead_code_ == o.eliminate_dead_code_ &amp;&amp;
+               eliminate_memory_ == o.eliminate_memory_;
+    }
 
     static LlvmPassesConfiguration createDisabled();
 
@@ -670,7 +681,7 @@ class LlvmPassesConfiguration
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

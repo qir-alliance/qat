@@ -595,12 +595,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Commandline/ConfigurationManager.hpp&quot;
-#include &quot;PostTransformValidation/PostTransformValidationPassConfiguration.hpp&quot;
-#include &quot;Profile/Profile.hpp&quot;
-#include &quot;QatTypes/QatTypes.hpp&quot;
-
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Commandline/ConfigurationManager.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp&quot;
+#include &quot;qir/qat/Profile/Profile.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
 
 namespace microsoft::quantum
 {
@@ -611,12 +610,12 @@ class ProfileGenerator
     // LLVM types
     //
     using PassBuilder             = llvm::PassBuilder;
-    using OptimizationLevel       = PassBuilder::OptimizationLevel;
+    using OptimizationLevel       = llvm::OptimizationLevel;
     using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
 
-    template &lt;typename R&gt; using SetupFunction = std::function&lt;void(R const&amp;, ProfileGenerator*, Profile&amp;)&gt;;
+    template &lt;typename R&gt; using SetupFunction = std::function&lt;void(R const&amp;, ProfileGenerator&amp;, Profile&amp;)&gt;;
 
-    using SetupFunctionWrapper = std::function&lt;void(ProfileGenerator*, Profile&amp;)&gt;;
+    using SetupFunctionWrapper = std::function&lt;void(ProfileGenerator&amp;, Profile&amp;)&gt;;
 
     using Components = std::vector&lt;std::pair&lt;String, SetupFunctionWrapper&gt;&gt;;
 
@@ -639,7 +638,7 @@ class ProfileGenerator
 
     ConfigurationManager const&amp; configurationManager() const;
 
-    Profile newProfile(String const&amp; name, OptimizationLevel const&amp; optimization_level, bool debug);
+    std::shared_ptr&lt;Profile&gt; newProfile(String const&amp; name, OptimizationLevel const&amp; optimization_level, bool debug);
 
     // Defining the generator
 
@@ -671,10 +670,7 @@ class ProfileGenerator
     void setLogger(ILoggerPtr const&amp; logger = nullptr);
 
   protected:
-    llvm::ModulePassManager createGenerationModulePassManager(
-        Profile&amp;                 profile,
-        OptimizationLevel const&amp; optimization_level,
-        bool                     debug);
+    void configureGeneratorFromProfile(Profile&amp; profile, OptimizationLevel const&amp; optimization_level, bool debug);
 
     llvm::ModulePassManager createValidationModulePass(
         PassBuilder&amp;             pass_builder,
@@ -701,13 +697,13 @@ template &lt;typename R&gt; void ProfileGenerator::registerProfileComponent(Stri
 {
     configuration_manager_.addConfig&lt;R&gt;(id);
 
-    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
+    auto setup_wrapper = [setup](ProfileGenerator&amp; generator, Profile&amp; profile)
     {
-        if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
+        if (generator.configuration_manager_.isActive&lt;R&gt;())
         {
-            auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
+            auto&amp; config = generator.configuration_manager_.get&lt;R&gt;();
 
-            setup(config, ptr, profile);
+            setup(config, generator, profile);
         }
     };
 
@@ -716,13 +712,13 @@ template &lt;typename R&gt; void ProfileGenerator::registerProfileComponent(Stri
 
 template &lt;typename R&gt; void ProfileGenerator::replaceProfileComponent(String const&amp; id, SetupFunction&lt;R&gt; setup)
 {
-    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
+    auto setup_wrapper = [setup](ProfileGenerator&amp; generator, Profile&amp; profile)
     {
-        if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
+        if (generator.configuration_manager_.isActive&lt;R&gt;())
         {
-            auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
+            auto&amp; config = generator.configuration_manager_.get&lt;R&gt;();
 
-            setup(config, ptr, profile);
+            setup(config, generator, profile);
         }
     };
 
@@ -745,13 +741,13 @@ template &lt;typename R&gt; void ProfileGenerator::registerAnonymousProfileCompo
         throw std::runtime_error(&quot;Configuration '&quot; + static_cast&lt;String&gt;(typeid(R).name()) + &quot;' does not exist.&quot;);
     }
 
-    auto setup_wrapper = [setup](ProfileGenerator* ptr, Profile&amp; profile)
+    auto setup_wrapper = [setup](ProfileGenerator&amp; generation, Profile&amp; profile)
     {
-        if (ptr-&gt;configuration_manager_.isActive&lt;R&gt;())
+        if (generation.configuration_manager_.isActive&lt;R&gt;())
         {
-            auto&amp; config = ptr-&gt;configuration_manager_.get&lt;R&gt;();
+            auto&amp; config = generation.configuration_manager_.get&lt;R&gt;();
 
-            setup(config, ptr, profile);
+            setup(config, generation, profile);
         }
     };
 
@@ -761,7 +757,7 @@ template &lt;typename R&gt; void ProfileGenerator::registerAnonymousProfileCompo
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

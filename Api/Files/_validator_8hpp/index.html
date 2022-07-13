@@ -595,13 +595,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;AllocationManager/AllocationManager.hpp&quot;
-#include &quot;AllocationManager/IAllocationManager.hpp&quot;
-#include &quot;Logging/ILogger.hpp&quot;
-#include &quot;Logging/LogCollection.hpp&quot;
-#include &quot;ValidationPass/ValidationPassConfiguration.hpp&quot;
-
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/AllocationManager/AllocationManager.hpp&quot;
+#include &quot;qir/qat/AllocationManager/IAllocationManager.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Logging/ILogger.hpp&quot;
+#include &quot;qir/qat/Logging/LogCollection.hpp&quot;
+#include &quot;qir/qat/ValidationPass/ValidationPassConfiguration.hpp&quot;
 
 #include &lt;memory&gt;
 
@@ -628,9 +627,9 @@ class Validator
 
     Validator()                 = delete;
     Validator(Validator const&amp;) = delete;
-    Validator(Validator&amp;&amp;)      = default;
+    Validator(Validator&amp;&amp;)      = delete;
     Validator&amp; operator=(Validator const&amp;) = delete;
-    Validator&amp; operator=(Validator&amp;&amp;) = default;
+    Validator&amp; operator=(Validator&amp;&amp;) = delete;
     ~Validator()                      = default;
 
     // Validator methods
@@ -672,7 +671,7 @@ class Validator
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

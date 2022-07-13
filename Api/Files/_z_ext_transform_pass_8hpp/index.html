@@ -595,12 +595,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Logging/ILogger.hpp&quot;
-#include &quot;Profile/Profile.hpp&quot;
-#include &quot;QatTypes/QatTypes.hpp&quot;
-#include &quot;StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
-
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Logging/ILogger.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
 
 #include &lt;functional&gt;
 #include &lt;unordered_map&gt;
@@ -634,15 +631,13 @@ class ZExtTransformPass : public llvm::PassInfoMixin&lt;ZExtTransformPass&gt;
     static bool isRequired();
 
   private:
-    ValidationPassConfiguration config_{};
-
     ILoggerPtr logger_{nullptr};
 };
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

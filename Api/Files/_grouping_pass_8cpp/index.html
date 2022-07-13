@@ -579,10 +579,10 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;GroupingPass/GroupingAnalysisPass.hpp&quot;
-#include &quot;GroupingPass/GroupingPass.hpp&quot;
+#include &quot;qir/qat/GroupingPass/GroupingPass.hpp&quot;
 
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/GroupingPass/GroupingAnalysisPass.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 
 #include &lt;fstream&gt;
 #include &lt;iostream&gt;
@@ -612,7 +612,7 @@ bool GroupingPass::isQuantumRegister(llvm::Type const* type)
 
 int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
 {
-    int64_t ret = PURE_CLASSICAL;
+    int64_t ret = PureClassical;
 
     // Checking all operations
     bool any_quantum     = false;
@@ -632,7 +632,7 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
 
         if (returns_quantum || is_void &amp;&amp; !any_classical &amp;&amp; any_quantum)
         {
-            ret |= DEST_QUANTUM;
+            ret |= DestQuantum;
         }
     }
     else
@@ -647,28 +647,28 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
         // Setting the destination platform
         if (returns_quantum)
         {
-            ret |= DEST_QUANTUM;
+            ret |= DestQuantum;
 
             // If no classical or quantum arguments present, then destination dictates
             // source
             if (!any_quantum &amp;&amp; !any_classical)
             {
-                ret |= SOURCE_QUANTUM;
+                ret |= SourceQuantum;
             }
         }
     }
 
     if (any_quantum &amp;&amp; any_classical)
     {
-        if (ret != DEST_QUANTUM)
+        if (ret != DestQuantum)
         {
-            ret = INVALID_MIXED_LOCATION;
+            ret = InvalidMixedLocation;
         }
     }
 
     else if (any_quantum)
     {
-        ret |= SOURCE_QUANTUM;
+        ret |= SourceQuantum;
     }
 
     return ret;
@@ -753,7 +753,7 @@ void GroupingPass::expandBasedOnSource(llvm::Module&amp; module, llvm::BasicBloc
         }
 
         auto instr_class = classifyInstruction(&amp;instr);
-        if ((instr_class &amp; SOURCE_QUANTUM) != 0)
+        if ((instr_class &amp; SourceQuantum) != 0)
         {
             // Checking if we are starting a new quantum program
             for (auto&amp; op : instr.operands())
@@ -782,7 +782,7 @@ void GroupingPass::expandBasedOnSource(llvm::Module&amp; module, llvm::BasicBloc
             instr.replaceAllUsesWith(new_instr);
             to_delete_.push_back(&amp;instr);
         }
-        else if (instr_class != INVALID_MIXED_LOCATION)
+        else if (instr_class != InvalidMixedLocation)
         {
             // Check if depends on readout
             if (depends_on_qc.find(&amp;instr) != depends_on_qc.end())
@@ -858,7 +858,7 @@ void GroupingPass::expandBasedOnDest(
         }
 
         auto instr_class     = classifyInstruction(&amp;instr);
-        bool dest_is_quantum = (instr_class &amp; DEST_QUANTUM) != 0;
+        bool dest_is_quantum = (instr_class &amp; DestQuantum) != 0;
 
         if (dest_is_quantum == move_quatum)
         {
@@ -967,7 +967,7 @@ void GroupingPass::setLogger(ILoggerPtr logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

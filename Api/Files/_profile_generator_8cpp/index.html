@@ -579,32 +579,35 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Generators/LlvmPassesConfiguration.hpp&quot;
-#include &quot;Generators/PostTransformConfig.hpp&quot;
-#include &quot;Generators/ProfileGenerator.hpp&quot;
-#include &quot;GroupingPass/GroupingAnalysisPass.hpp&quot;
-#include &quot;GroupingPass/GroupingPass.hpp&quot;
-#include &quot;GroupingPass/GroupingPassConfiguration.hpp&quot;
-#include &quot;PostTransformValidation/PostTransformValidationPass.hpp&quot;
-#include &quot;PreTransformTrimming/PreTransformTrimmingPass.hpp&quot;
-#include &quot;Rules/Factory.hpp&quot;
-#include &quot;Rules/RuleSet.hpp&quot;
-#include &quot;StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
-#include &quot;StaticResourceComponent/QubitRemapPass.hpp&quot;
-#include &quot;StaticResourceComponent/ReplaceQubitOnResetPass.hpp&quot;
-#include &quot;StaticResourceComponent/ResourceAnnotationPass.hpp&quot;
-#include &quot;StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
-#include &quot;TransformationRulesPass/TransformationRulesPass.hpp&quot;
-#include &quot;TransformationRulesPass/TransformationRulesPassConfiguration.hpp&quot;
-#include &quot;Utils/FunctionToModule.hpp&quot;
-#include &quot;ValidationPass/ValidationPassConfiguration.hpp&quot;
-#include &quot;ZExtTransformPass/ZExtTransformPass.hpp&quot;
+#include &quot;qir/qat/Generators/ProfileGenerator.hpp&quot;
 
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Generators/LlvmPassesConfiguration.hpp&quot;
+#include &quot;qir/qat/Generators/PostTransformConfig.hpp&quot;
+#include &quot;qir/qat/GroupingPass/GroupingAnalysisPass.hpp&quot;
+#include &quot;qir/qat/GroupingPass/GroupingPass.hpp&quot;
+#include &quot;qir/qat/GroupingPass/GroupingPassConfiguration.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/PostTransformValidation/PostTransformValidationPass.hpp&quot;
+#include &quot;qir/qat/PreTransformTrimming/PreTransformTrimmingPass.hpp&quot;
+#include &quot;qir/qat/Rules/Factory.hpp&quot;
+#include &quot;qir/qat/Rules/RuleSet.hpp&quot;
+#include &quot;qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
+#include &quot;qir/qat/StaticResourceComponent/QubitRemapPass.hpp&quot;
+#include &quot;qir/qat/StaticResourceComponent/ReplaceQubitOnResetPass.hpp&quot;
+#include &quot;qir/qat/StaticResourceComponent/ResourceAnnotationPass.hpp&quot;
+#include &quot;qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
+#include &quot;qir/qat/TransformationRulesPass/TransformationRulesPass.hpp&quot;
+#include &quot;qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp&quot;
+#include &quot;qir/qat/Utils/FunctionToModule.hpp&quot;
+#include &quot;qir/qat/ValidationPass/ValidationPassConfiguration.hpp&quot;
+#include &quot;qir/qat/ZExtTransformPass/ZExtTransformPass.hpp&quot;
 
 namespace microsoft::quantum
 {
-Profile ProfileGenerator::newProfile(String const&amp; name, OptimizationLevel const&amp; optimization_level, bool debug)
+std::shared_ptr&lt;Profile&gt; ProfileGenerator::newProfile(
+    String const&amp;            name,
+    OptimizationLevel const&amp; optimization_level,
+    bool                     debug)
 {
     auto qubit_allocation_manager  = BasicAllocationManager::createNew();
     auto result_allocation_manager = BasicAllocationManager::createNew();
@@ -615,9 +618,10 @@ Profile ProfileGenerator::newProfile(String const&amp; name, OptimizationLevel c
 
     // Creating profile
     // TODO(issue-12): Set target machine
-    Profile ret{name, logger_, debug, nullptr, qubit_allocation_manager, result_allocation_manager};
+    auto ret =
+        std::make_shared&lt;Profile&gt;(name, logger_, debug, nullptr, qubit_allocation_manager, result_allocation_manager);
 
-    auto module_pass_manager = createGenerationModulePassManager(ret, optimization_level, debug);
+    configureGeneratorFromProfile(*ret, optimization_level, debug);
 
     for (auto&amp; c : components_)
     {
@@ -628,35 +632,30 @@ Profile ProfileGenerator::newProfile(String const&amp; name, OptimizationLevel c
             llvm::outs() &lt;&lt; &quot;Setting &quot; &lt;&lt; c.first &lt;&lt; &quot; up\n&quot;;
         }
 
-        c.second(this, ret);
-        module_pass_manager.addPass(FunctionToModule(std::move(function_pass_manager)));
+        c.second(*this, *ret);
+        module_pass_manager_-&gt;addPass(FunctionToModule(std::move(function_pass_manager)));
     }
-
-    ret.setModulePassManager(std::move(module_pass_manager));
 
     // Creating validator
     auto validator =
         std::make_unique&lt;Validator&gt;(configuration_manager_.get&lt;ValidationPassConfiguration&gt;(), logger_, debug);
 
-    ret.setValidator(std::move(validator));
+    ret-&gt;setValidator(std::move(validator));
 
     return ret;
 }
 
-llvm::ModulePassManager ProfileGenerator::createGenerationModulePassManager(
+void ProfileGenerator::configureGeneratorFromProfile(
     Profile&amp;                 profile,
     OptimizationLevel const&amp; optimization_level,
     bool                     debug)
 {
-    auto&amp;                   pass_builder = profile.passBuilder();
-    llvm::ModulePassManager ret{};
+    auto&amp; pass_builder = profile.passBuilder();
 
-    module_pass_manager_ = &amp;ret;
+    module_pass_manager_ = &amp;profile.modulePassManager();
     pass_builder_        = &amp;pass_builder;
     optimization_level_  = optimization_level;
     debug_               = debug;
-
-    return ret;
 }
 
 llvm::ModulePassManager ProfileGenerator::createValidationModulePass(PassBuilder&amp;, OptimizationLevel const&amp;, bool)
@@ -723,9 +722,9 @@ void ProfileGenerator::setupDefaultComponentPipeline()
 
     registerProfileComponent&lt;LlvmPassesConfiguration&gt;(
         &quot;llvm-optimization&quot;,
-        [](LlvmPassesConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/)
+        [](LlvmPassesConfiguration const&amp; cfg, ProfileGenerator&amp; generator, Profile&amp; /*profile*/)
         {
-            auto&amp; mpm = ptr-&gt;modulePassManager();
+            auto&amp; mpm = generator.modulePassManager();
 
             // Eliminating intrinsic functions
             if (cfg.eliminateConstants())
@@ -739,13 +738,13 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 mpm.addPass(FunctionToModule(std::move(early_fpm)));
             }
 
-            auto&amp; fpm = ptr-&gt;functionPassManager();
+            auto&amp; fpm = generator.functionPassManager();
 
             // Always inline
             if (cfg.alwaysInline())
             {
 
-                auto&amp; pass_builder = ptr-&gt;passBuilder();
+                auto&amp; pass_builder = generator.passBuilder();
                 mpm.addPass(llvm::AlwaysInlinerPass());
                 auto                           inline_param = getInlineParams(cfg.inlineParameter());
                 llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
@@ -755,7 +754,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             // Unroll loop
             if (cfg.unrollLoops())
             {
-                auto&amp; pass_builder = ptr-&gt;passBuilder();
+                auto&amp; pass_builder = generator.passBuilder();
 
 
 
@@ -790,24 +789,24 @@ void ProfileGenerator::setupDefaultComponentPipeline()
 
     registerProfileComponent&lt;PreTransformTrimmingPassConfiguration&gt;(
         &quot;pre-transform-trimming&quot;,
-        [logger](PreTransformTrimmingPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/)
+        [logger](PreTransformTrimmingPassConfiguration const&amp; cfg, ProfileGenerator&amp; generator, Profile&amp; /*profile*/)
         {
-            auto&amp; mpm = ptr-&gt;modulePassManager();
+            auto&amp; mpm = generator.modulePassManager();
 
             mpm.addPass(PreTransformTrimmingPass(cfg, logger));
         });
 
     registerProfileComponent&lt;TransformationRulesPassConfiguration&gt;(
         &quot;transformation-rules&quot;,
-        [logger](TransformationRulesPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile)
+        [logger](TransformationRulesPassConfiguration const&amp; cfg, ProfileGenerator&amp; generator, Profile&amp; profile)
         {
-            auto&amp; ret = ptr-&gt;modulePassManager();
+            auto&amp; ret = generator.modulePassManager();
 
             // Defining the mapping
             RuleSet rule_set;
             auto    factory = RuleFactory(
                    rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), logger);
-            factory.usingConfiguration(ptr-&gt;configurationManager().get&lt;FactoryConfiguration&gt;());
+            factory.usingConfiguration(generator.configurationManager().get&lt;FactoryConfiguration&gt;());
 
             // Creating profile pass
             auto pass = TransformationRulesPass(std::move(rule_set), cfg, &amp;profile);
@@ -817,10 +816,10 @@ void ProfileGenerator::setupDefaultComponentPipeline()
 
     registerProfileComponent&lt;PostTransformConfig&gt;(
         &quot;post-transform&quot;,
-        [logger](PostTransformConfig const&amp; cfg, ProfileGenerator* ptr, Profile&amp; /*profile*/)
+        [logger](PostTransformConfig const&amp; cfg, ProfileGenerator&amp; generator, Profile&amp; /*profile*/)
         {
-            auto&amp; mpm = ptr-&gt;modulePassManager();
-            auto&amp; fpm = ptr-&gt;functionPassManager();
+            auto&amp; mpm = generator.modulePassManager();
+            auto&amp; fpm = generator.functionPassManager();
 
             if (cfg.shouldAddInstCombinePass())
             {
@@ -856,21 +855,21 @@ void ProfileGenerator::setupDefaultComponentPipeline()
     registerProfileComponent&lt;PostTransformValidationPassConfiguration&gt;(
         &quot;post-transform-validation&quot;,
         [logger](
-            PostTransformValidationPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp;
+            PostTransformValidationPassConfiguration const&amp; cfg, ProfileGenerator&amp; generator, Profile&amp;
             /*profile*/)
         {
-            auto&amp; mpm = ptr-&gt;modulePassManager();
+            auto&amp; mpm = generator.modulePassManager();
             mpm.addPass(PostTransformValidationPass(cfg, logger));
         });
 
     registerProfileComponent&lt;StaticResourceComponentConfiguration&gt;(
         &quot;static-resource&quot;,
-        [logger](StaticResourceComponentConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile)
+        [logger](StaticResourceComponentConfiguration const&amp; cfg, ProfileGenerator&amp; generator, Profile&amp; profile)
         {
             auto&amp; fam = profile.functionAnalysisManager();
             fam.registerPass([&amp;] { return AllocationAnalysisPass(logger); });
 
-            auto&amp; fpm = ptr-&gt;functionPassManager();
+            auto&amp; fpm = generator.functionPassManager();
 
             fpm.addPass(ReplaceQubitOnResetPass(cfg, logger));
             fpm.addPass(QubitRemapPass(cfg, logger));
@@ -890,13 +889,13 @@ void ProfileGenerator::setupDefaultComponentPipeline()
 
     registerProfileComponent&lt;GroupingPassConfiguration&gt;(
         &quot;grouping&quot;,
-        [logger](GroupingPassConfiguration const&amp; cfg, ProfileGenerator* ptr, Profile&amp; profile)
+        [logger](GroupingPassConfiguration const&amp; cfg, ProfileGenerator&amp; generator, Profile&amp; profile)
         {
             if (cfg.circuitSeparation())
             {
                 auto&amp; mam = profile.moduleAnalysisManager();
                 mam.registerPass([&amp;] { return GroupingAnalysisPass(cfg, logger); });
-                auto&amp; ret = ptr-&gt;modulePassManager();
+                auto&amp; ret = generator.modulePassManager();
 
                 auto pass = GroupingPass(cfg);
                 pass.setLogger(logger);
@@ -913,7 +912,7 @@ void ProfileGenerator::setLogger(ILoggerPtr const&amp; logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

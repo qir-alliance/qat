@@ -574,7 +574,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-passbuilder">PassBuilder</a></strong></td>
 </tr>
 <tr>
-<td>using PassBuilder::OptimizationLevel</td>
+<td>using llvm::OptimizationLevel</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-optimizationlevel">OptimizationLevel</a></strong></td>
 </tr>
 <tr>
@@ -582,11 +582,11 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-functionanalysismanager">FunctionAnalysisManager</a></strong></td>
 </tr>
 <tr>
-<td>template &lt;typename R > <br>using std::function&lt; void(R const  &amp;, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> *, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;)&gt;</td>
+<td>template &lt;typename R > <br>using std::function&lt; void(R const  &amp;, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> &amp;, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;)&gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunction">SetupFunction</a></strong></td>
 </tr>
 <tr>
-<td>using std::function&lt; void(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> *, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;)&gt;</td>
+<td>using std::function&lt; void(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> &amp;, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;)&gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunctionwrapper">SetupFunctionWrapper</a></strong> <br>Wrapper function type for invoking the profile setup function.</td>
 </tr>
 <tr>
@@ -641,7 +641,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-configurationmanager">configurationManager</a></strong>() const</td>
 </tr>
 <tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a></td>
+<td>std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-newprofile">newProfile</a></strong>(String const &amp; name, OptimizationLevel const &amp; optimization_level, bool debug)</td>
 </tr>
 <tr>
@@ -700,8 +700,8 @@
 </thead>
 <tbody>
 <tr>
-<td>llvm::ModulePassManager</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-creategenerationmodulepassmanager">createGenerationModulePassManager</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp; profile, OptimizationLevel const &amp; optimization_level, bool debug)</td>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-configuregeneratorfromprofile">configureGeneratorFromProfile</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp; profile, OptimizationLevel const &amp; optimization_level, bool debug)</td>
 </tr>
 <tr>
 <td>llvm::ModulePassManager</td>
@@ -714,18 +714,18 @@
 <pre><code class="language-cpp">using microsoft::quantum::ProfileGenerator::PassBuilder =  llvm::PassBuilder;
 </code></pre>
 <h3 id="using-optimizationlevel">using OptimizationLevel</h3>
-<pre><code class="language-cpp">using microsoft::quantum::ProfileGenerator::OptimizationLevel =  PassBuilder::OptimizationLevel;
+<pre><code class="language-cpp">using microsoft::quantum::ProfileGenerator::OptimizationLevel =  llvm::OptimizationLevel;
 </code></pre>
 <h3 id="using-functionanalysismanager">using FunctionAnalysisManager</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ProfileGenerator::FunctionAnalysisManager =  llvm::FunctionAnalysisManager;
 </code></pre>
 <h3 id="using-setupfunction">using SetupFunction</h3>
 <pre><code class="language-cpp">template &lt;typename R &gt;
-using microsoft::quantum::ProfileGenerator::SetupFunction =  std::function&lt;void(R const&amp;, ProfileGenerator*, Profile&amp;)&gt;;
+using microsoft::quantum::ProfileGenerator::SetupFunction =  std::function&lt;void(R const&amp;, ProfileGenerator&amp;, Profile&amp;)&gt;;
 </code></pre>
 <p>Setup function that uses a configuration type R to configure the profile and/or generator. </p>
 <h3 id="using-setupfunctionwrapper">using SetupFunctionWrapper</h3>
-<pre><code class="language-cpp">using microsoft::quantum::ProfileGenerator::SetupFunctionWrapper =  std::function&lt;void(ProfileGenerator*, Profile&amp;)&gt;;
+<pre><code class="language-cpp">using microsoft::quantum::ProfileGenerator::SetupFunctionWrapper =  std::function&lt;void(ProfileGenerator&amp;, Profile&amp;)&gt;;
 </code></pre>
 <p>Wrapper function type for invoking the profile setup function. </p>
 <h3 id="using-components">using Components</h3>
@@ -771,7 +771,7 @@ using microsoft::quantum::ProfileGenerator::SetupFunction =  std::function&lt;vo
 </code></pre>
 <p>Constant reference to the configuration manager. This property allows read access to the configuration manager and is intended for profile generation. </p>
 <h3 id="function-newprofile">function newProfile</h3>
-<pre><code class="language-cpp">Profile newProfile(
+<pre><code class="language-cpp">std::shared_ptr&lt; Profile &gt; newProfile(
     String const &amp; name,
     OptimizationLevel const &amp; optimization_level,
     bool debug
@@ -839,8 +839,8 @@ void registerAnonymousProfileComponent(
 )
 </code></pre>
 <h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
-<h3 id="function-creategenerationmodulepassmanager">function createGenerationModulePassManager</h3>
-<pre><code class="language-cpp">llvm::ModulePassManager createGenerationModulePassManager(
+<h3 id="function-configuregeneratorfromprofile">function configureGeneratorFromProfile</h3>
+<pre><code class="language-cpp">void configureGeneratorFromProfile(
     Profile &amp; profile,
     OptimizationLevel const &amp; optimization_level,
     bool debug
@@ -856,7 +856,7 @@ void registerAnonymousProfileComponent(
 </code></pre>
 <p>Internal function that creates a module pass for QIR validation. At the moment, this function is a placeholder for future functionality. </p>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

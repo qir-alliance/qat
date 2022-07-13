@@ -579,9 +579,9 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Profile/Profile.hpp&quot;
+#include &quot;qir/qat/Profile/Profile.hpp&quot;
 
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 
 namespace microsoft::quantum
 {
@@ -630,7 +630,7 @@ void Profile::registerEPCallbacks()
     if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, peephole_ep_pipeline_))
     {
         pass_builder_-&gt;registerPeepholeEPCallback(
-            [this](llvm::FunctionPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            [this](llvm::FunctionPassManager&amp; pass_manager, llvm::OptimizationLevel)
             {
                 llvm::ExitOnError error_safeguard(&quot;Unable to parse PeepholeEP pipeline: &quot;);
                 error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, peephole_ep_pipeline_));
@@ -640,7 +640,7 @@ void Profile::registerEPCallbacks()
     if (tryParsePipelineText&lt;llvm::LoopPassManager&gt;(*pass_builder_, late_loop_optimizations_ep_pipeline_))
     {
         pass_builder_-&gt;registerLateLoopOptimizationsEPCallback(
-            [this](llvm::LoopPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            [this](llvm::LoopPassManager&amp; pass_manager, llvm::OptimizationLevel)
             {
                 llvm::ExitOnError error_safeguard(&quot;Unable to parse LateLoopOptimizationsEP pipeline: &quot;);
                 error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, late_loop_optimizations_ep_pipeline_));
@@ -650,7 +650,7 @@ void Profile::registerEPCallbacks()
     if (tryParsePipelineText&lt;llvm::LoopPassManager&gt;(*pass_builder_, loop_optimizer_end_ep_pipeline_))
     {
         pass_builder_-&gt;registerLoopOptimizerEndEPCallback(
-            [this](llvm::LoopPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            [this](llvm::LoopPassManager&amp; pass_manager, llvm::OptimizationLevel)
             {
                 llvm::ExitOnError error_safeguard(&quot;Unable to parse LoopOptimizerEndEP pipeline: &quot;);
                 error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, loop_optimizer_end_ep_pipeline_));
@@ -660,7 +660,7 @@ void Profile::registerEPCallbacks()
     if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, scalar_optimizer_late_ep_pipeline_))
     {
         pass_builder_-&gt;registerScalarOptimizerLateEPCallback(
-            [this](llvm::FunctionPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            [this](llvm::FunctionPassManager&amp; pass_manager, llvm::OptimizationLevel)
             {
                 llvm::ExitOnError error_safeguard(&quot;Unable to parse ScalarOptimizerLateEP pipeline: &quot;);
                 error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, scalar_optimizer_late_ep_pipeline_));
@@ -670,7 +670,7 @@ void Profile::registerEPCallbacks()
     if (tryParsePipelineText&lt;llvm::CGSCCPassManager&gt;(*pass_builder_, cgscc_optimizer_late_ep_pipeline_))
     {
         pass_builder_-&gt;registerCGSCCOptimizerLateEPCallback(
-            [this](llvm::CGSCCPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            [this](llvm::CGSCCPassManager&amp; pass_manager, llvm::OptimizationLevel)
             {
                 llvm::ExitOnError error_safeguard(&quot;Unable to parse CGSCCOptimizerLateEP pipeline: &quot;);
                 error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, cgscc_optimizer_late_ep_pipeline_));
@@ -680,7 +680,7 @@ void Profile::registerEPCallbacks()
     if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, vectorizer_start_ep_pipeline_))
     {
         pass_builder_-&gt;registerVectorizerStartEPCallback(
-            [this](llvm::FunctionPassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            [this](llvm::FunctionPassManager&amp; pass_manager, llvm::OptimizationLevel)
             {
                 llvm::ExitOnError error_safeguard(&quot;Unable to parse VectorizerStartEP pipeline: &quot;);
                 error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, vectorizer_start_ep_pipeline_));
@@ -690,7 +690,7 @@ void Profile::registerEPCallbacks()
     if (tryParsePipelineText&lt;llvm::ModulePassManager&gt;(*pass_builder_, pipeline_start_ep_pipeline_))
     {
         pass_builder_-&gt;registerPipelineStartEPCallback(
-            [this](llvm::ModulePassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            [this](llvm::ModulePassManager&amp; pass_manager, llvm::OptimizationLevel)
             {
                 llvm::ExitOnError error_safeguard(&quot;Unable to parse PipelineStartEP pipeline: &quot;);
                 error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, pipeline_start_ep_pipeline_));
@@ -700,7 +700,7 @@ void Profile::registerEPCallbacks()
     if (tryParsePipelineText&lt;llvm::FunctionPassManager&gt;(*pass_builder_, optimizer_last_ep_pipeline_))
     {
         pass_builder_-&gt;registerOptimizerLastEPCallback(
-            [this](llvm::ModulePassManager&amp; pass_manager, llvm::PassBuilder::OptimizationLevel)
+            [this](llvm::ModulePassManager&amp; pass_manager, llvm::OptimizationLevel)
             {
                 llvm::ExitOnError error_safeguard(&quot;Unable to parse OptimizerLastEP pipeline: &quot;);
                 error_safeguard(pass_builder_-&gt;parsePassPipeline(pass_manager, optimizer_last_ep_pipeline_));
@@ -740,11 +740,6 @@ Profile::AllocationManagerPtr Profile::getResultAllocationManager()
     return result_allocation_manager_;
 }
 
-void Profile::setModulePassManager(llvm::ModulePassManager&amp;&amp; manager)
-{
-    module_pass_manager_ = std::move(manager);
-}
-
 void Profile::setValidator(ValidatorPtr&amp;&amp; validator)
 {
     validator_ = std::move(validator);
@@ -771,10 +766,14 @@ llvm::ModuleAnalysisManager&amp; Profile::moduleAnalysisManager()
     return module_analysis_manager_;
 }
 
+llvm::ModulePassManager&amp; Profile::modulePassManager()
+{
+    return module_pass_manager_;
+}
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

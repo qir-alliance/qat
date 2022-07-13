@@ -579,9 +579,9 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;ModuleLoader/InstructionLocationTable.hpp&quot;
+#include &quot;qir/qat/ModuleLoader/InstructionLocationTable.hpp&quot;
 
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 
 #include &lt;memory&gt;
 
@@ -617,7 +617,7 @@ InstructionLocationTable::Position InstructionLocationTable::getPosition(Value c
         return it-&gt;second;
     }
 
-    return Position::InvalidPosition();
+    return Position::invalidPosition();
 }
 
 void InstructionLocationTable::registerModule(StringRef const&amp; filename, Module const* module)
@@ -635,9 +635,9 @@ void InstructionLocationTable::registerValuePosition(Value const* value, llvm::f
     outstream.flush();
 
     Position pos;
-    pos.name   = static_cast&lt;String&gt;(current_filename_);
-    pos.line   = outstream.getLine() + 1;
-    pos.column = outstream.getColumn() + 1;
+    pos.setName(static_cast&lt;String&gt;(current_filename_));
+    pos.setLine(outstream.getLine() + 1);
+    pos.setColumn(outstream.getColumn() + 1);
 
     positions_.insert(std::make_pair(value, pos));
 }
@@ -645,7 +645,7 @@ void InstructionLocationTable::registerValuePosition(Value const* value, llvm::f
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

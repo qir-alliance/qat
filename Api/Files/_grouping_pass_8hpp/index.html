@@ -595,12 +595,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;GroupingPass/GroupingPassConfiguration.hpp&quot;
-#include &quot;Logging/ILogger.hpp&quot;
-#include &quot;Profile/Profile.hpp&quot;
-#include &quot;QatTypes/QatTypes.hpp&quot;
-
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/GroupingPass/GroupingPassConfiguration.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Logging/ILogger.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
 
 #include &lt;functional&gt;
 #include &lt;unordered_map&gt;
@@ -624,14 +622,14 @@ class GroupingPass : public llvm::PassInfoMixin&lt;GroupingPass&gt;
 
     enum
     {
-        PURE_CLASSICAL                = 0,
-        SOURCE_QUANTUM                = 1,
-        DEST_QUANTUM                  = 2,
-        PURE_QUANTUM                  = SOURCE_QUANTUM | DEST_QUANTUM,
-        TRANSFER_CLASSICAL_TO_QUANTUM = DEST_QUANTUM,
-        TRANSFER_QUANTUM_TO_CLASSICAL = SOURCE_QUANTUM,
+        PureClassical              = 0,
+        SourceQuantum              = 1,
+        DestQuantum                = 2,
+        PureQuantum                = SourceQuantum | DestQuantum,
+        TransferClassicalToQuantum = DestQuantum,
+        TransferQuantumToClassical = SourceQuantum,
 
-        INVALID_MIXED_LOCATION = -1
+        InvalidMixedLocation = -1
     };
 
     explicit GroupingPass(GroupingPassConfiguration const&amp; cfg)
@@ -696,7 +694,7 @@ class GroupingPass : public llvm::PassInfoMixin&lt;GroupingPass&gt;
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

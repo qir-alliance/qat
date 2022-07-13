@@ -588,8 +588,8 @@
 </thead>
 <tbody>
 <tr>
-<td>struct</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">microsoft::quantum::OpcodeValue</a></strong></td>
+<td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_opcode_value/">microsoft::quantum::OpcodeValue</a></strong></td>
 </tr>
 <tr>
 <td>struct</td>
@@ -606,21 +606,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Commandline/ConfigurationManager.hpp&quot;
-#include &quot;QatTypes/QatTypes.hpp&quot;
+#include &quot;qir/qat/Commandline/ConfigurationManager.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
 
 #include &lt;functional&gt;
 #include &lt;set&gt;
 
 namespace microsoft::quantum
 {
-struct OpcodeValue
+class OpcodeValue
 {
-    String id{&quot;&quot;};
-    String predicate{&quot;&quot;};
-    OpcodeValue(String const&amp; name, String const&amp; fi = &quot;&quot;)
-      : id{name}
-      , predicate{fi}
+  public:
+    OpcodeValue(String const&amp; name, String const&amp; fi = &quot;&quot;) // NOLINT
+      : id_{name}
+      , predicate_{fi}
     {
     }
 
@@ -631,8 +630,31 @@ struct OpcodeValue
     OpcodeValue&amp; operator=(OpcodeValue const&amp;) = default;
     bool         operator==(OpcodeValue const&amp; other) const
     {
-        return id == other.id &amp;&amp; predicate == other.predicate;
+        return id_ == other.id_ &amp;&amp; predicate_ == other.predicate_;
     }
+
+    String&amp; id()
+    {
+        return id_;
+    }
+    String const&amp; id() const
+    {
+        return id_;
+    }
+
+    String&amp; predicate()
+    {
+        return predicate_;
+    }
+
+    String const&amp; predicate() const
+    {
+        return predicate_;
+    }
+
+  private:
+    String id_{&quot;&quot;};
+    String predicate_{&quot;&quot;};
 };
 } // namespace microsoft::quantum
 
@@ -643,7 +665,7 @@ template &lt;&gt; struct hash&lt;microsoft::quantum::OpcodeValue&gt;
     size_t operator()(microsoft::quantum::OpcodeValue const&amp; x) const
     {
         hash&lt;std::string&gt; hasher;
-        return hasher(x.id + &quot;.&quot; + x.predicate);
+        return hasher(x.id() + &quot;.&quot; + x.predicate());
     }
 };
 } // namespace std
@@ -713,7 +735,7 @@ class ValidationPassConfiguration
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

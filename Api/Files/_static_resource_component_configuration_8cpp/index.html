@@ -579,9 +579,10 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Commandline/ConfigurationManager.hpp&quot;
-#include &quot;QatTypes/QatTypes.hpp&quot;
-#include &quot;StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
+#include &quot;qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
+
+#include &quot;qir/qat/Commandline/ConfigurationManager.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
 
 namespace microsoft::quantum
 {
@@ -664,10 +665,45 @@ StaticResourceComponentConfiguration StaticResourceComponentConfiguration::creat
     return ret;
 }
 
+void StaticResourceComponentConfiguration::enableAnnotateQubitUse()
+{
+    annotate_qubit_use_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableAnnotateResultUse()
+{
+    annotate_result_use_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableAnnotateMaxQubitIndex()
+{
+    annotate_max_qubit_index_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableAnnotateMaxResultIndex()
+{
+    annotate_max_result_index_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableReplaceQubitOnReset()
+{
+    replace_qubit_on_reset_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableReindexQubits()
+{
+    reindex_qubits_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableInlineAfterIdChange()
+{
+    inline_after_id_change_ = true;
+}
+
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

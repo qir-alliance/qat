@@ -598,7 +598,7 @@
 <pre><code class="language-cpp">ResourceType type {ResourceType::NotResource};
 </code></pre>
 <h3 id="variable-index">variable index</h3>
-<pre><code class="language-cpp">uint64_t index {-1};
+<pre><code class="language-cpp">uint64_t index {static_cast&lt;uint64_t&gt;(-1)};
 </code></pre>
 <h3 id="variable-used_by">variable used_by</h3>
 <pre><code class="language-cpp">llvm::Instruction * used_by {nullptr};
@@ -607,7 +607,7 @@
 <pre><code class="language-cpp">uint64_t operand_id {0};
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

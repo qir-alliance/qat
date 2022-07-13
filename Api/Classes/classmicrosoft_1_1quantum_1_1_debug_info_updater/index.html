@@ -661,49 +661,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="public-attributes">Public Attributes</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>InstructionLocationTablePtr</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_debug_info_updater/#variable-debug_info_">debug_info_</a></strong></td>
-</tr>
-<tr>
-<td>llvm::Module &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_debug_info_updater/#variable-module_">module_</a></strong></td>
-</tr>
-<tr>
-<td>llvm::DIBuilder</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_debug_info_updater/#variable-builder_">builder_</a></strong></td>
-</tr>
-<tr>
-<td>llvm::DebugInfoFinder</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_debug_info_updater/#variable-finder_">finder_</a></strong></td>
-</tr>
-<tr>
-<td>llvm::DICompileUnit *</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_debug_info_updater/#variable-compile_unit_">compile_unit_</a></strong></td>
-</tr>
-<tr>
-<td>llvm::DIFile *</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_debug_info_updater/#variable-file_unit_">file_unit_</a></strong></td>
-</tr>
-<tr>
-<td>llvm::ValueMap&lt; llvm::Function const  *, llvm::DISubprogram * &gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_debug_info_updater/#variable-function_debug_info_">function_debug_info_</a></strong></td>
-</tr>
-<tr>
-<td>llvm::DenseMap&lt; llvm::Type const  *, llvm::DIType * &gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_debug_info_updater/#variable-type_debug_info_">type_debug_info_</a></strong></td>
-</tr>
-</tbody>
-</table>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
 <h3 id="using-dibuilder">using DIBuilder</h3>
 <pre><code class="language-cpp">using microsoft::quantum::DebugInfoUpdater::DIBuilder =  llvm::DIBuilder;
@@ -779,33 +736,8 @@
     llvm::Type * type
 )
 </code></pre>
-<h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
-<h3 id="variable-debug_info_">variable debug_info_</h3>
-<pre><code class="language-cpp">InstructionLocationTablePtr debug_info_ {nullptr};
-</code></pre>
-<h3 id="variable-module_">variable module_</h3>
-<pre><code class="language-cpp">llvm::Module &amp; module_;
-</code></pre>
-<h3 id="variable-builder_">variable builder_</h3>
-<pre><code class="language-cpp">llvm::DIBuilder builder_;
-</code></pre>
-<h3 id="variable-finder_">variable finder_</h3>
-<pre><code class="language-cpp">llvm::DebugInfoFinder finder_ {};
-</code></pre>
-<h3 id="variable-compile_unit_">variable compile_unit_</h3>
-<pre><code class="language-cpp">llvm::DICompileUnit * compile_unit_;
-</code></pre>
-<h3 id="variable-file_unit_">variable file_unit_</h3>
-<pre><code class="language-cpp">llvm::DIFile * file_unit_;
-</code></pre>
-<h3 id="variable-function_debug_info_">variable function_debug_info_</h3>
-<pre><code class="language-cpp">llvm::ValueMap&lt; llvm::Function const  *, llvm::DISubprogram * &gt; function_debug_info_ {};
-</code></pre>
-<h3 id="variable-type_debug_info_">variable type_debug_info_</h3>
-<pre><code class="language-cpp">llvm::DenseMap&lt; llvm::Type const  *, llvm::DIType * &gt; type_debug_info_ {};
-</code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

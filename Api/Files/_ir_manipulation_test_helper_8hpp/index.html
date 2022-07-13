@@ -595,9 +595,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Generators/ProfileGenerator.hpp&quot;
-
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Generators/ProfileGenerator.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 
 #include &lt;unordered_set&gt;
 #include &lt;vector&gt;
@@ -614,14 +613,14 @@ class IrManipulationTestHelper
     using SMDiagnostic      = llvm::SMDiagnostic;
     using Module            = llvm::Module;
     using ModulePtr         = std::unique_ptr&lt;Module&gt;;
-    using OptimizationLevel = llvm::PassBuilder::OptimizationLevel;
+    using OptimizationLevel = llvm::OptimizationLevel;
     using GeneratorPtr      = std::shared_ptr&lt;ProfileGenerator&gt;;
 
     // IrManipulationTestHelper is default constructible with no ability to move
     // or copy.
     //
 
-    IrManipulationTestHelper();
+    IrManipulationTestHelper()                                = default;
     IrManipulationTestHelper(IrManipulationTestHelper const&amp;) = delete;
     IrManipulationTestHelper&amp; operator=(IrManipulationTestHelper const&amp;) = delete;
     IrManipulationTestHelper(IrManipulationTestHelper&amp;&amp;)                 = delete;
@@ -693,25 +692,17 @@ class IrManipulationTestHelper
 
     bool compilation_failed_{false};
 
-    SMDiagnostic error_;
-
     LLVMContext context_;
 
     ModulePtr module_;
 
-    // Objects used to run a set of passes
-    //
-    llvm::PassBuilder             pass_builder_;
-    llvm::LoopAnalysisManager     loop_analysis_manager_;
-    llvm::FunctionAnalysisManager function_analysis_manager_;
-    llvm::CGSCCAnalysisManager    gscc_analysis_manager_;
-    llvm::ModuleAnalysisManager   module_analysis_manager_;
+    SMDiagnostic error_;
 };
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

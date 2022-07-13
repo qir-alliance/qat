@@ -607,7 +607,7 @@
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#function-profile">Profile</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;&amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#function-profile">Profile</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;&amp; )</td>
 </tr>
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;</td>
@@ -615,7 +615,7 @@
 </tr>
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;&amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;&amp; )</td>
 </tr>
 <tr>
 <td></td>
@@ -665,6 +665,10 @@
 <td>llvm::ModuleAnalysisManager &amp;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#function-moduleanalysismanager">moduleAnalysisManager</a></strong>()<br>Returns a reference to the module analysis manager.</td>
 </tr>
+<tr>
+<td>llvm::ModulePassManager &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#function-modulepassmanager">modulePassManager</a></strong>()<br>Returns the module pass manager associated with the profile.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="protected-functions">Protected Functions</h2>
@@ -676,10 +680,6 @@
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#function-setmodulepassmanager">setModulePassManager</a></strong>(llvm::ModulePassManager &amp;&amp; manager)<br>Sets the module pass manager used for the transformation of the IR.</td>
-</tr>
 <tr>
 <td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#function-setvalidator">setValidator</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/#using-validatorptr">ValidatorPtr</a> &amp;&amp; validator)<br>Sets the validator.</td>
@@ -739,7 +739,7 @@
 <h3 id="function-profile_3">function Profile</h3>
 <pre><code class="language-cpp">Profile(
     Profile &amp;&amp; 
-) =default
+)
 </code></pre>
 <h3 id="function-operator">function operator=</h3>
 <pre><code class="language-cpp">Profile &amp; operator=(
@@ -749,7 +749,7 @@
 <h3 id="function-operator_1">function operator=</h3>
 <pre><code class="language-cpp">Profile &amp; operator=(
     Profile &amp;&amp; 
-) =default
+)
 </code></pre>
 <h3 id="function-profile_4">function ~Profile</h3>
 <pre><code class="language-cpp">~Profile() =default
@@ -801,13 +801,11 @@
 <pre><code class="language-cpp">llvm::ModuleAnalysisManager &amp; moduleAnalysisManager()
 </code></pre>
 <p>Returns a reference to the module analysis manager. </p>
-<h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
-<h3 id="function-setmodulepassmanager">function setModulePassManager</h3>
-<pre><code class="language-cpp">void setModulePassManager(
-    llvm::ModulePassManager &amp;&amp; manager
-)
+<h3 id="function-modulepassmanager">function modulePassManager</h3>
+<pre><code class="language-cpp">llvm::ModulePassManager &amp; modulePassManager()
 </code></pre>
-<p>Sets the module pass manager used for the transformation of the IR. </p>
+<p>Returns the module pass manager associated with the profile. </p>
+<h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
 <h3 id="function-setvalidator">function setValidator</h3>
 <pre><code class="language-cpp">void setValidator(
     ValidatorPtr &amp;&amp; validator
@@ -819,7 +817,7 @@
 <pre><code class="language-cpp">friend class ProfileGenerator;
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

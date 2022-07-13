@@ -595,9 +595,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;ModuleLoader/InstructionLocationTable.hpp&quot;
-
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/ModuleLoader/InstructionLocationTable.hpp&quot;
 
 namespace microsoft::quantum
 {
@@ -638,7 +637,7 @@ class DebugInfoUpdater : public llvm::InstVisitor&lt;DebugInfoUpdater&gt;
     DIType*                 getOrCreateType(llvm::Type* type);
     DIType*                 getType(llvm::Type* type);
 
-  public:
+  private:
     InstructionLocationTablePtr debug_info_{nullptr};
     llvm::Module&amp;               module_;
     llvm::DIBuilder             builder_;
@@ -654,7 +653,7 @@ class DebugInfoUpdater : public llvm::InstVisitor&lt;DebugInfoUpdater&gt;
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

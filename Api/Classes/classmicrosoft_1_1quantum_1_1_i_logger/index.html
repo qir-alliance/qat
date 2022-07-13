@@ -599,7 +599,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-value">Value</a></strong></td>
 </tr>
 <tr>
-<td>using std::function&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a>(Value const  *)&gt;</td>
+<td>using std::function&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a>(Value const  *)&gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-locationresolver">LocationResolver</a></strong></td>
 </tr>
 <tr>
@@ -627,19 +627,19 @@
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; )</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; )</td>
 </tr>
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; )</td>
 </tr>
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; )</td>
 </tr>
 <tr>
 <td>virtual</td>
@@ -667,7 +667,7 @@
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocation">setLocation</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a> const &amp; location) =0</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocation">setLocation</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a> const &amp; location) =0</td>
 </tr>
 <tr>
 <td>virtual void</td>
@@ -694,7 +694,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationresolver">setLocationResolver</a></strong>(LocationResolver const &amp; r)<br>Sets a resolver which that translates a LLVM value into a position in the source.</td>
 </tr>
 <tr>
-<td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-resolvelocation">resolveLocation</a></strong>(llvm::Value const * value)<br>Returns a source location from the value pointer (if possible)</td>
 </tr>
 <tr>
@@ -767,7 +767,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="protected-attributes">Protected Attributes</h2>
+<h2 id="protected-functions">Protected Functions</h2>
 <table>
 <thead>
 <tr>
@@ -777,12 +777,12 @@
 </thead>
 <tbody>
 <tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#variable-had_errors_">had_errors_</a></strong> <br>Variable to indicate whether or not errors were reported.</td>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-sethaserrors">setHasErrors</a></strong>(bool value)</td>
 </tr>
 <tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#variable-had_warnings_">had_warnings_</a></strong> <br>Variable to indicate whether or not warnings were reported.</td>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-sethaswarnings">setHasWarnings</a></strong>(bool value)</td>
 </tr>
 </tbody>
 </table>
@@ -849,22 +849,22 @@
 <h3 id="function-ilogger_1">function ILogger</h3>
 <pre><code class="language-cpp">ILogger(
     ILogger const &amp; 
-) =default
+)
 </code></pre>
 <h3 id="function-ilogger_2">function ILogger</h3>
 <pre><code class="language-cpp">ILogger(
     ILogger &amp;&amp; 
-) =default
+)
 </code></pre>
 <h3 id="function-operator">function operator=</h3>
 <pre><code class="language-cpp">ILogger &amp; operator=(
     ILogger const &amp; 
-) =default
+)
 </code></pre>
 <h3 id="function-operator_1">function operator=</h3>
 <pre><code class="language-cpp">ILogger &amp; operator=(
     ILogger &amp;&amp; 
-) =default
+)
 </code></pre>
 <h3 id="function-ilogger_3">function ~ILogger</h3>
 <pre><code class="language-cpp">virtual ~ILogger()
@@ -1047,17 +1047,19 @@
     llvm::Value * ptr =nullptr
 )
 </code></pre>
-<h2 id="protected-attributes-documentation">Protected Attributes Documentation</h2>
-<h3 id="variable-had_errors_">variable had_errors_</h3>
-<pre><code class="language-cpp">bool had_errors_ {false};
+<h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
+<h3 id="function-sethaserrors">function setHasErrors</h3>
+<pre><code class="language-cpp">void setHasErrors(
+    bool value
+)
 </code></pre>
-<p>Variable to indicate whether or not errors were reported. </p>
-<h3 id="variable-had_warnings_">variable had_warnings_</h3>
-<pre><code class="language-cpp">bool had_warnings_ {false};
+<h3 id="function-sethaswarnings">function setHasWarnings</h3>
+<pre><code class="language-cpp">void setHasWarnings(
+    bool value
+)
 </code></pre>
-<p>Variable to indicate whether or not warnings were reported. </p>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

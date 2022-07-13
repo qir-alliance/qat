@@ -579,8 +579,9 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Logging/LogCollection.hpp&quot;
-#include &quot;Utils/Trim.hpp&quot;
+#include &quot;qir/qat/Logging/LogCollection.hpp&quot;
+
+#include &quot;qir/qat/Utils/Trim.hpp&quot;
 
 #include &lt;fstream&gt;
 #include &lt;iostream&gt;
@@ -601,27 +602,27 @@ void LogCollection::info(String const&amp; message)
 
 void LogCollection::warning(String const&amp; message)
 {
-    had_warnings_ = true;
+    setHasWarnings(true);
     messages_.push_back({Type::Warning, current_location_, message});
 }
 
 void LogCollection::error(String const&amp; message)
 {
-    had_errors_ = true;
+    setHasErrors(true);
     messages_.push_back({Type::Error, current_location_, message});
 }
 
 void LogCollection::internalError(String const&amp; message)
 {
-    had_errors_ = true;
+    setHasErrors(true);
     messages_.push_back({Type::InternalError, current_location_, message});
 }
 
 void LogCollection::setLocation(SourceLocation const&amp; loc)
 {
-    current_location_.name   = loc.name;
-    current_location_.line   = loc.line;
-    current_location_.column = loc.column;
+    current_location_.setName(loc.name());
+    current_location_.setLine(loc.line());
+    current_location_.setColumn(loc.column());
 }
 
 ILogger::Messages const&amp; LogCollection::messages() const
@@ -631,14 +632,14 @@ ILogger::Messages const&amp; LogCollection::messages() const
 
 void LogCollection::setLlvmHint(String const&amp; value)
 {
-    current_location_.llvm_hint = value;
-    trim(current_location_.llvm_hint);
+    current_location_.setLlvmHint(value);
+    trim(current_location_.llvmHint());
 }
 
 void LogCollection::setFrontendHint(String const&amp; value)
 {
-    current_location_.frontend_hint = value;
-    trim(current_location_.frontend_hint);
+    current_location_.setFrontendHint(value);
+    trim(current_location_.frontendHint());
 }
 
 void LogCollection::dump(std::ostream&amp; out) const
@@ -675,11 +676,11 @@ void LogCollection::dump(std::ostream&amp; out) const
 
         out &lt;&lt; &quot;    \&quot;message\&quot;: \&quot;&quot; &lt;&lt; message.message &lt;&lt; &quot;\&quot;,\n&quot;;
         out &lt;&lt; &quot;    \&quot;location\&quot;: {\n&quot;;
-        out &lt;&lt; &quot;      \&quot;filename\&quot;: \&quot;&quot; &lt;&lt; static_cast&lt;std::string&gt;(message.location.name) &lt;&lt; &quot;\&quot;,\n&quot;;
-        out &lt;&lt; &quot;      \&quot;line\&quot;: &quot; &lt;&lt; message.location.line &lt;&lt; &quot;,\n&quot;;
-        out &lt;&lt; &quot;      \&quot;column\&quot;: &quot; &lt;&lt; message.location.column &lt;&lt; &quot;,\n&quot;;
-        out &lt;&lt; &quot;      \&quot;llvm_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\&quot;,\n&quot;;
-        out &lt;&lt; &quot;      \&quot;frontend_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.frontend_hint &lt;&lt; &quot;\&quot;\n&quot;;
+        out &lt;&lt; &quot;      \&quot;filename\&quot;: \&quot;&quot; &lt;&lt; static_cast&lt;std::string&gt;(message.location.name()) &lt;&lt; &quot;\&quot;,\n&quot;;
+        out &lt;&lt; &quot;      \&quot;line\&quot;: &quot; &lt;&lt; message.location.line() &lt;&lt; &quot;,\n&quot;;
+        out &lt;&lt; &quot;      \&quot;column\&quot;: &quot; &lt;&lt; message.location.column() &lt;&lt; &quot;,\n&quot;;
+        out &lt;&lt; &quot;      \&quot;llvm_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.llvmHint() &lt;&lt; &quot;\&quot;,\n&quot;;
+        out &lt;&lt; &quot;      \&quot;frontend_hint\&quot;: \&quot;&quot; &lt;&lt; message.location.frontendHint() &lt;&lt; &quot;\&quot;\n&quot;;
         out &lt;&lt; &quot;    }\n&quot;;
         out &lt;&lt; &quot;  }&quot;;
         not_first = true;
@@ -690,7 +691,7 @@ void LogCollection::dump(std::ostream&amp; out) const
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

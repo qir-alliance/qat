@@ -607,12 +607,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Logging/ILogger.hpp&quot;
-#include &quot;Profile/Profile.hpp&quot;
-#include &quot;QatTypes/QatTypes.hpp&quot;
-#include &quot;StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
-
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Logging/ILogger.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
+#include &quot;qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
 
 #include &lt;functional&gt;
 #include &lt;unordered_map&gt;
@@ -635,7 +633,7 @@ struct AllocationAnalysis
     {
         llvm::Value*       operand{nullptr};
         ResourceType       type{ResourceType::NotResource};
-        uint64_t           index{-1};
+        uint64_t           index{static_cast&lt;uint64_t&gt;(-1)};
         llvm::Instruction* used_by{nullptr};
         uint64_t           operand_id{0};
     };
@@ -684,9 +682,8 @@ class AllocationAnalysisPass : public llvm::AnalysisInfoMixin&lt;AllocationAnaly
   private:
     bool extractResourceId(llvm::Value* value, uint64_t&amp; return_value, ResourceType&amp; type) const;
 
-    ILoggerPtr logger_{nullptr};
-
-    static llvm::AnalysisKey Key;
+    ILoggerPtr               logger_{nullptr};
+    static llvm::AnalysisKey Key; // NOLINT
     friend struct llvm::AnalysisInfoMixin&lt;AllocationAnalysisPass&gt;;
 };
 
@@ -704,7 +701,7 @@ class AllocationAnalysisPassPrinter : public llvm::PassInfoMixin&lt;AllocationAn
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

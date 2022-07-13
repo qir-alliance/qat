@@ -579,10 +579,10 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
-#include &quot;StaticResourceComponent/ResourceAnnotationPass.hpp&quot;
+#include &quot;qir/qat/StaticResourceComponent/ResourceAnnotationPass.hpp&quot;
 
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
 
 #include &lt;fstream&gt;
 #include &lt;iostream&gt;
@@ -602,7 +602,7 @@ llvm::PreservedAnalyses ResourceAnnotationPass::run(llvm::Function&amp; function
 {
     if (!config_.shouldAnnotateResultUse() &amp;&amp; !config_.shouldAnnotateQubitUse())
     {
-        return;
+        return llvm::PreservedAnalyses::all();
     }
 
     auto stats = fam.getResult&lt;AllocationAnalysisPass&gt;(function);
@@ -646,7 +646,7 @@ bool ResourceAnnotationPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

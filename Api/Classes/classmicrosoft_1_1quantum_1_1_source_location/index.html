@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      microsoft::quantum::OpcodeValue - QAT Documentation
+      microsoft::quantum::SourceLocation - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,12 +553,32 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> microsoft::quantum::OpcodeValue </span>
+        <span class="text-center"> microsoft::quantum::SourceLocation </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumopcodevalue">microsoft::quantum::OpcodeValue</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumsourcelocation">microsoft::quantum::SourceLocation</h1>
+<p>Inherited by <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/">microsoft::quantum::ILogger::Location</a></p>
+<h2 id="public-types">Public Types</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enum</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#enum-@1">@1</a></strong> { InvalidPosition = -1}</td>
+</tr>
+<tr>
+<td>using llvm::StringRef</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#using-stringref">StringRef</a></strong></td>
+</tr>
+</tbody>
+</table>
 <h2 id="public-functions">Public Functions</h2>
 <table>
 <thead>
@@ -570,97 +590,131 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/#function-opcodevalue">OpcodeValue</a></strong>(String const &amp; name, String const &amp; fi ="")</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-sourcelocation">SourceLocation</a></strong>() =default</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/#function-opcodevalue">OpcodeValue</a></strong>() =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-sourcelocation">SourceLocation</a></strong>(String v_name, int64_t v_line, int64_t v_column)</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/#function-opcodevalue">OpcodeValue</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">OpcodeValue</a> &amp;&amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-operator-bool">operator bool</a></strong>() const</td>
 </tr>
 <tr>
-<td></td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/#function-opcodevalue">OpcodeValue</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">OpcodeValue</a> const &amp; ) =default</td>
+<td>String &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-name">name</a></strong>()</td>
 </tr>
 <tr>
-<td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">OpcodeValue</a> &amp;</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">OpcodeValue</a> &amp;&amp; ) =default</td>
+<td>String const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-name">name</a></strong>() const</td>
 </tr>
 <tr>
-<td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">OpcodeValue</a> &amp;</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">OpcodeValue</a> const &amp; ) =default</td>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-setname">setName</a></strong>(String const &amp; name)</td>
 </tr>
 <tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/#function-operator==">operator==</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/">OpcodeValue</a> const &amp; other) const</td>
+<td>int64_t &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-line">line</a></strong>()</td>
+</tr>
+<tr>
+<td>int64_t const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-line">line</a></strong>() const</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-setline">setLine</a></strong>(int64_t line)</td>
+</tr>
+<tr>
+<td>int64_t &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-column">column</a></strong>()</td>
+</tr>
+<tr>
+<td>int64_t const  &amp;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-column">column</a></strong>() const</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-setcolumn">setColumn</a></strong>(int64_t column)</td>
+</tr>
+<tr>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/#function-invalidposition">invalidPosition</a></strong>()</td>
 </tr>
 </tbody>
 </table>
-<h2 id="public-attributes">Public Attributes</h2>
+<h2 id="public-types-documentation">Public Types Documentation</h2>
+<h3 id="enum-1">enum @1</h3>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>Name</th>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>String</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/#variable-id">id</a></strong></td>
-</tr>
-<tr>
-<td>String</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_opcode_value/#variable-predicate">predicate</a></strong></td>
+<td>InvalidPosition</td>
+<td>-1</td>
+<td></td>
 </tr>
 </tbody>
 </table>
+<h3 id="using-stringref">using StringRef</h3>
+<pre><code class="language-cpp">using microsoft::quantum::SourceLocation::StringRef =  llvm::StringRef;
+</code></pre>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
-<h3 id="function-opcodevalue">function OpcodeValue</h3>
-<pre><code class="language-cpp">inline OpcodeValue(
-    String const &amp; name,
-    String const &amp; fi =&quot;&quot;
+<h3 id="function-sourcelocation">function SourceLocation</h3>
+<pre><code class="language-cpp">SourceLocation() =default
+</code></pre>
+<h3 id="function-sourcelocation_1">function SourceLocation</h3>
+<pre><code class="language-cpp">inline SourceLocation(
+    String v_name,
+    int64_t v_line,
+    int64_t v_column
 )
 </code></pre>
-<h3 id="function-opcodevalue_1">function OpcodeValue</h3>
-<pre><code class="language-cpp">OpcodeValue() =default
+<h3 id="function-operator-bool">function operator bool</h3>
+<pre><code class="language-cpp">inline explicit operator bool() const
 </code></pre>
-<h3 id="function-opcodevalue_2">function OpcodeValue</h3>
-<pre><code class="language-cpp">OpcodeValue(
-    OpcodeValue &amp;&amp; 
-) =default
+<h3 id="function-name">function name</h3>
+<pre><code class="language-cpp">inline String &amp; name()
 </code></pre>
-<h3 id="function-opcodevalue_3">function OpcodeValue</h3>
-<pre><code class="language-cpp">OpcodeValue(
-    OpcodeValue const &amp; 
-) =default
+<h3 id="function-name_1">function name</h3>
+<pre><code class="language-cpp">inline String const  &amp; name() const
 </code></pre>
-<h3 id="function-operator">function operator=</h3>
-<pre><code class="language-cpp">OpcodeValue &amp; operator=(
-    OpcodeValue &amp;&amp; 
-) =default
+<h3 id="function-setname">function setName</h3>
+<pre><code class="language-cpp">inline void setName(
+    String const &amp; name
+)
 </code></pre>
-<h3 id="function-operator_1">function operator=</h3>
-<pre><code class="language-cpp">OpcodeValue &amp; operator=(
-    OpcodeValue const &amp; 
-) =default
+<h3 id="function-line">function line</h3>
+<pre><code class="language-cpp">inline int64_t &amp; line()
 </code></pre>
-<h3 id="function-operator_2">function operator==</h3>
-<pre><code class="language-cpp">inline bool operator==(
-    OpcodeValue const &amp; other
-) const
+<h3 id="function-line_1">function line</h3>
+<pre><code class="language-cpp">inline int64_t const  &amp; line() const
 </code></pre>
-<h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
-<h3 id="variable-id">variable id</h3>
-<pre><code class="language-cpp">String id {&quot;&quot;};
+<h3 id="function-setline">function setLine</h3>
+<pre><code class="language-cpp">inline void setLine(
+    int64_t line
+)
 </code></pre>
-<h3 id="variable-predicate">variable predicate</h3>
-<pre><code class="language-cpp">String predicate {&quot;&quot;};
+<h3 id="function-column">function column</h3>
+<pre><code class="language-cpp">inline int64_t &amp; column()
+</code></pre>
+<h3 id="function-column_1">function column</h3>
+<pre><code class="language-cpp">inline int64_t const  &amp; column() const
+</code></pre>
+<h3 id="function-setcolumn">function setColumn</h3>
+<pre><code class="language-cpp">inline void setColumn(
+    int64_t column
+)
+</code></pre>
+<h3 id="function-invalidposition">function invalidPosition</h3>
+<pre><code class="language-cpp">static inline SourceLocation invalidPosition()
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

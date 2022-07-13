@@ -585,8 +585,8 @@
 </thead>
 <tbody>
 <tr>
-<td>struct</td>
-<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></td>
+<td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">microsoft::quantum::SourceLocation</a></strong></td>
 </tr>
 </tbody>
 </table>
@@ -595,50 +595,92 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;QatTypes/QatTypes.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
 
-#include &quot;Llvm/Llvm.hpp&quot;
-
+#include &lt;utility&gt;
 #include &lt;vector&gt;
 
 namespace microsoft::quantum
 {
 
-struct SourceLocation
+class SourceLocation
 {
+  public:
     using StringRef = llvm::StringRef;
 
     SourceLocation() = default;
     SourceLocation(String v_name, int64_t v_line, int64_t v_column)
-      : name{v_name}
-      , line{v_line}
-      , column{v_column}
+      : name_{std::move(v_name)}
+      , line_{v_line}
+      , column_{v_column}
     {
     }
 
     enum
     {
-        INVALID_POSITION = -1
+        InvalidPosition = -1
     };
 
-    operator bool() const
+    explicit operator bool() const
     {
-        return line != INVALID_POSITION &amp;&amp; column != INVALID_POSITION;
+        return line_ != InvalidPosition &amp;&amp; column_ != InvalidPosition;
     }
 
-    static SourceLocation InvalidPosition()
+    static SourceLocation invalidPosition()
     {
-        return {&quot;&quot;, INVALID_POSITION, INVALID_POSITION};
+        return {&quot;&quot;, InvalidPosition, InvalidPosition};
     }
 
-    String  name{};
-    int64_t line{0};
-    int64_t column{0};
+    String&amp; name()
+    {
+        return name_;
+    }
+    String const&amp; name() const
+    {
+        return name_;
+    }
+
+    void setName(String const&amp; name)
+    {
+        name_ = name;
+    }
+
+    int64_t&amp; line()
+    {
+        return line_;
+    }
+    int64_t const&amp; line() const
+    {
+        return line_;
+    }
+
+    void setLine(int64_t line)
+    {
+        line_ = line;
+    }
+    int64_t&amp; column()
+    {
+        return column_;
+    }
+    int64_t const&amp; column() const
+    {
+        return column_;
+    }
+    void setColumn(int64_t column)
+    {
+        column_ = column;
+    }
+
+  private:
+    String  name_{};
+    int64_t line_{0};
+    int64_t column_{0};
 };
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

@@ -579,7 +579,7 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Logging/ILogger.hpp&quot;
+#include &quot;qir/qat/Logging/ILogger.hpp&quot;
 
 #include &lt;cstdint&gt;
 #include &lt;fstream&gt;
@@ -625,7 +625,7 @@ SourceLocation ILogger::resolveLocation(llvm::Value const* value)
     {
         return location_resolver_(value);
     }
-    return SourceLocation::InvalidPosition();
+    return SourceLocation::invalidPosition();
 }
 
 bool ILogger::hadErrors() const
@@ -727,10 +727,20 @@ void ILogger::errorUndefNotAllowed(String const&amp; profile_name, llvm::Value* 
     errorWithLocation(&quot;Undef value is not allowed for this profile (&quot; + profile_name + &quot;).&quot;, ptr);
 }
 
+void ILogger::setHasErrors(bool value)
+{
+    had_errors_ = value;
+}
+
+void ILogger::setHasWarnings(bool value)
+{
+    had_warnings_ = value;
+}
+
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

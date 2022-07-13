@@ -579,9 +579,9 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;Logging/CommentLogger.hpp&quot;
+#include &quot;qir/qat/Logging/CommentLogger.hpp&quot;
 
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 
 #include &lt;vector&gt;
 
@@ -590,36 +590,36 @@ namespace microsoft::quantum
 
 void CommentLogger::debug(String const&amp; message)
 {
-    llvm::errs() &lt;&lt; &quot;debug - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot; &lt;&lt; message
-                 &lt;&lt; &quot;\n&quot;;
+    llvm::errs() &lt;&lt; &quot;debug - &quot; &lt;&lt; location_.name() &lt;&lt; &quot;:&quot; &lt;&lt; location_.line() &lt;&lt; &quot;,&quot; &lt;&lt; location_.column() &lt;&lt; &quot; - &quot;
+                 &lt;&lt; message &lt;&lt; &quot;\n&quot;;
 }
 
 void CommentLogger::info(String const&amp; message)
 {
-    llvm::errs() &lt;&lt; &quot;info - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot; &lt;&lt; message
-                 &lt;&lt; &quot;\n&quot;;
+    llvm::errs() &lt;&lt; &quot;info - &quot; &lt;&lt; location_.name() &lt;&lt; &quot;:&quot; &lt;&lt; location_.line() &lt;&lt; &quot;,&quot; &lt;&lt; location_.column() &lt;&lt; &quot; - &quot;
+                 &lt;&lt; message &lt;&lt; &quot;\n&quot;;
 }
 
 void CommentLogger::warning(String const&amp; message)
 {
-    had_warnings_ = true;
+    setHasWarnings(true);
 
-    llvm::errs() &lt;&lt; &quot;warning - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
+    llvm::errs() &lt;&lt; &quot;warning - &quot; &lt;&lt; location_.name() &lt;&lt; &quot;:&quot; &lt;&lt; location_.line() &lt;&lt; &quot;,&quot; &lt;&lt; location_.column() &lt;&lt; &quot; - &quot;
                  &lt;&lt; message &lt;&lt; &quot;\n&quot;;
 }
 
 void CommentLogger::error(String const&amp; message)
 {
-    had_errors_ = true;
-    llvm::errs() &lt;&lt; &quot;error - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot; &lt;&lt; message
-                 &lt;&lt; &quot;\n&quot;;
+    setHasErrors(true);
+    llvm::errs() &lt;&lt; &quot;error - &quot; &lt;&lt; location_.name() &lt;&lt; &quot;:&quot; &lt;&lt; location_.line() &lt;&lt; &quot;,&quot; &lt;&lt; location_.column() &lt;&lt; &quot; - &quot;
+                 &lt;&lt; message &lt;&lt; &quot;\n&quot;;
 }
 
 void CommentLogger::internalError(String const&amp; message)
 {
-    had_errors_ = true;
-    llvm::errs() &lt;&lt; &quot;internal error - &quot; &lt;&lt; location_.name &lt;&lt; &quot;:&quot; &lt;&lt; location_.line &lt;&lt; &quot;,&quot; &lt;&lt; location_.column &lt;&lt; &quot; - &quot;
-                 &lt;&lt; message &lt;&lt; &quot;\n&quot;;
+    setHasErrors(true);
+    llvm::errs() &lt;&lt; &quot;internal error - &quot; &lt;&lt; location_.name() &lt;&lt; &quot;:&quot; &lt;&lt; location_.line() &lt;&lt; &quot;,&quot; &lt;&lt; location_.column()
+                 &lt;&lt; &quot; - &quot; &lt;&lt; message &lt;&lt; &quot;\n&quot;;
 }
 
 void CommentLogger::setLocation(SourceLocation const&amp; loc)
@@ -634,7 +634,7 @@ void CommentLogger::setFrontendHint(String const&amp;) {}
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:56 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

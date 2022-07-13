@@ -619,7 +619,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-passbuilder">PassBuilder</a></strong></td>
 </tr>
 <tr>
-<td>using PassBuilder::OptimizationLevel</td>
+<td>using llvm::OptimizationLevel</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-optimizationlevel">OptimizationLevel</a></strong></td>
 </tr>
 <tr>
@@ -627,11 +627,11 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-functionanalysismanager">FunctionAnalysisManager</a></strong></td>
 </tr>
 <tr>
-<td>template &lt;typename R > <br>using std::function&lt; void(R const  &amp;, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> *, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;)&gt;</td>
+<td>template &lt;typename R > <br>using std::function&lt; void(R const  &amp;, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> &amp;, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;)&gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunction">SetupFunction</a></strong></td>
 </tr>
 <tr>
-<td>using std::function&lt; void(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> *, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;)&gt;</td>
+<td>using std::function&lt; void(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> &amp;, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp;)&gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#using-setupfunctionwrapper">SetupFunctionWrapper</a></strong> <br>Wrapper function type for invoking the profile setup function.</td>
 </tr>
 <tr>
@@ -686,7 +686,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-configurationmanager">configurationManager</a></strong>() const</td>
 </tr>
 <tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a></td>
+<td>std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-newprofile">newProfile</a></strong>(String const &amp; name, OptimizationLevel const &amp; optimization_level, bool debug)</td>
 </tr>
 <tr>
@@ -745,8 +745,8 @@
 </thead>
 <tbody>
 <tr>
-<td>llvm::ModulePassManager</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-creategenerationmodulepassmanager">createGenerationModulePassManager</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp; profile, OptimizationLevel const &amp; optimization_level, bool debug)</td>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/#function-configuregeneratorfromprofile">configureGeneratorFromProfile</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> &amp; profile, OptimizationLevel const &amp; optimization_level, bool debug)</td>
 </tr>
 <tr>
 <td>llvm::ModulePassManager</td>
@@ -785,7 +785,7 @@
 </code></pre>
 <p>Returns a constant reference to the LLVM passes configuration. </p>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

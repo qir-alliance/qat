@@ -579,24 +579,14 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;TestTools/IrManipulationTestHelper.hpp&quot;
-#include &quot;Utils/Trim.hpp&quot;
+#include &quot;qir/qat/TestTools/IrManipulationTestHelper.hpp&quot;
 
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Utils/FunctionToModule.hpp&quot;
+#include &quot;qir/qat/Utils/Trim.hpp&quot;
 
 namespace microsoft::quantum
 {
-
-IrManipulationTestHelper::IrManipulationTestHelper()
-{
-    pass_builder_.registerModuleAnalyses(module_analysis_manager_);
-    pass_builder_.registerCGSCCAnalyses(gscc_analysis_manager_);
-    pass_builder_.registerFunctionAnalyses(function_analysis_manager_);
-    pass_builder_.registerLoopAnalyses(loop_analysis_manager_);
-
-    pass_builder_.crossRegisterProxies(
-        loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
-}
 
 bool IrManipulationTestHelper::fromString(String const&amp; data)
 {
@@ -692,8 +682,9 @@ void IrManipulationTestHelper::applyProfile(
     OptimizationLevel const&amp; optimization_level,
     bool                     debug)
 {
+
     auto profile = generator-&gt;newProfile(&quot;generic&quot;, optimization_level, debug);
-    profile.apply(*module_);
+    profile-&gt;apply(*module_);
 
     // Verifying that the module is valid
     if (isModuleBroken())
@@ -706,7 +697,7 @@ bool IrManipulationTestHelper::validateProfile(GeneratorPtr const&amp; generator
 {
     auto profile = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
 
-    return profile.validate(*module_);
+    return profile-&gt;validate(*module_);
 }
 
 bool IrManipulationTestHelper::containsValidationErrors(
@@ -732,7 +723,7 @@ bool IrManipulationTestHelper::containsValidationErrors(
 
     for (auto&amp; message : logger-&gt;messages())
     {
-        hints.insert(message.location.llvm_hint);
+        hints.insert(message.location.llvmHint());
     }
 
     auto ret = true;
@@ -758,7 +749,7 @@ bool IrManipulationTestHelper::containsValidationErrors(
         llvm::errs() &lt;&lt; &quot;\nActual errors: \n&quot;;
         for (auto const&amp; message : logger-&gt;messages())
         {
-            llvm::errs() &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\n&quot;;
+            llvm::errs() &lt;&lt; message.location.llvmHint() &lt;&lt; &quot;\n&quot;;
             llvm::errs() &lt;&lt; &quot;  - &quot; &lt;&lt; message.message &lt;&lt; &quot;\n&quot;;
         }
         llvm::errs() &lt;&lt; &quot;\n&quot;;
@@ -792,14 +783,14 @@ bool IrManipulationTestHelper::containsExactValidationErrors(
 
     for (auto const&amp; message : logger-&gt;messages())
     {
-        hints.insert(message.location.llvm_hint);
+        hints.insert(message.location.llvmHint());
 
-        if (error_set.find(message.location.llvm_hint) == error_set.end())
+        if (error_set.find(message.location.llvmHint()) == error_set.end())
         {
             ret = false;
             if (debug)
             {
-                llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;' in expected errors.\n&quot;;
+                llvm::errs() &lt;&lt; &quot;Missing '&quot; &lt;&lt; message.location.llvmHint() &lt;&lt; &quot;' in expected errors.\n&quot;;
             }
         }
     }
@@ -826,7 +817,7 @@ bool IrManipulationTestHelper::containsExactValidationErrors(
         llvm::errs() &lt;&lt; &quot;\nActual errors: \n&quot;;
         for (auto const&amp; message : logger-&gt;messages())
         {
-            llvm::errs() &lt;&lt; message.location.llvm_hint &lt;&lt; &quot;\n&quot;;
+            llvm::errs() &lt;&lt; message.location.llvmHint() &lt;&lt; &quot;\n&quot;;
             llvm::errs() &lt;&lt; &quot;  - &quot; &lt;&lt; message.message &lt;&lt; &quot;\n&quot;;
         }
         llvm::errs() &lt;&lt; &quot;\n&quot;;
@@ -918,15 +909,30 @@ bool IrManipulationTestHelper::isModuleBroken()
         return compilation_failed_;
     }
 
+    llvm::LoopAnalysisManager     loop_analysis_manager;
+    llvm::FunctionAnalysisManager function_analysis_manager;
+    llvm::CGSCCAnalysisManager    gscc_analysis_manager;
+    llvm::ModuleAnalysisManager   module_analysis_manager;
+
+    auto pass_builder = std::make_unique&lt;llvm::PassBuilder&gt;();
+
+    pass_builder-&gt;registerModuleAnalyses(module_analysis_manager);
+    pass_builder-&gt;registerCGSCCAnalyses(gscc_analysis_manager);
+    pass_builder-&gt;registerFunctionAnalyses(function_analysis_manager);
+    pass_builder-&gt;registerLoopAnalyses(loop_analysis_manager);
+
+    pass_builder-&gt;crossRegisterProxies(
+        loop_analysis_manager, function_analysis_manager, gscc_analysis_manager, module_analysis_manager);
+
     llvm::VerifierAnalysis verifier;
-    auto                   result = verifier.run(*module_, module_analysis_manager_);
+    auto                   result = verifier.run(*module_, module_analysis_manager);
     return result.IRBroken;
 }
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

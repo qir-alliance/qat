@@ -579,10 +579,10 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
-#include &quot;ValidationPass/ValidationPass.hpp&quot;
+#include &quot;qir/qat/ValidationPass/ValidationPass.hpp&quot;
 
-#include &quot;Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
 
 #include &lt;fstream&gt;
 #include &lt;iostream&gt;
@@ -723,7 +723,7 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module&amp; module)
                         current_location_ =
                             Location{static_cast&lt;String&gt;(dl-&gt;getFilename()), dl-&gt;getLine(), dl-&gt;getColumn(), &quot;&quot;, &quot;&quot;};
                     }
-                    llvm::raw_string_ostream rso(current_location_.llvm_hint);
+                    llvm::raw_string_ostream rso(current_location_.llvmHint());
                     instr.print(rso);
 
                     String opname = static_cast&lt;String&gt;(instr.getOpcodeName());
@@ -829,8 +829,8 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module&amp; module)
                     {
 
                         logger_-&gt;setLocation(
-                            {current_location_.name, current_location_.line, current_location_.column});
-                        logger_-&gt;setLlvmHint(current_location_.llvm_hint);
+                            {current_location_.name(), current_location_.line(), current_location_.column()});
+                        logger_-&gt;setLlvmHint(current_location_.llvmHint());
 
                         logger_-&gt;errorOpcodeNotAllowed(code, config_.profileName());
                         ret = false;
@@ -880,8 +880,8 @@ bool ValidationPass::satisfyingExternalCallRequirements()
                     if (!locs.empty())
                     {
                         auto const&amp; loc = locs.front();
-                        logger_-&gt;setLocation({loc.name, loc.line, loc.column});
-                        logger_-&gt;setLlvmHint(loc.llvm_hint);
+                        logger_-&gt;setLocation({loc.name(), loc.line(), loc.column()});
+                        logger_-&gt;setLlvmHint(loc.llvmHint());
                     }
                 }
 
@@ -915,8 +915,8 @@ bool ValidationPass::satisfyingPointerRequirements()
                     if (!locs.empty())
                     {
                         auto const&amp; loc = locs.front();
-                        logger_-&gt;setLocation({loc.name, loc.line, loc.column});
-                        logger_-&gt;setLlvmHint(loc.llvm_hint);
+                        logger_-&gt;setLocation({loc.name(), loc.line(), loc.column()});
+                        logger_-&gt;setLlvmHint(loc.llvmHint());
                     }
                 }
 
@@ -946,7 +946,7 @@ llvm::PreservedAnalyses ValidationPass::run(llvm::Module&amp; module, llvm::Modu
                     current_location_ =
                         Location{static_cast&lt;String&gt;(dl-&gt;getFilename()), dl-&gt;getLine(), dl-&gt;getColumn(), &quot;&quot;, &quot;&quot;};
                 }
-                llvm::raw_string_ostream rso(current_location_.llvm_hint);
+                llvm::raw_string_ostream rso(current_location_.llvmHint());
                 instr.print(rso);
 
                 callChecks(instr);
@@ -978,7 +978,7 @@ bool ValidationPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>

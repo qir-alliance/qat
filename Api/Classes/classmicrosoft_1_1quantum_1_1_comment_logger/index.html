@@ -595,7 +595,7 @@
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setlocation">setLocation</a></strong>(<a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a> const &amp; loc) override<br>Function that allows to set the current location.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/#function-setlocation">setLocation</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a> const &amp; loc) override<br>Function that allows to set the current location.</td>
 </tr>
 <tr>
 <td>virtual void</td>
@@ -645,7 +645,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-value">Value</a></strong></td>
 </tr>
 <tr>
-<td>using std::function&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a>(Value const  *)&gt;</td>
+<td>using std::function&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a>(Value const  *)&gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-locationresolver">LocationResolver</a></strong></td>
 </tr>
 <tr>
@@ -673,19 +673,19 @@
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; )</td>
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-ilogger">ILogger</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; )</td>
 </tr>
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> const &amp; )</td>
 </tr>
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; ) =default</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-operator=">operator=</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &amp;&amp; )</td>
 </tr>
 <tr>
 <td>virtual</td>
@@ -708,7 +708,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationresolver">setLocationResolver</a></strong>(LocationResolver const &amp; r)<br>Sets a resolver which that translates a LLVM value into a position in the source.</td>
 </tr>
 <tr>
-<td><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-resolvelocation">resolveLocation</a></strong>(llvm::Value const * value)<br>Returns a source location from the value pointer (if possible)</td>
 </tr>
 <tr>
@@ -781,7 +781,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Protected Attributes inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></strong></p>
+<p><strong>Protected Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">microsoft::quantum::ILogger</a></strong></p>
 <table>
 <thead>
 <tr>
@@ -791,12 +791,12 @@
 </thead>
 <tbody>
 <tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#variable-had_errors_">had_errors_</a></strong> <br>Variable to indicate whether or not errors were reported.</td>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-sethaserrors">setHasErrors</a></strong>(bool value)</td>
 </tr>
 <tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#variable-had_warnings_">had_warnings_</a></strong> <br>Variable to indicate whether or not warnings were reported.</td>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-sethaswarnings">setHasWarnings</a></strong>(bool value)</td>
 </tr>
 </tbody>
 </table>
@@ -858,7 +858,7 @@
 <p>Sets the value of the frontend instruction causing the issue. </p>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setfrontendhint">microsoft::quantum::ILogger::setFrontendHint</a></p>
 <hr />
-<p>Updated on 29 June 2022 at 10:25:55 UTC</p></div>
+<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
 </div>
           </div>
         </main>
