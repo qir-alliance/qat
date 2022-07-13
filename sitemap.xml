@@ -241,6 +241,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_record_pull_back_pass/</loc>
+         <lastmod>2022-07-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_remove_disallowed_attributes_pass/</loc>
          <lastmod>2022-07-13</lastmod>
          <changefreq>daily</changefreq>
@@ -791,6 +796,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_record_pull_back_pass_8cpp/</loc>
+         <lastmod>2022-07-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_record_pull_back_pass_8hpp/</loc>
+         <lastmod>2022-07-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_remove_disallowed_attributes_pass_8hpp/</loc>
          <lastmod>2022-07-13</lastmod>
          <changefreq>daily</changefreq>
@@ -986,6 +1001,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/dir_5ca0a259d9a1a3a61a1ce69e9739cfa7/</loc>
+         <lastmod>2022-07-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_76e799bfaed323ed7497703f1980580e/</loc>
          <lastmod>2022-07-13</lastmod>
          <changefreq>daily</changefreq>
@@ -1081,7 +1101,7 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d45/</loc>
+         <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d47/</loc>
          <lastmod>2022-07-13</lastmod>
          <changefreq>daily</changefreq>
     </url>

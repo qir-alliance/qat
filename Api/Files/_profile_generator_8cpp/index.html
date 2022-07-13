@@ -589,6 +589,7 @@
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 #include &quot;qir/qat/PostTransformValidation/PostTransformValidationPass.hpp&quot;
 #include &quot;qir/qat/PreTransformTrimming/PreTransformTrimmingPass.hpp&quot;
+#include &quot;qir/qat/RecordPullBackPass/RecordPullBackPass.hpp&quot;
 #include &quot;qir/qat/Rules/Factory.hpp&quot;
 #include &quot;qir/qat/Rules/RuleSet.hpp&quot;
 #include &quot;qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
@@ -850,6 +851,11 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             {
                 fpm.addPass(ZExtTransformPass());
             }
+
+            if (cfg.shouldPullRecordsBack())
+            {
+                fpm.addPass(RecordPullBackPass());
+            }
         });
 
     registerProfileComponent&lt;PostTransformValidationPassConfiguration&gt;(
@@ -912,7 +918,7 @@ void ProfileGenerator::setLogger(ILoggerPtr const&amp; logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 July 2022 at 09:06:20 UTC</p></div>
+<p>Updated on 13 July 2022 at 19:15:40 UTC</p></div>
 </div>
           </div>
         </main>
