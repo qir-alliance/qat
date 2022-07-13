@@ -2,12 +2,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "GroupingPass/GroupingPassConfiguration.hpp"
-#include "Logging/ILogger.hpp"
-#include "Profile/Profile.hpp"
-#include "QatTypes/QatTypes.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -61,14 +59,14 @@ class GroupingPass : public llvm::PassInfoMixin<GroupingPass>
 
     enum
     {
-        PURE_CLASSICAL                = 0,
-        SOURCE_QUANTUM                = 1,
-        DEST_QUANTUM                  = 2,
-        PURE_QUANTUM                  = SOURCE_QUANTUM | DEST_QUANTUM,
-        TRANSFER_CLASSICAL_TO_QUANTUM = DEST_QUANTUM,
-        TRANSFER_QUANTUM_TO_CLASSICAL = SOURCE_QUANTUM,
+        PureClassical              = 0,
+        SourceQuantum              = 1,
+        DestQuantum                = 2,
+        PureQuantum                = SourceQuantum | DestQuantum,
+        TransferClassicalToQuantum = DestQuantum,
+        TransferQuantumToClassical = SourceQuantum,
 
-        INVALID_MIXED_LOCATION = -1
+        InvalidMixedLocation = -1
     };
 
     explicit GroupingPass(GroupingPassConfiguration const& cfg)

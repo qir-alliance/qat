@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
 
 #include <cstdint>
 #include <fstream>
@@ -47,7 +47,7 @@ SourceLocation ILogger::resolveLocation(llvm::Value const* value)
     {
         return location_resolver_(value);
     }
-    return SourceLocation::InvalidPosition();
+    return SourceLocation::invalidPosition();
 }
 
 bool ILogger::hadErrors() const
@@ -147,6 +147,16 @@ void ILogger::errorPoisonNotAllowed(String const& profile_name, llvm::Value* ptr
 void ILogger::errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr)
 {
     errorWithLocation("Undef value is not allowed for this profile (" + profile_name + ").", ptr);
+}
+
+void ILogger::setHasErrors(bool value)
+{
+    had_errors_ = value;
+}
+
+void ILogger::setHasWarnings(bool value)
+{
+    had_warnings_ = value;
 }
 
 } // namespace microsoft::quantum

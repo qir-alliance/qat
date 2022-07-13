@@ -1,6 +1,8 @@
-import pytest
-import os
 import glob
+import os
+
+import pytest
+
 BASE_DIR = os.path.dirname(__file__)
 
 
@@ -8,12 +10,11 @@ def generate_test(filename: str):
     @pytest.fixture()
     def response():
         return filename
+
     return response
 
 
-all_validation = [
-
-]
+all_validation = []
 
 
 for f in glob.glob(os.path.join(BASE_DIR, "*")):
@@ -25,6 +26,6 @@ for f in glob.glob(os.path.join(BASE_DIR, "*")):
     if not f.endswith("input.ll"):
         continue
 
-    name = "validation_"+name.replace("-", "_").replace(".", "_")
+    name = "validation_" + name.replace("-", "_").replace(".", "_")
     locals()[name] = generate_test(f)
     all_validation.append(name)

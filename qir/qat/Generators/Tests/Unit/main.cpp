@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Generators/LlvmPassesConfiguration.hpp"
-#include "Rules/FactoryConfig.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
-#include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "gtest/gtest.h"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 
 using namespace microsoft::quantum;
 using GeneratorPtr = std::shared_ptr<ConfigurableProfileGenerator>;
@@ -16,7 +16,6 @@ class ExposedConfigurableProfileGenerator : public ConfigurableProfileGenerator
 {
   public:
     using ConfigurableProfileGenerator::ConfigurableProfileGenerator;
-    using ConfigurableProfileGenerator::createGenerationModulePassManager;
     using ConfigurableProfileGenerator::createValidationModulePass;
 };
 
@@ -26,11 +25,7 @@ class TestAnalysis
     TestAnalysis(TestAnalysis const&) = delete;
     TestAnalysis(TestAnalysis&&)      = default;
     ~TestAnalysis()                   = default;
-    explicit TestAnalysis()
-      : loop_analysis_manager_{}
-      , function_analysis_manager_{}
-      , gscc_analysis_manager_{}
-      , module_analysis_manager_{}
+    TestAnalysis()
     {
 
         // Creating a full pass builder and registering each of the
@@ -89,7 +84,7 @@ TEST(GeneratorsTestSuite, ConfigureFunction)
 
     TestAnalysis test;
 
-    generator->newProfile("test", llvm::PassBuilder::OptimizationLevel::O0, false);
+    generator->newProfile("test", llvm::OptimizationLevel::O0, false);
 
     EXPECT_EQ(call_count, 1);
     EXPECT_TRUE(generator->ruleTransformationConfig().isDisabled());
@@ -104,7 +99,7 @@ TEST(GeneratorsTestSuite, ConfigurationManager)
 
     TestAnalysis test;
 
-    generator->newProfile("test", llvm::PassBuilder::OptimizationLevel::O0, false);
+    generator->newProfile("test", llvm::OptimizationLevel::O0, false);
 
     EXPECT_EQ(generator->ruleTransformationConfig(), TransformationRulesPassConfiguration());
     EXPECT_EQ(generator->llvmPassesConfig(), LlvmPassesConfiguration());

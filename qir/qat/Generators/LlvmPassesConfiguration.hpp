@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
 
 #include <limits>
 
@@ -65,7 +65,18 @@ class LlvmPassesConfiguration
     bool isDisabled() const;
 
     /// Checking whether two configurations are identical.
-    bool operator==(LlvmPassesConfiguration const& o) const = default;
+    bool operator==(LlvmPassesConfiguration const& o) const
+    {
+        return always_inline_ == o.always_inline_ && inline_parameter_ == o.inline_parameter_ &&
+               unroll_loops_ == o.unroll_loops_ && unroll_allow_partial_ == o.unroll_allow_partial_ &&
+               unroll_allow_peeling_ == o.unroll_allow_peeling_ && unroll_allow_runtime_ == o.unroll_allow_runtime_ &&
+               unroll_allow_upper_bound_ == o.unroll_allow_upper_bound_ &&
+               unroll_allow_profile_based_peeling_ == o.unroll_allow_profile_based_peeling_ &&
+               unroll_full_unroll_count_ == o.unroll_full_unroll_count_ && unroll_opt_level_ == o.unroll_opt_level_ &&
+               unroll_only_when_forced_ == o.unroll_only_when_forced_ && unroll_forget_scev_ == o.unroll_forget_scev_ &&
+               eliminate_constants_ == o.eliminate_constants_ && eliminate_dead_code_ == o.eliminate_dead_code_ &&
+               eliminate_memory_ == o.eliminate_memory_;
+    }
 
     /// Creating a configuration that disables all passes and/or their effect on the IR.
     static LlvmPassesConfiguration createDisabled();

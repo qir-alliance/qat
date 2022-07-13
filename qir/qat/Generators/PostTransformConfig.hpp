@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
 
 namespace microsoft::quantum
 {

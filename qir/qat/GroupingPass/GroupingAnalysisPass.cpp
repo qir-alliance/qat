@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "GroupingPass/GroupingAnalysisPass.hpp"
+#include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <fstream>
 #include <iostream>

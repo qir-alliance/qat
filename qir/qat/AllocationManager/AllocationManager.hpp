@@ -2,9 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "AllocationManager/IAllocationManager.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/AllocationManager/IAllocationManager.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <memory>
 #include <string>

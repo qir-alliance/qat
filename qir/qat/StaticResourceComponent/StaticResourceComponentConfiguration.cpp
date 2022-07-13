@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 namespace microsoft::quantum
 {
@@ -84,6 +85,41 @@ StaticResourceComponentConfiguration StaticResourceComponentConfiguration::creat
     ret.inline_after_id_change_ = false;
 
     return ret;
+}
+
+void StaticResourceComponentConfiguration::enableAnnotateQubitUse()
+{
+    annotate_qubit_use_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableAnnotateResultUse()
+{
+    annotate_result_use_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableAnnotateMaxQubitIndex()
+{
+    annotate_max_qubit_index_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableAnnotateMaxResultIndex()
+{
+    annotate_max_result_index_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableReplaceQubitOnReset()
+{
+    replace_qubit_on_reset_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableReindexQubits()
+{
+    reindex_qubits_ = true;
+}
+
+void StaticResourceComponentConfiguration::enableInlineAfterIdChange()
+{
+    inline_after_id_change_ = true;
 }
 
 } // namespace microsoft::quantum
