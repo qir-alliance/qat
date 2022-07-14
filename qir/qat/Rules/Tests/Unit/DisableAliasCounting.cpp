@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Rules/Factory.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 
@@ -43,7 +42,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 } // namespace
 
 // Single allocation with action and then release
-TEST(RuleSetTestSuite, DISABLED_DisablingArrayhAliasCounting)
+TEST(RuleSetTestSuite, DisablingArrayhAliasCounting)
 {
     auto ir_manip = newIrManip(R"script(
     %0 = call %Array* @__quantum__rt__array_create_1d(i32 8, i64 2)
@@ -51,8 +50,10 @@ TEST(RuleSetTestSuite, DISABLED_DisablingArrayhAliasCounting)
     call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set)
+    {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableAliasCounting();
     };
@@ -88,8 +89,10 @@ TEST(RuleSetTestSuite, DisablingStringAliasCounting)
     call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set)
+    {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableAliasCounting();
     };
@@ -127,8 +130,10 @@ TEST(RuleSetTestSuite, DisablingResultAliasCounting)
     call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set)
+    {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableAliasCounting();
     };

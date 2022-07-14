@@ -2,81 +2,77 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "QatTypes/QatTypes.hpp"
-#include "Rules/Patterns/AnyPattern.hpp"
-#include "Rules/Patterns/CallPattern.hpp"
-#include "Rules/Patterns/Instruction.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/Rules/Patterns/AnyPattern.hpp"
+#include "qir/qat/Rules/Patterns/CallPattern.hpp"
+#include "qir/qat/Rules/Patterns/Instruction.hpp"
 
 #include <unordered_map>
 #include <vector>
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    /// Rule that describes a pattern and how to make a replacement of the matched values.
-    /// The class contains a OperandPrototype which is used to test whether an LLVM IR value
-    /// follows a specific pattern. The class also holds a function pointer to logic that
-    /// allows replacement of the specified value.
-    class ReplacementRule
-    {
-      public:
-        /// Table to store LLVM values using a name.
-        using Captures = IOperandPrototype::Captures;
+/// Rule that describes a pattern and how to make a replacement of the matched values.
+/// The class contains a OperandPrototype which is used to test whether an LLVM IR value
+/// follows a specific pattern. The class also holds a function pointer to logic that
+/// allows replacement of the specified value.
+class ReplacementRule
+{
+  public:
+    /// Table to store LLVM values using a name.
+    using Captures = IOperandPrototype::Captures;
 
-        /// Value alias for shorthand usage.
-        using Value = llvm::Value;
+    /// Value alias for shorthand usage.
+    using Value = llvm::Value;
 
-        /// Pointer to the pattern type.
-        using IOperandPrototypePtr = std::shared_ptr<IOperandPrototype>;
+    /// Pointer to the pattern type.
+    using IOperandPrototypePtr = std::shared_ptr<IOperandPrototype>;
 
-        /// Builder alias for shorthand notation.
-        using Builder = llvm::IRBuilder<>;
+    /// Builder alias for shorthand notation.
+    using Builder = llvm::IRBuilder<>;
 
-        /// List of replacements.
-        using Replacements = std::vector<std::pair<Value*, Value*>>;
+    /// List of replacements.
+    using Replacements = std::vector<std::pair<Value*, Value*>>;
 
-        /// Function to perform replacements.
-        using ReplaceFunction = std::function<bool(Builder&, Value*, Captures&, Replacements&)>;
+    /// Function to perform replacements.
+    using ReplaceFunction = std::function<bool(Builder&, Value*, Captures&, Replacements&)>;
 
-        // Constructors and destructors
-        //
+    // Constructors and destructors
+    //
 
-        ReplacementRule() = default;
-        ReplacementRule(String const& name, IOperandPrototypePtr&& pattern, ReplaceFunction&& replacer);
-        ReplacementRule(IOperandPrototypePtr&& pattern, ReplaceFunction&& replacer);
+    ReplacementRule() = default;
+    ReplacementRule(String const& name, IOperandPrototypePtr&& pattern, ReplaceFunction&& replacer);
+    ReplacementRule(IOperandPrototypePtr&& pattern, ReplaceFunction&& replacer);
 
-        // Rule configuration
-        //
+    // Rule configuration
+    //
 
-        /// Sets the pattern describing logic to be replaced.
-        void setPattern(IOperandPrototypePtr&& pattern);
+    /// Sets the pattern describing logic to be replaced.
+    void setPattern(IOperandPrototypePtr&& pattern);
 
-        /// Sets the replacer logic which given a successful match will perform
-        /// a replacement on the IR.
-        void setReplacer(ReplaceFunction const& replacer);
+    /// Sets the replacer logic which given a successful match will perform
+    /// a replacement on the IR.
+    void setReplacer(ReplaceFunction const& replacer);
 
-        // Operation
-        //
+    // Operation
+    //
 
-        /// Tests whether a given value matches the rule pattern and store captures.
-        /// The function returns true if the match was successful in which case captures
-        /// are recorded.
-        bool match(Value* value, Captures& captures) const;
+    /// Tests whether a given value matches the rule pattern and store captures.
+    /// The function returns true if the match was successful in which case captures
+    /// are recorded.
+    bool match(Value* value, Captures& captures) const;
 
-        /// Invokes the replacer given a matched value and its corresponding captures
-        bool replace(Builder& builder, Value* value, Captures& captures, Replacements& replacements) const;
+    /// Invokes the replacer given a matched value and its corresponding captures
+    bool replace(Builder& builder, Value* value, Captures& captures, Replacements& replacements) const;
 
-        String name() const;
+    String name() const;
 
-      private:
-        IOperandPrototypePtr pattern_{nullptr};  ///< Pattern to be matched against
-        ReplaceFunction      replacer_{nullptr}; ///< Function to perform replacement upon match.
-        String               name_{"unnamed"};   ///< Name of the pattern
-    };
+  private:
+    IOperandPrototypePtr pattern_{nullptr};  ///< Pattern to be matched against
+    ReplaceFunction      replacer_{nullptr}; ///< Function to perform replacement upon match.
+    String               name_{"unnamed"};   ///< Name of the pattern
+};
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum

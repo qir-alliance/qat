@@ -2,63 +2,132 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
-#include "QatTypes/QatTypes.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
-namespace microsoft
-{
-namespace quantum
-{
+#include <functional>
+#include <set>
 
-    class ValidationPassConfiguration
+namespace microsoft::quantum
+{
+class OpcodeValue
+{
+  public:
+    OpcodeValue(String const& name, String const& fi = "") // NOLINT
+      : id_{name}
+      , predicate_{fi}
     {
-      public:
-        using Set = std::unordered_set<std::string>;
-        // Setup and construction
-        //
+    }
 
-        ValidationPassConfiguration() = default;
+    OpcodeValue()                   = default;
+    OpcodeValue(OpcodeValue&&)      = default;
+    OpcodeValue(OpcodeValue const&) = default;
+    OpcodeValue& operator=(OpcodeValue&&) = default;
+    OpcodeValue& operator=(OpcodeValue const&) = default;
+    bool         operator==(OpcodeValue const& other) const
+    {
+        return id_ == other.id_ && predicate_ == other.predicate_;
+    }
 
-        /// Setup function that adds the configuration flags to the ConfigurationManager. See the
-        /// ConfigurationManager documentation for more details on how the setup process is implemented.
-        void setup(ConfigurationManager& config);
+    String& id()
+    {
+        return id_;
+    }
+    String const& id() const
+    {
+        return id_;
+    }
 
-        static ValidationPassConfiguration fromProfileName(String const& name);
-        Set const&                         allowedOpcodes() const;
-        Set const&                         allowedExternalCallNames() const;
+    String& predicate()
+    {
+        return predicate_;
+    }
 
-        bool allowInternalCalls() const;
-        bool allowlistOpcodes() const;
-        bool allowlistExternalCalls() const;
+    String const& predicate() const
+    {
+        return predicate_;
+    }
 
-        String const& saveReportTo() const;
-        bool          allowlistPointerTypes() const;
-        Set const&    allowedPointerTypes() const;
+  private:
+    String id_{""};
+    String predicate_{""};
+};
+} // namespace microsoft::quantum
 
-        String profileName() const;
+namespace std
+{
+template <> struct hash<microsoft::quantum::OpcodeValue>
+{
+    size_t operator()(microsoft::quantum::OpcodeValue const& x) const
+    {
+        hash<std::string> hasher;
+        return hasher(x.id() + "." + x.predicate());
+    }
+};
+} // namespace std
 
-      private:
-        void addAllowedExternalCall(String const& name);
-        void addAllowedOpcode(String const& name);
-        void addAllowedPointerType(String const& name);
+namespace microsoft::quantum
+{
 
-        String profile_name_{"null"};
+class ValidationPassConfiguration
+{
+  public:
+    using Set       = std::unordered_set<std::string>;
+    using OpcodeSet = std::unordered_set<OpcodeValue>;
 
-        Set opcodes_{};
-        Set external_calls_{};
-        Set allowed_pointer_types_{};
+    // Setup and construction
+    //
 
-        String save_report_to_{""};
+    ValidationPassConfiguration() = default;
 
-        bool allowlist_opcodes_{true};
-        bool allowlist_external_calls_{true};
-        bool allow_internal_calls_{false};
-        bool allowlist_pointer_types_{false};
+    /// Setup function that adds the configuration flags to the ConfigurationManager. See the
+    /// ConfigurationManager documentation for more details on how the setup process is implemented.
+    void setup(ConfigurationManager& config);
 
-        bool allow_primitive_return_{true};
-        bool allow_struct_return_{true};
-        bool allow_pointer_return_{true};
-    };
+    static ValidationPassConfiguration fromProfileName(String const& name);
+    OpcodeSet const&                   allowedOpcodes() const;
+    Set const&                         allowedExternalCallNames() const;
 
-} // namespace quantum
-} // namespace microsoft
+    bool allowInternalCalls() const;
+    bool allowlistOpcodes() const;
+    bool allowlistExternalCalls() const;
+
+    bool       allowlistPointerTypes() const;
+    Set const& allowedPointerTypes() const;
+
+    bool requiresQubits() const;
+    bool requiresResults() const;
+
+    bool allowPoison() const;
+    bool allowUndef() const;
+
+    String profileName() const;
+
+  private:
+    void addAllowedExternalCall(String const& name);
+    void addAllowedOpcode(String const& name);
+    void addAllowedPointerType(String const& name);
+
+    String profile_name_{"null"};
+
+    OpcodeSet opcodes_{};
+    Set       external_calls_{};
+    Set       allowed_pointer_types_{};
+
+    bool allowlist_opcodes_{true};
+    bool allowlist_external_calls_{true};
+    bool allow_internal_calls_{false};
+    bool allowlist_pointer_types_{false};
+
+    bool allow_primitive_return_{true};
+    bool allow_struct_return_{true};
+    bool allow_pointer_return_{true};
+
+    bool requires_qubits_{false};
+    bool requires_results_{false};
+
+    bool allow_poison_{true};
+    bool allow_undef_{true};
+};
+
+} // namespace microsoft::quantum

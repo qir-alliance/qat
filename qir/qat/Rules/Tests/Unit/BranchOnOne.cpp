@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "Rules/Factory.hpp"
-#include "Rules/ReplacementRule.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Rules/ReplacementRule.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 
@@ -65,9 +65,10 @@ continue__1:
   ret i8 0
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
-        // factory.useStaticResultAllocation();
+    auto configure_profile = [](RuleSet& rule_set)
+    {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.optimizeResultOne();
     };
@@ -79,6 +80,7 @@ continue__1:
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
     ir_manip->applyProfile(profile);
 

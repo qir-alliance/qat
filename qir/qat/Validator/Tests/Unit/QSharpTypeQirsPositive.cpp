@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "Rules/Factory.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 using namespace microsoft::quantum;
@@ -70,7 +69,7 @@ void expectSuccess(String const& profile_name, String const& script)
 
 TEST(QSharpPositive, TeleportChain)
 {
-    expectSuccess("base", R"script(
+    expectSuccess("default", R"script(
   tail call void @__quantum__qis__h__body(%Qubit* null)
   tail call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
   tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))
@@ -131,7 +130,7 @@ quantum17:                                        ; preds = %quantum12, %quantum
 
 TEST(QSharpPositive, SimpleLoop)
 {
-    expectSuccess("base", R"script(
+    expectSuccess("default", R"script(
   tail call void @__quantum__qis__h__body(%Qubit* null)
   tail call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)
   tail call void @__quantum__qis__reset__body(%Qubit* null)
@@ -157,7 +156,7 @@ TEST(QSharpPositive, SimpleLoop)
 
 TEST(QSharpPositive, LoopRecursion)
 {
-    expectSuccess("base", R"script(
+    expectSuccess("default", R"script(
   tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
   tail call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
   tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))

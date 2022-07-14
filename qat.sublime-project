@@ -1,0 +1,29 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+		}
+	],
+	"debugger_tasks": [
+		{
+			"name": "Compile",
+			"working_dir": "${project_path}",
+			"shell_cmd": "mkdir -p Debug && cd Debug && cmake .. && make -j4",
+			"file_regex": "(..[^:]*):([0-9]+):([0-9]+)?:? error: (.*)",
+		},
+	],
+	"debugger_configurations":
+	[
+		{
+			"name": "C++ (Console)",
+			"type": "lldb",
+			"request": "launch",
+			"pre_debug_task": "Compile",
+			"program": "${project_path}/Debug/qir/qat/Apps/qat",
+			"cwd": "${project_path}/Debug",
+			"terminal": "console",
+		},
+	],
+}
+

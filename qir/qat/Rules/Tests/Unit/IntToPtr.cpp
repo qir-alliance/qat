@@ -1,14 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Rules/Factory.hpp"
-#include "Rules/Notation/Notation.hpp"
-#include "Rules/ReplacementRule.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Rules/Notation/Notation.hpp"
+#include "qir/qat/Rules/ReplacementRule.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 
@@ -52,18 +55,30 @@ TEST(RuleSetTestSuite, IntToPtr)
   %0 = inttoptr i64 2 to %Array*
  )script");
     bool matched           = false;
-    auto configure_profile = [&matched](RuleSet& rule_set) {
+    auto configure_profile = [&matched](RuleSet& rule_set)
+    {
         auto inttoptr = intToPtr(constInt());
-        auto rule     = ReplacementRule(std::move(inttoptr), [&matched](Builder&, Value*, Captures&, Replacements&) {
-            matched = true;
-            return true;
-        });
-        auto ret      = std::make_shared<ReplacementRule>(std::move(rule));
+        auto rule     = ReplacementRule(
+                std::move(inttoptr),
+                [&matched](Builder&, Value*, Captures&, Replacements&)
+                {
+                matched = true;
+                return true;
+                });
+        auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
         rule_set.addRule(ret);
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto                  profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+
+    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
+    configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
+
     ir_manip->applyProfile(profile);
 
     EXPECT_TRUE(matched);
@@ -76,13 +91,17 @@ TEST(RuleSetTestSuite, EmbeddedIntToPtr)
   )script");
     bool matched  = false;
 
-    auto configure_profile = [&matched](RuleSet& rule_set) {
+    auto configure_profile = [&matched](RuleSet& rule_set)
+    {
         auto inttoptr = call("__quantum__rt__array_get_element_ptr_1d", intToPtr(constInt()), constInt());
-        auto rule     = ReplacementRule(std::move(inttoptr), [&matched](Builder&, Value*, Captures&, Replacements&) {
-            matched = true;
-            return true;
-        });
-        auto ret      = std::make_shared<ReplacementRule>(std::move(rule));
+        auto rule     = ReplacementRule(
+                std::move(inttoptr),
+                [&matched](Builder&, Value*, Captures&, Replacements&)
+                {
+                matched = true;
+                return true;
+                });
+        auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
         rule_set.addRule(ret);
     };
@@ -101,13 +120,17 @@ TEST(RuleSetTestSuite, ExpandedIntToPtr)
   )script");
     bool matched  = false;
 
-    auto configure_profile = [&matched](RuleSet& rule_set) {
+    auto configure_profile = [&matched](RuleSet& rule_set)
+    {
         auto inttoptr = call("__quantum__rt__array_get_element_ptr_1d", intToPtr(constInt()), constInt());
-        auto rule     = ReplacementRule(std::move(inttoptr), [&matched](Builder&, Value*, Captures&, Replacements&) {
-            matched = true;
-            return true;
-        });
-        auto ret      = std::make_shared<ReplacementRule>(std::move(rule));
+        auto rule     = ReplacementRule(
+                std::move(inttoptr),
+                [&matched](Builder&, Value*, Captures&, Replacements&)
+                {
+                matched = true;
+                return true;
+                });
+        auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
         rule_set.addRule(ret);
     };

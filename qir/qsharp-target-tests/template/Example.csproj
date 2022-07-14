@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.Quantum.Sdk/{{version}}{{channel}}">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <IncludeProviderPackages>False</IncludeProviderPackages>
+    <ExecutionTarget>{{executionTarget}}</ExecutionTarget>
+    <QirGeneration>true</QirGeneration>
+    {{extraFields}}
+  </PropertyGroup>
+</Project>

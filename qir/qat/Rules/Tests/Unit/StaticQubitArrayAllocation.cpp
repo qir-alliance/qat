@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "Rules/Factory.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Generators/PostTransformConfig.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 
@@ -57,8 +57,10 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationOffsets)
   %array5 = call %Array* @__quantum__rt__qubit_allocate_array(i64 14) ; offset 19
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set)
+    {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticQubitArrayAllocation();
     };
 
@@ -68,6 +70,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationOffsets)
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
     ir_manip->applyProfile(profile);
 
@@ -101,8 +104,10 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)
     // LLVM will optimize the two last instructions away even at O0 as they are not used.
     // Consequently the pattern fails.
 
-    auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set)
+    {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticQubitArrayAllocation();
     };
 
@@ -112,6 +117,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
     ir_manip->applyProfile(profile);
 
@@ -152,8 +158,10 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationAdvanced)
   call void @__quantum__rt__qubit_release_array(%Array* %array2)
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set)
+    {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticQubitArrayAllocation();
     };
 
@@ -163,6 +171,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationAdvanced)
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
     ir_manip->applyProfile(profile);
 

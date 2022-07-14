@@ -7,14 +7,13 @@ try:
 except:  # noqa: E722
     raise BaseException("Could not find Qiskit QIR tests")
 
-from qiskit_qir import to_qir
-import subprocess
+import logging
 import os
+import subprocess
 import tempfile
 
 import pytest
-import logging
-
+from qiskit_qir import to_qir
 
 logger = logging.getLogger(__name__)
 
@@ -29,10 +28,10 @@ def validate_circuit(name, profile, circuit):
         qat_binary = os.environ.get("QAT_BINARY")
 
         p = subprocess.Popen(
-            [qat_binary, "-S", "--validate", "--apply", "--profile",
-             profile, filename],
+            [qat_binary, "-S", "--validate", "--apply", "--profile", profile, filename],
             stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
+            stderr=subprocess.PIPE,
+        )
 
         out, errs = p.communicate()
         ret = p.returncode == 0
@@ -57,4 +56,4 @@ def test_qat_validation(circuit_name, request):
     circuit = request.getfixturevalue(circuit_name)
     generated_ir = to_qir(circuit)
     logger.debug(generated_ir)
-    assert validate_circuit(circuit_name, "base", circuit)
+    assert validate_circuit(circuit_name, "default", circuit)

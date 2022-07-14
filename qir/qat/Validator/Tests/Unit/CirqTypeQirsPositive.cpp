@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "Rules/Factory.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 using namespace microsoft::quantum;
@@ -66,7 +65,7 @@ void expectSuccess(String const& profile_name, String const& script)
 
 TEST(CirqPositive, BscMeanField)
 {
-    expectSuccess("base", R"script(
+    expectSuccess("default", R"script(
   %0 = inttoptr i64 0 to %Qubit*
   %1 = inttoptr i64 1 to %Qubit*
   %2 = inttoptr i64 2 to %Qubit*

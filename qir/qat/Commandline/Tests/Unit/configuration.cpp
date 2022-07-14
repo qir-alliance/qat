@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "AllocationManager/AllocationManager.hpp"
-#include "Commandline/ConfigurationManager.hpp"
 #include "gtest/gtest.h"
+#include "qir/qat/AllocationManager/AllocationManager.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
 
 using namespace microsoft::quantum;
 
@@ -144,6 +144,30 @@ TEST(CommandlineTestSuite, Configuration)
         configuration_manager.configure(parser);
 
         auto& config = configuration_manager.get<TestConfig2>();
+        EXPECT_EQ(config.param1(), false);
+        EXPECT_EQ(config.param2(), "msss");
+        EXPECT_EQ(config.param3(), 17372);
+    }
+
+    // Testing deferred parameters
+    {
+        ConfigurationManager configuration_manager;
+        auto                 var = configuration_manager.getParameter("param2");
+
+        EXPECT_FALSE(var->isDereferenceable());
+
+        configuration_manager.addConfig<TestConfig2>();
+        EXPECT_TRUE(var->isDereferenceable());
+
+        ParameterParser parser;
+        configuration_manager.setupArguments(parser);
+        char* args[] = {"main", "--no-param1", "--param2", "msss", "--param3", "17372"};
+        parser.parseArgs(6, args);
+
+        configuration_manager.configure(parser);
+
+        auto& config = configuration_manager.get<TestConfig2>();
+        EXPECT_EQ(config.param2(), var->value<std::string>());
         EXPECT_EQ(config.param1(), false);
         EXPECT_EQ(config.param2(), "msss");
         EXPECT_EQ(config.param3(), 17372);

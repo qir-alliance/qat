@@ -13,10 +13,10 @@
 
 ## Table of Contents
 
-- [Purpose](#purpose)
+- [Purpose](#purpose-and-terminology)
 - [Building](#building)
 - [Getting started](#getting-started)
-- [Next steps](#next-steps)
+- [Documentation](#documentation)
 
 ## Purpose and terminology
 
@@ -28,7 +28,7 @@ requirements.
 
 When we refer to a QIR in any of the documentation related to this tool, we do
 so irrespective of whether we represent the QIR though human readable text, the
-more storage-efficient bitcode format or in-memory representation. We note that
+more storage-efficient bit-code format or in-memory representation. We note that
 all of these representations are semantically identical and for that reason, QAT
 is designed to work with all of them.
 

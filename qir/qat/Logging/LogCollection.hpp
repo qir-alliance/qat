@@ -2,83 +2,55 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
-#include "Logging/SourceLocation.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/Logging/SourceLocation.hpp"
 
 #include <vector>
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    /// Concrete ILogger implementation that collects all messages and their corresponding location in a
-    /// list that can be traversed later on.
-    class LogCollection : public ILogger
-    {
-      public:
-        /// Class that holds the location of where the incident happened.
-        struct Location : public SourceLocation
-        {
-            String llvm_hint;
-            String frontend_hint;
-        };
+/// Concrete ILogger implementation that collects all messages and their corresponding location in a
+/// list that can be traversed later on.
+class LogCollection : public ILogger
+{
+  public:
+    // Interface implementation
+    //
 
-        /// Enum description what type of information we are conveying.
-        enum class Type
-        {
-            Debug,
-            Info,
-            Warning,
-            Error,
-            InternalError,
-        };
+    /// Adds a debug message to the list.
+    void debug(String const& message) override;
 
-        /// Struct to hold a message together with its type and location
-        struct Message
-        {
-            Type     type;
-            Location location;
-            String   message;
-        };
+    /// Adds an info message to the list.
+    void info(String const& message) override;
 
-        /// List of messages defined as alias.
-        using Messages = std::vector<Message>;
+    /// Adds a warning message to the list.
+    void warning(String const& message) override;
 
-        // Interface implementation
-        //
+    /// Adds an error message to the list.
+    void error(String const& message) override;
 
-        /// Adds a debug message to the list.
-        void debug(String const& message) override;
+    /// Adds an internal error message to the list.
+    void internalError(String const& message) override;
 
-        /// Adds an info message to the list.
-        void info(String const& message) override;
+    /// Function that allows to set the current location.
+    void setLocation(SourceLocation const& loc) override;
 
-        /// Adds a warning message to the list.
-        void warning(String const& message) override;
+    /// Sets the value of the LLVM instruction causing the issue.
+    void setLlvmHint(String const& value) override;
 
-        /// Adds an error message to the list.
-        void error(String const& message) override;
+    /// Sets the value of the frontend instruction causing the issue.
+    void setFrontendHint(String const& value) override;
 
-        /// Adds an internal error message to the list.
-        void internalError(String const& message) override;
+    /// Accessor to the messages
+    Messages const& messages() const override;
 
-        /// Function that allows to set the current location.
-        void setLocation(String const& name, int64_t line, int64_t col) override;
+    /// Enabling dumping collection to a file
+    void dump(std::ostream& out) const override;
 
-        /// Sets the value of the LLVM instruction causing the issue.
-        void setLlvmHint(String const& value) override;
+  private:
+    Location current_location_{}; ///< Holds current location.
+    Messages messages_;           ///< All messages emitted.
+};
 
-        /// Sets the value of the frontend instruction causing the issue.
-        void setFrontendHint(String const& value) override;
-
-        /// Accessor to the messages
-        Messages const& messages() const;
-
-      private:
-        Location current_location_{}; ///< Holds current location.
-        Messages messages_;           ///< All messages emitted.
-    };
-
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum

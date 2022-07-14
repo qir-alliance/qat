@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.Quantum.Sdk/0.24.213020-alpha">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <IncludeProviderPackages>False</IncludeProviderPackages>
+    <!--ExecutionTarget>qci.qpu</ExecutionTarget-->
+    <ExecutionTarget>rigetti.qpu</ExecutionTarget>
+    <!--TargetCapability>AdaptiveExecution</TargetCapability-->
+    <QirGeneration>true</QirGeneration>
+  </PropertyGroup>
+
+</Project>

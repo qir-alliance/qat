@@ -50,27 +50,30 @@
 ///
 ///
 
-#include "Apps/Qat/QatConfig.hpp"
-#include "Commandline/ConfigurationManager.hpp"
-#include "Commandline/ParameterParser.hpp"
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Generators/LlvmPassesConfiguration.hpp"
-#include "GroupingPass/GroupingAnalysisPass.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "GroupingPass/GroupingPassConfiguration.hpp"
-#include "ModuleLoader/ModuleLoader.hpp"
-#include "Profile/Profile.hpp"
-#include "Rules/Factory.hpp"
-#include "Rules/FactoryConfig.hpp"
-#include "TransformationRulesPass/TransformationRulesPass.hpp"
-#include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "ValidationPass/ValidationPassConfiguration.hpp"
-#include "Validator/Validator.hpp"
+#include "qir/qat/Apps/Qat/QatConfig.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Commandline/ParameterParser.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/CommentLogger.hpp"
+#include "qir/qat/ModuleLoader/ModuleLoader.hpp"
+#include "qir/qat/Profile/Profile.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Validator/Validator.hpp"
 
-#include "Llvm/Llvm.hpp"
-
+#ifndef _WIN32
 #include <dlfcn.h>
+#endif
 
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <unordered_map>
@@ -98,12 +101,12 @@ void init()
     initializeTarget(registry);
 
     initializeExpandMemCmpPassPass(registry);
-    initializeScalarizeMaskedMemIntrinPass(registry);
     initializeCodeGenPreparePass(registry);
     initializeAtomicExpandPass(registry);
     initializeRewriteSymbolsLegacyPassPass(registry);
     initializeWinEHPreparePass(registry);
-    initializeDwarfEHPreparePass(registry);
+
+    initializeWasmEHPreparePass(registry);
     initializeSafeStackLegacyPassPass(registry);
     initializeSjLjEHPreparePass(registry);
     initializePreISelIntrinsicLoweringLegacyPassPass(registry);
@@ -123,6 +126,7 @@ void init()
 
 int main(int argc, char** argv)
 {
+    int ret = 0;
 
     try
     {
@@ -149,6 +153,21 @@ int main(int argc, char** argv)
         configuration_manager.addConfig<ValidationPassConfiguration>(
             "validation-configuration", ValidationPassConfiguration::fromProfileName(config.profile()));
 
+        // Setting logger up
+        std::shared_ptr<ILogger> logger{nullptr};
+
+        // Updating logger based on whether we are dumping output
+        if (!config.saveReportTo().empty())
+        {
+            logger = std::make_shared<LogCollection>();
+        }
+        else
+        {
+            logger = std::make_shared<CommentLogger>();
+        }
+
+        generator->setLogger(logger);
+
         // Setting default component pipelines up
         generator->setupDefaultComponentPipeline();
 
@@ -157,6 +176,7 @@ int main(int argc, char** argv)
 
         if (!config.load().empty())
         {
+#ifndef _WIN32
             // TODO (issue-47): Add support for multiple loads
             void* handle = dlopen(config.load().c_str(), RTLD_LAZY);
 
@@ -172,6 +192,9 @@ int main(int argc, char** argv)
 
                 load_component(generator.get());
             }
+#else
+            throw std::runtime_error("Dynamic modules not supported on the Windows platform.");
+#endif
         }
 
         // Reconfiguring to get all the arguments of the passes registered
@@ -238,24 +261,29 @@ int main(int argc, char** argv)
             exit(-1);
         }
 
+        // Making LLVM locations resolvable
+        auto location_table = loader.locationTable();
+        logger->setLocationResolver([location_table](llvm::Value const* val)
+                                    { return location_table->getPosition(val); });
+
         // Getting the optimization level
         //
-        auto optimization_level = llvm::PassBuilder::OptimizationLevel::O0;
+        auto optimization_level = llvm::OptimizationLevel::O0;
 
         // Setting the optimization level
         if (config.isOpt1Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O1;
+            optimization_level = llvm::OptimizationLevel::O1;
         }
 
         if (config.isOpt2Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O2;
+            optimization_level = llvm::OptimizationLevel::O2;
         }
 
         if (config.isOpt3Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O3;
+            optimization_level = llvm::OptimizationLevel::O3;
         }
 
         // Profile manipulation
@@ -267,43 +295,89 @@ int main(int argc, char** argv)
 
         if (config.shouldGenerate())
         {
-            profile.apply(*module);
+            profile->apply(*module);
+
+            //  Preventing subsequent routines to run if errors occurred.
+            if (logger && (logger->hadErrors() || logger->hadWarnings()))
+            {
+                ret = -1;
+            }
         }
 
         // We deliberately emit LLVM prior to verification and validation
         // to allow output the IR for debugging purposes.
-        if (config.shouldEmitLlvm())
+        if (ret == 0)
         {
-            llvm::outs() << *module << "\n";
-        }
-        else
-        {
-            llvm::WriteBitcodeToFile(*module, llvm::outs());
+            if (config.outputFile().empty())
+            {
+                if (config.shouldEmitLlvm())
+                {
+                    llvm::outs() << *module << "\n";
+                }
+                else
+                {
+                    llvm::WriteBitcodeToFile(*module, llvm::outs());
+                }
+            }
+            else
+            {
+                std::error_code      ec;
+                llvm::raw_fd_ostream fout(config.outputFile(), ec);
+
+                if (config.shouldEmitLlvm())
+                {
+                    fout << *module << "\n";
+                }
+                else
+                {
+                    llvm::WriteBitcodeToFile(*module, fout);
+                }
+
+                if (ec.value() != 0)
+                {
+                    throw std::runtime_error("Failed to write output to file.");
+                }
+            }
         }
 
-        if (config.verifyModule())
+        if (ret == 0 && config.verifyModule())
         {
-            if (!profile.verify(*module))
+            if (!profile->verify(*module))
             {
                 std::cerr << "IR is broken." << std::endl;
-                exit(-1);
+                ret = -1;
             }
         }
 
-        if (config.shouldValidate())
+        if (ret == 0 && config.shouldValidate())
         {
-            if (!profile.validate(*module))
+            if (!profile->validate(*module))
             {
                 std::cerr << "IR did not validate to the profile constraints." << std::endl;
-                exit(-1);
+                ret = -1;
             }
+        }
+
+        // Safety pre-caution to ensure that all errors and warnings reported
+        // results in failure.
+        if (logger && (logger->hadErrors() || logger->hadWarnings()))
+        {
+            ret = -1;
+        }
+
+        // Saving output
+        if (logger && !config.saveReportTo().empty())
+        {
+            std::fstream fout(config.saveReportTo(), std::ios::out);
+            logger->dump(fout);
+            fout.close();
         }
     }
     catch (std::exception const& e)
     {
         std::cerr << "An error occurred: " << e.what() << std::endl;
-        exit(-1);
+        ret = -1;
     }
 
-    return 0;
+    return ret;
 }

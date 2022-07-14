@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Rules/Factory.hpp"
-#include "Rules/ReplacementRule.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Rules/ReplacementRule.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 
@@ -51,13 +51,20 @@ TEST(RuleSetTestSuite, SelectOnOne)
   ret i8 %3
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set) {
-        auto factory = RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew());
+    auto configure_profile = [](RuleSet& rule_set)
+    {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.optimizeResultOne();
     };
 
     auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+
+    ConfigurationManager& configuration_manager = profile->configurationManager();
+
+    configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
+
     ir_manip->applyProfile(profile);
 
     // This optimization is specific to the the __quantum__qis__read_result__body which
@@ -69,9 +76,11 @@ TEST(RuleSetTestSuite, SelectOnOne)
     // %5 = select i1 %2, <type> %3, <type> %4
     //
     // will be mapped to using this instruction.
+
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
-        "%0 = call i1 @__quantum__qis__read_result__body(%Result* inttoptr (i64 1 to %Result*))",
-        "%1 = select i1 %0, i8 3, i8 4",
+        "%0 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to "
+        "%Result*))",
+        "%1 = select i1 %0, i8 5, i8 6",
     }));
 
     EXPECT_FALSE(

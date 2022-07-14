@@ -32,8 +32,11 @@
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Support/raw_ostream.h"
+#include "llvm/Transforms/IPO/ForceFunctionAttrs.h"
+#include "llvm/Transforms/IPO/InferFunctionAttrs.h"
 #include "llvm/Transforms/IPO/Inliner.h"
 #include "llvm/Transforms/Instrumentation.h"
+#include "llvm/Transforms/Scalar/EarlyCSE.h"
 #include "llvm/Transforms/Scalar/LoopUnrollPass.h"
 #include "llvm/Transforms/Scalar/Reassociate.h"
 #include "llvm/Transforms/Scalar/SCCP.h"
@@ -44,6 +47,7 @@
 
 // Building
 #include "llvm/IR/AssemblyAnnotationWriter.h"
+#include "llvm/IR/Attributes.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/Constants.h"
 #include "llvm/IR/DIBuilder.h"
@@ -72,6 +76,7 @@
 #include "llvm/LinkAllPasses.h"
 #include "llvm/Transforms/Scalar/ADCE.h"
 #include "llvm/Transforms/Scalar/DCE.h"
+#include "llvm/Transforms/Utils/LowerSwitch.h"
 
 // Const folding
 #include "llvm/Analysis/ConstantFolding.h"
@@ -95,6 +100,13 @@
 
 // Debugging
 #include "llvm/IR/DebugInfoMetadata.h"
+
+namespace llvm
+{
+#ifdef USE_LLVM13
+using OptimizationLevel = PassBuilder::OptimizationLevel;
+#endif
+} // namespace llvm
 
 #if defined(__clang__)
 #pragma Clang diagnostic pop

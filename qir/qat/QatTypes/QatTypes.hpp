@@ -4,12 +4,9 @@
 
 #include <string>
 
-namespace microsoft
-{
-namespace quantum
+namespace microsoft::quantum
 {
 
-    using String = std::string;
+using String = std::string;
 
-} // namespace quantum
-} // namespace microsoft
+} // namespace microsoft::quantum

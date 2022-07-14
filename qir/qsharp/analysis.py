@@ -1,5 +1,5 @@
-import os
 import json
+import os
 
 path = os.path.dirname(__file__)
 
@@ -27,9 +27,7 @@ for d in os.listdir(path):
         all_data.append((len(data), d, data))
 
 
-opcounts = {
-
-}
+opcounts = {}
 
 all_data.sort()
 for c, d, data in all_data:

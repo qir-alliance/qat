@@ -1,0 +1,54 @@
+cc_library(
+    name = "googletest", # TODO: Eliminate this libary
+    srcs = glob(
+        ["googletest/src/*.cc"],
+        exclude = ["googletest/src/gtest-all.cc", "googlemock/src/gmock-all.cc", "googletest/src/gtest-test-part.cc"]
+    ),
+    hdrs = glob([
+        "googletest/include/**/*.h",
+        "googletest/include/*.h",
+        "googletest/src/*.h",
+    ]),
+    includes =[
+        "googletest/include",
+    ],
+    copts = [
+        "-Iexternal/googletest/googletest/include",
+        "-Iexternal/googletest/googletest",        
+    ],
+    linkopts = ["-pthread"],
+#    alwayslink = 1,
+#    linkstatic = True,    
+    visibility = ["//visibility:public"],
+)
+
+
+cc_library(
+    name = "googlemock",
+    srcs = glob(
+        ["googlemock/src/*.cc", "googletest/src/*.cc"],
+        exclude = ["googletest/src/gtest_main.cc", "googletest/src/gtest-all.cc", "googlemock/src/gmock-all.cc"]
+    ),
+    hdrs = glob([
+        "googletest/include/**/*.h",
+        "googletest/include/*.h",
+        "googletest/src/*.h",    
+        "googlemock/include/**/*.h",
+        "googlemock/include/*.h",
+        "googlemock/src/*.h"
+    ]),
+    includes =[
+        "googletest/include",    
+        "googlemock/include"        
+    ],
+    copts = [
+        "-Iexternal/googletest/googletest/include",
+        "-Iexternal/googletest/googletest",    
+        "-Iexternal/googletest/googlemock/include",
+        "-Iexternal/googletest/googlemock"        
+    ],
+#    alwayslink = 1,
+#    linkstatic = True,    
+    linkopts = ["-pthread"],
+    visibility = ["//visibility:public"],
+)
