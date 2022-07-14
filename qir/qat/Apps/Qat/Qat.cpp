@@ -43,6 +43,7 @@
 ///
 ///
 
+#include "qir/qat/Apps/Qat/ProfileConfiguration.hpp"
 #include "qir/qat/Apps/Qat/QatConfig.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Commandline/ParameterParser.hpp"
@@ -142,10 +143,6 @@ int main(int argc, char** argv)
         // Getting the main configuration
         auto config = configuration_manager.get<QatConfig>();
 
-        // Setting profile validation configuration
-        configuration_manager.addConfig<ValidationPassConfiguration>(
-            "validation-configuration", ValidationPassConfiguration::fromProfileName(config.profile()));
-
         // Setting logger up
         std::shared_ptr<ILogger> logger{nullptr};
 
@@ -190,14 +187,8 @@ int main(int argc, char** argv)
 #endif
         }
 
-        // Setting configuration based on configuration name
-        /*
-        if(config.profile() == "")
-        {
-
-        }
-        */
-        configuration_manager.updateParameter("lower-switch", false);
+        // Configuring QAT according to profile
+        configureProfile(onfig.profile(), configuration_manager);
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
