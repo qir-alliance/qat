@@ -785,6 +785,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             if (cfg.eliminateDeadCode())
             {
                 fpm.addPass(llvm::ADCEPass());
+                mpm.addPass(llvm::GlobalDCEPass());
             }
         });
 
@@ -918,7 +919,7 @@ void ProfileGenerator::setLogger(ILoggerPtr const&amp; logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 July 2022 at 19:15:40 UTC</p></div>
+<p>Updated on 14 July 2022 at 17:03:02 UTC</p></div>
 </div>
           </div>
         </main>
