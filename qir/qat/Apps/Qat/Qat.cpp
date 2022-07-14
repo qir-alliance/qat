@@ -190,6 +190,15 @@ int main(int argc, char** argv)
 #endif
         }
 
+        // Setting configuration based on configuration name
+        /*
+        if(config.profile() == "")
+        {
+
+        }
+        */
+        configuration_manager.updateParameter("lower-switch", false);
+
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
 

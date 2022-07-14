@@ -8,9 +8,11 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
+#include <cstddef>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 #include <type_traits>
 #include <typeindex>
 #include <typeinfo>
@@ -199,6 +201,8 @@ class ConfigurationManager
 
     DeferredValuePtr getParameter(String const& name);
 
+    template <typename T> inline void updateParameter(String const& name, T const& value);
+
   private:
     /// Helper function to get a reference to the configuration of type T.
     template <typename T> inline T& getInternal() const;
@@ -385,4 +389,28 @@ inline void ConfigurationManager::addExperimentalParameter(T& bind, String const
     ptr->markAsExperimental(T(bind));
     config_sections_.back().settings.push_back(ptr);
 }
+
+template <typename T> inline void ConfigurationManager::updateParameter(String const& name, T const& value)
+{
+    auto it = parameters_.find(name);
+    if (it == parameters_.end())
+    {
+        throw std::runtime_error("Parameter '" + name + "' does not exist.");
+    }
+
+    if (it->second == nullptr)
+    {
+        throw std::runtime_error("Configuration '" + name + "' binds to nullptr.");
+    }
+
+    auto param = it->second;
+    if (param->valueType() != std::type_index(typeid(T)))
+    {
+        throw std::runtime_error("Parameter mismatch while attemting to update the parameter '" + name + "'");
+    }
+
+    auto& bind = *static_cast<T*>(param->pointerDefaultValue());
+    bind       = value;
+}
+
 } // namespace microsoft::quantum
