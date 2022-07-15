@@ -8,7 +8,7 @@
 namespace microsoft::quantum
 {
 
-void configureGenericProfile(ConfigurationManager& configuration_manager)
+inline void configureGenericProfile(ConfigurationManager& configuration_manager)
 {
     // Transformation
     // TODO(tfr):
@@ -18,7 +18,7 @@ void configureGenericProfile(ConfigurationManager& configuration_manager)
         "validation-configuration", ValidationPassConfiguration::fromProfileName("generic"));
 }
 
-void configureDefaultProfile(ConfigurationManager& configuration_manager)
+inline void configureDefaultProfile(ConfigurationManager& configuration_manager)
 {
     // Transformation
     // TODO(tfr):
@@ -28,7 +28,7 @@ void configureDefaultProfile(ConfigurationManager& configuration_manager)
         "validation-configuration", ValidationPassConfiguration::fromProfileName("default"));
 }
 
-void configureProvider4bf9Profile(ConfigurationManager& configuration_manager)
+inline void configureProvider4bf9Profile(ConfigurationManager& configuration_manager)
 {
 
     // Setting profile validation configuration
@@ -107,7 +107,7 @@ void configureProvider4bf9Profile(ConfigurationManager& configuration_manager)
     configuration_manager.updateParameter("allow-undef", true);
 }
 
-void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
+inline void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
 {
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
@@ -185,7 +185,7 @@ void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
     configuration_manager.updateParameter("allow-undef", true);
 }
 
-void configureProviderb340Profile(ConfigurationManager& configuration_manager)
+inline void configureProviderb340Profile(ConfigurationManager& configuration_manager)
 {
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
@@ -274,7 +274,7 @@ void configureProviderb340Profile(ConfigurationManager& configuration_manager)
     configuration_manager.updateParameter("allow-undef", true);
 }
 
-void configureProfile(String const& name, ConfigurationManager& configuration_manager)
+inline void configureProfile(String const& name, ConfigurationManager& configuration_manager)
 {
     if (name == "generic")
     {
