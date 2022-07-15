@@ -169,10 +169,10 @@ class ConfigurationManager
     void disableSectionByDefault();
 
     /// Disables a named section
-    void disableSectionByName(String const& name);
+    void disableSectionById(String const& id);
 
     /// Enables a named section
-    void enableSectionByName(String const& name);
+    void enableSectionById(String const& id);
 
     /// Adds a new parameter with a default value to the configuration section. This function should
     /// be used by the configuration class.
@@ -209,13 +209,6 @@ class ConfigurationManager
 
     template <typename T> inline void updateParameter(String const& name, T const& value);
 
-
-    void printParameters() const {
-                for(auto &param: parameters_)
-        {
-            llvm::errs() << "--" << param.first << "\n";
-        }
-    }
   private:
     /// Helper function to get a reference to the configuration of type T.
     template <typename T> inline T& getInternal() const;
@@ -337,7 +330,7 @@ inline std::shared_ptr<ConfigBind<T>> ConfigurationManager::newParameter(
     String const& name,
     String const& description)
 {
-    llvm::errs() << "Adding "<<name << "\n";
+
     if (parameters_.find(name) != parameters_.end())
     {
         throw std::runtime_error("Parameter '" + name + "' already exists.");
@@ -409,8 +402,6 @@ template <typename T> inline void ConfigurationManager::updateParameter(String c
     auto it = parameters_.find(name);
     if (it == parameters_.end())
     {
-        llvm::errs() << "-------xxxxx\n";
-        printParameters();
         throw std::runtime_error("Parameter '" + name + "' does not exist.");
     }
 
