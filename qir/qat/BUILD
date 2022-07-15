@@ -28,8 +28,8 @@ cc_library(
             "@llvm-project//llvm:ARMAsmParser",
         ],
         "@platforms//cpu:x86_64": [
-            "@llvm-project//llvm:X64CodeGen",
-            "@llvm-project//llvm:X64AsmParser",
+            "@llvm-project//llvm:X86CodeGen",
+            "@llvm-project//llvm:X86AsmParser",
         ],
         "//conditions:default": [
         ],
