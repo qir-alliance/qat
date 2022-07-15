@@ -10,8 +10,6 @@ namespace microsoft::quantum
 
 void ConfigurationManager::setupArguments(ParameterParser& parser)
 {
-    parameters_.clear();
-
     for (auto& section : config_sections_)
     {
         if (section.enabled_by_default)
@@ -181,6 +179,28 @@ void ConfigurationManager::disableSectionByDefault()
     }
 
     config_sections_.back().enabled_by_default = false;
+}
+
+void ConfigurationManager::disableSectionByName(String const& name)
+{
+    for (auto& section : config_sections_)
+    {
+        if (section.name == name)
+        {
+            section.enabled_by_default = false;
+        }
+    }
+}
+
+void ConfigurationManager::enableSectionByName(String const& name)
+{
+    for (auto& section : config_sections_)
+    {
+        if (section.name == name)
+        {
+            section.enabled_by_default = true;
+        }
+    }
 }
 
 DeferredValue::DeferredValuePtr ConfigurationManager::getParameter(String const& name)

@@ -1,6 +1,7 @@
 #pragma once
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 
@@ -50,13 +51,79 @@ void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
 
 void configureProviderb340Profile(ConfigurationManager& configuration_manager)
 {
-    // Transformation
-    // TODO(tfr):
-
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
         "validation-configuration", ValidationPassConfiguration::fromProfileName("provider_b340"));
+
+    // Transformation
+    configuration_manager.disableSectionByName("grouping");
+
+    configuration_manager.updateParameter("apply", true);
+    configuration_manager.updateParameter("validate", true);
+    configuration_manager.updateParameter("verify-module", true);
+    configuration_manager.updateParameter("experimental", false);
+
+    configuration_manager.updateParameter("optimize-result-one", true);
+    configuration_manager.updateParameter("optimize-result-zero", true);
+    configuration_manager.updateParameter("optimize-result-comparison", true);
+    configuration_manager.updateParameter("use-static-qubit-array-allocation", false);
+    configuration_manager.updateParameter("use-static-qubit-allocation", false);
+    configuration_manager.updateParameter("use-static-result-allocation", false);
+
+    configuration_manager.updateParameter("disable-reference-counting", false);
+    configuration_manager.updateParameter("disable-alias-counting", false);
+    configuration_manager.updateParameter("use-static-result-allocation", false);
+
+    configuration_manager.updateParameter("disable-reference-counting", true);
+    configuration_manager.updateParameter("disable-alias-counting", true);
+    configuration_manager.updateParameter("disable-string-support", true);
+    configuration_manager.updateParameter("disable-record-output-support", false);
+
+    configuration_manager.updateParameter("allow-internal-calls", false);
+    configuration_manager.updateParameter("requires-qubits", true);
+    configuration_manager.updateParameter("requires-results", true);
+    configuration_manager.updateParameter("allow-poison", true);
+    configuration_manager.updateParameter("allow-undef", true);
+
+    configuration_manager.updateParameter("unroll-loops", true);
+    configuration_manager.updateParameter("allow-partial", true);
+    configuration_manager.updateParameter("allow-peeling", true);
+    configuration_manager.updateParameter("allow-runtime", true);
+    configuration_manager.updateParameter("allow-upper-bound", true);
+    configuration_manager.updateParameter("allow-profile-based-peeling", true);
+    configuration_manager.updateParameter<uint64_t>("full-unroll-count", 1024);
+    configuration_manager.updateParameter<int32_t>("unroll-opt-level", 3);
+    configuration_manager.updateParameter("only-when-forced", false);
+    configuration_manager.updateParameter("forget-scev", false);
+    configuration_manager.updateParameter("always-inline", true);
+    configuration_manager.updateParameter<int32_t>("inlining-parameter", 2147483647);
+    configuration_manager.updateParameter("eliminate-constants", true);
+    configuration_manager.updateParameter("eliminate-dead-code", true);
+    configuration_manager.updateParameter("eliminate-memory", true);
+
+    configuration_manager.updateParameter("delete-dead-code", false);
+    configuration_manager.updateParameter("clone-functions", false);
+    configuration_manager.updateParameter("transform-execution-path-only", false);
+    configuration_manager.updateParameter<uint64_t>("max-recursion", 1);
+    configuration_manager.updateParameter("assume-no-except", false);
+    configuration_manager.updateParameter("reuse-qubits", false);
+    configuration_manager.updateParameter("reuse-results", false);
+
+    configuration_manager.updateParameter("lower-switch", true);
+    configuration_manager.updateParameter("should-eleminate-zext-i1", true);
+    configuration_manager.updateParameter("pull-records-back", true);
+
+    configuration_manager.updateParameter("annotate-qubit-use", true);
+    configuration_manager.updateParameter("annotate-result-use", true);
+    configuration_manager.updateParameter("annotate-max-qubit-index", true);
+    configuration_manager.updateParameter("annotate-max-result-index", true);
+    configuration_manager.updateParameter("reindex-qubits", true);
+    configuration_manager.updateParameter("replace-qubit-on-reset", true);
+    configuration_manager.updateParameter("inline-after-id-change", true);
+
+    configuration_manager.updateParameter("separate-circuits", true);
 }
+
 
 void configureProfile(String const& name, ConfigurationManager& configuration_manager)
 {
@@ -84,4 +151,6 @@ void configureProfile(String const& name, ConfigurationManager& configuration_ma
     {
         throw std::runtime_error("Invalid profile " + name);
     }
+}
+
 }

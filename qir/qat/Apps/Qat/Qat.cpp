@@ -188,7 +188,7 @@ int main(int argc, char** argv)
         }
 
         // Configuring QAT according to profile
-        configureProfile(onfig.profile(), configuration_manager);
+        configureProfile(config.profile(), configuration_manager);
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
