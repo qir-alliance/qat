@@ -15,6 +15,13 @@ TESTS = {
         "--reuse-qubits",
         "--entry-point-attr",
         "EntryPoint",
+        "--no-allow-internal-calls",
+        "--no-allow-poison",
+        "--no-allow-undef",
+        "--no-allow-internal-calls",
+        "--use-static-result-allocation",
+        "--use-static-qubit-allocation",
+        "--use-static-qubit-array-allocation",        
     ],
     "provider_7ee0": [
         "--apply",
@@ -30,6 +37,13 @@ TESTS = {
         "--reuse-qubits",
         "--entry-point-attr",
         "EntryPoint",
+        "--no-allow-internal-calls",
+        "--no-allow-poison",
+        "--no-allow-undef",
+        "--no-allow-internal-calls",
+        "--use-static-result-allocation",
+        "--use-static-qubit-allocation",
+        "--use-static-qubit-array-allocation",
     ],
     "provider_b340": [
         "--apply",
@@ -46,6 +60,13 @@ TESTS = {
         "--pull-records-back",
         "--entry-point-attr",
         "EntryPoint",
+        "--no-allow-internal-calls",
+        "--no-allow-poison",
+        "--no-allow-undef",
+        "--no-allow-internal-calls",
+        "--use-static-result-allocation",
+        "--use-static-qubit-allocation",
+        "--use-static-qubit-array-allocation",
     ],
 }
 
@@ -54,8 +75,8 @@ QAT_BINARY = sys.argv[1]
 fail = False
 if __name__ == "__main__":
     for profile, args in TESTS.items():
-        cmd1 = "{} {} --profile {} --dump-config".format(
-            QAT_BINARY, " ".join(args), profile
+        cmd1 = "{} {}  --profile generic --dump-config".format(
+            QAT_BINARY, " ".join(args)
         )
 
         p = subprocess.Popen(
@@ -63,20 +84,31 @@ if __name__ == "__main__":
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,
         )
-        out1 = p.communicate()[0]
+        out1 = p.communicate()[0].decode("utf-8")
+        out1 = out1.replace(": generic", ": {}".format(profile))
 
         p = subprocess.Popen(
             [QAT_BINARY, "--profile", profile, "--dump-config"],
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,
         )
-        out2 = p.communicate()[0]
+        out2 = p.communicate()[0].decode("utf-8")
 
         if out1 == out2:
             print("Testing " + profile + " " + "." * (20 - len(profile)) + "[  OK  ]")
         else:
             fail = True
             print("Testing " + profile + " " + "." * (20 - len(profile)) + "[ FAIL ]")
+            lines1 = out1.split("\n")
+            lines2 = out2.split("\n")
+
+            for i in range(len(lines1)):
+                l1 = lines1[i]
+                l2 = lines2[i]
+
+                if l1 != l2:
+                    print("- {}".format(l1))
+                    print("+ {}".format(l2))
 
 if fail:
     exit(-1)

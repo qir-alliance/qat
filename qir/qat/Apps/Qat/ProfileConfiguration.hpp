@@ -103,8 +103,9 @@ inline void configureProvider4bf9Profile(ConfigurationManager& configuration_man
     configuration_manager.updateParameter("allow-internal-calls", false);
     configuration_manager.updateParameter("requires-qubits", true);
     configuration_manager.updateParameter("requires-results", true);
-    configuration_manager.updateParameter("allow-poison", true);
-    configuration_manager.updateParameter("allow-undef", true);
+    configuration_manager.updateParameter("allow-poison", false);
+    configuration_manager.updateParameter("allow-undef", false);
+
 }
 
 inline void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
@@ -176,13 +177,14 @@ inline void configureProvider7ee0Profile(ConfigurationManager& configuration_man
     configuration_manager.updateParameter("replace-qubit-on-reset", false);
     configuration_manager.updateParameter("inline-after-id-change", true);
 
-    configuration_manager.updateParameter("separate-circuits", true);
+    configuration_manager.updateParameter("separate-circuits", false);
 
     configuration_manager.updateParameter("allow-internal-calls", false);
     configuration_manager.updateParameter("requires-qubits", true);
     configuration_manager.updateParameter("requires-results", true);
-    configuration_manager.updateParameter("allow-poison", true);
-    configuration_manager.updateParameter("allow-undef", true);
+    configuration_manager.updateParameter("allow-poison", false);
+    configuration_manager.updateParameter("allow-undef", false);
+
 }
 
 inline void configureProviderb340Profile(ConfigurationManager& configuration_manager)
@@ -210,24 +212,13 @@ inline void configureProviderb340Profile(ConfigurationManager& configuration_man
     configuration_manager.updateParameter("optimize-result-one", true);
     configuration_manager.updateParameter("optimize-result-zero", true);
     configuration_manager.updateParameter("optimize-result-comparison", true);
-    configuration_manager.updateParameter("use-static-qubit-array-allocation", false);
-    configuration_manager.updateParameter("use-static-qubit-allocation", false);
-    configuration_manager.updateParameter("use-static-result-allocation", false);
-
-    configuration_manager.updateParameter("disable-reference-counting", false);
-    configuration_manager.updateParameter("disable-alias-counting", false);
-    configuration_manager.updateParameter("use-static-result-allocation", false);
-
+    configuration_manager.updateParameter("use-static-qubit-array-allocation", true);
+    configuration_manager.updateParameter("use-static-qubit-allocation", true);
+    configuration_manager.updateParameter("use-static-result-allocation", true);    
     configuration_manager.updateParameter("disable-reference-counting", true);
     configuration_manager.updateParameter("disable-alias-counting", true);
     configuration_manager.updateParameter("disable-string-support", true);
     configuration_manager.updateParameter("disable-record-output-support", false);
-
-    configuration_manager.updateParameter("allow-internal-calls", false);
-    configuration_manager.updateParameter("requires-qubits", true);
-    configuration_manager.updateParameter("requires-results", true);
-    configuration_manager.updateParameter("allow-poison", true);
-    configuration_manager.updateParameter("allow-undef", true);
 
     configuration_manager.updateParameter("unroll-loops", true);
     configuration_manager.updateParameter("allow-partial", true);
@@ -265,13 +256,13 @@ inline void configureProviderb340Profile(ConfigurationManager& configuration_man
     configuration_manager.updateParameter("replace-qubit-on-reset", true);
     configuration_manager.updateParameter("inline-after-id-change", true);
 
-    configuration_manager.updateParameter("separate-circuits", true);
+    configuration_manager.updateParameter("separate-circuits", false);
 
     configuration_manager.updateParameter("allow-internal-calls", false);
     configuration_manager.updateParameter("requires-qubits", true);
     configuration_manager.updateParameter("requires-results", true);
-    configuration_manager.updateParameter("allow-poison", true);
-    configuration_manager.updateParameter("allow-undef", true);
+    configuration_manager.updateParameter("allow-poison", false);
+    configuration_manager.updateParameter("allow-undef", false);
 }
 
 inline void configureProfile(String const& name, ConfigurationManager& configuration_manager)

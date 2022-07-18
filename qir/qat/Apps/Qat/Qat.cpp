@@ -225,8 +225,18 @@ int main(int argc, char** argv)
         if (parser.arguments().empty())
         {
             std::cerr << "Usage: " << argv[0] << " [options] filename" << std::endl;
-            configuration_manager.printHelp(config.isExperimental());
             std::cerr << "\n";
+        }
+
+        // Shows help if needed
+        if(config.showHelp())
+        {
+            configuration_manager.printHelp(config.isExperimental());            
+        }
+
+        // Returns from program if no input files were provided
+        if (parser.arguments().empty())
+        {
             exit(-1);
         }
 

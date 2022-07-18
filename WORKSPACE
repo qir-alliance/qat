@@ -56,7 +56,7 @@ llvm_disable_optional_support_deps()
 # ================================================================
 # Python
 # ================================================================
-rules_python_version = "740825b7f74930c62f44af95c9a4c1bd428d2c53" # Latest @ 2021-06-23
+rules_python_version = "740825b7f74930c62f44af95c9a4c1bd428d2c53"  # Latest @ 2021-06-23
 
 http_archive(
     name = "rules_python",
@@ -64,7 +64,6 @@ http_archive(
     strip_prefix = "rules_python-{}".format(rules_python_version),
     url = "https://github.com/bazelbuild/rules_python/archive/{}.zip".format(rules_python_version),
 )
-
 
 # ================================================================
 # Google
