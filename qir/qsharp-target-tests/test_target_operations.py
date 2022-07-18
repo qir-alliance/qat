@@ -76,8 +76,16 @@ def test_target1(test_name, request):
             test_name,
             "provider_7ee0",
             project.qir_filename,
-            ["--no-requires-results", "--no-requires-qubits", "--disable-record-output-support", "--validate", "--apply"],
+            [
+                "--no-requires-results",
+                "--no-requires-qubits",
+                "--disable-record-output-support",
+                "--validate",
+                "--apply",
+            ],
         )
+
+
 # "-O3", "--unroll-loops", "--always-inline",
 
 
@@ -89,7 +97,13 @@ def test_target3(test_name, request):
             test_name,
             "provider_4bf9",
             project.qir_filename,
-            ["--no-requires-results", "--no-requires-qubits",  "--disable-record-output-support", "--validate", "--apply"],
+            [
+                "--no-requires-results",
+                "--no-requires-qubits",
+                "--disable-record-output-support",
+                "--validate",
+                "--apply",
+            ],
         )
 
 
@@ -103,7 +117,9 @@ def test_target4(test_name, request):
             project.qir_filename,
             [
                 "--validate",
-                "--no-requires-results", "--no-requires-qubits", "--disable-record-output-support",
+                "--no-requires-results",
+                "--no-requires-qubits",
+                "--disable-record-output-support",
                 "--disable-grouping",
                 "--replace-qubit-on-reset",
                 "--reindex-qubits",
