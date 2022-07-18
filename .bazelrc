@@ -11,8 +11,8 @@ build --features=external_include_paths
 build:generic_clang --repo_env=CC=clang
 
 # C++ 17
-build --cxxopt=-std:c++17
-build --host_cxxopt=-std:c++17
+build --cxxopt=-std=c++17
+build --host_cxxopt=-std=c++17
 
 # Other MSVC specific config
 build:msvc --copt=/w
