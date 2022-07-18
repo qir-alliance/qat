@@ -1,8 +1,16 @@
 # Platform independent configuration
 build --workspace_status_command "python config/workspace-status.py"
 
-coverage --experimental_generate_llvm_lcov
-coverage --combined_report=lcov
+# We would turn this on globally, but unfortunattely
+# it kills external libraries
+# build --cxxopt=-Wall
+# build --cxxopt=-Wextra
+# build --cxxopt=-Wconversion
+# build --cxxopt=-Wpedantic
+# build --cxxopt=-Werror
+# Use `-Wall` and `-Werror` for Clang.
+# build:generic_clang --copt=-Wall --copt=-Werror --host_copt=-Wall --host_copt=-Werror
+
 
 # build --disk_cache=~/.cache/bazel/
 build --features=external_include_paths
@@ -10,9 +18,14 @@ build --features=external_include_paths
 # Set the default compiler to the `clang` binary on the `PATH`.
 build:generic_clang --repo_env=CC=clang
 
+# C++17 standard version is required.
+build:generic_clang --cxxopt=-std=c++17
+build:generic_clang --host_cxxopt=-std=c++17
+
+
 # C++ 17
-build --cxxopt=-std=c++17
-build --host_cxxopt=-std=c++17
+build:msvc --cxxopt=/std:c++17
+build:msvc --host_cxxopt=/std:c++17
 
 # Other MSVC specific config
 build:msvc --copt=/w
@@ -20,6 +33,8 @@ build:msvc --cxxopt=/w
 build:msvc --host_copt=/w
 build:msvc --host_cxxopt=/w
 
+# build:msvc --copt=/WX --host_copt=/WX    # Treat warnings as errors...
+# ...but disable the ones that are violated
 build:msvc --copt=/wd4141 --host_copt=/wd4141 # inline used more than once
 build:msvc --copt=/wd4244 --host_copt=/wd4244 # conversion type -> type
 build:msvc --copt=/wd4267 --host_copt=/wd4267 # conversion size_t -> type
@@ -38,6 +53,12 @@ build:msvc --copt=/wd4805 --host_copt=/wd4805 # comparisons between bool and int
 build:release --copt=-DNDEBUG
 build:release --copt=-Os 
 build:release --copt=-fno-unroll-loops
+# RTTI used in config, so cannot be disabled at this point
+# build:release --copt=-fno-rtti
+# build:release --copt=-mllvm 
+# # build:release --copt=-inline-threshold=n
+# # build:release --copt=-flto
+# # build:release --copt=-flto=thin
 
 build:debug -c dbg
 build:debug --copt=-g 
@@ -51,6 +72,8 @@ build:debug --apple_enable_auto_dsym_dbg
 build:debug --apple_generate_dsym 
 
 # ## SEE https://github.com/RobotLocomotion/drake/tree/master/tools/dynamic_analysis
+
+
 
 # To manually set the target CPU, use
 # build --apple_platform_type=macos
