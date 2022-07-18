@@ -4,6 +4,7 @@ Target definitions to enable stricter C++ stanard for internal libraries
 
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
+
 _CLANG_ADDITIONAL_COPTS = [
     "-Wall",
     "-Wextra",
@@ -21,7 +22,7 @@ def ms_cc_library(**kwargs):
     name = kwargs["name"]
     kwargs.pop("name")
     copts = kwargs.get("copts", []) + select({
-        "@bazel_tools//src/conditions:windows_msvc": [],
+        "@bazel_tools//src/conditions:windows": [],        
         "//conditions:default": _CLANG_ADDITIONAL_COPTS,
     })
 
@@ -44,7 +45,7 @@ def ms_cc_binary(**kwargs):
     name = kwargs["name"]
     kwargs.pop("name")
     copts = kwargs.get("copts", []) + select({
-        "@bazel_tools//src/conditions:windows_msvc": [],
+        "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": _CLANG_ADDITIONAL_COPTS,
     })
 
