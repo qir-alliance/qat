@@ -4,6 +4,7 @@
 
 #include "qir/qat/Generators/ProfileGenerator.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/TestTools/TestVm.hpp"
 
 #include <unordered_set>
 #include <vector>
@@ -19,6 +20,7 @@ class IrManipulationTestHelper
     using LLVMContext       = llvm::LLVMContext;
     using SMDiagnostic      = llvm::SMDiagnostic;
     using Module            = llvm::Module;
+    using ContextPtr        = std::unique_ptr<LLVMContext>;
     using ModulePtr         = std::unique_ptr<Module>;
     using OptimizationLevel = llvm::OptimizationLevel;
     using GeneratorPtr      = std::shared_ptr<ProfileGenerator>;
@@ -41,6 +43,8 @@ class IrManipulationTestHelper
 
     /// Generates a list of instructions for the main function in the module.
     Strings toBodyInstructions();
+
+    TestProgram toProgram();
 
     // Test functions
     //
@@ -151,7 +155,7 @@ class IrManipulationTestHelper
     bool compilation_failed_{false};
 
     /// The LLVM context.
-    LLVMContext context_;
+    ContextPtr context_;
 
     /// Pointer to the module obtained from the compilation process.
     ModulePtr module_;

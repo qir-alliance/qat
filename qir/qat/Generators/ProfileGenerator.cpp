@@ -35,9 +35,12 @@ std::shared_ptr<Profile> ProfileGenerator::newProfile(
     auto qubit_allocation_manager  = BasicAllocationManager::createNew();
     auto result_allocation_manager = BasicAllocationManager::createNew();
 
-    auto cfg = configuration_manager_.get<TransformationRulesPassConfiguration>();
-    qubit_allocation_manager->setReuseRegisters(cfg.shouldReuseQubits());
-    result_allocation_manager->setReuseRegisters(cfg.shouldReuseResults());
+    if (configuration_manager_.has<TransformationRulesPassConfiguration>())
+    {
+        auto cfg = configuration_manager_.get<TransformationRulesPassConfiguration>();
+        qubit_allocation_manager->setReuseRegisters(cfg.shouldReuseQubits());
+        result_allocation_manager->setReuseRegisters(cfg.shouldReuseResults());
+    }
 
     // Creating profile
     // TODO(issue-12): Set target machine
