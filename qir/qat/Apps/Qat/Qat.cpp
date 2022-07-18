@@ -229,9 +229,9 @@ int main(int argc, char** argv)
         }
 
         // Shows help if needed
-        if(config.showHelp())
+        if (config.showHelp())
         {
-            configuration_manager.printHelp(config.isExperimental());            
+            configuration_manager.printHelp(config.isExperimental());
         }
 
         // Returns from program if no input files were provided

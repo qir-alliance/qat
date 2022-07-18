@@ -90,7 +90,7 @@ inline void configureDefaultProfile(ConfigurationManager& configuration_manager)
     configuration_manager.updateParameter("requires-qubits", true);
     configuration_manager.updateParameter("requires-results", true);
     configuration_manager.updateParameter("allow-poison", false);
-    configuration_manager.updateParameter("allow-undef", false);    
+    configuration_manager.updateParameter("allow-undef", false);
 }
 
 inline void configureProvider4bf9Profile(ConfigurationManager& configuration_manager)
@@ -102,7 +102,7 @@ inline void configureProvider4bf9Profile(ConfigurationManager& configuration_man
 
     // Transformation
     configuration_manager.disableSectionById("grouping");
-    
+
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
     configuration_manager.updateParameter("S", false);
@@ -170,7 +170,6 @@ inline void configureProvider4bf9Profile(ConfigurationManager& configuration_man
     configuration_manager.updateParameter("requires-results", true);
     configuration_manager.updateParameter("allow-poison", false);
     configuration_manager.updateParameter("allow-undef", false);
-
 }
 
 inline void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
@@ -249,7 +248,6 @@ inline void configureProvider7ee0Profile(ConfigurationManager& configuration_man
     configuration_manager.updateParameter("requires-results", true);
     configuration_manager.updateParameter("allow-poison", false);
     configuration_manager.updateParameter("allow-undef", false);
-
 }
 
 inline void configureProviderb340Profile(ConfigurationManager& configuration_manager)
@@ -279,7 +277,7 @@ inline void configureProviderb340Profile(ConfigurationManager& configuration_man
     configuration_manager.updateParameter("optimize-result-comparison", true);
     configuration_manager.updateParameter("use-static-qubit-array-allocation", true);
     configuration_manager.updateParameter("use-static-qubit-allocation", true);
-    configuration_manager.updateParameter("use-static-result-allocation", true);    
+    configuration_manager.updateParameter("use-static-result-allocation", true);
     configuration_manager.updateParameter("disable-reference-counting", true);
     configuration_manager.updateParameter("disable-alias-counting", true);
     configuration_manager.updateParameter("disable-string-support", true);

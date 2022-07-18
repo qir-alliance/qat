@@ -75,6 +75,7 @@ class QatConfig
 
     /// Whether or not to show help page.
     bool showHelp() const;
+
   private:
     // Variables to be bound to the configuration manager
     //

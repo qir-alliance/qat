@@ -128,9 +128,9 @@ String const& QatConfig::saveReportTo() const
     return save_report_to_;
 }
 
-    bool QatConfig::showHelp() const
-    {
-        return show_help_;
-    }
+bool QatConfig::showHelp() const
+{
+    return show_help_;
+}
 
 } // namespace microsoft::quantum

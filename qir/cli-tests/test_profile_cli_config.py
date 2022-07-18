@@ -21,7 +21,7 @@ TESTS = {
         "--no-allow-internal-calls",
         "--use-static-result-allocation",
         "--use-static-qubit-allocation",
-        "--use-static-qubit-array-allocation",        
+        "--use-static-qubit-array-allocation",
     ],
     "provider_7ee0": [
         "--apply",
