@@ -36,7 +36,6 @@ Checks: "-*,bugprone-*,\
   modernize-use-override,\
   modernize-use-transparent-functors,\
   misc-*,\
-  -misc-misplaced-widening-cast,\
   -misc-no-recursion,\
   performance-*"
 
