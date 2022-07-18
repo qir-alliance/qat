@@ -48,7 +48,8 @@ Additionally to CMake, you will also require Clang in order to build on Ubuntu
 20.04. You can accomplish this by following the steps below:
 
 ```sh
-apt install clang-11 cmake
+wget -O - https://apt.llvm.org/llvm.sh | bash -s 13
+apt install cmake
 ```
 
 You can skip straight to [Library Dependencies](#library-dependencies) if you do
@@ -78,18 +79,18 @@ Installing the Clang tools on Ubuntu along with Python can be accomplished by
 running these commands:
 
 ```sh
-apt install clang-format-11 clang-tidy-11
+apt install clang-format-13 clang-tidy-13
 apt install python3 python3-pip
 ```
 
-We recommend that you use version 11 of Clang in order to be consistent with the
+We recommend that you use version 13 of Clang in order to be consistent with the
 version of LLVM on which the library depends. In general, the code should work
 with any version of clang. Make sure that the compiler environment variables are
 defined correctly in order to select the correct version:
 
 ```sh
-export CC=clang-11
-export CXX=clang++-11
+export CC=clang-13
+export CXX=clang++-13
 ```
 
 ### Common to all platforms
@@ -128,7 +129,7 @@ For the installation of LLVM from Ubuntu we use the package manager `apt`. For
 full run installation, run the following command:
 
 ```sh
-apt install  llvm-11 lldb-11 llvm-11-dev libllvm11 llvm-11-runtime
+apt install llvm-13 lldb-13 llvm-13-dev libllvm13 llvm-13-runtime
 ```
 
 By doing this, we will ensure that CMake can find LLVM and that all headers and
@@ -140,6 +141,7 @@ From the root folder in the repository, create a build folder `Debug` and use
 CMake to build the executable:
 
 ```sh
+mkdir Debug
 cd Debug
 cmake ..
 make qat
