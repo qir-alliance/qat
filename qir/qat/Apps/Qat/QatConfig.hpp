@@ -73,6 +73,9 @@ class QatConfig
     /// Whether or not to strip existing debug info.
     bool stripExistingDebugInfo() const;
 
+    /// Whether or not to show help page.
+    bool showHelp() const;
+
   private:
     // Variables to be bound to the configuration manager
     //
@@ -95,5 +98,6 @@ class QatConfig
     bool debug_{false};
     bool experimental_{false};
     bool dump_config_{false};
+    bool show_help_{false};
 };
 } // namespace microsoft::quantum

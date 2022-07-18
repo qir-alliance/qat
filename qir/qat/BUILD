@@ -327,7 +327,10 @@ cc_library(
 
 cc_binary(
     name = "qat",
-    srcs = ["Apps/Qat/Qat.cpp"],
+    srcs = [
+        "Apps/Qat/ProfileConfiguration.hpp",
+        "Apps/Qat/Qat.cpp",
+    ],
     visibility = [
         "//visibility:public",
     ],

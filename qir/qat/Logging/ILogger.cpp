@@ -103,14 +103,14 @@ void ILogger::errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr)
     errorWithLocation("Function inlining exceeded maximum recursion depth of " + std::to_string(n), ptr);
 }
 
-void ILogger::errorNoQubitsPresent(llvm::Value* ptr)
+void ILogger::errorNoQubitsPresent(llvm::Value* ptr, String const& name)
 {
-    errorWithLocation("No qubits present in function (required by profile).", ptr);
+    errorWithLocation("No qubits present in function (required by profile '" + name + "').", ptr);
 }
 
-void ILogger::errorNoResultsPresent(llvm::Value* ptr)
+void ILogger::errorNoResultsPresent(llvm::Value* ptr, String const& name)
 {
-    errorWithLocation("No results present in function (required by profile).", ptr);
+    errorWithLocation("No results present in function (required by profile '" + name + "').", ptr);
 }
 
 void ILogger::errorOpcodeNotAllowed(String const& code, String const& profile_name, llvm::Value* ptr)

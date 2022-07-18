@@ -57,6 +57,9 @@ class IConfigBind
     /// Pointer to underlying data.
     virtual void* pointer() const = 0;
 
+    /// Pointer to underlying default value.
+    virtual void* pointerDefaultValue() = 0;
+
     /// Type index of contained data
     virtual std::type_index valueType() const = 0;
 

@@ -21,7 +21,8 @@ class GroupingPassConfiguration
     {
         config.setSectionName("Grouping quantum instructions", "");
         config.addExperimentalParameter(
-            circuit_separation_, "separate-circuits", "Whether or not to separate quantum and classical circuits");
+            circuit_separation_, true, false, "separate-circuits",
+            "Whether or not to separate quantum and classical circuits");
     }
 
     static GroupingPassConfiguration createDisabled()
