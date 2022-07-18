@@ -11,9 +11,9 @@ logger = logging.getLogger(__name__)
 def validate_circuit(name, profile, filename, args=[], output_file=None):
 
     qat_binary = os.environ.get("QAT_BINARY")
-    logger.debug("TEST")
+    cmd = [qat_binary, "-S"] + args + ["--profile", profile, filename]
     p = subprocess.Popen(
-        [qat_binary, "-S"] + args + ["--profile", profile, filename],
+        cmd,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
@@ -35,6 +35,7 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
 
     if not ret:
         print("Processed file:", filename)
+        print("Command:", " ".join(cmd))
         if not os.path.exists(filename):
             print("File does not exists: {}".format(filename))
         else:
@@ -75,8 +76,9 @@ def test_target1(test_name, request):
             test_name,
             "provider_7ee0",
             project.qir_filename,
-            ["--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"],
+            ["--no-requires-results", "--no-requires-qubits", "--disable-record-output-support", "--validate", "--apply"],
         )
+# "-O3", "--unroll-loops", "--always-inline",
 
 
 @pytest.mark.parametrize("test_name", target3_tests)
@@ -87,7 +89,7 @@ def test_target3(test_name, request):
             test_name,
             "provider_4bf9",
             project.qir_filename,
-            ["--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"],
+            ["--no-requires-results", "--no-requires-qubits",  "--disable-record-output-support", "--validate", "--apply"],
         )
 
 
@@ -101,9 +103,7 @@ def test_target4(test_name, request):
             project.qir_filename,
             [
                 "--validate",
-                "-O3",
-                "--unroll-loops",
-                "--always-inline",
+                "--no-requires-results", "--no-requires-qubits", "--disable-record-output-support",
                 "--disable-grouping",
                 "--replace-qubit-on-reset",
                 "--reindex-qubits",
