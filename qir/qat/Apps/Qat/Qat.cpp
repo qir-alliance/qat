@@ -145,7 +145,7 @@ int main(int argc, char** argv)
 
         if(config.showVersion())
         {
-            llvm::errs() << "v. "  << microsoft::quantum::version::FULL << "\n";
+            llvm::errs() << "v. "  << microsoft::quantum::version::FULL << "\n\n";
             exit(0);
         }
 
