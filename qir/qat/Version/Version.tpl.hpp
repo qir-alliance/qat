@@ -18,6 +18,6 @@ constexpr bool const        WORK_IN_PROGRESS = $is_dirty;
 constexpr bool const        VALID            = true;
 }
 
-void displayCliHeader();
+void displayCliHeader(bool extended_info=false);
 
 }  // namespace microsoft::quantum

@@ -21,7 +21,6 @@ genrule(
   tools = ["//qir/qat:VersionBuilder", "//qir/qat:WorkspaceVariables"],
 )
 
-
 cc_library(
     name="Version",
     hdrs=["Version/Version.hpp"],
