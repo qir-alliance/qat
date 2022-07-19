@@ -20,11 +20,6 @@ def get_full_version(
     return full
 
 
-# there appears to be half a dozen different mecnanisms for generating and obtaining the version
-# in terms of the docker build this is very expensive because it means that the whole .git/ archive
-# needs to be included in the build - simply to generate this version number. This also seems out of
-# step because the containers themselves are versioned. We need to raise an issue to investigate and
-# work out a better solution to this problem
 def main():
     print("STABLE_GIT_COMMIT_HASH unknown")
     print("STABLE_GIT_DIRTY 1")
@@ -36,23 +31,6 @@ def main():
     print("STABLE_FULL_VERSION unknown")
 
 
-def main2():
-    git_hash = get_git_hash(".")
-    git_is_dirty = is_git_dirty(".")
-    version = get_version(".")
-    version.update({"commit_hash": git_hash, "is_dirty": git_is_dirty})
-    version["full_version"] = get_full_version(**version)
-
-    print("STABLE_GIT_COMMIT_HASH {}".format(git_hash))
-    print("STABLE_GIT_DIRTY {}".format("1" if git_is_dirty else "0"))
-    print("STABLE_GIT_MAJOR {major}".format(**version))
-    print("STABLE_GIT_MINOR {minor}".format(**version))
-    print("STABLE_GIT_REVISION {revision}".format(**version))
-    print("STABLE_GIT_CHANNEL {channel}".format(**version))
-    print("STABLE_GIT_PATCH {patch}".format(**version))
-    print("STABLE_FULL_VERSION {full_version}".format(**version))
-
-    print("STABLE_DUMMY A")
 
 
 def get_git_hash(path):
