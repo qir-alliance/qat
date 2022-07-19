@@ -21,15 +21,20 @@ def get_full_version(
 
 
 def main():
-    print("STABLE_GIT_COMMIT_HASH unknown")
-    print("STABLE_GIT_DIRTY 1")
-    print("STABLE_GIT_MAJOR 0")
-    print("STABLE_GIT_MINOR 0")
-    print("STABLE_GIT_REVISION 0")
-    print("STABLE_GIT_CHANNEL release")
-    print("STABLE_GIT_PATCH 0")
-    print("STABLE_FULL_VERSION unknown")
+  git_hash = get_git_hash(".")
+  git_is_dirty = is_git_dirty(".")
+  version = get_version(".")
+  version.update({"commit_hash": git_hash, "is_dirty": git_is_dirty})
+  version["full_version"] = get_full_version(**version)
 
+  print("STABLE_GIT_COMMIT_HASH {}".format(git_hash))
+  print("STABLE_GIT_DIRTY {}".format("1" if git_is_dirty else "0"))
+  print("STABLE_GIT_MAJOR {major}".format(**version))
+  print("STABLE_GIT_MINOR {minor}".format(**version))
+  print("STABLE_GIT_REVISION {revision}".format(**version))
+  print("STABLE_GIT_CHANNEL {channel}".format(**version))
+  print("STABLE_GIT_PATCH {patch}".format(**version))
+  print("STABLE_FULL_VERSION {full_version}".format(**version))
 
 
 
