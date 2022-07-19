@@ -6,12 +6,11 @@ import sys
 def get_full_version(
     major, minor, revision, channel, patch, commit_hash, is_dirty, **kwargs
 ):
-    # TODO: Replicated code from version-lib-generator
     full = "%s.%s.%s" % (major, minor, revision)
     if channel != "release":
         full += "-%s" % channel
 
-    if patch != "0":
+    if str(patch) != "0":
         full += "-patch-%s-%s" % (patch, commit_hash[:10])
 
     if is_dirty:
@@ -56,11 +55,11 @@ def is_git_dirty(path):
 
 def get_version(path):
     ret = {
-        "major": 0,
-        "minor": 0,
-        "revision": 0,
+        "major": "0",
+        "minor": "0",
+        "revision": "0",
         "channel": "release",
-        "patch": 0,
+        "patch": "0",
         "build": "unkown",
     }
 

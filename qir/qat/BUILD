@@ -392,5 +392,6 @@ cc_binary(
         "//qir/qat:TransformationRulesPass",
         "//qir/qat:ValidationPass",
         "//qir/qat:Validator",
+        "//qir/qat:Version",        
     ],
 )

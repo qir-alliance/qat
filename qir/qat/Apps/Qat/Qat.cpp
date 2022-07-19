@@ -61,6 +61,7 @@
 #include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 #include "qir/qat/Validator/Validator.hpp"
+#include "qir/qat/Version/Version.hpp"
 
 #ifndef _WIN32
 #include <dlfcn.h>
@@ -141,6 +142,12 @@ int main(int argc, char** argv)
 
         // Getting the main configuration
         auto config = configuration_manager.get<QatConfig>();
+
+        if(config.showVersion())
+        {
+            llvm::errs() << "v. "  << microsoft::quantum::version::FULL << "\n";
+            exit(0);
+        }
 
         // Setting profile validation configuration
         configuration_manager.addConfig<ValidationPassConfiguration>(
