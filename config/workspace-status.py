@@ -64,7 +64,7 @@ def get_version(path):
     }
 
     pattern = re.compile(
-        r"(v\.? ?)?(?P<major>\d+)(\.(?P<minor>\d\d?))(\.(?P<revision>\d\d?))?(\-(?P<channel>\w[\w\d]+))?(\-(?P<patch>\d+)\-(?P<build>[\w\d]{10}))?"
+        r"(v\.? ?)?(?P<major>\d+)(\.(?P<minor>\d\d?))(\.(?P<revision>\d\d?))?(\-(?P<channel>\w[\w\d]+))?(\-(?P<patch>\d+)\-(?P<build>[\w\d]{2,64}))?"
     )
     p = subprocess.Popen(
         ["git", "describe"], cwd=path, stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -82,12 +82,13 @@ def get_version(path):
     m = pattern.search(out)
     if m:
         ret["channel"] = "release"
+        print(m.groupdict())
         ret.update(m.groupdict())
         if ret["patch"] is None:
-            ret["patch"] = 0
+            ret["patch"] = "0"
         if ret["channel"] is None:
             ret["channel"] = "release"
-
+    print(ret)
     return ret
 
 
