@@ -57,7 +57,7 @@ similar mechanism that allows to activate or deactivate existing (and new) LLVM
 passes. We would thus need something like
 
 ```sh
-qat --always-inline --apply -S filename.ll
+qat --always-inline --profile base --apply -S filename.ll
 ```
 
 where `--apply` tells the tool to apply the profile and `-S` tells the tool to
@@ -65,7 +65,7 @@ emit human readable LLVM IR code. Furthermore, if the inline pass is provided as
 an external module, we would need to be able load it
 
 ```sh
-qat --always-inline --load path/to/lib.(dylib|so|dll) --apply -S filename.ll
+qat --always-inline --profile base --load path/to/lib.(dylib|so|dll) --apply -S filename.ll
 ```
 
 We note that from a developer point of view, the underlying code would also need
@@ -118,4 +118,101 @@ needs while benefiting from the components that QAT ships with.
 
 ## Architecture description
 
-TODO(issue-9): Yet to be written
+On a high level, the process of the IRs can be divided into three main tasks: 1)
+Loading the QIR, 2) creating a generator and validator and 3) transform and
+validate the QIR. We summarize this process in the diagram below, listing the
+components and settings used in the process and how they feed into one and
+another:
+
+```text
+┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+                         User input
+└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┬ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+┌─────────────────────────────▼─────────────────────────────┐
+│            Configuration and parameter parser             │
+└─────────────┬───────────────────────────────┬─────────────┘
+┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
+│        IR file list       │   │      Profile config       │
+└─────────────┬─────────────┘   └─────────────┬─────────────┘
+┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
+│       Module loader       │   │     Profile Generator     │
+└─────────────┬─────────────┘   └─────────────┬─────────────┘
+┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
+│       Single module       │   │          Profile          │
+│      transformations      │   └──────┬──────────────┬─────┘
+└─────────────┬─────────────┘   ┌──────▼─────┐ ┌──────▼─────┐
+┌─────────────▼─────────────┐   │            │ │            │
+│   Adding debug symbols    ├───▶ Generation ├─┼▶Validation ├─────┐
+└───────────────────────────┘   │            │ │            │     │
+                                └──────┬─────┘ └──────┬─────┘     │
+                                ┌──────▼──────────────▼─────┐     │
+                                │          Logger           │     │
+                                └───────────────────────────┘     │
+                                              │                   │
+                                              ▼                   ▼
+                                     ┌ ─ ─ ─ ─ ─ ─ ─ ─ ┐┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+                                       Standard error     Standard Output:
+                                     │    or file:     ││   Resulting IR    │
+                                          JSON Logs
+                                     └ ─ ─ ─ ─ ─ ─ ─ ─ ┘└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+```
+
+The profile consists of a generator and a validator. The generator is
+responsible for performing as many transformations as possible to get the
+original QIR to be compliant with the selected profile. This is done by each of
+the components taking a configuration which then installs LLVM passes to execute
+said transactions. This is illustrated on the left hand-side in the following
+figure whereas the pass execution is illustrated on the right hand-side:
+
+```text
+                                                    ┌ ─ ─ ─ ─ ─ ─ ─ ┐
+                                                       LLVM module
+┌───┐                                               └ ─ ─ ─│─ ─ ─ ─ ┘
+│   │                                                      │ Apply profile
+│ C │                                                      │ process
+│ o │                                     ┌ Generator ─ ─ ─│─ ─ ─ ─ ─
+│ n │If                                            ┌───────▼───────┐ │
+│ f │component                     Install│        │  Inline pass  │
+│ i │active:  ┌───────────────────┐passes   ┌───┐  └───────┬───────┘ │
+│ g ├─────────▶    LLVM passes    │───────┼─▶   │  ┌───────▼───────┐
+│ u │         └───────────────────┘         │   │  │  Unroll pass  │ │
+│ r │                                     │ │ P │  └───────┬───────┘
+│ a │         ┌───────────────────┐         │ a │  ┌───────▼───────┐ │
+│ t ├─────────▶  Transformation   │───────┼─▶ s │  │Transform pass │
+│ i │         └───────────────────┘         │ s │  └───────┬───────┘ │
+│ o │                                     │ │   │  ┌───────▼───────┐
+│ n │         ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐         │ m │  │  Inline pass  │ │
+│   ├─────────▶    LLVM passes     ───────┼─▶ a │  └───────┬───────┘
+│ m │         └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘         │ n │  ┌───────▼───────┐ │
+│ a │                                     │ │ a │  │   Fold pass   │
+│ n │         ┌───────────────────┐         │ g │  └───────┬───────┘ │
+│ a ├─────────▶     Grouping      │───────┼─▶ e │  ┌───────▼───────┐
+│ g │         └───────────────────┘         │ r │  │  Group pass   │ │
+│ e │                                     │ │ s │  └───────┬───────┘
+│ r │                                       │   │          │         │
+│   │                                     │ │   │          │
+└───┘                                       └───┘          │         │
+                                          └ ─ ─ ─ ─ ─ ─ ─ ─│─ ─ ─ ─ ─
+                                                           │
+                                                   ┌ ─ ─ ─ ▼ ─ ─ ─ ┐
+                                                     Output module
+                                                   └ ─ ─ ─ ─ ─ ─ ─ ┘
+```
+
+For each component available, QAT checks if the component is active and if it
+is, the components setup function is ran with its configuration class. This
+class can be configured from the command line or through the profile. We note
+that the figure does not contain a comprehensive list of passes that can be
+installed. Whether or not any of the listed passes is added to the pass managers
+is happening at the discretion of each of the components and is further subject
+to the configuration provided to these components. This means that depending on
+the profile configuration, the pass may perform one task or another. This is in
+particular true for the transformation pass which uses a set of rules to perform
+replacements in the IR.
+
+The transformation component is a highly configurable component that does
+replacements of pieces of the DAG in the IR with using a custom replacer
+function. The infrastructure is written such that it is possible to express a
+new pattern in just a couple of lines and the developer can focus on the
+replacement routine rather than the task of capturing the right segment of
+instructions.

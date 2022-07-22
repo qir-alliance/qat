@@ -65,18 +65,17 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
 
     ir_manip->applyProfile(profile);
 
-    EXPECT_TRUE(ir_manip->hasInstructionSequence({
-        "%result1 = inttoptr i64 0 to %Result*",
-        "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result1)",
-        "%result2 = inttoptr i64 1 to %Result*",
-        "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result2)",
-        "%result3 = inttoptr i64 2 to %Result*",
-        "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result3)",
-        "%result4 = inttoptr i64 3 to %Result*",
-        "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result4)",
-        "%result5 = inttoptr i64 4 to %Result*",
-        "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result5)",
-    }));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence(
+        {"%result1 = inttoptr i64 0 to %Result*",
+         "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result1)",
+         "%result2 = inttoptr i64 1 to %Result*",
+         "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result2)",
+         "%result3 = inttoptr i64 2 to %Result*",
+         "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result3)",
+         "%result4 = inttoptr i64 3 to %Result*",
+         "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result4)",
+         "%result5 = inttoptr i64 4 to %Result*",
+         "call void @__quantum__qis__mz__body(%Qubit* null, %Result* %result5)"}));
 
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({

@@ -47,23 +47,30 @@ version and on different platforms, it is recommended that you use a Docker
 image to perform these steps. TODO(issue-10): The Docker image is not added yet
 and this will be documented in the future.
 
+## Style checking using Docker
+
+In some cases it is not possible to replicate the necessary toolchain to perform
+style checks on the code. To address this, this repository is equipped with a
+Docker image that allows the developer to run the CI script:
+
+```sh
+make linux-ci
+```
+
+as well as automatically fix style issues where possible:
+
+```sh
+make format-in-docker
+```
+
+The latter command will mount the current source directory inside docker and use
+the Ubuntu image to run the style check. This image was created with the version
+of the tool that is officially supported by the maintainers.
+
 ## Running tests
 
 In order to run the tests, you first need to build the library. Assuming that
-this is already done and the corresponding build is in `Debug/`, run the tests
-from the `Debug` folder:
-
-```sh
-lit tests/ -v
--- Testing: 2 tests, 2 workers --
-PASS: Quantum-Passes :: QirAllocationAnalysis/case1.ll (1 of 2)
-PASS: Quantum-Passes :: QirAllocationAnalysis/case2.ll (2 of 2)
-
-Testing Time: 0.27s
-  Passed: 2
-```
-
-The C++ test suite can also be ran from the debug by first building all targets:
+this is already done and the corresponding build is in `Debug/`:
 
 ```sh
 cmake ..
