@@ -19,7 +19,6 @@ function (generate_version_header)
 
 
     # cmake regex processing to extract all meaningful elements
-    set(MATCH_EXPRESSION "(v\\.? ?)?([[0-9]+])(\\.([0-9][0-9]?))(\\.([0-9][0-9]?))?")
     if(version_core)        
         string(REGEX
                REPLACE "v\\.?[ ]?([0-9]+)\\..*"
@@ -36,69 +35,78 @@ function (generate_version_header)
                        "\\1"
                        MICROSOFT_VERSION_REVISION
                        "${version_core}")
+
+
+        string(REGEX
+               REPLACE ".*\\-(wip)"
+                       "\\1"
+                       MICROSOFT_VERSION_WIP_MATCH
+                       "${version_details}")
+
+        if(MICROSOFT_VERSION_WIP_MATCH STREQUAL "wip")
+            set(MICROSOFT_VERSION_WIP "true")
+            string(REGEX
+                   REPLACE "(.*)\\-wip"
+                           "\\1"
+                           version_details
+                           "${version_details}")     
+
+
+        string(REGEX
+               REPLACE  ".*\\-g([a-zA-Z0-9]+)"
+                       "\\1"
+                       MICROSOFT_VERSION_COMMIT
+                       "${version_details}")
+        string(REGEX
+               REPLACE "(.*)\\-g[a-zA-Z0-9]+"
+                       "\\1"
+                       version_details
+                       "${version_details}")        
+
+        set(MICROSOFT_VERSION_PATCH "")
+        if(version_details)    
+            string(REGEX
+                   REPLACE ".*\\-([0-9]+)"
+                           "\\1"
+                           MICROSOFT_VERSION_PATCH
+                           "${version_details}")
+            string(REGEX
+                   REPLACE "(.*)\\-[0-9]+"
+                           "\\1"
+                           version_details
+                           "${version_details}") 
+        endif()
+
+
+        set(MICROSOFT_VERSION_CHANNEL "release")
+        if(version_details)    
+            string(REGEX
+                   REPLACE ".*\\-([a-zA-Z0-9]+)"
+                           "\\1"
+                           MICROSOFT_VERSION_CHANNEL
+                           "${version_details}")
+            string(REGEX
+                   REPLACE "(.*)\\-[a-zA-Z0-9]+"
+                           "\\1"
+                           version_details
+                           "${version_details}")             
+        endif()
+
+
+   
+        else()
+            set(MICROSOFT_VERSION_WIP "false")
+        endif()
+
     else()
         set(MICROSOFT_VERSION_MAJOR "0")
         set(MICROSOFT_VERSION_MINOR "0")
         set(MICROSOFT_VERSION_REVISION "0")
+        set(MICROSOFT_VERSION_PATCH "0")
+        set(MICROSOFT_VERSION_CHANNEL "release")
+        set(MICROSOFT_VERSION_COMMIT MICROSOFT_VERSION_FULL)
+        set(MICROSOFT_VERSION_WIP "false")        
     endif()                               
-
-
-    string(REGEX
-           REPLACE ".*\\-(wip)"
-                   "\\1"
-                   MICROSOFT_VERSION_WIP_MATCH
-                   "${version_details}")
-
-    if(MICROSOFT_VERSION_WIP_MATCH STREQUAL "wip")
-        set(MICROSOFT_VERSION_WIP "true")
-        string(REGEX
-               REPLACE "(.*)\\-wip"
-                       "\\1"
-                       version_details
-                       "${version_details}")        
-    else()
-        set(MICROSOFT_VERSION_WIP "false")
-    endif()
-
-    string(REGEX
-           REPLACE  ".*\\-g([a-zA-Z0-9]+)"
-                   "\\1"
-                   MICROSOFT_VERSION_COMMIT
-                   "${version_details}")
-    string(REGEX
-           REPLACE "(.*)\\-g[a-zA-Z0-9]+"
-                   "\\1"
-                   version_details
-                   "${version_details}")        
-
-    set(MICROSOFT_VERSION_PATCH "")
-    if(version_details)    
-        string(REGEX
-               REPLACE ".*\\-([0-9]+)"
-                       "\\1"
-                       MICROSOFT_VERSION_PATCH
-                       "${version_details}")
-        string(REGEX
-               REPLACE "(.*)\\-[0-9]+"
-                       "\\1"
-                       version_details
-                       "${version_details}") 
-    endif()
-
-
-    set(MICROSOFT_VERSION_CHANNEL "release")
-    if(version_details)    
-        string(REGEX
-               REPLACE ".*\\-([a-zA-Z0-9]+)"
-                       "\\1"
-                       MICROSOFT_VERSION_CHANNEL
-                       "${version_details}")
-        string(REGEX
-               REPLACE "(.*)\\-[a-zA-Z0-9]+"
-                       "\\1"
-                       version_details
-                       "${version_details}")             
-    endif()
 
     set(MICROSOFT_VERSION_FULL "${MICROSOFT_VERSION_MAJOR}.${MICROSOFT_VERSION_MINOR}.${MICROSOFT_VERSION_REVISION}")
 
