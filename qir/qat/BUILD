@@ -1,37 +1,41 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+load("@rules_python//python:defs.bzl", "py_binary")
 
 genrule(
-  name = "WorkspaceVariables",
-  outs = ["workspace.txt"],
-  cmd = "cp bazel-out/stable-status.txt $@",
-  stamp = 1,
+    name = "WorkspaceVariables",
+    outs = ["workspace.txt"],
+    cmd = "cp bazel-out/stable-status.txt $@",
+    stamp = 1,
 )
 
 py_binary(
-  name = "VersionBuilder",
-  srcs = ["Version/version_builder.py"],
-  main = "version_builder.py",
+    name = "VersionBuilder",
+    srcs = ["Version/version_builder.py"],
+    main = "version_builder.py",
 )
 
 genrule(
-  name = "VersionHeaderFile",
-  srcs = ["Version/Version.tpl.hpp"],
-  outs = ["Version/Version.hpp"],
-  cmd = "$(location //qir/qat:VersionBuilder) $(location //qir/qat:WorkspaceVariables) $(location Version/Version.tpl.hpp) $@",
-  tools = ["//qir/qat:VersionBuilder", "//qir/qat:WorkspaceVariables"],
+    name = "VersionHeaderFile",
+    srcs = ["Version/Version.tpl.hpp"],
+    outs = ["Version/Version.hpp"],
+    cmd = "$(location //qir/qat:VersionBuilder) $(location //qir/qat:WorkspaceVariables) $(location Version/Version.tpl.hpp) $@",
+    tools = [
+        "//qir/qat:VersionBuilder",
+        "//qir/qat:WorkspaceVariables",
+    ],
 )
 
 cc_library(
-    name="Version",
-    hdrs=["Version/Version.hpp"],
-    srcs=["Version/Version.cpp"],
+    name = "Version",
+    srcs = ["Version/Version.cpp"],
+    hdrs = ["Version/Version.hpp"],
     data = [
-    "//qir/qat:VersionHeaderFile"
-    ]
+        "//qir/qat:VersionHeaderFile",
+    ],
 )
 
 cc_binary(
-    name="VersionTool",
+    name = "VersionTool",
     srcs = ["Version/VersionTool.cpp"],
     visibility = [
         "//visibility:public",
@@ -40,7 +44,6 @@ cc_binary(
         "//qir/qat:Version",
     ],
 )
-
 
 cc_library(
     name = "Llvm",
@@ -392,6 +395,6 @@ cc_binary(
         "//qir/qat:TransformationRulesPass",
         "//qir/qat:ValidationPass",
         "//qir/qat:Validator",
-        "//qir/qat:Version",        
+        "//qir/qat:Version",
     ],
 )

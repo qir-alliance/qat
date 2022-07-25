@@ -143,9 +143,9 @@ int main(int argc, char** argv)
         // Getting the main configuration
         auto config = configuration_manager.get<QatConfig>();
 
-        if(config.showVersion())
+        if (config.showVersion())
         {
-            llvm::errs() << "v. "  << microsoft::quantum::version::FULL << "\n\n";
+            llvm::errs() << "v. " << microsoft::quantum::version::FULL << "\n\n";
             exit(0);
         }
 

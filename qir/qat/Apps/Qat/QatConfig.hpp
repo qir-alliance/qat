@@ -75,6 +75,7 @@ class QatConfig
 
     /// Whether or not to show the version of qat
     bool showVersion() const;
+
   private:
     // Variables to be bound to the configuration manager
     //

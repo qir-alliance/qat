@@ -35,7 +35,6 @@ void QatConfig::setup(ConfigurationManager& config)
 
     config.addParameter(save_report_to_, "save-logs", "Saves the logs report to specified filename in JSON format.");
     config.addParameter(show_version_, "version", "Shows the version of QAT.");
-
 }
 
 bool QatConfig::shouldGenerate() const
@@ -129,7 +128,7 @@ String const& QatConfig::saveReportTo() const
     return save_report_to_;
 }
 
-bool QatConfig::showVersion() const 
+bool QatConfig::showVersion() const
 {
     return show_version_;
 }

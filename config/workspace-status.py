@@ -20,21 +20,20 @@ def get_full_version(
 
 
 def main():
-  git_hash = get_git_hash(".")
-  git_is_dirty = is_git_dirty(".")
-  version = get_version(".")
-  version.update({"commit_hash": git_hash, "is_dirty": git_is_dirty})
-  version["full_version"] = get_full_version(**version)
+    git_hash = get_git_hash(".")
+    git_is_dirty = is_git_dirty(".")
+    version = get_version(".")
+    version.update({"commit_hash": git_hash, "is_dirty": git_is_dirty})
+    version["full_version"] = get_full_version(**version)
 
-  print("STABLE_GIT_COMMIT_HASH {}".format(git_hash))
-  print("STABLE_GIT_DIRTY {}".format("1" if git_is_dirty else "0"))
-  print("STABLE_GIT_MAJOR {major}".format(**version))
-  print("STABLE_GIT_MINOR {minor}".format(**version))
-  print("STABLE_GIT_REVISION {revision}".format(**version))
-  print("STABLE_GIT_CHANNEL {channel}".format(**version))
-  print("STABLE_GIT_PATCH {patch}".format(**version))
-  print("STABLE_FULL_VERSION {full_version}".format(**version))
-
+    print("STABLE_GIT_COMMIT_HASH {}".format(git_hash))
+    print("STABLE_GIT_DIRTY {}".format("1" if git_is_dirty else "0"))
+    print("STABLE_GIT_MAJOR {major}".format(**version))
+    print("STABLE_GIT_MINOR {minor}".format(**version))
+    print("STABLE_GIT_REVISION {revision}".format(**version))
+    print("STABLE_GIT_CHANNEL {channel}".format(**version))
+    print("STABLE_GIT_PATCH {patch}".format(**version))
+    print("STABLE_FULL_VERSION {full_version}".format(**version))
 
 
 def get_git_hash(path):
@@ -82,13 +81,13 @@ def get_version(path):
     m = pattern.search(out)
     if m:
         ret["channel"] = "release"
-        print(m.groupdict())
+
         ret.update(m.groupdict())
         if ret["patch"] is None:
             ret["patch"] = "0"
         if ret["channel"] is None:
             ret["channel"] = "release"
-    print(ret)
+
     return ret
 
 

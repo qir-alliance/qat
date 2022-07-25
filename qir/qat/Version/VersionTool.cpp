@@ -8,7 +8,7 @@
 
 int main()
 {
-  microsoft::quantum::displayCliHeader(true);
+    microsoft::quantum::displayCliHeader(true);
 
-  return 0;
+    return 0;
 }
