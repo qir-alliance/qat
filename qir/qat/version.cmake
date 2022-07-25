@@ -20,22 +20,27 @@ function (generate_version_header)
 
     # cmake regex processing to extract all meaningful elements
     set(MATCH_EXPRESSION "(v\\.? ?)?([[0-9]+])(\\.([0-9][0-9]?))(\\.([0-9][0-9]?))?")
-    string(REGEX
-           REPLACE "v\\.?[ ]?([0-9]+)\\..*"
-                   "\\1"
-                   MICROSOFT_VERSION_MAJOR
-                   "${version_core}")
-    string(REGEX
-           REPLACE "v\\.?[ ]?[0-9]+\\.([0-9]+)\\..*"
-                   "\\1"
-                   MICROSOFT_VERSION_MINOR
-                   "${version_core}")
-    string(REGEX
-           REPLACE "v\\.?[ ]?[0-9]+\\.[0-9]+\\.([0-9]+)"
-                   "\\1"
-                   MICROSOFT_VERSION_REVISION
-                   "${version_core}")
-
+    if(version_core)        
+        string(REGEX
+               REPLACE "v\\.?[ ]?([0-9]+)\\..*"
+                       "\\1"
+                       MICROSOFT_VERSION_MAJOR
+                       "${version_core}")
+        string(REGEX
+               REPLACE "v\\.?[ ]?[0-9]+\\.([0-9]+)\\..*"
+                       "\\1"
+                       MICROSOFT_VERSION_MINOR
+                       "${version_core}")
+        string(REGEX
+               REPLACE "v\\.?[ ]?[0-9]+\\.[0-9]+\\.([0-9]+)"
+                       "\\1"
+                       MICROSOFT_VERSION_REVISION
+                       "${version_core}")
+    else()
+        set(MICROSOFT_VERSION_MAJOR "0")
+        set(MICROSOFT_VERSION_MINOR "0")
+        set(MICROSOFT_VERSION_REVISION "0")
+    endif()                               
 
 
     string(REGEX
