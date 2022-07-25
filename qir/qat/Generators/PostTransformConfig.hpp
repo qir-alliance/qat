@@ -31,7 +31,7 @@ struct PostTransformConfig
         ret.simplify_cfg_pass_            = false;
         ret.lower_switch_                 = false;
         ret.should_eleminate_zext_i1_     = false;
-        ret.use_one_shot_measurements_     = false;
+        ret.use_one_shot_measurements_    = false;
 
         return ret;
     }

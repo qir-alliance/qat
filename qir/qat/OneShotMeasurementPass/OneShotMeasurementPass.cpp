@@ -5,8 +5,8 @@
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
-#include "qir/qat/QatTypes/QatTypes.hpp"
 #include "qir/qat/OneShotMeasurementPass/OneShotMeasurementPass.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
 #include <stdexcept>
