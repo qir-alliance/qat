@@ -10,6 +10,8 @@ microsoft_add_library_tests(TestTools Generators Logging GroupingPass)
 microsoft_add_library(Commandline)
 microsoft_add_library_tests(Commandline Logging GroupingPass)
 
+microsoft_add_library(Version)
+
 microsoft_add_library(Profile)
 microsoft_add_library_tests(Profile GroupingPass)
 

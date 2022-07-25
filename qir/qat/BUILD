@@ -36,7 +36,7 @@ cc_library(
 
 cc_binary(
     name = "VersionTool",
-    srcs = ["Version/VersionTool.cpp"],
+    srcs = ["Apps/VersionTool/VersionTool.cpp"],
     visibility = [
         "//visibility:public",
     ],
