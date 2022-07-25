@@ -71,10 +71,11 @@ struct PostTransformConfig
         return use_one_shot_measurements_;
     }
 
-    void setUseOneShotMeasurements(bool const&v)
+    void setUseOneShotMeasurements(bool const& v)
     {
         use_one_shot_measurements_ = v;
     }
+
   private:
     bool inst_combine_pass_{true};
     bool aggressive_inst_combine_pass_{true};
