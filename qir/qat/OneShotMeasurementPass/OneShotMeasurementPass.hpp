@@ -13,7 +13,7 @@
 namespace microsoft::quantum
 {
 
-class RecordPullBackPass : public llvm::PassInfoMixin<RecordPullBackPass>
+class OneShotMeasurementPass : public llvm::PassInfoMixin<OneShotMeasurementPass>
 {
   public:
     using Instruction = llvm::Instruction;
@@ -26,16 +26,16 @@ class RecordPullBackPass : public llvm::PassInfoMixin<RecordPullBackPass>
     // Construction and destruction configuration.
     //
 
-    RecordPullBackPass() noexcept;
+    OneShotMeasurementPass() noexcept;
 
     /// Copy construction is banned.
-    RecordPullBackPass(RecordPullBackPass const&) = delete;
+    OneShotMeasurementPass(OneShotMeasurementPass const&) = delete;
 
     /// We allow move semantics.
-    RecordPullBackPass(RecordPullBackPass&&) = default;
+    OneShotMeasurementPass(OneShotMeasurementPass&&) = default;
 
     /// Default destruction.
-    ~RecordPullBackPass() = default;
+    ~OneShotMeasurementPass() = default;
 
     llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& fam);
 

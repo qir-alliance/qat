@@ -11,7 +11,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPass.hpp"
 #include "qir/qat/PreTransformTrimming/PreTransformTrimmingPass.hpp"
-#include "qir/qat/RecordPullBackPass/RecordPullBackPass.hpp"
+#include "qir/qat/OneShotMeasurementPass/OneShotMeasurementPass.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 #include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
@@ -279,9 +279,9 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(ZExtTransformPass());
             }
 
-            if (cfg.shouldPullRecordsBack())
+            if (cfg.useOneShotMeasurements())
             {
-                fpm.addPass(RecordPullBackPass());
+                fpm.addPass(OneShotMeasurementPass());
             }
         });
 

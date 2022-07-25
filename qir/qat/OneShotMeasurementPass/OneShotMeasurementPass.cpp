@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/RecordPullBackPass/RecordPullBackPass.hpp"
+#include "qir/qat/OneShotMeasurementPass/OneShotMeasurementPass.hpp"
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
-#include "qir/qat/RecordPullBackPass/RecordPullBackPass.hpp"
+#include "qir/qat/OneShotMeasurementPass/OneShotMeasurementPass.hpp"
 
 #include <functional>
 #include <stdexcept>
@@ -16,13 +16,13 @@
 namespace microsoft::quantum
 {
 
-std::string const RecordPullBackPass::RECORD_INSTR_END = "_record_output";
-RecordPullBackPass::RecordPullBackPass() noexcept
+std::string const OneShotMeasurementPass::RECORD_INSTR_END = "_record_output";
+OneShotMeasurementPass::OneShotMeasurementPass() noexcept
   : readout_names_{{"__quantum__qis__m__body", "__quantum__qis__mz__body", "__quantum__qis__reset__body"}}
 {
 }
 
-llvm::PreservedAnalyses RecordPullBackPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
+llvm::PreservedAnalyses OneShotMeasurementPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
 {
 
     llvm::BasicBlock* last_block = nullptr;
@@ -81,7 +81,7 @@ llvm::PreservedAnalyses RecordPullBackPass::run(llvm::Function& function, llvm::
     return llvm::PreservedAnalyses::none();
 }
 
-bool RecordPullBackPass::isRequired()
+bool OneShotMeasurementPass::isRequired()
 {
     return true;
 }
