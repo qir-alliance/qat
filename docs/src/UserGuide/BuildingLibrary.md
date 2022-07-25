@@ -69,11 +69,11 @@ tools and packages are used:
 The installation process varies depending on the platform you use. The following
 subsections provide details on how to install these tools on each platform.
 
-### On macOS
+### Developing on macOS
 
 TODO(issue-45): Create developer prerequisites for macOS in docs.
 
-### On Ubuntu 20.04
+### Developing on Ubuntu 20.04
 
 Installing the Clang tools on Ubuntu along with Python can be accomplished by
 running these commands:
