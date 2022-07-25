@@ -177,7 +177,9 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
             "__quantum__rt__tuple_end_record_output:void ()",
             "__quantum__rt__array_start_record_output:void ()",
             "__quantum__rt__array_end_record_output:void ()",
+            "__quantum__rt__result_record_output:void (%Result*, i8*)",
             "__quantum__rt__bool_record_output:void (i1, i8*)",
+            "__quantum__rt__int_record_output:void (i64, i8*)",
 
         };
         profile.allowlist_pointer_types_ = true;
