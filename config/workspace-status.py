@@ -11,7 +11,7 @@ def get_full_version(
         full += "-%s" % channel
 
     if str(patch) != "0":
-        full += "-patch-%s-%s" % (patch, commit_hash[:10])
+        full += "-patch-%s-%s" % (patch, commit_hash[:8])
 
     if is_dirty:
         full += "-wip"
