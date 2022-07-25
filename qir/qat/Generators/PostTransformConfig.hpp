@@ -66,11 +66,15 @@ struct PostTransformConfig
         return should_eleminate_zext_i1_;
     }
 
-    bool useOneShotMeasurements() const
+    bool shouldUseOneShotMeasurements() const
     {
         return use_one_shot_measurements_;
     }
 
+    void setUseOneShotMeasurements(bool const&v)
+    {
+        use_one_shot_measurements_ = v;
+    }
   private:
     bool inst_combine_pass_{true};
     bool aggressive_inst_combine_pass_{true};

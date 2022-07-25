@@ -19,7 +19,10 @@ microsoft_add_library(ModuleLoader)
 
 microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
 microsoft_add_library(ValidationPass Logging)
+
 microsoft_add_library(OneShotMeasurementPass Logging)
+microsoft_add_library_tests(OneShotMeasurementPass  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
+
 microsoft_add_library(PreTransformTrimming Logging)
 
 microsoft_add_library(PostTransformValidation Logging)

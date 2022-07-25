@@ -18,13 +18,12 @@ namespace microsoft::quantum
 
 std::string const OneShotMeasurementPass::RECORD_INSTR_END = "_record_output";
 OneShotMeasurementPass::OneShotMeasurementPass() noexcept
-  : readout_names_{{"__quantum__qis__m__body", "__quantum__qis__mz__body", "__quantum__qis__reset__body"}}
+  : readout_names_{{"__quantum__qis__m__body", "__quantum__qis__mz__body", "__quantum__qis__reset__body", "__quantum__qis__read_result__body"}}
 {
 }
 
 llvm::PreservedAnalyses OneShotMeasurementPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
 {
-
     llvm::BasicBlock* last_block = nullptr;
 
     for (auto& block : function)

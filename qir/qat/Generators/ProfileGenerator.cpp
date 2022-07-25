@@ -279,7 +279,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(ZExtTransformPass());
             }
 
-            if (cfg.useOneShotMeasurements())
+            if (cfg.shouldUseOneShotMeasurements())
             {
                 fpm.addPass(OneShotMeasurementPass());
             }
