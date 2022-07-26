@@ -1,9 +1,9 @@
 function (generate_version_header)
 
-	execute_process(COMMAND git describe --dirty=-wip  --always
-	                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-	                OUTPUT_VARIABLE MICROSOFT_VERSION_FULL
-	                OUTPUT_STRIP_TRAILING_WHITESPACE)
+  execute_process(COMMAND git describe --dirty=-wip  --always
+                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                  OUTPUT_VARIABLE MICROSOFT_VERSION_FULL
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 
     string(REGEX
