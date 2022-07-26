@@ -49,7 +49,6 @@ jobs:
 
           exec -l $SHELL
 
-
       - name: "Building"
         run: |
           mkdir Debug

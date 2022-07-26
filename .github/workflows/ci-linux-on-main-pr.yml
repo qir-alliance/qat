@@ -45,8 +45,6 @@ jobs:
           CC: clang-13
           CXX: clang++-13
 
-
-
       - name: "Running unit tests"
         run: |
           mkdir Debug
