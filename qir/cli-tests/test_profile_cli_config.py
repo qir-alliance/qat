@@ -103,12 +103,21 @@ if __name__ == "__main__":
             lines2 = out2.split("\n")
 
             for i in range(min(len(lines1), len(lines2))):
-                l1 = lines1[i]
-                l2 = lines2[i]
+                line1 = lines1[i]
+                line2 = lines2[i]
 
-                if l1 != l2:
-                    print("- {}".format(l1))
-                    print("+ {}".format(l2))
+                if line1 != line2:
+                    print("- {}".format(line1))
+                    print("+ {}".format(line2))
+
+            if len(lines1) > len(lines2):
+                for line1 in lines1[i:]:
+                    print("- {}".format(line1))
+
+            if len(lines1) < len(lines2):
+                for line2 in lines2[i:]:
+                    print("+ {}".format(line2))
+
 
 if fail:
     exit(-1)
