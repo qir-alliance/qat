@@ -24,6 +24,10 @@ linux-docker:
 linux-ci: linux-docker
 	docker run -it -v ${PWD}:/src --rm -t qir-passes-ubuntu:latest /bin/bash
 
+format-in-docker: linux-docker
+	docker run -it --rm -v ${PWD}:/src/ -t qir-passes-ubuntu:latest ./manage stylecheck --fix-issues
+
+
 test-examples:
 	mkdir -p Debug
 	cd Debug && cmake .. && make qat
