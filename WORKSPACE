@@ -66,6 +66,8 @@ http_archive(
 )
 
 
+
+
 # ================================================================
 # Docker
 # ================================================================
@@ -88,8 +90,13 @@ load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 container_deps()
 
 load(
-    "@io_bazel_rules_docker//cc:image.bzl",
-    _cc_image_repos = "repositories",
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_pull",
 )
 
-_cc_image_repos()
+container_pull(
+    name = "alpine-linux",
+    registry = "index.docker.io",
+    repository = "library/ubuntu",
+    tag = "latest",
+)

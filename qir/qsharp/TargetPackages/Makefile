@@ -1,6 +1,7 @@
 all: QSharpVersion/qir/Example.ll
 #	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --disable-grouping --profile provider_b340 QSharpVersion/qir/Example.ll  || echo "failed!"
-	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --replace-qubit-on-reset --reindex-qubits --unroll-loops --disable-grouping --profile provider_b340 QSharpVersion/qir/Example.ll  || echo "failed!"
+#	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --replace-qubit-on-reset --reindex-qubits --unroll-loops --disable-grouping --profile provider_b340 QSharpVersion/qir/Example.ll  || echo "failed!"
+	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --disable-grouping --no-disable-record-output-support --profile generic QSharpVersion/qir/Example.ll  || echo "failed!"
 	
 
 QSharpVersion/qir/Example.ll:

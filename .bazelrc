@@ -14,6 +14,7 @@ build --workspace_status_command "python config/workspace-status.py"
 
 # build --disk_cache=~/.cache/bazel/
 build --features=external_include_paths
+build --copt=-UHAVE_PROC_PID_RUSAGE --copt=-UHAVE_MACH_MACH_H --copt=-UHAVE_LINK_H --copt=-UHAVE_MALLOC_MALLOC_H
 
 # Set the default compiler to the `clang` binary on the `PATH`.
 build:generic_clang --repo_env=CC=clang

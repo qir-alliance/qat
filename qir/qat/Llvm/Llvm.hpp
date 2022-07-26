@@ -8,10 +8,8 @@
 #pragma GCC diagnostic ignored "-Wpedantic"
 #pragma GCC diagnostic ignored "-Wunused-value"
 #pragma GCC diagnostic ignored "-Wsign-compare"
-#pragma GCC diagnostic ignored "-Wunknown-warning-option"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #pragma GCC diagnostic ignored "-Wall"
-#pragma GCC diagnostic ignored "-Weverything"
 #endif
 
 #if defined(__clang__)
@@ -102,12 +100,11 @@
 // Debugging
 #include "llvm/IR/DebugInfoMetadata.h"
 
-namespace llvm
-{
+namespace llvm {
 #ifdef USE_LLVM13
 using OptimizationLevel = PassBuilder::OptimizationLevel;
 #endif
-} // namespace llvm
+}  // namespace llvm
 
 #if defined(__clang__)
 #pragma Clang diagnostic pop
