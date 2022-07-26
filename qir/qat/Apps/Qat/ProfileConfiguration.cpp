@@ -70,7 +70,7 @@ void configureProvider4bf9Profile(ConfigurationManager& configuration_manager)
     configuration_manager.updateParameter("only-when-forced", false);
     configuration_manager.updateParameter("forget-scev", false);
     configuration_manager.updateParameter("always-inline", true);
-    configuration_manager.updateParameter<int32_t>("inlining-parameter", 2147483647);
+    configuration_manager.updateParameter<int32_t>("inlining-parameter", std::numeric_limits<int32_t>::max());
     configuration_manager.updateParameter("eliminate-constants", true);
     configuration_manager.updateParameter("eliminate-dead-code", true);
     configuration_manager.updateParameter("eliminate-memory", true);
@@ -148,7 +148,7 @@ void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
     configuration_manager.updateParameter("only-when-forced", false);
     configuration_manager.updateParameter("forget-scev", false);
     configuration_manager.updateParameter("always-inline", true);
-    configuration_manager.updateParameter<int32_t>("inlining-parameter", 2147483647);
+    configuration_manager.updateParameter<int32_t>("inlining-parameter", std::numeric_limits<int32_t>::max());
     configuration_manager.updateParameter("eliminate-constants", true);
     configuration_manager.updateParameter("eliminate-dead-code", true);
     configuration_manager.updateParameter("eliminate-memory", true);
@@ -226,7 +226,7 @@ void configureProviderb340Profile(ConfigurationManager& configuration_manager)
     configuration_manager.updateParameter("only-when-forced", false);
     configuration_manager.updateParameter("forget-scev", false);
     configuration_manager.updateParameter("always-inline", true);
-    configuration_manager.updateParameter<int32_t>("inlining-parameter", 2147483647);
+    configuration_manager.updateParameter<int32_t>("inlining-parameter", std::numeric_limits<int32_t>::max());
     configuration_manager.updateParameter("eliminate-constants", true);
     configuration_manager.updateParameter("eliminate-dead-code", true);
     configuration_manager.updateParameter("eliminate-memory", true);
