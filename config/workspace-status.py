@@ -59,7 +59,7 @@ def get_version(path):
         "revision": "0",
         "channel": "release",
         "patch": "0",
-        "build": "unkown",
+        "build": "unknown",
     }
 
     pattern = re.compile(
