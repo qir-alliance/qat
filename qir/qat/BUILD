@@ -1,4 +1,5 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+load("@io_bazel_rules_docker//cc:image.bzl", "cc_image")
 
 cc_library(
     name = "Llvm",
@@ -327,6 +328,35 @@ cc_library(
 
 cc_binary(
     name = "qat",
+    srcs = ["Apps/Qat/Qat.cpp"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//qir/qat:AllocationManager",
+        "//qir/qat:Commandline",
+        "//qir/qat:Generators",
+        "//qir/qat:GroupingPass",
+        "//qir/qat:Llvm",
+        "//qir/qat:Logging",
+        "//qir/qat:ModuleLoader",
+        "//qir/qat:PostTransformValidation",
+        "//qir/qat:PreTransformTrimming",
+        "//qir/qat:Profile",
+        "//qir/qat:QatConfig",
+        "//qir/qat:QatTypes",
+        "//qir/qat:RecordPullBackPass",
+        "//qir/qat:Rules",
+        "//qir/qat:StaticResourceComponent",
+        "//qir/qat:TransformationRulesPass",
+        "//qir/qat:ValidationPass",
+        "//qir/qat:Validator",
+    ],
+)
+
+
+cc_image(
+    name="qat-image",
     srcs = ["Apps/Qat/Qat.cpp"],
     visibility = [
         "//visibility:public",

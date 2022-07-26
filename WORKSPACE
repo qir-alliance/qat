@@ -64,3 +64,32 @@ http_archive(
     strip_prefix = "googletest-release-1.10.0",
     url = "https://github.com/google/googletest/archive/release-1.10.0.zip",
 )
+
+
+# ================================================================
+# Docker
+# ================================================================
+http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "4349f2b0b45c860dd2ffe18802e9f79183806af93ce5921fb12cbd6c07ab69a8",
+    strip_prefix = "rules_docker-0.21.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.21.0/rules_docker-v0.21.0.tar.gz"],
+)
+
+
+load(
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
+)
+container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
+
+load(
+    "@io_bazel_rules_docker//cc:image.bzl",
+    _cc_image_repos = "repositories",
+)
+
+_cc_image_repos()
