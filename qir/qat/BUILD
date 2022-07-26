@@ -316,7 +316,7 @@ ms_cc_library(
         "//qir/qat:Commandline",
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
-        "//qir/qat:Version",        
+        "//qir/qat:ValidationPass",
     ],
 )
 
