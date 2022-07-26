@@ -1,4 +1,5 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//:config/microsoft.bzl", "ms_cc_binary", "ms_cc_library")
 
 cc_library(
     name = "Llvm",
@@ -14,15 +15,28 @@ cc_library(
         "@llvm-project//llvm:Passes",
 
         # VM deps
-        "@llvm-project//llvm:ARMCodeGen",
-        "@llvm-project//llvm:ARMAsmParser",
         "@llvm-project//llvm:ExecutionEngine",
         "@llvm-project//llvm:OrcJIT",
         "@llvm-project//llvm:Interpreter",
-    ],
+    ] + select({
+        "@platforms//cpu:aarch64": [
+            "@llvm-project//llvm:AArch64CodeGen",
+            "@llvm-project//llvm:AArch64AsmParser",
+        ],
+        "@platforms//cpu:arm": [
+            "@llvm-project//llvm:ARMCodeGen",
+            "@llvm-project//llvm:ARMAsmParser",
+        ],
+        "@platforms//cpu:x86_64": [
+            "@llvm-project//llvm:X86CodeGen",
+            "@llvm-project//llvm:X86AsmParser",
+        ],
+        "//conditions:default": [
+        ],
+    }),
 )
 
-cc_library(
+ms_cc_library(
     name = "QatTypes",
     srcs = glob(["QatTypes/*.cpp"]),
     hdrs = glob(["QatTypes/*.hpp"]),
@@ -32,7 +46,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "Utils",
     srcs = glob(["Utils/*.cpp"]),
     hdrs = glob([
@@ -45,7 +59,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "Logging",
     srcs = glob(["Logging/*.cpp"]),
     hdrs = glob([
@@ -60,7 +74,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "Commandline",
     srcs = glob(["Commandline/*.cpp"]),
     hdrs = glob(["Commandline/*.hpp"]),
@@ -70,7 +84,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "Profile",
     srcs = glob(["Profile/*.cpp"]),
     hdrs = glob(["Profile/*.hpp"]),
@@ -83,7 +97,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "Validator",
     srcs = glob(["Validator/*.cpp"]),
     hdrs = glob(["Validator/*.hpp"]),
@@ -98,7 +112,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "ValidationPass",
     srcs = glob(["ValidationPass/*.cpp"]),
     hdrs = glob(["ValidationPass/*.hpp"]),
@@ -112,7 +126,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "PreTransformTrimming",
     srcs = glob(["PreTransformTrimming/*.cpp"]),
     hdrs = glob(["PreTransformTrimming/*.hpp"]),
@@ -125,7 +139,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "PostTransformValidation",
     srcs = glob(["PostTransformValidation/*.cpp"]),
     hdrs = glob(["PostTransformValidation/*.hpp"]),
@@ -138,7 +152,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "StaticResourceComponent",
     srcs = glob(["StaticResourceComponent/*.cpp"]),
     hdrs = glob(["StaticResourceComponent/*.hpp"]),
@@ -151,7 +165,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "GroupingPass",
     srcs = glob(["GroupingPass/*.cpp"]),
     hdrs = glob(["GroupingPass/*.hpp"]),
@@ -164,7 +178,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "RemoveDisallowedAttributesPass",
     srcs = glob(["RemoveDisallowedAttributesPass/*.cpp"]),
     hdrs = glob(["RemoveDisallowedAttributesPass/*.hpp"]),
@@ -176,7 +190,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "ZExtTransformPass",
     srcs = glob(["ZExtTransformPass/*.cpp"]),
     hdrs = glob(["ZExtTransformPass/*.hpp"]),
@@ -188,7 +202,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "ModuleLoader",
     srcs = glob(["ModuleLoader/*.cpp"]),
     hdrs = glob(["ModuleLoader/*.hpp"]),
@@ -201,7 +215,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "AllocationManager",
     srcs = glob(["AllocationManager/*.cpp"]),
     hdrs = glob(["AllocationManager/*.hpp"]),
@@ -212,7 +226,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "Rules",
     srcs = glob([
         "Rules/*.cpp",
@@ -234,7 +248,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "TransformationRulesPass",
     srcs = glob(["TransformationRulesPass/*.cpp"]),
     hdrs = glob(["TransformationRulesPass/*.hpp"]),
@@ -249,7 +263,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "RecordPullBackPass",
     srcs = glob(["RecordPullBackPass/*.cpp"]),
     hdrs = glob(["RecordPullBackPass/*.hpp"]),
@@ -262,7 +276,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "Generators",
     srcs = glob(["Generators/*.cpp"]),
     hdrs = glob(["Generators/*.hpp"]),
@@ -287,7 +301,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "QatConfig",
     srcs = [
         "Apps/Qat/ProfileConfiguration.cpp",
@@ -305,7 +319,7 @@ cc_library(
     ],
 )
 
-cc_library(
+ms_cc_library(
     name = "TestTools",
     srcs = glob(["TestTools/*.cpp"]),
     hdrs = glob(["TestTools/*.hpp"]),
@@ -331,7 +345,7 @@ cc_library(
     ],
 )
 
-cc_binary(
+ms_cc_binary(
     name = "qat",
     srcs = [
         "Apps/Qat/ProfileConfiguration.hpp",
