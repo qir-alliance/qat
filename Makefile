@@ -22,7 +22,7 @@ linux-docker:
 	docker build -f Docker/CI.Ubuntu22.dockerfile -t qir-passes-ubuntu:latest .
 
 linux-ci: linux-docker
-	docker run -it -v ${PWD}:/src --rm -t qir-passes-ubuntu:latest ./manage runci
+	docker run -it -v ${PWD}:/src --rm -t qir-passes-ubuntu:latest /bin/bash
 
 test-examples:
 	mkdir -p Debug
