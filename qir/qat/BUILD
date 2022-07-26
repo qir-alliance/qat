@@ -303,13 +303,20 @@ ms_cc_library(
 
 ms_cc_library(
     name = "QatConfig",
-    srcs = ["Apps/Qat/QatConfig.cpp"],
-    hdrs = ["Apps/Qat/QatConfig.hpp"],
+    srcs = [
+        "Apps/Qat/ProfileConfiguration.cpp",
+        "Apps/Qat/QatConfig.cpp",
+    ],
+    hdrs = [
+        "Apps/Qat/ProfileConfiguration.hpp",
+        "Apps/Qat/QatConfig.hpp",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
+        "//qir/qat:ValidationPass",
     ],
 )
 
@@ -341,7 +348,10 @@ ms_cc_library(
 
 ms_cc_binary(
     name = "qat",
-    srcs = ["Apps/Qat/Qat.cpp"],
+    srcs = [
+        "Apps/Qat/ProfileConfiguration.hpp",
+        "Apps/Qat/Qat.cpp",
+    ],
     visibility = [
         "//visibility:public",
     ],

@@ -34,6 +34,7 @@ void QatConfig::setup(ConfigurationManager& config)
     config.addParameter(output_file_, "output", "Output file. If empty, the output is sent to stdout.");
 
     config.addParameter(save_report_to_, "save-logs", "Saves the logs report to specified filename in JSON format.");
+    config.addParameter(show_help_, "help", "Show help page.");
 }
 
 bool QatConfig::shouldGenerate() const
@@ -126,4 +127,10 @@ String const& QatConfig::saveReportTo() const
 {
     return save_report_to_;
 }
+
+bool QatConfig::showHelp() const
+{
+    return show_help_;
+}
+
 } // namespace microsoft::quantum

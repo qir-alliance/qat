@@ -176,9 +176,9 @@ class ILogger
 
     virtual void errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr = nullptr);
 
-    virtual void errorNoQubitsPresent(llvm::Value* ptr = nullptr);
+    virtual void errorNoQubitsPresent(llvm::Value* ptr = nullptr, String const& name = "unnamed");
 
-    virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr);
+    virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr, String const& name = "unnamed");
 
     virtual void errorOpcodeNotAllowed(String const& code, String const& profile_name, llvm::Value* ptr = nullptr);
 
