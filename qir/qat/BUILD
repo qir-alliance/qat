@@ -289,8 +289,14 @@ cc_library(
 
 cc_library(
     name = "QatConfig",
-    srcs = ["Apps/Qat/QatConfig.cpp"],
-    hdrs = ["Apps/Qat/QatConfig.hpp"],
+    srcs = [
+        "Apps/Qat/ProfileConfiguration.cpp",
+        "Apps/Qat/QatConfig.cpp",
+    ],
+    hdrs = [
+        "Apps/Qat/ProfileConfiguration.hpp",
+        "Apps/Qat/QatConfig.hpp",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
