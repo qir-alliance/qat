@@ -1,5 +1,5 @@
 """
-Target definitions to enable stricter C++ stanard for internal libraries
+Target definitions to enable stricter C++ standard for internal libraries
 """
 
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
