@@ -30,17 +30,6 @@ jobs:
           git submodule update --init --recursive
           pip install -r requirements.txt  
           npm install -g prettier@2.2.1
-          chmod +x manage
-        env:
-          DEBIAN_FRONTEND: noninteractive
-          PYTHONUNBUFFERED: 1
-          PYTHON_BIN_PATH: /usr/bin/python3
-          CC: clang-13
-          CXX: clang++-13
-
-      - name: "Running unit tests"
-        run: |
-          ./manage test
         env:
           DEBIAN_FRONTEND: noninteractive
           PYTHONUNBUFFERED: 1
