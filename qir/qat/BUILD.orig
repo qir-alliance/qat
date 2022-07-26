@@ -1,6 +1,6 @@
+<<<<<<< HEAD
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 load("@rules_python//python:defs.bzl", "py_binary")
-load("//:config/microsoft.bzl", "ms_cc_binary", "ms_cc_library")
 
 genrule(
     name = "WorkspaceVariables",
@@ -45,6 +45,10 @@ cc_binary(
         "//qir/qat:Version",
     ],
 )
+=======
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//:config/microsoft.bzl", "ms_cc_binary", "ms_cc_library")
+>>>>>>> main
 
 cc_library(
     name = "Llvm",
