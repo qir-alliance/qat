@@ -381,4 +381,3 @@ int main(int argc, char** argv)
 
     return ret;
 }
-// Some minor update to qat
