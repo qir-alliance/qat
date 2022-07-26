@@ -102,7 +102,7 @@ if __name__ == "__main__":
             lines1 = out1.split("\n")
             lines2 = out2.split("\n")
 
-            for i in range(len(lines1)):
+            for i in range(min(len(lines1), len(lines2))):
                 l1 = lines1[i]
                 l2 = lines2[i]
 
