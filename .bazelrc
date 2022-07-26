@@ -1,7 +1,7 @@
 # Platform independent configuration
 build --workspace_status_command "python config/workspace-status.py"
 
-# We would turn this on globally, but unfortunattely
+# We would turn this on globally, but unfortunately
 # it kills external libraries
 # build --cxxopt=-Wall
 # build --cxxopt=-Wextra
