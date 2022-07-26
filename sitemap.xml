@@ -1171,6 +1171,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/UserGuide/GoalsAndAssumptions/</loc>
+         <lastmod>2022-07-26</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/UserGuide/IntroductionToProfiles/</loc>
          <lastmod>2022-07-26</lastmod>
          <changefreq>daily</changefreq>

@@ -610,16 +610,32 @@ tools and packages are used:</p>
 <li>Python packages specified in <code>requirements.txt</code></li>
 <li>clang-format</li>
 <li>clang-tidy</li>
+<li>NodeJS &amp; Prettier</li>
 </ul>
 <p>The installation process varies depending on the platform you use. The following
 subsections provide details on how to install these tools on each platform.</p>
 <h3 id="on-macos_1">On macOS</h3>
-<p>TODO(issue-45): Create developer prerequisites for macOS in docs.</p>
+<p>To install LLVM version 11, we use the <code>brew</code> package <code>llvm@11</code> which will
+install the LLVM libraries alongside with Clang 11, Clang format and Clang Tidy:</p>
+<pre><code class="language-sh">brew install llvm@11
+</code></pre>
+<p>Python and NodeJS can also be installed using <code>brew</code>:</p>
+<pre><code class="language-sh">brew install python@3.9 node@16
+</code></pre>
+<p>After successful installation, you may need to update your environment variables
+to ensure that CMake will use the right version of Clang as well as the LLVM
+libraries:</p>
+<pre><code class="language-sh">export CC=clang-11
+export CXX=clang++-11
+export LDFLAGS=&quot;-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/lib&quot;
+export CPPFLAGS=&quot;-I/usr/local/opt/llvm@11/include&quot;
+</code></pre>
 <h3 id="on-ubuntu-2004_1">On Ubuntu 20.04</h3>
-<p>Installing the Clang tools on Ubuntu along with Python can be accomplished by
-running these commands:</p>
+<p>Installing the Clang tools on Ubuntu along with Python and NodeJS can be
+accomplished by running these commands:</p>
 <pre><code class="language-sh">apt install clang-format-13 clang-tidy-13
 apt install python3 python3-pip
+apt install nodejs npm
 </code></pre>
 <p>We recommend that you use version 13 of Clang in order to be consistent with the
 version of LLVM on which the library depends. In general, the code should work
@@ -630,8 +646,9 @@ export CXX=clang++-13
 </code></pre>
 <h3 id="common-to-all-platforms">Common to all platforms</h3>
 <p>Last but not least, we install the Python libraries that are required:</p>
-<pre><code class="language-sh">      pip install -r requirements.txt
-      chmod +x manage
+<pre><code class="language-sh">pip install -r requirements.txt
+chmod +x manage
+npm install -g prettier@2.2.1
 </code></pre>
 <p>As a result, the <code>manage</code> tool will be available for you to help you make sure
 your code is high quality. Getting a contribution merged into the code base
@@ -646,7 +663,14 @@ submodules run</p>
 <pre><code class="language-sh">git submodule update --init --recursive
 </code></pre>
 <h3 id="installing-llvm-on-macos">Installing LLVM on macOS</h3>
-<p>TODO(issue-45): Document installation process</p>
+<p>If you have previously installed the packages under
+<a href="#developer-prerequisites">Developer prerequisites</a>, you do not need to take any
+additional steps for macOS. If you are relying on the natively installed Clang,
+you may need to install the LLVM libraries:</p>
+<pre><code class="language-sh">brew install llvm@11
+</code></pre>
+<p>Additionally, you may need to update your <code>LDFLAGS</code> and <code>CPPFLAGS</code> for the
+toolchain to work properly.</p>
 <h3 id="installing-llvm-on-ubuntu-2004">Installing LLVM on Ubuntu 20.04</h3>
 <p>For the installation of LLVM from Ubuntu we use the package manager <code>apt</code>. For
 full run installation, run the following command:</p>

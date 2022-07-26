@@ -587,19 +587,21 @@ required dependencies.</p>
 version and on different platforms, it is recommended that you use a Docker
 image to perform these steps. TODO(issue-10): The Docker image is not added yet
 and this will be documented in the future.</p>
+<h2 id="style-checking-using-docker">Style checking using Docker</h2>
+<p>In some cases it is not possible to replicate the necessary toolchain to perform
+style checks on the code. To address this, this repository is equipped with a
+Docker image that allows the developer to run the CI script:</p>
+<pre><code class="language-sh">make linux-ci
+</code></pre>
+<p>as well as automatically fix style issues where possible:</p>
+<pre><code class="language-sh">make format-in-docker
+</code></pre>
+<p>The latter command will mount the current source directory inside docker and use
+the Ubuntu image to run the style check. This image was created with the version
+of the tool that is officially supported by the maintainers.</p>
 <h2 id="running-tests">Running tests</h2>
 <p>In order to run the tests, you first need to build the library. Assuming that
-this is already done and the corresponding build is in <code>Debug/</code>, run the tests
-from the <code>Debug</code> folder:</p>
-<pre><code class="language-sh">lit tests/ -v
--- Testing: 2 tests, 2 workers --
-PASS: Quantum-Passes :: QirAllocationAnalysis/case1.ll (1 of 2)
-PASS: Quantum-Passes :: QirAllocationAnalysis/case2.ll (2 of 2)
-
-Testing Time: 0.27s
-  Passed: 2
-</code></pre>
-<p>The C++ test suite can also be ran from the debug by first building all targets:</p>
+this is already done and the corresponding build is in <code>Debug/</code>:</p>
 <pre><code class="language-sh">cmake ..
 make
 </code></pre>
