@@ -572,7 +572,7 @@
 </thead>
 <tbody>
 <tr>
-<td>using T</td>
+<td>using typename std::decay&lt; T &gt;::type</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#using-type">Type</a></strong></td>
 </tr>
 <tr>
@@ -637,6 +637,10 @@
 <tr>
 <td>virtual void *</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-pointer">pointer</a></strong>() const override<br>Pointer to underlying data.</td>
+</tr>
+<tr>
+<td>virtual void *</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-pointerdefaultvalue">pointerDefaultValue</a></strong>() override<br>Pointer to underlying default value.</td>
 </tr>
 <tr>
 <td>virtual std::type_index</td>
@@ -726,7 +730,7 @@ class microsoft::quantum::ConfigBind;
 <p>Generic implementation of the bind interface for different types. This class holds the name of the command line parameter and a reference variable corresponding to it. It implements serializers and deserializers to allow transforming strings to native values and vice versa. </p>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
 <h3 id="using-type">using Type</h3>
-<pre><code class="language-cpp">using microsoft::quantum::ConfigBind&lt; T &gt;::Type =  T;
+<pre><code class="language-cpp">using microsoft::quantum::ConfigBind&lt; T &gt;::Type =  typename std::decay&lt;T&gt;::type;
 </code></pre>
 <h3 id="using-enableif">using EnableIf</h3>
 <pre><code class="language-cpp">template &lt;typename A ,
@@ -801,13 +805,18 @@ using microsoft::quantum::ConfigBind&lt; T &gt;::EnableIf =  typename std::enabl
 </code></pre>
 <p>Pointer to underlying data. </p>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-pointer">microsoft::quantum::IConfigBind::pointer</a></p>
+<h3 id="function-pointerdefaultvalue">function pointerDefaultValue</h3>
+<pre><code class="language-cpp">virtual void * pointerDefaultValue() override
+</code></pre>
+<p>Pointer to underlying default value. </p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-pointerdefaultvalue">microsoft::quantum::IConfigBind::pointerDefaultValue</a></p>
 <h3 id="function-valuetype">function valueType</h3>
 <pre><code class="language-cpp">virtual std::type_index valueType() const override
 </code></pre>
 <p>Type index of contained data. </p>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-valuetype">microsoft::quantum::IConfigBind::valueType</a></p>
 <hr />
-<p>Updated on 26 July 2022 at 20:34:13 UTC</p></div>
+<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
 </div>
           </div>
         </main>

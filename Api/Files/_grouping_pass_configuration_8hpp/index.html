@@ -612,7 +612,8 @@ class GroupingPassConfiguration
     {
         config.setSectionName(&quot;Grouping quantum instructions&quot;, &quot;&quot;);
         config.addExperimentalParameter(
-            circuit_separation_, &quot;separate-circuits&quot;, &quot;Whether or not to separate quantum and classical circuits&quot;);
+            circuit_separation_, true, false, &quot;separate-circuits&quot;,
+            &quot;Whether or not to separate quantum and classical circuits&quot;);
     }
 
     static GroupingPassConfiguration createDisabled()
@@ -636,7 +637,7 @@ class GroupingPassConfiguration
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 26 July 2022 at 20:34:14 UTC</p></div>
+<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
 </div>
           </div>
         </main>

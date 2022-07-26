@@ -611,7 +611,7 @@ namespace microsoft::quantum
 template &lt;typename T&gt; class ConfigBind : public IConfigBind
 {
   public:
-    using Type = T;
+    using Type = typename std::decay&lt;T&gt;::type;
 
     template &lt;typename A, typename B, typename R&gt;
     using EnableIf = typename std::enable_if&lt;std::is_same&lt;A, B&gt;::value, R&gt;::type;
@@ -641,6 +641,8 @@ template &lt;typename T&gt; class ConfigBind : public IConfigBind
     String value() override;
 
     void* pointer() const override;
+
+    void* pointerDefaultValue() override;
 
     std::type_index valueType() const override;
 
@@ -716,6 +718,7 @@ template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::setupArguments(ParameterPa
 
 template &lt;typename T&gt; bool ConfigBind&lt;T&gt;::configure(ParameterParser&amp; parser, bool experimental_mode)
 {
+
     if (!isExperimental())
     {
         // For non-experimental parameters we load the default value
@@ -811,6 +814,11 @@ template &lt;typename T&gt; void* ConfigBind&lt;T&gt;::pointer() const
     return static_cast&lt;void*&gt;(&amp;bind_);
 }
 
+template &lt;typename T&gt; void* ConfigBind&lt;T&gt;::pointerDefaultValue()
+{
+    return static_cast&lt;void*&gt;(&amp;default_value_);
+}
+
 template &lt;typename T&gt; std::type_index ConfigBind&lt;T&gt;::valueType() const
 {
     return std::type_index(typeid(T));
@@ -819,7 +827,7 @@ template &lt;typename T&gt; std::type_index ConfigBind&lt;T&gt;::valueType() con
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 26 July 2022 at 20:34:14 UTC</p></div>
+<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
 </div>
           </div>
         </main>

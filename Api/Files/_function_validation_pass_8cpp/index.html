@@ -605,12 +605,12 @@ llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function&amp; function
 
     if (config_.requiresQubits() &amp;&amp; function_details.usage_qubit_counts == 0)
     {
-        logger_-&gt;errorNoQubitsPresent(&amp;function);
+        logger_-&gt;errorNoQubitsPresent(&amp;function, config_.profileName());
     }
 
     if (config_.requiresResults() &amp;&amp; function_details.usage_result_counts == 0)
     {
-        logger_-&gt;errorNoResultsPresent(&amp;function);
+        logger_-&gt;errorNoResultsPresent(&amp;function, config_.profileName());
     }
 
     for (auto&amp; block : function)
@@ -644,7 +644,7 @@ bool FunctionValidationPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 26 July 2022 at 20:34:13 UTC</p></div>
+<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
 </div>
           </div>
         </main>

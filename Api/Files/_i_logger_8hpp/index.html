@@ -754,9 +754,9 @@ class ILogger
 
     virtual void errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr = nullptr);
 
-    virtual void errorNoQubitsPresent(llvm::Value* ptr = nullptr);
+    virtual void errorNoQubitsPresent(llvm::Value* ptr = nullptr, String const&amp; name = &quot;unnamed&quot;);
 
-    virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr);
+    virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr, String const&amp; name = &quot;unnamed&quot;);
 
     virtual void errorOpcodeNotAllowed(String const&amp; code, String const&amp; profile_name, llvm::Value* ptr = nullptr);
 
@@ -787,7 +787,7 @@ class ILogger
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 26 July 2022 at 20:34:14 UTC</p></div>
+<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
 </div>
           </div>
         </main>
