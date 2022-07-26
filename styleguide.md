@@ -4,7 +4,7 @@ This document sets out some light style requirements for contributing to QAT. In
 case you do not feel like reading this style guide, just run
 
 ```sh
-./manage runci
+trunk check
 ```
 
 from the root directory before making a pull request. This script enforces all
@@ -102,7 +102,7 @@ Prefer `#pragma once` over `#ifdef` protection.
 ## Code TODOs must contain owner name or Github issue
 
 ```sh
-./manage runci
+trunk check
 (...)
 Passes/src/OpsCounter/OpsCounter.cpp:39:21: error: missing username/bug in TODO [google-readability-todo,-warnings-as-errors]
                     // TODO: Fails to load if this is present
