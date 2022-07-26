@@ -13,7 +13,7 @@ namespace microsoft::quantum
 void displayCliHeader(bool extended_info)
 {
     std::cout << "QAT v. " << version::FULL << std::endl;
-    std::cout << "Copyright 2021-2022 (c) Microsoft Corporation." << std::endl;
+    std::cout << "Copyright (c) Microsoft Corporation." << std::endl;
     std::cout << "Licensed under the MIT License." << std::endl;
     if (extended_info)
     {
