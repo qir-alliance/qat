@@ -981,6 +981,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_version_8cpp/</loc>
+         <lastmod>2022-07-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/_version_8tpl_8hpp/</loc>
+         <lastmod>2022-07-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_z_ext_8cpp/</loc>
          <lastmod>2022-07-27</lastmod>
          <changefreq>daily</changefreq>
@@ -1076,6 +1086,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/dir_c088d9039decfcf39c85aae8d9153291/</loc>
+         <lastmod>2022-07-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_c15e684057bea667e6dbded2e5ded5b0/</loc>
          <lastmod>2022-07-27</lastmod>
          <changefreq>daily</changefreq>
@@ -1107,6 +1122,11 @@
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_f44b21f0fee8aab07f8f4068c1a37dc7/</loc>
+         <lastmod>2022-07-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Files/version__builder_8py/</loc>
          <lastmod>2022-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -1151,7 +1171,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1version/</loc>
+         <lastmod>2022-07-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacestd/</loc>
+         <lastmod>2022-07-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespaceversion__builder/</loc>
          <lastmod>2022-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
