@@ -592,11 +592,14 @@
 namespace microsoft::quantum
 {
 
-ConfigurableProfileGenerator::ConfigurableProfileGenerator()
+ConfigurableProfileGenerator::ConfigurableProfileGenerator(SetupMode const&amp; mode)
 {
     configurationManager().addConfig&lt;ValidationPassConfiguration&gt;();
 
-    setupDefaultComponentPipeline();
+    if (mode == SetupMode::SetupPipeline)
+    {
+        setupDefaultComponentPipeline();
+    }
 }
 
 ConfigurableProfileGenerator::ConfigurableProfileGenerator(
@@ -640,7 +643,7 @@ LlvmPassesConfiguration const&amp; ConfigurableProfileGenerator::llvmPassesConfi
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
+<p>Updated on 27 July 2022 at 07:30:02 UTC</p></div>
 </div>
           </div>
         </main>

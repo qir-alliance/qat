@@ -768,6 +768,8 @@ class ConfigurationManager
 
     DeferredValuePtr getParameter(String const&amp; name);
 
+    template &lt;typename T&gt; inline bool has() const;
+
     template &lt;typename T&gt; inline void updateParameter(String const&amp; name, T const&amp; value);
 
   private:
@@ -826,6 +828,21 @@ template &lt;typename T&gt; inline bool ConfigurationManager::configWasRegistere
     return false;
 }
 
+template &lt;typename T&gt; inline bool ConfigurationManager::has() const
+{
+    auto type = std::type_index(typeid(T));
+
+    for (auto&amp; section : config_sections_)
+    {
+        if (section.type == type)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 template &lt;typename T&gt; inline T&amp; ConfigurationManager::getInternal() const
 {
     VoidPtr ptr{nullptr};
@@ -843,7 +860,7 @@ template &lt;typename T&gt; inline T&amp; ConfigurationManager::getInternal() co
     if (ptr == nullptr)
     {
         throw std::runtime_error(
-            &quot;Could not find configuration class '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;'.&quot;);
+            &quot;(getInternal) Could not find configuration class '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;'.&quot;);
     }
 
     return *static_cast&lt;T*&gt;(ptr.get());
@@ -877,7 +894,7 @@ template &lt;typename T&gt; inline bool ConfigurationManager::isActive()
     if (ptr == nullptr)
     {
         throw std::runtime_error(
-            &quot;Could not find configuration class '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;'.&quot;);
+            &quot;(isActive)  Could not find configuration class '&quot; + static_cast&lt;std::string&gt;(typeid(T).name()) + &quot;'.&quot;);
     }
 
     return *ptr;
@@ -983,7 +1000,7 @@ template &lt;typename T&gt; inline void ConfigurationManager::updateParameter(St
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
+<p>Updated on 27 July 2022 at 07:30:02 UTC</p></div>
 </div>
           </div>
         </main>

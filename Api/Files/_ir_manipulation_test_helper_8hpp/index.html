@@ -597,6 +597,7 @@
 
 #include &quot;qir/qat/Generators/ProfileGenerator.hpp&quot;
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/TestTools/TestVm.hpp&quot;
 
 #include &lt;unordered_set&gt;
 #include &lt;vector&gt;
@@ -612,6 +613,7 @@ class IrManipulationTestHelper
     using LLVMContext       = llvm::LLVMContext;
     using SMDiagnostic      = llvm::SMDiagnostic;
     using Module            = llvm::Module;
+    using ContextPtr        = std::unique_ptr&lt;LLVMContext&gt;;
     using ModulePtr         = std::unique_ptr&lt;Module&gt;;
     using OptimizationLevel = llvm::OptimizationLevel;
     using GeneratorPtr      = std::shared_ptr&lt;ProfileGenerator&gt;;
@@ -632,6 +634,8 @@ class IrManipulationTestHelper
     String toString() const;
 
     Strings toBodyInstructions();
+
+    TestProgram toProgram();
 
     // Test functions
     //
@@ -692,7 +696,7 @@ class IrManipulationTestHelper
 
     bool compilation_failed_{false};
 
-    LLVMContext context_;
+    ContextPtr context_;
 
     ModulePtr module_;
 
@@ -702,7 +706,7 @@ class IrManipulationTestHelper
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
+<p>Updated on 27 July 2022 at 07:30:02 UTC</p></div>
 </div>
           </div>
         </main>

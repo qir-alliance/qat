@@ -610,8 +610,13 @@ class ConfigurableProfileGenerator : public ProfileGenerator
 {
   public:
     using ConfigureFunction = std::function&lt;void(RuleSet&amp;)&gt;; 
+    enum class SetupMode
+    {
+        DoNothing,
+        SetupPipeline,
+    };
 
-    ConfigurableProfileGenerator();
+    explicit ConfigurableProfileGenerator(SetupMode const&amp; mode = SetupMode::SetupPipeline);
 
     explicit ConfigurableProfileGenerator(
         ConfigureFunction const&amp;                    configure,
@@ -630,7 +635,7 @@ class ConfigurableProfileGenerator : public ProfileGenerator
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
+<p>Updated on 27 July 2022 at 07:30:02 UTC</p></div>
 </div>
           </div>
         </main>

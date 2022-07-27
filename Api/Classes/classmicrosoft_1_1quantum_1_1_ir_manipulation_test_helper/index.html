@@ -589,6 +589,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-module">Module</a></strong></td>
 </tr>
 <tr>
+<td>using std::unique_ptr&lt; LLVMContext &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-contextptr">ContextPtr</a></strong></td>
+</tr>
+<tr>
 <td>using std::unique_ptr&lt; Module &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-moduleptr">ModulePtr</a></strong></td>
 </tr>
@@ -638,6 +642,10 @@
 <tr>
 <td>Strings</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-tobodyinstructions">toBodyInstructions</a></strong>()<br>Generates a list of instructions for the main function in the module.</td>
+</tr>
+<tr>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_test_program/">TestProgram</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-toprogram">toProgram</a></strong>()</td>
 </tr>
 <tr>
 <td>bool</td>
@@ -709,6 +717,9 @@
 <h3 id="using-module">using Module</h3>
 <pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::Module =  llvm::Module;
 </code></pre>
+<h3 id="using-contextptr">using ContextPtr</h3>
+<pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::ContextPtr =  std::unique_ptr&lt;LLVMContext&gt;;
+</code></pre>
 <h3 id="using-moduleptr">using ModulePtr</h3>
 <pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::ModulePtr =  std::unique_ptr&lt;Module&gt;;
 </code></pre>
@@ -750,6 +761,9 @@
 <pre><code class="language-cpp">Strings toBodyInstructions()
 </code></pre>
 <p>Generates a list of instructions for the main function in the module. </p>
+<h3 id="function-toprogram">function toProgram</h3>
+<pre><code class="language-cpp">TestProgram toProgram()
+</code></pre>
 <h3 id="function-hasinstructionsequence">function hasInstructionSequence</h3>
 <pre><code class="language-cpp">bool hasInstructionSequence(
     Strings const &amp; instructions
@@ -846,7 +860,7 @@ call void @__quantum__qis__h__body(%Qubit* %leftMessage)
 </code></pre>
 <p>Returns a reference to the module. </p>
 <hr />
-<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
+<p>Updated on 27 July 2022 at 07:30:02 UTC</p></div>
 </div>
           </div>
         </main>

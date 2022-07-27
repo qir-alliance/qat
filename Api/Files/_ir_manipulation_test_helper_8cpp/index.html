@@ -590,7 +590,8 @@ namespace microsoft::quantum
 
 bool IrManipulationTestHelper::fromString(String const&amp; data)
 {
-    module_             = llvm::parseIR(llvm::MemoryBufferRef(data, &quot;IrManipulationTestHelper&quot;), error_, context_);
+    context_ = std::make_unique&lt;llvm::LLVMContext&gt;();
+    module_  = llvm::parseIR(llvm::MemoryBufferRef(data, &quot;IrManipulationTestHelper&quot;), error_, *context_.get());
     compilation_failed_ = (module_ == nullptr);
     return !compilation_failed_;
 }
@@ -602,6 +603,12 @@ String IrManipulationTestHelper::toString() const
     ostream &lt;&lt; *module_;
     ostream.flush();
     return str;
+}
+
+TestProgram IrManipulationTestHelper::toProgram()
+{
+    TestProgram ret{std::move(module_), std::move(context_)};
+    return ret;
 }
 
 IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
@@ -932,7 +939,7 @@ bool IrManipulationTestHelper::isModuleBroken()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
+<p>Updated on 27 July 2022 at 07:30:02 UTC</p></div>
 </div>
           </div>
         </main>

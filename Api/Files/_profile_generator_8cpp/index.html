@@ -613,9 +613,12 @@ std::shared_ptr&lt;Profile&gt; ProfileGenerator::newProfile(
     auto qubit_allocation_manager  = BasicAllocationManager::createNew();
     auto result_allocation_manager = BasicAllocationManager::createNew();
 
-    auto cfg = configuration_manager_.get&lt;TransformationRulesPassConfiguration&gt;();
-    qubit_allocation_manager-&gt;setReuseRegisters(cfg.shouldReuseQubits());
-    result_allocation_manager-&gt;setReuseRegisters(cfg.shouldReuseResults());
+    if (configuration_manager_.has&lt;TransformationRulesPassConfiguration&gt;())
+    {
+        auto cfg = configuration_manager_.get&lt;TransformationRulesPassConfiguration&gt;();
+        qubit_allocation_manager-&gt;setReuseRegisters(cfg.shouldReuseQubits());
+        result_allocation_manager-&gt;setReuseRegisters(cfg.shouldReuseResults());
+    }
 
     // Creating profile
     // TODO(issue-12): Set target machine
@@ -919,7 +922,7 @@ void ProfileGenerator::setLogger(ILoggerPtr const&amp; logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
+<p>Updated on 27 July 2022 at 07:30:02 UTC</p></div>
 </div>
           </div>
         </main>

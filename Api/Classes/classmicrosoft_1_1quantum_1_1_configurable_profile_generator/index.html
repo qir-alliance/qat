@@ -572,6 +572,10 @@
 </thead>
 <tbody>
 <tr>
+<td>enum class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configurable_profile_generator/#enum-setupmode">SetupMode</a></strong> { DoNothing, SetupPipeline}</td>
+</tr>
+<tr>
 <td>using std::function&lt; void(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/">RuleSet</a> &amp;)&gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configurable_profile_generator/#using-configurefunction">ConfigureFunction</a></strong> <br>Function type that configures a rule set.</td>
 </tr>
@@ -588,7 +592,7 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configurable_profile_generator/#function-configurableprofilegenerator">ConfigurableProfileGenerator</a></strong>()</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configurable_profile_generator/#function-configurableprofilegenerator">ConfigurableProfileGenerator</a></strong>(SetupMode const &amp; mode =SetupMode::SetupPipeline)</td>
 </tr>
 <tr>
 <td></td>
@@ -759,13 +763,37 @@
 </code></pre>
 <p><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configurable_profile_generator/">ConfigurableProfileGenerator</a> defines a profile that configures the rule set used by the <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> pass. This profile is useful for generating dynamic profiles and is well suited for testing purposes or YAML configured transformation of the IR. </p>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
+<h3 id="enum-setupmode">enum SetupMode</h3>
+<table>
+<thead>
+<tr>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DoNothing</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SetupPipeline</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h3 id="using-configurefunction">using ConfigureFunction</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ConfigurableProfileGenerator::ConfigureFunction =  std::function&lt;void(RuleSet&amp;)&gt;;
 </code></pre>
 <p>Function type that configures a rule set. </p>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-configurableprofilegenerator">function ConfigurableProfileGenerator</h3>
-<pre><code class="language-cpp">ConfigurableProfileGenerator()
+<pre><code class="language-cpp">explicit ConfigurableProfileGenerator(
+    SetupMode const &amp; mode =SetupMode::SetupPipeline
+)
 </code></pre>
 <p>Default constructor. This constructor adds components for rule transformation and LLVM passes. These are configurable through the corresponding configuration classes which can be access through the configuration manager. </p>
 <h3 id="function-configurableprofilegenerator_1">function ConfigurableProfileGenerator</h3>
@@ -785,7 +813,7 @@
 </code></pre>
 <p>Returns a constant reference to the LLVM passes configuration. </p>
 <hr />
-<p>Updated on 26 July 2022 at 21:23:33 UTC</p></div>
+<p>Updated on 27 July 2022 at 07:30:02 UTC</p></div>
 </div>
           </div>
         </main>
