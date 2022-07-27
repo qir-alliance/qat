@@ -21,6 +21,10 @@ target_link_libraries(Validator PRIVATE Logging)
 microsoft_add_library(ModuleLoader)
 
 
+microsoft_add_library(DivisionByZeroPass Logging)
+microsoft_add_library_tests(DivisionByZeroPass Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass StaticResourceComponent Logging GroupingPass) 
+
+
 microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
 microsoft_add_library(ValidationPass Logging)
 microsoft_add_library(RecordPullBackPass Logging)

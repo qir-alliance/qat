@@ -50,7 +50,7 @@ jobs:
           mkdir -p Debug
           pushd Debug
           cmake ..
-          make -j qat
+          make qat
           popd
 
           export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat        

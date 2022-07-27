@@ -14,11 +14,14 @@
 namespace microsoft::quantum
 {
 
-ConfigurableProfileGenerator::ConfigurableProfileGenerator()
+ConfigurableProfileGenerator::ConfigurableProfileGenerator(SetupMode const& mode)
 {
     configurationManager().addConfig<ValidationPassConfiguration>();
 
-    setupDefaultComponentPipeline();
+    if (mode == SetupMode::SetupPipeline)
+    {
+        setupDefaultComponentPipeline();
+    }
 }
 
 ConfigurableProfileGenerator::ConfigurableProfileGenerator(
