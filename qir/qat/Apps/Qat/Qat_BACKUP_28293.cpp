@@ -151,12 +151,19 @@ int main(int argc, char** argv)
         // Getting the main configuration
         auto config = configuration_manager.get<QatConfig>();
 
+<<<<<<< HEAD
         if (config.showVersion())
         {
             llvm::errs() << "v. " << microsoft::quantum::version::FULL << "\n\n";
             exit(0);
         }
 
+        // Setting profile validation configuration
+        configuration_manager.addConfig<ValidationPassConfiguration>(
+            "validation-configuration", ValidationPassConfiguration::fromProfileName(config.profile()));
+
+=======
+>>>>>>> main
         // Setting logger up
         std::shared_ptr<ILogger> logger{nullptr};
 

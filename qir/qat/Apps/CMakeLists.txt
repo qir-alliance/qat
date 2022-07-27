@@ -1,4 +1,4 @@
-add_executable(qat Qat/Qat.cpp Qat/QatConfig.cpp)
+add_executable(qat Qat/Qat.cpp Qat/QatConfig.cpp Qat/ProfileConfiguration.cpp)
 
 target_link_libraries(qat ${llvm_libs})
 target_link_libraries(qat 

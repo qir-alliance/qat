@@ -8,9 +8,11 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
+#include <cstddef>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 #include <type_traits>
 #include <typeindex>
 #include <typeinfo>
@@ -163,8 +165,14 @@ class ConfigurationManager
     /// name.
     void setSectionName(String const& name, String const& description);
 
-    ///
+    /// Disables the last section added to the manager
     void disableSectionByDefault();
+
+    /// Disables a named section
+    void disableSectionById(String const& id);
+
+    /// Enables a named section
+    void enableSectionById(String const& id);
 
     /// Adds a new parameter with a default value to the configuration section. This function should
     /// be used by the configuration class.
@@ -198,6 +206,8 @@ class ConfigurationManager
     template <typename T> inline void addParameter(T& bind, String const& name, String const& description);
 
     DeferredValuePtr getParameter(String const& name);
+
+    template <typename T> inline void updateParameter(String const& name, T const& value);
 
   private:
     /// Helper function to get a reference to the configuration of type T.
@@ -320,6 +330,7 @@ inline std::shared_ptr<ConfigBind<T>> ConfigurationManager::newParameter(
     String const& name,
     String const& description)
 {
+
     if (parameters_.find(name) != parameters_.end())
     {
         throw std::runtime_error("Parameter '" + name + "' already exists.");
@@ -385,4 +396,28 @@ inline void ConfigurationManager::addExperimentalParameter(T& bind, String const
     ptr->markAsExperimental(T(bind));
     config_sections_.back().settings.push_back(ptr);
 }
+
+template <typename T> inline void ConfigurationManager::updateParameter(String const& name, T const& value)
+{
+    auto it = parameters_.find(name);
+    if (it == parameters_.end())
+    {
+        throw std::runtime_error("Parameter '" + name + "' does not exist.");
+    }
+
+    if (it->second == nullptr)
+    {
+        throw std::runtime_error("Configuration '" + name + "' binds to nullptr.");
+    }
+
+    auto param = it->second;
+    if (param->valueType() != std::type_index(typeid(T)))
+    {
+        throw std::runtime_error("Parameter mismatch while attemting to update the parameter '" + name + "'");
+    }
+
+    auto& bind = *static_cast<T*>(param->pointerDefaultValue());
+    bind       = value;
+}
+
 } // namespace microsoft::quantum

@@ -50,7 +50,6 @@
 ///
 ///
 
-#include "qir/qat/Apps/Qat/ProfileConfiguration.hpp"
 #include "qir/qat/Apps/Qat/QatConfig.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Commandline/ParameterParser.hpp"
@@ -69,7 +68,6 @@
 #include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 #include "qir/qat/Validator/Validator.hpp"
-#include "qir/qat/Version/Version.hpp"
 
 #ifndef _WIN32
 #include <dlfcn.h>
@@ -151,11 +149,9 @@ int main(int argc, char** argv)
         // Getting the main configuration
         auto config = configuration_manager.get<QatConfig>();
 
-        if (config.showVersion())
-        {
-            llvm::errs() << "v. " << microsoft::quantum::version::FULL << "\n\n";
-            exit(0);
-        }
+        // Setting profile validation configuration
+        configuration_manager.addConfig<ValidationPassConfiguration>(
+            "validation-configuration", ValidationPassConfiguration::fromProfileName(config.profile()));
 
         // Setting logger up
         std::shared_ptr<ILogger> logger{nullptr};
@@ -201,9 +197,6 @@ int main(int argc, char** argv)
 #endif
         }
 
-        // Configuring QAT according to profile
-        configureProfile(config.profile(), configuration_manager);
-
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
 
@@ -239,18 +232,8 @@ int main(int argc, char** argv)
         if (parser.arguments().empty())
         {
             std::cerr << "Usage: " << argv[0] << " [options] filename" << std::endl;
-            std::cerr << "\n";
-        }
-
-        // Shows help if needed
-        if (config.showHelp())
-        {
             configuration_manager.printHelp(config.isExperimental());
-        }
-
-        // Returns from program if no input files were provided
-        if (parser.arguments().empty())
-        {
+            std::cerr << "\n";
             exit(-1);
         }
 
