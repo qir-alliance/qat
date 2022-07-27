@@ -134,9 +134,9 @@ bool QatConfig::showHelp() const
     return show_help_;
 }
 
-    bool QatConfig::showVersion() const
-    {
-        return show_version_;
-    }
+bool QatConfig::showVersion() const
+{
+    return show_version_;
+}
 
 } // namespace microsoft::quantum
