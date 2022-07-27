@@ -82,10 +82,7 @@ class TestVM
     {
         llvm::ExitOnError exit_on_error;
 
-        // TODO(unknown): remove exit_on_error
         lljit_ = exit_on_error(llvm::orc::LLJITBuilder().create());
-
-        // TODO(unknown): Copy module and context to avoid destructive behaviour
         exit_on_error(lljit_->addIRModule(
             llvm::orc::ThreadSafeModule(std::move(program_.module_), std::move(program_.context_))));
 

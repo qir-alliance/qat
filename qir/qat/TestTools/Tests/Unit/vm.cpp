@@ -5,12 +5,14 @@
 #include "qir/qat/TestTools/TestVm.hpp"
 
 using namespace microsoft::quantum;
-
+namespace
+{
 int8_t print_call_value = 0;
 void   internalPrintName(int32_t x)
 {
     print_call_value = static_cast<int8_t>(print_call_value + x);
 }
+} // namespace
 
 TEST(TestToolsTestSuite, TestVmBasic)
 {
