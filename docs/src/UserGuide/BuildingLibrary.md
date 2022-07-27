@@ -70,7 +70,7 @@ tools and packages are used:
 The installation process varies depending on the platform you use. The following
 subsections provide details on how to install these tools on each platform.
 
-### On macOS
+### Developing on macOS
 
 To install LLVM version 11, we use the `brew` package `llvm@11` which will
 install the LLVM libraries alongside with Clang 11, Clang format and Clang Tidy:
@@ -96,7 +96,7 @@ export LDFLAGS="-L/usr/local/opt/llvm@11/lib -Wl,-rpath,/usr/local/opt/llvm@11/l
 export CPPFLAGS="-I/usr/local/opt/llvm@11/include"
 ```
 
-### On Ubuntu 20.04
+### Developing on Ubuntu 20.04
 
 Installing the Clang tools on Ubuntu along with Python and NodeJS can be
 accomplished by running these commands:

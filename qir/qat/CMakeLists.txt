@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.4.3)
+include(${CURRENT_SOURCE_DIR}version.cmake)
+generate_version_header()
 
 microsoft_add_library(Logging)
 
@@ -7,6 +9,8 @@ microsoft_add_library_tests(TestTools Generators Logging GroupingPass)
 
 microsoft_add_library(Commandline)
 microsoft_add_library_tests(Commandline Logging GroupingPass)
+
+microsoft_add_library(Version)
 
 microsoft_add_library(Profile)
 microsoft_add_library_tests(Profile GroupingPass)
