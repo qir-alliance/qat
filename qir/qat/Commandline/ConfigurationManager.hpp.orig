@@ -207,10 +207,12 @@ class ConfigurationManager
 
     DeferredValuePtr getParameter(String const& name);
 
+<<<<<<< HEAD
     /// Checks whether a configuration section exists
     template <typename T> inline bool has() const;
-
+=======
     template <typename T> inline void updateParameter(String const& name, T const& value);
+>>>>>>> main
 
   private:
     /// Helper function to get a reference to the configuration of type T.
