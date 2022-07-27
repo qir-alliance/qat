@@ -86,7 +86,7 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::Modu
     {
         for (auto start_block : exit_blocks)
         {
-            auto if_block    = start_block->splitBasicBlock(start_block->getTerminator(), "if_error_occured", false);
+            auto if_block    = start_block->splitBasicBlock(start_block->getTerminator(), "if_error_occurred", false);
             auto final_block = if_block->splitBasicBlock(if_block->getTerminator(), "exit_block", false);
 
             builder.SetInsertPoint(start_block->getTerminator());
