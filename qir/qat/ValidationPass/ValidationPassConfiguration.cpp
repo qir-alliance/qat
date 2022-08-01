@@ -151,10 +151,9 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
         profile.allow_internal_calls_     = false;
         profile.allowlist_external_calls_ = true;
         profile.allowlist_opcodes_        = true;
-        profile.opcodes_ = OpcodeSet{
-            {"call"}, {"ret"}, {"inttoptr"}, {"br"}, {"phi"}, {"add"}, {"sub"}, {"mul"}, {"and"}, {"or"}, {"xor"},
-            {"lshr"}, {"shl"}, {"icmp"}, {"select"}, {"zext"}
-        };
+        profile.opcodes_ =
+            OpcodeSet{{"call"}, {"ret"}, {"inttoptr"}, {"br"},   {"phi"}, {"add"},  {"sub"},    {"mul"},
+                      {"and"},  {"or"},  {"xor"},      {"lshr"}, {"shl"}, {"icmp"}, {"select"}, {"zext"}};
         profile.external_calls_ = Set{
             "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
             "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
