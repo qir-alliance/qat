@@ -20,6 +20,7 @@ llvm::PreservedAnalyses FunctionReplacementPass::run(llvm::Module               
                                                      llvm::ModuleAnalysisManager &mam)
 {
   auto &result = mam.getResult<FunctionReplacementAnalysisPass>(module);
+  llvm::errs() << "Was here? x ?\n";
 
   return llvm::PreservedAnalyses::none();
 }

@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/FunctionReplacementPass/FunctionReplacementPassConfiguration.hpp"
+#include "qir/qat/FunctionReplacementPass/FunctionReplacementConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
@@ -25,7 +25,8 @@ public:
   // Construction and destruction configuration.
   //
 
-  FunctionReplacementPass() = default;
+  FunctionReplacementPass(FunctionReplacementConfiguration const& cfg) 
+  : config_{cfg} {}
 
   /// Copy construction is banned.
   FunctionReplacementPass(FunctionReplacementPass const &) = delete;
@@ -45,6 +46,7 @@ public:
   void setLogger(ILoggerPtr logger);
 
 private:
+  FunctionReplacementConfiguration config_{};
   ILoggerPtr logger_{nullptr};
 };
 

@@ -18,6 +18,7 @@ target_link_libraries(qat
     PreTransformTrimming 
     ZExtTransformPass 
     RecordPullBackPass 
+    FunctionReplacementPass
     Version)
 
 
