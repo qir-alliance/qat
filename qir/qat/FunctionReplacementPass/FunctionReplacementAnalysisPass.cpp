@@ -40,7 +40,6 @@ FunctionReplacementAnalysisPass::Result FunctionReplacementAnalysisPass::run(
             {
                 if (logger_)
                 {
-                    logger_->setLocationFromValue(&function);
                     logger_->errorExpectedStringValueForAttr(
                         static_cast<String>(function.getName()), static_cast<String>(attr.getKindAsString()));
                 }
@@ -58,8 +57,7 @@ FunctionReplacementAnalysisPass::Result FunctionReplacementAnalysisPass::run(
             {
                 if (logger_)
                 {
-                    logger_->warningWeakLinkReplacementNotPossible(
-                        static_cast<String>(function.getName()), name, &function);
+                    logger_->warningWeakLinkReplacementNotPossible(static_cast<String>(function.getName()), name);
                 }
                 continue;
             }
@@ -78,7 +76,7 @@ FunctionReplacementAnalysisPass::Result FunctionReplacementAnalysisPass::run(
                 if (logger_)
                 {
                     logger_->errorReplacementSignatureMismatch(
-                        static_cast<String>(function.getName()), signature1, signature2, &function);
+                        static_cast<String>(function.getName()), signature1, signature2);
                 }
                 else
                 {
