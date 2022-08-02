@@ -8,122 +8,148 @@
 #include <fstream>
 #include <iostream>
 
-namespace microsoft::quantum {
+namespace microsoft::quantum
+{
 llvm::AnalysisKey FunctionReplacementAnalysisPass::Key;
 
 FunctionReplacementAnalysisPass::Result FunctionReplacementAnalysisPass::run(
-    llvm::Module &module, llvm::ModuleAnalysisManager & /*mam*/)
+    llvm::Module& module,
+    llvm::ModuleAnalysisManager& /*mam*/)
 {
-  FunctionRegister ret;
+    FunctionRegister ret;
 
-  // Registering all functions
-  for(auto &function: module)
-  {
-    /*
-    if(function.isDeclaration())
+    // Registering all functions
+    for (auto& function : module)
     {
-      continue;
-    }
-    */
-
-    ret.name_to_function_pointer[static_cast<String>(function.getName())] = &function;
-  }
-
-  // Registering replacements
-  for(auto &function: module)
-  {
-    if(function.isDeclaration())
-    {
-      continue;
+        ret.name_to_function_pointer[static_cast<String>(function.getName())] = &function;
     }
 
-    if(function.hasFnAttribute("replaceWith"))
+    // Registering replacements
+    for (auto& function : module)
     {
-      llvm::errs() << "Found replace with ---\n";
-      auto attr = function.getFnAttribute("replaceWith");
-      if(!attr.isStringAttribute())
-      {
-        // TODO: Use logger
-        throw std::runtime_error("Expected string attribute");
-      }
-
-      auto name = static_cast<String>(attr.getValueAsString());
-      auto it = ret.name_to_function_pointer.find(name);
-
-      // Ignoring replacements that were not found
-      if(it == ret.name_to_function_pointer.end())
-      {
-        llvm::errs() << name << " not found\n";
-        continue;
-      }
-
-      // Checking function signature
-      // TODO:
-
-      ret.functions_to_replace[&function] = it->second;
-    }
-  }
-
-
-  for(auto &function: module)
-  {
-    for(auto& block: function)
-    {
-      for(auto &instr: block)
-      {
-         auto call_instr = llvm::dyn_cast<llvm::CallInst>(&instr);
-         if(call_instr == nullptr)
-         {
+        if (function.isDeclaration())
+        {
             continue;
-         }
+        }
 
-         auto function = call_instr->getCalledFunction ();
-         auto it = ret.functions_to_replace.find(function);
+        if (function.hasFnAttribute("replaceWith"))
+        {
 
-         if(function == nullptr || it == ret.functions_to_replace.end())
-         {
-            continue;
-         }
+            auto attr = function.getFnAttribute("replaceWith");
+            if (!attr.isStringAttribute())
+            {
+                if (logger_)
+                {
+                    logger_->setLocationFromValue(&function);
+                    logger_->errorExpectedStringValueForAttr(
+                        static_cast<String>(function.getName()), static_cast<String>(attr.getKindAsString()));
+                }
+                else
+                {
+                    throw std::runtime_error("Expected string attribute for attribute 'replaceWith'");
+                }
+            }
 
-         ret.calls_to_replace.push_back(call_instr);
-      }      
+            auto name = static_cast<String>(attr.getValueAsString());
+            auto it   = ret.name_to_function_pointer.find(name);
+
+            // Ignoring replacements that were not found
+            if (it == ret.name_to_function_pointer.end())
+            {
+                if (logger_)
+                {
+                    logger_->warningWeakLinkReplacementNotPossible(
+                        static_cast<String>(function.getName()), name, &function);
+                }
+                continue;
+            }
+
+            // Checking function signature
+            String                   signature1;
+            llvm::raw_string_ostream ostream1(signature1);
+            ostream1 << *function.getFunctionType();
+
+            String                   signature2;
+            llvm::raw_string_ostream ostream2(signature2);
+            ostream2 << *it->second->getFunctionType();
+
+            if (signature1 != signature2)
+            {
+                if (logger_)
+                {
+                    logger_->errorReplacementSignatureMismatch(
+                        static_cast<String>(function.getName()), signature1, signature2, &function);
+                }
+                else
+                {
+                    throw std::runtime_error("Expected string attribute for attribute 'replaceWith'");
+                }
+            }
+
+            // Registering replacement
+            ret.functions_to_replace[&function] = it->second;
+        }
     }
-  }
 
-  return ret;
+    for (auto& function : module)
+    {
+        for (auto& block : function)
+        {
+            for (auto& instr : block)
+            {
+                auto call_instr = llvm::dyn_cast<llvm::CallInst>(&instr);
+                if (call_instr == nullptr)
+                {
+                    continue;
+                }
+
+                auto function = call_instr->getCalledFunction();
+                auto it       = ret.functions_to_replace.find(function);
+
+                if (function == nullptr || it == ret.functions_to_replace.end())
+                {
+                    continue;
+                }
+
+                ret.calls_to_replace.push_back(call_instr);
+            }
+        }
+    }
+
+    return ret;
 }
 
 bool FunctionReplacementAnalysisPass::isRequired()
 {
-  return true;
+    return true;
 }
 
 llvm::PreservedAnalyses FunctionReplacementAnalysisPassPrinter::run(
-    llvm::Module &module, llvm::ModuleAnalysisManager &mam)
+    llvm::Module&                module,
+    llvm::ModuleAnalysisManager& mam)
 {
-  auto &result = mam.getResult<FunctionReplacementAnalysisPass>(module);
-  llvm::errs() << "============================== REPORT ==============================\n";
-  llvm::errs() << "Functions:\n";
-  for(auto &p: result.name_to_function_pointer)
-  {
-    llvm::errs() << "Found function " << p.first << "\n";
-  }
+    auto& result = mam.getResult<FunctionReplacementAnalysisPass>(module);
+    llvm::errs() << "============================== REPORT ==============================\n";
+    llvm::errs() << "Functions:\n";
+    for (auto& p : result.name_to_function_pointer)
+    {
+        llvm::errs() << "Found function " << p.first << "\n";
+    }
 
-  llvm::errs() << "\nFunctions to replace:\n";
-  for(auto &p: result.functions_to_replace)
-  {
-    llvm::errs() <<  p.first->getName() << " -> " <<   p.second->getName() << "\n";
-  }
+    llvm::errs() << "\nFunctions to replace:\n";
+    for (auto& p : result.functions_to_replace)
+    {
+        llvm::errs() << p.first->getName() << " -> " << p.second->getName() << "\n";
+    }
 
-  llvm::errs() << "\nCalls to replacable functions:\n";
-  for(auto &p: result.calls_to_replace)
-  {
-    llvm::errs() << *p <<"\n";
-  }
-  llvm::errs() << "============================ END REPORT ============================\n";
+    llvm::errs() << "\nCalls to replacable functions:\n";
+    for (auto& p : result.calls_to_replace)
+    {
+        llvm::errs() << *p << "\n";
+    }
+    llvm::errs() << "============================ END REPORT ============================\n";
 
-
-  return llvm::PreservedAnalyses::all();
+    return llvm::PreservedAnalyses::all();
 }
 
-}  // namespace microsoft::quantum
+} // namespace microsoft::quantum

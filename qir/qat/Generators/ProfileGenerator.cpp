@@ -3,6 +3,8 @@
 
 #include "qir/qat/Generators/ProfileGenerator.hpp"
 
+#include "qir/qat/FunctionReplacementPass/FunctionReplacementAnalysisPass.hpp"
+#include "qir/qat/FunctionReplacementPass/FunctionReplacementPass.hpp"
 #include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Generators/PostTransformConfig.hpp"
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
@@ -24,9 +26,6 @@
 #include "qir/qat/Utils/FunctionToModule.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 #include "qir/qat/ZExtTransformPass/ZExtTransformPass.hpp"
-#include "qir/qat/FunctionReplacementPass/FunctionReplacementAnalysisPass.hpp"
-#include "qir/qat/FunctionReplacementPass/FunctionReplacementPass.hpp"
-
 
 namespace microsoft::quantum
 {
@@ -149,19 +148,18 @@ void ProfileGenerator::setupDefaultComponentPipeline()
     using namespace llvm;
     ILoggerPtr logger = logger_;
 
-    registerProfileComponent<FunctionReplacementConfiguration>("weak-linking",[logger](FunctionReplacementConfiguration const& cfg, ProfileGenerator& generator, Profile& profile){
+    registerProfileComponent<FunctionReplacementConfiguration>(
+        "weak-linking",
+        [logger](FunctionReplacementConfiguration const& cfg, ProfileGenerator& generator, Profile& profile)
+        {
+            auto& mam = profile.moduleAnalysisManager();
+            mam.registerPass([&] { return FunctionReplacementAnalysisPass(cfg, logger); });
+            auto& ret = generator.modulePassManager();
 
-        llvm::errs() << "Creating Function replacement pass\n";
-        auto& mam = profile.moduleAnalysisManager();
-        mam.registerPass([&] { return FunctionReplacementAnalysisPass(cfg, logger); });
-        auto& ret = generator.modulePassManager();
-
-        ret.addPass(FunctionReplacementAnalysisPassPrinter());
-
-        auto pass = FunctionReplacementPass(cfg);
-        pass.setLogger(logger);
-        ret.addPass(std::move(pass));
-    });
+            auto pass = FunctionReplacementPass(cfg);
+            pass.setLogger(logger);
+            ret.addPass(std::move(pass));
+        });
 
     registerProfileComponent<LlvmPassesConfiguration>(
         "llvm-optimization",

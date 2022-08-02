@@ -12,42 +12,45 @@
 #include <unordered_set>
 #include <vector>
 
-namespace microsoft::quantum {
+namespace microsoft::quantum
+{
 
 class FunctionReplacementPass : public llvm::PassInfoMixin<FunctionReplacementPass>
 {
-public:
-  using Instruction   = llvm::Instruction;
-  using Value         = llvm::Value;
-  using ILoggerPtr    = ILogger::ILoggerPtr;
-  using BlockSet      = std::unordered_set<llvm::BasicBlock *>;
-  using SharedBuilder = std::shared_ptr<llvm::IRBuilder<>>;
-  // Construction and destruction configuration.
-  //
+  public:
+    using Instruction   = llvm::Instruction;
+    using Value         = llvm::Value;
+    using ILoggerPtr    = ILogger::ILoggerPtr;
+    using BlockSet      = std::unordered_set<llvm::BasicBlock*>;
+    using SharedBuilder = std::shared_ptr<llvm::IRBuilder<>>;
+    // Construction and destruction configuration.
+    //
 
-  FunctionReplacementPass(FunctionReplacementConfiguration const& cfg) 
-  : config_{cfg} {}
+    explicit FunctionReplacementPass(FunctionReplacementConfiguration const& cfg)
+      : config_{cfg}
+    {
+    }
 
-  /// Copy construction is banned.
-  FunctionReplacementPass(FunctionReplacementPass const &) = delete;
+    /// Copy construction is banned.
+    FunctionReplacementPass(FunctionReplacementPass const&) = delete;
 
-  /// We allow move semantics.
-  FunctionReplacementPass(FunctionReplacementPass &&) = default;
+    /// We allow move semantics.
+    FunctionReplacementPass(FunctionReplacementPass&&) = default;
 
-  /// Default destruction.
-  ~FunctionReplacementPass() = default;
+    /// Default destruction.
+    ~FunctionReplacementPass() = default;
 
-  llvm::PreservedAnalyses run(llvm::Module &module, llvm::ModuleAnalysisManager &mam);
+    llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
 
-  /// Whether or not this pass is required to run.
-  static bool isRequired();
+    /// Whether or not this pass is required to run.
+    static bool isRequired();
 
-  /// Sets the logger
-  void setLogger(ILoggerPtr logger);
+    /// Sets the logger
+    void setLogger(ILoggerPtr logger);
 
-private:
-  FunctionReplacementConfiguration config_{};
-  ILoggerPtr logger_{nullptr};
+  private:
+    FunctionReplacementConfiguration config_{};
+    ILoggerPtr                       logger_{nullptr};
 };
 
-}  // namespace microsoft::quantum
+} // namespace microsoft::quantum

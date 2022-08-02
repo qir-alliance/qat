@@ -282,6 +282,8 @@ int main(int argc, char** argv)
         auto location_table = loader.locationTable();
         logger->setLocationResolver([location_table](llvm::Value const* val)
                                     { return location_table->getPosition(val); });
+        logger->setLocationFromNameResolver([location_table](String const& name)
+                                            { return location_table->getPositionFromFunctionName(name); });
 
         // Getting the optimization level
         //
@@ -315,7 +317,7 @@ int main(int argc, char** argv)
             profile->apply(*module);
 
             //  Preventing subsequent routines to run if errors occurred.
-            if (logger && (logger->hadErrors() || logger->hadWarnings()))
+            if (logger && logger->hadErrors())
             {
                 ret = -1;
             }
@@ -377,7 +379,7 @@ int main(int argc, char** argv)
 
         // Safety pre-caution to ensure that all errors and warnings reported
         // results in failure.
-        if (logger && (logger->hadErrors() || logger->hadWarnings()))
+        if (logger && logger->hadErrors())
         {
             ret = -1;
         }

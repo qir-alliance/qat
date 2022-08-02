@@ -224,7 +224,6 @@ ms_cc_library(
     ],
 )
 
-
 ms_cc_library(
     name = "FunctionReplacementPass",
     srcs = glob(["FunctionReplacementPass/*.cpp"]),
@@ -344,8 +343,8 @@ ms_cc_library(
     deps = [
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
+        "//qir/qat:FunctionReplacementPass",
         "//qir/qat:GroupingPass",
-        "//qir/qat:FunctionReplacementPass",        
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
         "//qir/qat:PostTransformValidation",
@@ -389,9 +388,9 @@ ms_cc_library(
     deps = [
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
+        "//qir/qat:FunctionReplacementPass",
         "//qir/qat:Generators",
         "//qir/qat:GroupingPass",
-        "//qir/qat:FunctionReplacementPass",                
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
         "//qir/qat:ModuleLoader",
@@ -420,9 +419,9 @@ ms_cc_binary(
     deps = [
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
+        "//qir/qat:FunctionReplacementPass",
         "//qir/qat:Generators",
         "//qir/qat:GroupingPass",
-        "//qir/qat:FunctionReplacementPass",                
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
         "//qir/qat:ModuleLoader",

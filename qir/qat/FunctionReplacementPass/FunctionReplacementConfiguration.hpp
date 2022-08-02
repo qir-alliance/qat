@@ -29,7 +29,6 @@ class FunctionReplacementConfiguration
         return ret;
     }
 
-
   private:
 };
 

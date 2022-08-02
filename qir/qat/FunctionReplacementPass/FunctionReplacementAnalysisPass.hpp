@@ -12,72 +12,71 @@
 #include <unordered_set>
 #include <vector>
 
-namespace microsoft::quantum {
+namespace microsoft::quantum
+{
 
 struct FunctionRegister
 {
-  using FunctionMap = std::unordered_map<String, llvm::Function *>;
-  using ReplacementMap = std::unordered_map< llvm::Function *, llvm::Function *>;  
-  using CallList = std::vector<llvm::CallInst *>;
+    using FunctionMap    = std::unordered_map<String, llvm::Function*>;
+    using ReplacementMap = std::unordered_map<llvm::Function*, llvm::Function*>;
+    using CallList       = std::vector<llvm::CallInst*>;
 
-  FunctionMap name_to_function_pointer{};
-  ReplacementMap functions_to_replace{};  
-  CallList calls_to_replace{};
+    FunctionMap    name_to_function_pointer{};
+    ReplacementMap functions_to_replace{};
+    CallList       calls_to_replace{};
 };
 
-class FunctionReplacementAnalysisPass
-  : public llvm::AnalysisInfoMixin<FunctionReplacementAnalysisPass>
+class FunctionReplacementAnalysisPass : public llvm::AnalysisInfoMixin<FunctionReplacementAnalysisPass>
 {
-public:
-  using Result      = FunctionRegister;
-  using Instruction = llvm::Instruction;
-  using Value       = llvm::Value;
-  using ILoggerPtr  = ILogger::ILoggerPtr;
-  using BlockSet    = std::unordered_set<llvm::BasicBlock *>;
+  public:
+    using Result      = FunctionRegister;
+    using Instruction = llvm::Instruction;
+    using Value       = llvm::Value;
+    using ILoggerPtr  = ILogger::ILoggerPtr;
+    using BlockSet    = std::unordered_set<llvm::BasicBlock*>;
 
-  // Construction and destruction configuration.
-  //
+    // Construction and destruction configuration.
+    //
 
-  explicit FunctionReplacementAnalysisPass(FunctionReplacementConfiguration const& cfg, ILoggerPtr const &logger)
-    : config_{cfg}
-    , logger_{logger}
-  {}
+    explicit FunctionReplacementAnalysisPass(FunctionReplacementConfiguration const& cfg, ILoggerPtr const& logger)
+      : config_{cfg}
+      , logger_{logger}
+    {
+    }
 
-  /// Copy construction is banned.
-  FunctionReplacementAnalysisPass(FunctionReplacementAnalysisPass const &) = delete;
+    /// Copy construction is banned.
+    FunctionReplacementAnalysisPass(FunctionReplacementAnalysisPass const&) = delete;
 
-  /// We allow move semantics.
-  FunctionReplacementAnalysisPass(FunctionReplacementAnalysisPass &&) = default;
+    /// We allow move semantics.
+    FunctionReplacementAnalysisPass(FunctionReplacementAnalysisPass&&) = default;
 
-  /// Default destruction.
-  ~FunctionReplacementAnalysisPass() = default;
+    /// Default destruction.
+    ~FunctionReplacementAnalysisPass() = default;
 
-  Result run(llvm::Module &module, llvm::ModuleAnalysisManager &mam);
+    Result run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
 
-  void runBlockAnalysis(llvm::Module &module);
+    void runBlockAnalysis(llvm::Module& module);
 
-  /// Whether or not this pass is required to run.
-  static bool isRequired();
+    /// Whether or not this pass is required to run.
+    static bool isRequired();
 
-private:
-  FunctionReplacementConfiguration config_{};  
-  ILoggerPtr logger_{nullptr};
+  private:
+    FunctionReplacementConfiguration config_{};
+    ILoggerPtr                       logger_{nullptr};
 
-  static llvm::AnalysisKey Key;  // NOLINT
-  friend struct llvm::AnalysisInfoMixin<FunctionReplacementAnalysisPass>;
+    static llvm::AnalysisKey Key; // NOLINT
+    friend struct llvm::AnalysisInfoMixin<FunctionReplacementAnalysisPass>;
 };
 
-class FunctionReplacementAnalysisPassPrinter
-  : public llvm::PassInfoMixin<FunctionReplacementAnalysisPassPrinter>
+class FunctionReplacementAnalysisPassPrinter : public llvm::PassInfoMixin<FunctionReplacementAnalysisPassPrinter>
 {
-public:
+  public:
+    llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
 
-  llvm::PreservedAnalyses run(llvm::Module &module, llvm::ModuleAnalysisManager &mam);
-
-  static bool isRequired()
-  {
-    return true;
-  }
+    static bool isRequired()
+    {
+        return true;
+    }
 };
 
-}  // namespace microsoft::quantum
+} // namespace microsoft::quantum
