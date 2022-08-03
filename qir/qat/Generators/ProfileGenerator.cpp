@@ -3,6 +3,7 @@
 
 #include "qir/qat/Generators/ProfileGenerator.hpp"
 
+#include "qir/qat/FunctionReplacementPass/FunctionAnnotatorPass.hpp"
 #include "qir/qat/FunctionReplacementPass/FunctionReplacementAnalysisPass.hpp"
 #include "qir/qat/FunctionReplacementPass/FunctionReplacementPass.hpp"
 #include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
@@ -155,6 +156,8 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             auto& mam = profile.moduleAnalysisManager();
             mam.registerPass([&] { return FunctionReplacementAnalysisPass(cfg, logger); });
             auto& ret = generator.modulePassManager();
+
+            ret.addPass(FunctionAnnotatorPass(cfg));
 
             auto pass = FunctionReplacementPass(cfg);
             pass.setLogger(logger);

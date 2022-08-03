@@ -22,6 +22,7 @@ class FunctionReplacementConfiguration
         config.setSectionName("Weak linking", "");
 
         config.addParameter(injected_annotations_, "replace-functions", "Functions to be replaced.");
+        config.addParameter(should_remove_call_attributes_, "remove-call-attributes", "Discard all call attributes");
     }
 
     static FunctionReplacementConfiguration createDisabled()
@@ -36,8 +37,14 @@ class FunctionReplacementConfiguration
         return injected_annotations_;
     }
 
+    bool shouldRemoveCallAttributes() const
+    {
+        return should_remove_call_attributes_;
+    }
+
   private:
     StringMap injected_annotations_{};
+    bool      should_remove_call_attributes_{false};
 };
 
 } // namespace microsoft::quantum
