@@ -20,6 +20,8 @@ class FunctionReplacementConfiguration
     void setup(ConfigurationManager& config)
     {
         config.setSectionName("Weak linking", "");
+
+        config.addParameter(injected_annotations_, "replace-functions", "Functions to be replaced.");
     }
 
     static FunctionReplacementConfiguration createDisabled()
@@ -29,7 +31,13 @@ class FunctionReplacementConfiguration
         return ret;
     }
 
+    StringMap const& injectedAnnotations() const
+    {
+        return injected_annotations_;
+    }
+
   private:
+    StringMap injected_annotations_{};
 };
 
 } // namespace microsoft::quantum

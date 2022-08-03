@@ -19,6 +19,11 @@ bool FunctionReplacementPass::isRequired()
 
 llvm::PreservedAnalyses FunctionReplacementPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& mam)
 {
+    for (auto const& p : config_.injectedAnnotations())
+    {
+        llvm::errs() << p.first << ": " << p.second << "\n";
+    }
+
     llvm::IRBuilder<> builder(module.getContext());
     auto&             result = mam.getResult<FunctionReplacementAnalysisPass>(module);
 

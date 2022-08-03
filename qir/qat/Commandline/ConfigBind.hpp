@@ -79,11 +79,17 @@ template <typename T> class ConfigBind : public IConfigBind
     /// Specialized function that changes the parameter name based on default value for booleans.
     void alterNameBasedOnType(bool const& default_value);
 
+    /// Specialized function that changes the parameter name based on default value for booleans.
+    void alterNameBasedOnType(StringMap const& default_value);
+
     /// Generic string serialization.
     template <typename A> String valueAsString(A const&);
 
     /// Specialized serialization for booleans.
     template <typename A> String valueAsString(EnableIf<A, bool, A> const&);
+
+    /// Specialized serialization for string map.
+    template <typename A> String valueAsString(EnableIf<A, StringMap, A> const&);
 
     /// Generic deserialization of string values from parser.
     template <typename R> void loadValue(ParameterParser& parser, R const& default_value);
@@ -93,6 +99,12 @@ template <typename T> class ConfigBind : public IConfigBind
 
     /// Specialized deserialization of string values from parser for strings.
     template <typename A> void loadValue(ParameterParser& parser, EnableIf<A, String, A> const& default_value);
+
+    /// Specialized deserialization of string-string maps
+    template <typename A> void loadValue(ParameterParser& parser, EnableIf<A, StringMap, A> const& default_value);
+
+    /// Inserts a key value pair into the string map
+    void insertKeyValueInStringMap(StringMap& map, String const& part);
 
     Type& bind_;                   ///< Bound variable to be updated.
     Type  default_value_;          ///< Default value.
@@ -127,6 +139,22 @@ template <typename T> void ConfigBind<T>::alterNameBasedOnType(bool const& defau
     {
         setDefault("false");
     }
+}
+
+template <typename T> void ConfigBind<T>::alterNameBasedOnType(StringMap const& default_value)
+{
+    std::stringstream ss{""};
+    bool              not_first = true;
+    for (auto const& p : bind_)
+    {
+        if (not_first)
+        {
+            ss << ",";
+        }
+        ss << p.first << "=" << p.second;
+    }
+
+    setDefault(static_cast<String>(ss.str()));
 }
 
 template <typename T> bool ConfigBind<T>::setupArguments(ParameterParser& parser)
@@ -196,6 +224,21 @@ template <typename T> template <typename A> String ConfigBind<T>::valueAsString(
     return static_cast<String>(ss.str());
 }
 
+template <typename T> template <typename A> String ConfigBind<T>::valueAsString(EnableIf<A, StringMap, A> const&)
+{
+    std::stringstream ss{""};
+    bool              not_first = true;
+    for (auto const& p : bind_)
+    {
+        if (not_first)
+        {
+            ss << ",";
+        }
+        ss << p.first << "=" << p.second;
+    }
+    return static_cast<String>(ss.str());
+}
+
 template <typename T>
 template <typename R>
 void ConfigBind<T>::loadValue(ParameterParser& parser, R const& default_value)
@@ -235,6 +278,57 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, String, A> co
     if (parser.has(name()))
     {
         bind_ = parser.get(name());
+    }
+}
+
+template <typename T> void ConfigBind<T>::insertKeyValueInStringMap(StringMap& map, String const& part)
+{
+    auto   q = part.find('=');
+    String key{};
+    String value{};
+
+    if (q == String::npos)
+    {
+        llvm::errs() << "= not found.\n";
+        key = part;
+    }
+    else
+    {
+        key   = part.substr(0, q);
+        value = part.substr(q + 1, part.size() - q - 1);
+    }
+
+    map[key] = value;
+}
+
+template <typename T>
+template <typename A>
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringMap, A> const& default_value)
+{
+    if (!parser.has(name()))
+    {
+        bind_ = default_value;
+        return;
+    }
+
+    auto value = parser.get(name());
+
+    bind_.clear();
+    std::size_t last_p = 0;
+    auto        p      = value.find(',', last_p);
+    while (p != String::npos)
+    {
+        auto part = value.substr(last_p, p - last_p);
+        insertKeyValueInStringMap(bind_, part);
+
+        last_p = p + 1;
+        p      = value.find(',', last_p);
+    }
+
+    if (last_p < value.size())
+    {
+        auto part = value.substr(last_p, p - last_p);
+        insertKeyValueInStringMap(bind_, part);
     }
 }
 
