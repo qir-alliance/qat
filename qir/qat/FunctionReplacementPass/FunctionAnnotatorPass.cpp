@@ -17,9 +17,8 @@ bool FunctionAnnotatorPass::isRequired()
     return true;
 }
 
-llvm::PreservedAnalyses FunctionAnnotatorPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& mam)
+llvm::PreservedAnalyses FunctionAnnotatorPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
 {
-
     bool changed     = false;
     auto annotations = config_.injectedAnnotations();
 
