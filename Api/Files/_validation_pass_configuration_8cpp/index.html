@@ -705,7 +705,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
     else if (name == &quot;provider_7ee0&quot;)
     {
         // Supported LLVM types: i64 (integer), double, i1 (bool), %Qubit*, %Result*.
-        // Supported LLVM instructions: ret, br, add, sub, mul, and, or, xor, lshr, shl, icmp eq, icmp
+        // Supported LLVM instructions: ret, br, phi, add, sub, mul, and, or, xor, lshr, shl, icmp eq, icmp
         // ne, icmp ule, icmp ult, icmp uge, icmp ugt. Restrictions: rotation convention using radians,
         // ret should appear only once (no conditional early return). Supported quantum intrinsic
         // functions:
@@ -729,8 +729,9 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
         profile.allow_internal_calls_     = false;
         profile.allowlist_external_calls_ = true;
         profile.allowlist_opcodes_        = true;
-        profile.opcodes_ = OpcodeSet{{&quot;call&quot;}, {&quot;ret&quot;}, {&quot;inttoptr&quot;}, {&quot;br&quot;},  {&quot;add&quot;},  {&quot;sub&quot;},    {&quot;mul&quot;}, {&quot;and&quot;},
-                                     {&quot;or&quot;},   {&quot;xor&quot;}, {&quot;lshr&quot;},     {&quot;shl&quot;}, {&quot;icmp&quot;}, {&quot;select&quot;}, {&quot;zext&quot;}};
+        profile.opcodes_ =
+            OpcodeSet{{&quot;call&quot;}, {&quot;ret&quot;}, {&quot;inttoptr&quot;}, {&quot;br&quot;},   {&quot;phi&quot;}, {&quot;add&quot;},  {&quot;sub&quot;},    {&quot;mul&quot;},
+                      {&quot;and&quot;},  {&quot;or&quot;},  {&quot;xor&quot;},      {&quot;lshr&quot;}, {&quot;shl&quot;}, {&quot;icmp&quot;}, {&quot;select&quot;}, {&quot;zext&quot;}};
         profile.external_calls_ = Set{
             &quot;__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)&quot;,
             &quot;__quantum__qis__cz__body:void (%Qubit*, %Qubit*)&quot;,
@@ -883,7 +884,7 @@ bool ValidationPassConfiguration::allowUndef() const
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 July 2022 at 08:13:23 UTC</p></div>
+<p>Updated on  3 August 2022 at 00:40:38 UTC</p></div>
 </div>
           </div>
         </main>
