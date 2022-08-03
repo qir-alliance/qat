@@ -141,7 +141,7 @@ template <typename T> void ConfigBind<T>::alterNameBasedOnType(bool const& defau
     }
 }
 
-template <typename T> void ConfigBind<T>::alterNameBasedOnType(StringMap const& default_value)
+template <typename T> void ConfigBind<T>::alterNameBasedOnType(StringMap const& /*default_value*/)
 {
     std::stringstream ss{""};
     bool              not_first = true;
