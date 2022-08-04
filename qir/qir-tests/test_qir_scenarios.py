@@ -11,7 +11,9 @@ logger = logging.getLogger(__name__)
 
 
 def run_scenario(name, profile, directory):
-    files = glob.glob(os.path.join(directory, "*.input.ll"))
+    files = [
+        x for x in reversed(sorted(glob.glob(os.path.join(directory, "*.input.ll"))))
+    ]
     args = []
     qat_binary = os.environ.get("QAT_BINARY")
 
