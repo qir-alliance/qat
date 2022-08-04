@@ -1,11 +1,11 @@
+import glob
+import json
 import logging
 import os
 import subprocess
 
 import pytest
-import glob
 from scenario_tests import all_scenarios as SCENARIOS
-import json
 
 logger = logging.getLogger(__name__)
 
@@ -15,20 +15,15 @@ def run_scenario(name, profile, directory):
     args = []
     qat_binary = os.environ.get("QAT_BINARY")
 
-    output_file=None
+    output_file = None
     if os.path.isfile(os.path.join(directory, "output.ll")):
         output_file = os.path.join(directory, "output.ll")
 
-    output = {
-        "stdoutContains": "",
-        "stderrContains": "",
-        "expectFail": False
-    }
+    output = {"stdoutContains": "", "stderrContains": "", "expectFail": False}
 
     if os.path.isfile(os.path.join(directory, "output.json")):
-        with open(os.path.join(directory, "output.json"),"r") as fb:
+        with open(os.path.join(directory, "output.json"), "r") as fb:
             output = json.loads(fb.read())
-
 
     cmd = [qat_binary, "-S", "--apply"] + args + files
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -40,11 +35,10 @@ def run_scenario(name, profile, directory):
     if output["expectFail"]:
         ret = not ret
 
-    if not output["stdoutContains"]  in out:
+    if not output["stdoutContains"] in out:
         ret = False
-    if not output["stderrContains"]  in errs:        
+    if not output["stderrContains"] in errs:
         ret = False
-
 
     compare_to = None
     if output_file:
@@ -79,10 +73,10 @@ def run_scenario(name, profile, directory):
             for line in compare_to.strip().split("\n"):
                 print("    | {}".format(line))
 
-        if not output["stdoutContains"]  in out:
+        if not output["stdoutContains"] in out:
             print("\nExpected '{}' in stdout".format(output["stdoutContains"]))
 
-        if not output["stderrContains"]  in errs:
+        if not output["stderrContains"] in errs:
             print("\nExpected '{}' in stderr".format(output["stderrContains"]))
 
     return ret
@@ -91,8 +85,4 @@ def run_scenario(name, profile, directory):
 @pytest.mark.parametrize("test_name", SCENARIOS)
 def test_qat_scenarios(test_name, request):
     input_directory = request.getfixturevalue(test_name)
-    assert run_scenario(
-        test_name,
-        "default",
-        input_directory
-    )
+    assert run_scenario(test_name, "default", input_directory)

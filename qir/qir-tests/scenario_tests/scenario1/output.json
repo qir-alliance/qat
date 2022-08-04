@@ -1,5 +1,5 @@
 {
-	"stderrContains": "",
-	"stdoutContains": "",
-	"expectFail": false
+  "stderrContains": "",
+  "stdoutContains": "",
+  "expectFail": false
 }
