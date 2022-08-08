@@ -77,6 +77,7 @@ load("@llvm_toolchain//:toolchains.bzl", "llvm_register_toolchains")
 llvm_register_toolchains()
 
 register_toolchains("//toolchain:clang-darwin-arm64")
+register_toolchains("//toolchain:clang-darwin-x86_64")
 
 # ================================================================
 # LLVM
