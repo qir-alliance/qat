@@ -1,6 +1,9 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//:config/microsoft.bzl", "ms_cc_binary", "ms_cc_library")
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("@io_bazel_rules_docker//cc:image.bzl", "cc_image")
 
 cc_library(
     name = "Llvm",
@@ -423,3 +426,19 @@ ms_cc_binary(
         "//qir/qat:Version",
     ],
 )
+
+pkg_tar(
+    name = "qat-tar",
+    srcs = [":qat"],
+    mode = "0755",
+    package_dir = "/opt",
+    visibility = ["//visibility:public"],
+)
+
+# container_image(
+#  name = "qat-image",
+#  base = "@alpine-linux//image",
+#  cmd = ["/opt/qat"],
+# #    mode = "777",
+#  tars = [":qat-tar"],
+# )
