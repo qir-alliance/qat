@@ -100,5 +100,3 @@ cc_toolchain_config = rule(
     attrs = {},
     provides = [CcToolchainConfigInfo],
 )
-
-

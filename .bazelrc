@@ -1,5 +1,6 @@
 # Platform independent configuration
 build --workspace_status_command "python config/workspace-status.py"
+build --incompatible_enable_cc_toolchain_resolution
 
 # We would turn this on globally, but unfortunattely
 # it kills external libraries
@@ -10,7 +11,6 @@ build --workspace_status_command "python config/workspace-status.py"
 # build --cxxopt=-Werror
 # Use `-Wall` and `-Werror` for Clang.
 # build:generic_clang --copt=-Wall --copt=-Werror --host_copt=-Wall --host_copt=-Werror
-
 
 # build --disk_cache=~/.cache/bazel/
 build --features=external_include_paths

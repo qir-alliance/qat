@@ -3,7 +3,7 @@ platform(
     constraint_values = [
         "@platforms//cpu:arm64",
         "@platforms//os:osx",
-    ]
+    ],
 )
 
 platform(
