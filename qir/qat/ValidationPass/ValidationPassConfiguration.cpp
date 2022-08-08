@@ -127,7 +127,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
     else if (name == "provider_7ee0")
     {
         // Supported LLVM types: i64 (integer), double, i1 (bool), %Qubit*, %Result*.
-        // Supported LLVM instructions: ret, br, add, sub, mul, and, or, xor, lshr, shl, icmp eq, icmp
+        // Supported LLVM instructions: ret, br, phi, add, sub, mul, and, or, xor, lshr, shl, icmp eq, icmp
         // ne, icmp ule, icmp ult, icmp uge, icmp ugt. Restrictions: rotation convention using radians,
         // ret should appear only once (no conditional early return). Supported quantum intrinsic
         // functions:
@@ -151,8 +151,9 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
         profile.allow_internal_calls_     = false;
         profile.allowlist_external_calls_ = true;
         profile.allowlist_opcodes_        = true;
-        profile.opcodes_ = OpcodeSet{{"call"}, {"ret"}, {"inttoptr"}, {"br"},  {"add"},  {"sub"},    {"mul"}, {"and"},
-                                     {"or"},   {"xor"}, {"lshr"},     {"shl"}, {"icmp"}, {"select"}, {"zext"}};
+        profile.opcodes_ =
+            OpcodeSet{{"call"}, {"ret"}, {"inttoptr"}, {"br"},   {"phi"}, {"add"},  {"sub"},    {"mul"},
+                      {"and"},  {"or"},  {"xor"},      {"lshr"}, {"shl"}, {"icmp"}, {"select"}, {"zext"}};
         profile.external_calls_ = Set{
             "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
             "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
@@ -177,6 +178,9 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
             "__quantum__rt__tuple_end_record_output:void ()",
             "__quantum__rt__array_start_record_output:void ()",
             "__quantum__rt__array_end_record_output:void ()",
+            "__quantum__rt__result_record_output:void (%Result*, i8*)",
+            "__quantum__rt__bool_record_output:void (i1, i8*)",
+            "__quantum__rt__int_record_output:void (i64, i8*)",
 
         };
         profile.allowlist_pointer_types_ = true;

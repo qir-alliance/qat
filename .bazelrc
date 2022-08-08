@@ -2,15 +2,13 @@
 build --workspace_status_command "python config/workspace-status.py"
 build --incompatible_enable_cc_toolchain_resolution
 
-# We would turn this on globally, but unfortunattely
+# We would turn this on globally, but unfortunately
 # it kills external libraries
 # build --cxxopt=-Wall
 # build --cxxopt=-Wextra
 # build --cxxopt=-Wconversion
 # build --cxxopt=-Wpedantic
 # build --cxxopt=-Werror
-# Use `-Wall` and `-Werror` for Clang.
-# build:generic_clang --copt=-Wall --copt=-Werror --host_copt=-Wall --host_copt=-Werror
 
 # build --disk_cache=~/.cache/bazel/
 build --features=external_include_paths
@@ -21,6 +19,9 @@ build:generic_clang --repo_env=CC=clang
 # C++17 standard version is required.
 build:generic_clang --cxxopt=-std=c++17
 build:generic_clang --host_cxxopt=-std=c++17
+
+# Use `-Wall` and `-Werror` for Clang.
+# build:generic_clang --copt=-Wall --copt=-Werror --host_copt=-Wall --host_copt=-Werror
 
 # The Clang available on MacOS has a warning that isn't clean on MLIR code. The
 # warning doesn't show up with more recent Clangs, so just disable for now.
@@ -61,7 +62,6 @@ build:msvc --copt=/wd4805 --host_copt=/wd4805 # comparisons between bool and int
 build:release --copt=-DNDEBUG
 build:release --copt=-Os 
 build:release --copt=-fno-unroll-loops
-# RTTI used in config, so cannot be disabled at this point
 # build:release --copt=-fno-rtti
 # build:release --copt=-mllvm 
 # # build:release --copt=-inline-threshold=n
@@ -86,6 +86,8 @@ build:debug --apple_generate_dsym
 # To manually set the target CPU, use
 # build --apple_platform_type=macos
 # build --cpu=darwin_arm64 --host_cpu=darwin_arm64
+# build --apple_platform_type=macos
+# build --cpu=darwin_x86_64 --host_cpu=darwin_x86_64
 
 # Tries to import additional config
 try-import %workspace%/.bazelrc.configure

@@ -45,12 +45,12 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 class MockLogger : public LogCollection
 {
   public:
-    void errorNoQubitsPresent(llvm::Value*) override
+    void errorNoQubitsPresent(llvm::Value*, String const&) override
     {
         raise_no_qubits_error_ = true;
     }
 
-    void errorNoResultsPresent(llvm::Value*) override
+    void errorNoResultsPresent(llvm::Value*, String const&) override
     {
         raise_no_results_error_ = true;
     }

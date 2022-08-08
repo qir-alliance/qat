@@ -10,8 +10,6 @@ namespace microsoft::quantum
 
 void ConfigurationManager::setupArguments(ParameterParser& parser)
 {
-    parameters_.clear();
-
     for (auto& section : config_sections_)
     {
         if (section.enabled_by_default)
@@ -41,7 +39,7 @@ void ConfigurationManager::configure(ParameterParser& parser, bool experimental_
 
     for (auto& section : config_sections_)
     {
-        if (section.enabled_by_default)
+        if (section.enabled_by_default || parser.has("disable-" + section.id))
         {
             *section.active = (parser.get("disable-" + section.id, "false") != "true");
         }
@@ -181,6 +179,33 @@ void ConfigurationManager::disableSectionByDefault()
     }
 
     config_sections_.back().enabled_by_default = false;
+}
+
+void ConfigurationManager::disableSectionById(String const& id)
+{
+    for (auto& section : config_sections_)
+    {
+        if (section.id == id)
+        {
+            section.enabled_by_default = false;
+            return;
+        }
+    }
+
+    throw std::runtime_error("Section '" + id + "' not found");
+}
+
+void ConfigurationManager::enableSectionById(String const& id)
+{
+    for (auto& section : config_sections_)
+    {
+        if (section.id == id)
+        {
+            section.enabled_by_default = true;
+        }
+    }
+
+    throw std::runtime_error("Section '" + id + "' not found");
 }
 
 DeferredValue::DeferredValuePtr ConfigurationManager::getParameter(String const& name)

@@ -26,9 +26,9 @@ http_archive(
 
 ## `bazel-toolchain`:
 # LLVM_TOOLCHAIN_VER = "f353e0a15b96f5aaf915dcc0772794faba899e38"
-# 
+#
 # LLVM_TOOLCHAIN_SHA = "b0d6a9fe9b962939c01e2e5ad6dae5d7843d9c8c24df8258ea433634e9b11728"
-# 
+#
 # http_archive(
 #     name = "com_grail_bazel_toolchain",
 #     canonical_id = LLVM_TOOLCHAIN_VER,
@@ -36,21 +36,21 @@ http_archive(
 #     strip_prefix = "bazel-toolchain-{ver}".format(ver = LLVM_TOOLCHAIN_VER),
 #     url = "https://github.com/rrbutani/bazel-toolchain/archive/{ver}.tar.gz".format(ver = LLVM_TOOLCHAIN_VER),
 # )
-# 
+#
 # load("@com_grail_bazel_toolchain//toolchain:deps.bzl", "bazel_toolchain_dependencies")
-# 
+#
 # bazel_toolchain_dependencies()
-# 
+#
 # ## Toolchains:
 # load("@com_grail_bazel_toolchain//toolchain:rules.bzl", "llvm_toolchain")
-# 
+#
 # llvm_toolchain(
 #     name = "llvm_toolchain",
 #     # NOTE: This is required to set up toolchains outside of `@llvm_toolchain`, unfortunately
 #     absolute_paths = True,
 #     llvm_version = "12.0.0",
 # )
-# 
+#
 # # Not sure if there's a *right* place to grab the macOS SDKs, but this certainly works:
 # #
 # # TODO: this is massive (~640MB); we only need a fraction of the things in `/usr/lib`
@@ -71,22 +71,21 @@ http_archive(
 #     strip_prefix = "MacOSX11.3.sdk",
 #     url = "https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.3.sdk.tar.xz",
 # )
-# 
+#
 # load("@llvm_toolchain//:toolchains.bzl", "llvm_register_toolchains")
-# 
+#
 # llvm_register_toolchains()
-# 
+#
 # register_toolchains(
-# #    "//toolchain:clang-darwin-x86", 
+# #    "//toolchain:clang-darwin-x86",
 # #    "//toolchain:clang-darwin-arm64"
 # )
 
 register_toolchains(
-        "//toolchain:clang-linux-x86"
-# #    "//toolchain:clang-darwin-x86", 
-# #    "//toolchain:clang-darwin-arm64"
+    "//toolchain:clang-linux-x86",
+    # #    "//toolchain:clang-darwin-x86",
+    # #    "//toolchain:clang-darwin-arm64"
 )
-
 
 # ================================================================
 # LLVM
@@ -116,6 +115,18 @@ llvm_configure(name = "llvm-project")
 # instead want to configure them using the macros in the corresponding bzl
 # files.
 llvm_disable_optional_support_deps()
+
+# ================================================================
+# Python
+# ================================================================
+rules_python_version = "740825b7f74930c62f44af95c9a4c1bd428d2c53"  # Latest @ 2021-06-23
+
+http_archive(
+    name = "rules_python",
+    sha256 = "09a3c4791c61b62c2cbc5b2cbea4ccc32487b38c7a2cc8f87a794d7a659cc742",
+    strip_prefix = "rules_python-{}".format(rules_python_version),
+    url = "https://github.com/bazelbuild/rules_python/archive/{}.zip".format(rules_python_version),
+)
 
 # ================================================================
 # Google

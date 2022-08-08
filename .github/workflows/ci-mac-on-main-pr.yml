@@ -46,21 +46,15 @@ jobs:
           python3 -c "import autopep8;print(autopep8.__file__)"
           dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.24.201332
           npm install -g prettier@2.2.1
-          chmod +x manage
+
           exec -l $SHELL
 
-      - name: "Checking format"
+      - name: "Building"
         run: |
-          ./manage stylecheck
-        env:
-          LDFLAGS: "-L/usr/local/opt/llvm@13/lib -Wl,-rpath,/usr/local/opt/llvm@13/lib"
-          CPPFLAGS: "-I/usr/local/opt/llvm@13/include"
-          CC: clang
-          CXX: clang++
-
-      - name: "Running unit tests"
-        run: |
-          ./manage test
+          mkdir Debug
+          cd Debug
+          cmake ..
+          make
         env:
           LDFLAGS: "-L/usr/local/opt/llvm@13/lib -Wl,-rpath,/usr/local/opt/llvm@13/lib"
           CPPFLAGS: "-I/usr/local/opt/llvm@13/include"
@@ -136,14 +130,5 @@ jobs:
           python3 -m pytest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CC: clang
-          CXX: clang++
-
-      - name: "Performing static analysis"
-        run: |
-          ./manage lint
-        env:
-          LDFLAGS: "-L/usr/local/opt/llvm@13/lib -Wl,-rpath,/usr/local/opt/llvm@13/lib"
-          CPPFLAGS: "-I/usr/local/opt/llvm@13/include"
           CC: clang
           CXX: clang++
