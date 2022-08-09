@@ -48,16 +48,9 @@ build:msvc --copt=/wd4805 --host_copt=/wd4805 # comparisons between bool and int
 # build:msvc --linkopt=/IGNORE:4001 --host_linkopt=/IGNORE:4001 # no object files
 
 
-# Ideally these should be moved to user configuration
-
 build:release --copt=-DNDEBUG
 build:release --copt=-Os 
 build:release --copt=-fno-unroll-loops
-# build:release --copt=-fno-rtti
-# build:release --copt=-mllvm 
-# # build:release --copt=-inline-threshold=n
-# # build:release --copt=-flto
-# # build:release --copt=-flto=thin
 
 build:debug -c dbg
 build:debug --copt=-g 
@@ -72,7 +65,15 @@ build:debug --apple_generate_dsym
 
 # ## SEE https://github.com/RobotLocomotion/drake/tree/master/tools/dynamic_analysis
 
-
+# Configuration for generating 
+build:coverage --repo_env=CC=clang
+build:coverage --cxxopt=-std=c++17
+build:coverage --host_cxxopt=-std=c++17
+build:coverage --test_env=VERBOSE_COVERAGE=1 
+build:coverage --test_env=GCOV_PREFIX_STRIP=10 
+build:coverage --test_output=all 
+build:coverage --nocache_test_results 
+build:coverage --combined_report=lcov
 
 # To manually set the target CPU, use
 # build --apple_platform_type=macos
