@@ -24,7 +24,6 @@ http_archive(
     ],
 )
 
-
 register_toolchains(
     "//toolchain:clang-linux-x86",
 )
@@ -92,29 +91,27 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.21.0/rules_docker-v0.21.0.tar.gz"],
 )
 
-
 load(
     "@io_bazel_rules_docker//repositories:repositories.bzl",
     container_repositories = "repositories",
 )
+
 container_repositories()
 
 load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 
 # TODO: Tool chain breaks if this is added:
 container_deps()
-# 
+#
 
 load(
- "@io_bazel_rules_docker//container:container.bzl",
- "container_pull",
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_pull",
 )
 
 container_pull(
- name = "alpine-linux",
- registry = "index.docker.io",
- repository = "library/ubuntu",
- tag = "latest",
+    name = "alpine-linux",
+    registry = "index.docker.io",
+    repository = "library/ubuntu",
+    tag = "latest",
 )
-
-

@@ -1,9 +1,10 @@
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//:config/microsoft.bzl", "ms_cc_binary", "ms_cc_library")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
-load("@io_bazel_rules_docker//cc:image.bzl", "cc_image")
+
 
 cc_library(
     name = "Llvm",
@@ -435,10 +436,11 @@ pkg_tar(
     visibility = ["//visibility:public"],
 )
 
+# Still missing a Go cross toolchain for this to work
 # container_image(
-#  name = "qat-image",
-#  base = "@alpine-linux//image",
-#  cmd = ["/opt/qat"],
-# #    mode = "777",
-#  tars = [":qat-tar"],
+#     name = "qat-image",
+#     base = "@alpine-linux//image",
+#     cmd = ["/opt/qat"],
+#     #    mode = "777",
+#     tars = [":qat-tar"],
 # )

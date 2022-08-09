@@ -24,7 +24,7 @@ toolchain(
     name = "clang-linux-x86",
     exec_compatible_with = [
         "@platforms//os:osx",
-        "@platforms//cpu:arm64",
+        "@platforms//cpu:aarch64",
     ],
     target_compatible_with = [
         "@platforms//os:linux",

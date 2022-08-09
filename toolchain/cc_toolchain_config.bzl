@@ -1,7 +1,4 @@
-# NEW
 load("@bazel_tools//tools/build_defs/cc:action_names.bzl", "ACTION_NAMES")
-
-# NEW
 load(
     "@bazel_tools//tools/cpp:cc_toolchain_config_lib.bzl",
     "feature",
@@ -11,7 +8,6 @@ load(
 )
 
 all_link_actions = [
-    # NEW
     ACTION_NAMES.cpp_link_executable,
     ACTION_NAMES.cpp_link_dynamic_library,
     ACTION_NAMES.cpp_link_nodeps_dynamic_library,
@@ -54,7 +50,6 @@ def _impl(ctx):
     ]
 
     features = [
-        # NEW
         feature(
             name = "default_linker_flags",
             enabled = True,
@@ -89,7 +84,7 @@ def _impl(ctx):
         target_system_name = "local",
         target_cpu = "k8",
         target_libc = "unknown",
-        compiler = "clang",
+        compiler = "gcc",
         abi_version = "unknown",
         abi_libc_version = "unknown",
         tool_paths = tool_paths,

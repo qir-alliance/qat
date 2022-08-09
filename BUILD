@@ -14,7 +14,7 @@ platform(
     name = "apple-silicon",
     constraint_values = [
         "@//:glibc",
-        "@platforms//cpu:arm64",
+        "@platforms//cpu:aarch64",
         "@platforms//os:osx",
     ],
 )
