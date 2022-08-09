@@ -345,16 +345,16 @@ llvm::PreservedAnalyses GroupingPass::run(llvm::Module& module, llvm::ModuleAnal
 
         expandBasedOnSource(module, block);
 
-        for (auto* block : quantum_blocks_)
+        for (auto* readout_block : quantum_blocks_)
         {
-            expandBasedOnDest(module, block, true, "readout");
+            expandBasedOnDest(module, readout_block, true, "readout");
         }
 
         // Last classical block does not contain any loads
         classical_blocks_.pop_back();
-        for (auto* block : classical_blocks_)
+        for (auto* load_block : classical_blocks_)
         {
-            expandBasedOnDest(module, block, false, "load");
+            expandBasedOnDest(module, load_block, false, "load");
         }
     }
 
@@ -365,16 +365,16 @@ llvm::PreservedAnalyses GroupingPass::run(llvm::Module& module, llvm::ModuleAnal
 
         expandBasedOnSource(module, block);
 
-        for (auto* block : quantum_blocks_)
+        for (auto* readout_block : quantum_blocks_)
         {
-            expandBasedOnDest(module, block, true, "readout");
+            expandBasedOnDest(module, readout_block, true, "readout");
         }
 
         // Last classical block does not contain any loads
         classical_blocks_.pop_back();
-        for (auto* block : classical_blocks_)
+        for (auto* load_block : classical_blocks_)
         {
-            expandBasedOnDest(module, block, false, "load");
+            expandBasedOnDest(module, load_block, false, "load");
         }
     }
 

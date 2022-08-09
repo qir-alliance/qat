@@ -23,7 +23,7 @@ class ConfigurableProfileGenerator : public ProfileGenerator
     enum class SetupMode
     {
         DoNothing,
-        SetupPipeline,
+        SetupPipeline
     };
 
     /// Default constructor. This constructor adds components for rule transformation and LLVM passes.

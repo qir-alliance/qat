@@ -124,7 +124,6 @@ AllocationAnalysisPass::Result AllocationAnalysisPass::run(
                     ret.largest_result_index = ret.largest_result_index < n ? n : ret.largest_result_index;
                     break;
                 case ResourceType::NotResource:
-                default:
                     break;
                 }
             }

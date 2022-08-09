@@ -10,7 +10,7 @@
 
 using namespace microsoft::quantum;
 
-extern "C" void loadComponent(ProfileGenerator* generator);
+extern "C" void loadComponent(ProfileGenerator* profile_generator);
 void            activateAllocatorReplacement(RuleSet& ruleset);
 void            removeArrayCopies(RuleSet& ruleset);
 void            replaceAccess(RuleSet& ruleset);
@@ -201,9 +201,9 @@ void removeArrayCopies(RuleSet& ruleset)
     ruleset.addRule({call("__quantum__rt__array_copy", "array"_cap = _, _), replacer});
 }
 
-extern "C" void loadComponent(ProfileGenerator* generator)
+extern "C" void loadComponent(ProfileGenerator* profile_generator)
 {
-    generator->registerProfileComponent<CArrayMapConfig>(
+    profile_generator->registerProfileComponent<CArrayMapConfig>(
         "c-array-map",
         [](CArrayMapConfig const& cfg, ProfileGenerator& generator, Profile& profile)
         {

@@ -176,7 +176,6 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function& function, l
                     }
 
                     // Removing operand nonnull if present
-                    auto call_instr = llvm::dyn_cast<llvm::CallInst>(&instr);
                     if (call_instr)
                     {
                         auto attrs   = call_instr->getAttributes();

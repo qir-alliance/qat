@@ -85,7 +85,7 @@ class ILogger
         Info,
         Warning,
         Error,
-        InternalError,
+        InternalError
     };
 
     /// Struct to hold a message together with its type and location

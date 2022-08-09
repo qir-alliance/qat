@@ -88,7 +88,6 @@ llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function& function, llvm::Func
 
             break;
         case AllocationAnalysis::NotResource:
-        default:
             continue;
         }
 

@@ -5,11 +5,21 @@ Target definitions to enable stricter C++ standard for internal libraries
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 _CLANG_ADDITIONAL_COPTS = [
+    # Enable all warnings be default
     "-Wall",
     "-Wextra",
+    "-Weverything",
     "-Wconversion",
     "-Wpedantic",
     "-Werror",
+    # ... and then selectively disable those we do not need
+    "-Wno-pre-c++17-compat",
+    "-Wno-c++98-compat",
+    "-Wno-padded",
+    "-Wno-documentation-unknown-command",
+    "-Wno-exit-time-destructors",
+    "-Wno-global-constructors",
+    "-Wno-c++98-compat-pedantic",
 ]
 
 def ms_cc_library(**kwargs):

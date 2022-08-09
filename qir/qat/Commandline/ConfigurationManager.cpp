@@ -202,6 +202,7 @@ void ConfigurationManager::enableSectionById(String const& id)
         if (section.id == id)
         {
             section.enabled_by_default = true;
+            return;
         }
     }
 

@@ -145,6 +145,19 @@ ms_cc_library(
 )
 
 ms_cc_library(
+    name = "DivisionByZero",
+    srcs = glob(["DivisionByZeroPass/*.cpp"]),
+    hdrs = glob(["DivisionByZeroPass/*.hpp"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//qir/qat:Llvm",
+        "//qir/qat:Logging",
+        "//qir/qat:QatTypes",
+        "//qir/qat:ValidationPass",
+    ],
+)
+
+ms_cc_library(
     name = "Validator",
     srcs = glob(["Validator/*.cpp"]),
     hdrs = glob(["Validator/*.hpp"]),
