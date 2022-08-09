@@ -5,11 +5,11 @@ Target definitions to enable stricter C++ standard for internal libraries
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 _CLANG_ADDITIONAL_COPTS = [
-    #    "-Wall",
-    #    "-Wextra",
-    #    "-Wconversion",
-    #    "-Wpedantic",
-    #    "-Werror",
+        "-Wall",
+        "-Wextra",
+        "-Wconversion",
+        "-Wpedantic",
+        "-Werror",
 ]
 
 def ms_cc_library(**kwargs):
