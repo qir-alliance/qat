@@ -41,6 +41,7 @@ class ILogger
         }
 
         Location(Location const& source) = default;
+        Location& operator=(Location const& source) = default;
 
         String& llvmHint()
         {

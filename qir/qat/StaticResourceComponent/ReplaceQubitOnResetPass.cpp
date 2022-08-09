@@ -114,7 +114,7 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function& function, l
                     uint64_t remapped_index = 0;
 
                     // Getting remapped index based on resource type
-                    if (type == Qubit)
+                    if (type == AllocationAnalysis::QubitResource)
                     {
                         if (qubits_mapping.find(n) != qubits_mapping.end())
                         {
@@ -134,7 +134,7 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function& function, l
                             continue;
                         }
                     }
-                    else if (type == Result)
+                    else if (type == AllocationAnalysis::ResultResource)
                     {
                         if (results_mapping.find(n) != results_mapping.end())
                         {
