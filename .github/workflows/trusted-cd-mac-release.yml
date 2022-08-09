@@ -33,17 +33,7 @@ jobs:
           python3 -c "import autopep8;print(autopep8.__file__)"
           dotnet tool install --global Microsoft.Quantum.IQSharp --version 0.20.2110171573
           npm install -g prettier@2.2.1
-          chmod +x manage
           exec -l $SHELL
-
-      - name: "Running unit tests"
-        run: |
-          ./manage test
-        env:
-          LDFLAGS: "-L/usr/local/opt/llvm@13/lib -Wl,-rpath,/usr/local/opt/llvm@13/lib"
-          CPPFLAGS: "-I/usr/local/opt/llvm@13/include"
-          CC: clang
-          CXX: clang++
 
       - name: "Build project"
         run: |

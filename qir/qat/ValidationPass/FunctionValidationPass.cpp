@@ -27,12 +27,12 @@ llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function& function, ll
 
     if (config_.requiresQubits() && function_details.usage_qubit_counts == 0)
     {
-        logger_->errorNoQubitsPresent(&function);
+        logger_->errorNoQubitsPresent(&function, config_.profileName());
     }
 
     if (config_.requiresResults() && function_details.usage_result_counts == 0)
     {
-        logger_->errorNoResultsPresent(&function);
+        logger_->errorNoResultsPresent(&function, config_.profileName());
     }
 
     for (auto& block : function)

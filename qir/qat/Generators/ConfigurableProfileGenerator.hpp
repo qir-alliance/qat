@@ -20,11 +20,16 @@ class ConfigurableProfileGenerator : public ProfileGenerator
 {
   public:
     using ConfigureFunction = std::function<void(RuleSet&)>; ///< Function type that configures a rule set.
+    enum class SetupMode
+    {
+        DoNothing,
+        SetupPipeline,
+    };
 
     /// Default constructor. This constructor adds components for rule transformation and LLVM passes.
     /// These are configurable through the corresponding configuration classes which can be access
     /// through the configuration manager.
-    ConfigurableProfileGenerator();
+    explicit ConfigurableProfileGenerator(SetupMode const& mode = SetupMode::SetupPipeline);
 
     /// The constructor takes a lambda function which configures the rule set. This
     /// function is invoked during the creation of the generation module. This constructor

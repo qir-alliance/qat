@@ -22,7 +22,11 @@ linux-docker:
 	docker build -f Docker/CI.Ubuntu22.dockerfile -t qir-passes-ubuntu:latest .
 
 linux-ci: linux-docker
-	docker run -it -v ${PWD}:/src --rm -t qir-passes-ubuntu:latest ./manage runci
+	docker run -it -v ${PWD}:/src --rm -t qir-passes-ubuntu:latest /bin/bash
+
+format-in-docker: linux-docker
+	docker run -it --rm -v ${PWD}:/src/ -t qir-passes-ubuntu:latest ./manage stylecheck --fix-issues
+
 
 test-examples:
 	mkdir -p Debug

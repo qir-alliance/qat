@@ -21,7 +21,7 @@ namespace microsoft::quantum
 template <typename T> class ConfigBind : public IConfigBind
 {
   public:
-    using Type = T;
+    using Type = typename std::decay<T>::type;
 
     /// Helper template to conditionally disable implementation unless a specific type is used.
     template <typename A, typename B, typename R>
@@ -59,6 +59,9 @@ template <typename T> class ConfigBind : public IConfigBind
 
     /// Pointer to underlying data.
     void* pointer() const override;
+
+    /// Pointer to underlying default value.
+    void* pointerDefaultValue() override;
 
     /// Type index of contained data
     std::type_index valueType() const override;
@@ -144,6 +147,7 @@ template <typename T> bool ConfigBind<T>::setupArguments(ParameterParser& parser
 
 template <typename T> bool ConfigBind<T>::configure(ParameterParser& parser, bool experimental_mode)
 {
+
     if (!isExperimental())
     {
         // For non-experimental parameters we load the default value
@@ -237,6 +241,11 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, String, A> co
 template <typename T> void* ConfigBind<T>::pointer() const
 {
     return static_cast<void*>(&bind_);
+}
+
+template <typename T> void* ConfigBind<T>::pointerDefaultValue()
+{
+    return static_cast<void*>(&default_value_);
 }
 
 template <typename T> std::type_index ConfigBind<T>::valueType() const

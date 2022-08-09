@@ -1,0 +1,96 @@
+# Platform independent configuration
+build --workspace_status_command "python config/workspace-status.py"
+
+# We would turn this on globally, but unfortunately
+# it kills external libraries
+# build --cxxopt=-Wall
+# build --cxxopt=-Wextra
+# build --cxxopt=-Wconversion
+# build --cxxopt=-Wpedantic
+# build --cxxopt=-Werror
+
+# build --disk_cache=~/.cache/bazel/
+build --features=external_include_paths
+
+# Set the default compiler to the `clang` binary on the `PATH`.
+build:generic_clang --repo_env=CC=clang
+
+# C++17 standard version is required.
+build:generic_clang --cxxopt=-std=c++17
+build:generic_clang --host_cxxopt=-std=c++17
+
+<<<<<<< HEAD
+# Use `-Wall` and `-Werror` for Clang.
+build:generic_clang --copt=-Wall --copt=-Werror --host_copt=-Wall --host_copt=-Werror
+
+# The Clang available on MacOS has a warning that isn't clean on MLIR code. The
+# warning doesn't show up with more recent Clangs, so just disable for now.
+build:generic_clang --cxxopt=-Wno-range-loop-analysis --host_cxxopt=-Wno-range-loop-analysis
+
+# Build errors are not a helpful way to enforce deprecation in-repo and it is
+# not the point of the Bazel build to catch usage of deprecated APIs.
+build:generic_clang --copt=-Wno-deprecated --host_copt=-Wno-deprecated
+
+=======
+>>>>>>> main
+
+# C++ 17
+build:msvc --cxxopt=/std:c++17
+build:msvc --host_cxxopt=/std:c++17
+
+# Other MSVC specific config
+build:msvc --copt=/w
+build:msvc --cxxopt=/w
+build:msvc --host_copt=/w
+build:msvc --host_cxxopt=/w
+
+# build:msvc --copt=/WX --host_copt=/WX    # Treat warnings as errors...
+# ...but disable the ones that are violated
+build:msvc --copt=/wd4141 --host_copt=/wd4141 # inline used more than once
+build:msvc --copt=/wd4244 --host_copt=/wd4244 # conversion type -> type
+build:msvc --copt=/wd4267 --host_copt=/wd4267 # conversion size_t -> type
+build:msvc --copt=/wd4273 --host_copt=/wd4273 # multiple definitions with different dllimport
+build:msvc --copt=/wd4319 --host_copt=/wd4319 # zero-extending after complement
+build:msvc --copt=/wd4624 --host_copt=/wd4624 # destructor was implicitly defined as deleted
+build:msvc --copt=/wd4804 --host_copt=/wd4804 # comparisons between bool and int
+build:msvc --copt=/wd4805 --host_copt=/wd4805 # comparisons between bool and int
+# build:msvc --linkopt=/WX --host_linkopt=/WX # Treat warnings as errors...
+# ...but disable the ones that are violated.
+# build:msvc --linkopt=/IGNORE:4001 --host_linkopt=/IGNORE:4001 # no object files
+
+
+# Ideally these should be moved to user configuration
+
+build:release --copt=-DNDEBUG
+build:release --copt=-Os 
+build:release --copt=-fno-unroll-loops
+# build:release --copt=-fno-rtti
+# build:release --copt=-mllvm 
+# # build:release --copt=-inline-threshold=n
+# # build:release --copt=-flto
+# # build:release --copt=-flto=thin
+
+build:debug -c dbg
+build:debug --copt=-g 
+build:debug --strip=never
+build:debug --copt=-UNDEBUG 
+build:debug --copt=-O0
+build:debug --features=asan
+# build:debug --features=ubsan
+build:debug --spawn_strategy=standalone
+build:debug --apple_enable_auto_dsym_dbg
+build:debug --apple_generate_dsym 
+
+# ## SEE https://github.com/RobotLocomotion/drake/tree/master/tools/dynamic_analysis
+
+
+
+# To manually set the target CPU, use
+# build --apple_platform_type=macos
+# build --cpu=darwin_arm64 --host_cpu=darwin_arm64
+# build --apple_platform_type=macos
+# build --cpu=darwin_x86_64 --host_cpu=darwin_x86_64
+
+# Tries to import additional config
+try-import %workspace%/.bazelrc.configure
+try-import %workspace%/.bazelrc.user

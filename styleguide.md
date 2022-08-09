@@ -4,12 +4,39 @@ This document sets out some light style requirements for contributing to QAT. In
 case you do not feel like reading this style guide, just run
 
 ```sh
-./manage runci
+trunk check
 ```
 
-from the `src/Passes` directory before making a pull request. This script
-enforces all requirements described below programmatically. You can then refer
-to this guide for an explanation for why and how.
+from the root directory before making a pull request. This script enforces all
+requirements described below programmatically. You can then refer to this guide
+for an explanation for why and how.
+
+In case you have formatting issues, the manage script do the majority of the
+formatting foryou. If your toolchain on your local machine is set up correctly,
+you can simply run
+
+```sh
+./manage stylecheck --fix-issues
+```
+
+to automatically format all source files in compliance with the styles chosen
+for this project. To avoid different versions of the tool chain creating
+different formats or complaining about different static issues, we have created
+a docker image to serve as "the source of truth". In case your toolchain differ,
+you can use the provided docker image, just running:
+
+```sh
+make format-in-docker
+```
+
+This will mount your local source directory and perform formatting of the code.
+Likewise, if you need to run CI in the docker image, you can run:
+
+```sh
+make linux-ci
+```
+
+which will execute `./manage runci` inside the docker image.
 
 ## Why do we need a style guide?
 
@@ -75,7 +102,7 @@ Prefer `#pragma once` over `#ifdef` protection.
 ## Code TODOs must contain owner name or Github issue
 
 ```sh
-./manage runci
+trunk check
 (...)
 Passes/src/OpsCounter/OpsCounter.cpp:39:21: error: missing username/bug in TODO [google-readability-todo,-warnings-as-errors]
                     // TODO: Fails to load if this is present
