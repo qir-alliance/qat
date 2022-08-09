@@ -37,6 +37,9 @@ test-examples:
 		cd qir/qsharp && \
 		make
 
+add-newlines-eof:
+	git ls-files -z "*.cpp" "*.hpp" | while IFS= read -rd '' f; do tail -c1 < "$f" | read -r _ || echo >> "$f"; done	
+
 
 clean:
 	rm -rf Release/
