@@ -85,7 +85,7 @@ void configureProvider4bf9Profile(ConfigurationManager& configuration_manager)
 
     configuration_manager.updateParameter("lower-switch", true);
     configuration_manager.updateParameter("should-eleminate-zext-i1", true);
-    configuration_manager.updateParameter("pull-records-back", false);
+    configuration_manager.updateParameter("use-one-shot-measurements", false);
 
     configuration_manager.updateParameter("annotate-qubit-use", true);
     configuration_manager.updateParameter("annotate-result-use", true);
@@ -163,7 +163,7 @@ void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
 
     configuration_manager.updateParameter("lower-switch", true);
     configuration_manager.updateParameter("should-eleminate-zext-i1", true);
-    configuration_manager.updateParameter("pull-records-back", false);
+    configuration_manager.updateParameter("use-one-shot-measurements", false);
 
     configuration_manager.updateParameter("annotate-qubit-use", true);
     configuration_manager.updateParameter("annotate-result-use", true);
@@ -241,7 +241,7 @@ void configureProviderb340Profile(ConfigurationManager& configuration_manager)
 
     configuration_manager.updateParameter("lower-switch", true);
     configuration_manager.updateParameter("should-eleminate-zext-i1", true);
-    configuration_manager.updateParameter("pull-records-back", true);
+    configuration_manager.updateParameter("use-one-shot-measurements", true);
 
     configuration_manager.updateParameter("annotate-qubit-use", true);
     configuration_manager.updateParameter("annotate-result-use", true);
