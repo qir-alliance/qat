@@ -28,6 +28,9 @@ format-in-docker: linux-docker
 	docker run -it --rm -v ${PWD}:/src/ -t qir-passes-ubuntu:latest ./manage stylecheck --fix-issues
 
 
+qat-docker:
+	docker run --rm -it --platform linux/amd64 bazel/qir/qat:qat-image /bin/sh
+
 test-examples:
 	mkdir -p Debug
 	cd Debug && cmake .. && make qat

@@ -1,8 +1,8 @@
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//:config/microsoft.bzl", "ms_cc_binary", "ms_cc_library")
-load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 
 cc_library(
     name = "Llvm",
@@ -439,9 +439,45 @@ ms_cc_binary(
     ],
 )
 
+ms_cc_binary(
+    name = "qat-x86",
+    srcs = [
+        "Apps/Qat/ProfileConfiguration.hpp",
+        "Apps/Qat/Qat.cpp",
+    ],
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//qir/qat:AllocationManager",
+        "//qir/qat:Commandline",
+        "//qir/qat:Generators",
+        "//qir/qat:GroupingPass",
+        "//qir/qat:Llvm",
+        "//qir/qat:Logging",
+        "//qir/qat:ModuleLoader",
+        "//qir/qat:PostTransformValidation",
+        "//qir/qat:PreTransformTrimming",
+        "//qir/qat:Profile",
+        "//qir/qat:QatConfig",
+        "//qir/qat:QatTypes",
+        "//qir/qat:RecordPullBackPass",
+        "//qir/qat:Rules",
+        "//qir/qat:StaticResourceComponent",
+        "//qir/qat:TransformationRulesPass",
+        "//qir/qat:ValidationPass",
+        "//qir/qat:Validator",
+        "//qir/qat:Version",
+    ],
+)
+
 pkg_tar(
     name = "qat-tar",
-    srcs = [":qat"],
+    srcs = [":qat-x86"],
     mode = "0755",
     package_dir = "/opt",
     visibility = ["//visibility:public"],
@@ -449,9 +485,9 @@ pkg_tar(
 
 # Still missing a Go cross toolchain for this to work
 container_image(
- name = "qat-image",
- base = "@alpine-linux//image",
- cmd = ["/opt/qat"],
- #    mode = "777",
- tars = [":qat-tar"],
+    name = "qat-image",
+    base = "@alpine-linux//image",
+    cmd = ["/opt/qat"],
+    #    mode = "777",
+    tars = [":qat-tar"],
 )

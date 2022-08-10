@@ -24,8 +24,11 @@ http_archive(
     ],
 )
 
+# ================================================================
+# C++ cross-compilation toolchains
+# ================================================================
 register_toolchains(
-    "//toolchain:clang-linux-x86",
+    "//toolchain:gcc-linux-x86",
 )
 
 # ================================================================
@@ -118,9 +121,7 @@ container_repositories()
 
 load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 
-# TODO: Tool chain breaks if this is added:
 container_deps()
-#
 
 load(
     "@io_bazel_rules_docker//container:container.bzl",

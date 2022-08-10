@@ -21,7 +21,7 @@ cc_toolchain(
 )
 
 toolchain(
-    name = "clang-linux-x86",
+    name = "gcc-linux-x86",
     exec_compatible_with = [
         "@platforms//os:osx",
         "@platforms//cpu:aarch64",
