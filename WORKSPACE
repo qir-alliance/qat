@@ -127,9 +127,10 @@ load(
     "container_pull",
 )
 
-container_pull(
-    name = "ubuntu-linux",
-    registry = "index.docker.io",
-    repository = "library/ubuntu",
-    tag = "latest",
-)
+# To enable building Docker images, add this
+# container_pull(
+#     name = "ubuntu-linux",
+#     registry = "index.docker.io",
+#     repository = "library/ubuntu",
+#     tag = "latest",
+# )

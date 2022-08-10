@@ -447,13 +447,14 @@ pkg_tar(
     visibility = ["//visibility:public"],
 )
 
-container_image(
-    name = "qat-image",
-    base = "@ubuntu-linux//image",
-    cmd = ["/opt/qat"],
-    target_compatible_with = [
-        "@platforms//cpu:x86_64",
-        "@platforms//os:linux",
-    ],
-    tars = [":qat-tar"],
-)
+# To enable building Docker images, add this
+# container_image(
+#     name = "qat-image",
+#     base = "@ubuntu-linux//image",
+#     cmd = ["/opt/qat"],
+#     target_compatible_with = [
+#         "@platforms//cpu:x86_64",
+#         "@platforms//os:linux",
+#     ],
+#     tars = [":qat-tar"],
+# )
