@@ -21,7 +21,7 @@ build:generic_clang --cxxopt=-std=c++17
 build:generic_clang --host_cxxopt=-std=c++17
 
 # Use `-Wall` and `-Werror` for Clang.
-build:generic_clang --copt=-Wall --copt=-Werror --host_copt=-Wall --host_copt=-Werror
+# build:generic_clang --copt=-Wall --copt=-Werror --host_copt=-Wall --host_copt=-Werror
 
 # C++ 17
 build:msvc --cxxopt=/std:c++17

@@ -8,10 +8,10 @@ _CLANG_ADDITIONAL_COPTS = [
     # Enable all warnings be default
     "-Wall",
     "-Wextra",
-    "-Weverything",
+#    "-Weverything",
     "-Wconversion",
     "-Wpedantic",
-    "-Werror",
+#    "-Werror",
     # ... and then selectively disable those we do not need
     "-Wno-pre-c++17-compat",
     "-Wno-c++98-compat",
