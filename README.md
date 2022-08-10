@@ -35,7 +35,8 @@ is designed to work with all of them.
 ## Building
 
 For full instructions on dependencies and how to build, follow
-[these instructions](./docs/src/UserGuide/BuildingLibrary.md). In summary, the executable is built using `baslisk`:
+[these instructions](./docs/src/UserGuide/BuildingLibrary.md). In summary, the
+executable is built using `baslisk`:
 
 ```sh
 bazelisk run //qir/qat:qat --config generic_clang --config release
@@ -47,7 +48,8 @@ and the Ubuntu based Doker image can be built:
 bazelisk run //qir/qat:qat-image --config generic_clang --config release  --platforms=@//:linux-x86
 ```
 
-This command will cross compile the `qat` executable for `linux-x86` and add it to a docker image named `bazel/qir/qat:qat-image`.
+This command will cross compile the `qat` executable for `linux-x86` and add
+it to a docker image named `bazel/qir/qat:qat-image`.
 
 ## Getting started
 

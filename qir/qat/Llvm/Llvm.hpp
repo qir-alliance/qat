@@ -9,6 +9,7 @@
 #pragma GCC diagnostic ignored "-Wunused-value"
 #pragma GCC diagnostic ignored "-Wsign-compare"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wunused-variable"
 #pragma GCC diagnostic ignored "-Wall"
 #endif
 
@@ -23,6 +24,7 @@
 #pragma clang diagnostic ignored "-Wunused-parameter"
 #pragma clang diagnostic ignored "-Wall"
 #pragma clang diagnostic ignored "-Weverything"
+#pragma clang diagnostic ignored "-Wunused-variable"
 #endif
 
 // Passes

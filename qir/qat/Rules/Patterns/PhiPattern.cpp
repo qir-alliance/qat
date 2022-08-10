@@ -25,7 +25,7 @@ PhiPattern::Child PhiPattern::copy() const
 {
     auto ret = std::make_shared<PhiPattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 } // namespace microsoft::quantum

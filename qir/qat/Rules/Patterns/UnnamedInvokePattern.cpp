@@ -25,7 +25,7 @@ UnnamedInvokePattern::Child UnnamedInvokePattern::copy() const
 {
     auto ret = std::make_shared<UnnamedInvokePattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 } // namespace microsoft::quantum

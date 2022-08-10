@@ -12,6 +12,7 @@ _CLANG_ADDITIONAL_COPTS = [
     "-Wconversion",
     "-Wpedantic",
     "-Werror",
+    "-XXXXXXX",
 
     # ... and then selectively disable those we do not need
     "-Wno-pre-c++17-compat",
@@ -29,16 +30,10 @@ _GCC_ADDITIONAL_COPTS = [
     "-Wextra",
     "-Wconversion",
     "-Wpedantic",
-    #    "-Werror",
+    "-Werror",
 
     # ... and then selectively disable those we do not need
-    "-Wno-pre-c++17-compat",
-    "-Wno-c++98-compat",
     "-Wno-padded",
-    "-Wno-documentation-unknown-command",
-    "-Wno-exit-time-destructors",
-    "-Wno-global-constructors",
-    "-Wno-c++98-compat-pedantic",
 ]
 
 def ms_cc_library(**kwargs):
@@ -50,8 +45,8 @@ def ms_cc_library(**kwargs):
     name = kwargs["name"]
     kwargs.pop("name")
     copts = kwargs.get("copts", []) + select({
-        "@bazel_tools//tools/cpp:clang": _CLANG_ADDITIONAL_COPTS,
-        "@bazel_tools//tools/cpp:gcc": _GCC_ADDITIONAL_COPTS,
+        "//:clang_compiler": _CLANG_ADDITIONAL_COPTS,
+        "//:gcc_compiler": _GCC_ADDITIONAL_COPTS,
         "//conditions:default": [],
     })
 
@@ -74,8 +69,8 @@ def ms_cc_binary(**kwargs):
     name = kwargs["name"]
     kwargs.pop("name")
     copts = kwargs.get("copts", []) + select({
-        "@bazel_tools//tools/cpp:clang": _CLANG_ADDITIONAL_COPTS,
-        "@bazel_tools//tools/cpp:gcc": _GCC_ADDITIONAL_COPTS,
+        "//:clang_compiler": _CLANG_ADDITIONAL_COPTS,
+        "//:gcc_compiler": _GCC_ADDITIONAL_COPTS,
         "//conditions:default": [],
     })
 

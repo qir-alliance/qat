@@ -1,3 +1,15 @@
+# Compiler settings
+config_setting(
+    name = "clang_compiler",
+    flag_values = {"@bazel_tools//tools/cpp:compiler": "clang"},
+)
+
+config_setting(
+    name = "gcc_compiler",
+    flag_values = {"@bazel_tools//tools/cpp:compiler": "gcc"},
+)
+
+# Standard library constraints
 constraint_setting(name = "stdlib")
 
 constraint_value(
@@ -10,6 +22,7 @@ constraint_value(
     constraint_setting = ":stdlib",
 )
 
+# Platform constraints
 platform(
     name = "apple-silicon",
     constraint_values = [

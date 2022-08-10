@@ -52,7 +52,7 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
             any_classical |= !q;
         }
 
-        if (returns_quantum || is_void && !any_classical && any_quantum)
+        if (returns_quantum || (is_void && !any_classical && any_quantum))
         {
             ret |= DestQuantum;
         }
