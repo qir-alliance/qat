@@ -439,7 +439,6 @@ ms_cc_binary(
     ],
 )
 
-
 pkg_tar(
     name = "qat-tar",
     srcs = [":qat"],
@@ -452,9 +451,9 @@ container_image(
     name = "qat-image",
     base = "@ubuntu-linux//image",
     cmd = ["/opt/qat"],
-    tars = [":qat-tar"],
     target_compatible_with = [
         "@platforms//cpu:x86_64",
         "@platforms//os:linux",
-    ],    
+    ],
+    tars = [":qat-tar"],
 )
