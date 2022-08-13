@@ -762,7 +762,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
 
         };
         profile.allowlist_pointer_types_ = true;
-        profile.allowed_pointer_types_   = {&quot;Qubit*&quot;, &quot;Result*&quot;};
+        profile.allowed_pointer_types_   = {&quot;Qubit*&quot;, &quot;Result*&quot;, &quot;i8*&quot;};
     }
     else if (name == &quot;provider_b340&quot;)
     {
@@ -884,7 +884,7 @@ bool ValidationPassConfiguration::allowUndef() const
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on  3 August 2022 at 00:40:38 UTC</p></div>
+<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
 </div>
           </div>
         </main>
