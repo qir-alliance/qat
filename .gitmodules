@@ -2,3 +2,6 @@
   path = vendors/googletest
   url = https://github.com/google/googletest.git
   shallow = true
+[submodule "vendors/yaml-cpp"]
+	path = vendors/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git

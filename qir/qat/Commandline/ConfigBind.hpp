@@ -167,7 +167,7 @@ template <typename T> void ConfigBind<T>::alterNameBasedOnType(bool const& defau
 template <typename T> void ConfigBind<T>::alterNameBasedOnType(StringSet const& /*default_value*/)
 {
     std::stringstream ss{""};
-    bool              not_first = true;
+    bool              not_first = false;
     for (auto const& p : bind_)
     {
         if (not_first)
@@ -175,6 +175,7 @@ template <typename T> void ConfigBind<T>::alterNameBasedOnType(StringSet const& 
             ss << ",";
         }
         ss << p;
+        not_first = true;
     }
 
     setDefault(static_cast<String>(ss.str()));
@@ -254,7 +255,7 @@ template <typename T> template <typename A> String ConfigBind<T>::valueAsString(
 template <typename T> template <typename A> String ConfigBind<T>::valueAsString(EnableIf<A, StringSet, A> const&)
 {
     std::stringstream ss{""};
-    bool              not_first = true;
+    bool              not_first = false;
     for (auto const& p : bind_)
     {
         if (not_first)
@@ -262,6 +263,7 @@ template <typename T> template <typename A> String ConfigBind<T>::valueAsString(
             ss << ",";
         }
         ss << p;
+        not_first = true;
     }
     return static_cast<String>(ss.str());
 }

@@ -56,6 +56,10 @@ if (MICROSOFT_GENERATE_COVERAGE)
 endif (MICROSOFT_GENERATE_COVERAGE)
 
 
+# YAML CPP
+add_subdirectory(${MICROSOFT_ROOT_VENDOR_DIR}/yaml-cpp)
+include_directories(${MICROSOFT_ROOT_VENDOR_DIR}/yaml-cpp/include)
+
 
 if(MICROSOFT_ENABLE_TESTS)
   add_subdirectory(${MICROSOFT_ROOT_VENDOR_DIR}/googletest)

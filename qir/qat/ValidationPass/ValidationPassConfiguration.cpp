@@ -16,6 +16,10 @@ void ValidationPassConfiguration::setup(ConfigurationManager& config)
     config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
     config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
 
+    config.addParameter(allow_internal_calls_, "allow-internal-calls", "allow_internal_calls_");
+    config.addParameter(allow_poison_, "allow-poison", "allow-poison");
+    config.addParameter(allow_undef_, "allow-undef", "allow-undef");
+
     /// Config accessible
     //    config.addParameter(
     //        opcodes_, "opcodes", "Allowed opcodes",
@@ -27,9 +31,7 @@ void ValidationPassConfiguration::setup(ConfigurationManager& config)
     config.addParameter(
         allowlist_external_calls_, "allowlist-external-calls", "allowlist_external_calls_",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
-    config.addParameter(
-        allow_internal_calls_, "allow-internal-calls", "allow_internal_calls_",
-        ConfigurationManager::ParameterVisibility::ConfigOnly);
+
     config.addParameter(
         allowlist_pointer_types_, "allowlist-pointer-types", "allowlist_pointer_types_",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
@@ -43,11 +45,6 @@ void ValidationPassConfiguration::setup(ConfigurationManager& config)
     config.addParameter(
         allow_pointer_return_, "allow-pointer-return", "allow-pointer-return",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
-
-    config.addParameter(
-        allow_poison_, "allow-poison", "allow-poison", ConfigurationManager::ParameterVisibility::ConfigOnly);
-    config.addParameter(
-        allow_undef_, "allow-undef", "allow-undef", ConfigurationManager::ParameterVisibility::ConfigOnly);
 
     config.addParameter(
         external_calls_, "external-calls", "Allowed external calls.",

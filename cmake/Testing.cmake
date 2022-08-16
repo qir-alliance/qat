@@ -11,9 +11,9 @@ function (_internal_add_test name source library)
     file(GLOB_RECURSE ipps RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${source}/*.ipp)
 
     add_executable(${name} ${ipps} ${hdrs} ${srcs})
-    add_dependencies(${name} llvm)
+    add_dependencies(${name} llvm )
     target_link_libraries(${name} PRIVATE ${llvm_libs})    
-    target_link_libraries(${name} PRIVATE ${library} gmock gmock_main TestTools)  
+    target_link_libraries(${name} PRIVATE ${library} gmock gmock_main yaml-cpp TestTools)  
 
     target_include_directories(${name} 
                                  PRIVATE ${MICROSOFT_ROOT_VENDOR_DIR}/googletest/googlemock/include)
