@@ -29,6 +29,9 @@ lint:
   ignore:
     - linters: [ALL]
       paths:
+        - vendors/*
+        - vendors/**
+        - vendors/yaml-cpp/**
         - .devcontainer/*
         - .devcontainer/**
         - .trunk/*out/**
