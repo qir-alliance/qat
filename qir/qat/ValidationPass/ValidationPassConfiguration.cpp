@@ -220,7 +220,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
 
         };
         profile.allowlist_pointer_types_ = true;
-        profile.allowed_pointer_types_   = {"Qubit*", "Result*"};
+        profile.allowed_pointer_types_   = {"Qubit*", "Result*", "i8*"};
     }
     else if (name == "provider_b340")
     {
