@@ -127,6 +127,7 @@ ms_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:QatTypes",
+        "@yaml-cpp//:yaml-cpp"
     ],
 )
 

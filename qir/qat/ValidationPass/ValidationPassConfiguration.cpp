@@ -12,13 +12,49 @@ namespace microsoft::quantum
 void ValidationPassConfiguration::setup(ConfigurationManager& config)
 {
     config.setSectionName("Validation configuration", "");
-    config.addParameter(allow_internal_calls_, "allow-internal-calls", "Whether or not internal calls are allowed.");
-
+    /// CLI and config accessible
     config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
     config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
 
-    config.addParameter(allow_poison_, "allow-poison", "Whether or not to allow poison values.");
-    config.addParameter(allow_undef_, "allow-undef", "Whether or not to allow undef values.");
+    /// Config accessible
+    //    config.addParameter(
+    //        opcodes_, "opcodes", "Allowed opcodes",
+    //        ConfigurationManager::ParameterVisibility::ConfigOnly);
+
+    config.addParameter(
+        allowlist_opcodes_, "allowlist-opcodes", "allowlist_opcodes_",
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allowlist_external_calls_, "allowlist-external-calls", "allowlist_external_calls_",
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allow_internal_calls_, "allow-internal-calls", "allow_internal_calls_",
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allowlist_pointer_types_, "allowlist-pointer-types", "allowlist_pointer_types_",
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+
+    config.addParameter(
+        allow_primitive_return_, "allow-primitive-return", "allow_primitive_return_",
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allow_struct_return_, "allow-struct-return", "allow-struct-return",
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allow_pointer_return_, "allow-pointer-return", "allow-pointer-return",
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+
+    config.addParameter(
+        allow_poison_, "allow-poison", "allow-poison", ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allow_undef_, "allow-undef", "allow-undef", ConfigurationManager::ParameterVisibility::ConfigOnly);
+
+    config.addParameter(
+        external_calls_, "external-calls", "Allowed external calls.",
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allowed_pointer_types_, "allowed-pointer-types", "Allowed pointer types.",
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
 }
 
 String ValidationPassConfiguration::profileName() const

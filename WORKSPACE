@@ -76,3 +76,15 @@ http_archive(
     strip_prefix = "googletest-release-1.10.0",
     url = "https://github.com/google/googletest/archive/release-1.10.0.zip",
 )
+
+
+# ================================================================
+# Yaml
+# ================================================================
+
+http_archive(
+    name = "yaml-cpp",
+    sha256 = "",
+    strip_prefix = "yaml-cpp-yaml-cpp-0.7.0",
+    url = "https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz",
+)

@@ -21,7 +21,8 @@ namespace microsoft::quantum
 template <typename T> class ConfigBind : public IConfigBind
 {
   public:
-    using Type = typename std::decay<T>::type;
+    using Type      = typename std::decay<T>::type;
+    using StringSet = std::unordered_set<std::string>;
 
     /// Helper template to conditionally disable implementation unless a specific type is used.
     template <typename A, typename B, typename R>
@@ -39,7 +40,12 @@ template <typename T> class ConfigBind : public IConfigBind
 
     /// Constructor to bind value to parameter. This class holds a reference to a variable together
     /// with the name it is expected to have when passed through the parameter parser.
-    ConfigBind(Type& bind, T default_value, String const& name, String const& description);
+    ConfigBind(
+        Type&               bind,
+        T                   default_value,
+        String const&       name,
+        String const&       description,
+        ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
     // Marks the configuration as being experimental.
     void markAsExperimental(Type const& off_value);
@@ -66,7 +72,22 @@ template <typename T> class ConfigBind : public IConfigBind
     /// Type index of contained data
     std::type_index valueType() const override;
 
+    /// Method to load value from YAML configuratino
+    void setValueFromYamlNode(YAML::Node const& node) override;
+
+    /// Dumps the current value to the node
+    void updateValueInYamlNode(YAML::Node& node) override;
+
   private:
+    /// Fallback load YAML node value
+    template <typename R> void loadYaml(YAML::Node const& node, R& value);
+
+    /// Fallback save YAML node value
+    template <typename R> void saveYaml(YAML::Node& node, R const& value);
+
+    void loadYaml(YAML::Node const& node, StringSet& value);
+    void saveYaml(YAML::Node& node, StringSet const& value);
+
     /// Generic function to setup arguments of any type.
     template <typename R> bool setupArguments(ParameterParser&, R const&);
 
@@ -79,11 +100,17 @@ template <typename T> class ConfigBind : public IConfigBind
     /// Specialized function that changes the parameter name based on default value for booleans.
     void alterNameBasedOnType(bool const& default_value);
 
+    /// Specialized function that changes the parameter name based on default value for string sets.
+    void alterNameBasedOnType(StringSet const& default_value);
+
     /// Generic string serialization.
     template <typename A> String valueAsString(A const&);
 
     /// Specialized serialization for booleans.
     template <typename A> String valueAsString(EnableIf<A, bool, A> const&);
+
+    /// Specialized serialization for string sets.
+    template <typename A> String valueAsString(EnableIf<A, StringSet, A> const&);
 
     /// Generic deserialization of string values from parser.
     template <typename R> void loadValue(ParameterParser& parser, R const& default_value);
@@ -94,14 +121,22 @@ template <typename T> class ConfigBind : public IConfigBind
     /// Specialized deserialization of string values from parser for strings.
     template <typename A> void loadValue(ParameterParser& parser, EnableIf<A, String, A> const& default_value);
 
+    /// Specialized deserialization of string set
+    template <typename A> void loadValue(ParameterParser& parser, EnableIf<A, StringSet, A> const& default_value);
+
     Type& bind_;                   ///< Bound variable to be updated.
     Type  default_value_;          ///< Default value.
     Type  experimental_off_value_; ///< Value when experimental is not enabled.
 };
 
 template <typename T>
-ConfigBind<T>::ConfigBind(Type& bind, T default_value, String const& name, String const& description)
-  : IConfigBind(name, description)
+ConfigBind<T>::ConfigBind(
+    Type&               bind,
+    T                   default_value,
+    String const&       name,
+    String const&       description,
+    ParameterVisibility visibility)
+  : IConfigBind(name, description, visibility)
   , bind_{bind}
   , default_value_{std::move(default_value)}
 {
@@ -129,6 +164,22 @@ template <typename T> void ConfigBind<T>::alterNameBasedOnType(bool const& defau
     }
 }
 
+template <typename T> void ConfigBind<T>::alterNameBasedOnType(StringSet const& /*default_value*/)
+{
+    std::stringstream ss{""};
+    bool              not_first = true;
+    for (auto const& p : bind_)
+    {
+        if (not_first)
+        {
+            ss << ",";
+        }
+        ss << p;
+    }
+
+    setDefault(static_cast<String>(ss.str()));
+}
+
 template <typename T> bool ConfigBind<T>::setupArguments(ParameterParser& parser)
 {
     return setupArguments(parser, default_value_);
@@ -147,6 +198,10 @@ template <typename T> bool ConfigBind<T>::setupArguments(ParameterParser& parser
 
 template <typename T> bool ConfigBind<T>::configure(ParameterParser& parser, bool experimental_mode)
 {
+    if (!isAvailableToCli())
+    {
+        return false;
+    }
 
     if (!isExperimental())
     {
@@ -196,6 +251,21 @@ template <typename T> template <typename A> String ConfigBind<T>::valueAsString(
     return static_cast<String>(ss.str());
 }
 
+template <typename T> template <typename A> String ConfigBind<T>::valueAsString(EnableIf<A, StringSet, A> const&)
+{
+    std::stringstream ss{""};
+    bool              not_first = true;
+    for (auto const& p : bind_)
+    {
+        if (not_first)
+        {
+            ss << ",";
+        }
+        ss << p;
+    }
+    return static_cast<String>(ss.str());
+}
+
 template <typename T>
 template <typename R>
 void ConfigBind<T>::loadValue(ParameterParser& parser, R const& default_value)
@@ -238,6 +308,37 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, String, A> co
     }
 }
 
+template <typename T>
+template <typename A>
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringSet, A> const& default_value)
+{
+    if (!parser.has(name()))
+    {
+        bind_ = default_value;
+        return;
+    }
+
+    auto value = parser.get(name());
+
+    bind_.clear();
+    std::size_t last_p = 0;
+    auto        p      = value.find(',', last_p);
+    while (p != String::npos)
+    {
+        auto part = value.substr(last_p, p - last_p);
+        bind_.insert(part);
+
+        last_p = p + 1;
+        p      = value.find(',', last_p);
+    }
+
+    if (last_p < value.size())
+    {
+        auto part = value.substr(last_p, p - last_p);
+        bind_.insert(part);
+    }
+}
+
 template <typename T> void* ConfigBind<T>::pointer() const
 {
     return static_cast<void*>(&bind_);
@@ -251,6 +352,53 @@ template <typename T> void* ConfigBind<T>::pointerDefaultValue()
 template <typename T> std::type_index ConfigBind<T>::valueType() const
 {
     return std::type_index(typeid(T));
+}
+
+template <typename T> void ConfigBind<T>::setValueFromYamlNode(YAML::Node const& node)
+{
+    if (isLoadAndSavable() && node[name()])
+    {
+        loadYaml(node, bind_);
+    }
+}
+
+template <typename T> void ConfigBind<T>::updateValueInYamlNode(YAML::Node& node)
+{
+    if (isLoadAndSavable())
+    {
+        saveYaml(node, bind_);
+    }
+}
+
+template <typename T> template <typename R> void ConfigBind<T>::loadYaml(YAML::Node const& node, R& value)
+{
+    value = node[name()].template as<T>();
+}
+
+template <typename T> template <typename R> void ConfigBind<T>::saveYaml(YAML::Node& node, R const& value)
+{
+    node[name()] = value;
+}
+
+template <typename T> void ConfigBind<T>::loadYaml(YAML::Node const& node, StringSet& value)
+{
+    for (auto& v : node[name()])
+    {
+        value.insert(v.template as<String>());
+    }
+}
+
+template <typename T> void ConfigBind<T>::saveYaml(YAML::Node& node, StringSet const& value)
+{
+    YAML::Node list;
+
+    // TODO: Make sorted
+    for (auto& v : value)
+    {
+        list.push_back(v);
+    }
+
+    node[name()] = list;
 }
 
 } // namespace microsoft::quantum
