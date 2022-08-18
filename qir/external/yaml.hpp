@@ -19,10 +19,9 @@
 #pragma clang diagnostic ignored "-Wreturn-std-move"
 #pragma clang diagnostic ignored "-Wsign-compare"
 #pragma clang diagnostic ignored "-Wmacro-redefined"
-
 #endif
 
-#include "gtest/gtest.h"
+#include "yaml-cpp/yaml.h"
 
 #if defined(__clang__)
 #pragma clang diagnostic pop

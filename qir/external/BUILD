@@ -1,6 +1,20 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
+    name = "yaml",
+    hdrs = ["yaml.hpp"],
+    copts = [
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "@yaml-cpp//:yaml-cpp",
+    ],
+)
+
+
+cc_library(
     name = "gtest",
     hdrs = ["gtest.hpp"],
     copts = [
@@ -32,3 +46,4 @@ cc_library(
         "@googletest//:googlemock",
     ],
 )
+

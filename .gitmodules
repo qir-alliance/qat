@@ -5,3 +5,4 @@
 [submodule "vendors/yaml-cpp"]
 	path = vendors/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
+  shallow = true

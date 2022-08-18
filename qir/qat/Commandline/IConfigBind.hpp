@@ -2,10 +2,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/external/yaml.hpp"
 #include "qir/qat/Commandline/ParameterParser.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
-#include "yaml-cpp/yaml.h"
 
 #include <iomanip>
 #include <iostream>

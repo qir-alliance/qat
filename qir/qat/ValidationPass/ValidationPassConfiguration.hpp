@@ -69,11 +69,47 @@ template <> struct hash<microsoft::quantum::OpcodeValue>
 namespace microsoft::quantum
 {
 
+class OpcodeSet
+{
+  public:
+    using Container = std::unordered_set<OpcodeValue>;
+    explicit OpcodeSet(Container const& data = {})
+      : data_{data}
+    {
+    }
+    OpcodeSet(Container&& data)
+      : data_{std::move(data)}
+    {
+    }
+
+    Container& data()
+    {
+        return data_;
+    }
+
+    Container const& data() const
+    {
+        return data_;
+    }
+
+    void toString(String& value) {}
+
+    void fromString(String const& value) {}
+
+    void toYaml(YAML::Node& node) {}
+
+    void fromYaml(YAML::Node const&) {}
+
+  private:
+    Container data_;
+};
+static_assert(YamlSerializable<OpcodeSet>::value, "Expected OpcodeSet to be serializable.");
+
 class ValidationPassConfiguration
 {
   public:
-    using Set       = std::unordered_set<std::string>;
-    using OpcodeSet = std::unordered_set<OpcodeValue>;
+    using Set = std::unordered_set<std::string>;
+    //    using OpcodeSet = std::unordered_set<OpcodeValue>;
 
     // Setup and construction
     //

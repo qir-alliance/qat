@@ -1,4 +1,6 @@
 #pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic push
