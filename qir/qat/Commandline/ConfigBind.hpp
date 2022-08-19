@@ -285,7 +285,7 @@ template <typename T>
 template <typename A>
 typename ConfigBind<T>::template EnableIfNotSerializable<A, String> ConfigBind<T>::valueAsString(A const& val)
 {
-    nonSerializableValueAsString<A>(val);
+    return nonSerializableValueAsString<A>(val);
 }
 
 template <typename T>
