@@ -61,15 +61,22 @@ grouping:
 validation-configuration:
   requires-qubits: true
   requires-results: true
+  allow-internal-calls: false
+  allow-poison: false
+  allow-undef: false
+  opcodes:
+    - id: call
+      predicate: ""
+    - id: ret
+      predicate: ""
+    - id: inttoptr
+      predicate: ""
   allowlist-opcodes: true
   allowlist-external-calls: true
-  allow-internal-calls: false
   allowlist-pointer-types: true
   allow-primitive-return: true
   allow-struct-return: true
   allow-pointer-return: true
-  allow-poison: true
-  allow-undef: true
   external-calls:
     - __quantum__qis__cnot__body:void (%Qubit*, %Qubit*)
     - __quantum__qis__t__adj:void (%Qubit*)

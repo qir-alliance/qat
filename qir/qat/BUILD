@@ -126,8 +126,8 @@ ms_cc_library(
     hdrs = glob(["Commandline/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
+        "//qir/external:yaml",
         "//qir/qat:QatTypes",
-        "//qir/external:yaml"
     ],
 )
 

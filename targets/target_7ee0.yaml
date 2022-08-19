@@ -61,15 +61,48 @@ grouping:
 validation-configuration:
   requires-qubits: true
   requires-results: true
+  allow-internal-calls: false
+  allow-poison: false
+  allow-undef: false
+  opcodes:
+    - id: call
+      predicate: ""
+    - id: or
+      predicate: ""
+    - id: br
+      predicate: ""
+    - id: ret
+      predicate: ""
+    - id: shl
+      predicate: ""
+    - id: add
+      predicate: ""
+    - id: xor
+      predicate: ""
+    - id: sub
+      predicate: ""
+    - id: mul
+      predicate: ""
+    - id: phi
+      predicate: ""
+    - id: inttoptr
+      predicate: ""
+    - id: and
+      predicate: ""
+    - id: lshr
+      predicate: ""
+    - id: zext
+      predicate: ""
+    - id: icmp
+      predicate: ""
+    - id: select
+      predicate: ""
   allowlist-opcodes: true
   allowlist-external-calls: true
-  allow-internal-calls: false
   allowlist-pointer-types: true
   allow-primitive-return: true
   allow-struct-return: true
   allow-pointer-return: true
-  allow-poison: true
-  allow-undef: true
   external-calls:
     - __quantum__qis__cnot__body:void (%Qubit*, %Qubit*)
     - __quantum__rt__bool_record_output:void (i1)
@@ -99,4 +132,5 @@ validation-configuration:
     - __quantum__rt__int_record_output:void (i64, i8*)
   allowed-pointer-types:
     - Qubit*
+    - i8*
     - Result*

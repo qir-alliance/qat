@@ -13,7 +13,6 @@ cc_library(
     ],
 )
 
-
 cc_library(
     name = "gtest",
     hdrs = ["gtest.hpp"],
@@ -46,4 +45,3 @@ cc_library(
         "@googletest//:googlemock",
     ],
 )
-

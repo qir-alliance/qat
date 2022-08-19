@@ -82,15 +82,9 @@ template <typename T> class ConfigBind : public IConfigBind
 
   private:
     template <typename A, typename R = A>
-    using EnableIfSerializable = typename std::enable_if<YamlSerializable<A>::value, R>::type;
-
+    using EnableIfSerializable = typename std::enable_if<HasQatSerializers<A>::VALUE, R>::type;
     template <typename A, typename R = A>
-    using EnableIfNotSerializable = typename std::enable_if<!YamlSerializable<A>::value, R>::type;
-
-    static_assert(!YamlSerializable<int32_t>::value, "Expected int32 to be not serializable.");
-    static_assert(!YamlSerializable<uint64_t>::value, "Expected uint64 to be not serializable.");
-    static_assert(!YamlSerializable<bool>::value, "Expected bool to be not serializable.");
-    static_assert(!YamlSerializable<String>::value, "Expected string to be not serializable.");
+    using EnableIfNotSerializable = typename std::enable_if<!HasQatSerializers<A>::VALUE, R>::type;
 
     /// Fallback load and save YAML node value
     template <typename R> EnableIfNotSerializable<R, void> loadYaml(YAML::Node const& node, R& value);
@@ -111,39 +105,34 @@ template <typename T> class ConfigBind : public IConfigBind
     bool setupArguments(ParameterParser& parser, bool const&);
 
     /// Generic function that changes the parameter name based on the value type and default value.
-    template <typename R> EnableIfNotSerializable<R, void> alterNameBasedOnType(R const& default_value)
-    {
-        alterNameBasedOnType2(default_value);
-    }
+    template <typename R> EnableIfNotSerializable<R, void> alterNameBasedOnType(R const& default_value);
 
-    /// Specialisation for TODO
-    template <typename R> EnableIfSerializable<R, void> alterNameBasedOnType(R const& default_value)
-    {
-        // TODO:
-    }
+    /// Specialisation for serializatble types
+    template <typename R> EnableIfSerializable<R, void> alterNameBasedOnType(R const& default_value);
 
-    template <typename R> void alterNameBasedOnType2(R const& default_value);
+    /// Fallback method for non-serializable types
+    template <typename R> void nonSerializableTypeAlterName(R const& default_value);
 
     /// Specialized function that changes the parameter name based on default value for booleans.
-    void alterNameBasedOnType2(bool const& default_value);
+    void nonSerializableTypeAlterName(bool const& default_value);
 
     /// Specialized function that changes the parameter name based on default value for string sets.
-    void alterNameBasedOnType2(StringSet const& default_value);
+    void nonSerializableTypeAlterName(StringSet const& default_value);
 
-    /// Generic string serialization.
+    /// Generic string serialization for types with no serialization defined.
     template <typename A> EnableIfNotSerializable<A, String> valueAsString(A const& val);
 
     // String serialization for data types with custom serializers
     template <typename A> EnableIfSerializable<A, String> valueAsString(A const&);
 
     /// Generic string serialization.
-    template <typename A> String valueAsString2(A const&);
+    template <typename A> String nonSerializableValueAsString(A const&);
 
     /// Specialized serialization for booleans.
-    template <typename A> String valueAsString2(EnableIf<A, bool, A> const&);
+    template <typename A> String nonSerializableValueAsString(EnableIf<A, bool, A> const&);
 
     /// Specialized serialization for string sets.
-    template <typename A> String valueAsString2(EnableIf<A, StringSet, A> const&);
+    template <typename A> String nonSerializableValueAsString(EnableIf<A, StringSet, A> const&);
 
     /// Generic deserialization of string values from parser.
     template <typename A> EnableIfNotSerializable<A, void> loadValue(ParameterParser& parser, A const& default_value);
@@ -179,14 +168,14 @@ ConfigBind<T>::ConfigBind(
     alterNameBasedOnType(default_value_);
 }
 
-template <typename T> template <typename R> void ConfigBind<T>::alterNameBasedOnType2(R const& default_value)
+template <typename T> template <typename R> void ConfigBind<T>::nonSerializableTypeAlterName(R const& default_value)
 {
     std::stringstream ss{""};
     ss << default_value;
     setDefault(static_cast<String>(ss.str()));
 }
 
-template <typename T> void ConfigBind<T>::alterNameBasedOnType2(bool const& default_value)
+template <typename T> void ConfigBind<T>::nonSerializableTypeAlterName(bool const& default_value)
 {
     markAsFlag();
 
@@ -200,7 +189,7 @@ template <typename T> void ConfigBind<T>::alterNameBasedOnType2(bool const& defa
     }
 }
 
-template <typename T> void ConfigBind<T>::alterNameBasedOnType2(StringSet const& /*default_value*/)
+template <typename T> void ConfigBind<T>::nonSerializableTypeAlterName(StringSet const& /*default_value*/)
 {
     std::stringstream ss{""};
     bool              not_first = false;
@@ -231,6 +220,24 @@ template <typename T> bool ConfigBind<T>::setupArguments(ParameterParser& parser
 {
     parser.addFlag(name());
     return true;
+}
+
+template <typename T>
+template <typename R>
+typename ConfigBind<T>::template EnableIfNotSerializable<R, void> ConfigBind<T>::alterNameBasedOnType(
+    R const& default_value)
+{
+    nonSerializableTypeAlterName(default_value);
+}
+
+template <typename T>
+template <typename R>
+typename ConfigBind<T>::template EnableIfSerializable<R, void> ConfigBind<T>::alterNameBasedOnType(
+    R const& /*default_value*/)
+{
+    String ret;
+    bind_.toString(ret);
+    setDefault(static_cast<String>(ret));
 }
 
 template <typename T> bool ConfigBind<T>::configure(ParameterParser& parser, bool experimental_mode)
@@ -278,31 +285,37 @@ template <typename T>
 template <typename A>
 typename ConfigBind<T>::template EnableIfNotSerializable<A, String> ConfigBind<T>::valueAsString(A const& val)
 {
-    valueAsString2<A>(val);
+    nonSerializableValueAsString<A>(val);
 }
 
 template <typename T>
 template <typename A>
 typename ConfigBind<T>::template EnableIfSerializable<A, String> ConfigBind<T>::valueAsString(A const&)
 {
-    // TODO:
+    String ret;
+    bind_.toString(ret);
+    return ret;
 }
 
-template <typename T> template <typename A> String ConfigBind<T>::valueAsString2(A const&)
+template <typename T> template <typename A> String ConfigBind<T>::nonSerializableValueAsString(A const&)
 {
     std::stringstream ss{""};
     ss << bind_;
     return static_cast<String>(ss.str());
 }
 
-template <typename T> template <typename A> String ConfigBind<T>::valueAsString2(EnableIf<A, bool, A> const&)
+template <typename T>
+template <typename A>
+String ConfigBind<T>::nonSerializableValueAsString(EnableIf<A, bool, A> const&)
 {
     std::stringstream ss{""};
     ss << (bind_ ? "true" : "false");
     return static_cast<String>(ss.str());
 }
 
-template <typename T> template <typename A> String ConfigBind<T>::valueAsString2(EnableIf<A, StringSet, A> const&)
+template <typename T>
+template <typename A>
+String ConfigBind<T>::nonSerializableValueAsString(EnableIf<A, StringSet, A> const&)
 {
     std::stringstream ss{""};
     bool              not_first = false;
@@ -324,6 +337,10 @@ typename ConfigBind<T>::template EnableIfNotSerializable<A, void> ConfigBind<T>:
     ParameterParser& parser,
     A const&         default_value)
 {
+    static_assert(!std::is_same<A, bool>::value, "Expected bool to be specialised");
+    static_assert(!std::is_same<A, StringSet>::value, "Expected StringSet to be specialised");
+    static_assert(!std::is_same<A, String>::value, "Expected String to be specialised");
+
     bind_ = default_value;
 
     if (parser.has(name()))
@@ -399,6 +416,15 @@ typename ConfigBind<T>::template EnableIfSerializable<A, void> ConfigBind<T>::lo
     ParameterParser& parser,
     A const&         default_value)
 {
+    if (!parser.has(name()))
+    {
+        bind_ = default_value;
+        return;
+    }
+
+    auto value = parser.get(name());
+
+    bind_.fromString(value);
 }
 
 template <typename T> void* ConfigBind<T>::pointer() const
@@ -474,14 +500,16 @@ template <typename T>
 template <typename R>
 typename ConfigBind<T>::template EnableIfSerializable<R, void> ConfigBind<T>::loadYaml(YAML::Node const& node, R& value)
 {
-    // TODO:
+    value.fromYaml(node[name()]);
 }
 
 template <typename T>
 template <typename R>
 typename ConfigBind<T>::template EnableIfSerializable<R, void> ConfigBind<T>::saveYaml(YAML::Node& node, R const& value)
 {
-    // TODO:
+    YAML::Node val;
+    value.toYaml(val);
+    node[name()] = val;
 }
 
 } // namespace microsoft::quantum

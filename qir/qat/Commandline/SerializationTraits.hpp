@@ -9,7 +9,7 @@
 namespace microsoft::quantum
 {
 
-template <typename C> struct YamlSerializable
+template <typename C> struct HasQatSerializers
 {
   private:
     template <typename T>
@@ -36,14 +36,20 @@ template <typename C> struct YamlSerializable
 
     template <typename> static constexpr std::false_type checkFromString(...);
 
-    typedef decltype(checkToYaml<C>(0))   check1;
-    typedef decltype(checkFromYaml<C>(0)) check2;
+    typedef decltype(checkToYaml<C>(nullptr))   CheckToYaml;
+    typedef decltype(checkFromYaml<C>(nullptr)) CheckFromYaml;
 
-    typedef decltype(checkToString<C>(0))   check3;
-    typedef decltype(checkFromString<C>(0)) check4;
+    typedef decltype(checkToString<C>(nullptr))   CheckToString;
+    typedef decltype(checkFromString<C>(nullptr)) CheckFromString;
 
   public:
-    static constexpr bool value = check1::value && check2::value && check3::value && check4::value;
+    static constexpr bool VALUE =
+        CheckToYaml::value && CheckFromYaml::value && CheckToString::value && CheckFromString::value;
 };
+
+static_assert(!HasQatSerializers<int32_t>::VALUE, "Expected int32 to be not serializable.");
+static_assert(!HasQatSerializers<uint64_t>::VALUE, "Expected uint64 to be not serializable.");
+static_assert(!HasQatSerializers<bool>::VALUE, "Expected bool to be not serializable.");
+static_assert(!HasQatSerializers<String>::VALUE, "Expected string to be not serializable.");
 
 } // namespace microsoft::quantum
