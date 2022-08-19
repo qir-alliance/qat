@@ -9,6 +9,8 @@
 #pragma GCC diagnostic ignored "-Wunused-value"
 #pragma GCC diagnostic ignored "-Wsign-compare"
 #pragma GCC diagnostic ignored "-Wmacro-redefined"
+#pragma GCC diagnostic ignored "-Wreserved-identifier"
+#pragma GCC diagnostic ignored "-Wshadow"
 #endif
 
 #if defined(__clang__)
@@ -19,6 +21,8 @@
 #pragma clang diagnostic ignored "-Wreturn-std-move"
 #pragma clang diagnostic ignored "-Wsign-compare"
 #pragma clang diagnostic ignored "-Wmacro-redefined"
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+#pragma clang diagnostic ignored "-Wshadow"
 #endif
 
 #include "yaml-cpp/yaml.h"
