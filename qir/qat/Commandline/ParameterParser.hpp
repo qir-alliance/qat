@@ -51,7 +51,7 @@ class ParameterParser
 
     /// Parses the command line arguments given the argc and argv
     /// from the main function.
-    void parseArgs(int argc, char** argv);
+    void parseArgs(int argc, char const** argv);
 
     /// Returns list of arguments without flags and/or options
     /// included.

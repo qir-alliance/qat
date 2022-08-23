@@ -25,8 +25,6 @@ RecordPullBackPass::RecordPullBackPass() noexcept
 llvm::PreservedAnalyses RecordPullBackPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
 {
 
-    llvm::BasicBlock* last_block = nullptr;
-
     for (auto& block : function)
     {
         // Identifying record functions
