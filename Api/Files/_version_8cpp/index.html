@@ -603,13 +603,23 @@ void displayCliHeader(bool extended_info)
         std::cout &lt;&lt; &quot;PATCH            &quot; &lt;&lt; version::PATCH &lt;&lt; std::endl;
         std::cout &lt;&lt; &quot;COMMIT_HASH      &quot; &lt;&lt; version::COMMIT_HASH &lt;&lt; std::endl;
         std::cout &lt;&lt; &quot;WORK_IN_PROGRESS &quot; &lt;&lt; version::WORK_IN_PROGRESS &lt;&lt; std::endl;
+
+        std::cout &lt;&lt; &quot;COMPILED WITH    &quot;;
+#ifdef __clang__
+        std::cout &lt;&lt; &quot;Clang &quot; &lt;&lt; __clang_major__ &lt;&lt; &quot;.&quot; &lt;&lt; __clang_minor__ &lt;&lt; &quot;.&quot; &lt;&lt; __clang_patchlevel__;
+#elif __GNUC__
+        std::cout &lt;&lt; &quot;GCC &quot; &lt;&lt; __GNUC__ &lt;&lt; &quot;.&quot; &lt;&lt; __GNUC_MINOR__ &lt;&lt; &quot;.&quot; &lt;&lt; __GNUC_PATCHLEVEL__;
+#else
+        std::cout &lt;&lt; &quot;unknown compiler&quot;;
+#endif
+        std::cout &lt;&lt; std::endl;
     }
 }
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

@@ -623,9 +623,9 @@ llvm::PreservedAnalyses ZExtTransformPass::run(llvm::Function&amp; function, llv
             }
 
             uint64_t width      = output_type-&gt;getIntegerBitWidth();
-            auto     one        = llvm::APInt(width, 1);
+            auto     one        = llvm::APInt(static_cast&lt;uint32_t&gt;(width), 1);
             auto     one_value  = llvm::ConstantInt::get(builder.getContext(), one);
-            auto     zero       = llvm::APInt(width, 0);
+            auto     zero       = llvm::APInt(static_cast&lt;uint32_t&gt;(width), 0);
             auto     zero_value = llvm::ConstantInt::get(builder.getContext(), zero);
 
             builder.SetInsertPoint(&amp;instr);
@@ -665,7 +665,7 @@ bool ZExtTransformPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

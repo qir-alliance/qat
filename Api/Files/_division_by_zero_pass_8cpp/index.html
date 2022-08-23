@@ -668,7 +668,7 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module&amp; module, llvm::
             auto final_block = if_block-&gt;splitBasicBlock(if_block-&gt;getTerminator(), &quot;exit_block&quot;, false);
 
             builder.SetInsertPoint(start_block-&gt;getTerminator());
-            llvm::LoadInst* load = builder.CreateLoad(error_variable_);
+            llvm::LoadInst* load = builder.CreateLoad(builder.getInt64Ty(), error_variable_);
             auto            cmp  = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_NE, load, builder.getInt64(0));
             auto            old_terminator = start_block-&gt;getTerminator();
             llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
@@ -712,7 +712,7 @@ void DivisionByZeroPass::raiseError(int64_t error_code, llvm::Module&amp; module
     final_block-&gt;setName(&quot;ecc_set_finally&quot;);
 
     builder.SetInsertPoint(start_block-&gt;getTerminator());
-    llvm::LoadInst* load = builder.CreateLoad(error_variable_);
+    llvm::LoadInst* load = builder.CreateLoad(builder.getInt64Ty(), error_variable_);
     auto            cmp  = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_EQ, load, builder.getInt64(0));
 
     auto old_terminator = start_block-&gt;getTerminator();
@@ -730,7 +730,7 @@ bool DivisionByZeroPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

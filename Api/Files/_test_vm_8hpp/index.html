@@ -629,8 +629,8 @@ class TestProgram
   public:
     TestProgram() = default;
     TestProgram(std::unique_ptr&lt;llvm::Module&gt;&amp;&amp; module, std::unique_ptr&lt;llvm::LLVMContext&gt;&amp;&amp; context)
-      : module_{std::move(module)}
-      , context_{std::move(context)}
+      : context_{std::move(context)}
+      , module_{std::move(module)}
     {
     }
     TestProgram(TestProgram&amp;&amp;)      = default;
@@ -772,7 +772,7 @@ template &lt;typename R&gt; R TestVM::run(String const&amp; name)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

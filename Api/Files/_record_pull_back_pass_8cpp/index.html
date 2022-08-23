@@ -603,8 +603,6 @@ RecordPullBackPass::RecordPullBackPass() noexcept
 llvm::PreservedAnalyses RecordPullBackPass::run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; /*mam*/)
 {
 
-    llvm::BasicBlock* last_block = nullptr;
-
     for (auto&amp; block : function)
     {
         // Identifying record functions
@@ -666,7 +664,7 @@ bool RecordPullBackPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

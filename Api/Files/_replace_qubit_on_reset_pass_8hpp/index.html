@@ -616,13 +616,6 @@ class ReplaceQubitOnResetPass : public llvm::PassInfoMixin&lt;ReplaceQubitOnRese
     using Location    = ILogger::Location;
     using StringRef   = llvm::StringRef;
 
-    enum ResourceType
-    {
-        None,
-        Qubit,
-        Result
-    };
-
     // Construction and destruction configuration.
     //
 
@@ -649,7 +642,7 @@ class ReplaceQubitOnResetPass : public llvm::PassInfoMixin&lt;ReplaceQubitOnRese
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

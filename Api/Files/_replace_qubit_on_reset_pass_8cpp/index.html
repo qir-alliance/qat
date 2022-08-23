@@ -636,6 +636,8 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function&amp; functio
             }
 
             break;
+        case AllocationAnalysis::NotResource:
+            break;
         }
     }
 
@@ -674,7 +676,7 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function&amp; functio
 
             for (uint64_t i = 0; i &lt; instr.getNumOperands(); ++i)
             {
-                auto op = instr.getOperand(i);
+                auto op = instr.getOperand(static_cast&lt;uint32_t&gt;(i));
 
                 // In case we already did the mapping, we skip to next instruction
                 if (already_replaced.find(op) != already_replaced.end())
@@ -692,7 +694,7 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function&amp; functio
                     uint64_t remapped_index = 0;
 
                     // Getting remapped index based on resource type
-                    if (type == Qubit)
+                    if (type == AllocationAnalysis::QubitResource)
                     {
                         if (qubits_mapping.find(n) != qubits_mapping.end())
                         {
@@ -712,7 +714,7 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function&amp; functio
                             continue;
                         }
                     }
-                    else if (type == Result)
+                    else if (type == AllocationAnalysis::ResultResource)
                     {
                         if (results_mapping.find(n) != results_mapping.end())
                         {
@@ -754,11 +756,11 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function&amp; functio
                     }
 
                     // Removing operand nonnull if present
-                    auto call_instr = llvm::dyn_cast&lt;llvm::CallInst&gt;(&amp;instr);
                     if (call_instr)
                     {
                         auto attrs   = call_instr-&gt;getAttributes();
-                        auto newlist = attrs.removeParamAttribute(function.getContext(), i, llvm::Attribute::NonNull);
+                        auto newlist = attrs.removeParamAttribute(
+                            function.getContext(), static_cast&lt;uint32_t&gt;(i), llvm::Attribute::NonNull);
                         call_instr-&gt;setAttributes(newlist);
                     }
 
@@ -780,7 +782,7 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function&amp; functio
                         to_remove.push_back(op_as_instr);
                     }
 
-                    instr.setOperand(i, new_instr);
+                    instr.setOperand(static_cast&lt;uint32_t&gt;(i), new_instr);
                     already_replaced.insert(new_instr);
                 }
             }
@@ -807,7 +809,7 @@ bool ReplaceQubitOnResetPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

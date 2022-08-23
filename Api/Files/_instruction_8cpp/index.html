@@ -601,7 +601,7 @@ StorePattern::Child StorePattern::copy() const
 {
     auto ret = std::make_shared&lt;StorePattern&gt;();
     ret-&gt;copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool LoadPattern::match(Value* instr, Captures&amp; captures) const
@@ -619,7 +619,7 @@ LoadPattern::Child LoadPattern::copy() const
 {
     auto ret = std::make_shared&lt;LoadPattern&gt;();
     ret-&gt;copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool BitCastPattern::match(Value* instr, Captures&amp; captures) const
@@ -637,7 +637,7 @@ BitCastPattern::Child BitCastPattern::copy() const
 {
     auto ret = std::make_shared&lt;BitCastPattern&gt;();
     ret-&gt;copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool IntToPtrPattern::match(Value* instr, Captures&amp; captures) const
@@ -658,7 +658,7 @@ IntToPtrPattern::Child IntToPtrPattern::copy() const
 {
     auto ret = std::make_shared&lt;IntToPtrPattern&gt;();
     ret-&gt;copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool ConstIntPattern::match(Value* instr, Captures&amp; captures) const
@@ -676,7 +676,7 @@ ConstIntPattern::Child ConstIntPattern::copy() const
 {
     auto ret = std::make_shared&lt;ConstIntPattern&gt;();
     ret-&gt;copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool BranchPattern::match(Value* instr, Captures&amp; captures) const
@@ -694,7 +694,7 @@ BranchPattern::Child BranchPattern::copy() const
 {
     auto ret = std::make_shared&lt;BranchPattern&gt;();
     ret-&gt;copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool SelectPattern::match(Value* instr, Captures&amp; captures) const
@@ -712,7 +712,7 @@ SelectPattern::Child SelectPattern::copy() const
 {
     auto ret = std::make_shared&lt;SelectPattern&gt;();
     ret-&gt;copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool BasicBlockPattern::match(Value* instr, Captures&amp; captures) const
@@ -730,7 +730,7 @@ BasicBlockPattern::Child BasicBlockPattern::copy() const
 {
     auto ret = std::make_shared&lt;BasicBlockPattern&gt;();
     ret-&gt;copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool SwitchPattern::match(Value* instr, Captures&amp; captures) const
@@ -748,7 +748,7 @@ SwitchPattern::Child SwitchPattern::copy() const
 {
     auto ret = std::make_shared&lt;SwitchPattern&gt;();
     ret-&gt;copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool ZExtPattern::match(Value* instr, Captures&amp; captures) const
@@ -766,13 +766,13 @@ ZExtPattern::Child ZExtPattern::copy() const
 {
     auto ret = std::make_shared&lt;ZExtPattern&gt;();
     ret-&gt;copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

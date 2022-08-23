@@ -780,6 +780,7 @@ void ConfigurationManager::enableSectionById(String const&amp; id)
         if (section.id == id)
         {
             section.enabled_by_default = true;
+            return;
         }
     }
 
@@ -811,7 +812,7 @@ DeferredValue::DeferredValuePtr ConfigurationManager::getParameter(String const&
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

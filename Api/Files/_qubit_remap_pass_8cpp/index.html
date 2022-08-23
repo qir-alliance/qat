@@ -633,6 +633,8 @@ llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function&amp; function, llvm::
             }
 
             break;
+        case AllocationAnalysis::NotResource:
+            break;
         }
     }
 
@@ -666,7 +668,6 @@ llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function&amp; function, llvm::
 
             break;
         case AllocationAnalysis::NotResource:
-        default:
             continue;
         }
 
@@ -676,9 +677,9 @@ llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function&amp; function, llvm::
         auto call_instr = llvm::dyn_cast&lt;llvm::CallInst&gt;(value.used_by);
         if (call_instr)
         {
-            auto attrs = call_instr-&gt;getAttributes();
-            auto newlist =
-                attrs.removeParamAttribute(function.getContext(), value.operand_id, llvm::Attribute::NonNull);
+            auto attrs   = call_instr-&gt;getAttributes();
+            auto newlist = attrs.removeParamAttribute(
+                function.getContext(), static_cast&lt;uint32_t&gt;(value.operand_id), llvm::Attribute::NonNull);
             call_instr-&gt;setAttributes(newlist);
         }
 
@@ -692,7 +693,7 @@ llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function&amp; function, llvm::
         new_instr = new llvm::IntToPtrInst(new_index, pointer_type);
         builder.Insert(new_instr);
 
-        value.used_by-&gt;setOperand(value.operand_id, new_instr);
+        value.used_by-&gt;setOperand(static_cast&lt;uint32_t&gt;(value.operand_id), new_instr);
     }
 
     return llvm::PreservedAnalyses::none();
@@ -705,7 +706,7 @@ bool QubitRemapPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

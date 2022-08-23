@@ -675,7 +675,7 @@ AllocationAnalysisPass::Result AllocationAnalysisPass::run(
         {
             for (uint64_t i = 0; i &lt; instr.getNumOperands(); ++i)
             {
-                auto         op   = instr.getOperand(i);
+                auto         op   = instr.getOperand(static_cast&lt;uint32_t&gt;(i));
                 ResourceType type = ResourceType::NotResource;
                 uint64_t     n    = 0;
 
@@ -702,7 +702,6 @@ AllocationAnalysisPass::Result AllocationAnalysisPass::run(
                     ret.largest_result_index = ret.largest_result_index &lt; n ? n : ret.largest_result_index;
                     break;
                 case ResourceType::NotResource:
-                default:
                     break;
                 }
             }
@@ -720,17 +719,17 @@ bool AllocationAnalysisPass::isRequired()
     return true;
 }
 
-llvm::PreservedAnalyses AllocationAnalysisPassPrinter::run(llvm::Function&amp; module, llvm::FunctionAnalysisManager&amp; fam)
+llvm::PreservedAnalyses AllocationAnalysisPassPrinter::run(
+    llvm::Function&amp; /*module*/,
+    llvm::FunctionAnalysisManager&amp; /*fam*/)
 {
-    auto&amp; result = fam.getResult&lt;AllocationAnalysisPass&gt;(module);
-
     return llvm::PreservedAnalyses::all();
 }
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

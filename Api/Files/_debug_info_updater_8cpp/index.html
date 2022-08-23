@@ -724,8 +724,8 @@ void DebugInfoUpdater::visitFunction(Function&amp; function)
     }
 
     auto subprogram = builder_.createFunction(
-        file_unit_, function.getName(), StringRef(), file_unit_, position.line(), createFunctionType(&amp;function),
-        position.line(), llvm::DINode::FlagZero, program_flags);
+        file_unit_, function.getName(), StringRef(), file_unit_, static_cast&lt;uint32_t&gt;(position.line()),
+        createFunctionType(&amp;function), static_cast&lt;uint32_t&gt;(position.line()), llvm::DINode::FlagZero, program_flags);
     function.setSubprogram(subprogram);
 
     function_debug_info_[&amp;function] = subprogram;
@@ -768,8 +768,9 @@ void DebugInfoUpdater::visitInstruction(Instruction&amp; instr)
         }
 
         // Updating the debug location
-        auto new_debug_loc = llvm::DebugLoc(
-            llvm::DILocation::get(module_.getContext(), position.line(), position.column(), scope, inlined_at));
+        auto new_debug_loc = llvm::DebugLoc(llvm::DILocation::get(
+            module_.getContext(), static_cast&lt;uint32_t&gt;(position.line()), static_cast&lt;uint32_t&gt;(position.column()),
+            scope, inlined_at));
 
         instr.setDebugLoc(new_debug_loc);
     }
@@ -778,7 +779,7 @@ void DebugInfoUpdater::visitInstruction(Instruction&amp; instr)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

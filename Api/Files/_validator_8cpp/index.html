@@ -623,12 +623,13 @@ Validator::Validator(
     else
     {
         // Our default is a pass that logs errors via comments
-        auto logger = std::make_shared&lt;CommentLogger&gt;();
-        function_analysis_manager_.registerPass([&amp;] { return AllocationAnalysisPass(logger); });
+        auto comment_logger = std::make_shared&lt;CommentLogger&gt;();
+        function_analysis_manager_.registerPass([&amp;] { return AllocationAnalysisPass(comment_logger); });
 
-        module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger)));
+        module_pass_manager_.addPass(
+            llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, comment_logger)));
 
-        module_pass_manager_.addPass(ValidationPass(cfg, logger));
+        module_pass_manager_.addPass(ValidationPass(cfg, comment_logger));
     }
 }
 
@@ -702,7 +703,7 @@ Validator::ILoggerPtr Validator::logger() const
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

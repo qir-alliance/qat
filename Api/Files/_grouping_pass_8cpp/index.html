@@ -630,7 +630,7 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
             any_classical |= !q;
         }
 
-        if (returns_quantum || is_void &amp;&amp; !any_classical &amp;&amp; any_quantum)
+        if (returns_quantum || (is_void &amp;&amp; !any_classical &amp;&amp; any_quantum))
         {
             ret |= DestQuantum;
         }
@@ -923,16 +923,16 @@ llvm::PreservedAnalyses GroupingPass::run(llvm::Module&amp; module, llvm::Module
 
         expandBasedOnSource(module, block);
 
-        for (auto* block : quantum_blocks_)
+        for (auto* readout_block : quantum_blocks_)
         {
-            expandBasedOnDest(module, block, true, &quot;readout&quot;);
+            expandBasedOnDest(module, readout_block, true, &quot;readout&quot;);
         }
 
         // Last classical block does not contain any loads
         classical_blocks_.pop_back();
-        for (auto* block : classical_blocks_)
+        for (auto* load_block : classical_blocks_)
         {
-            expandBasedOnDest(module, block, false, &quot;load&quot;);
+            expandBasedOnDest(module, load_block, false, &quot;load&quot;);
         }
     }
 
@@ -943,16 +943,16 @@ llvm::PreservedAnalyses GroupingPass::run(llvm::Module&amp; module, llvm::Module
 
         expandBasedOnSource(module, block);
 
-        for (auto* block : quantum_blocks_)
+        for (auto* readout_block : quantum_blocks_)
         {
-            expandBasedOnDest(module, block, true, &quot;readout&quot;);
+            expandBasedOnDest(module, readout_block, true, &quot;readout&quot;);
         }
 
         // Last classical block does not contain any loads
         classical_blocks_.pop_back();
-        for (auto* block : classical_blocks_)
+        for (auto* load_block : classical_blocks_)
         {
-            expandBasedOnDest(module, block, false, &quot;load&quot;);
+            expandBasedOnDest(module, load_block, false, &quot;load&quot;);
         }
     }
 
@@ -967,7 +967,7 @@ void GroupingPass::setLogger(ILoggerPtr logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>

@@ -662,7 +662,7 @@ void ValidationPass::pointerChecks(Instruction&amp; instr)
 
         uint64_t    n            = 1;
         llvm::Type* element_type = pointer_type-&gt;getElementType();
-        while (pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(element_type))
+        while (pointer_type == llvm::dyn_cast&lt;llvm::PointerType&gt;(element_type))
         {
             element_type = pointer_type-&gt;getElementType();
             ++n;
@@ -812,6 +812,12 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module&amp; module)
                             break;
                         case llvm::CmpInst::Predicate::ICMP_SLE:
                             first_arg = &quot;sle&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::BAD_FCMP_PREDICATE:
+                            first_arg = &quot;badfcmp&quot;;
+                            break;
+                        case llvm::CmpInst::Predicate::BAD_ICMP_PREDICATE:
+                            first_arg = &quot;badicmp&quot;;
                             break;
                         }
                     }
@@ -978,7 +984,7 @@ bool ValidationPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 13 August 2022 at 00:16:45 UTC</p></div>
+<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
 </div>
           </div>
         </main>
