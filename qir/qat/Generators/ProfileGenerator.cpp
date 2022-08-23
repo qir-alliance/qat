@@ -3,13 +3,13 @@
 
 #include "qir/qat/Generators/ProfileGenerator.hpp"
 
+#include "qir/qat/DeferMeasurementPass/DeferMeasurementPass.hpp"
 #include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Generators/PostTransformConfig.hpp"
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
-#include "qir/qat/OneShotMeasurementPass/OneShotMeasurementPass.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPass.hpp"
 #include "qir/qat/PreTransformTrimming/PreTransformTrimmingPass.hpp"
 #include "qir/qat/Rules/Factory.hpp"
@@ -282,9 +282,9 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(ZExtTransformPass());
             }
 
-            if (cfg.shouldUseOneShotMeasurements())
+            if (cfg.shouldDeferMeasurements())
             {
-                fpm.addPass(OneShotMeasurementPass());
+                fpm.addPass(DeferMeasurementPass());
             }
         });
 

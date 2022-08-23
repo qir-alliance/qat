@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/OneShotMeasurementPass/OneShotMeasurementPass.hpp"
+#include "qir/qat/DeferMeasurementPass/DeferMeasurementPass.hpp"
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
-#include "qir/qat/OneShotMeasurementPass/OneShotMeasurementPass.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
@@ -16,15 +15,15 @@
 namespace microsoft::quantum
 {
 
-std::string const OneShotMeasurementPass::RECORD_INSTR_END = "_record_output";
-OneShotMeasurementPass::OneShotMeasurementPass() noexcept
+std::string const DeferMeasurementPass::RECORD_INSTR_END = "_record_output";
+DeferMeasurementPass::DeferMeasurementPass() noexcept
   : readout_names_{
         {"__quantum__qis__m__body", "__quantum__qis__mz__body", "__quantum__qis__reset__body",
          "__quantum__qis__read_result__body"}}
 {
 }
 
-llvm::PreservedAnalyses OneShotMeasurementPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
+llvm::PreservedAnalyses DeferMeasurementPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
 {
     llvm::BasicBlock* last_block = nullptr;
 
@@ -82,7 +81,7 @@ llvm::PreservedAnalyses OneShotMeasurementPass::run(llvm::Function& function, ll
     return llvm::PreservedAnalyses::none();
 }
 
-bool OneShotMeasurementPass::isRequired()
+bool DeferMeasurementPass::isRequired()
 {
     return true;
 }

@@ -17,8 +17,8 @@ class PostTransformValidationPassConfiguration
     void setup(ConfigurationManager& config)
     {
         config.setSectionName("Pre-transform validation", "");
-        replace_qubits_on_reset_  = config.getParameter("replace-qubit-on-reset");
-        use_oneshot_measurements_ = config.getParameter("use-one-shot-measurements");
+        replace_qubits_on_reset_ = config.getParameter("replace-qubit-on-reset");
+        defer_measurements_      = config.getParameter("defer-measurements");
     }
 
     static PostTransformValidationPassConfiguration createDisabled()
@@ -35,13 +35,13 @@ class PostTransformValidationPassConfiguration
             return false;
         }
 
-        return replace_qubits_on_reset_->value<bool>() || use_oneshot_measurements_->value<bool>();
+        return replace_qubits_on_reset_->value<bool>() || defer_measurements_->value<bool>();
     }
 
   private:
     bool             disable_straightline_code_requirement_{false};
     DeferredValuePtr replace_qubits_on_reset_{nullptr};
-    DeferredValuePtr use_oneshot_measurements_{nullptr};
+    DeferredValuePtr defer_measurements_{nullptr};
 };
 
 } // namespace microsoft::quantum

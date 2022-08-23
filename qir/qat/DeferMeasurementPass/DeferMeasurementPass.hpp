@@ -13,7 +13,7 @@
 namespace microsoft::quantum
 {
 
-class OneShotMeasurementPass : public llvm::PassInfoMixin<OneShotMeasurementPass>
+class DeferMeasurementPass : public llvm::PassInfoMixin<DeferMeasurementPass>
 {
   public:
     using Instruction = llvm::Instruction;
@@ -26,16 +26,16 @@ class OneShotMeasurementPass : public llvm::PassInfoMixin<OneShotMeasurementPass
     // Construction and destruction configuration.
     //
 
-    OneShotMeasurementPass() noexcept;
+    DeferMeasurementPass() noexcept;
 
     /// Copy construction is banned.
-    OneShotMeasurementPass(OneShotMeasurementPass const&) = delete;
+    DeferMeasurementPass(DeferMeasurementPass const&) = delete;
 
     /// We allow move semantics.
-    OneShotMeasurementPass(OneShotMeasurementPass&&) = default;
+    DeferMeasurementPass(DeferMeasurementPass&&) = default;
 
     /// Default destruction.
-    ~OneShotMeasurementPass() = default;
+    ~DeferMeasurementPass() = default;
 
     llvm::PreservedAnalyses run(llvm::Function& function, llvm::FunctionAnalysisManager& fam);
 

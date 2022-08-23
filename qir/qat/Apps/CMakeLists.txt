@@ -17,7 +17,7 @@ target_link_libraries(qat
     PostTransformValidation 
     PreTransformTrimming 
     ZExtTransformPass 
-    OneShotMeasurementPass 
+    DeferMeasurementPass 
     Version)
 
 

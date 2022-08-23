@@ -17,7 +17,7 @@ struct PostTransformConfig
         config.addParameter(
             should_eleminate_zext_i1_, "should-eleminate-zext-i1", "Replace zext instruction for i1 with select.");
         config.addParameter(
-            use_one_shot_measurements_, "use-one-shot-measurements",
+            defer_measurements_, "defer-measurements",
             "Wether or not measurement and recording functions should be moved to the end of the program.");
     }
 
@@ -31,7 +31,7 @@ struct PostTransformConfig
         ret.simplify_cfg_pass_            = false;
         ret.lower_switch_                 = false;
         ret.should_eleminate_zext_i1_     = false;
-        ret.use_one_shot_measurements_    = false;
+        ret.defer_measurements_           = false;
 
         return ret;
     }
@@ -66,14 +66,14 @@ struct PostTransformConfig
         return should_eleminate_zext_i1_;
     }
 
-    bool shouldUseOneShotMeasurements() const
+    bool shouldDeferMeasurements() const
     {
-        return use_one_shot_measurements_;
+        return defer_measurements_;
     }
 
-    void setUseOneShotMeasurements(bool const& v)
+    void setUseDeferMeasurements(bool const& v)
     {
-        use_one_shot_measurements_ = v;
+        defer_measurements_ = v;
     }
 
   private:
@@ -83,7 +83,7 @@ struct PostTransformConfig
     bool simplify_cfg_pass_{true};
     bool lower_switch_{true};
     bool should_eleminate_zext_i1_{true};
-    bool use_one_shot_measurements_{false};
+    bool defer_measurements_{false};
 };
 
 } // namespace microsoft::quantum

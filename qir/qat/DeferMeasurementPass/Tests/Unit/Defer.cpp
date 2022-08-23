@@ -49,7 +49,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 
 } // namespace
 
-TEST(OneShotMeasurements, ReorderTest)
+TEST(DeferMeasurements, ReorderTest)
 {
     using namespace microsoft::quantum::notation;
 
@@ -84,7 +84,7 @@ TEST(OneShotMeasurements, ReorderTest)
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
     auto cfg = PostTransformConfig::createDisabled();
-    cfg.setUseOneShotMeasurements(true);
+    cfg.setUseDeferMeasurements(true);
     configuration_manager.setConfig(cfg);
 
     ir_manip->applyProfile(profile);

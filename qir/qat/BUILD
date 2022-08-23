@@ -310,9 +310,9 @@ ms_cc_library(
 )
 
 cc_library(
-    name = "OneShotMeasurementPass",
-    srcs = glob(["OneShotMeasurementPass/*.cpp"]),
-    hdrs = glob(["OneShotMeasurementPass/*.hpp"]),
+    name = "DeferMeasurementPass",
+    srcs = glob(["DeferMeasurementPass/*.cpp"]),
+    hdrs = glob(["DeferMeasurementPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -330,10 +330,10 @@ ms_cc_library(
     deps = [
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
+        "//qir/qat:DeferMeasurementPass",
         "//qir/qat:GroupingPass",
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
-        "//qir/qat:OneShotMeasurementPass",
         "//qir/qat:PostTransformValidation",
         "//qir/qat:PreTransformTrimming",
         "//qir/qat:Profile",
@@ -404,12 +404,12 @@ ms_cc_binary(
     deps = [
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
+        "//qir/qat:DeferMeasurementPass",
         "//qir/qat:Generators",
         "//qir/qat:GroupingPass",
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
         "//qir/qat:ModuleLoader",
-        "//qir/qat:OneShotMeasurementPass",
         "//qir/qat:PostTransformValidation",
         "//qir/qat:PreTransformTrimming",
         "//qir/qat:Profile",
