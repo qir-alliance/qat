@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_record_pull_back_pass_8hpp/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_defer_measurement_pass_8hpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      RecordPullBackPass/RecordPullBackPass.hpp - QAT Documentation
+      DeferMeasurementPass/DeferMeasurementPass.hpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,12 +553,12 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> RecordPullBackPass/RecordPullBackPass.hpp </span>
+        <span class="text-center"> DeferMeasurementPass/DeferMeasurementPass.hpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="recordpullbackpassrecordpullbackpasshpp">RecordPullBackPass/RecordPullBackPass.hpp</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="defermeasurementpassdefermeasurementpasshpp">DeferMeasurementPass/DeferMeasurementPass.hpp</h1>
 <h2 id="namespaces">Namespaces</h2>
 <table>
 <thead>
@@ -586,7 +586,7 @@
 <tbody>
 <tr>
 <td>class</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_record_pull_back_pass/">microsoft::quantum::RecordPullBackPass</a></strong></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_defer_measurement_pass/">microsoft::quantum::DeferMeasurementPass</a></strong></td>
 </tr>
 </tbody>
 </table>
@@ -606,7 +606,7 @@
 namespace microsoft::quantum
 {
 
-class RecordPullBackPass : public llvm::PassInfoMixin&lt;RecordPullBackPass&gt;
+class DeferMeasurementPass : public llvm::PassInfoMixin&lt;DeferMeasurementPass&gt;
 {
   public:
     using Instruction = llvm::Instruction;
@@ -619,13 +619,13 @@ class RecordPullBackPass : public llvm::PassInfoMixin&lt;RecordPullBackPass&gt;
     // Construction and destruction configuration.
     //
 
-    RecordPullBackPass() noexcept;
+    DeferMeasurementPass() noexcept;
 
-    RecordPullBackPass(RecordPullBackPass const&amp;) = delete;
+    DeferMeasurementPass(DeferMeasurementPass const&amp;) = delete;
 
-    RecordPullBackPass(RecordPullBackPass&amp;&amp;) = default;
+    DeferMeasurementPass(DeferMeasurementPass&amp;&amp;) = default;
 
-    ~RecordPullBackPass() = default;
+    ~DeferMeasurementPass() = default;
 
     llvm::PreservedAnalyses run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; fam);
 
@@ -638,7 +638,7 @@ class RecordPullBackPass : public llvm::PassInfoMixin&lt;RecordPullBackPass&gt;
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
+<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
 </div>
           </div>
         </main>

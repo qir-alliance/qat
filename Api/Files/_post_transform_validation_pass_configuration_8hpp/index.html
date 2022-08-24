@@ -611,6 +611,7 @@ class PostTransformValidationPassConfiguration
     {
         config.setSectionName(&quot;Pre-transform validation&quot;, &quot;&quot;);
         replace_qubits_on_reset_ = config.getParameter(&quot;replace-qubit-on-reset&quot;);
+        defer_measurements_      = config.getParameter(&quot;defer-measurements&quot;);
     }
 
     static PostTransformValidationPassConfiguration createDisabled()
@@ -627,18 +628,19 @@ class PostTransformValidationPassConfiguration
             return false;
         }
 
-        return replace_qubits_on_reset_-&gt;value&lt;bool&gt;();
+        return replace_qubits_on_reset_-&gt;value&lt;bool&gt;() || defer_measurements_-&gt;value&lt;bool&gt;();
     }
 
   private:
     bool             disable_straightline_code_requirement_{false};
     DeferredValuePtr replace_qubits_on_reset_{nullptr};
+    DeferredValuePtr defer_measurements_{nullptr};
 };
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
+<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
 </div>
           </div>
         </main>

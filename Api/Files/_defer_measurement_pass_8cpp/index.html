@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/dir_5ca0a259d9a1a3a61a1ce69e9739cfa7/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_defer_measurement_pass_8cpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      RecordPullBackPass - QAT Documentation
+      DeferMeasurementPass/DeferMeasurementPass.cpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,13 +553,13 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> RecordPullBackPass </span>
+        <span class="text-center"> DeferMeasurementPass/DeferMeasurementPass.cpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="recordpullbackpass">RecordPullBackPass</h1>
-<h2 id="files">Files</h2>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="defermeasurementpassdefermeasurementpasscpp">DeferMeasurementPass/DeferMeasurementPass.cpp</h1>
+<h2 id="namespaces">Namespaces</h2>
 <table>
 <thead>
 <tr>
@@ -568,15 +568,104 @@
 </thead>
 <tbody>
 <tr>
-<td><strong><a href="/qat/Api/Files/_record_pull_back_pass_8cpp/#file-recordpullbackpass.cpp">RecordPullBackPass/RecordPullBackPass.cpp</a></strong></td>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
 </tr>
 <tr>
-<td><strong><a href="/qat/Api/Files/_record_pull_back_pass_8hpp/#file-recordpullbackpass.hpp">RecordPullBackPass/RecordPullBackPass.hpp</a></strong></td>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
 </tr>
 </tbody>
 </table>
+<h2 id="source-code">Source code</h2>
+<pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include &quot;qir/qat/DeferMeasurementPass/DeferMeasurementPass.hpp&quot;
+
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Logging/ILogger.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
+
+#include &lt;functional&gt;
+#include &lt;stdexcept&gt;
+#include &lt;unordered_map&gt;
+#include &lt;vector&gt;
+
+namespace microsoft::quantum
+{
+
+std::string const DeferMeasurementPass::RECORD_INSTR_END = &quot;_record_output&quot;;
+DeferMeasurementPass::DeferMeasurementPass() noexcept
+  : readout_names_{
+        {&quot;__quantum__qis__m__body&quot;, &quot;__quantum__qis__mz__body&quot;, &quot;__quantum__qis__reset__body&quot;,
+         &quot;__quantum__qis__read_result__body&quot;}}
+{
+}
+
+llvm::PreservedAnalyses DeferMeasurementPass::run(llvm::Function&amp; function, llvm::FunctionAnalysisManager&amp; /*mam*/)
+{
+
+    for (auto&amp; block : function)
+    {
+        // Identifying record functions
+        std::vector&lt;llvm::Instruction*&gt; records;
+        for (auto&amp; instr : block)
+        {
+            auto call = llvm::dyn_cast&lt;llvm::CallBase&gt;(&amp;instr);
+            if (call != nullptr)
+            {
+                auto f = call-&gt;getCalledFunction();
+                if (f != nullptr)
+                {
+                    auto name = static_cast&lt;std::string&gt;(f-&gt;getName());
+                    bool is_readout =
+                        (name.size() &gt;= RECORD_INSTR_END.size() &amp;&amp;
+                         name.substr(name.size() - RECORD_INSTR_END.size(), RECORD_INSTR_END.size()) ==
+                             RECORD_INSTR_END);
+
+                    if (is_readout || readout_names_.find(name) != readout_names_.end())
+                    {
+                        records.push_back(&amp;instr);
+                    }
+                }
+            }
+        }
+
+        // Moving function calls
+        if (!records.empty())
+        {
+            llvm::IRBuilder&lt;&gt; builder(function.getContext());
+            builder.SetInsertPoint(block.getTerminator());
+
+            for (auto instr : records)
+            {
+                auto new_instr = instr-&gt;clone();
+                new_instr-&gt;takeName(instr);
+                builder.Insert(new_instr);
+                instr-&gt;replaceAllUsesWith(new_instr);
+                if (instr-&gt;use_empty())
+                {
+                    instr-&gt;eraseFromParent();
+                }
+                else
+                {
+                    throw std::runtime_error(
+                        &quot;Unexpected uses of instruction while moving records to the bottom of the block&quot;);
+                }
+            }
+        }
+    }
+
+    return llvm::PreservedAnalyses::none();
+}
+
+bool DeferMeasurementPass::isRequired()
+{
+    return true;
+}
+} // namespace microsoft::quantum
+</code></pre>
 <hr />
-<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
+<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
 </div>
           </div>
         </main>

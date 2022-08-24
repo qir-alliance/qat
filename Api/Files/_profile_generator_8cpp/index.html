@@ -581,6 +581,7 @@
 
 #include &quot;qir/qat/Generators/ProfileGenerator.hpp&quot;
 
+#include &quot;qir/qat/DeferMeasurementPass/DeferMeasurementPass.hpp&quot;
 #include &quot;qir/qat/Generators/LlvmPassesConfiguration.hpp&quot;
 #include &quot;qir/qat/Generators/PostTransformConfig.hpp&quot;
 #include &quot;qir/qat/GroupingPass/GroupingAnalysisPass.hpp&quot;
@@ -589,7 +590,6 @@
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 #include &quot;qir/qat/PostTransformValidation/PostTransformValidationPass.hpp&quot;
 #include &quot;qir/qat/PreTransformTrimming/PreTransformTrimmingPass.hpp&quot;
-#include &quot;qir/qat/RecordPullBackPass/RecordPullBackPass.hpp&quot;
 #include &quot;qir/qat/Rules/Factory.hpp&quot;
 #include &quot;qir/qat/Rules/RuleSet.hpp&quot;
 #include &quot;qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
@@ -851,9 +851,9 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(ZExtTransformPass());
             }
 
-            if (cfg.shouldPullRecordsBack())
+            if (cfg.shouldDeferMeasurements())
             {
-                fpm.addPass(RecordPullBackPass());
+                fpm.addPass(DeferMeasurementPass());
             }
         });
 
@@ -917,7 +917,7 @@ void ProfileGenerator::setLogger(ILoggerPtr const&amp; logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 23 August 2022 at 17:23:00 UTC</p></div>
+<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
 </div>
           </div>
         </main>
