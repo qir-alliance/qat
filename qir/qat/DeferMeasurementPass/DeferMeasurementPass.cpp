@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/RecordPullBackPass/RecordPullBackPass.hpp"
+#include "qir/qat/DeferMeasurementPass/DeferMeasurementPass.hpp"
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
-#include "qir/qat/RecordPullBackPass/RecordPullBackPass.hpp"
 
 #include <functional>
 #include <stdexcept>
@@ -16,13 +15,15 @@
 namespace microsoft::quantum
 {
 
-std::string const RecordPullBackPass::RECORD_INSTR_END = "_record_output";
-RecordPullBackPass::RecordPullBackPass() noexcept
-  : readout_names_{{"__quantum__qis__m__body", "__quantum__qis__mz__body", "__quantum__qis__reset__body"}}
+std::string const DeferMeasurementPass::RECORD_INSTR_END = "_record_output";
+DeferMeasurementPass::DeferMeasurementPass() noexcept
+  : readout_names_{
+        {"__quantum__qis__m__body", "__quantum__qis__mz__body", "__quantum__qis__reset__body",
+         "__quantum__qis__read_result__body"}}
 {
 }
 
-llvm::PreservedAnalyses RecordPullBackPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
+llvm::PreservedAnalyses DeferMeasurementPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
 {
 
     for (auto& block : function)
@@ -79,7 +80,7 @@ llvm::PreservedAnalyses RecordPullBackPass::run(llvm::Function& function, llvm::
     return llvm::PreservedAnalyses::none();
 }
 
-bool RecordPullBackPass::isRequired()
+bool DeferMeasurementPass::isRequired()
 {
     return true;
 }

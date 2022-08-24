@@ -57,7 +57,7 @@ TESTS = {
         "--no-disable-record-output-support",
         "--unroll-loops",
         "--replace-qubit-on-reset",
-        "--pull-records-back",
+        "--defer-measurements",
         "--entry-point-attr",
         "EntryPoint",
         "--no-allow-internal-calls",

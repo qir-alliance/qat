@@ -325,10 +325,10 @@ ms_cc_library(
     ],
 )
 
-ms_cc_library(
-    name = "RecordPullBackPass",
-    srcs = glob(["RecordPullBackPass/*.cpp"]),
-    hdrs = glob(["RecordPullBackPass/*.hpp"]),
+cc_library(
+    name = "DeferMeasurementPass",
+    srcs = glob(["DeferMeasurementPass/*.cpp"]),
+    hdrs = glob(["DeferMeasurementPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -346,6 +346,7 @@ ms_cc_library(
     deps = [
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
+        "//qir/qat:DeferMeasurementPass",
         "//qir/qat:GroupingPass",
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
@@ -353,7 +354,6 @@ ms_cc_library(
         "//qir/qat:PreTransformTrimming",
         "//qir/qat:Profile",
         "//qir/qat:QatTypes",
-        "//qir/qat:RecordPullBackPass",
         "//qir/qat:Rules",
         "//qir/qat:StaticResourceComponent",
         "//qir/qat:TransformationRulesPass",
@@ -420,6 +420,7 @@ ms_cc_binary(
     deps = [
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
+        "//qir/qat:DeferMeasurementPass",
         "//qir/qat:Generators",
         "//qir/qat:GroupingPass",
         "//qir/qat:Llvm",
@@ -430,7 +431,6 @@ ms_cc_binary(
         "//qir/qat:Profile",
         "//qir/qat:QatConfig",
         "//qir/qat:QatTypes",
-        "//qir/qat:RecordPullBackPass",
         "//qir/qat:Rules",
         "//qir/qat:StaticResourceComponent",
         "//qir/qat:TransformationRulesPass",
