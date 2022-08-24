@@ -2,8 +2,7 @@ load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//:config/microsoft.bzl", "ms_cc_binary", "ms_cc_library")
-# To build Docker image include
-# load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 
 cc_library(
     name = "Llvm",
@@ -448,14 +447,13 @@ pkg_tar(
     visibility = ["//visibility:public"],
 )
 
-# To enable building Docker images, add this
-# container_image(
-#     name = "qat-image",
-#     base = "@ubuntu-linux//image",
-#     cmd = ["/opt/qat"],
-#     target_compatible_with = [
-#         "@platforms//cpu:x86_64",
-#         "@platforms//os:linux",
-#     ],
-#     tars = [":qat-tar"],
-# )
+container_image(
+ name = "qat-image",
+ base = "@ubuntu-linux//image",
+ cmd = ["/opt/qat"],
+ target_compatible_with = [
+     "@platforms//cpu:x86_64",
+     "@platforms//os:linux",
+ ],
+ tars = [":qat-tar"],
+)
