@@ -84,7 +84,7 @@ void ValidationPass::pointerChecks(Instruction& instr)
 
         uint64_t    n            = 1;
         llvm::Type* element_type = pointer_type->getElementType();
-        while (pointer_type = llvm::dyn_cast<llvm::PointerType>(element_type))
+        while (pointer_type == llvm::dyn_cast<llvm::PointerType>(element_type))
         {
             element_type = pointer_type->getElementType();
             ++n;
@@ -234,6 +234,12 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
                             break;
                         case llvm::CmpInst::Predicate::ICMP_SLE:
                             first_arg = "sle";
+                            break;
+                        case llvm::CmpInst::Predicate::BAD_FCMP_PREDICATE:
+                            first_arg = "badfcmp";
+                            break;
+                        case llvm::CmpInst::Predicate::BAD_ICMP_PREDICATE:
+                            first_arg = "badicmp";
                             break;
                         }
                     }

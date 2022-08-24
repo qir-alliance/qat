@@ -169,8 +169,6 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             // Always inline
             if (cfg.alwaysInline())
             {
-
-                auto& pass_builder = generator.passBuilder();
                 mpm.addPass(llvm::AlwaysInlinerPass());
                 auto                           inline_param = getInlineParams(cfg.inlineParameter());
                 llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
@@ -180,8 +178,6 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             // Unroll loop
             if (cfg.unrollLoops())
             {
-                auto& pass_builder = generator.passBuilder();
-
                 /// More unroll parameters
                 /// https://llvm.org/doxygen/LoopUnrollPass_8cpp.html
 
@@ -196,7 +192,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                     .setRuntime(cfg.unrollAllowRuntime())
                     .setUpperBound(cfg.unrollAllowUpperBound())
                     .setProfileBasedPeeling(cfg.unrollAllowProfilBasedPeeling())
-                    .setFullUnrollMaxCount(cfg.unrolFullUnrollCount());
+                    .setFullUnrollMaxCount(static_cast<uint32_t>(cfg.unrolFullUnrollCount()));
 
                 fpm.addPass(llvm::LoopUnrollPass(loop_config));
             }
@@ -249,7 +245,6 @@ void ProfileGenerator::setupDefaultComponentPipeline()
         "post-transform",
         [logger](PostTransformConfig const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
         {
-            auto& mpm = generator.modulePassManager();
             auto& fpm = generator.functionPassManager();
 
             if (cfg.shouldAddInstCombinePass())

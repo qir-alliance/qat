@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Apps/Qat/ProfileConfiguration.hpp"
+
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 

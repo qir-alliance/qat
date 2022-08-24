@@ -86,7 +86,7 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
 
     ParameterParser parser;
     configuration_manager.setupArguments(parser);
-    char* argv[] = {"exe", "--no-allow-undef", "--no-allow-poison"};
+    char const* argv[] = {"exe", "--no-allow-undef", "--no-allow-poison"};
     parser.parseArgs(3, argv);
 
     configuration_manager.configure(parser);

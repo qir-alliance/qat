@@ -126,7 +126,7 @@ void init()
     initializeTypePromotionPass(registry);
 }
 
-int main(int argc, char** argv)
+int main(int argc, char const** argv)
 {
     int ret = 0;
 

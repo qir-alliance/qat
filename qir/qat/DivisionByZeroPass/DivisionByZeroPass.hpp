@@ -4,8 +4,8 @@
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
-#include "qir/qat/Profile/Profile.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 
 #include <functional>
 #include <unordered_map>

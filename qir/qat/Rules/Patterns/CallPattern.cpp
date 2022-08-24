@@ -44,7 +44,7 @@ CallPattern::Child CallPattern::copy() const
 {
     auto ret = std::make_shared<CallPattern>(name_);
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 } // namespace microsoft::quantum

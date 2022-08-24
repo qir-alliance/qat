@@ -25,6 +25,10 @@ DeferMeasurementPass::DeferMeasurementPass() noexcept
 
 llvm::PreservedAnalyses DeferMeasurementPass::run(llvm::Function& function, llvm::FunctionAnalysisManager& /*mam*/)
 {
+<<<<<<< HEAD:qir/qat/DeferMeasurementPass/DeferMeasurementPass.cpp
+    llvm::BasicBlock* last_block = nullptr;
+=======
+>>>>>>> main:qir/qat/RecordPullBackPass/RecordPullBackPass.cpp
 
     for (auto& block : function)
     {

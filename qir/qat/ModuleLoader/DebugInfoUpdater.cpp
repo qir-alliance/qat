@@ -146,8 +146,8 @@ void DebugInfoUpdater::visitFunction(Function& function)
     }
 
     auto subprogram = builder_.createFunction(
-        file_unit_, function.getName(), StringRef(), file_unit_, position.line(), createFunctionType(&function),
-        position.line(), llvm::DINode::FlagZero, program_flags);
+        file_unit_, function.getName(), StringRef(), file_unit_, static_cast<uint32_t>(position.line()),
+        createFunctionType(&function), static_cast<uint32_t>(position.line()), llvm::DINode::FlagZero, program_flags);
     function.setSubprogram(subprogram);
 
     function_debug_info_[&function] = subprogram;
@@ -190,8 +190,9 @@ void DebugInfoUpdater::visitInstruction(Instruction& instr)
         }
 
         // Updating the debug location
-        auto new_debug_loc = llvm::DebugLoc(
-            llvm::DILocation::get(module_.getContext(), position.line(), position.column(), scope, inlined_at));
+        auto new_debug_loc = llvm::DebugLoc(llvm::DILocation::get(
+            module_.getContext(), static_cast<uint32_t>(position.line()), static_cast<uint32_t>(position.column()),
+            scope, inlined_at));
 
         instr.setDebugLoc(new_debug_loc);
     }
