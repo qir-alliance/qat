@@ -124,12 +124,13 @@ container_deps()
 
 # To enable building Docker images, add this
 load("//:docker.bzl", "load_docker_image")
+
 load_docker_image(
-            name = "ubuntu-linux",
-            registry = "index.docker.io",
-            repository = "library/ubuntu",
-            tag = "latest",
-    )
+    name = "ubuntu-linux",
+    registry = "index.docker.io",
+    repository = "library/ubuntu",
+    tag = "latest",
+)
 
 #        container_pull(
 #            name = "ubuntu-linux",

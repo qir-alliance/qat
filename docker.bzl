@@ -47,6 +47,13 @@ _container_pull_attrs = {
         doc = "Which CPU variant to pull if this image refers to a " +
               "multi-platform manifest list.",
     ),
+    "cred_helpers": attr.label_list(
+        doc = """Labels to a list of credential helper binaries that are configured in `docker_client_config`.
+
+        More about credential helpers: https://docs.docker.com/engine/reference/commandline/login/#credential-helpers
+        """,
+        mandatory = False,
+    ),
     "digest": attr.string(
         doc = "The digest of the image to pull.",
     ),
@@ -65,13 +72,6 @@ _container_pull_attrs = {
 
             If `DOCKER_CONFIG` isn't set, docker falls back to `$HOME/.docker`.
             """,
-        mandatory = False,
-    ),
-    "cred_helpers": attr.label_list(
-        doc = """Labels to a list of credential helper binaries that are configured in `docker_client_config`.
-
-        More about credential helpers: https://docs.docker.com/engine/reference/commandline/login/#credential-helpers
-        """,
         mandatory = False,
     ),
     "import_tags": attr.string_list(
@@ -94,25 +94,25 @@ _container_pull_attrs = {
     "puller_darwin": attr.label(
         executable = True,
         default = Label("@go_puller_darwin//file:downloaded"),
-        cfg = "host",
+        cfg = "exec",
         doc = "Exposed to provide a way to test other pullers on macOS",
     ),
     "puller_linux_amd64": attr.label(
         executable = True,
         default = Label("@go_puller_linux_amd64//file:downloaded"),
-        cfg = "host",
+        cfg = "exec",
         doc = "Exposed to provide a way to test other pullers on Linux",
     ),
     "puller_linux_arm64": attr.label(
         executable = True,
         default = Label("@go_puller_linux_arm64//file:downloaded"),
-        cfg = "host",
+        cfg = "exec",
         doc = "Exposed to provide a way to test other pullers on Linux",
     ),
     "puller_linux_s390x": attr.label(
         executable = True,
         default = Label("@go_puller_linux_s390x//file:downloaded"),
-        cfg = "host",
+        cfg = "exec",
         doc = "Exposed to provide a way to test other pullers on Linux",
     ),
     "registry": attr.string(
@@ -144,7 +144,11 @@ def _impl(repository_ctx):
     """Core implementation of container_pull."""
 
     if repository_ctx.os.name == "windows":
-        return
+        updated_attrs = {
+            k: getattr(repository_ctx.attr, k)
+            for k in _container_pull_attrs.keys()
+        }
+        return updated_attrs
 
     # Add an empty top-level BUILD file.
     repository_ctx.file("BUILD", "")
@@ -307,4 +311,3 @@ load_docker_image = repository_rule(
         "PULLER_TIMEOUT",
     ],
 )
-
