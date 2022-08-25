@@ -26,9 +26,9 @@ void ValidationPassConfiguration::setup(ConfigurationManager& config)
     config.addParameter(
         allowlist_opcodes_, "allowlist-opcodes", "Whether or not to use allow list for op-codes.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
-    config.addParameter(allowlist_external_calls_, "allowlist-external-calls",
-                        "Whether or not to use allow list external calls.";
-                        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allowlist_external_calls_, "allowlist-external-calls", "Whether or not to use allow list external calls.",
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
 
     config.addParameter(
         allowlist_pointer_types_, "allowlist-pointer-types", "Whether or not to use allow list pointer types.",
