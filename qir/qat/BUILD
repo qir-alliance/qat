@@ -445,15 +445,20 @@ pkg_tar(
     mode = "0755",
     package_dir = "/opt",
     visibility = ["//visibility:public"],
+
 )
 
-container_image(
-    name = "qat-image",
-    base = "@ubuntu-linux//image",
-    cmd = ["/opt/qat"],
-    target_compatible_with = [
-        "@platforms//cpu:x86_64",
-        "@platforms//os:linux",
-    ],
-    tars = [":qat-tar"],
-)
+#container_image(
+#    name = "qat-image",
+#    base = "@ubuntu-linux//image",
+#    cmd = ["/opt/qat"],
+#    target_compatible_with = select({
+#        "@platforms//os:windows": ["@platforms//:incompatible"],
+#        "//conditions:default":  [
+#            "@platforms//cpu:x86_64",
+#            "@platforms//os:linux",
+#        ],
+#    }),    
+#
+#    tars = [":qat-tar"],
+#)

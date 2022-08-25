@@ -142,13 +142,8 @@ _container_pull_attrs = {
 
 def _impl(repository_ctx):
     """Core implementation of container_pull."""
-
-    if repository_ctx.os.name == "windows":
-        updated_attrs = {
-            k: getattr(repository_ctx.attr, k)
-            for k in _container_pull_attrs.keys()
-        }
-        return updated_attrs
+    print("HELLLO")
+    print(repository_ctx.os.name )
 
     # Add an empty top-level BUILD file.
     repository_ctx.file("BUILD", "")
@@ -157,6 +152,36 @@ def _impl(repository_ctx):
     repository_ctx.file("image/BUILD", "")
 
     import_rule_tags = "[\"{}\"]".format("\", \"".join(repository_ctx.attr.import_tags))
+
+    # Exiting if we are on a Windows platform
+    if repository_ctx.os.name.startswith("windows"):
+        updated_attrs = {
+            k: getattr(repository_ctx.attr, k)
+            for k in _container_pull_attrs.keys()
+        }
+        print("Making empty import")
+        repository_ctx.file("image/BUILD", """package(default_visibility = ["//visibility:public"])
+load("@io_bazel_rules_docker//container:import.bzl", "container_import")
+# filegroup(name = "image")
+container_import(
+    name = "image",
+    config = "config.json",
+    layers = glob(["*.tar.gz"]),
+    base_image_registry = "{registry}",
+    base_image_repository = "{repository}",
+    base_image_digest = "{digest}",
+    tags = {tags},
+)
+
+exports_files(["image.digest", "digest"])
+""".format(
+            registry = updated_attrs["registry"],
+            repository = updated_attrs["repository"],
+            digest = updated_attrs["digest"],
+            tags = import_rule_tags,
+        ))
+
+        return updated_attrs
 
     puller = repository_ctx.attr.puller_linux_amd64
     if repository_ctx.os.name.lower().startswith("mac os"):

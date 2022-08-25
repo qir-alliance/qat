@@ -122,6 +122,7 @@ load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 
 container_deps()
 
+
 # To enable building Docker images, add this
 load("//:docker.bzl", "load_docker_image")
 

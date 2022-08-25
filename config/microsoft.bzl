@@ -82,3 +82,6 @@ def ms_cc_binary(**kwargs):
         copts = copts,
         **kwargs
     )
+
+def ms_container(condition, **kwargs):
+    print("HELLO",condition)
