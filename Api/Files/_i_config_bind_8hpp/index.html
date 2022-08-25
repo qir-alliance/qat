@@ -595,6 +595,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include &quot;qir/external/yaml.hpp&quot;
 #include &quot;qir/qat/Commandline/ParameterParser.hpp&quot;
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 #include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
@@ -611,6 +612,14 @@ namespace microsoft::quantum
 class IConfigBind
 {
   public:
+    enum ParameterVisibility
+    {
+        None         = 0,
+        CliOnly      = 1,
+        ConfigOnly   = 2,
+        CliAndConfig = CliOnly | ConfigOnly,
+    };
+
     // Deleted constructors and deleted operators
     //
     // Strictly speaking the code would remain correct if we allowed copy and/or move, but
@@ -640,6 +649,10 @@ class IConfigBind
 
     virtual std::type_index valueType() const = 0;
 
+    virtual void setValueFromYamlNode(YAML::Node const&amp; node) = 0;
+
+    virtual void updateValueInYamlNode(YAML::Node&amp; node) = 0;
+
     // Properties
     //
 
@@ -653,10 +666,17 @@ class IConfigBind
 
     bool isExperimental() const;
 
+    bool isLoadAndSavable() const;
+
+    bool isAvailableToCli() const;
+
   protected:
     // Constructor
     //
-    IConfigBind(String const&amp; name, String const&amp; description);
+    IConfigBind(
+        String const&amp;       name,
+        String const&amp;       description,
+        ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
     // Configuration
     //
@@ -675,13 +695,14 @@ class IConfigBind
     bool   is_flag_{false};        
     String str_default_value_{&quot;&quot;}; 
 
-    bool is_experimental_{false}; 
+    bool                is_experimental_{false};                        
+    ParameterVisibility visibility_{ParameterVisibility::CliAndConfig}; 
 };
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
+<p>Updated on 25 August 2022 at 12:24:56 UTC</p></div>
 </div>
           </div>
         </main>

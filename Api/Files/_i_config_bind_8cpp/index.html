@@ -588,9 +588,10 @@ using namespace microsoft::quantum;
 namespace microsoft::quantum
 {
 
-IConfigBind::IConfigBind(String const&amp; name, String const&amp; description)
+IConfigBind::IConfigBind(String const&amp; name, String const&amp; description, ParameterVisibility visibility)
   : name_{name}
   , description_{description}
+  , visibility_{visibility}
 {
 }
 
@@ -641,10 +642,20 @@ bool IConfigBind::isExperimental() const
     return is_experimental_;
 }
 
+bool IConfigBind::isLoadAndSavable() const
+{
+    return (visibility_ &amp; ParameterVisibility::ConfigOnly) != ParameterVisibility::None;
+}
+
+bool IConfigBind::isAvailableToCli() const
+{
+    return (visibility_ &amp; ParameterVisibility::CliOnly) != ParameterVisibility::None;
+}
+
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
+<p>Updated on 25 August 2022 at 12:24:56 UTC</p></div>
 </div>
           </div>
         </main>

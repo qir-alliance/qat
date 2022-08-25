@@ -618,6 +618,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#using-deferredrefs">DeferredRefs</a></strong></td>
 </tr>
 <tr>
+<td>using IConfigBind::ParameterVisibility</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#using-parametervisibility">ParameterVisibility</a></strong></td>
+</tr>
+<tr>
 <td>using std::vector&lt; <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section/">Section</a> &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#using-sections">Sections</a></strong> <br>List of available sections.</td>
 </tr>
@@ -710,23 +714,23 @@
 </tr>
 <tr>
 <td>template &lt;typename T > <br>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addparameter">addParameter</a></strong>(T &amp; bind, T default_value, String const &amp; name, String const &amp; description)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addparameter">addParameter</a></strong>(T &amp; bind, T default_value, String const &amp; name, String const &amp; description, ParameterVisibility visibility =ParameterVisibility::CliAndConfig)</td>
 </tr>
 <tr>
 <td>template &lt;typename T > <br>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addexperimentalparameter">addExperimentalParameter</a></strong>(T &amp; bind, T default_value, T off_value, String const &amp; name, String const &amp; description)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addparameter">addParameter</a></strong>(T &amp; bind, String const &amp; name, String const &amp; description, ParameterVisibility visibility =ParameterVisibility::CliAndConfig)</td>
 </tr>
 <tr>
 <td>template &lt;typename T > <br>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addexperimentalparameter">addExperimentalParameter</a></strong>(T &amp; bind, T default_value, String const &amp; name, String const &amp; description)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addexperimentalparameter">addExperimentalParameter</a></strong>(T &amp; bind, T default_value, T off_value, String const &amp; name, String const &amp; description, ParameterVisibility visibility =ParameterVisibility::CliAndConfig)</td>
 </tr>
 <tr>
 <td>template &lt;typename T > <br>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addexperimentalparameter">addExperimentalParameter</a></strong>(T &amp; bind, String const &amp; name, String const &amp; description)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addexperimentalparameter">addExperimentalParameter</a></strong>(T &amp; bind, T default_value, String const &amp; name, String const &amp; description, ParameterVisibility visibility =ParameterVisibility::CliAndConfig)</td>
 </tr>
 <tr>
 <td>template &lt;typename T > <br>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addparameter">addParameter</a></strong>(T &amp; bind, String const &amp; name, String const &amp; description)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addexperimentalparameter">addExperimentalParameter</a></strong>(T &amp; bind, String const &amp; name, String const &amp; description, ParameterVisibility visibility =ParameterVisibility::CliAndConfig)</td>
 </tr>
 <tr>
 <td>DeferredValuePtr</td>
@@ -739,6 +743,14 @@
 <tr>
 <td>template &lt;typename T > <br>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-updateparameter">updateParameter</a></strong>(String const &amp; name, T const &amp; value)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-loadconfig">loadConfig</a></strong>(String const &amp; filename)<br>Loads a configuration file.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-saveconfig">saveConfig</a></strong>(String const &amp; filename)<br>Saves the configuration to the specified file.</td>
 </tr>
 </tbody>
 </table>
@@ -774,6 +786,9 @@
 </code></pre>
 <h3 id="using-deferredrefs">using DeferredRefs</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ConfigurationManager::DeferredRefs =  std::unordered_map&lt;String, DeferredValuePtr&gt;;
+</code></pre>
+<h3 id="using-parametervisibility">using ParameterVisibility</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ConfigurationManager::ParameterVisibility =  IConfigBind::ParameterVisibility;
 </code></pre>
 <h3 id="using-sections">using Sections</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ConfigurationManager::Sections =  std::vector&lt;Section&gt;;
@@ -889,10 +904,21 @@ inline void addParameter(
     T &amp; bind,
     T default_value,
     String const &amp; name,
-    String const &amp; description
+    String const &amp; description,
+    ParameterVisibility visibility =ParameterVisibility::CliAndConfig
 )
 </code></pre>
 <p>Adds a new parameter with a default value to the configuration section. This function should be used by the configuration class. </p>
+<h3 id="function-addparameter_1">function addParameter</h3>
+<pre><code class="language-cpp">template &lt;typename T &gt;
+inline void addParameter(
+    T &amp; bind,
+    String const &amp; name,
+    String const &amp; description,
+    ParameterVisibility visibility =ParameterVisibility::CliAndConfig
+)
+</code></pre>
+<p>Adds a new parameter to the configuration section. This method uses the bound variable value as default value. This function should be used by the configuration class. </p>
 <h3 id="function-addexperimentalparameter">function addExperimentalParameter</h3>
 <pre><code class="language-cpp">template &lt;typename T &gt;
 inline void addExperimentalParameter(
@@ -900,7 +926,8 @@ inline void addExperimentalParameter(
     T default_value,
     T off_value,
     String const &amp; name,
-    String const &amp; description
+    String const &amp; description,
+    ParameterVisibility visibility =ParameterVisibility::CliAndConfig
 )
 </code></pre>
 <p>Adds an experimental parameter with a default value and an experimental "off" value to the configuration section. This function should be used by the configuration class. The difference to <code>addParameter</code> is that this function marks the parameter as experimental and has a default "off" value </p>
@@ -910,7 +937,8 @@ inline void addExperimentalParameter(
     T &amp; bind,
     T default_value,
     String const &amp; name,
-    String const &amp; description
+    String const &amp; description,
+    ParameterVisibility visibility =ParameterVisibility::CliAndConfig
 )
 </code></pre>
 <p>Adds an experimental parameter with a default value to the configuration section. The experimental off value will be set to the default value of parameter. This function should be used by the configuration class. </p>
@@ -919,19 +947,11 @@ inline void addExperimentalParameter(
 inline void addExperimentalParameter(
     T &amp; bind,
     String const &amp; name,
-    String const &amp; description
+    String const &amp; description,
+    ParameterVisibility visibility =ParameterVisibility::CliAndConfig
 )
 </code></pre>
 <p>Adds an experimental parameter. The default value and the experimental off value will be the value of the parameter added. This function should be used by the configuration class. </p>
-<h3 id="function-addparameter_1">function addParameter</h3>
-<pre><code class="language-cpp">template &lt;typename T &gt;
-inline void addParameter(
-    T &amp; bind,
-    String const &amp; name,
-    String const &amp; description
-)
-</code></pre>
-<p>Adds a new parameter to the configuration section. This method uses the bound variable value as default value. This function should be used by the configuration class. </p>
 <h3 id="function-getparameter">function getParameter</h3>
 <pre><code class="language-cpp">DeferredValuePtr getParameter(
     String const &amp; name
@@ -949,8 +969,20 @@ inline void updateParameter(
     T const &amp; value
 )
 </code></pre>
+<h3 id="function-loadconfig">function loadConfig</h3>
+<pre><code class="language-cpp">void loadConfig(
+    String const &amp; filename
+)
+</code></pre>
+<p>Loads a configuration file. </p>
+<h3 id="function-saveconfig">function saveConfig</h3>
+<pre><code class="language-cpp">void saveConfig(
+    String const &amp; filename
+)
+</code></pre>
+<p>Saves the configuration to the specified file. </p>
 <hr />
-<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
+<p>Updated on 25 August 2022 at 12:24:55 UTC</p></div>
 </div>
           </div>
         </main>

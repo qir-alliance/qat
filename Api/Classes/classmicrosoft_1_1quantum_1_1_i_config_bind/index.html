@@ -562,6 +562,21 @@
 <p><a href="#detailed-description">More...</a></p>
 <p><code>#include &lt;Commandline/IConfigBind.hpp&gt;</code></p>
 <p>Inherited by <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">microsoft::quantum::ConfigBind&lt; T &gt;</a></p>
+<h2 id="public-types">Public Types</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enum</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#enum-parametervisibility">ParameterVisibility</a></strong> { None = 0, CliOnly = 1, ConfigOnly = 2, CliAndConfig = CliOnly</td>
+</tr>
+</tbody>
+</table>
 <h2 id="public-functions">Public Functions</h2>
 <table>
 <thead>
@@ -616,6 +631,14 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-valuetype">valueType</a></strong>() const =0<br>Type index of contained data.</td>
 </tr>
 <tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-setvaluefromyamlnode">setValueFromYamlNode</a></strong>(YAML::Node const &amp; node) =0<br>Method to load value from YAML configuratino.</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-updatevalueinyamlnode">updateValueInYamlNode</a></strong>(YAML::Node &amp; node) =0<br>Dumps the current value to the node.</td>
+</tr>
+<tr>
 <td>String</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-name">name</a></strong>() const<br>Returns the name of the bound configuration variable.</td>
 </tr>
@@ -635,6 +658,14 @@
 <td>bool</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-isexperimental">isExperimental</a></strong>() const<br>Indicates whether or not this is an experimental config.</td>
 </tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-isloadandsavable">isLoadAndSavable</a></strong>() const</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-isavailabletocli">isAvailableToCli</a></strong>() const<br>Indicates whether or not this paramter is available to the CLI.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="protected-functions">Protected Functions</h2>
@@ -648,7 +679,7 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-iconfigbind">IConfigBind</a></strong>(String const &amp; name, String const &amp; description)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-iconfigbind">IConfigBind</a></strong>(String const &amp; name, String const &amp; description, ParameterVisibility visibility =ParameterVisibility::CliAndConfig)</td>
 </tr>
 <tr>
 <td>void</td>
@@ -672,6 +703,39 @@
 <pre><code class="language-cpp">class microsoft::quantum::IConfigBind;
 </code></pre>
 <p>Interface class to bind a variable to a configuration flag. This class provides the necessary interface to bind variables and populate their value based on given command-line arguments. </p>
+<h2 id="public-types-documentation">Public Types Documentation</h2>
+<h3 id="enum-parametervisibility">enum ParameterVisibility</h3>
+<table>
+<thead>
+<tr>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>None</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>CliOnly</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>ConfigOnly</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>CliAndConfig</td>
+<td>CliOnly</td>
+<td>ConfigOnly</td>
+</tr>
+</tbody>
+</table>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-iconfigbind">function IConfigBind</h3>
 <pre><code class="language-cpp">IConfigBind(
@@ -731,6 +795,20 @@
 </code></pre>
 <p>Type index of contained data. </p>
 <p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-valuetype">microsoft::quantum::ConfigBind::valueType</a></p>
+<h3 id="function-setvaluefromyamlnode">function setValueFromYamlNode</h3>
+<pre><code class="language-cpp">virtual void setValueFromYamlNode(
+    YAML::Node const &amp; node
+) =0
+</code></pre>
+<p>Method to load value from YAML configuratino. </p>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-setvaluefromyamlnode">microsoft::quantum::ConfigBind::setValueFromYamlNode</a></p>
+<h3 id="function-updatevalueinyamlnode">function updateValueInYamlNode</h3>
+<pre><code class="language-cpp">virtual void updateValueInYamlNode(
+    YAML::Node &amp; node
+) =0
+</code></pre>
+<p>Dumps the current value to the node. </p>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-updatevalueinyamlnode">microsoft::quantum::ConfigBind::updateValueInYamlNode</a></p>
 <h3 id="function-name">function name</h3>
 <pre><code class="language-cpp">String name() const
 </code></pre>
@@ -751,11 +829,20 @@
 <pre><code class="language-cpp">bool isExperimental() const
 </code></pre>
 <p>Indicates whether or not this is an experimental config. </p>
+<h3 id="function-isloadandsavable">function isLoadAndSavable</h3>
+<pre><code class="language-cpp">bool isLoadAndSavable() const
+</code></pre>
+<p>Indicates whether the load and save functions should serialize this configuration. </p>
+<h3 id="function-isavailabletocli">function isAvailableToCli</h3>
+<pre><code class="language-cpp">bool isAvailableToCli() const
+</code></pre>
+<p>Indicates whether or not this paramter is available to the CLI. </p>
 <h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
 <h3 id="function-iconfigbind_3">function IConfigBind</h3>
 <pre><code class="language-cpp">IConfigBind(
     String const &amp; name,
-    String const &amp; description
+    String const &amp; description,
+    ParameterVisibility visibility =ParameterVisibility::CliAndConfig
 )
 </code></pre>
 <h3 id="function-setname">function setName</h3>
@@ -779,7 +866,7 @@
 </code></pre>
 <p>Marks the config as experimental. </p>
 <hr />
-<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
+<p>Updated on 25 August 2022 at 12:24:55 UTC</p></div>
 </div>
           </div>
         </main>

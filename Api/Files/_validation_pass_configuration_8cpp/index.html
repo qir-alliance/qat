@@ -590,13 +590,42 @@ namespace microsoft::quantum
 void ValidationPassConfiguration::setup(ConfigurationManager&amp; config)
 {
     config.setSectionName(&quot;Validation configuration&quot;, &quot;&quot;);
-    config.addParameter(allow_internal_calls_, &quot;allow-internal-calls&quot;, &quot;Whether or not internal calls are allowed.&quot;);
-
     config.addParameter(requires_qubits_, &quot;requires-qubits&quot;, &quot;Whether or not qubits are required in the IR.&quot;);
     config.addParameter(requires_results_, &quot;requires-results&quot;, &quot;Whether or not results are required in the IR.&quot;);
 
-    config.addParameter(allow_poison_, &quot;allow-poison&quot;, &quot;Whether or not to allow poison values.&quot;);
-    config.addParameter(allow_undef_, &quot;allow-undef&quot;, &quot;Whether or not to allow undef values.&quot;);
+    config.addParameter(allow_internal_calls_, &quot;allow-internal-calls&quot;, &quot;Whether or not internal calls are allowed.&quot;);
+    config.addParameter(allow_poison_, &quot;allow-poison&quot;, &quot;Whether or not poison values are allowed.&quot;);
+    config.addParameter(allow_undef_, &quot;allow-undef&quot;, &quot;Whether or not undef values are allowed.&quot;);
+
+    config.addParameter(opcodes_, &quot;opcodes&quot;, &quot;Allowed opcodes&quot;, ConfigurationManager::ParameterVisibility::ConfigOnly);
+
+    config.addParameter(
+        allowlist_opcodes_, &quot;allowlist-opcodes&quot;, &quot;Whether or not to use allow list for op-codes.&quot;,
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allowlist_external_calls_, &quot;allowlist-external-calls&quot;, &quot;Whether or not to use allow list external calls.&quot;,
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+
+    config.addParameter(
+        allowlist_pointer_types_, &quot;allowlist-pointer-types&quot;, &quot;Whether or not to use allow list pointer types.&quot;,
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+
+    config.addParameter(
+        allow_primitive_return_, &quot;allow-primitive-return&quot;, &quot;Whether or not primitive return types are allowed.&quot;,
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allow_struct_return_, &quot;allow-struct-return&quot;, &quot;Whether or not struct return types are allowed.&quot;,
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allow_pointer_return_, &quot;allow-pointer-return&quot;, &quot;Whether or not pointer return types are allowed.&quot;,
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+
+    config.addParameter(
+        external_calls_, &quot;external-calls&quot;, &quot;Allowed external calls.&quot;,
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(
+        allowed_pointer_types_, &quot;allowed-pointer-types&quot;, &quot;Allowed pointer types.&quot;,
+        ConfigurationManager::ParameterVisibility::ConfigOnly);
 }
 
 String ValidationPassConfiguration::profileName() const
@@ -627,16 +656,28 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
         profile.allow_internal_calls_     = false;
         profile.allowlist_external_calls_ = true;
         profile.allowlist_opcodes_        = true;
-        profile.opcodes_                  = OpcodeSet{
-            {&quot;ret&quot;},  {&quot;call&quot;}, {&quot;inttoptr&quot;}, {&quot;br&quot;},   {&quot;add&quot;}, {&quot;sub&quot;}, {&quot;mul&quot;},
-            {&quot;fadd&quot;}, {&quot;fsub&quot;}, {&quot;fmul&quot;},     {&quot;lshr&quot;}, {&quot;and&quot;}, {&quot;or&quot;},  {&quot;xor&quot;},
+        profile.opcodes_                  = OpcodeSet({
+            {&quot;ret&quot;},
+            {&quot;call&quot;},
+            {&quot;inttoptr&quot;},
+            {&quot;br&quot;},
+            {&quot;add&quot;},
+            {&quot;sub&quot;},
+            {&quot;mul&quot;},
+            {&quot;fadd&quot;},
+            {&quot;fsub&quot;},
+            {&quot;fmul&quot;},
+            {&quot;lshr&quot;},
+            {&quot;and&quot;},
+            {&quot;or&quot;},
+            {&quot;xor&quot;},
             /*
             {&quot;icmp&quot;, &quot;eq&quot;},  {&quot;icmp&quot;, &quot;ne&quot;},  {&quot;icmp&quot;, &quot;ugt&quot;}, {&quot;icmp&quot;, &quot;uge&quot;}, {&quot;icmp&quot;, &quot;ult&quot;},
             {&quot;icmp&quot;, &quot;ule&quot;}, {&quot;fcmp&quot;, &quot;oeq&quot;}, {&quot;fcmp&quot;, &quot;ogt&quot;}, {&quot;fcmp&quot;, &quot;oge&quot;}, {&quot;fcmp&quot;, &quot;olt&quot;},
             {&quot;fcmp&quot;, &quot;ole&quot;}, {&quot;fcmp&quot;, &quot;one&quot;},
             */
-        };
-        profile.external_calls_ = Set{
+        });
+        profile.external_calls_           = Set{
             &quot;__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)&quot;,
             &quot;__quantum__qis__cz__body:void (%Qubit*, %Qubit*)&quot;,
             &quot;__quantum__qis__cx__body:void (%Qubit*, %Qubit*)&quot;,
@@ -668,9 +709,9 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
         profile.allow_internal_calls_     = false;
         profile.allowlist_external_calls_ = true;
         profile.allowlist_opcodes_        = true;
-        profile.opcodes_        = OpcodeSet{{&quot;call&quot;}, {&quot;ret&quot;},  {&quot;inttoptr&quot;}, {&quot;br&quot;},   {&quot;phi&quot;},    {&quot;add&quot;}, {&quot;sub&quot;},
-                                     {&quot;mul&quot;},  {&quot;fadd&quot;}, {&quot;fsub&quot;},     {&quot;fmul&quot;}, {&quot;lshr&quot;},   {&quot;shl&quot;}, {&quot;and&quot;},
-                                     {&quot;or&quot;},   {&quot;xor&quot;},  {&quot;icmp&quot;},     {&quot;fcmp&quot;}, {&quot;select&quot;}, {&quot;zext&quot;}};
+        profile.opcodes_        = OpcodeSet({{&quot;call&quot;}, {&quot;ret&quot;},  {&quot;inttoptr&quot;}, {&quot;br&quot;},   {&quot;phi&quot;},    {&quot;add&quot;}, {&quot;sub&quot;},
+                                      {&quot;mul&quot;},  {&quot;fadd&quot;}, {&quot;fsub&quot;},     {&quot;fmul&quot;}, {&quot;lshr&quot;},   {&quot;shl&quot;}, {&quot;and&quot;},
+                                      {&quot;or&quot;},   {&quot;xor&quot;},  {&quot;icmp&quot;},     {&quot;fcmp&quot;}, {&quot;select&quot;}, {&quot;zext&quot;}});
         profile.external_calls_ = Set{
             &quot;__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)&quot;,
             &quot;__quantum__qis__cz__body:void (%Qubit*, %Qubit*)&quot;,
@@ -729,9 +770,23 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
         profile.allow_internal_calls_     = false;
         profile.allowlist_external_calls_ = true;
         profile.allowlist_opcodes_        = true;
-        profile.opcodes_ =
-            OpcodeSet{{&quot;call&quot;}, {&quot;ret&quot;}, {&quot;inttoptr&quot;}, {&quot;br&quot;},   {&quot;phi&quot;}, {&quot;add&quot;},  {&quot;sub&quot;},    {&quot;mul&quot;},
-                      {&quot;and&quot;},  {&quot;or&quot;},  {&quot;xor&quot;},      {&quot;lshr&quot;}, {&quot;shl&quot;}, {&quot;icmp&quot;}, {&quot;select&quot;}, {&quot;zext&quot;}};
+        profile.opcodes_                  = OpcodeSet(
+                             {{&quot;call&quot;},
+             {&quot;ret&quot;},
+             {&quot;inttoptr&quot;},
+             {&quot;br&quot;},
+             {&quot;phi&quot;},
+             {&quot;add&quot;},
+             {&quot;sub&quot;},
+             {&quot;mul&quot;},
+             {&quot;and&quot;},
+             {&quot;or&quot;},
+             {&quot;xor&quot;},
+             {&quot;lshr&quot;},
+             {&quot;shl&quot;},
+             {&quot;icmp&quot;},
+             {&quot;select&quot;},
+             {&quot;zext&quot;}});
         profile.external_calls_ = Set{
             &quot;__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)&quot;,
             &quot;__quantum__qis__cz__body:void (%Qubit*, %Qubit*)&quot;,
@@ -769,12 +824,12 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
         profile.allow_internal_calls_     = false;
         profile.allowlist_external_calls_ = true;
         profile.allowlist_opcodes_        = true;
-        profile.opcodes_                  = OpcodeSet{
+        profile.opcodes_                  = OpcodeSet({
             {&quot;call&quot;},
             {&quot;ret&quot;},
             {&quot;inttoptr&quot;},
-        };
-        profile.external_calls_ = Set{
+        });
+        profile.external_calls_           = Set{
             &quot;__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)&quot;,
             &quot;__quantum__qis__cz__body:void (%Qubit*, %Qubit*)&quot;,
             &quot;__quantum__qis__swap__body:void (%Qubit*, %Qubit*)&quot;,
@@ -811,7 +866,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String 
     return profile;
 }
 
-ValidationPassConfiguration::OpcodeSet const&amp; ValidationPassConfiguration::allowedOpcodes() const
+OpcodeSet const&amp; ValidationPassConfiguration::allowedOpcodes() const
 {
     return opcodes_;
 }
@@ -853,7 +908,7 @@ void ValidationPassConfiguration::addAllowedExternalCall(String const&amp; name)
 
 void ValidationPassConfiguration::addAllowedOpcode(String const&amp; name)
 {
-    opcodes_.insert(name);
+    opcodes_.data().insert(name);
 }
 
 void ValidationPassConfiguration::addAllowedPointerType(String const&amp; name)
@@ -884,7 +939,7 @@ bool ValidationPassConfiguration::allowUndef() const
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
+<p>Updated on 25 August 2022 at 12:24:56 UTC</p></div>
 </div>
           </div>
         </main>

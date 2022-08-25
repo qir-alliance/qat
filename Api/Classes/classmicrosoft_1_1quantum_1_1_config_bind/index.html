@@ -576,6 +576,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#using-type">Type</a></strong></td>
 </tr>
 <tr>
+<td>using std::unordered_set&lt; std::string &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#using-stringset">StringSet</a></strong></td>
+</tr>
+<tr>
 <td>template &lt;typename A ,typename B ,typename R > <br>using typename std::enable_if&lt; std::is_same&lt; A, B &gt;::<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-value">value</a>, R &gt;::type</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#using-enableif">EnableIf</a></strong> <br>Helper template to conditionally disable implementation unless a specific type is used.</td>
 </tr>
@@ -616,7 +620,7 @@
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-configbind">ConfigBind</a></strong>(Type &amp; bind, T default_value, String const &amp; name, String const &amp; description)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-configbind">ConfigBind</a></strong>(Type &amp; bind, T default_value, String const &amp; name, String const &amp; description, ParameterVisibility visibility =ParameterVisibility::CliAndConfig)</td>
 </tr>
 <tr>
 <td>void</td>
@@ -646,9 +650,72 @@
 <td>virtual std::type_index</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-valuetype">valueType</a></strong>() const override<br>Type index of contained data.</td>
 </tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-setvaluefromyamlnode">setValueFromYamlNode</a></strong>(YAML::Node const &amp; node) override<br>Method to load value from YAML configuratino.</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-updatevalueinyamlnode">updateValueInYamlNode</a></strong>(YAML::Node &amp; node) override<br>Dumps the current value to the node.</td>
+</tr>
+<tr>
+<td>template &lt;typename R > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfNotSerializable&lt; R, void &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-alternamebasedontype">alterNameBasedOnType</a></strong>(R const &amp; default_value)</td>
+</tr>
+<tr>
+<td>template &lt;typename R > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfSerializable&lt; R, void &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-alternamebasedontype">alterNameBasedOnType</a></strong>(R const &amp; )</td>
+</tr>
+<tr>
+<td>template &lt;typename A > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfNotSerializable&lt; A, String &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-valueasstring">valueAsString</a></strong>(A const &amp; val)</td>
+</tr>
+<tr>
+<td>template &lt;typename A > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfSerializable&lt; A, String &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-valueasstring">valueAsString</a></strong>(A const &amp; )</td>
+</tr>
+<tr>
+<td>template &lt;typename A > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfNotSerializable&lt; A, void &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-loadvalue">loadValue</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, A const &amp; default_value)</td>
+</tr>
+<tr>
+<td>template &lt;typename A > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfSerializable&lt; A, void &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-loadvalue">loadValue</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, A const &amp; default_value)</td>
+</tr>
+<tr>
+<td>template &lt;typename R > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfNotSerializable&lt; R, void &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-loadyaml">loadYaml</a></strong>(YAML::Node const &amp; node, R &amp; value)</td>
+</tr>
+<tr>
+<td>template &lt;typename R > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfNotSerializable&lt; R, void &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-saveyaml">saveYaml</a></strong>(YAML::Node &amp; node, R const &amp; value)</td>
+</tr>
+<tr>
+<td>template &lt;typename R > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfSerializable&lt; R, void &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-loadyaml">loadYaml</a></strong>(YAML::Node const &amp; node, R &amp; value)</td>
+</tr>
+<tr>
+<td>template &lt;typename R > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfSerializable&lt; R, void &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-saveyaml">saveYaml</a></strong>(YAML::Node &amp; node, R const &amp; value)</td>
+</tr>
 </tbody>
 </table>
 <h2 id="additional-inherited-members">Additional inherited members</h2>
+<p><strong>Public Types inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/">microsoft::quantum::IConfigBind</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enum</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#enum-parametervisibility">ParameterVisibility</a></strong> { None, CliOnly, ConfigOnly, CliAndConfig}</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Public Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/">microsoft::quantum::IConfigBind</a></strong></p>
 <table>
 <thead>
@@ -690,6 +757,14 @@
 <td>bool</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-isexperimental">isExperimental</a></strong>() const<br>Indicates whether or not this is an experimental config.</td>
 </tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-isloadandsavable">isLoadAndSavable</a></strong>() const</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-isavailabletocli">isAvailableToCli</a></strong>() const<br>Indicates whether or not this paramter is available to the CLI.</td>
+</tr>
 </tbody>
 </table>
 <p><strong>Protected Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/">microsoft::quantum::IConfigBind</a></strong></p>
@@ -703,7 +778,7 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-iconfigbind">IConfigBind</a></strong>(String const &amp; name, String const &amp; description)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-iconfigbind">IConfigBind</a></strong>(String const &amp; name, String const &amp; description, ParameterVisibility visibility =ParameterVisibility::CliAndConfig)</td>
 </tr>
 <tr>
 <td>void</td>
@@ -731,6 +806,9 @@ class microsoft::quantum::ConfigBind;
 <h2 id="public-types-documentation">Public Types Documentation</h2>
 <h3 id="using-type">using Type</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ConfigBind&lt; T &gt;::Type =  typename std::decay&lt;T&gt;::type;
+</code></pre>
+<h3 id="using-stringset">using StringSet</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ConfigBind&lt; T &gt;::StringSet =  std::unordered_set&lt;std::string&gt;;
 </code></pre>
 <h3 id="using-enableif">using EnableIf</h3>
 <pre><code class="language-cpp">template &lt;typename A ,
@@ -771,7 +849,8 @@ using microsoft::quantum::ConfigBind&lt; T &gt;::EnableIf =  typename std::enabl
     Type &amp; bind,
     T default_value,
     String const &amp; name,
-    String const &amp; description
+    String const &amp; description,
+    ParameterVisibility visibility =ParameterVisibility::CliAndConfig
 )
 </code></pre>
 <p>Constructor to bind value to parameter. This class holds a reference to a variable together with the name it is expected to have when passed through the parameter parser. </p>
@@ -815,8 +894,88 @@ using microsoft::quantum::ConfigBind&lt; T &gt;::EnableIf =  typename std::enabl
 </code></pre>
 <p>Type index of contained data. </p>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-valuetype">microsoft::quantum::IConfigBind::valueType</a></p>
+<h3 id="function-setvaluefromyamlnode">function setValueFromYamlNode</h3>
+<pre><code class="language-cpp">virtual void setValueFromYamlNode(
+    YAML::Node const &amp; node
+) override
+</code></pre>
+<p>Method to load value from YAML configuratino. </p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-setvaluefromyamlnode">microsoft::quantum::IConfigBind::setValueFromYamlNode</a></p>
+<h3 id="function-updatevalueinyamlnode">function updateValueInYamlNode</h3>
+<pre><code class="language-cpp">virtual void updateValueInYamlNode(
+    YAML::Node &amp; node
+) override
+</code></pre>
+<p>Dumps the current value to the node. </p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-updatevalueinyamlnode">microsoft::quantum::IConfigBind::updateValueInYamlNode</a></p>
+<h3 id="function-alternamebasedontype">function alterNameBasedOnType</h3>
+<pre><code class="language-cpp">template &lt;typename R &gt;
+ConfigBind&lt; T &gt;::template EnableIfNotSerializable&lt; R, void &gt; alterNameBasedOnType(
+    R const &amp; default_value
+)
+</code></pre>
+<h3 id="function-alternamebasedontype_1">function alterNameBasedOnType</h3>
+<pre><code class="language-cpp">template &lt;typename R &gt;
+ConfigBind&lt; T &gt;::template EnableIfSerializable&lt; R, void &gt; alterNameBasedOnType(
+    R const &amp; 
+)
+</code></pre>
+<h3 id="function-valueasstring">function valueAsString</h3>
+<pre><code class="language-cpp">template &lt;typename A &gt;
+ConfigBind&lt; T &gt;::template EnableIfNotSerializable&lt; A, String &gt; valueAsString(
+    A const &amp; val
+)
+</code></pre>
+<h3 id="function-valueasstring_1">function valueAsString</h3>
+<pre><code class="language-cpp">template &lt;typename A &gt;
+ConfigBind&lt; T &gt;::template EnableIfSerializable&lt; A, String &gt; valueAsString(
+    A const &amp; 
+)
+</code></pre>
+<h3 id="function-loadvalue">function loadValue</h3>
+<pre><code class="language-cpp">template &lt;typename A &gt;
+ConfigBind&lt; T &gt;::template EnableIfNotSerializable&lt; A, void &gt; loadValue(
+    ParameterParser &amp; parser,
+    A const &amp; default_value
+)
+</code></pre>
+<h3 id="function-loadvalue_1">function loadValue</h3>
+<pre><code class="language-cpp">template &lt;typename A &gt;
+ConfigBind&lt; T &gt;::template EnableIfSerializable&lt; A, void &gt; loadValue(
+    ParameterParser &amp; parser,
+    A const &amp; default_value
+)
+</code></pre>
+<h3 id="function-loadyaml">function loadYaml</h3>
+<pre><code class="language-cpp">template &lt;typename R &gt;
+ConfigBind&lt; T &gt;::template EnableIfNotSerializable&lt; R, void &gt; loadYaml(
+    YAML::Node const &amp; node,
+    R &amp; value
+)
+</code></pre>
+<h3 id="function-saveyaml">function saveYaml</h3>
+<pre><code class="language-cpp">template &lt;typename R &gt;
+ConfigBind&lt; T &gt;::template EnableIfNotSerializable&lt; R, void &gt; saveYaml(
+    YAML::Node &amp; node,
+    R const &amp; value
+)
+</code></pre>
+<h3 id="function-loadyaml_1">function loadYaml</h3>
+<pre><code class="language-cpp">template &lt;typename R &gt;
+ConfigBind&lt; T &gt;::template EnableIfSerializable&lt; R, void &gt; loadYaml(
+    YAML::Node const &amp; node,
+    R &amp; value
+)
+</code></pre>
+<h3 id="function-saveyaml_1">function saveYaml</h3>
+<pre><code class="language-cpp">template &lt;typename R &gt;
+ConfigBind&lt; T &gt;::template EnableIfSerializable&lt; R, void &gt; saveYaml(
+    YAML::Node &amp; node,
+    R const &amp; value
+)
+</code></pre>
 <hr />
-<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
+<p>Updated on 25 August 2022 at 12:24:55 UTC</p></div>
 </div>
           </div>
         </main>

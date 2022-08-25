@@ -597,6 +597,10 @@
 </tr>
 <tr>
 <td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_opcode_set/">microsoft::quantum::OpcodeSet</a></strong></td>
+</tr>
+<tr>
+<td>class</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">microsoft::quantum::ValidationPassConfiguration</a></strong></td>
 </tr>
 </tbody>
@@ -673,11 +677,112 @@ template &lt;&gt; struct hash&lt;microsoft::quantum::OpcodeValue&gt;
 namespace microsoft::quantum
 {
 
+class OpcodeSet
+{
+  public:
+    using Container = std::unordered_set&lt;OpcodeValue&gt;;
+    explicit OpcodeSet(Container const&amp; data = {})
+      : data_{data}
+    {
+    }
+    explicit OpcodeSet(Container&amp;&amp; data)
+      : data_{std::move(data)}
+    {
+    }
+
+    Container&amp; data()
+    {
+        return data_;
+    }
+
+    Container const&amp; data() const
+    {
+        return data_;
+    }
+
+    void toString(String&amp; value) const
+    {
+        std::stringstream val;
+        bool              not_first = false;
+        for (auto const&amp; d : data_)
+        {
+            if (not_first)
+            {
+                val &lt;&lt; &quot;;&quot;;
+            }
+            val &lt;&lt; d.id() &lt;&lt; &quot;,&quot; &lt;&lt; d.predicate();
+            not_first = true;
+        }
+
+        value = val.str();
+    }
+
+    void insertPart(String const&amp; part)
+    {
+        // bind_.insert(part);
+        auto p = part.find(',');
+        if (p == std::string::npos)
+        {
+            throw std::runtime_error(&quot;Execpted ',' but it is not present in opcode segment&quot;);
+        }
+
+        auto a = part.substr(0, p);
+        auto b = part.substr(p + 1, part.size() - p - 1);
+        data_.insert(OpcodeValue(a, b));
+    }
+
+    void fromString(String const&amp; value)
+    {
+        data_.clear();
+        std::size_t last_p = 0;
+        auto        p      = value.find(';', last_p);
+        while (p != String::npos)
+        {
+            auto part = value.substr(last_p, p - last_p);
+            insertPart(part);
+
+            last_p = p + 1;
+            p      = value.find(';', last_p);
+        }
+
+        if (last_p &lt; value.size())
+        {
+            auto part = value.substr(last_p, p - last_p);
+            insertPart(part);
+        }
+    }
+
+    void toYaml(YAML::Node&amp; node) const
+    {
+        for (auto const&amp; d : data_)
+        {
+            YAML::Node pair;
+            pair[&quot;id&quot;]        = d.id();
+            pair[&quot;predicate&quot;] = d.predicate();
+            node.push_back(pair);
+        }
+    }
+
+    void fromYaml(YAML::Node const&amp; node)
+    {
+        for (auto&amp; pair : node)
+        {
+            auto a = pair[&quot;id&quot;].as&lt;String&gt;();
+            auto b = pair[&quot;predicate&quot;].as&lt;String&gt;();
+            data_.insert(OpcodeValue(a, b));
+        }
+    }
+
+  private:
+    Container data_;
+};
+static_assert(HasQatSerializers&lt;OpcodeSet&gt;::VALUE, &quot;Expected OpcodeSet to be serializable.&quot;);
+
 class ValidationPassConfiguration
 {
   public:
-    using Set       = std::unordered_set&lt;std::string&gt;;
-    using OpcodeSet = std::unordered_set&lt;OpcodeValue&gt;;
+    using Set = std::unordered_set&lt;std::string&gt;;
+    //    using OpcodeSet = std::unordered_set&lt;OpcodeValue&gt;;
 
     // Setup and construction
     //
@@ -735,7 +840,7 @@ class ValidationPassConfiguration
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
+<p>Updated on 25 August 2022 at 12:24:56 UTC</p></div>
 </div>
           </div>
         </main>

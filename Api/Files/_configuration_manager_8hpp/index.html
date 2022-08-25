@@ -671,14 +671,15 @@ class DeferredValue
 class ConfigurationManager
 {
   public:
-    using IConfigBindPtr   = std::shared_ptr&lt;IConfigBind&gt;; 
-    using ConfigList       = std::vector&lt;IConfigBindPtr&gt;;  
-    using VoidPtr          = std::shared_ptr&lt;void&gt;;        
-    using TypeId           = std::type_index;              
-    using BoolPtr          = std::shared_ptr&lt;bool&gt;;
-    using Parameters       = std::unordered_map&lt;String, IConfigBindPtr&gt;;
-    using DeferredValuePtr = DeferredValue::DeferredValuePtr;
-    using DeferredRefs     = std::unordered_map&lt;String, DeferredValuePtr&gt;;
+    using IConfigBindPtr      = std::shared_ptr&lt;IConfigBind&gt;; 
+    using ConfigList          = std::vector&lt;IConfigBindPtr&gt;;  
+    using VoidPtr             = std::shared_ptr&lt;void&gt;;        
+    using TypeId              = std::type_index;              
+    using BoolPtr             = std::shared_ptr&lt;bool&gt;;
+    using Parameters          = std::unordered_map&lt;String, IConfigBindPtr&gt;;
+    using DeferredValuePtr    = DeferredValue::DeferredValuePtr;
+    using DeferredRefs        = std::unordered_map&lt;String, DeferredValuePtr&gt;;
+    using ParameterVisibility = IConfigBind::ParameterVisibility;
 
     struct Section
     {
@@ -749,22 +750,43 @@ class ConfigurationManager
     void enableSectionById(String const&amp; id);
 
     template &lt;typename T&gt;
-    inline void addParameter(T&amp; bind, T default_value, String const&amp; name, String const&amp; description);
+    inline void addParameter(
+        T&amp;                  bind,
+        T                   default_value,
+        String const&amp;       name,
+        String const&amp;       description,
+        ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
+
+    template &lt;typename T&gt;
+    inline void addParameter(
+        T&amp;                  bind,
+        String const&amp;       name,
+        String const&amp;       description,
+        ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
     template &lt;typename T&gt;
     inline void addExperimentalParameter(
-        T&amp;            bind,
-        T             default_value,
-        T             off_value,
-        String const&amp; name,
-        String const&amp; description);
+        T&amp;                  bind,
+        T                   default_value,
+        T                   off_value,
+        String const&amp;       name,
+        String const&amp;       description,
+        ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
     template &lt;typename T&gt;
-    inline void addExperimentalParameter(T&amp; bind, T default_value, String const&amp; name, String const&amp; description);
+    inline void addExperimentalParameter(
+        T&amp;                  bind,
+        T                   default_value,
+        String const&amp;       name,
+        String const&amp;       description,
+        ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
-    template &lt;typename T&gt; inline void addExperimentalParameter(T&amp; bind, String const&amp; name, String const&amp; description);
-
-    template &lt;typename T&gt; inline void addParameter(T&amp; bind, String const&amp; name, String const&amp; description);
+    template &lt;typename T&gt;
+    inline void addExperimentalParameter(
+        T&amp;                  bind,
+        String const&amp;       name,
+        String const&amp;       description,
+        ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
     DeferredValuePtr getParameter(String const&amp; name);
 
@@ -772,15 +794,20 @@ class ConfigurationManager
 
     template &lt;typename T&gt; inline void updateParameter(String const&amp; name, T const&amp; value);
 
+    void loadConfig(String const&amp; filename);
+
+    void saveConfig(String const&amp; filename);
+
   private:
     template &lt;typename T&gt; inline T&amp; getInternal() const;
 
     template &lt;typename T&gt;
     std::shared_ptr&lt;ConfigBind&lt;T&gt;&gt; newParameter(
-        T&amp;            bind,
-        T             default_value,
-        String const&amp; name,
-        String const&amp; description);
+        T&amp;                  bind,
+        T                   default_value,
+        String const&amp;       name,
+        String const&amp;       description,
+        ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
     Sections     config_sections_{}; 
     Parameters   parameters_{};      
@@ -902,18 +929,18 @@ template &lt;typename T&gt; inline bool ConfigurationManager::isActive()
 
 template &lt;typename T&gt;
 inline std::shared_ptr&lt;ConfigBind&lt;T&gt;&gt; ConfigurationManager::newParameter(
-    T&amp;            bind,
-    T             default_value,
-    String const&amp; name,
-    String const&amp; description)
+    T&amp;                  bind,
+    T                   default_value,
+    String const&amp;       name,
+    String const&amp;       description,
+    ParameterVisibility visibility)
 {
-
     if (parameters_.find(name) != parameters_.end())
     {
         throw std::runtime_error(&quot;Parameter '&quot; + name + &quot;' already exists.&quot;);
     }
 
-    auto ret          = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, default_value, name, description);
+    auto ret          = std::make_shared&lt;ConfigBind&lt;T&gt;&gt;(bind, default_value, name, description, visibility);
     parameters_[name] = ret;
 
     auto it = deferred_refs_.find(name);
@@ -926,50 +953,65 @@ inline std::shared_ptr&lt;ConfigBind&lt;T&gt;&gt; ConfigurationManager::newParam
 }
 
 template &lt;typename T&gt;
-inline void ConfigurationManager::addParameter(T&amp; bind, T default_value, String const&amp; name, String const&amp; description)
+inline void ConfigurationManager::addParameter(
+    T&amp;                  bind,
+    T                   default_value,
+    String const&amp;       name,
+    String const&amp;       description,
+    ParameterVisibility visibility)
 {
-    auto ptr = newParameter&lt;T&gt;(bind, default_value, name, description);
+    auto ptr = newParameter&lt;T&gt;(bind, default_value, name, description, visibility);
     config_sections_.back().settings.push_back(ptr);
 }
 
 template &lt;typename T&gt;
 inline void ConfigurationManager::addExperimentalParameter(
-    T&amp;            bind,
-    T             default_value,
-    T             off_value,
-    String const&amp; name,
-    String const&amp; description)
+    T&amp;                  bind,
+    T                   default_value,
+    T                   off_value,
+    String const&amp;       name,
+    String const&amp;       description,
+    ParameterVisibility visibility)
 {
-    auto ptr = newParameter&lt;T&gt;(bind, default_value, name, description);
+    auto ptr = newParameter&lt;T&gt;(bind, default_value, name, description, visibility);
     ptr-&gt;markAsExperimental(off_value);
     config_sections_.back().settings.push_back(ptr);
 }
 
 template &lt;typename T&gt;
-inline void ConfigurationManager::addParameter(T&amp; bind, String const&amp; name, String const&amp; description)
+inline void ConfigurationManager::addParameter(
+    T&amp;                  bind,
+    String const&amp;       name,
+    String const&amp;       description,
+    ParameterVisibility visibility)
 {
-    auto ptr = newParameter&lt;T&gt;(bind, T(bind), name, description);
+    auto ptr = newParameter&lt;T&gt;(bind, T(bind), name, description, visibility);
     config_sections_.back().settings.push_back(ptr);
 }
 
 template &lt;typename T&gt;
 inline void ConfigurationManager::addExperimentalParameter(
-    T&amp;            bind,
-    T             default_value,
-    String const&amp; name,
-    String const&amp; description)
+    T&amp;                  bind,
+    T                   default_value,
+    String const&amp;       name,
+    String const&amp;       description,
+    ParameterVisibility visibility)
 {
 
-    auto ptr = newParameter&lt;T&gt;(bind, T(default_value), name, description);
+    auto ptr = newParameter&lt;T&gt;(bind, T(default_value), name, description, visibility);
     ptr-&gt;markAsExperimental(T(bind));
     config_sections_.back().settings.push_back(ptr);
 }
 
 template &lt;typename T&gt;
-inline void ConfigurationManager::addExperimentalParameter(T&amp; bind, String const&amp; name, String const&amp; description)
+inline void ConfigurationManager::addExperimentalParameter(
+    T&amp;                  bind,
+    String const&amp;       name,
+    String const&amp;       description,
+    ParameterVisibility visibility)
 {
 
-    auto ptr = newParameter&lt;T&gt;(bind, T(bind), name, description);
+    auto ptr = newParameter&lt;T&gt;(bind, T(bind), name, description, visibility);
     ptr-&gt;markAsExperimental(T(bind));
     config_sections_.back().settings.push_back(ptr);
 }
@@ -1000,7 +1042,7 @@ template &lt;typename T&gt; inline void ConfigurationManager::updateParameter(St
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 24 August 2022 at 11:00:09 UTC</p></div>
+<p>Updated on 25 August 2022 at 12:24:56 UTC</p></div>
 </div>
           </div>
         </main>
