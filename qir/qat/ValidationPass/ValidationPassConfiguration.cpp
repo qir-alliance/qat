@@ -24,24 +24,24 @@ void ValidationPassConfiguration::setup(ConfigurationManager& config)
     config.addParameter(opcodes_, "opcodes", "Allowed opcodes", ConfigurationManager::ParameterVisibility::ConfigOnly);
 
     config.addParameter(
-        allowlist_opcodes_, "allowlist-opcodes", "allowlist_opcodes_",
+        allowlist_opcodes_, "allowlist-opcodes", "Whether or not to use allow list for op-codes.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
+    config.addParameter(allowlist_external_calls_, "allowlist-external-calls",
+                        "Whether or not to use allow list external calls.";
+                        ConfigurationManager::ParameterVisibility::ConfigOnly);
+
     config.addParameter(
-        allowlist_external_calls_, "allowlist-external-calls", "allowlist_external_calls_",
+        allowlist_pointer_types_, "allowlist-pointer-types", "Whether or not to use allow list pointer types.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
 
     config.addParameter(
-        allowlist_pointer_types_, "allowlist-pointer-types", "allowlist_pointer_types_",
-        ConfigurationManager::ParameterVisibility::ConfigOnly);
-
-    config.addParameter(
-        allow_primitive_return_, "allow-primitive-return", "allow_primitive_return_",
+        allow_primitive_return_, "allow-primitive-return", "Whether or not primitive return types are allowed.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
     config.addParameter(
-        allow_struct_return_, "allow-struct-return", "allow-struct-return",
+        allow_struct_return_, "allow-struct-return", "Whether or not struct return types are allowed.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
     config.addParameter(
-        allow_pointer_return_, "allow-pointer-return", "allow-pointer-return",
+        allow_pointer_return_, "allow-pointer-return", "Whether or not pointer return types are allowed.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
 
     config.addParameter(
