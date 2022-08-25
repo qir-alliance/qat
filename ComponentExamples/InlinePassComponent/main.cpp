@@ -5,7 +5,7 @@
 #include "qir/qat/Generators/ProfileGenerator.hpp"
 using namespace microsoft::quantum;
 
-extern "C" void loadComponent(ProfileGenerator* generator);
+extern "C" void loadComponent(ProfileGenerator* profile_generator);
 
 class InlinerConfig
 {
@@ -27,9 +27,9 @@ class InlinerConfig
     bool inline_{false}; ///< Default behaviour is that we do not add the inliner pass
 };
 
-extern "C" void loadComponent(ProfileGenerator* generator)
+extern "C" void loadComponent(ProfileGenerator* profile_generator)
 {
-    generator->registerProfileComponent<InlinerConfig>(
+    profile_generator->registerProfileComponent<InlinerConfig>(
         "inliner",
         [](InlinerConfig const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
         {

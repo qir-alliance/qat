@@ -3,6 +3,7 @@
 
 #include "qir/qat/Generators/ProfileGenerator.hpp"
 
+#include "qir/qat/DeferMeasurementPass/DeferMeasurementPass.hpp"
 #include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Generators/PostTransformConfig.hpp"
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
@@ -11,7 +12,6 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPass.hpp"
 #include "qir/qat/PreTransformTrimming/PreTransformTrimmingPass.hpp"
-#include "qir/qat/RecordPullBackPass/RecordPullBackPass.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 #include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
@@ -169,8 +169,6 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             // Always inline
             if (cfg.alwaysInline())
             {
-
-                auto& pass_builder = generator.passBuilder();
                 mpm.addPass(llvm::AlwaysInlinerPass());
                 auto                           inline_param = getInlineParams(cfg.inlineParameter());
                 llvm::ModuleInlinerWrapperPass inliner_pass = ModuleInlinerWrapperPass(inline_param);
@@ -180,8 +178,6 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             // Unroll loop
             if (cfg.unrollLoops())
             {
-                auto& pass_builder = generator.passBuilder();
-
                 /// More unroll parameters
                 /// https://llvm.org/doxygen/LoopUnrollPass_8cpp.html
 
@@ -196,7 +192,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                     .setRuntime(cfg.unrollAllowRuntime())
                     .setUpperBound(cfg.unrollAllowUpperBound())
                     .setProfileBasedPeeling(cfg.unrollAllowProfilBasedPeeling())
-                    .setFullUnrollMaxCount(cfg.unrolFullUnrollCount());
+                    .setFullUnrollMaxCount(static_cast<uint32_t>(cfg.unrolFullUnrollCount()));
 
                 fpm.addPass(llvm::LoopUnrollPass(loop_config));
             }
@@ -249,7 +245,6 @@ void ProfileGenerator::setupDefaultComponentPipeline()
         "post-transform",
         [logger](PostTransformConfig const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
         {
-            auto& mpm = generator.modulePassManager();
             auto& fpm = generator.functionPassManager();
 
             if (cfg.shouldAddInstCombinePass())
@@ -282,9 +277,9 @@ void ProfileGenerator::setupDefaultComponentPipeline()
                 fpm.addPass(ZExtTransformPass());
             }
 
-            if (cfg.shouldPullRecordsBack())
+            if (cfg.shouldDeferMeasurements())
             {
-                fpm.addPass(RecordPullBackPass());
+                fpm.addPass(DeferMeasurementPass());
             }
         });
 

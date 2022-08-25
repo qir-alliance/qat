@@ -29,8 +29,8 @@ class TestProgram
   public:
     TestProgram() = default;
     TestProgram(std::unique_ptr<llvm::Module>&& module, std::unique_ptr<llvm::LLVMContext>&& context)
-      : module_{std::move(module)}
-      , context_{std::move(context)}
+      : context_{std::move(context)}
+      , module_{std::move(module)}
     {
     }
     TestProgram(TestProgram&&)      = default;
