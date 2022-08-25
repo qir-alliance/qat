@@ -79,6 +79,12 @@ class QatConfig
     /// Whether or not to show help page.
     bool showHelp() const;
 
+    /// YAML filename containing target definition
+    String targetDefinition() const;
+
+    /// YAML filename to save the configuration to
+    String saveConfigTo() const;
+
   private:
     // Variables to be bound to the configuration manager
     //
@@ -103,5 +109,8 @@ class QatConfig
     bool dump_config_{false};
     bool show_version_{false};
     bool show_help_{false};
+
+    String target_definition_{""};
+    String save_config_to_{""};
 };
 } // namespace microsoft::quantum

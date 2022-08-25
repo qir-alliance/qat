@@ -252,8 +252,8 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
                     OpcodeValue opcode1{opname};
                     OpcodeValue opcode2{opname, first_arg};
 
-                    if (allowed_ops.find(opcode1) == allowed_ops.end() &&
-                        allowed_ops.find(opcode2) == allowed_ops.end())
+                    if (allowed_ops.data().find(opcode1) == allowed_ops.data().end() &&
+                        allowed_ops.data().find(opcode2) == allowed_ops.data().end())
                     {
 
                         logger_->setLocation(

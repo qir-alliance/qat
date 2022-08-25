@@ -103,6 +103,7 @@ http_archive(
 )
 
 # ================================================================
+<<<<<<< HEAD
 # Yaml
 # ================================================================
 
@@ -112,8 +113,7 @@ http_archive(
     strip_prefix = "yaml-cpp-yaml-cpp-0.7.0",
     url = "https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz",
 )
-
-# ================================================================
+=======
 # Docker
 # ================================================================
 http_archive(
@@ -140,3 +140,4 @@ container_deps()
 #     repository = "library/ubuntu",
 #     tag = "latest",
 # )
+>>>>>>> main

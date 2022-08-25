@@ -3,6 +3,10 @@
 
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 
+#include "yaml-cpp/yaml.h"
+
+#include <fstream>
+
 using namespace microsoft::quantum;
 
 namespace microsoft::quantum
@@ -53,6 +57,14 @@ void ConfigurationManager::configure(ParameterParser& parser, bool experimental_
     {
         for (auto& c : section.settings)
         {
+            // Skipping those parameters which are not available to the
+            // commandline interface for configuration
+            if (!c->isAvailableToCli())
+            {
+                continue;
+            }
+
+            // Configuring the paramter
             if (!c->configure(parser, experimental_mode))
             {
                 throw std::runtime_error("Failed configure the section.");
@@ -100,6 +112,15 @@ void ConfigurationManager::printHelp(bool experimental_mode) const
 
         for (auto& c : section.settings)
         {
+            // Skipping those parameters which are not available to the
+            // commandline interface for configuration
+            if (!c->isAvailableToCli())
+            {
+                continue;
+            }
+
+            // Skipping experimental parameters unless if we are in experimental
+            // mode.
             if (c->isExperimental() && !experimental_mode)
             {
                 continue;
@@ -229,6 +250,47 @@ DeferredValue::DeferredValuePtr ConfigurationManager::getParameter(String const&
     }
 
     return ret;
+}
+
+void ConfigurationManager::loadConfig(String const& filename)
+{
+    YAML::Node config = YAML::LoadFile(filename);
+
+    for (auto& section : config_sections_)
+    {
+        if (config[section.id])
+        {
+            auto node = config[section.id];
+            for (auto& c : section.settings)
+            {
+                c->setValueFromYamlNode(node);
+            }
+        }
+    }
+}
+
+void ConfigurationManager::saveConfig(String const& filename)
+{
+    YAML::Node ret;
+    for (auto& section : config_sections_)
+    {
+        if (section.id.empty())
+        {
+            continue;
+        }
+
+        YAML::Node config;
+
+        for (auto& c : section.settings)
+        {
+            c->updateValueInYamlNode(config);
+        }
+
+        ret[section.id] = config;
+    }
+
+    std::ofstream fout(filename);
+    fout << ret;
 }
 
 } // namespace microsoft::quantum

@@ -17,9 +17,14 @@ target_link_libraries(qat
     PostTransformValidation 
     PreTransformTrimming 
     ZExtTransformPass 
-    DeferMeasurementPass 
+<<<<<<< HEAD
+    RecordPullBackPass 
     Version
     yaml-cpp)
+=======
+    DeferMeasurementPass 
+    Version)
+>>>>>>> main
 
 
 
