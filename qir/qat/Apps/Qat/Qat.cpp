@@ -126,7 +126,7 @@ void init()
     initializeTypePromotionPass(registry);
 }
 
-int main(int argc, char** argv)
+int main(int argc, char const** argv)
 {
     int ret = 0;
 
@@ -140,8 +140,8 @@ int main(int argc, char** argv)
         //
 
         ConfigurationManager& configuration_manager = generator->configurationManager();
-        configuration_manager.addConfig<QatConfig>();
-        configuration_manager.addConfig<FactoryConfiguration>();
+        configuration_manager.addConfig<QatConfig>("qat");
+        configuration_manager.addConfig<FactoryConfiguration>("transformation-rules");
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
@@ -209,7 +209,21 @@ int main(int argc, char** argv)
 
         configuration_manager.setupArguments(parser);
         parser.parseArgs(argc, argv);
+
+        // Loading configuration file if needed
+        if (!config.targetDefinition().empty())
+        {
+            configuration_manager.loadConfig(config.targetDefinition());
+        }
+
+        // Configure the manager based on the commandline arguments
         configuration_manager.configure(parser, config.isExperimental());
+
+        // Saving configuration if requested to do so
+        if (!config.saveConfigTo().empty())
+        {
+            configuration_manager.saveConfig(config.saveConfigTo());
+        }
 
         // Checking that all command line parameters were used
         bool incorrect_settings = false;

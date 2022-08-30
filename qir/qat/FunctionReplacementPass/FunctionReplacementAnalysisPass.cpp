@@ -101,10 +101,10 @@ FunctionReplacementAnalysisPass::Result FunctionReplacementAnalysisPass::run(
                     continue;
                 }
 
-                auto function = call_instr->getCalledFunction();
-                auto it       = ret.functions_to_replace.find(function);
+                auto function_ptr = call_instr->getCalledFunction();
+                auto it           = ret.functions_to_replace.find(function_ptr);
 
-                if (function == nullptr || it == ret.functions_to_replace.end())
+                if (function_ptr == nullptr || it == ret.functions_to_replace.end())
                 {
                     continue;
                 }

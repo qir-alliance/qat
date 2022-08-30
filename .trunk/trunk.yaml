@@ -1,6 +1,6 @@
 version: 0.1
 cli:
-  version: 0.13.2-beta
+  version: 0.16.0-beta
 lint:
   compile_commands: json  
   linters:
@@ -29,6 +29,9 @@ lint:
   ignore:
     - linters: [ALL]
       paths:
+        - vendors/*
+        - vendors/**
+        - vendors/yaml-cpp/**
         - .devcontainer/*
         - .devcontainer/**
         - .trunk/*out/**

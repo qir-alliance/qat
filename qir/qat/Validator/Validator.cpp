@@ -45,12 +45,13 @@ Validator::Validator(
     else
     {
         // Our default is a pass that logs errors via comments
-        auto logger = std::make_shared<CommentLogger>();
-        function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(logger); });
+        auto comment_logger = std::make_shared<CommentLogger>();
+        function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(comment_logger); });
 
-        module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger)));
+        module_pass_manager_.addPass(
+            llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, comment_logger)));
 
-        module_pass_manager_.addPass(ValidationPass(cfg, logger));
+        module_pass_manager_.addPass(ValidationPass(cfg, comment_logger));
     }
 }
 

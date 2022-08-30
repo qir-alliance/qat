@@ -69,11 +69,112 @@ template <> struct hash<microsoft::quantum::OpcodeValue>
 namespace microsoft::quantum
 {
 
+class OpcodeSet
+{
+  public:
+    using Container = std::unordered_set<OpcodeValue>;
+    explicit OpcodeSet(Container const& data = {})
+      : data_{data}
+    {
+    }
+    explicit OpcodeSet(Container&& data)
+      : data_{std::move(data)}
+    {
+    }
+
+    Container& data()
+    {
+        return data_;
+    }
+
+    Container const& data() const
+    {
+        return data_;
+    }
+
+    void toString(String& value) const
+    {
+        std::stringstream val;
+        bool              not_first = false;
+        for (auto const& d : data_)
+        {
+            if (not_first)
+            {
+                val << ";";
+            }
+            val << d.id() << "," << d.predicate();
+            not_first = true;
+        }
+
+        value = val.str();
+    }
+
+    void insertPart(String const& part)
+    {
+        // bind_.insert(part);
+        auto p = part.find(',');
+        if (p == std::string::npos)
+        {
+            throw std::runtime_error("Execpted ',' but it is not present in opcode segment");
+        }
+
+        auto a = part.substr(0, p);
+        auto b = part.substr(p + 1, part.size() - p - 1);
+        data_.insert(OpcodeValue(a, b));
+    }
+
+    void fromString(String const& value)
+    {
+        data_.clear();
+        std::size_t last_p = 0;
+        auto        p      = value.find(';', last_p);
+        while (p != String::npos)
+        {
+            auto part = value.substr(last_p, p - last_p);
+            insertPart(part);
+
+            last_p = p + 1;
+            p      = value.find(';', last_p);
+        }
+
+        if (last_p < value.size())
+        {
+            auto part = value.substr(last_p, p - last_p);
+            insertPart(part);
+        }
+    }
+
+    void toYaml(YAML::Node& node) const
+    {
+        for (auto const& d : data_)
+        {
+            YAML::Node pair;
+            pair["id"]        = d.id();
+            pair["predicate"] = d.predicate();
+            node.push_back(pair);
+        }
+    }
+
+    void fromYaml(YAML::Node const& node)
+    {
+        for (auto& pair : node)
+        {
+            auto a = pair["id"].as<String>();
+            auto b = pair["predicate"].as<String>();
+            data_.insert(OpcodeValue(a, b));
+        }
+    }
+
+  private:
+    Container data_;
+};
+static_assert(HasQatSerializers<OpcodeSet>::VALUE, "Expected OpcodeSet to be serializable.");
+
 class ValidationPassConfiguration
 {
   public:
-    using Set       = std::unordered_set<std::string>;
-    using OpcodeSet = std::unordered_set<OpcodeValue>;
+    using Set = std::unordered_set<std::string>;
+    //    using OpcodeSet = std::unordered_set<OpcodeValue>;
 
     // Setup and construction
     //

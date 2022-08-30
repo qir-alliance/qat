@@ -16,6 +16,7 @@ using namespace microsoft::quantum;
 
 namespace
 {
+
 using IrManipulationTestHelperPtr = std::shared_ptr<IrManipulationTestHelper>;
 IrManipulationTestHelperPtr newIrManip(std::string const& script)
 {

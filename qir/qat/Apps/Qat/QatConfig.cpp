@@ -24,6 +24,14 @@ void QatConfig::setup(ConfigurationManager& config)
     config.addParameter(opt2_, false, "O2", "Optimization level 2.");
     config.addParameter(opt3_, false, "O3", "Optimization level 3.");
 
+    config.addParameter(
+        target_definition_, static_cast<std::string>(""), "target-def",
+        "YAML file containing the definition for the target.", ConfigurationManager::ParameterVisibility::CliOnly);
+
+    config.addParameter(
+        save_config_to_, static_cast<std::string>(""), "save-config", "YAML file to which the config will be save.",
+        ConfigurationManager::ParameterVisibility::CliOnly);
+
     config.addParameter(verify_module_, "verify-module", "Verifies the module after transformation.");
 
     config.addParameter(experimental_, "experimental", "Enables experimental features.");
@@ -139,4 +147,13 @@ bool QatConfig::showVersion() const
     return show_version_;
 }
 
+String QatConfig::targetDefinition() const
+{
+    return target_definition_;
+}
+
+String QatConfig::saveConfigTo() const
+{
+    return save_config_to_;
+}
 } // namespace microsoft::quantum

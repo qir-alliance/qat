@@ -42,6 +42,7 @@ class ILogger
         }
 
         Location(Location const& source) = default;
+        Location& operator=(Location const& source) = default;
 
         String& llvmHint()
         {
@@ -85,7 +86,7 @@ class ILogger
         Info,
         Warning,
         Error,
-        InternalError,
+        InternalError
     };
 
     /// Struct to hold a message together with its type and location

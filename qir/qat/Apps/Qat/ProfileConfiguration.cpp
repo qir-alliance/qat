@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Apps/Qat/ProfileConfiguration.hpp"
+
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
 
@@ -85,7 +87,7 @@ void configureProvider4bf9Profile(ConfigurationManager& configuration_manager)
 
     configuration_manager.updateParameter("lower-switch", true);
     configuration_manager.updateParameter("should-eleminate-zext-i1", true);
-    configuration_manager.updateParameter("pull-records-back", false);
+    configuration_manager.updateParameter("defer-measurements", false);
 
     configuration_manager.updateParameter("annotate-qubit-use", true);
     configuration_manager.updateParameter("annotate-result-use", true);
@@ -163,7 +165,7 @@ void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
 
     configuration_manager.updateParameter("lower-switch", true);
     configuration_manager.updateParameter("should-eleminate-zext-i1", true);
-    configuration_manager.updateParameter("pull-records-back", false);
+    configuration_manager.updateParameter("defer-measurements", false);
 
     configuration_manager.updateParameter("annotate-qubit-use", true);
     configuration_manager.updateParameter("annotate-result-use", true);
@@ -241,7 +243,7 @@ void configureProviderb340Profile(ConfigurationManager& configuration_manager)
 
     configuration_manager.updateParameter("lower-switch", true);
     configuration_manager.updateParameter("should-eleminate-zext-i1", true);
-    configuration_manager.updateParameter("pull-records-back", true);
+    configuration_manager.updateParameter("defer-measurements", true);
 
     configuration_manager.updateParameter("annotate-qubit-use", true);
     configuration_manager.updateParameter("annotate-result-use", true);

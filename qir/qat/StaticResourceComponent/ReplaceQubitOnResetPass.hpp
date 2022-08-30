@@ -23,13 +23,6 @@ class ReplaceQubitOnResetPass : public llvm::PassInfoMixin<ReplaceQubitOnResetPa
     using Location    = ILogger::Location;
     using StringRef   = llvm::StringRef;
 
-    enum ResourceType
-    {
-        None,
-        Qubit,
-        Result
-    };
-
     // Construction and destruction configuration.
     //
 

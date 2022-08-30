@@ -90,7 +90,7 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::Modu
             auto final_block = if_block->splitBasicBlock(if_block->getTerminator(), "exit_block", false);
 
             builder.SetInsertPoint(start_block->getTerminator());
-            llvm::LoadInst* load = builder.CreateLoad(error_variable_);
+            llvm::LoadInst* load = builder.CreateLoad(builder.getInt64Ty(), error_variable_);
             auto            cmp  = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_NE, load, builder.getInt64(0));
             auto            old_terminator = start_block->getTerminator();
             llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
@@ -134,7 +134,7 @@ void DivisionByZeroPass::raiseError(int64_t error_code, llvm::Module& module, ll
     final_block->setName("ecc_set_finally");
 
     builder.SetInsertPoint(start_block->getTerminator());
-    llvm::LoadInst* load = builder.CreateLoad(error_variable_);
+    llvm::LoadInst* load = builder.CreateLoad(builder.getInt64Ty(), error_variable_);
     auto            cmp  = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_EQ, load, builder.getInt64(0));
 
     auto old_terminator = start_block->getTerminator();

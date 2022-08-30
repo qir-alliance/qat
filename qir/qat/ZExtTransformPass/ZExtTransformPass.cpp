@@ -45,9 +45,9 @@ llvm::PreservedAnalyses ZExtTransformPass::run(llvm::Function& function, llvm::F
             }
 
             uint64_t width      = output_type->getIntegerBitWidth();
-            auto     one        = llvm::APInt(width, 1);
+            auto     one        = llvm::APInt(static_cast<uint32_t>(width), 1);
             auto     one_value  = llvm::ConstantInt::get(builder.getContext(), one);
-            auto     zero       = llvm::APInt(width, 0);
+            auto     zero       = llvm::APInt(static_cast<uint32_t>(width), 0);
             auto     zero_value = llvm::ConstantInt::get(builder.getContext(), zero);
 
             builder.SetInsertPoint(&instr);

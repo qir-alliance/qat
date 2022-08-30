@@ -17,12 +17,13 @@ target_link_libraries(qat
     PostTransformValidation 
     PreTransformTrimming 
     ZExtTransformPass 
-    RecordPullBackPass 
+    DeferMeasurementPass
     FunctionReplacementPass
-    Version)
+    Version
+    yaml-cpp)
 
 
 
 add_executable(version_tool VersionTool/VersionTool.cpp)
-target_link_libraries(version_tool ${llvm_libs})
+target_link_libraries(version_tool ${llvm_libs} yaml-cpp)
 target_link_libraries(version_tool Version)

@@ -5,11 +5,35 @@ Target definitions to enable stricter C++ standard for internal libraries
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 _CLANG_ADDITIONAL_COPTS = [
+    # Enable all warnings be default
+    "-Wall",
+    "-Wextra",
+    "-Weverything",
+    "-Wconversion",
+    "-Wpedantic",
+    "-Werror",
+    "-XXXXXXX",
+
+    # ... and then selectively disable those we do not need
+    "-Wno-pre-c++17-compat",
+    "-Wno-c++98-compat",
+    "-Wno-padded",
+    "-Wno-documentation-unknown-command",
+    "-Wno-exit-time-destructors",
+    "-Wno-global-constructors",
+    "-Wno-c++98-compat-pedantic",
+]
+
+_GCC_ADDITIONAL_COPTS = [
+    # Enable all warnings be default
     "-Wall",
     "-Wextra",
     "-Wconversion",
     "-Wpedantic",
     "-Werror",
+
+    # ... and then selectively disable those we do not need
+    "-Wno-padded",
 ]
 
 def ms_cc_library(**kwargs):
@@ -21,8 +45,9 @@ def ms_cc_library(**kwargs):
     name = kwargs["name"]
     kwargs.pop("name")
     copts = kwargs.get("copts", []) + select({
-        "@bazel_tools//src/conditions:windows": [],
-        "//conditions:default": _CLANG_ADDITIONAL_COPTS,
+        "//:clang_compiler": _CLANG_ADDITIONAL_COPTS,
+        "//:gcc_compiler": _GCC_ADDITIONAL_COPTS,
+        "//conditions:default": [],
     })
 
     if "copts" in kwargs:
@@ -44,8 +69,9 @@ def ms_cc_binary(**kwargs):
     name = kwargs["name"]
     kwargs.pop("name")
     copts = kwargs.get("copts", []) + select({
-        "@bazel_tools//src/conditions:windows": [],
-        "//conditions:default": _CLANG_ADDITIONAL_COPTS,
+        "//:clang_compiler": _CLANG_ADDITIONAL_COPTS,
+        "//:gcc_compiler": _GCC_ADDITIONAL_COPTS,
+        "//conditions:default": [],
     })
 
     if "copts" in kwargs:

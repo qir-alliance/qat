@@ -25,6 +25,31 @@ http_archive(
 )
 
 # ================================================================
+# C++ cross-compilation toolchains
+# ================================================================
+register_toolchains(
+    "//toolchain:gcc-linux-x86",
+)
+
+# ================================================================
+# Go (needed for cross-compiling Docker)
+# ================================================================
+http_archive(
+    name = "io_bazel_rules_go",
+    sha256 = "16e9fca53ed6bd4ff4ad76facc9b7b651a89db1689a2877d6fd7b82aa824e366",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.34.0/rules_go-v0.34.0.zip",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.34.0/rules_go-v0.34.0.zip",
+    ],
+)
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains(version = "1.18.3")
+
+# ================================================================
 # LLVM
 # ================================================================
 
@@ -76,3 +101,42 @@ http_archive(
     strip_prefix = "googletest-release-1.10.0",
     url = "https://github.com/google/googletest/archive/release-1.10.0.zip",
 )
+
+# ================================================================
+# Yaml
+# ================================================================
+
+http_archive(
+    name = "yaml-cpp",
+    sha256 = "",
+    strip_prefix = "yaml-cpp-yaml-cpp-0.7.0",
+    url = "https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz",
+)
+
+# ================================================================
+# Docker
+# ================================================================
+http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "b1e80761a8a8243d03ebca8845e9cc1ba6c82ce7c5179ce2b295cd36f7e394bf",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.25.0/rules_docker-v0.25.0.tar.gz"],
+)
+
+load(
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
+)
+
+container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
+
+# To enable building Docker images, add this
+# container_pull(
+#     name = "ubuntu-linux",
+#     registry = "index.docker.io",
+#     repository = "library/ubuntu",
+#     tag = "latest",
+# )

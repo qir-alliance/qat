@@ -86,7 +86,7 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
 
     ParameterParser parser;
     configuration_manager.setupArguments(parser);
-    char* argv[] = {"exe", "--requires-results", "--requires-qubits"};
+    char const* argv[] = {"exe", "--requires-results", "--requires-qubits"};
     parser.parseArgs(3, argv);
 
     configuration_manager.configure(parser);
