@@ -258,9 +258,9 @@ void ConfigurationManager::loadConfig(String const& filename)
 
     for (auto& section : config_sections_)
     {
-        if (config[section.id])
+        auto node = getNodeFromPath(config, section.id);
+        if (node)
         {
-            auto node = config[section.id];
             for (auto& c : section.settings)
             {
                 c->setValueFromYamlNode(node);
@@ -286,7 +286,7 @@ void ConfigurationManager::saveConfig(String const& filename)
             c->updateValueInYamlNode(config);
         }
 
-        ret[section.id] = config;
+        setNodeFromPath(ret, section.id, config);
     }
 
     std::ofstream fout(filename);

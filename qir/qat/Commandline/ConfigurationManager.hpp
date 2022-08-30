@@ -252,6 +252,71 @@ class ConfigurationManager
         String const&       description,
         ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
+    YAML::Node getNodeFromPath(const YAML::Node& root, String const& path)
+    {
+        if (!root)
+        {
+            return YAML::Node();
+        }
+
+        YAML::Node  ret    = root;
+        std::size_t last_p = 0;
+        std::size_t p      = path.find('.', last_p);
+        while (p != std::string::npos)
+        {
+            auto key = path.substr(last_p, p - last_p);
+            last_p   = p + 1;
+            ret.reset(ret[key]);
+            if (!ret)
+            {
+                return YAML::Node();
+            }
+            p = path.find('.', last_p);
+        }
+
+        auto key = path.substr(last_p, path.size() - last_p);
+        ret.reset(ret[key]);
+        return ret;
+    }
+
+    void setNodeFromPath(YAML::Node& root, String const& path, YAML::Node const& value)
+    {
+        std::stack<String>      name_stack;
+        std::vector<YAML::Node> nodes;
+
+        std::size_t last_p = 0;
+        std::size_t p      = path.find('.', last_p);
+        while (p != std::string::npos)
+        {
+            name_stack.push(path.substr(last_p, p - last_p));
+            nodes.emplace_back();
+            last_p = p + 1;
+            p      = path.find('.', last_p);
+        }
+        name_stack.push(path.substr(last_p, path.size() - last_p));
+
+        if (nodes.empty())
+        {
+            root[name_stack.top()] = value;
+        }
+        else
+        {
+            nodes.back()[name_stack.top()] = value;
+            name_stack.pop();
+
+            while (nodes.size() != 1)
+            {
+                auto n = nodes.back();
+                nodes.pop_back();
+                nodes.back()[name_stack.top()] = n;
+                name_stack.pop();
+            }
+            assert(nodes.size() == 1);
+
+            root[name_stack.top()] = nodes.back();
+        }
+    }
+
     Sections     config_sections_{}; ///< All available sections within the ConfigurationManager instance
     Parameters   parameters_{};      ///< Map with all available parameters.
     DeferredRefs deferred_refs_{};   ///< Map with deferred references.

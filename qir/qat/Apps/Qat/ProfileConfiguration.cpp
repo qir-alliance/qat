@@ -13,7 +13,7 @@ void configureGenericProfile(ConfigurationManager& configuration_manager)
 {
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation-configuration", ValidationPassConfiguration::fromProfileName("generic"));
+        "validation.configuration", ValidationPassConfiguration::fromProfileName("generic"));
 
     // The generic profile does not alter the default settings for transformation
 }
@@ -22,7 +22,7 @@ void configureDefaultProfile(ConfigurationManager& configuration_manager)
 {
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation-configuration", ValidationPassConfiguration::fromProfileName("default"));
+        "validation.configuration", ValidationPassConfiguration::fromProfileName("default"));
 
     // The default profile does not alter the default settings for transformation
 }
@@ -32,7 +32,7 @@ void configureProvider4bf9Profile(ConfigurationManager& configuration_manager)
 
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation-configuration", ValidationPassConfiguration::fromProfileName("provider_4bf9"));
+        "validation.configuration", ValidationPassConfiguration::fromProfileName("provider_4bf9"));
 
     // Transformation
     configuration_manager.disableSectionById("grouping");
@@ -110,7 +110,7 @@ void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
 {
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation-configuration", ValidationPassConfiguration::fromProfileName("provider_7ee0"));
+        "validation.configuration", ValidationPassConfiguration::fromProfileName("provider_7ee0"));
 
     // Transform
     configuration_manager.disableSectionById("grouping");
@@ -188,7 +188,7 @@ void configureProviderb340Profile(ConfigurationManager& configuration_manager)
 {
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation-configuration", ValidationPassConfiguration::fromProfileName("provider_b340"));
+        "validation.configuration", ValidationPassConfiguration::fromProfileName("provider_b340"));
 
     // Transformation
     configuration_manager.disableSectionById("grouping");

@@ -10,8 +10,10 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <stack>
 #include <type_traits>
 #include <typeindex>
+#include <vector>
 
 namespace microsoft::quantum
 {
@@ -444,7 +446,7 @@ template <typename T> std::type_index ConfigBind<T>::valueType() const
 
 template <typename T> void ConfigBind<T>::setValueFromYamlNode(YAML::Node const& node)
 {
-    if (isLoadAndSavable() && node[name()])
+    if (isLoadAndSavable() && node && node[name()])
     {
         loadYaml(node, bind_);
     }
