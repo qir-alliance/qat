@@ -4,7 +4,7 @@
 #include "gtest/gtest.h"
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
-#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"

@@ -4,8 +4,8 @@
 #include "gtest/gtest.h"
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
-#include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 

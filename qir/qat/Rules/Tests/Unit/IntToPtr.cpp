@@ -4,13 +4,13 @@
 #include "gtest/gtest.h"
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
-#include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
-#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
-#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>

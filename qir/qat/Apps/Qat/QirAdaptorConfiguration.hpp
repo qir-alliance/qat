@@ -3,7 +3,7 @@
 // Licensed under the MIT License.
 
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
-#include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/ValidationPassConfiguration.hpp"
 
 namespace microsoft::quantum
 {

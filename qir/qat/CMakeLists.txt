@@ -20,35 +20,11 @@ target_link_libraries(Validator PRIVATE Logging)
 
 microsoft_add_library(ModuleLoader)
 
-
-microsoft_add_library(DivisionByZeroPass Logging)
-microsoft_add_library_tests(DivisionByZeroPass Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass StaticResourceComponent Logging GroupingPass) 
-
-
 microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass  Logging GroupingPass)
-microsoft_add_library(ValidationPass Logging)
-
-microsoft_add_library(DeferMeasurementPass Logging)
-microsoft_add_library_tests(DeferMeasurementPass  Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass  Logging GroupingPass)
-
-microsoft_add_library(PreTransformTrimming Logging)
-
-microsoft_add_library(PostTransformValidation Logging)
-microsoft_add_library(StaticResourceComponent Logging)
-microsoft_add_library_tests(StaticResourceComponent  Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass  Logging GroupingPass)
-
-
-microsoft_add_library(GroupingPass Logging)
-microsoft_add_library(ZExtTransformPass Logging)
-microsoft_add_library_tests(ZExtTransformPass Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass StaticResourceComponent Logging GroupingPass) 
 
 
 microsoft_add_library(AllocationManager)
 microsoft_add_library_tests(AllocationManager Logging GroupingPass)
-
-microsoft_add_library(TransformationRulesPass)
-target_link_libraries(TransformationRulesPass PRIVATE Rules Commandline AllocationManager)
-microsoft_add_library_tests(TransformationRulesPass Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass StaticResourceComponent Logging GroupingPass) 
 
 
 microsoft_add_library(Rules)
@@ -60,4 +36,6 @@ microsoft_add_library(AdaptorFactory)
 target_link_libraries(AdaptorFactory PRIVATE Rules Commandline AllocationManager TransformationRulesPass QirAdaptor Validator StaticResourceComponent ValidationPass PostTransformValidation PreTransformTrimming ZExtTransformPass DeferMeasurementPass)
 microsoft_add_library_tests(AdaptorFactory Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Logging GroupingPass ZExtTransformPass)
 
+
+add_subdirectory(Passes)
 add_subdirectory(Apps)

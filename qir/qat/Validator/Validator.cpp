@@ -7,9 +7,9 @@
 #include "qir/qat/Logging/CommentLogger.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/Logging/LogCollection.hpp"
-#include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
-#include "qir/qat/ValidationPass/FunctionValidationPass.hpp"
-#include "qir/qat/ValidationPass/ValidationPass.hpp"
+#include "qir/qat/Passes/StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "qir/qat/Passes/ValidationPass/FunctionValidationPass.hpp"
+#include "qir/qat/Passes/ValidationPass/ValidationPass.hpp"
 
 #include <fstream>
 

@@ -4,7 +4,7 @@
 
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
-#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 #include "qir/qat/QirAdaptor/QirAdaptor.hpp"
 

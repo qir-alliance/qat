@@ -3,11 +3,11 @@
 
 #include "gtest/gtest.h"
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
-#include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Passes/StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "qir/qat/Rules/Factory.hpp"
-#include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
-#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>

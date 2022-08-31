@@ -4,9 +4,9 @@
 #include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
-#include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
 
 using namespace microsoft::quantum;
 

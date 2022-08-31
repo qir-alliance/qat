@@ -7,7 +7,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/Logging/LogCollection.hpp"
-#include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/ValidationPassConfiguration.hpp"
 
 #include <memory>
 
