@@ -23,13 +23,13 @@
 /// │            Configuration and paramater parser             │
 /// └─────────────┬───────────────────────────────┬─────────────┘
 /// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
-/// │        LLVM (Q)IRs        │   │      Profile config       │
+/// │        LLVM (Q)IRs        │   │      QirAdaptor config       │
 /// └─────────────┬─────────────┘   └─────────────┬─────────────┘
 /// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
-/// │       Module loader       │   │     Profile Generator     │
+/// │       Module loader       │   │     QirAdaptor Generator     │
 /// └─────────────┬─────────────┘   └─────────────┬─────────────┘
 /// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
-/// │       Single module       │   │          Profile          │
+/// │       Single module       │   │          QirAdaptor          │
 /// │      transformations      │   └──────┬──────────────┬─────┘
 /// └─────────────┬─────────────┘   ┌──────▼─────┐ ┌──────▼─────┐
 /// ┌─────────────▼─────────────┐   │            │ │            │
@@ -50,19 +50,19 @@
 ///
 ///
 
-#include "qir/qat/Apps/Qat/ProfileConfiguration.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
+#include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Apps/Qat/QatConfig.hpp"
+#include "qir/qat/Apps/Qat/QirAdaptorConfiguration.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Commandline/ParameterParser.hpp"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
-#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/CommentLogger.hpp"
 #include "qir/qat/ModuleLoader/ModuleLoader.hpp"
-#include "qir/qat/Profile/Profile.hpp"
+#include "qir/qat/QirAdaptor/QirAdaptor.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/FactoryConfig.hpp"
 #include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
@@ -134,7 +134,7 @@ int main(int argc, char const** argv)
     {
         // Default generator. A future version of QAT may allow the generator to be selected
         // through the command line, but it is hard coded for now.
-        auto generator = std::make_shared<ProfileGenerator>();
+        auto generator = std::make_shared<QirAdaptorFactory>();
 
         // Configuration and command line parsing
         //
@@ -190,7 +190,7 @@ int main(int argc, char const** argv)
             }
             else
             {
-                using LoadFunctionPtr = void (*)(ProfileGenerator*);
+                using LoadFunctionPtr = void (*)(QirAdaptorFactory*);
                 LoadFunctionPtr load_component;
                 load_component = reinterpret_cast<LoadFunctionPtr>(dlsym(handle, "loadComponent"));
 
@@ -202,7 +202,7 @@ int main(int argc, char const** argv)
         }
 
         // Configuring QAT according to profile
-        configureProfile(config.profile(), configuration_manager);
+        configureQirAdaptor(config.profile(), configuration_manager);
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
@@ -317,12 +317,12 @@ int main(int argc, char const** argv)
             optimization_level = llvm::OptimizationLevel::O3;
         }
 
-        // Profile manipulation
+        // QirAdaptor manipulation
         //
 
         // Creating the profile that will be used for generation and validation
 
-        auto profile = generator->newProfile(config.profile(), optimization_level, config.isDebugMode());
+        auto profile = generator->newQirAdaptor(config.profile(), optimization_level, config.isDebugMode());
 
         if (config.shouldGenerate())
         {

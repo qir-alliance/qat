@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
@@ -64,12 +64,12 @@ TEST(RuleSetTestSuite, RemovingLeftOverZeroAndOnes)
         factory.removeGetZeroOrOne();
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %Result* @__quantum__rt__result_get_zero()"}));
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     // We expect that the call was removed
     EXPECT_FALSE(ir_manip->hasInstructionSequence({"%0 = call %Result* @__quantum__rt__result_get_zero()"}));

@@ -106,13 +106,13 @@ bool IrManipulationTestHelper::hasInstructionSequence(Strings const& instruction
     return true;
 }
 
-void IrManipulationTestHelper::applyProfile(
+void IrManipulationTestHelper::applyQirAdaptor(
     GeneratorPtr const&      generator,
     OptimizationLevel const& optimization_level,
     bool                     debug)
 {
 
-    auto profile = generator->newProfile("generic", optimization_level, debug);
+    auto profile = generator->newQirAdaptor("generic", optimization_level, debug);
     profile->apply(*module_);
 
     // Verifying that the module is valid
@@ -122,9 +122,9 @@ void IrManipulationTestHelper::applyProfile(
     }
 }
 
-bool IrManipulationTestHelper::validateProfile(GeneratorPtr const& generator, String const& profile_name, bool debug)
+bool IrManipulationTestHelper::validateQirAdaptor(GeneratorPtr const& generator, String const& profile_name, bool debug)
 {
-    auto profile = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
+    auto profile = generator->newQirAdaptor(profile_name, OptimizationLevel::O0, debug);
 
     return profile->validate(*module_);
 }
@@ -136,7 +136,7 @@ bool IrManipulationTestHelper::containsValidationErrors(
     bool                debug) const
 {
 
-    auto  profile               = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
+    auto  profile               = generator->newQirAdaptor(profile_name, OptimizationLevel::O0, debug);
     auto& configuration_manager = generator->configurationManager();
     auto  logger                = std::make_shared<LogCollection>();
     auto  validator =
@@ -193,7 +193,7 @@ bool IrManipulationTestHelper::containsExactValidationErrors(
     Strings const&      errors,
     bool                debug) const
 {
-    auto  profile               = generator->newProfile(profile_name, OptimizationLevel::O0, debug);
+    auto  profile               = generator->newQirAdaptor(profile_name, OptimizationLevel::O0, debug);
     auto& configuration_manager = generator->configurationManager();
     auto  logger                = std::make_shared<LogCollection>();
 

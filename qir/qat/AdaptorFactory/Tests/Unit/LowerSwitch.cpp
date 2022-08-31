@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Factory.hpp"
@@ -47,7 +47,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 }
 } // namespace
 
-TEST(GeneratorsPostTransformLower, PostTransformLowerSwitch)
+TEST(AdaptorFactoryPostTransformLower, PostTransformLowerSwitch)
 {
     auto                  ir_manip              = newIrManip(R"script(
   %0 = call i1 @get_value()
@@ -76,7 +76,7 @@ then1__2:                                         ; preds = %entry
 continue__3:                                      ; preds = %entry, %then1__2, %then2__2, %then0__4
   call void @d()
   )script");
-    auto                  profile               = std::make_shared<ConfigurableProfileGenerator>();
+    auto                  profile               = std::make_shared<ConfigurableQirAdaptorFactory>();
     ConfigurationManager& configuration_manager = profile->configurationManager();
 
     configuration_manager.addConfig<FactoryConfiguration>();
@@ -87,7 +87,7 @@ continue__3:                                      ; preds = %entry, %then1__2, %
         {"switch i64 %rand.1, label %then1__2 [", "i64 0, label %continue__3", "i64 1, label %then0__4",
          "i64 2, label %then2__2", "]"}));
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_FALSE(ir_manip->hasInstructionSequence(
         {"switch i64 %rand.1, label %then1__2 [", "i64 0, label %continue__3", "i64 1, label %then0__4",

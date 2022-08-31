@@ -2,21 +2,21 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
-#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
+#include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Rules/FactoryConfig.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 #include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 
 using namespace microsoft::quantum;
-using GeneratorPtr = std::shared_ptr<ConfigurableProfileGenerator>;
+using GeneratorPtr = std::shared_ptr<ConfigurableQirAdaptorFactory>;
 namespace
 {
-class ExposedConfigurableProfileGenerator : public ConfigurableProfileGenerator
+class ExposedConfigurableQirAdaptorFactory : public ConfigurableQirAdaptorFactory
 {
   public:
-    using ConfigurableProfileGenerator::ConfigurableProfileGenerator;
-    using ConfigurableProfileGenerator::createValidationModulePass;
+    using ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory;
+    using ConfigurableQirAdaptorFactory::createValidationModulePass;
 };
 
 class TestAnalysis
@@ -76,30 +76,30 @@ class TestAnalysis
 };
 } // namespace
 
-TEST(GeneratorsTestSuite, ConfigureFunction)
+TEST(AdaptorFactoryTestSuite, ConfigureFunction)
 {
     uint64_t call_count{0};
     auto     configure = [&call_count](RuleSet&) { ++call_count; };
-    auto     generator = std::make_shared<ExposedConfigurableProfileGenerator>(configure);
+    auto     generator = std::make_shared<ExposedConfigurableQirAdaptorFactory>(configure);
 
     TestAnalysis test;
 
-    generator->newProfile("test", llvm::OptimizationLevel::O0, false);
+    generator->newQirAdaptor("test", llvm::OptimizationLevel::O0, false);
 
     EXPECT_EQ(call_count, 1);
     EXPECT_TRUE(generator->ruleTransformationConfig().isDisabled());
     EXPECT_TRUE(generator->llvmPassesConfig().isDisabled());
 }
 
-TEST(GeneratorsTestSuite, ConfigurationManager)
+TEST(AdaptorFactoryTestSuite, ConfigurationManager)
 {
-    auto                  generator             = std::make_shared<ExposedConfigurableProfileGenerator>();
+    auto                  generator             = std::make_shared<ExposedConfigurableQirAdaptorFactory>();
     ConfigurationManager& configuration_manager = generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     TestAnalysis test;
 
-    generator->newProfile("test", llvm::OptimizationLevel::O0, false);
+    generator->newQirAdaptor("test", llvm::OptimizationLevel::O0, false);
 
     EXPECT_EQ(generator->ruleTransformationConfig(), TransformationRulesPassConfiguration());
     EXPECT_EQ(generator->llvmPassesConfig(), LlvmPassesConfiguration());

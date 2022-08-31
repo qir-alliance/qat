@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
-#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
+#include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
@@ -70,7 +70,7 @@ TEST(RuleSetTestSuite, IntToPtr)
         rule_set.addRule(ret);
     };
 
-    auto                  profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto                  profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
     ConfigurationManager& configuration_manager = profile->configurationManager();
 
     configuration_manager.addConfig<FactoryConfiguration>();
@@ -79,7 +79,7 @@ TEST(RuleSetTestSuite, IntToPtr)
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(matched);
 }
@@ -106,8 +106,8 @@ TEST(RuleSetTestSuite, EmbeddedIntToPtr)
         rule_set.addRule(ret);
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
-    ir_manip->applyProfile(profile);
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(matched);
 }
@@ -135,8 +135,8 @@ TEST(RuleSetTestSuite, ExpandedIntToPtr)
         rule_set.addRule(ret);
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
-    ir_manip->applyProfile(profile);
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(matched);
 }

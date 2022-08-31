@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #include "qir/external/gtest.hpp"
-#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
-#include "qir/qat/Generators/PostTransformConfig.hpp"
+#include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
+#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"

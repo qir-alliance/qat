@@ -185,7 +185,7 @@ class ValidationPassConfiguration
     /// ConfigurationManager documentation for more details on how the setup process is implemented.
     void setup(ConfigurationManager& config);
 
-    static ValidationPassConfiguration fromProfileName(String const& name);
+    static ValidationPassConfiguration fromQirAdaptorName(String const& name);
     OpcodeSet const&                   allowedOpcodes() const;
     Set const&                         allowedExternalCallNames() const;
 

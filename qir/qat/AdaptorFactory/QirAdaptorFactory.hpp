@@ -5,13 +5,13 @@
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
-#include "qir/qat/Profile/Profile.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/QirAdaptor/QirAdaptor.hpp"
 
 namespace microsoft::quantum
 {
 
-class ProfileGenerator
+class QirAdaptorFactory
 {
   public:
     // LLVM types
@@ -22,10 +22,10 @@ class ProfileGenerator
 
     /// Setup function that uses a configuration type R to
     /// configure the profile and/or generator.
-    template <typename R> using SetupFunction = std::function<void(R const&, ProfileGenerator&, Profile&)>;
+    template <typename R> using SetupFunction = std::function<void(R const&, QirAdaptorFactory&, QirAdaptor&)>;
 
     /// Wrapper function type for invoking the profile setup function
-    using SetupFunctionWrapper = std::function<void(ProfileGenerator&, Profile&)>;
+    using SetupFunctionWrapper = std::function<void(QirAdaptorFactory&, QirAdaptor&)>;
 
     /// List of components to be configured.
     using Components = std::vector<std::pair<String, SetupFunctionWrapper>>;
@@ -35,14 +35,14 @@ class ProfileGenerator
     // Construction, moves and copies
     //
 
-    ProfileGenerator()                        = default;
-    ~ProfileGenerator()                       = default;
-    ProfileGenerator(ProfileGenerator const&) = delete;
-    ProfileGenerator(ProfileGenerator&&)      = delete;
-    ProfileGenerator& operator=(ProfileGenerator const&) = delete;
-    ProfileGenerator& operator=(ProfileGenerator&&) = delete;
+    QirAdaptorFactory()                         = default;
+    ~QirAdaptorFactory()                        = default;
+    QirAdaptorFactory(QirAdaptorFactory const&) = delete;
+    QirAdaptorFactory(QirAdaptorFactory&&)      = delete;
+    QirAdaptorFactory& operator=(QirAdaptorFactory const&) = delete;
+    QirAdaptorFactory& operator=(QirAdaptorFactory&&) = delete;
 
-    // Profile generation interface
+    // QirAdaptor generation interface
     //
 
     /// Reference to configuration manager. This property allows to access and modify configurations
@@ -56,7 +56,10 @@ class ProfileGenerator
     /// Creates a new profile based on the registered components, optimization level and debug
     /// requirements. The returned profile can be applied to an IR to transform it in accordance with
     /// the configurations given.
-    std::shared_ptr<Profile> newProfile(String const& name, OptimizationLevel const& optimization_level, bool debug);
+    std::shared_ptr<QirAdaptor> newQirAdaptor(
+        String const&            name,
+        OptimizationLevel const& optimization_level,
+        bool                     debug);
 
     // Defining the generator
 
@@ -65,21 +68,21 @@ class ProfileGenerator
     /// Registers a new profile component with a given configuration R. The profile component is
     /// given a name and a setup function which is responsible for configuring the profile in
     /// accordance with the configuration.
-    template <typename R> void registerProfileComponent(String const& id, SetupFunction<R> setup);
+    template <typename R> void registerAdaptorComponent(String const& id, SetupFunction<R> setup);
 
     /// Replaces a profile component. This function is useful for testing purposes and alteration to
     /// the default set of components. For instance, one can setup a production set of components and
     /// then replace a single component to test the effects of this single replacement while keeping
     /// all other components actually as they are in production.
-    template <typename R> void replaceProfileComponent(String const& id, SetupFunction<R> setup);
+    template <typename R> void replaceAdaptorComponent(String const& id, SetupFunction<R> setup);
 
     /// Registers a new profile component with a given configuration R. Unlike
-    /// `registerProfileComponent` this component will not have an ID.
-    template <typename R> void registerAnonymousProfileComponent(SetupFunction<R> setup);
+    /// `registerAdaptorComponent` this component will not have an ID.
+    template <typename R> void registerAnonymousAdaptorComponent(SetupFunction<R> setup);
 
     /// Replicates an existing component as an anonymous component. The original component is found by
     /// its id and then copied as an anonymous component which is appended to the list of components.
-    void replicateProfileComponent(String const& id);
+    void replicateAdaptorComponent(String const& id);
 
     // Support properties for generators
     //
@@ -107,7 +110,7 @@ class ProfileGenerator
   protected:
     /// Internal function that creates a module pass for QIR transformation. The module pass is
     /// defined through the profile, the optimization level and whether or not we are in debug mode.
-    void configureGeneratorFromProfile(Profile& profile, OptimizationLevel const& optimization_level, bool debug);
+    void configureGeneratorFromQirAdaptor(QirAdaptor& profile, OptimizationLevel const& optimization_level, bool debug);
 
     /// Internal function that creates a module pass for QIR validation. At the moment, this function
     /// is a placeholder for future functionality.
@@ -137,11 +140,11 @@ class ProfileGenerator
     bool debug_{false};
 };
 
-template <typename R> void ProfileGenerator::registerProfileComponent(String const& id, SetupFunction<R> setup)
+template <typename R> void QirAdaptorFactory::registerAdaptorComponent(String const& id, SetupFunction<R> setup)
 {
     configuration_manager_.addConfig<R>(id);
 
-    auto setup_wrapper = [setup](ProfileGenerator& generator, Profile& profile)
+    auto setup_wrapper = [setup](QirAdaptorFactory& generator, QirAdaptor& profile)
     {
         if (generator.configuration_manager_.isActive<R>())
         {
@@ -154,9 +157,9 @@ template <typename R> void ProfileGenerator::registerProfileComponent(String con
     components_.push_back({id, std::move(setup_wrapper)});
 }
 
-template <typename R> void ProfileGenerator::replaceProfileComponent(String const& id, SetupFunction<R> setup)
+template <typename R> void QirAdaptorFactory::replaceAdaptorComponent(String const& id, SetupFunction<R> setup)
 {
-    auto setup_wrapper = [setup](ProfileGenerator& generator, Profile& profile)
+    auto setup_wrapper = [setup](QirAdaptorFactory& generator, QirAdaptor& profile)
     {
         if (generator.configuration_manager_.isActive<R>())
         {
@@ -178,14 +181,14 @@ template <typename R> void ProfileGenerator::replaceProfileComponent(String cons
     throw std::runtime_error("Could not find component " + id);
 }
 
-template <typename R> void ProfileGenerator::registerAnonymousProfileComponent(SetupFunction<R> setup)
+template <typename R> void QirAdaptorFactory::registerAnonymousAdaptorComponent(SetupFunction<R> setup)
 {
     if (!configuration_manager_.configWasRegistered<R>())
     {
         throw std::runtime_error("Configuration '" + static_cast<String>(typeid(R).name()) + "' does not exist.");
     }
 
-    auto setup_wrapper = [setup](ProfileGenerator& generation, Profile& profile)
+    auto setup_wrapper = [setup](QirAdaptorFactory& generation, QirAdaptor& profile)
     {
         if (generation.configuration_manager_.isActive<R>())
         {

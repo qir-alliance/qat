@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Generators/ProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/TestTools/TestVm.hpp"
 
@@ -23,7 +23,7 @@ class IrManipulationTestHelper
     using ContextPtr        = std::unique_ptr<LLVMContext>;
     using ModulePtr         = std::unique_ptr<Module>;
     using OptimizationLevel = llvm::OptimizationLevel;
-    using GeneratorPtr      = std::shared_ptr<ProfileGenerator>;
+    using GeneratorPtr      = std::shared_ptr<QirAdaptorFactory>;
 
     // IrManipulationTestHelper is default constructible with no ability to move
     // or copy.
@@ -55,14 +55,14 @@ class IrManipulationTestHelper
 
     /// Applies a profile to the module to allow which transforms the IR. This
     /// allow us to write small profiles to test a single piece of transformation.
-    void applyProfile(
+    void applyQirAdaptor(
         GeneratorPtr const&      generator,
         OptimizationLevel const& optimization_level = OptimizationLevel::O0,
         bool                     debug              = false);
 
     /// Validates a profile to the module to allow which transforms the IR. This
     /// allow us to write small profiles to test a single piece of transformation.
-    bool validateProfile(GeneratorPtr const& generator, String const& profile_name = "generic", bool debug = false);
+    bool validateQirAdaptor(GeneratorPtr const& generator, String const& profile_name = "generic", bool debug = false);
 
     /// Tests whether a given set of errors (LLVM hints) are present in the validation errors
     /// for a specific profile. This method only checks if errors are present but does not fail if

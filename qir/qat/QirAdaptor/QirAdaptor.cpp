@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Profile/Profile.hpp"
+#include "qir/qat/QirAdaptor/QirAdaptor.hpp"
 
 #include "qir/qat/Llvm/Llvm.hpp"
 
 namespace microsoft::quantum
 {
 
-Profile::Profile(
+QirAdaptor::QirAdaptor(
     String const&        name,
     ILoggerPtr const&    logger,
     bool                 debug,
@@ -46,7 +46,7 @@ Profile::Profile(
         loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
 }
 
-void Profile::registerEPCallbacks()
+void QirAdaptor::registerEPCallbacks()
 {
 
     if (tryParsePipelineText<llvm::FunctionPassManager>(*pass_builder_, peephole_ep_pipeline_))
@@ -130,65 +130,65 @@ void Profile::registerEPCallbacks()
     }
 }
 
-void Profile::apply(llvm::Module& module)
+void QirAdaptor::apply(llvm::Module& module)
 {
     module_pass_manager_.run(module, module_analysis_manager_);
 }
 
-bool Profile::verify(llvm::Module& module)
+bool QirAdaptor::verify(llvm::Module& module)
 {
     llvm::VerifierAnalysis verifier;
     auto                   result = verifier.run(module, module_analysis_manager_);
     return !result.IRBroken;
 }
 
-bool Profile::validate(llvm::Module& module)
+bool QirAdaptor::validate(llvm::Module& module)
 {
     return validator_->validate(module);
 }
 
-String const& Profile::name() const
+String const& QirAdaptor::name() const
 {
     return name_;
 }
 
-Profile::AllocationManagerPtr Profile::getQubitAllocationManager()
+QirAdaptor::AllocationManagerPtr QirAdaptor::getQubitAllocationManager()
 {
     return qubit_allocation_manager_;
 }
 
-Profile::AllocationManagerPtr Profile::getResultAllocationManager()
+QirAdaptor::AllocationManagerPtr QirAdaptor::getResultAllocationManager()
 {
     return result_allocation_manager_;
 }
 
-void Profile::setValidator(ValidatorPtr&& validator)
+void QirAdaptor::setValidator(ValidatorPtr&& validator)
 {
     validator_ = std::move(validator);
 }
 
-llvm::PassBuilder& Profile::passBuilder()
+llvm::PassBuilder& QirAdaptor::passBuilder()
 {
     return *pass_builder_;
 }
-llvm::LoopAnalysisManager& Profile::loopAnalysisManager()
+llvm::LoopAnalysisManager& QirAdaptor::loopAnalysisManager()
 {
     return loop_analysis_manager_;
 }
-llvm::FunctionAnalysisManager& Profile::functionAnalysisManager()
+llvm::FunctionAnalysisManager& QirAdaptor::functionAnalysisManager()
 {
     return function_analysis_manager_;
 }
-llvm::CGSCCAnalysisManager& Profile::gsccAnalysisManager()
+llvm::CGSCCAnalysisManager& QirAdaptor::gsccAnalysisManager()
 {
     return gscc_analysis_manager_;
 }
-llvm::ModuleAnalysisManager& Profile::moduleAnalysisManager()
+llvm::ModuleAnalysisManager& QirAdaptor::moduleAnalysisManager()
 {
     return module_analysis_manager_;
 }
 
-llvm::ModulePassManager& Profile::modulePassManager()
+llvm::ModulePassManager& QirAdaptor::modulePassManager()
 {
     return module_pass_manager_;
 }

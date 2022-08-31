@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
@@ -71,7 +71,7 @@ continue__1:
         factory.optimizeResultZero();
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
@@ -80,7 +80,7 @@ continue__1:
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"call void @send_message()", "call void @bye_message()"}));
 
@@ -119,7 +119,7 @@ continue__1:
         factory.optimizeResultZero();
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
@@ -128,7 +128,7 @@ continue__1:
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"call void @bye_message()"}));
 
@@ -168,7 +168,7 @@ continue__1:
         factory.optimizeResultZero();
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
@@ -177,7 +177,7 @@ continue__1:
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"call void @bye_message()"}));
 
@@ -217,7 +217,7 @@ continue__1:
         factory.optimizeResultZero();
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
@@ -226,7 +226,7 @@ continue__1:
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"call void @send_message()", "call void @bye_message()"}));
 

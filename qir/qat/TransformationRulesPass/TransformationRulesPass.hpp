@@ -4,8 +4,8 @@
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
-#include "qir/qat/Profile/Profile.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/QirAdaptor/QirAdaptor.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 #include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 
@@ -74,7 +74,10 @@ class TransformationRulesPass : public llvm::PassInfoMixin<TransformationRulesPa
     //
 
     /// Custom default constructor
-    TransformationRulesPass(RuleSet&& rule_set, TransformationRulesPassConfiguration const& config, Profile* profile);
+    TransformationRulesPass(
+        RuleSet&&                                   rule_set,
+        TransformationRulesPassConfiguration const& config,
+        QirAdaptor*                                 profile);
 
     /// Copy construction is banned.
     TransformationRulesPass(TransformationRulesPass const&) = delete;
@@ -220,13 +223,13 @@ class TransformationRulesPass : public llvm::PassInfoMixin<TransformationRulesPa
     /// Registered replacements to be executed.
     Replacements replacements_;
 
-    // Profile
+    // QirAdaptor
     //
 
     /// Pointer to the current profile. This pointer is used to annotate top level functions with
     /// regards to how many qubits they require. TODO(issue-22): Consider moving into its own
     /// component.
-    Profile* profile_{nullptr};
+    QirAdaptor* profile_{nullptr};
 };
 
 } // namespace microsoft::quantum

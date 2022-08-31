@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Generators/ProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 
+#include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
+#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
 #include "qir/qat/DeferMeasurementPass/DeferMeasurementPass.hpp"
-#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
-#include "qir/qat/Generators/PostTransformConfig.hpp"
 #include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
@@ -27,7 +27,7 @@
 
 namespace microsoft::quantum
 {
-std::shared_ptr<Profile> ProfileGenerator::newProfile(
+std::shared_ptr<QirAdaptor> QirAdaptorFactory::newQirAdaptor(
     String const&            name,
     OptimizationLevel const& optimization_level,
     bool                     debug)
@@ -44,10 +44,10 @@ std::shared_ptr<Profile> ProfileGenerator::newProfile(
 
     // Creating profile
     // TODO(issue-12): Set target machine
-    auto ret =
-        std::make_shared<Profile>(name, logger_, debug, nullptr, qubit_allocation_manager, result_allocation_manager);
+    auto ret = std::make_shared<QirAdaptor>(
+        name, logger_, debug, nullptr, qubit_allocation_manager, result_allocation_manager);
 
-    configureGeneratorFromProfile(*ret, optimization_level, debug);
+    configureGeneratorFromQirAdaptor(*ret, optimization_level, debug);
 
     for (auto& c : components_)
     {
@@ -71,8 +71,8 @@ std::shared_ptr<Profile> ProfileGenerator::newProfile(
     return ret;
 }
 
-void ProfileGenerator::configureGeneratorFromProfile(
-    Profile&                 profile,
+void QirAdaptorFactory::configureGeneratorFromQirAdaptor(
+    QirAdaptor&              profile,
     OptimizationLevel const& optimization_level,
     bool                     debug)
 {
@@ -84,49 +84,49 @@ void ProfileGenerator::configureGeneratorFromProfile(
     debug_               = debug;
 }
 
-llvm::ModulePassManager ProfileGenerator::createValidationModulePass(PassBuilder&, OptimizationLevel const&, bool)
+llvm::ModulePassManager QirAdaptorFactory::createValidationModulePass(PassBuilder&, OptimizationLevel const&, bool)
 {
     throw std::runtime_error("Validation is not supported yet.");
 }
 
-llvm::ModulePassManager& ProfileGenerator::modulePassManager()
+llvm::ModulePassManager& QirAdaptorFactory::modulePassManager()
 {
     assert(module_pass_manager_ != nullptr);
     return *module_pass_manager_;
 }
 
-llvm::FunctionPassManager& ProfileGenerator::functionPassManager()
+llvm::FunctionPassManager& QirAdaptorFactory::functionPassManager()
 {
     assert(function_pass_manager_ != nullptr);
     return *function_pass_manager_;
 }
 
-llvm::PassBuilder& ProfileGenerator::passBuilder()
+llvm::PassBuilder& QirAdaptorFactory::passBuilder()
 {
     return *pass_builder_;
 }
 
-ConfigurationManager& ProfileGenerator::configurationManager()
+ConfigurationManager& QirAdaptorFactory::configurationManager()
 {
     return configuration_manager_;
 }
 
-ConfigurationManager const& ProfileGenerator::configurationManager() const
+ConfigurationManager const& QirAdaptorFactory::configurationManager() const
 {
     return configuration_manager_;
 }
 
-ProfileGenerator::OptimizationLevel ProfileGenerator::optimizationLevel() const
+QirAdaptorFactory::OptimizationLevel QirAdaptorFactory::optimizationLevel() const
 {
     return optimization_level_;
 }
 
-bool ProfileGenerator::isDebugMode() const
+bool QirAdaptorFactory::isDebugMode() const
 {
     return debug_;
 }
 
-void ProfileGenerator::replicateProfileComponent(String const& id)
+void QirAdaptorFactory::replicateAdaptorComponent(String const& id)
 {
     for (auto& c : components_)
     {
@@ -141,14 +141,14 @@ void ProfileGenerator::replicateProfileComponent(String const& id)
     throw std::runtime_error("Component " + id + " not found.");
 }
 
-void ProfileGenerator::setupDefaultComponentPipeline()
+void QirAdaptorFactory::setupDefaultComponentPipeline()
 {
     using namespace llvm;
     ILoggerPtr logger = logger_;
 
-    registerProfileComponent<LlvmPassesConfiguration>(
+    registerAdaptorComponent<LlvmPassesConfiguration>(
         "llvm-optimization",
-        [](LlvmPassesConfiguration const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
+        [](LlvmPassesConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
         {
             auto& mpm = generator.modulePassManager();
 
@@ -214,18 +214,19 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             }
         });
 
-    registerProfileComponent<PreTransformTrimmingPassConfiguration>(
+    registerAdaptorComponent<PreTransformTrimmingPassConfiguration>(
         "pre-transform-trimming",
-        [logger](PreTransformTrimmingPassConfiguration const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
+        [logger](
+            PreTransformTrimmingPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
         {
             auto& mpm = generator.modulePassManager();
 
             mpm.addPass(PreTransformTrimmingPass(cfg, logger));
         });
 
-    registerProfileComponent<TransformationRulesPassConfiguration>(
+    registerAdaptorComponent<TransformationRulesPassConfiguration>(
         "transformation-rules",
-        [logger](TransformationRulesPassConfiguration const& cfg, ProfileGenerator& generator, Profile& profile)
+        [logger](TransformationRulesPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& profile)
         {
             auto& ret = generator.modulePassManager();
 
@@ -241,9 +242,9 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             ret.addPass(std::move(pass));
         });
 
-    registerProfileComponent<PostTransformConfig>(
+    registerAdaptorComponent<PostTransformConfig>(
         "post-transform",
-        [logger](PostTransformConfig const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
+        [logger](PostTransformConfig const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
         {
             auto& fpm = generator.functionPassManager();
 
@@ -283,19 +284,19 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             }
         });
 
-    registerProfileComponent<PostTransformValidationPassConfiguration>(
+    registerAdaptorComponent<PostTransformValidationPassConfiguration>(
         "post-transform-validation",
         [logger](
-            PostTransformValidationPassConfiguration const& cfg, ProfileGenerator& generator, Profile&
+            PostTransformValidationPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor&
             /*profile*/)
         {
             auto& mpm = generator.modulePassManager();
             mpm.addPass(PostTransformValidationPass(cfg, logger));
         });
 
-    registerProfileComponent<StaticResourceComponentConfiguration>(
+    registerAdaptorComponent<StaticResourceComponentConfiguration>(
         "static-resource",
-        [logger](StaticResourceComponentConfiguration const& cfg, ProfileGenerator& generator, Profile& profile)
+        [logger](StaticResourceComponentConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& profile)
         {
             auto& fam = profile.functionAnalysisManager();
             fam.registerPass([&] { return AllocationAnalysisPass(logger); });
@@ -318,9 +319,9 @@ void ProfileGenerator::setupDefaultComponentPipeline()
             fpm.addPass(ResourceAnnotationPass(cfg, logger));
         });
 
-    registerProfileComponent<GroupingPassConfiguration>(
+    registerAdaptorComponent<GroupingPassConfiguration>(
         "grouping",
-        [logger](GroupingPassConfiguration const& cfg, ProfileGenerator& generator, Profile& profile)
+        [logger](GroupingPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& profile)
         {
             if (cfg.circuitSeparation())
             {
@@ -335,7 +336,7 @@ void ProfileGenerator::setupDefaultComponentPipeline()
         });
 }
 
-void ProfileGenerator::setLogger(ILoggerPtr const& logger)
+void QirAdaptorFactory::setLogger(ILoggerPtr const& logger)
 {
     logger_ = logger;
 }

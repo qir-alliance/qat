@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
-#include "qir/qat/Generators/ProfileGenerator.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
@@ -10,7 +10,7 @@
 
 using namespace microsoft::quantum;
 
-extern "C" void loadComponent(ProfileGenerator* profile_generator);
+extern "C" void loadComponent(QirAdaptorFactory* profile_generator);
 void            activateAllocatorReplacement(RuleSet& ruleset);
 void            removeArrayCopies(RuleSet& ruleset);
 void            replaceAccess(RuleSet& ruleset);
@@ -201,11 +201,11 @@ void removeArrayCopies(RuleSet& ruleset)
     ruleset.addRule({call("__quantum__rt__array_copy", "array"_cap = _, _), replacer});
 }
 
-extern "C" void loadComponent(ProfileGenerator* profile_generator)
+extern "C" void loadComponent(QirAdaptorFactory* profile_generator)
 {
-    profile_generator->registerProfileComponent<CArrayMapConfig>(
+    profile_generator->registerAdaptorComponent<CArrayMapConfig>(
         "c-array-map",
-        [](CArrayMapConfig const& cfg, ProfileGenerator& generator, Profile& profile)
+        [](CArrayMapConfig const& cfg, QirAdaptorFactory& generator, QirAdaptor& profile)
         {
             auto& ret = generator.modulePassManager();
 

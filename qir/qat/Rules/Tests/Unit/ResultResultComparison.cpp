@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Factory.hpp"
@@ -89,10 +89,10 @@ continue__1:                                      ; preds = %then0__1, %entry
         factory.useStaticResultAllocation();
     };
 
-    auto                  profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto                  profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
     ConfigurationManager& configuration_manager = profile->configurationManager();
 
-    configuration_manager.setConfig(ValidationPassConfiguration::fromProfileName("default"));
+    configuration_manager.setConfig(ValidationPassConfiguration::fromQirAdaptorName("default"));
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
@@ -102,7 +102,7 @@ continue__1:                                      ; preds = %then0__1, %entry
          "%result__2 = call %Result* @__quantum__qis__m__body(%Qubit* %q1)",
          "%0 = call i1 @__quantum__rt__result_equal(%Result* %result, %Result* %result__2)"}));
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     // We expect that the call was removed
     EXPECT_FALSE(ir_manip->hasInstructionSequence({"%result = call %Result* @__quantum__qis__m__body(%Qubit* %q0)"}));

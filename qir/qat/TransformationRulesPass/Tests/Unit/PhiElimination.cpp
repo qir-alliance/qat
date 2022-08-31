@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
@@ -93,7 +93,7 @@ continue__1:                                      ; preds = %then0__1, %entry
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>();
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>();
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
@@ -103,7 +103,7 @@ continue__1:                                      ; preds = %then0__1, %entry
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         "call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* null)",
@@ -137,7 +137,7 @@ continue__1:                                      ; preds = %then0__1, %entry
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>();
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>();
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
@@ -147,7 +147,7 @@ continue__1:                                      ; preds = %then0__1, %entry
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         "call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* null)",

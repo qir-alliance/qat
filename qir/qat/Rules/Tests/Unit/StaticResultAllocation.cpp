@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
-#include "qir/qat/Generators/PostTransformConfig.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
+#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Factory.hpp"
@@ -55,7 +55,7 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
         factory.useStaticResultAllocation();
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(
         std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
@@ -63,7 +63,7 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
         {"%result1 = inttoptr i64 0 to %Result*",

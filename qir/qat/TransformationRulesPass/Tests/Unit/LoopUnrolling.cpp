@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
@@ -76,7 +76,7 @@ exit__1:                                          ; preds = %header__1
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>();
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>();
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
@@ -86,7 +86,7 @@ exit__1:                                          ; preds = %header__1
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         "%0 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",

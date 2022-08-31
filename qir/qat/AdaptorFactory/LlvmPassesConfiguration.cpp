@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
 
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 

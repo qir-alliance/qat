@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
@@ -74,12 +74,12 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
 {
     auto ir_manip = newIrManip(script);
 
-    auto generator = std::make_shared<ProfileGenerator>();
+    auto generator = std::make_shared<QirAdaptorFactory>();
 
     ConfigurationManager& configuration_manager = generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation-configuration", ValidationPassConfiguration::fromProfileName("generic"));
+        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("generic"));
 
     generator->setLogger(logger);
     generator->setupDefaultComponentPipeline();
@@ -97,7 +97,7 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
                         "\n";
     }
 
-    ir_manip->validateProfile(generator, "generic", false);
+    ir_manip->validateQirAdaptor(generator, "generic", false);
 }
 
 } // namespace

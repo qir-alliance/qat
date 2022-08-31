@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
-#include "qir/qat/Generators/PostTransformConfig.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
+#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
@@ -75,7 +75,7 @@ TEST(DeferMeasurements, ReorderTest)
 
     auto configure_profile = [](RuleSet&) {};
 
-    auto                  profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto                  profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
     ConfigurationManager& configuration_manager = profile->configurationManager();
 
     configuration_manager.addConfig<FactoryConfiguration>();
@@ -87,7 +87,7 @@ TEST(DeferMeasurements, ReorderTest)
     cfg.setUseDeferMeasurements(true);
     configuration_manager.setConfig(cfg);
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
     llvm::errs() << *ir_manip->module();
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({

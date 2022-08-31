@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Apps/Qat/ProfileConfiguration.hpp"
+#include "qir/qat/Apps/Qat/QirAdaptorConfiguration.hpp"
 
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
@@ -9,30 +9,30 @@
 namespace microsoft::quantum
 {
 
-void configureGenericProfile(ConfigurationManager& configuration_manager)
+void configureGenericQirAdaptor(ConfigurationManager& configuration_manager)
 {
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation.configuration", ValidationPassConfiguration::fromProfileName("generic"));
+        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("generic"));
 
     // The generic profile does not alter the default settings for transformation
 }
 
-void configureDefaultProfile(ConfigurationManager& configuration_manager)
+void configureDefaultQirAdaptor(ConfigurationManager& configuration_manager)
 {
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation.configuration", ValidationPassConfiguration::fromProfileName("default"));
+        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("default"));
 
     // The default profile does not alter the default settings for transformation
 }
 
-void configureProvider4bf9Profile(ConfigurationManager& configuration_manager)
+void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager)
 {
 
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation.configuration", ValidationPassConfiguration::fromProfileName("provider_4bf9"));
+        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("provider_4bf9"));
 
     // Transformation
     configuration_manager.disableSectionById("grouping");
@@ -106,11 +106,11 @@ void configureProvider4bf9Profile(ConfigurationManager& configuration_manager)
     configuration_manager.updateParameter("allow-undef", false);
 }
 
-void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
+void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager)
 {
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation.configuration", ValidationPassConfiguration::fromProfileName("provider_7ee0"));
+        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("provider_7ee0"));
 
     // Transform
     configuration_manager.disableSectionById("grouping");
@@ -184,11 +184,11 @@ void configureProvider7ee0Profile(ConfigurationManager& configuration_manager)
     configuration_manager.updateParameter("allow-undef", false);
 }
 
-void configureProviderb340Profile(ConfigurationManager& configuration_manager)
+void configureProviderb340QirAdaptor(ConfigurationManager& configuration_manager)
 {
     // Setting profile validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation.configuration", ValidationPassConfiguration::fromProfileName("provider_b340"));
+        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("provider_b340"));
 
     // Transformation
     configuration_manager.disableSectionById("grouping");
@@ -262,27 +262,27 @@ void configureProviderb340Profile(ConfigurationManager& configuration_manager)
     configuration_manager.updateParameter("allow-undef", false);
 }
 
-void configureProfile(String const& name, ConfigurationManager& configuration_manager)
+void configureQirAdaptor(String const& name, ConfigurationManager& configuration_manager)
 {
     if (name == "generic")
     {
-        configureGenericProfile(configuration_manager);
+        configureGenericQirAdaptor(configuration_manager);
     }
     else if (name == "default")
     {
-        configureDefaultProfile(configuration_manager);
+        configureDefaultQirAdaptor(configuration_manager);
     }
     else if (name == "provider_4bf9")
     {
-        configureProvider4bf9Profile(configuration_manager);
+        configureProvider4bf9QirAdaptor(configuration_manager);
     }
     else if (name == "provider_7ee0")
     {
-        configureProvider7ee0Profile(configuration_manager);
+        configureProvider7ee0QirAdaptor(configuration_manager);
     }
     else if (name == "provider_b340")
     {
-        configureProviderb340Profile(configuration_manager);
+        configureProviderb340QirAdaptor(configuration_manager);
     }
     else
     {

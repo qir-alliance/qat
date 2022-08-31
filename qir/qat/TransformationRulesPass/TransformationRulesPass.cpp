@@ -17,7 +17,7 @@ namespace microsoft::quantum
 TransformationRulesPass::TransformationRulesPass(
     RuleSet&&                                   rule_set,
     TransformationRulesPassConfiguration const& config,
-    Profile*                                    profile)
+    QirAdaptor*                                 profile)
   : rule_set_{std::move(rule_set)}
   , config_{config}
   , profile_{profile}

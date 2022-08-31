@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
@@ -52,9 +52,9 @@ TEST(RuleSetTestSuite, RemovingFunctionCall)
         factory.removeFunctionCall("__quantum__qis__h__body");
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
         {"%qubit = call %Qubit* @__quantum__rt__qubit_allocate()",

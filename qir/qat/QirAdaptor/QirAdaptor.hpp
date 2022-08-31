@@ -11,12 +11,12 @@
 namespace microsoft::quantum
 {
 
-class ProfileGenerator;
+class QirAdaptorFactory;
 
-/// Profile class that defines a set of rules which constitutes the profile definition. Each of the
+/// QirAdaptor class that defines a set of rules which constitutes the profile definition. Each of the
 /// rules can be used to transform a generic QIR and/or validate that the QIR is compliant with said
 /// rule.
-class Profile
+class QirAdaptor
 {
   public:
     /// Allocation manager pointer type. Used to reference to concrete allocation manager
@@ -31,7 +31,7 @@ class Profile
     // Constructors
     //
 
-    explicit Profile(
+    explicit QirAdaptor(
         String const&        name,
         ILoggerPtr const&    logger,
         bool                 debug,
@@ -42,14 +42,14 @@ class Profile
     // Default construction not allowed as this leads to invalid configuration of the allocation
     // managers.
 
-    Profile()               = delete;
-    Profile(Profile const&) = delete;
-    Profile(Profile&&)      = delete;
-    Profile& operator=(Profile const&) = delete;
-    Profile& operator=(Profile&&) = delete;
-    ~Profile()                    = default;
+    QirAdaptor()                  = delete;
+    QirAdaptor(QirAdaptor const&) = delete;
+    QirAdaptor(QirAdaptor&&)      = delete;
+    QirAdaptor& operator=(QirAdaptor const&) = delete;
+    QirAdaptor& operator=(QirAdaptor&&) = delete;
+    ~QirAdaptor()                       = default;
 
-    // Profile methods
+    // QirAdaptor methods
     //
 
     /// Applies the profile to a module.
@@ -85,8 +85,8 @@ class Profile
     llvm::ModulePassManager& modulePassManager();
 
   protected:
-    // Ensuring that ProfileGenerator has access to following protected functions.
-    friend class ProfileGenerator;
+    // Ensuring that QirAdaptorFactory has access to following protected functions.
+    friend class QirAdaptorFactory;
 
     /// Sets the validator
     void setValidator(ValidatorPtr&& validator);

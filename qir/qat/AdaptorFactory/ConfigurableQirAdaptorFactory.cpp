@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Factory.hpp"
@@ -14,7 +14,7 @@
 namespace microsoft::quantum
 {
 
-ConfigurableProfileGenerator::ConfigurableProfileGenerator(SetupMode const& mode)
+ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(SetupMode const& mode)
 {
     configurationManager().addConfig<ValidationPassConfiguration>();
 
@@ -24,7 +24,7 @@ ConfigurableProfileGenerator::ConfigurableProfileGenerator(SetupMode const& mode
     }
 }
 
-ConfigurableProfileGenerator::ConfigurableProfileGenerator(
+ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
     ConfigureFunction const&                    configure,
     TransformationRulesPassConfiguration const& profile_pass_config,
     LlvmPassesConfiguration const&              llvm_config)
@@ -32,9 +32,10 @@ ConfigurableProfileGenerator::ConfigurableProfileGenerator(
     configurationManager().addConfig<ValidationPassConfiguration>();
     setupDefaultComponentPipeline();
 
-    replaceProfileComponent<TransformationRulesPassConfiguration>(
+    replaceAdaptorComponent<TransformationRulesPassConfiguration>(
         "transformation-rules",
-        [configure](TransformationRulesPassConfiguration const& config, ProfileGenerator& generator, Profile& profile)
+        [configure](
+            TransformationRulesPassConfiguration const& config, QirAdaptorFactory& generator, QirAdaptor& profile)
         {
             auto& ret = generator.modulePassManager();
 
@@ -52,12 +53,12 @@ ConfigurableProfileGenerator::ConfigurableProfileGenerator(
     configurationManager().setConfig(llvm_config);
 }
 
-TransformationRulesPassConfiguration const& ConfigurableProfileGenerator::ruleTransformationConfig() const
+TransformationRulesPassConfiguration const& ConfigurableQirAdaptorFactory::ruleTransformationConfig() const
 {
     return configurationManager().get<TransformationRulesPassConfiguration>();
 }
 
-LlvmPassesConfiguration const& ConfigurableProfileGenerator::llvmPassesConfig() const
+LlvmPassesConfiguration const& ConfigurableQirAdaptorFactory::llvmPassesConfig() const
 {
     return configurationManager().get<LlvmPassesConfiguration>();
 }

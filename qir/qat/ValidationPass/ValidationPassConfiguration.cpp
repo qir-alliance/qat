@@ -57,7 +57,7 @@ String ValidationPassConfiguration::profileName() const
     return profile_name_;
 }
 
-ValidationPassConfiguration ValidationPassConfiguration::fromProfileName(String const& name)
+ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(String const& name)
 {
 
     auto profile = ValidationPassConfiguration();

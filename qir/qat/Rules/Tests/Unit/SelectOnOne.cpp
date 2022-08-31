@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "qir/qat/Rules/Factory.hpp"
@@ -59,13 +59,13 @@ TEST(RuleSetTestSuite, SelectOnOne)
         factory.optimizeResultOne();
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
 
     ConfigurationManager& configuration_manager = profile->configurationManager();
 
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(profile);
 
     // This optimization is specific to the the __quantum__qis__read_result__body which
     // returns 1 or 0 depending on the result. We expect that

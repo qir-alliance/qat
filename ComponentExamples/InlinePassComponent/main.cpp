@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
-#include "qir/qat/Generators/ProfileGenerator.hpp"
 using namespace microsoft::quantum;
 
-extern "C" void loadComponent(ProfileGenerator* profile_generator);
+extern "C" void loadComponent(QirAdaptorFactory* profile_generator);
 
 class InlinerConfig
 {
@@ -27,11 +27,11 @@ class InlinerConfig
     bool inline_{false}; ///< Default behaviour is that we do not add the inliner pass
 };
 
-extern "C" void loadComponent(ProfileGenerator* profile_generator)
+extern "C" void loadComponent(QirAdaptorFactory* profile_generator)
 {
-    profile_generator->registerProfileComponent<InlinerConfig>(
+    profile_generator->registerAdaptorComponent<InlinerConfig>(
         "inliner",
-        [](InlinerConfig const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
+        [](InlinerConfig const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
         {
             if (cfg.shouldInline())
             {

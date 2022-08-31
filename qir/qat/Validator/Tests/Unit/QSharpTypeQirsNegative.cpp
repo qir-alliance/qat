@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Factory.hpp"
@@ -62,12 +62,12 @@ void expectFail(String const& profile_name, String const& script, std::vector<St
 {
     auto ir_manip = newIrManip(script);
 
-    auto profile_generator = std::make_shared<ConfigurableProfileGenerator>();
+    auto profile_generator = std::make_shared<ConfigurableQirAdaptorFactory>();
 
     ConfigurationManager& configuration_manager = profile_generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
-    configuration_manager.setConfig(ValidationPassConfiguration::fromProfileName(profile_name));
+    configuration_manager.setConfig(ValidationPassConfiguration::fromQirAdaptorName(profile_name));
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
