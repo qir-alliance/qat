@@ -14,7 +14,7 @@
 namespace microsoft::quantum
 {
 
-/// Validator class that defines a set of rules which constitutes the profile definition. Each of
+/// Validator class that defines a set of rules which constitutes the adaptor definition. Each of
 /// the rules can be used to transform a generic QIR and/or validate that the QIR is compliant with
 /// said rule.
 class Validator
@@ -45,7 +45,7 @@ class Validator
     // Validator methods
     //
 
-    /// Validates that a module complies with the specified QIR profile. Returns true if the module is
+    /// Validates that a module complies with the specified QIR adaptor. Returns true if the module is
     /// valid and false otherwise.
     bool validate(llvm::Module& module);
 

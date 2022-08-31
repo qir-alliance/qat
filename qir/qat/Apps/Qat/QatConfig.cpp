@@ -15,9 +15,9 @@ void QatConfig::setup(ConfigurationManager& config)
         "Base configuration", "Configuration of the quantum adoption tool to execute a specific behaviour.");
     config.addExperimentalParameter(load_, static_cast<String>(""), "load", "Load component.");
     config.addParameter(
-        generate_, "apply", "Applies a profile to transform the IR in correspondence with the profile.");
+        generate_, "apply", "Applies a adaptor to transform the IR in correspondence with the adaptor.");
     config.addParameter(validate_, false, "validate", "Executes the validation procedure.");
-    config.addParameter(profile_, static_cast<String>("generic"), "profile", "Sets the profile.");
+    config.addParameter(adaptor_, static_cast<String>("generic"), "adaptor", "Sets the adaptor.");
     config.addParameter(emit_llvm_, false, "S", "Emits LLVM IR to the standard output.");
     config.addParameter(opt0_, false, "O0", "Optimization level 0.");
     config.addParameter(opt1_, false, "O1", "Optimization level 1.");
@@ -56,15 +56,15 @@ bool QatConfig::shouldValidate() const
     return validate_;
 }
 
-String QatConfig::profile() const
+String QatConfig::adaptor() const
 {
-    if (profile_ == "base")
+    if (adaptor_ == "base")
     {
         // TODO(tfr): Remove warning upon final release.
-        llvm::errs() << "; WARNING: 'base' profile renamed to 'default'. Please update your scripts.\n";
+        llvm::errs() << "; WARNING: 'base' adaptor renamed to 'default'. Please update your scripts.\n";
         return "default";
     }
-    return profile_;
+    return adaptor_;
 }
 
 bool QatConfig::shouldEmitLlvm() const

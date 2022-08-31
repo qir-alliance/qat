@@ -78,7 +78,7 @@ continue__1:                                      ; preds = %then0__1, %entry
   call void @__quantum__rt__result_update_reference_count(%Result* %result__4, i32 -1)
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -89,8 +89,8 @@ continue__1:                                      ; preds = %then0__1, %entry
         factory.useStaticResultAllocation();
     };
 
-    auto                  profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    auto                  adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
 
     configuration_manager.setConfig(ValidationPassConfiguration::fromQirAdaptorName("default"));
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
@@ -102,7 +102,7 @@ continue__1:                                      ; preds = %then0__1, %entry
          "%result__2 = call %Result* @__quantum__qis__m__body(%Qubit* %q1)",
          "%0 = call i1 @__quantum__rt__result_equal(%Result* %result, %Result* %result__2)"}));
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     // We expect that the call was removed
     EXPECT_FALSE(ir_manip->hasInstructionSequence({"%result = call %Result* @__quantum__qis__m__body(%Qubit* %q0)"}));

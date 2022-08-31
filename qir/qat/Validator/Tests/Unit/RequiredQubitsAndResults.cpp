@@ -79,7 +79,7 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
     ConfigurationManager& configuration_manager = generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("generic"));
+        "target.adaptor", ValidationPassConfiguration::fromQirAdaptorName("generic"));
 
     generator->setLogger(logger);
     generator->setupDefaultComponentPipeline();

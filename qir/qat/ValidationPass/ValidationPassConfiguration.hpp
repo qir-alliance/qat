@@ -202,14 +202,14 @@ class ValidationPassConfiguration
     bool allowPoison() const;
     bool allowUndef() const;
 
-    String profileName() const;
+    String adaptorName() const;
 
   private:
     void addAllowedExternalCall(String const& name);
     void addAllowedOpcode(String const& name);
     void addAllowedPointerType(String const& name);
 
-    String profile_name_{"null"};
+    String adaptor_name_{"null"};
 
     OpcodeSet opcodes_{};
     Set       external_calls_{};

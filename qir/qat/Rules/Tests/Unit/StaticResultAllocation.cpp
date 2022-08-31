@@ -48,22 +48,22 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
   %result5 = call %Result* @__quantum__qis__m__body(%Qubit* null)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticResultAllocation();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(
-        std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
         {"%result1 = inttoptr i64 0 to %Result*",

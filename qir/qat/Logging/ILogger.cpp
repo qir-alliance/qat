@@ -105,22 +105,22 @@ void ILogger::errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr)
 
 void ILogger::errorNoQubitsPresent(llvm::Value* ptr, String const& name)
 {
-    errorWithLocation("No qubits present in function (required by profile '" + name + "').", ptr);
+    errorWithLocation("No qubits present in function (required by adaptor '" + name + "').", ptr);
 }
 
 void ILogger::errorNoResultsPresent(llvm::Value* ptr, String const& name)
 {
-    errorWithLocation("No results present in function (required by profile '" + name + "').", ptr);
+    errorWithLocation("No results present in function (required by adaptor '" + name + "').", ptr);
 }
 
-void ILogger::errorOpcodeNotAllowed(String const& code, String const& profile_name, llvm::Value* ptr)
+void ILogger::errorOpcodeNotAllowed(String const& code, String const& adaptor_name, llvm::Value* ptr)
 {
     if (ptr)
     {
         setLocationFromValue(ptr);
     }
 
-    error("Opcode '" + code + "' is not allowed for this profile (" + profile_name + ").");
+    error("Opcode '" + code + "' is not allowed for this adaptor (" + adaptor_name + ").");
 }
 
 void ILogger::errorCustomFunctionsNotAllowed(llvm::Value* ptr)
@@ -128,25 +128,25 @@ void ILogger::errorCustomFunctionsNotAllowed(llvm::Value* ptr)
     errorWithLocation("Calls to custom defined functions not allowed.", ptr);
 }
 
-void ILogger::errorExternalCallsNotAllowed(String const& function_name, String const& profile_name, llvm::Value* ptr)
+void ILogger::errorExternalCallsNotAllowed(String const& function_name, String const& adaptor_name, llvm::Value* ptr)
 {
     errorWithLocation(
-        "External call '" + function_name + "' is not allowed for this profile (" + profile_name + ").", ptr);
+        "External call '" + function_name + "' is not allowed for this adaptor (" + adaptor_name + ").", ptr);
 }
 
-void ILogger::errorTypeNotAllowed(String const& type_name, String const& profile_name, llvm::Value* ptr)
+void ILogger::errorTypeNotAllowed(String const& type_name, String const& adaptor_name, llvm::Value* ptr)
 {
-    errorWithLocation("Type '" + type_name + "' is not allowed for this profile (" + profile_name + ").", ptr);
+    errorWithLocation("Type '" + type_name + "' is not allowed for this adaptor (" + adaptor_name + ").", ptr);
 }
 
-void ILogger::errorPoisonNotAllowed(String const& profile_name, llvm::Value* ptr)
+void ILogger::errorPoisonNotAllowed(String const& adaptor_name, llvm::Value* ptr)
 {
-    errorWithLocation("Poison value is not allowed for this profile (" + profile_name + ").", ptr);
+    errorWithLocation("Poison value is not allowed for this adaptor (" + adaptor_name + ").", ptr);
 }
 
-void ILogger::errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr)
+void ILogger::errorUndefNotAllowed(String const& adaptor_name, llvm::Value* ptr)
 {
-    errorWithLocation("Undef value is not allowed for this profile (" + profile_name + ").", ptr);
+    errorWithLocation("Undef value is not allowed for this adaptor (" + adaptor_name + ").", ptr);
 }
 
 void ILogger::setHasErrors(bool value)

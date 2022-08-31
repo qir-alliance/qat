@@ -87,14 +87,14 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(
     AllocationAnalysis&                         analysis_result,
     StaticResourceComponentConfiguration const& cfg)
 {
-    auto                  profile               = std::make_shared<ConfigurableQirAdaptorFactory>();
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    auto                  adaptor               = std::make_shared<ConfigurableQirAdaptorFactory>();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
 
-    profile->registerAnonymousAdaptorComponent<DummyConfig>(
-        [&analysis_result](DummyConfig const& /*config*/, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
+    adaptor->registerAnonymousAdaptorComponent<DummyConfig>(
+        [&analysis_result](DummyConfig const& /*config*/, QirAdaptorFactory& generator, QirAdaptor& /*adaptor*/)
         {
             auto& fpm = generator.functionPassManager();
             fpm.addPass(AnalysisReadoutPass(analysis_result));
@@ -104,7 +104,7 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(cfg);
 
-    return profile;
+    return adaptor;
 }
 
 TEST(StaticResourceComponent, AllocationAnalysisPass)
@@ -132,8 +132,8 @@ TEST(StaticResourceComponent, AllocationAnalysisPass)
   )script");
     AllocationAnalysis analysis_result{0};
 
-    auto profile = newQirAdaptor(analysis_result, StaticResourceComponentConfiguration::createDisabled());
-    ir_manip->applyQirAdaptor(profile);
+    auto adaptor = newQirAdaptor(analysis_result, StaticResourceComponentConfiguration::createDisabled());
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_EQ(analysis_result.usage_qubit_counts, 3);
     EXPECT_EQ(analysis_result.usage_result_counts, 3);
@@ -168,8 +168,8 @@ TEST(StaticResourceComponent, RemapTest)
 
     auto config = StaticResourceComponentConfiguration::createDisabled();
     config.enableReindexQubits();
-    auto profile = newQirAdaptor(analysis_result, config);
-    ir_manip->applyQirAdaptor(profile);
+    auto adaptor = newQirAdaptor(analysis_result, config);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_EQ(analysis_result.usage_qubit_counts, 3);
     EXPECT_EQ(analysis_result.usage_result_counts, 3);
@@ -201,8 +201,8 @@ TEST(StaticResourceComponent, AllocateOnMeasure)
 
     config.enableReplaceQubitOnReset();
 
-    auto profile = newQirAdaptor(analysis_result, config);
-    ir_manip->applyQirAdaptor(profile);
+    auto adaptor = newQirAdaptor(analysis_result, config);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_EQ(analysis_result.usage_qubit_counts, 7);
     EXPECT_EQ(analysis_result.usage_result_counts, 7);
@@ -258,8 +258,8 @@ TEST(StaticResourceComponent, AllocateOnMeasureWithInline)
     config.enableReplaceQubitOnReset();
     config.enableInlineAfterIdChange();
 
-    auto profile = newQirAdaptor(analysis_result, config);
-    ir_manip->applyQirAdaptor(profile);
+    auto adaptor = newQirAdaptor(analysis_result, config);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_EQ(analysis_result.usage_qubit_counts, 7);
     EXPECT_EQ(analysis_result.usage_result_counts, 7);

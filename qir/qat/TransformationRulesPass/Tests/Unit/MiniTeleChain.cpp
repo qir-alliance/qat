@@ -174,15 +174,15 @@ TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit: 
   call void @__quantum__rt__string_update_reference_count(%String* %38, i32 -1)
   )script");
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>();
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>();
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         // clang-format off

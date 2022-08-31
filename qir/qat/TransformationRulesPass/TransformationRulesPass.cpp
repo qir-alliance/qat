@@ -17,10 +17,10 @@ namespace microsoft::quantum
 TransformationRulesPass::TransformationRulesPass(
     RuleSet&&                                   rule_set,
     TransformationRulesPassConfiguration const& config,
-    QirAdaptor*                                 profile)
+    QirAdaptor*                                 adaptor)
   : rule_set_{std::move(rule_set)}
   , config_{config}
-  , profile_{profile}
+  , adaptor_{adaptor}
 {
 }
 

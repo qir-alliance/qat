@@ -65,7 +65,7 @@ continue__1:
   ret i8 0
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -73,16 +73,16 @@ continue__1:
         factory.optimizeResultZero();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     // This optimistation is specific to the the __quantum__qis__read_result__body which
     // returns 1 or 0 depending on the result. We expect that

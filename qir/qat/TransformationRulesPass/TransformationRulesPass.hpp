@@ -24,7 +24,7 @@ namespace microsoft::quantum
 /// The module executes the following steps:
 /// ```
 ///           ┌─────────────────┐
-///           │  Apply profile  │
+///           │  Apply adaptor  │
 ///           └─────────────────┘
 ///                    │                ┌───────────────────────────────┐
 ///                    ├───────────────▶│   Copy and expand functions   │──┐
@@ -77,7 +77,7 @@ class TransformationRulesPass : public llvm::PassInfoMixin<TransformationRulesPa
     TransformationRulesPass(
         RuleSet&&                                   rule_set,
         TransformationRulesPassConfiguration const& config,
-        QirAdaptor*                                 profile);
+        QirAdaptor*                                 adaptor);
 
     /// Copy construction is banned.
     TransformationRulesPass(TransformationRulesPass const&) = delete;
@@ -226,10 +226,10 @@ class TransformationRulesPass : public llvm::PassInfoMixin<TransformationRulesPa
     // QirAdaptor
     //
 
-    /// Pointer to the current profile. This pointer is used to annotate top level functions with
+    /// Pointer to the current adaptor. This pointer is used to annotate top level functions with
     /// regards to how many qubits they require. TODO(issue-22): Consider moving into its own
     /// component.
-    QirAdaptor* profile_{nullptr};
+    QirAdaptor* adaptor_{nullptr};
 };
 
 } // namespace microsoft::quantum

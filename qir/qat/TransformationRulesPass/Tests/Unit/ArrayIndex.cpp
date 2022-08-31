@@ -64,7 +64,7 @@ quantum:                                          ; preds = %load
   tail call void @__quantum__qis__h__body(%Qubit* %2)
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -72,9 +72,9 @@ quantum:                                          ; preds = %load
         factory.useStaticQubitArrayAllocation();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
@@ -82,7 +82,7 @@ quantum:                                          ; preds = %load
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
         {"tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))"}));

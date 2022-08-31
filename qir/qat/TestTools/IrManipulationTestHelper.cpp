@@ -112,8 +112,8 @@ void IrManipulationTestHelper::applyQirAdaptor(
     bool                     debug)
 {
 
-    auto profile = generator->newQirAdaptor("generic", optimization_level, debug);
-    profile->apply(*module_);
+    auto adaptor = generator->newQirAdaptor("generic", optimization_level, debug);
+    adaptor->apply(*module_);
 
     // Verifying that the module is valid
     if (isModuleBroken())
@@ -122,21 +122,21 @@ void IrManipulationTestHelper::applyQirAdaptor(
     }
 }
 
-bool IrManipulationTestHelper::validateQirAdaptor(GeneratorPtr const& generator, String const& profile_name, bool debug)
+bool IrManipulationTestHelper::validateQirAdaptor(GeneratorPtr const& generator, String const& adaptor_name, bool debug)
 {
-    auto profile = generator->newQirAdaptor(profile_name, OptimizationLevel::O0, debug);
+    auto adaptor = generator->newQirAdaptor(adaptor_name, OptimizationLevel::O0, debug);
 
-    return profile->validate(*module_);
+    return adaptor->validate(*module_);
 }
 
 bool IrManipulationTestHelper::containsValidationErrors(
     GeneratorPtr const& generator,
-    String const&       profile_name,
+    String const&       adaptor_name,
     Strings const&      errors,
     bool                debug) const
 {
 
-    auto  profile               = generator->newQirAdaptor(profile_name, OptimizationLevel::O0, debug);
+    auto  adaptor               = generator->newQirAdaptor(adaptor_name, OptimizationLevel::O0, debug);
     auto& configuration_manager = generator->configurationManager();
     auto  logger                = std::make_shared<LogCollection>();
     auto  validator =
@@ -189,11 +189,11 @@ bool IrManipulationTestHelper::containsValidationErrors(
 
 bool IrManipulationTestHelper::containsExactValidationErrors(
     GeneratorPtr const& generator,
-    String const&       profile_name,
+    String const&       adaptor_name,
     Strings const&      errors,
     bool                debug) const
 {
-    auto  profile               = generator->newQirAdaptor(profile_name, OptimizationLevel::O0, debug);
+    auto  adaptor               = generator->newQirAdaptor(adaptor_name, OptimizationLevel::O0, debug);
     auto& configuration_manager = generator->configurationManager();
     auto  logger                = std::make_shared<LogCollection>();
 

@@ -178,7 +178,7 @@ entry:
         auto    factory = RuleFactory(rule_set, qubit_allocation_manager, result_allocation_manager, logger);
         factory.usingConfiguration(configuration_manager.get<FactoryConfiguration>());
 
-        // Creating profile pass
+        // Creating adaptor pass
         auto pass = TransformationRulesPass(std::move(rule_set), cfg, nullptr);
         pass.setLogger(logger);
         mpm.addPass(std::move(pass));

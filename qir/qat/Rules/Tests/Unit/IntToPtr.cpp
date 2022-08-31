@@ -55,7 +55,7 @@ TEST(RuleSetTestSuite, IntToPtr)
   %0 = inttoptr i64 2 to %Array*
  )script");
     bool matched           = false;
-    auto configure_profile = [&matched](RuleSet& rule_set)
+    auto configure_adaptor = [&matched](RuleSet& rule_set)
     {
         auto inttoptr = intToPtr(constInt());
         auto rule     = ReplacementRule(
@@ -70,8 +70,8 @@ TEST(RuleSetTestSuite, IntToPtr)
         rule_set.addRule(ret);
     };
 
-    auto                  profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    auto                  adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
@@ -79,7 +79,7 @@ TEST(RuleSetTestSuite, IntToPtr)
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(matched);
 }
@@ -91,7 +91,7 @@ TEST(RuleSetTestSuite, EmbeddedIntToPtr)
   )script");
     bool matched  = false;
 
-    auto configure_profile = [&matched](RuleSet& rule_set)
+    auto configure_adaptor = [&matched](RuleSet& rule_set)
     {
         auto inttoptr = call("__quantum__rt__array_get_element_ptr_1d", intToPtr(constInt()), constInt());
         auto rule     = ReplacementRule(
@@ -106,8 +106,8 @@ TEST(RuleSetTestSuite, EmbeddedIntToPtr)
         rule_set.addRule(ret);
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
-    ir_manip->applyQirAdaptor(profile);
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(matched);
 }
@@ -120,7 +120,7 @@ TEST(RuleSetTestSuite, ExpandedIntToPtr)
   )script");
     bool matched  = false;
 
-    auto configure_profile = [&matched](RuleSet& rule_set)
+    auto configure_adaptor = [&matched](RuleSet& rule_set)
     {
         auto inttoptr = call("__quantum__rt__array_get_element_ptr_1d", intToPtr(constInt()), constInt());
         auto rule     = ReplacementRule(
@@ -135,8 +135,8 @@ TEST(RuleSetTestSuite, ExpandedIntToPtr)
         rule_set.addRule(ret);
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
-    ir_manip->applyQirAdaptor(profile);
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(matched);
 }

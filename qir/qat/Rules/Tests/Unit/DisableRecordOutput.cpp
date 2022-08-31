@@ -55,7 +55,7 @@ TEST(RuleSetTestSuite, DisablingRecordOutput)
     call void @__quantum__rt__array_end_record_output()    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -63,9 +63,9 @@ TEST(RuleSetTestSuite, DisablingRecordOutput)
         factory.disableRecordOutputSupport();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     // We expect that the call was removed
     EXPECT_EQ(ir_manip->toBodyInstructions(), IrManipulationTestHelper::Strings{"ret i8 0"});

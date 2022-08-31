@@ -13,14 +13,14 @@ namespace microsoft::quantum
 
 class QirAdaptorFactory;
 
-/// QirAdaptor class that defines a set of rules which constitutes the profile definition. Each of the
+/// QirAdaptor class that defines a set of rules which constitutes the adaptor definition. Each of the
 /// rules can be used to transform a generic QIR and/or validate that the QIR is compliant with said
 /// rule.
 class QirAdaptor
 {
   public:
     /// Allocation manager pointer type. Used to reference to concrete allocation manager
-    /// implementations which defines the allocation logic of the profile.
+    /// implementations which defines the allocation logic of the adaptor.
     using AllocationManagerPtr = IAllocationManager::AllocationManagerPtr;
 
     /// Validator class used to check that an IR fulfils a given specification
@@ -52,13 +52,13 @@ class QirAdaptor
     // QirAdaptor methods
     //
 
-    /// Applies the profile to a module.
+    /// Applies the adaptor to a module.
     void apply(llvm::Module& module);
 
     /// Verifies that a module is a valid LLVM IR.
     bool verify(llvm::Module& module);
 
-    /// Validates that a module complies with the specified QIR profile.
+    /// Validates that a module complies with the specified QIR adaptor.
     bool validate(llvm::Module& module);
 
     AllocationManagerPtr getQubitAllocationManager();
@@ -81,7 +81,7 @@ class QirAdaptor
     /// Returns a reference to the module analysis manager.
     llvm::ModuleAnalysisManager& moduleAnalysisManager();
 
-    /// Returns the module pass manager associated with the profile
+    /// Returns the module pass manager associated with the adaptor
     llvm::ModulePassManager& modulePassManager();
 
   protected:
@@ -116,7 +116,7 @@ class QirAdaptor
         return true;
     }
 
-    /// Name of the selected profile
+    /// Name of the selected adaptor
     String name_{};
 
     ILoggerPtr logger_{nullptr};

@@ -13,8 +13,8 @@
 namespace microsoft::quantum
 {
 
-/// ConfigurableQirAdaptorFactory defines a profile that configures the rule set used by the QirAdaptor
-/// pass. This profile is useful for generating dynamic profiles and is well suited for testing
+/// ConfigurableQirAdaptorFactory defines a adaptor that configures the rule set used by the QirAdaptor
+/// pass. This adaptor is useful for generating dynamic adaptors and is well suited for testing
 /// purposes or YAML configured transformation of the IR.
 class ConfigurableQirAdaptorFactory : public QirAdaptorFactory
 {
@@ -36,7 +36,7 @@ class ConfigurableQirAdaptorFactory : public QirAdaptorFactory
     /// further overrides the default configuration
     explicit ConfigurableQirAdaptorFactory(
         ConfigureFunction const&                    configure,
-        TransformationRulesPassConfiguration const& profile_pass_config =
+        TransformationRulesPassConfiguration const& adaptor_pass_config =
             TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration const& llvm_config = LlvmPassesConfiguration::createDisabled());
 

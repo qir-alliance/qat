@@ -26,7 +26,7 @@ ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(SetupMode const& mo
 
 ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
     ConfigureFunction const&                    configure,
-    TransformationRulesPassConfiguration const& profile_pass_config,
+    TransformationRulesPassConfiguration const& adaptor_pass_config,
     LlvmPassesConfiguration const&              llvm_config)
 {
     configurationManager().addConfig<ValidationPassConfiguration>();
@@ -35,21 +35,21 @@ ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
     replaceAdaptorComponent<TransformationRulesPassConfiguration>(
         "transformation-rules",
         [configure](
-            TransformationRulesPassConfiguration const& config, QirAdaptorFactory& generator, QirAdaptor& profile)
+            TransformationRulesPassConfiguration const& config, QirAdaptorFactory& generator, QirAdaptor& adaptor)
         {
             auto& ret = generator.modulePassManager();
 
             // Defining the mapping
             RuleSet rule_set;
             auto    factory = RuleFactory(
-                   rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), nullptr);
+                   rule_set, adaptor.getQubitAllocationManager(), adaptor.getResultAllocationManager(), nullptr);
             configure(rule_set);
 
-            // Creating profile pass
-            ret.addPass(TransformationRulesPass(std::move(rule_set), config, &profile));
+            // Creating adaptor pass
+            ret.addPass(TransformationRulesPass(std::move(rule_set), config, &adaptor));
         });
 
-    configurationManager().setConfig(profile_pass_config);
+    configurationManager().setConfig(adaptor_pass_config);
     configurationManager().setConfig(llvm_config);
 }
 

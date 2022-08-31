@@ -49,23 +49,23 @@ TEST(RuleSetTestSuite, AllocationActionRelease)
   call void @__quantum__rt__qubit_release(%Qubit* %qubit)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticQubitAllocation();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(
-        std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
         {"%qubit = inttoptr i64 0 to %Qubit*", "call void @__quantum__qis__h__body(%Qubit* %qubit)"}));
@@ -82,7 +82,7 @@ TEST(RuleSetTestSuite, MultipleAllocationsNoRelease)
   %qubit5 = call %Qubit* @__quantum__rt__qubit_allocate()
   )script");
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
         [](RuleSet& rule_set)
         {
             auto factory = RuleFactory(
@@ -92,12 +92,12 @@ TEST(RuleSetTestSuite, MultipleAllocationsNoRelease)
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     // Checking that static allocations happened
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
@@ -142,7 +142,7 @@ TEST(RuleSetTestSuite, AllocateReleaseMultipleTimes)
   call void @__quantum__rt__qubit_release(%Qubit* %qubit4)  
   )script");
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
         [](RuleSet& rule_set)
         {
             auto a = BasicAllocationManager::createNew();
@@ -156,13 +156,13 @@ TEST(RuleSetTestSuite, AllocateReleaseMultipleTimes)
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         "%qubit1 = inttoptr i64 0 to %Qubit*",
@@ -198,7 +198,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByName)
   call void @__quantum__rt__qubit_release(%Qubit* %leftMessage)  
   )script");
     auto logger   = std::make_shared<CommentLogger>();
-    auto profile  = std::make_shared<ConfigurableQirAdaptorFactory>(
+    auto adaptor  = std::make_shared<ConfigurableQirAdaptorFactory>(
         [logger](RuleSet& rule_set)
         {
             auto factory =
@@ -208,11 +208,11 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByName)
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(logger->hadErrors());
     EXPECT_FALSE(ir_manip->isModuleBroken());
@@ -226,7 +226,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByNameWithNoName)
   call void @__quantum__rt__qubit_release(%Qubit* %0)  
   )script");
     auto logger   = std::make_shared<CommentLogger>();
-    auto profile  = std::make_shared<ConfigurableQirAdaptorFactory>(
+    auto adaptor  = std::make_shared<ConfigurableQirAdaptorFactory>(
         [logger](RuleSet& rule_set)
         {
             auto factory =
@@ -236,12 +236,12 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByNameWithNoName)
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(logger->hadErrors());
     EXPECT_FALSE(ir_manip->isModuleBroken());
@@ -257,7 +257,7 @@ TEST(RuleSetTestSuite, ErrorReleaseWithTypeErasedAllocation)
   )script");
 
     auto logger  = std::make_shared<CommentLogger>();
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
         [logger](RuleSet& rule_set)
         {
             auto factory =
@@ -267,12 +267,12 @@ TEST(RuleSetTestSuite, ErrorReleaseWithTypeErasedAllocation)
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(logger->hadErrors());
     EXPECT_FALSE(ir_manip->isModuleBroken());

@@ -73,10 +73,10 @@ TEST(DeferMeasurements, ReorderTest)
   call void @__quantum__rt__array_end_record_output()
   )script");
 
-    auto configure_profile = [](RuleSet&) {};
+    auto configure_adaptor = [](RuleSet&) {};
 
-    auto                  profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    auto                  adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
 
     configuration_manager.addConfig<FactoryConfiguration>();
 
@@ -87,7 +87,7 @@ TEST(DeferMeasurements, ReorderTest)
     cfg.setUseDeferMeasurements(true);
     configuration_manager.setConfig(cfg);
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
     llvm::errs() << *ir_manip->module();
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({

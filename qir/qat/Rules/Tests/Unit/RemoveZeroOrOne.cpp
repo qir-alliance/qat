@@ -54,7 +54,7 @@ TEST(RuleSetTestSuite, RemovingLeftOverZeroAndOnes)
     call void @__quantum__rt__string_update_reference_count(%String* %1, i32 -1)
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -64,12 +64,12 @@ TEST(RuleSetTestSuite, RemovingLeftOverZeroAndOnes)
         factory.removeGetZeroOrOne();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %Result* @__quantum__rt__result_get_zero()"}));
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     // We expect that the call was removed
     EXPECT_FALSE(ir_manip->hasInstructionSequence({"%0 = call %Result* @__quantum__rt__result_get_zero()"}));

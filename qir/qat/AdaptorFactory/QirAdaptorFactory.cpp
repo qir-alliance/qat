@@ -42,7 +42,7 @@ std::shared_ptr<QirAdaptor> QirAdaptorFactory::newQirAdaptor(
         result_allocation_manager->setReuseRegisters(cfg.shouldReuseResults());
     }
 
-    // Creating profile
+    // Creating adaptor
     // TODO(issue-12): Set target machine
     auto ret = std::make_shared<QirAdaptor>(
         name, logger_, debug, nullptr, qubit_allocation_manager, result_allocation_manager);
@@ -72,13 +72,13 @@ std::shared_ptr<QirAdaptor> QirAdaptorFactory::newQirAdaptor(
 }
 
 void QirAdaptorFactory::configureGeneratorFromQirAdaptor(
-    QirAdaptor&              profile,
+    QirAdaptor&              adaptor,
     OptimizationLevel const& optimization_level,
     bool                     debug)
 {
-    auto& pass_builder = profile.passBuilder();
+    auto& pass_builder = adaptor.passBuilder();
 
-    module_pass_manager_ = &profile.modulePassManager();
+    module_pass_manager_ = &adaptor.modulePassManager();
     pass_builder_        = &pass_builder;
     optimization_level_  = optimization_level;
     debug_               = debug;
@@ -148,7 +148,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
 
     registerAdaptorComponent<LlvmPassesConfiguration>(
         "llvm-optimization",
-        [](LlvmPassesConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
+        [](LlvmPassesConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*adaptor*/)
         {
             auto& mpm = generator.modulePassManager();
 
@@ -217,7 +217,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
     registerAdaptorComponent<PreTransformTrimmingPassConfiguration>(
         "pre-transform-trimming",
         [logger](
-            PreTransformTrimmingPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
+            PreTransformTrimmingPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*adaptor*/)
         {
             auto& mpm = generator.modulePassManager();
 
@@ -226,25 +226,25 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
 
     registerAdaptorComponent<TransformationRulesPassConfiguration>(
         "transformation-rules",
-        [logger](TransformationRulesPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& profile)
+        [logger](TransformationRulesPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& adaptor)
         {
             auto& ret = generator.modulePassManager();
 
             // Defining the mapping
             RuleSet rule_set;
             auto    factory = RuleFactory(
-                   rule_set, profile.getQubitAllocationManager(), profile.getResultAllocationManager(), logger);
+                   rule_set, adaptor.getQubitAllocationManager(), adaptor.getResultAllocationManager(), logger);
             factory.usingConfiguration(generator.configurationManager().get<FactoryConfiguration>());
 
-            // Creating profile pass
-            auto pass = TransformationRulesPass(std::move(rule_set), cfg, &profile);
+            // Creating adaptor pass
+            auto pass = TransformationRulesPass(std::move(rule_set), cfg, &adaptor);
             pass.setLogger(logger);
             ret.addPass(std::move(pass));
         });
 
     registerAdaptorComponent<PostTransformConfig>(
         "post-transform",
-        [logger](PostTransformConfig const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
+        [logger](PostTransformConfig const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*adaptor*/)
         {
             auto& fpm = generator.functionPassManager();
 
@@ -288,7 +288,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         "post-transform-validation",
         [logger](
             PostTransformValidationPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor&
-            /*profile*/)
+            /*adaptor*/)
         {
             auto& mpm = generator.modulePassManager();
             mpm.addPass(PostTransformValidationPass(cfg, logger));
@@ -296,9 +296,9 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
 
     registerAdaptorComponent<StaticResourceComponentConfiguration>(
         "static-resource",
-        [logger](StaticResourceComponentConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& profile)
+        [logger](StaticResourceComponentConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& adaptor)
         {
-            auto& fam = profile.functionAnalysisManager();
+            auto& fam = adaptor.functionAnalysisManager();
             fam.registerPass([&] { return AllocationAnalysisPass(logger); });
 
             auto& fpm = generator.functionPassManager();
@@ -321,11 +321,11 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
 
     registerAdaptorComponent<GroupingPassConfiguration>(
         "grouping",
-        [logger](GroupingPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& profile)
+        [logger](GroupingPassConfiguration const& cfg, QirAdaptorFactory& generator, QirAdaptor& adaptor)
         {
             if (cfg.circuitSeparation())
             {
-                auto& mam = profile.moduleAnalysisManager();
+                auto& mam = adaptor.moduleAnalysisManager();
                 mam.registerPass([&] { return GroupingAnalysisPass(cfg, logger); });
                 auto& ret = generator.modulePassManager();
 

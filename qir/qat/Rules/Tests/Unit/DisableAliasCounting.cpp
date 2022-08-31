@@ -50,7 +50,7 @@ TEST(RuleSetTestSuite, DisablingArrayhAliasCounting)
     call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -58,7 +58,7 @@ TEST(RuleSetTestSuite, DisablingArrayhAliasCounting)
         factory.disableAliasCounting();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
@@ -68,7 +68,7 @@ TEST(RuleSetTestSuite, DisablingArrayhAliasCounting)
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__array_update_alias_count(%Array* %0, i32 -1)"}));
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %Array* @__quantum__rt__array_create_1d(i32 8, i64 2)"}));
 
@@ -89,7 +89,7 @@ TEST(RuleSetTestSuite, DisablingStringAliasCounting)
     call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -97,7 +97,7 @@ TEST(RuleSetTestSuite, DisablingStringAliasCounting)
         factory.disableAliasCounting();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
@@ -108,7 +108,7 @@ TEST(RuleSetTestSuite, DisablingStringAliasCounting)
             {"call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__string_update_alias_count(%String* %0, i32 -1)"}));
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %String* @__quantum__rt__string_create(i8* null)"}));
 
@@ -130,7 +130,7 @@ TEST(RuleSetTestSuite, DisablingResultAliasCounting)
     call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -138,7 +138,7 @@ TEST(RuleSetTestSuite, DisablingResultAliasCounting)
         factory.disableAliasCounting();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
@@ -149,7 +149,7 @@ TEST(RuleSetTestSuite, DisablingResultAliasCounting)
             {"call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__result_update_alias_count(%Result* %0, i32 -1)"}));
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %Result* @__quantum__qis__m__body(%Qubit* null)"}));
 

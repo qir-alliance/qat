@@ -52,35 +52,35 @@ void ValidationPassConfiguration::setup(ConfigurationManager& config)
         ConfigurationManager::ParameterVisibility::ConfigOnly);
 }
 
-String ValidationPassConfiguration::profileName() const
+String ValidationPassConfiguration::adaptorName() const
 {
-    return profile_name_;
+    return adaptor_name_;
 }
 
 ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(String const& name)
 {
 
-    auto profile = ValidationPassConfiguration();
+    auto adaptor = ValidationPassConfiguration();
     if (name == "generic")
     {
-        profile.opcodes_               = OpcodeSet{};
-        profile.external_calls_        = Set{};
-        profile.allowed_pointer_types_ = Set{};
+        adaptor.opcodes_               = OpcodeSet{};
+        adaptor.external_calls_        = Set{};
+        adaptor.allowed_pointer_types_ = Set{};
 
-        profile.allowlist_opcodes_        = true;
-        profile.allowlist_external_calls_ = false;
-        profile.allow_internal_calls_     = true;
-        profile.allowlist_pointer_types_  = false;
-        profile.allow_primitive_return_   = true;
-        profile.allow_struct_return_      = true;
-        profile.allow_pointer_return_     = true;
+        adaptor.allowlist_opcodes_        = true;
+        adaptor.allowlist_external_calls_ = false;
+        adaptor.allow_internal_calls_     = true;
+        adaptor.allowlist_pointer_types_  = false;
+        adaptor.allow_primitive_return_   = true;
+        adaptor.allow_struct_return_      = true;
+        adaptor.allow_pointer_return_     = true;
     }
     else if (name == "default")
     {
-        profile.allow_internal_calls_     = false;
-        profile.allowlist_external_calls_ = true;
-        profile.allowlist_opcodes_        = true;
-        profile.opcodes_                  = OpcodeSet({
+        adaptor.allow_internal_calls_     = false;
+        adaptor.allowlist_external_calls_ = true;
+        adaptor.allowlist_opcodes_        = true;
+        adaptor.opcodes_                  = OpcodeSet({
             {"ret"},
             {"call"},
             {"inttoptr"},
@@ -101,7 +101,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(Stri
             {"fcmp", "ole"}, {"fcmp", "one"},
             */
         });
-        profile.external_calls_           = Set{
+        adaptor.external_calls_           = Set{
             "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
             "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
             "__quantum__qis__cx__body:void (%Qubit*, %Qubit*)",
@@ -122,21 +122,21 @@ ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(Stri
             "__quantum__qis__read_result__body:i1 (%Result*)",
 
         };
-        profile.allowlist_pointer_types_ = true;
-        profile.allowed_pointer_types_   = {"i8*", "i16*", "i32*", "i64*", "Qubit*", "Qubit**", "Result*", "Result**"};
+        adaptor.allowlist_pointer_types_ = true;
+        adaptor.allowed_pointer_types_   = {"i8*", "i16*", "i32*", "i64*", "Qubit*", "Qubit**", "Result*", "Result**"};
     }
     else if (name == "provider_4bf9")
     {
         // Supported LLVM instructions: ret, br, phi, add, sub, mul, fadd, fsub, fmul, lshr, and, or,
         // xor, icmp eq, icmp ne, icmp ugt, icmp uge, icmp ult, icmp ule, fcmp oeq, fcmp ogt, fcmp oge,
         // fcmp olt, fcmp ole, fcmp one
-        profile.allow_internal_calls_     = false;
-        profile.allowlist_external_calls_ = true;
-        profile.allowlist_opcodes_        = true;
-        profile.opcodes_        = OpcodeSet({{"call"}, {"ret"},  {"inttoptr"}, {"br"},   {"phi"},    {"add"}, {"sub"},
+        adaptor.allow_internal_calls_     = false;
+        adaptor.allowlist_external_calls_ = true;
+        adaptor.allowlist_opcodes_        = true;
+        adaptor.opcodes_        = OpcodeSet({{"call"}, {"ret"},  {"inttoptr"}, {"br"},   {"phi"},    {"add"}, {"sub"},
                                       {"mul"},  {"fadd"}, {"fsub"},     {"fmul"}, {"lshr"},   {"shl"}, {"and"},
                                       {"or"},   {"xor"},  {"icmp"},     {"fcmp"}, {"select"}, {"zext"}});
-        profile.external_calls_ = Set{
+        adaptor.external_calls_ = Set{
             "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
             "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
             "__quantum__qis__swap__body:void (%Qubit*, %Qubit*)",
@@ -164,8 +164,8 @@ ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(Stri
             "__quantum__rt__array_end_record_output:void ()",
 
         };
-        profile.allowlist_pointer_types_ = true;
-        profile.allowed_pointer_types_   = {"Qubit*", "Result*"};
+        adaptor.allowlist_pointer_types_ = true;
+        adaptor.allowed_pointer_types_   = {"Qubit*", "Result*"};
     }
     else if (name == "provider_7ee0")
     {
@@ -191,10 +191,10 @@ ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(Stri
         // __quantum__qis__mz__body(%Qubit*, %Result*),
         // %i1 __quantum__qis__read_result__body(%Result*)
 
-        profile.allow_internal_calls_     = false;
-        profile.allowlist_external_calls_ = true;
-        profile.allowlist_opcodes_        = true;
-        profile.opcodes_                  = OpcodeSet(
+        adaptor.allow_internal_calls_     = false;
+        adaptor.allowlist_external_calls_ = true;
+        adaptor.allowlist_opcodes_        = true;
+        adaptor.opcodes_                  = OpcodeSet(
                              {{"call"},
              {"ret"},
              {"inttoptr"},
@@ -211,7 +211,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(Stri
              {"icmp"},
              {"select"},
              {"zext"}});
-        profile.external_calls_ = Set{
+        adaptor.external_calls_ = Set{
             "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
             "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
             "__quantum__qis__h__body:void (%Qubit*)",
@@ -240,20 +240,20 @@ ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(Stri
             "__quantum__rt__int_record_output:void (i64, i8*)",
 
         };
-        profile.allowlist_pointer_types_ = true;
-        profile.allowed_pointer_types_   = {"Qubit*", "Result*", "i8*"};
+        adaptor.allowlist_pointer_types_ = true;
+        adaptor.allowed_pointer_types_   = {"Qubit*", "Result*", "i8*"};
     }
     else if (name == "provider_b340")
     {
-        profile.allow_internal_calls_     = false;
-        profile.allowlist_external_calls_ = true;
-        profile.allowlist_opcodes_        = true;
-        profile.opcodes_                  = OpcodeSet({
+        adaptor.allow_internal_calls_     = false;
+        adaptor.allowlist_external_calls_ = true;
+        adaptor.allowlist_opcodes_        = true;
+        adaptor.opcodes_                  = OpcodeSet({
             {"call"},
             {"ret"},
             {"inttoptr"},
         });
-        profile.external_calls_           = Set{
+        adaptor.external_calls_           = Set{
             "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
             "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
             "__quantum__qis__swap__body:void (%Qubit*, %Qubit*)",
@@ -277,17 +277,17 @@ ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(Stri
             "__quantum__rt__array_end_record_output:void ()",
 
         };
-        profile.allowlist_pointer_types_ = true;
-        profile.allowed_pointer_types_   = {"Qubit*", "Result*"};
+        adaptor.allowlist_pointer_types_ = true;
+        adaptor.allowed_pointer_types_   = {"Qubit*", "Result*"};
     }
     else
     {
-        throw std::runtime_error("Invalid profile " + name);
+        throw std::runtime_error("Invalid adaptor " + name);
     }
 
-    profile.profile_name_ = name;
+    adaptor.adaptor_name_ = name;
 
-    return profile;
+    return adaptor;
 }
 
 OpcodeSet const& ValidationPassConfiguration::allowedOpcodes() const

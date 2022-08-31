@@ -260,7 +260,7 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
                             {current_location_.name(), current_location_.line(), current_location_.column()});
                         logger_->setLlvmHint(current_location_.llvmHint());
 
-                        logger_->errorOpcodeNotAllowed(code, config_.profileName());
+                        logger_->errorOpcodeNotAllowed(code, config_.adaptorName());
                         ret = false;
                     }
                 }
@@ -314,7 +314,7 @@ bool ValidationPass::satisfyingExternalCallRequirements()
                 }
 
                 // Emitting error
-                logger_->errorExternalCallsNotAllowed(k.first, config_.profileName());
+                logger_->errorExternalCallsNotAllowed(k.first, config_.adaptorName());
                 ret = false;
             }
         }
@@ -349,7 +349,7 @@ bool ValidationPass::satisfyingPointerRequirements()
                 }
 
                 // Emitting error
-                logger_->errorTypeNotAllowed(k.first, config_.profileName());
+                logger_->errorTypeNotAllowed(k.first, config_.adaptorName());
                 ret = false;
             }
         }
@@ -392,7 +392,7 @@ llvm::PreservedAnalyses ValidationPass::run(llvm::Module& module, llvm::ModuleAn
 
     if (raise_exception)
     {
-        throw std::runtime_error("QIR is not valid within the defined profile");
+        throw std::runtime_error("QIR is not valid within the defined adaptor");
     }
 
     return llvm::PreservedAnalyses::all();

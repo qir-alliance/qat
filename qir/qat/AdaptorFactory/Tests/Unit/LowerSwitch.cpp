@@ -76,8 +76,8 @@ then1__2:                                         ; preds = %entry
 continue__3:                                      ; preds = %entry, %then1__2, %then2__2, %then0__4
   call void @d()
   )script");
-    auto                  profile               = std::make_shared<ConfigurableQirAdaptorFactory>();
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    auto                  adaptor               = std::make_shared<ConfigurableQirAdaptorFactory>();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
@@ -87,7 +87,7 @@ continue__3:                                      ; preds = %entry, %then1__2, %
         {"switch i64 %rand.1, label %then1__2 [", "i64 0, label %continue__3", "i64 1, label %then0__4",
          "i64 2, label %then2__2", "]"}));
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_FALSE(ir_manip->hasInstructionSequence(
         {"switch i64 %rand.1, label %then1__2 [", "i64 0, label %continue__3", "i64 1, label %then0__4",

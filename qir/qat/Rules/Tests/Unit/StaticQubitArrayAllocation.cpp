@@ -57,22 +57,22 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationOffsets)
   %array5 = call %Array* @__quantum__rt__qubit_allocate_array(i64 14) ; offset 19
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticQubitArrayAllocation();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(
-        std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
         {"%array1 = inttoptr i64 0 to %Array*", "%array2 = inttoptr i64 2 to %Array*",
@@ -104,22 +104,22 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)
     // LLVM will optimize the two last instructions away even at O0 as they are not used.
     // Consequently the pattern fails.
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticQubitArrayAllocation();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(
-        std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         "%array1 = inttoptr i64 0 to %Array*",
@@ -158,22 +158,22 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationAdvanced)
   call void @__quantum__rt__qubit_release_array(%Array* %array2)
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticQubitArrayAllocation();
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(
-        std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         "%array1 = inttoptr i64 0 to %Array*",

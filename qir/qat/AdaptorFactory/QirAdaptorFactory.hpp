@@ -21,10 +21,10 @@ class QirAdaptorFactory
     using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
 
     /// Setup function that uses a configuration type R to
-    /// configure the profile and/or generator.
+    /// configure the adaptor and/or generator.
     template <typename R> using SetupFunction = std::function<void(R const&, QirAdaptorFactory&, QirAdaptor&)>;
 
-    /// Wrapper function type for invoking the profile setup function
+    /// Wrapper function type for invoking the adaptor setup function
     using SetupFunctionWrapper = std::function<void(QirAdaptorFactory&, QirAdaptor&)>;
 
     /// List of components to be configured.
@@ -50,11 +50,11 @@ class QirAdaptorFactory
     ConfigurationManager& configurationManager();
 
     /// Constant reference to the configuration manager. This property allows read access to the
-    /// configuration manager and is intended for profile generation.
+    /// configuration manager and is intended for adaptor generation.
     ConfigurationManager const& configurationManager() const;
 
-    /// Creates a new profile based on the registered components, optimization level and debug
-    /// requirements. The returned profile can be applied to an IR to transform it in accordance with
+    /// Creates a new adaptor based on the registered components, optimization level and debug
+    /// requirements. The returned adaptor can be applied to an IR to transform it in accordance with
     /// the configurations given.
     std::shared_ptr<QirAdaptor> newQirAdaptor(
         String const&            name,
@@ -65,18 +65,18 @@ class QirAdaptorFactory
 
     //
 
-    /// Registers a new profile component with a given configuration R. The profile component is
-    /// given a name and a setup function which is responsible for configuring the profile in
+    /// Registers a new adaptor component with a given configuration R. The adaptor component is
+    /// given a name and a setup function which is responsible for configuring the adaptor in
     /// accordance with the configuration.
     template <typename R> void registerAdaptorComponent(String const& id, SetupFunction<R> setup);
 
-    /// Replaces a profile component. This function is useful for testing purposes and alteration to
+    /// Replaces a adaptor component. This function is useful for testing purposes and alteration to
     /// the default set of components. For instance, one can setup a production set of components and
     /// then replace a single component to test the effects of this single replacement while keeping
     /// all other components actually as they are in production.
     template <typename R> void replaceAdaptorComponent(String const& id, SetupFunction<R> setup);
 
-    /// Registers a new profile component with a given configuration R. Unlike
+    /// Registers a new adaptor component with a given configuration R. Unlike
     /// `registerAdaptorComponent` this component will not have an ID.
     template <typename R> void registerAnonymousAdaptorComponent(SetupFunction<R> setup);
 
@@ -109,8 +109,8 @@ class QirAdaptorFactory
 
   protected:
     /// Internal function that creates a module pass for QIR transformation. The module pass is
-    /// defined through the profile, the optimization level and whether or not we are in debug mode.
-    void configureGeneratorFromQirAdaptor(QirAdaptor& profile, OptimizationLevel const& optimization_level, bool debug);
+    /// defined through the adaptor, the optimization level and whether or not we are in debug mode.
+    void configureGeneratorFromQirAdaptor(QirAdaptor& adaptor, OptimizationLevel const& optimization_level, bool debug);
 
     /// Internal function that creates a module pass for QIR validation. At the moment, this function
     /// is a placeholder for future functionality.
@@ -121,16 +121,16 @@ class QirAdaptorFactory
 
   private:
     ILoggerPtr           logger_{nullptr};       ///< Logger used to output messages
-    ConfigurationManager configuration_manager_; ///< Holds the configuration that defines the profile
-    Components           components_;            ///< List of registered components that configures the profile
+    ConfigurationManager configuration_manager_; ///< Holds the configuration that defines the adaptor
+    Components           components_;            ///< List of registered components that configures the adaptor
 
-    /// Pointer to the module pass manager the profile will use
+    /// Pointer to the module pass manager the adaptor will use
     llvm::ModulePassManager* module_pass_manager_{nullptr};
 
-    /// Pointer to the module pass manager the profile will use
+    /// Pointer to the module pass manager the adaptor will use
     llvm::FunctionPassManager* function_pass_manager_{nullptr};
 
-    /// Pointer to the pass builder the profile is based on
+    /// Pointer to the pass builder the adaptor is based on
     llvm::PassBuilder* pass_builder_{nullptr};
 
     /// Optimization level used by LLVM
@@ -144,13 +144,13 @@ template <typename R> void QirAdaptorFactory::registerAdaptorComponent(String co
 {
     configuration_manager_.addConfig<R>(id);
 
-    auto setup_wrapper = [setup](QirAdaptorFactory& generator, QirAdaptor& profile)
+    auto setup_wrapper = [setup](QirAdaptorFactory& generator, QirAdaptor& adaptor)
     {
         if (generator.configuration_manager_.isActive<R>())
         {
             auto& config = generator.configuration_manager_.get<R>();
 
-            setup(config, generator, profile);
+            setup(config, generator, adaptor);
         }
     };
 
@@ -159,13 +159,13 @@ template <typename R> void QirAdaptorFactory::registerAdaptorComponent(String co
 
 template <typename R> void QirAdaptorFactory::replaceAdaptorComponent(String const& id, SetupFunction<R> setup)
 {
-    auto setup_wrapper = [setup](QirAdaptorFactory& generator, QirAdaptor& profile)
+    auto setup_wrapper = [setup](QirAdaptorFactory& generator, QirAdaptor& adaptor)
     {
         if (generator.configuration_manager_.isActive<R>())
         {
             auto& config = generator.configuration_manager_.get<R>();
 
-            setup(config, generator, profile);
+            setup(config, generator, adaptor);
         }
     };
 
@@ -188,13 +188,13 @@ template <typename R> void QirAdaptorFactory::registerAnonymousAdaptorComponent(
         throw std::runtime_error("Configuration '" + static_cast<String>(typeid(R).name()) + "' does not exist.");
     }
 
-    auto setup_wrapper = [setup](QirAdaptorFactory& generation, QirAdaptor& profile)
+    auto setup_wrapper = [setup](QirAdaptorFactory& generation, QirAdaptor& adaptor)
     {
         if (generation.configuration_manager_.isActive<R>())
         {
             auto& config = generation.configuration_manager_.get<R>();
 
-            setup(config, generation, profile);
+            setup(config, generation, adaptor);
         }
     };
 

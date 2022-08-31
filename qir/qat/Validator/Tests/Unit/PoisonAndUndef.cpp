@@ -45,12 +45,12 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 class MockLogger : public LogCollection
 {
   public:
-    void errorPoisonNotAllowed(String const& /*profile_name*/, llvm::Value* /*ptr*/) override
+    void errorPoisonNotAllowed(String const& /*adaptor_name*/, llvm::Value* /*ptr*/) override
     {
         raised_poison_not_allowed_ = true;
     }
 
-    void errorUndefNotAllowed(String const& /*profile_name*/, llvm::Value* /*ptr*/) override
+    void errorUndefNotAllowed(String const& /*adaptor_name*/, llvm::Value* /*ptr*/) override
     {
         raised_undef_not_allowed_ = true;
     }
@@ -79,7 +79,7 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
     ConfigurationManager& configuration_manager = generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("generic"));
+        "target.adaptor", ValidationPassConfiguration::fromQirAdaptorName("generic"));
 
     generator->setLogger(logger);
     generator->setupDefaultComponentPipeline();

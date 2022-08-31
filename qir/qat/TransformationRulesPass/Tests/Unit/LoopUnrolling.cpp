@@ -76,9 +76,9 @@ exit__1:                                          ; preds = %header__1
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>();
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>();
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
@@ -86,7 +86,7 @@ exit__1:                                          ; preds = %header__1
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         "%0 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",

@@ -43,14 +43,14 @@ struct DummyConfig
 
 std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor()
 {
-    auto                  profile               = std::make_shared<ConfigurableQirAdaptorFactory>();
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    auto                  adaptor               = std::make_shared<ConfigurableQirAdaptorFactory>();
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
 
-    profile->registerAnonymousAdaptorComponent<DummyConfig>(
-        [](DummyConfig const& /*config*/, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
+    adaptor->registerAnonymousAdaptorComponent<DummyConfig>(
+        [](DummyConfig const& /*config*/, QirAdaptorFactory& generator, QirAdaptor& /*adaptor*/)
         {
             auto& fpm = generator.functionPassManager();
             fpm.addPass(ZExtTransformPass());
@@ -60,7 +60,7 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor()
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
 
-    return profile;
+    return adaptor;
 }
 
 TEST(ZExtTransformPassTests, ReplacementTest)
@@ -74,8 +74,8 @@ TEST(ZExtTransformPassTests, ReplacementTest)
     call void @print_i64(i64 %3)  
   )script");
 
-    auto profile = newQirAdaptor();
-    ir_manip->applyQirAdaptor(profile);
+    auto adaptor = newQirAdaptor();
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%1 = select i1 %0, i64 1, i64 0", "%3 = zext i2 %2 to i64"}));
     EXPECT_FALSE(ir_manip->hasInstructionSequence({"%1 = zext i1 %0 to i64"}));

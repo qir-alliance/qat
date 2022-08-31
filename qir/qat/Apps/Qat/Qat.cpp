@@ -3,9 +3,9 @@
 
 /// QIR Adaptor Tool (QAT)
 ///
-/// QAT is a tool that helps the enduser to easily build and use new profiles. The tool provides a
+/// QAT is a tool that helps the enduser to easily build and use new adaptors. The tool provides a
 /// commandline interface which is configurable through YAML files to validate a specific QIR
-/// profile and generate a QIR profile compatible IR from a generic IR.
+/// adaptor and generate a QIR adaptor compatible IR from a generic IR.
 ///
 /// The tool itself make use of LLVM passes to perform analysis and transformations of the supplied
 /// IR. These transfornations are described through high-level tasks such as
@@ -201,8 +201,8 @@ int main(int argc, char const** argv)
 #endif
         }
 
-        // Configuring QAT according to profile
-        configureQirAdaptor(config.profile(), configuration_manager);
+        // Configuring QAT according to adaptor
+        configureQirAdaptor(config.adaptor(), configuration_manager);
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
@@ -320,13 +320,13 @@ int main(int argc, char const** argv)
         // QirAdaptor manipulation
         //
 
-        // Creating the profile that will be used for generation and validation
+        // Creating the adaptor that will be used for generation and validation
 
-        auto profile = generator->newQirAdaptor(config.profile(), optimization_level, config.isDebugMode());
+        auto adaptor = generator->newQirAdaptor(config.adaptor(), optimization_level, config.isDebugMode());
 
         if (config.shouldGenerate())
         {
-            profile->apply(*module);
+            adaptor->apply(*module);
 
             //  Preventing subsequent routines to run if errors occurred.
             if (logger && (logger->hadErrors() || logger->hadWarnings()))
@@ -373,7 +373,7 @@ int main(int argc, char const** argv)
 
         if (ret == 0 && config.verifyModule())
         {
-            if (!profile->verify(*module))
+            if (!adaptor->verify(*module))
             {
                 std::cerr << "IR is broken." << std::endl;
                 ret = -1;
@@ -382,9 +382,9 @@ int main(int argc, char const** argv)
 
         if (ret == 0 && config.shouldValidate())
         {
-            if (!profile->validate(*module))
+            if (!adaptor->validate(*module))
             {
-                std::cerr << "IR did not validate to the profile constraints." << std::endl;
+                std::cerr << "IR did not validate to the adaptor constraints." << std::endl;
                 ret = -1;
             }
         }

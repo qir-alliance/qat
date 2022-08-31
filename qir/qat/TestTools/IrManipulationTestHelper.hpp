@@ -53,32 +53,32 @@ class IrManipulationTestHelper
     /// ignores instructions in-between the instruction set given.
     bool hasInstructionSequence(Strings const& instructions);
 
-    /// Applies a profile to the module to allow which transforms the IR. This
-    /// allow us to write small profiles to test a single piece of transformation.
+    /// Applies a adaptor to the module to allow which transforms the IR. This
+    /// allow us to write small adaptors to test a single piece of transformation.
     void applyQirAdaptor(
         GeneratorPtr const&      generator,
         OptimizationLevel const& optimization_level = OptimizationLevel::O0,
         bool                     debug              = false);
 
-    /// Validates a profile to the module to allow which transforms the IR. This
-    /// allow us to write small profiles to test a single piece of transformation.
-    bool validateQirAdaptor(GeneratorPtr const& generator, String const& profile_name = "generic", bool debug = false);
+    /// Validates a adaptor to the module to allow which transforms the IR. This
+    /// allow us to write small adaptors to test a single piece of transformation.
+    bool validateQirAdaptor(GeneratorPtr const& generator, String const& adaptor_name = "generic", bool debug = false);
 
     /// Tests whether a given set of errors (LLVM hints) are present in the validation errors
-    /// for a specific profile. This method only checks if errors are present but does not fail if
+    /// for a specific adaptor. This method only checks if errors are present but does not fail if
     /// there are more errors than requested through the API.
     bool containsValidationErrors(
         GeneratorPtr const& generator,
-        String const&       profile_name,
+        String const&       adaptor_name,
         Strings const&      errors,
         bool                debug = false) const;
 
     /// Tests whether a given set of errors (LLVM hints) are present in the validation errors
-    /// for a specific profile. In contrast to containsValidationErrors, this function expect an exact
+    /// for a specific adaptor. In contrast to containsValidationErrors, this function expect an exact
     /// match in the actual and expected errors.
     bool containsExactValidationErrors(
         GeneratorPtr const& generator,
-        String const&       profile_name,
+        String const&       adaptor_name,
         Strings const&      errors,
         bool                debug = false) const;
 

@@ -11,28 +11,28 @@ namespace microsoft::quantum
 
 void configureGenericQirAdaptor(ConfigurationManager& configuration_manager)
 {
-    // Setting profile validation configuration
+    // Setting adaptor validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("generic"));
+        "target.adaptor", ValidationPassConfiguration::fromQirAdaptorName("generic"));
 
-    // The generic profile does not alter the default settings for transformation
+    // The generic adaptor does not alter the default settings for transformation
 }
 
 void configureDefaultQirAdaptor(ConfigurationManager& configuration_manager)
 {
-    // Setting profile validation configuration
+    // Setting adaptor validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("default"));
+        "target.adaptor", ValidationPassConfiguration::fromQirAdaptorName("default"));
 
-    // The default profile does not alter the default settings for transformation
+    // The default adaptor does not alter the default settings for transformation
 }
 
 void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager)
 {
 
-    // Setting profile validation configuration
+    // Setting adaptor validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("provider_4bf9"));
+        "target.adaptor", ValidationPassConfiguration::fromQirAdaptorName("provider_4bf9"));
 
     // Transformation
     configuration_manager.disableSectionById("grouping");
@@ -66,7 +66,7 @@ void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager
     configuration_manager.updateParameter("allow-peeling", true);
     configuration_manager.updateParameter("allow-runtime", true);
     configuration_manager.updateParameter("allow-upper-bound", true);
-    configuration_manager.updateParameter("allow-profile-based-peeling", true);
+    configuration_manager.updateParameter("allow-adaptor-based-peeling", true);
     configuration_manager.updateParameter<uint64_t>("full-unroll-count", 1024);
     configuration_manager.updateParameter<int32_t>("unroll-opt-level", 3);
     configuration_manager.updateParameter("only-when-forced", false);
@@ -108,9 +108,9 @@ void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager
 
 void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager)
 {
-    // Setting profile validation configuration
+    // Setting adaptor validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("provider_7ee0"));
+        "target.adaptor", ValidationPassConfiguration::fromQirAdaptorName("provider_7ee0"));
 
     // Transform
     configuration_manager.disableSectionById("grouping");
@@ -144,7 +144,7 @@ void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager
     configuration_manager.updateParameter("allow-peeling", true);
     configuration_manager.updateParameter("allow-runtime", true);
     configuration_manager.updateParameter("allow-upper-bound", true);
-    configuration_manager.updateParameter("allow-profile-based-peeling", true);
+    configuration_manager.updateParameter("allow-adaptor-based-peeling", true);
     configuration_manager.updateParameter<uint64_t>("full-unroll-count", 1024);
     configuration_manager.updateParameter<int32_t>("unroll-opt-level", 3);
     configuration_manager.updateParameter("only-when-forced", false);
@@ -186,9 +186,9 @@ void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager
 
 void configureProviderb340QirAdaptor(ConfigurationManager& configuration_manager)
 {
-    // Setting profile validation configuration
+    // Setting adaptor validation configuration
     configuration_manager.addConfig<ValidationPassConfiguration>(
-        "target.profile", ValidationPassConfiguration::fromQirAdaptorName("provider_b340"));
+        "target.adaptor", ValidationPassConfiguration::fromQirAdaptorName("provider_b340"));
 
     // Transformation
     configuration_manager.disableSectionById("grouping");
@@ -222,7 +222,7 @@ void configureProviderb340QirAdaptor(ConfigurationManager& configuration_manager
     configuration_manager.updateParameter("allow-peeling", true);
     configuration_manager.updateParameter("allow-runtime", true);
     configuration_manager.updateParameter("allow-upper-bound", true);
-    configuration_manager.updateParameter("allow-profile-based-peeling", true);
+    configuration_manager.updateParameter("allow-adaptor-based-peeling", true);
     configuration_manager.updateParameter<uint64_t>("full-unroll-count", 1024);
     configuration_manager.updateParameter<int32_t>("unroll-opt-level", 3);
     configuration_manager.updateParameter("only-when-forced", false);
@@ -286,7 +286,7 @@ void configureQirAdaptor(String const& name, ConfigurationManager& configuration
     }
     else
     {
-        throw std::runtime_error("Invalid profile " + name);
+        throw std::runtime_error("Invalid adaptor " + name);
     }
 }
 

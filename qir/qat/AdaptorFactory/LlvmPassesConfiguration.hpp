@@ -14,10 +14,10 @@ class LlvmPassesConfiguration
   public:
     void setup(ConfigurationManager& config);
 
-    /// Whether or not the LLVM AlwaysInline pass should be added to the profile.
+    /// Whether or not the LLVM AlwaysInline pass should be added to the adaptor.
     bool alwaysInline() const;
 
-    /// Whether or not the LLVM LoopUnroll pass should be added to the profile
+    /// Whether or not the LLVM LoopUnroll pass should be added to the adaptor
     bool unrollLoops() const;
 
     /// Parameter that defines the maximum number of lines of code allowed for inlining.

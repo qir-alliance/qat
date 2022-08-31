@@ -44,19 +44,19 @@ struct DummyConfig
 
 std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor()
 {
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(ConfigurableQirAdaptorFactory::SetupMode::DoNothing);
-    ConfigurationManager& configuration_manager = profile->configurationManager();
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(ConfigurableQirAdaptorFactory::SetupMode::DoNothing);
+    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
 
-    profile->registerAnonymousAdaptorComponent<DummyConfig>(
-        [](DummyConfig const& /*config*/, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
+    adaptor->registerAnonymousAdaptorComponent<DummyConfig>(
+        [](DummyConfig const& /*config*/, QirAdaptorFactory& generator, QirAdaptor& /*adaptor*/)
         {
             auto& mpm = generator.modulePassManager();
             mpm.addPass(DivisionByZeroPass());
         });
 
-    return profile;
+    return adaptor;
 }
 
 TEST(DivideByZeroTests, InjectionTest)
@@ -72,9 +72,9 @@ TEST(DivideByZeroTests, InjectionTest)
   call void @print_i64(i64 %2)
   )script");
 
-    auto profile = newQirAdaptor();
+    auto adaptor = newQirAdaptor();
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
         "br i1 %2, label %if_denominator_is_zero, label %after_zero_check",
@@ -101,9 +101,9 @@ TEST(DivideByZeroTests, ExpectDivisionByZero)
   %2 = sdiv i64 %0, %1
   )script");
 
-    auto profile = newQirAdaptor();
+    auto adaptor = newQirAdaptor();
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     auto program = ir_manip->toProgram();
 
@@ -133,9 +133,9 @@ TEST(DivideByZeroTests, ExpectNoDivisionByZeroNoUpdate)
   %2 = sdiv i64 %0, %1
   )script");
 
-    auto profile = newQirAdaptor();
+    auto adaptor = newQirAdaptor();
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     auto program = ir_manip->toProgram();
 
@@ -165,9 +165,9 @@ TEST(DivideByZeroTests, ExpectNoDivisionByZeroNoReport)
   %2 = sdiv i64 %0, %1
   )script");
 
-    auto profile = newQirAdaptor();
+    auto adaptor = newQirAdaptor();
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     auto program = ir_manip->toProgram();
 

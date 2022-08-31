@@ -44,7 +44,7 @@ TEST(RuleSetTestSuite, RemovingFunctionCall)
   call void @__quantum__rt__qubit_release(%Qubit* %qubit)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -52,9 +52,9 @@ TEST(RuleSetTestSuite, RemovingFunctionCall)
         factory.removeFunctionCall("__quantum__qis__h__body");
     };
 
-    auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
 
-    ir_manip->applyQirAdaptor(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
         {"%qubit = call %Qubit* @__quantum__rt__qubit_allocate()",
