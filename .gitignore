@@ -364,4 +364,4 @@ bazel-*/
 /.cache/
 
 .bazelrc.user
-.bazelrc.configure
+.bazelrc.configure.orig
