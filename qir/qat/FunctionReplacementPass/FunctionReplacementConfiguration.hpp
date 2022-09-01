@@ -19,7 +19,7 @@ class FunctionReplacementConfiguration
     /// ConfigurationManager documentation for more details on how the setup process is implemented.
     void setup(ConfigurationManager& config)
     {
-        config.setSectionName("Weak linking", "");
+        config.setSectionName("Replacement linking", "");
 
         config.addParameter(injected_annotations_, "replace-functions", "Functions to be replaced.");
         config.addParameter(should_remove_call_attributes_, "remove-call-attributes", "Discard all call attributes");

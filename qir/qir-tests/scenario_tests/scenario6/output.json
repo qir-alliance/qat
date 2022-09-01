@@ -1,0 +1,5 @@
+{
+  "stderrContains": "",
+  "stdoutContains": "call void @__hello_qubit(%Qubit* %q1, i32 2)",
+  "expectFail": false
+}

@@ -27,10 +27,12 @@ FunctionReplacementAnalysisPass::Result FunctionReplacementAnalysisPass::run(
     // Registering replacements
     for (auto& function : module)
     {
+        /*
         if (function.isDeclaration())
         {
             continue;
         }
+        */
 
         if (function.hasFnAttribute("replaceWith"))
         {

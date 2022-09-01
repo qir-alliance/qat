@@ -21,12 +21,19 @@ def run_scenario(name, profile, directory):
     if os.path.isfile(os.path.join(directory, "output.ll")):
         output_file = os.path.join(directory, "output.ll")
 
-    output = {"stdoutContains": "", "stderrContains": "", "expectFail": False}
+    output = {
+        "stdoutContains": "",
+        "stderrContains": "",
+        "expectFail": False,
+        "args": [],
+    }
 
     if os.path.isfile(os.path.join(directory, "output.json")):
         with open(os.path.join(directory, "output.json"), "r") as fb:
             output = json.loads(fb.read())
 
+    if "args" in output:
+        args = output["args"]
     cmd = [qat_binary, "-S", "--apply"] + args + files
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
@@ -37,10 +44,19 @@ def run_scenario(name, profile, directory):
     if output["expectFail"]:
         ret = not ret
 
-    if not output["stdoutContains"] in out:
-        ret = False
-    if not output["stderrContains"] in errs:
-        ret = False
+    stdout_contains = output["stdoutContains"]
+    if isinstance(stdout_contains, str):
+        stdout_contains = [stdout_contains]
+    for x in stdout_contains:
+        if x not in out:
+            ret = False
+
+    stderr_contains = output["stderrContains"]
+    if isinstance(stderr_contains, str):
+        stderr_contains = [stderr_contains]
+    for x in stderr_contains:
+        if x not in errs:
+            ret = False
 
     compare_to = None
     if output_file:
@@ -76,10 +92,10 @@ def run_scenario(name, profile, directory):
                 print("    | {}".format(line))
 
         if not output["stdoutContains"] in out:
-            print("\nExpected '{}' in stdout".format(output["stdoutContains"]))
+            print("\nExpected '{}' in stdout".format("', '".join(stdout_contains)))
 
         if not output["stderrContains"] in errs:
-            print("\nExpected '{}' in stderr".format(output["stderrContains"]))
+            print("\nExpected '{}' in stderr".format("', '".join(stderr_contains)))
 
     return ret
 
