@@ -655,6 +655,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-locationresolver">LocationResolver</a></strong></td>
 </tr>
 <tr>
+<td>using std::function&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a>(String const  &amp;)&gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-locationfromnameresolver">LocationFromNameResolver</a></strong></td>
+</tr>
+<tr>
 <td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-iloggerptr">ILoggerPtr</a></strong></td>
 </tr>
@@ -703,7 +707,15 @@
 </tr>
 <tr>
 <td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationfromfunctionname">setLocationFromFunctionName</a></strong>(String const &amp; name)<br>Sets the logger position based on function name.</td>
+</tr>
+<tr>
+<td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationresolver">setLocationResolver</a></strong>(LocationResolver const &amp; r)<br>Sets a resolver which that translates a LLVM value into a position in the source.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationfromnameresolver">setLocationFromNameResolver</a></strong>(LocationFromNameResolver const &amp; r)<br>Sets a resolver which that translates function name into a position in the source.</td>
 </tr>
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
@@ -720,6 +732,10 @@
 <tr>
 <td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errorwithlocation">errorWithLocation</a></strong>(String const &amp; message, llvm::Value * ptr =nullptr)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-warningwithlocation">warningWithLocation</a></strong>(String const &amp; message, llvm::Value * ptr =nullptr)</td>
 </tr>
 <tr>
 <td>virtual void</td>
@@ -776,6 +792,18 @@
 <tr>
 <td>virtual void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errorundefnotallowed">errorUndefNotAllowed</a></strong>(String const &amp; profile_name, llvm::Value * ptr =nullptr)</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errorexpectedstringvalueforattr">errorExpectedStringValueForAttr</a></strong>(String const &amp; function_name, String const &amp; attr_name)</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-warningweaklinkreplacementnotpossible">warningWeakLinkReplacementNotPossible</a></strong>(String const &amp; function_name, String const &amp; replacement)</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errorreplacementsignaturemismatch">errorReplacementSignatureMismatch</a></strong>(String const &amp; function_name, String const &amp; signature1, String const &amp; signature2)</td>
 </tr>
 </tbody>
 </table>
@@ -872,7 +900,7 @@
 <p>Enabling dumping collection to a file. </p>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-dump">microsoft::quantum::ILogger::dump</a></p>
 <hr />
-<p>Updated on 25 August 2022 at 12:24:55 UTC</p></div>
+<p>Updated on  5 September 2022 at 06:41:27 UTC</p></div>
 </div>
           </div>
         </main>

@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d50/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_function_annotator_pass_8hpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      microsoft::quantum::@50 - QAT Documentation
+      FunctionReplacementPass/FunctionAnnotatorPass.hpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -220,7 +220,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../"
+                  href="../../Namespaces/"
                   >Namespaces</a
                 >
                 <a
@@ -230,7 +230,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../../Files/"
+                  href="../"
                   >Files</a
                 >
                 <a
@@ -403,7 +403,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../"
+                href="../../Namespaces/"
                 >Namespaces</a
               >
               <a
@@ -413,7 +413,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../../Files/"
+                href="../"
                 >Files</a
               >
               <a
@@ -553,14 +553,98 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> microsoft::quantum::@50 </span>
+        <span class="text-center"> FunctionReplacementPass/FunctionAnnotatorPass.hpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantum50">microsoft::quantum::@50</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="functionreplacementpassfunctionannotatorpasshpp">FunctionReplacementPass/FunctionAnnotatorPass.hpp</h1>
+<h2 id="namespaces">Namespaces</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="classes">Classes</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_annotator_pass/">microsoft::quantum::FunctionAnnotatorPass</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="source-code">Source code</h2>
+<pre><code class="language-cpp">#pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include &quot;qir/qat/FunctionReplacementPass/FunctionReplacementConfiguration.hpp&quot;
+#include &quot;qir/qat/Llvm/Llvm.hpp&quot;
+#include &quot;qir/qat/Logging/ILogger.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
+
+#include &lt;functional&gt;
+#include &lt;unordered_map&gt;
+#include &lt;unordered_set&gt;
+#include &lt;vector&gt;
+
+namespace microsoft::quantum
+{
+
+class FunctionAnnotatorPass : public llvm::PassInfoMixin&lt;FunctionAnnotatorPass&gt;
+{
+  public:
+    using Instruction   = llvm::Instruction;
+    using Value         = llvm::Value;
+    using ILoggerPtr    = ILogger::ILoggerPtr;
+    using BlockSet      = std::unordered_set&lt;llvm::BasicBlock*&gt;;
+    using SharedBuilder = std::shared_ptr&lt;llvm::IRBuilder&lt;&gt;&gt;;
+    // Construction and destruction configuration.
+    //
+
+    explicit FunctionAnnotatorPass(FunctionReplacementConfiguration const&amp; cfg)
+      : config_{cfg}
+    {
+    }
+
+    FunctionAnnotatorPass(FunctionAnnotatorPass const&amp;) = delete;
+
+    FunctionAnnotatorPass(FunctionAnnotatorPass&amp;&amp;) = default;
+
+    ~FunctionAnnotatorPass() = default;
+
+    llvm::PreservedAnalyses run(llvm::Module&amp; module, llvm::ModuleAnalysisManager&amp; mam);
+
+    static bool isRequired();
+
+    void setLogger(ILoggerPtr logger);
+
+  private:
+    FunctionReplacementConfiguration config_{};
+    ILoggerPtr                       logger_{nullptr};
+};
+
+} // namespace microsoft::quantum
+</code></pre>
 <hr />
-<p>Updated on 25 August 2022 at 12:24:55 UTC</p></div>
+<p>Updated on  5 September 2022 at 06:41:27 UTC</p></div>
 </div>
           </div>
         </main>

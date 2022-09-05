@@ -595,8 +595,18 @@ ILogger::~ILogger()
     location_resolver_ = nullptr;
 }
 
+void ILogger::setLocationFromFunctionName(String const&amp; name)
+{
+    if (location_from_name_resolver_)
+    {
+        auto loc = location_from_name_resolver_(name);
+        setLocation(loc);
+    }
+}
+
 void ILogger::setLocationFromValue(llvm::Value const* value)
 {
+
     if (location_resolver_)
     {
         auto loc = location_resolver_(value);
@@ -607,6 +617,11 @@ void ILogger::setLocationFromValue(llvm::Value const* value)
 void ILogger::setLocationResolver(LocationResolver const&amp; r)
 {
     location_resolver_ = r;
+}
+
+void ILogger::setLocationFromNameResolver(LocationFromNameResolver const&amp; r)
+{
+    location_from_name_resolver_ = r;
 }
 
 ILogger::Messages const&amp; ILogger::messages() const
@@ -645,6 +660,15 @@ void ILogger::errorWithLocation(String const&amp; message, llvm::Value* ptr)
         setLocationFromValue(ptr);
     }
     error(message);
+}
+
+void ILogger::warningWithLocation(String const&amp; message, llvm::Value* ptr)
+{
+    if (ptr)
+    {
+        setLocationFromValue(ptr);
+    }
+    warning(message);
 }
 
 void ILogger::errorCouldNotDeleteNode(llvm::Value* ptr)
@@ -727,6 +751,26 @@ void ILogger::errorUndefNotAllowed(String const&amp; profile_name, llvm::Value* 
     errorWithLocation(&quot;Undef value is not allowed for this profile (&quot; + profile_name + &quot;).&quot;, ptr);
 }
 
+void ILogger::errorExpectedStringValueForAttr(String const&amp; function_name, String const&amp; attr_name)
+{
+    setLocationFromFunctionName(function_name);
+    error(&quot;Expected string value for attribute '&quot; + attr_name + &quot;' for function &quot; + function_name);
+}
+
+void ILogger::warningWeakLinkReplacementNotPossible(String const&amp; function_name, String const&amp; replacement)
+{
+    setLocationFromFunctionName(function_name);
+    warning(&quot;Could not find replacement &quot; + replacement + &quot; for function &quot; + function_name);
+}
+void ILogger::errorReplacementSignatureMismatch(
+    String const&amp; function_name,
+    String const&amp; signature1,
+    String const&amp; signature2)
+{
+    setLocationFromFunctionName(function_name);
+    error(&quot;Replacement signature mismatch: &quot; + signature1 + &quot; differs from &quot; + signature2);
+}
+
 void ILogger::setHasErrors(bool value)
 {
     had_errors_ = value;
@@ -740,7 +784,7 @@ void ILogger::setHasWarnings(bool value)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 25 August 2022 at 12:24:56 UTC</p></div>
+<p>Updated on  5 September 2022 at 06:41:27 UTC</p></div>
 </div>
           </div>
         </main>

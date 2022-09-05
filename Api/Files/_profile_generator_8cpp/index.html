@@ -582,6 +582,9 @@
 #include &quot;qir/qat/Generators/ProfileGenerator.hpp&quot;
 
 #include &quot;qir/qat/DeferMeasurementPass/DeferMeasurementPass.hpp&quot;
+#include &quot;qir/qat/FunctionReplacementPass/FunctionAnnotatorPass.hpp&quot;
+#include &quot;qir/qat/FunctionReplacementPass/FunctionReplacementAnalysisPass.hpp&quot;
+#include &quot;qir/qat/FunctionReplacementPass/FunctionReplacementPass.hpp&quot;
 #include &quot;qir/qat/Generators/LlvmPassesConfiguration.hpp&quot;
 #include &quot;qir/qat/Generators/PostTransformConfig.hpp&quot;
 #include &quot;qir/qat/GroupingPass/GroupingAnalysisPass.hpp&quot;
@@ -723,6 +726,21 @@ void ProfileGenerator::setupDefaultComponentPipeline()
 {
     using namespace llvm;
     ILoggerPtr logger = logger_;
+
+    registerProfileComponent&lt;FunctionReplacementConfiguration&gt;(
+        &quot;weak-linking&quot;,
+        [logger](FunctionReplacementConfiguration const&amp; cfg, ProfileGenerator&amp; generator, Profile&amp; profile)
+        {
+            auto&amp; mam = profile.moduleAnalysisManager();
+            mam.registerPass([&amp;] { return FunctionReplacementAnalysisPass(cfg, logger); });
+            auto&amp; ret = generator.modulePassManager();
+
+            ret.addPass(FunctionAnnotatorPass(cfg));
+
+            auto pass = FunctionReplacementPass(cfg);
+            pass.setLogger(logger);
+            ret.addPass(std::move(pass));
+        });
 
     registerProfileComponent&lt;LlvmPassesConfiguration&gt;(
         &quot;llvm-optimization&quot;,
@@ -917,7 +935,7 @@ void ProfileGenerator::setLogger(ILoggerPtr const&amp; logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 25 August 2022 at 12:24:56 UTC</p></div>
+<p>Updated on  5 September 2022 at 06:41:27 UTC</p></div>
 </div>
           </div>
         </main>

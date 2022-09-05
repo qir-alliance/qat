@@ -611,7 +611,8 @@ class RemoveDisallowedAttributesPass : public llvm::PassInfoMixin&lt;RemoveDisal
     RemoveDisallowedAttributesPass()
       : allowed_attrs_{
             static_cast&lt;String&gt;(&quot;EntryPoint&quot;), static_cast&lt;String&gt;(&quot;InteropFriendly&quot;),
-            static_cast&lt;String&gt;(&quot;requiredQubits&quot;), static_cast&lt;String&gt;(&quot;requiredResults&quot;)
+            static_cast&lt;String&gt;(&quot;requiredQubits&quot;), static_cast&lt;String&gt;(&quot;requiredResults&quot;),
+            static_cast&lt;String&gt;(&quot;replaceWith&quot;)
             /*
             static_cast&lt;String&gt;(&quot;nofree&quot;)
             static_cast&lt;String&gt;(&quot;nosync&quot;)
@@ -706,7 +707,7 @@ class RemoveDisallowedAttributesPass : public llvm::PassInfoMixin&lt;RemoveDisal
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 25 August 2022 at 12:24:56 UTC</p></div>
+<p>Updated on  5 September 2022 at 06:41:27 UTC</p></div>
 </div>
           </div>
         </main>

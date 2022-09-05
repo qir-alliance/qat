@@ -598,6 +598,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_instruction_location_table/#using-positions">Positions</a></strong></td>
 </tr>
 <tr>
+<td>using std::unordered_map&lt; String, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">Position</a> &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_instruction_location_table/#using-functionpositions">FunctionPositions</a></strong></td>
+</tr>
+<tr>
 <td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_instruction_location_table/">InstructionLocationTable</a> &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_instruction_location_table/#using-instructionlocationtableptr">InstructionLocationTablePtr</a></strong></td>
 </tr>
@@ -619,6 +623,10 @@
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">Position</a></td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_instruction_location_table/#function-getposition">getPosition</a></strong>(Value const * value) const<br>Gets the position of a LLVM value.</td>
+</tr>
+<tr>
+<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">Position</a></td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_instruction_location_table/#function-getpositionfromfunctionname">getPositionFromFunctionName</a></strong>(String const &amp; name) const<br>Gets the position from a function name.</td>
 </tr>
 <tr>
 <td>void</td>
@@ -671,6 +679,9 @@
 <h3 id="using-positions">using Positions</h3>
 <pre><code class="language-cpp">using microsoft::quantum::InstructionLocationTable::Positions =  std::unordered_map&lt;Value const*, Position&gt;;
 </code></pre>
+<h3 id="using-functionpositions">using FunctionPositions</h3>
+<pre><code class="language-cpp">using microsoft::quantum::InstructionLocationTable::FunctionPositions =  std::unordered_map&lt;String, Position&gt;;
+</code></pre>
 <h3 id="using-instructionlocationtableptr">using InstructionLocationTablePtr</h3>
 <pre><code class="language-cpp">using microsoft::quantum::InstructionLocationTable::InstructionLocationTablePtr =  std::shared_ptr&lt;InstructionLocationTable&gt;;
 </code></pre>
@@ -685,6 +696,12 @@
 ) const
 </code></pre>
 <p>Gets the position of a LLVM value. </p>
+<h3 id="function-getpositionfromfunctionname">function getPositionFromFunctionName</h3>
+<pre><code class="language-cpp">Position getPositionFromFunctionName(
+    String const &amp; name
+) const
+</code></pre>
+<p>Gets the position from a function name. </p>
 <h3 id="function-registermodule">function registerModule</h3>
 <pre><code class="language-cpp">void registerModule(
     StringRef const &amp; filename,
@@ -712,7 +729,7 @@
 ) override
 </code></pre>
 <hr />
-<p>Updated on 25 August 2022 at 12:24:55 UTC</p></div>
+<p>Updated on  5 September 2022 at 06:41:27 UTC</p></div>
 </div>
           </div>
         </main>

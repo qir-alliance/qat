@@ -603,6 +603,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-locationresolver">LocationResolver</a></strong></td>
 </tr>
 <tr>
+<td>using std::function&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a>(String const  &amp;)&gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-locationfromnameresolver">LocationFromNameResolver</a></strong></td>
+</tr>
+<tr>
 <td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/">ILogger</a> &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#using-iloggerptr">ILoggerPtr</a></strong></td>
 </tr>
@@ -691,7 +695,15 @@
 </tr>
 <tr>
 <td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationfromfunctionname">setLocationFromFunctionName</a></strong>(String const &amp; name)<br>Sets the logger position based on function name.</td>
+</tr>
+<tr>
+<td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationresolver">setLocationResolver</a></strong>(LocationResolver const &amp; r)<br>Sets a resolver which that translates a LLVM value into a position in the source.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-setlocationfromnameresolver">setLocationFromNameResolver</a></strong>(LocationFromNameResolver const &amp; r)<br>Sets a resolver which that translates function name into a position in the source.</td>
 </tr>
 <tr>
 <td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/">SourceLocation</a></td>
@@ -708,6 +720,10 @@
 <tr>
 <td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errorwithlocation">errorWithLocation</a></strong>(String const &amp; message, llvm::Value * ptr =nullptr)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-warningwithlocation">warningWithLocation</a></strong>(String const &amp; message, llvm::Value * ptr =nullptr)</td>
 </tr>
 <tr>
 <td>virtual void</td>
@@ -764,6 +780,18 @@
 <tr>
 <td>virtual void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errorundefnotallowed">errorUndefNotAllowed</a></strong>(String const &amp; profile_name, llvm::Value * ptr =nullptr)</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errorexpectedstringvalueforattr">errorExpectedStringValueForAttr</a></strong>(String const &amp; function_name, String const &amp; attr_name)</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-warningweaklinkreplacementnotpossible">warningWeakLinkReplacementNotPossible</a></strong>(String const &amp; function_name, String const &amp; replacement)</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/#function-errorreplacementsignaturemismatch">errorReplacementSignatureMismatch</a></strong>(String const &amp; function_name, String const &amp; signature1, String const &amp; signature2)</td>
 </tr>
 </tbody>
 </table>
@@ -834,6 +862,9 @@
 </code></pre>
 <h3 id="using-locationresolver">using LocationResolver</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ILogger::LocationResolver =  std::function&lt;SourceLocation(Value const*)&gt;;
+</code></pre>
+<h3 id="using-locationfromnameresolver">using LocationFromNameResolver</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ILogger::LocationFromNameResolver =  std::function&lt;SourceLocation(String const&amp;)&gt;;
 </code></pre>
 <h3 id="using-iloggerptr">using ILoggerPtr</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ILogger::ILoggerPtr =  std::shared_ptr&lt;ILogger&gt;;
@@ -941,12 +972,24 @@
 )
 </code></pre>
 <p>Sets the logger position based on a LLVM value. </p>
+<h3 id="function-setlocationfromfunctionname">function setLocationFromFunctionName</h3>
+<pre><code class="language-cpp">void setLocationFromFunctionName(
+    String const &amp; name
+)
+</code></pre>
+<p>Sets the logger position based on function name. </p>
 <h3 id="function-setlocationresolver">function setLocationResolver</h3>
 <pre><code class="language-cpp">void setLocationResolver(
     LocationResolver const &amp; r
 )
 </code></pre>
 <p>Sets a resolver which that translates a LLVM value into a position in the source. </p>
+<h3 id="function-setlocationfromnameresolver">function setLocationFromNameResolver</h3>
+<pre><code class="language-cpp">void setLocationFromNameResolver(
+    LocationFromNameResolver const &amp; r
+)
+</code></pre>
+<p>Sets a resolver which that translates function name into a position in the source. </p>
 <h3 id="function-resolvelocation">function resolveLocation</h3>
 <pre><code class="language-cpp">SourceLocation resolveLocation(
     llvm::Value const * value
@@ -963,6 +1006,12 @@
 <p>Whether or not warnings were logged. </p>
 <h3 id="function-errorwithlocation">function errorWithLocation</h3>
 <pre><code class="language-cpp">void errorWithLocation(
+    String const &amp; message,
+    llvm::Value * ptr =nullptr
+)
+</code></pre>
+<h3 id="function-warningwithlocation">function warningWithLocation</h3>
+<pre><code class="language-cpp">void warningWithLocation(
     String const &amp; message,
     llvm::Value * ptr =nullptr
 )
@@ -1049,6 +1098,25 @@
     llvm::Value * ptr =nullptr
 )
 </code></pre>
+<h3 id="function-errorexpectedstringvalueforattr">function errorExpectedStringValueForAttr</h3>
+<pre><code class="language-cpp">virtual void errorExpectedStringValueForAttr(
+    String const &amp; function_name,
+    String const &amp; attr_name
+)
+</code></pre>
+<h3 id="function-warningweaklinkreplacementnotpossible">function warningWeakLinkReplacementNotPossible</h3>
+<pre><code class="language-cpp">virtual void warningWeakLinkReplacementNotPossible(
+    String const &amp; function_name,
+    String const &amp; replacement
+)
+</code></pre>
+<h3 id="function-errorreplacementsignaturemismatch">function errorReplacementSignatureMismatch</h3>
+<pre><code class="language-cpp">virtual void errorReplacementSignatureMismatch(
+    String const &amp; function_name,
+    String const &amp; signature1,
+    String const &amp; signature2
+)
+</code></pre>
 <h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
 <h3 id="function-sethaserrors">function setHasErrors</h3>
 <pre><code class="language-cpp">void setHasErrors(
@@ -1061,7 +1129,7 @@
 )
 </code></pre>
 <hr />
-<p>Updated on 25 August 2022 at 12:24:55 UTC</p></div>
+<p>Updated on  5 September 2022 at 06:41:27 UTC</p></div>
 </div>
           </div>
         </main>
