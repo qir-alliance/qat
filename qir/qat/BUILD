@@ -242,6 +242,19 @@ ms_cc_library(
 )
 
 ms_cc_library(
+    name = "FunctionReplacementPass",
+    srcs = glob(["FunctionReplacementPass/*.cpp"]),
+    hdrs = glob(["FunctionReplacementPass/*.hpp"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//qir/qat:Commandline",
+        "//qir/qat:Llvm",
+        "//qir/qat:Logging",
+        "//qir/qat:QatTypes",
+    ],
+)
+
+ms_cc_library(
     name = "RemoveDisallowedAttributesPass",
     srcs = glob(["RemoveDisallowedAttributesPass/*.cpp"]),
     hdrs = glob(["RemoveDisallowedAttributesPass/*.hpp"]),
@@ -348,6 +361,7 @@ ms_cc_library(
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
         "//qir/qat:DeferMeasurementPass",
+        "//qir/qat:FunctionReplacementPass",
         "//qir/qat:GroupingPass",
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
@@ -391,6 +405,7 @@ ms_cc_library(
     deps = [
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
+        "//qir/qat:FunctionReplacementPass",
         "//qir/qat:Generators",
         "//qir/qat:GroupingPass",
         "//qir/qat:Llvm",
@@ -422,6 +437,7 @@ ms_cc_binary(
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
         "//qir/qat:DeferMeasurementPass",
+        "//qir/qat:FunctionReplacementPass",
         "//qir/qat:Generators",
         "//qir/qat:GroupingPass",
         "//qir/qat:Llvm",

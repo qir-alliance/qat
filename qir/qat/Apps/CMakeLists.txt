@@ -17,7 +17,8 @@ target_link_libraries(qat
     PostTransformValidation 
     PreTransformTrimming 
     ZExtTransformPass 
-    DeferMeasurementPass 
+    DeferMeasurementPass
+    FunctionReplacementPass
     Version
     yaml-cpp)
 

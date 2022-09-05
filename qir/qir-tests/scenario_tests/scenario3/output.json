@@ -1,0 +1,5 @@
+{
+  "stderrContains": "Could not find replacement __hello_qubit for function Microsoft__Quantum__Intrinsic__CNOT__body",
+  "stdoutContains": "",
+  "expectFail": false
+}

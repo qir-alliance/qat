@@ -1,0 +1,10 @@
+{
+  "stderrContains": "",
+  "stdoutContains": [
+    "call void @bar(%Qubit* %q1)",
+    "call void @bar(%Qubit* %q2)",
+    "call void @foo(%Qubit* %q1)"
+  ],
+  "args": ["--replace-functions", "Microsoft__Quantum__Intrinsic__H__body=bar"],
+  "expectFail": false
+}
