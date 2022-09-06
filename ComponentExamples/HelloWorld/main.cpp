@@ -31,6 +31,6 @@ class HelloWorldConfig
 extern "C" void loadComponent(QirAdaptorFactory* generator)
 {
     generator->registerAdaptorComponent<HelloWorldConfig>(
-        "hello-world", [](HelloWorldConfig const& cfg, QirAdaptorFactory& /*ptr*/, QirAdaptor& /*profile*/)
+        "hello-world", [](HelloWorldConfig const& cfg, QirAdaptor& /*profile*/)
         { std::cout << "Message: " << cfg.message() << std::endl; });
 }

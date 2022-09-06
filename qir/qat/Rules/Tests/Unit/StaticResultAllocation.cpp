@@ -55,11 +55,11 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
         factory.useStaticResultAllocation();
     };
 
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
-        std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        configuration_manager, std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 

@@ -62,7 +62,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 // Single allocation with action and then release
 TEST(TransformationRulesPass, TeleportChain)
 {
-    auto ir_manip = newIrManip(R"script(
+    auto                 ir_manip = newIrManip(R"script(
   %leftMessage.i = call %Qubit* @__quantum__rt__qubit_allocate()
   %rightMessage.i = call %Qubit* @__quantum__rt__qubit_allocate()
   %leftPreshared.i = call %Array* @__quantum__rt__qubit_allocate_array(i64 2)
@@ -173,10 +173,9 @@ TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit: 
   call void @__quantum__rt__result_update_reference_count(%Result* %result.i1.i, i32 -1)
   call void @__quantum__rt__string_update_reference_count(%String* %38, i32 -1)
   )script");
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>();
-
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());

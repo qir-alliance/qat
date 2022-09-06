@@ -9,13 +9,15 @@ namespace microsoft::quantum
 {
 
 QirAdaptor::QirAdaptor(
-    String const&        name,
-    ILoggerPtr const&    logger,
-    bool                 debug,
-    llvm::TargetMachine* target_machine,
-    AllocationManagerPtr qubit_allocation_manager,
-    AllocationManagerPtr result_allocation_manager)
+    ConfigurationManager& configuration_manager,
+    String const&         name,
+    ILoggerPtr const&     logger,
+    bool                  debug,
+    llvm::TargetMachine*  target_machine,
+    AllocationManagerPtr  qubit_allocation_manager,
+    AllocationManagerPtr  result_allocation_manager)
   : name_{name}
+  , configuration_manager_{configuration_manager}
   , logger_{logger}
   , pass_instrumentation_callbacks_{std::make_unique<llvm::PassInstrumentationCallbacks>()}
   , standard_instrumentations_{std::make_unique<llvm::StandardInstrumentations>(debug)}

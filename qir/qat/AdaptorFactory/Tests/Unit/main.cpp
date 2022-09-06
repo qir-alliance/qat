@@ -78,9 +78,10 @@ class TestAnalysis
 
 TEST(AdaptorFactoryTestSuite, ConfigureFunction)
 {
-    uint64_t call_count{0};
-    auto     configure = [&call_count](RuleSet&) { ++call_count; };
-    auto     generator = std::make_shared<ExposedConfigurableQirAdaptorFactory>(configure);
+    uint64_t             call_count{0};
+    auto                 configure = [&call_count](RuleSet&) { ++call_count; };
+    ConfigurationManager configuration_manager;
+    auto generator = std::make_shared<ExposedConfigurableQirAdaptorFactory>(configuration_manager, configure);
 
     TestAnalysis test;
 
@@ -93,8 +94,8 @@ TEST(AdaptorFactoryTestSuite, ConfigureFunction)
 
 TEST(AdaptorFactoryTestSuite, ConfigurationManager)
 {
-    auto                  generator             = std::make_shared<ExposedConfigurableQirAdaptorFactory>();
-    ConfigurationManager& configuration_manager = generator->configurationManager();
+    ConfigurationManager configuration_manager;
+    auto                 generator = std::make_shared<ExposedConfigurableQirAdaptorFactory>(configuration_manager);
     configuration_manager.addConfig<FactoryConfiguration>();
 
     TestAnalysis test;

@@ -74,9 +74,9 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
 {
     auto ir_manip = newIrManip(script);
 
-    auto generator = std::make_shared<QirAdaptorFactory>();
+    ConfigurationManager configuration_manager;
+    auto                 generator = std::make_shared<QirAdaptorFactory>(configuration_manager);
 
-    ConfigurationManager& configuration_manager = generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<ValidationPassConfiguration>(
         "target.profile", ValidationPassConfiguration::fromQirAdaptorName("generic"));

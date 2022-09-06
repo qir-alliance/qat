@@ -9,6 +9,7 @@
 #include "qir/qat/Passes/ZExtTransformPass/ZExtTransformPass.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
+#include "qir/qat/Utils/FunctionToModule.hpp"
 
 #include <functional>
 
@@ -43,17 +44,18 @@ struct DummyConfig
 
 std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor()
 {
-    auto                  adaptor               = std::make_shared<ConfigurableQirAdaptorFactory>();
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
 
     adaptor->registerAnonymousAdaptorComponent<DummyConfig>(
-        [](DummyConfig const& /*config*/, QirAdaptorFactory& generator, QirAdaptor& /*adaptor*/)
+        [](DummyConfig const& /*config*/, QirAdaptor& adaptor)
         {
-            auto& fpm = generator.functionPassManager();
+            llvm::FunctionPassManager fpm;
             fpm.addPass(ZExtTransformPass());
+            adaptor.modulePassManager().addPass(FunctionToModule(std::move(fpm)));
         });
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());

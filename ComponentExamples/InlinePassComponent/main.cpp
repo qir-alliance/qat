@@ -31,16 +31,16 @@ extern "C" void loadComponent(QirAdaptorFactory* profile_generator)
 {
     profile_generator->registerAdaptorComponent<InlinerConfig>(
         "inliner",
-        [](InlinerConfig const& cfg, QirAdaptorFactory& generator, QirAdaptor& /*profile*/)
+        [](InlinerConfig const& cfg, QirAdaptor& adaptor)
         {
             if (cfg.shouldInline())
             {
-                auto& module_pass_manager = generator.modulePassManager();
+                auto& module_pass_manager = adaptor.modulePassManager();
 
                 // Adds the inline pipeline
-                auto& pass_builder = generator.passBuilder();
+                auto& pass_builder = adaptor.passBuilder();
                 auto  inliner_pass =
-                    pass_builder.buildInlinerPipeline(generator.optimizationLevel(), llvm::ThinOrFullLTOPhase::None);
+                    pass_builder.buildInlinerPipeline(llvm::OptimizationLevel::O0, llvm::ThinOrFullLTOPhase::None);
 
                 module_pass_manager.addPass(std::move(inliner_pass));
             }

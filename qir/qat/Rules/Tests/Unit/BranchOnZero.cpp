@@ -72,10 +72,9 @@ continue__1:
 
         factory.optimizeResultZero();
     };
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
-
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());

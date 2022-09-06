@@ -63,8 +63,8 @@ TEST(RuleSetTestSuite, RemovingLeftOverZeroAndOnes)
         factory.disableStringSupport();
         factory.removeGetZeroOrOne();
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %Result* @__quantum__rt__result_get_zero()"}));

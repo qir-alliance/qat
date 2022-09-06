@@ -44,8 +44,9 @@ struct DummyConfig
 
 std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor()
 {
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(ConfigurableQirAdaptorFactory::SetupMode::DoNothing);
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        configuration_manager, ConfigurableQirAdaptorFactory::SetupMode::DoNothing);
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
 

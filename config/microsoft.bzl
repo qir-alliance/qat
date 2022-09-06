@@ -12,7 +12,7 @@ _CLANG_ADDITIONAL_COPTS = [
     "-Wconversion",
     "-Wpedantic",
     "-Werror",
-    "-XXXXXXX",
+
 
     # ... and then selectively disable those we do not need
     "-Wno-pre-c++17-compat",
@@ -48,7 +48,7 @@ def ms_cc_library(**kwargs):
         "//:clang_compiler": _CLANG_ADDITIONAL_COPTS,
         "//:gcc_compiler": _GCC_ADDITIONAL_COPTS,
         "//conditions:default": [],
-    })
+    }) 
 
     if "copts" in kwargs:
         kwargs.pop("copts")

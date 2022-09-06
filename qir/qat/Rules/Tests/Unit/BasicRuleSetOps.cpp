@@ -73,8 +73,8 @@ TEST(RuleSetTestSuite, SetReplacerAndPattern)
         ret->setPattern(callByNameOnly("__quantum__rt__qubit_release"));
         rule_set.addRule(ret);
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
@@ -100,8 +100,8 @@ TEST(RuleSetTestSuite, NullPattern)
         auto            ret = std::make_shared<ReplacementRule>(rule);
         rule_set.addRule(ret);
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
@@ -128,8 +128,8 @@ TEST(RuleSetTestSuite, NullReplacer)
         auto            ret = std::make_shared<ReplacementRule>(rule);
         rule_set.addRule(ret);
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||

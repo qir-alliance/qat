@@ -9,6 +9,7 @@
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
+#include "qir/qat/Utils/FunctionToModule.hpp"
 
 #include <functional>
 
@@ -87,17 +88,18 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(
     AllocationAnalysis&                         analysis_result,
     StaticResourceComponentConfiguration const& cfg)
 {
-    auto                  adaptor               = std::make_shared<ConfigurableQirAdaptorFactory>();
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
 
     adaptor->registerAnonymousAdaptorComponent<DummyConfig>(
-        [&analysis_result](DummyConfig const& /*config*/, QirAdaptorFactory& generator, QirAdaptor& /*adaptor*/)
+        [&analysis_result](DummyConfig const& /*config*/, QirAdaptor& adaptor)
         {
-            auto& fpm = generator.functionPassManager();
+            llvm::FunctionPassManager fpm;
             fpm.addPass(AnalysisReadoutPass(analysis_result));
+            adaptor.modulePassManager().addPass(FunctionToModule(std::move(fpm)));
         });
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());

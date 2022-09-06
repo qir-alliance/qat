@@ -78,8 +78,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Weverything -Wconversion -Wno-c++98-compat-pedantic -Wno-c++98-compat -Wno-padded -Wno-exit-time-destructors -Wno-global-constructors")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wno-documentation-unknown-command")
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-documentation-unknown-command")
+# -Werror
 include(${MICROSOFT_ROOT_PASSES_DIR}/cmake/Testing.cmake)
 include(${MICROSOFT_ROOT_PASSES_DIR}/cmake/Library.cmake)
 

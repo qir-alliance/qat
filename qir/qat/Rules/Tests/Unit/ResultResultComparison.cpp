@@ -88,9 +88,8 @@ continue__1:                                      ; preds = %then0__1, %entry
         factory.optimizeResultComparison();
         factory.useStaticResultAllocation();
     };
-
-    auto                  adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     configuration_manager.setConfig(ValidationPassConfiguration::fromQirAdaptorName("default"));
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());

@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
@@ -16,13 +17,16 @@ class QirAdaptorFactory
   public:
     // LLVM types
     //
-    using PassBuilder             = llvm::PassBuilder;
-    using OptimizationLevel       = llvm::OptimizationLevel;
-    using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
+    using PassBuilder               = llvm::PassBuilder;
+    using OptimizationLevel         = llvm::OptimizationLevel;
+    using FunctionAnalysisManager   = llvm::FunctionAnalysisManager;
+    using QirAdaptorPtr             = std::shared_ptr<QirAdaptor>;
+    using BasicAllocationManagerPtr = std::shared_ptr<BasicAllocationManager>;
+    using FunctionPassManager       = llvm::FunctionPassManager;
 
     /// Setup function that uses a configuration type R to
     /// configure the adaptor and/or generator.
-    template <typename R> using SetupFunction = std::function<void(R const&, QirAdaptorFactory&, QirAdaptor&)>;
+    template <typename R> using SetupFunction = std::function<void(R const&, QirAdaptor&)>;
 
     /// Wrapper function type for invoking the adaptor setup function
     using SetupFunctionWrapper = std::function<void(QirAdaptorFactory&, QirAdaptor&)>;
@@ -35,7 +39,10 @@ class QirAdaptorFactory
     // Construction, moves and copies
     //
 
-    QirAdaptorFactory()                         = default;
+    QirAdaptorFactory(ConfigurationManager& configuration_manager)
+      : configuration_manager_{configuration_manager}
+    {
+    }
     ~QirAdaptorFactory()                        = default;
     QirAdaptorFactory(QirAdaptorFactory const&) = delete;
     QirAdaptorFactory(QirAdaptorFactory&&)      = delete;
@@ -56,10 +63,11 @@ class QirAdaptorFactory
     /// Creates a new adaptor based on the registered components, optimization level and debug
     /// requirements. The returned adaptor can be applied to an IR to transform it in accordance with
     /// the configurations given.
-    std::shared_ptr<QirAdaptor> newQirAdaptor(
-        String const&            name,
-        OptimizationLevel const& optimization_level,
-        bool                     debug);
+    QirAdaptorPtr newQirAdaptor(String const& name, OptimizationLevel const& optimization_level, bool debug);
+
+    void          newAdaptorContext();
+    void          addComponent(String const& name);
+    QirAdaptorPtr finalizeAdaptor();
 
     // Defining the generator
 
@@ -84,21 +92,6 @@ class QirAdaptorFactory
     /// its id and then copied as an anonymous component which is appended to the list of components.
     void replicateAdaptorComponent(String const& id);
 
-    // Support properties for generators
-    //
-
-    /// Returns the module pass manager.
-    llvm::ModulePassManager& modulePassManager();
-
-    /// Returns the module pass manager.
-    llvm::FunctionPassManager& functionPassManager();
-
-    /// Returns the pass builder.
-    llvm::PassBuilder& passBuilder();
-
-    /// Returns the optimization level.
-    OptimizationLevel optimizationLevel() const;
-
     /// Flag indicating whether we are operating in debug mode or not.
     bool isDebugMode() const;
 
@@ -108,10 +101,6 @@ class QirAdaptorFactory
     void setLogger(ILoggerPtr const& logger = nullptr);
 
   protected:
-    /// Internal function that creates a module pass for QIR transformation. The module pass is
-    /// defined through the adaptor, the optimization level and whether or not we are in debug mode.
-    void configureGeneratorFromQirAdaptor(QirAdaptor& adaptor, OptimizationLevel const& optimization_level, bool debug);
-
     /// Internal function that creates a module pass for QIR validation. At the moment, this function
     /// is a placeholder for future functionality.
     llvm::ModulePassManager createValidationModulePass(
@@ -120,25 +109,20 @@ class QirAdaptorFactory
         bool                     debug);
 
   private:
-    ILoggerPtr           logger_{nullptr};       ///< Logger used to output messages
-    ConfigurationManager configuration_manager_; ///< Holds the configuration that defines the adaptor
-    Components           components_;            ///< List of registered components that configures the adaptor
-
-    /// Pointer to the module pass manager the adaptor will use
-    llvm::ModulePassManager* module_pass_manager_{nullptr};
-
-    /// Pointer to the module pass manager the adaptor will use
-    llvm::FunctionPassManager* function_pass_manager_{nullptr};
-
-    /// Pointer to the pass builder the adaptor is based on
-    llvm::PassBuilder* pass_builder_{nullptr};
-
-    /// Optimization level used by LLVM
-    OptimizationLevel optimization_level_{OptimizationLevel::O0};
+    ILoggerPtr            logger_{nullptr};       ///< Logger used to output messages
+    ConfigurationManager& configuration_manager_; ///< Holds the configuration that defines the adaptor
+    Components            components_;            ///< List of registered components that configures the adaptor
 
     /// Whether or not we are in debug mode
     bool debug_{false};
+
+    //// TODO:
+    BasicAllocationManagerPtr qubit_allocation_manager_;
+    BasicAllocationManagerPtr result_allocation_manager_;
+    QirAdaptorPtr             adaptor_{};
 };
+
+extern QirAdaptorFactory::SetupFunction<LlvmPassesConfiguration> llvmSetupFunction;
 
 template <typename R> void QirAdaptorFactory::registerAdaptorComponent(String const& id, SetupFunction<R> setup)
 {
@@ -150,7 +134,7 @@ template <typename R> void QirAdaptorFactory::registerAdaptorComponent(String co
         {
             auto& config = generator.configuration_manager_.get<R>();
 
-            setup(config, generator, adaptor);
+            setup(config, adaptor);
         }
     };
 
@@ -165,7 +149,7 @@ template <typename R> void QirAdaptorFactory::replaceAdaptorComponent(String con
         {
             auto& config = generator.configuration_manager_.get<R>();
 
-            setup(config, generator, adaptor);
+            setup(config, adaptor);
         }
     };
 
@@ -194,7 +178,7 @@ template <typename R> void QirAdaptorFactory::registerAnonymousAdaptorComponent(
         {
             auto& config = generation.configuration_manager_.get<R>();
 
-            setup(config, generation, adaptor);
+            setup(config, adaptor);
         }
     };
 

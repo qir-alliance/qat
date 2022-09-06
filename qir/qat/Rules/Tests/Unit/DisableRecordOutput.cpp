@@ -62,8 +62,8 @@ TEST(RuleSetTestSuite, DisablingRecordOutput)
 
         factory.disableRecordOutputSupport();
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     ir_manip->applyQirAdaptor(adaptor);
 

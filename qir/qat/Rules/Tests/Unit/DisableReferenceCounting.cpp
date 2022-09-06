@@ -57,8 +57,8 @@ TEST(RuleSetTestSuite, DisablingArrayhReferenceCounting)
 
         factory.disableReferenceCounting();
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
@@ -104,8 +104,8 @@ TEST(RuleSetTestSuite, DisablingStringReferenceCounting)
 
         factory.disableReferenceCounting();
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
@@ -151,8 +151,8 @@ TEST(RuleSetTestSuite, DisablingResultReferenceCounting)
 
         factory.disableReferenceCounting();
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(

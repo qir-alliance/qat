@@ -49,7 +49,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 
 TEST(AdaptorFactoryPostTransformLower, PostTransformLowerSwitch)
 {
-    auto                  ir_manip              = newIrManip(R"script(
+    auto                 ir_manip = newIrManip(R"script(
   %0 = call i1 @get_value()
   %spec.select = select i1 %0, i64 2, i64 0
   %1 = call i1 @get_value()
@@ -76,8 +76,8 @@ then1__2:                                         ; preds = %entry
 continue__3:                                      ; preds = %entry, %then1__2, %then2__2, %then0__4
   call void @d()
   )script");
-    auto                  adaptor               = std::make_shared<ConfigurableQirAdaptorFactory>();
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());

@@ -5,22 +5,23 @@ generate_version_header()
 microsoft_add_library(Logging)
 
 microsoft_add_library(TestTools)
-microsoft_add_library_tests(TestTools AdaptorFactory Logging GroupingPass)
+microsoft_add_library_tests(TestTools AdaptorFactory Logging GroupingPass FunctionReplacementPass)
 
 microsoft_add_library(Commandline)
-microsoft_add_library_tests(Commandline Logging GroupingPass)
+microsoft_add_library_tests(Commandline Logging GroupingPass FunctionReplacementPass)
 
 microsoft_add_library(Version)
 
 microsoft_add_library(QirAdaptor)
-microsoft_add_library_tests(QirAdaptor GroupingPass)
+microsoft_add_library_tests(QirAdaptor GroupingPass FunctionReplacementPass)
 
 microsoft_add_library(Validator)
 target_link_libraries(Validator PRIVATE Logging)
 
 microsoft_add_library(ModuleLoader)
 
-microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass  Logging GroupingPass)
+microsoft_add_library(FunctionReplacementPass Logging)
+microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass  Logging GroupingPass FunctionReplacementPass)
 
 
 microsoft_add_library(AllocationManager)
@@ -28,13 +29,13 @@ microsoft_add_library_tests(AllocationManager Logging GroupingPass)
 
 
 microsoft_add_library(Rules)
-microsoft_add_library_tests(Rules Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Logging GroupingPass)
+microsoft_add_library_tests(Rules Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Logging GroupingPass FunctionReplacementPass)
 
 target_link_libraries(Rules PRIVATE AllocationManager)
 
 microsoft_add_library(AdaptorFactory)
 target_link_libraries(AdaptorFactory PRIVATE Rules Commandline AllocationManager TransformationRulesPass QirAdaptor Validator StaticResourceComponent ValidationPass PostTransformValidation PreTransformTrimming ZExtTransformPass DeferMeasurementPass)
-microsoft_add_library_tests(AdaptorFactory Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Logging GroupingPass ZExtTransformPass)
+microsoft_add_library_tests(AdaptorFactory Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Logging GroupingPass ZExtTransformPass FunctionReplacementPass)
 
 
 add_subdirectory(Passes)

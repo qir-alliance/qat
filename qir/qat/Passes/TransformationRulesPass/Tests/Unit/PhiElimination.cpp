@@ -70,7 +70,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 // Single allocation with action and then release
 TEST(TransformationRulesPass, PhiEliminationBranch1)
 {
-    auto ir_manip = newIrManip(R"script(
+    auto                 ir_manip = newIrManip(R"script(
   %c = inttoptr i64 0 to %Qubit*
   %n = add i64 0, 1
   %q = call %Qubit* @__quantum__rt__qubit_allocate()
@@ -92,10 +92,9 @@ continue__1:                                      ; preds = %then0__1, %entry
   %4 = load i64, i64* %ret, align 4
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>();
-
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
@@ -114,7 +113,7 @@ continue__1:                                      ; preds = %then0__1, %entry
 
 TEST(TransformationRulesPass, PhiEliminationBranch0)
 {
-    auto ir_manip = newIrManip(R"script(
+    auto                 ir_manip = newIrManip(R"script(
   %c = inttoptr i64 0 to %Qubit*    
   %n = add i64 0, 0
   %q = call %Qubit* @__quantum__rt__qubit_allocate()
@@ -136,10 +135,9 @@ continue__1:                                      ; preds = %then0__1, %entry
   %4 = load i64, i64* %ret, align 4
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>();
-
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());

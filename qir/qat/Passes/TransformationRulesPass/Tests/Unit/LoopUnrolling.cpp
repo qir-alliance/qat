@@ -49,7 +49,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 // Single allocation with action and then release
 TEST(TransformationRulesPass, LoopUnroll)
 {
-    auto ir_manip = newIrManip(R"script(
+    auto                 ir_manip = newIrManip(R"script(
   %q = call %Qubit* @__quantum__rt__qubit_allocate()
   %ret = alloca i64, align 8
   store i64 1, i64* %ret, align 4
@@ -75,10 +75,9 @@ exit__1:                                          ; preds = %header__1
   %5 = load i64, i64* %ret, align 4
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>();
-
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());

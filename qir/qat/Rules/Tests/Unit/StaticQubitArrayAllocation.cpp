@@ -64,11 +64,11 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationOffsets)
         factory.useStaticQubitArrayAllocation();
     };
 
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
-        std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        configuration_manager, std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
@@ -110,12 +110,11 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticQubitArrayAllocation();
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
-        std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        configuration_manager, std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
@@ -164,12 +163,11 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationAdvanced)
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticQubitArrayAllocation();
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
-        std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        configuration_manager, std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 

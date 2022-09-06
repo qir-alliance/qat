@@ -14,7 +14,10 @@
 namespace microsoft::quantum
 {
 
-ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(SetupMode const& mode)
+ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
+    ConfigurationManager& configuration_manager,
+    SetupMode const&      mode)
+  : QirAdaptorFactory(configuration_manager)
 {
     configurationManager().addConfig<ValidationPassConfiguration>();
 
@@ -25,19 +28,20 @@ ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(SetupMode const& mo
 }
 
 ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
+    ConfigurationManager&                       configuration_manager,
     ConfigureFunction const&                    configure,
     TransformationRulesPassConfiguration const& adaptor_pass_config,
     LlvmPassesConfiguration const&              llvm_config)
+  : QirAdaptorFactory(configuration_manager)
 {
     configurationManager().addConfig<ValidationPassConfiguration>();
     setupDefaultComponentPipeline();
 
     replaceAdaptorComponent<TransformationRulesPassConfiguration>(
         "transformation-rules",
-        [configure](
-            TransformationRulesPassConfiguration const& config, QirAdaptorFactory& generator, QirAdaptor& adaptor)
+        [configure](TransformationRulesPassConfiguration const& config, QirAdaptor& adaptor)
         {
-            auto& ret = generator.modulePassManager();
+            auto& ret = adaptor.modulePassManager();
 
             // Defining the mapping
             RuleSet rule_set;

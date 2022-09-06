@@ -32,12 +32,13 @@ class QirAdaptor
     //
 
     explicit QirAdaptor(
-        String const&        name,
-        ILoggerPtr const&    logger,
-        bool                 debug,
-        llvm::TargetMachine* target_machine            = nullptr,
-        AllocationManagerPtr qubit_allocation_manager  = BasicAllocationManager::createNew(),
-        AllocationManagerPtr result_allocation_manager = BasicAllocationManager::createNew());
+        ConfigurationManager& configuration_manager,
+        String const&         name,
+        ILoggerPtr const&     logger,
+        bool                  debug,
+        llvm::TargetMachine*  target_machine            = nullptr,
+        AllocationManagerPtr  qubit_allocation_manager  = BasicAllocationManager::createNew(),
+        AllocationManagerPtr  result_allocation_manager = BasicAllocationManager::createNew());
 
     // Default construction not allowed as this leads to invalid configuration of the allocation
     // managers.
@@ -84,6 +85,12 @@ class QirAdaptor
     /// Returns the module pass manager associated with the adaptor
     llvm::ModulePassManager& modulePassManager();
 
+    /// Returns the configuration manager
+    ConfigurationManager& configurationManager()
+    {
+        return configuration_manager_;
+    }
+
   protected:
     // Ensuring that QirAdaptorFactory has access to following protected functions.
     friend class QirAdaptorFactory;
@@ -118,6 +125,8 @@ class QirAdaptor
 
     /// Name of the selected adaptor
     String name_{};
+
+    ConfigurationManager& configuration_manager_; ///< Holds a reference to the configuration manager
 
     ILoggerPtr logger_{nullptr};
 

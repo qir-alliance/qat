@@ -50,9 +50,9 @@ void expectSuccess(String const& adaptor_name, String const& script)
 {
     auto ir_manip = newIrManip(script);
 
-    auto adaptor_generator = std::make_shared<ConfigurableQirAdaptorFactory>();
+    ConfigurationManager configuration_manager;
+    auto                 adaptor_generator = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    ConfigurationManager& configuration_manager = adaptor_generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(ValidationPassConfiguration::fromQirAdaptorName(adaptor_name));

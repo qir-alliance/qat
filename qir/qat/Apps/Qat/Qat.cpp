@@ -23,13 +23,13 @@
 /// │            Configuration and paramater parser             │
 /// └─────────────┬───────────────────────────────┬─────────────┘
 /// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
-/// │        LLVM (Q)IRs        │   │      QirAdaptor config       │
+/// │        LLVM (Q)IRs        │   │      QirAdaptor config    │
 /// └─────────────┬─────────────┘   └─────────────┬─────────────┘
 /// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
-/// │       Module loader       │   │     QirAdaptor Generator     │
+/// │       Module loader       │   │     QirAdaptor Generator  │
 /// └─────────────┬─────────────┘   └─────────────┬─────────────┘
 /// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
-/// │       Single module       │   │          QirAdaptor          │
+/// │       Single module       │   │          QirAdaptor       │
 /// │      transformations      │   └──────┬──────────────┬─────┘
 /// └─────────────┬─────────────┘   ┌──────▼─────┐ ┌──────▼─────┐
 /// ┌─────────────▼─────────────┐   │            │ │            │
@@ -51,7 +51,6 @@
 ///
 
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
-#include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
 #include "qir/qat/Apps/Qat/QatConfig.hpp"
 #include "qir/qat/Apps/Qat/QirAdaptorConfiguration.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
@@ -68,6 +67,7 @@
 #include "qir/qat/QirAdaptor/QirAdaptor.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/Utils/FunctionToModule.hpp"
 #include "qir/qat/Validator/Validator.hpp"
 #include "qir/qat/Version/Version.hpp"
 
@@ -82,6 +82,7 @@
 
 using namespace llvm;
 using namespace microsoft::quantum;
+
 void init();
 void init()
 {
@@ -132,14 +133,15 @@ int main(int argc, char const** argv)
 
     try
     {
+        ConfigurationManager configuration_manager;
+
         // Default generator. A future version of QAT may allow the generator to be selected
         // through the command line, but it is hard coded for now.
-        auto generator = std::make_shared<QirAdaptorFactory>();
+        auto generator = std::make_unique<QirAdaptorFactory>(configuration_manager);
 
         // Configuration and command line parsing
         //
 
-        ConfigurationManager& configuration_manager = generator->configurationManager();
         configuration_manager.addConfig<QatConfig>("qat");
         configuration_manager.addConfig<FactoryConfiguration>("transformation-rules");
 
@@ -296,6 +298,8 @@ int main(int argc, char const** argv)
         auto location_table = loader.locationTable();
         logger->setLocationResolver([location_table](llvm::Value const* val)
                                     { return location_table->getPosition(val); });
+        logger->setLocationFromNameResolver([location_table](String const& name)
+                                            { return location_table->getPositionFromFunctionName(name); });
 
         // Getting the optimization level
         //
@@ -321,15 +325,25 @@ int main(int argc, char const** argv)
         //
 
         // Creating the adaptor that will be used for generation and validation
+        generator->newAdaptorContext();
+        generator->addComponent("weak-linking");
+        generator->addComponent("llvm-optimization");
+        generator->addComponent("pre-transform-trimming");
+        generator->addComponent("transformation-rules");
+        generator->addComponent("post-transform");
+        generator->addComponent("post-transform-validation");
+        generator->addComponent("static-resource");
+        generator->addComponent("grouping");
 
-        auto adaptor = generator->newQirAdaptor(config.adaptor(), optimization_level, config.isDebugMode());
+        // auto adaptor = generator->newQirAdaptor(config.adaptor(), optimization_level, config.isDebugMode());
+        auto adaptor = generator->finalizeAdaptor();
 
         if (config.shouldGenerate())
         {
             adaptor->apply(*module);
 
             //  Preventing subsequent routines to run if errors occurred.
-            if (logger && (logger->hadErrors() || logger->hadWarnings()))
+            if (logger && logger->hadErrors())
             {
                 ret = -1;
             }
@@ -391,7 +405,7 @@ int main(int argc, char const** argv)
 
         // Safety pre-caution to ensure that all errors and warnings reported
         // results in failure.
-        if (logger && (logger->hadErrors() || logger->hadWarnings()))
+        if (logger && logger->hadErrors())
         {
             ret = -1;
         }

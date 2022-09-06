@@ -70,8 +70,8 @@ TEST(RuleSetTestSuite, IntToPtr)
         rule_set.addRule(ret);
     };
 
-    auto                  adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
-    ConfigurationManager& configuration_manager = adaptor->configurationManager();
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
@@ -105,8 +105,8 @@ TEST(RuleSetTestSuite, EmbeddedIntToPtr)
 
         rule_set.addRule(ret);
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
     ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(matched);
@@ -134,8 +134,8 @@ TEST(RuleSetTestSuite, ExpandedIntToPtr)
 
         rule_set.addRule(ret);
     };
-
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_adaptor));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
     ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(matched);

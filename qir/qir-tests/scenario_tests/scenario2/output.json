@@ -1,0 +1,5 @@
+{
+  "stderrContains": "Replacement signature mismatch: void (%Qubit*, %Qubit*) differs from void (%Qubit*)",
+  "stdoutContains": "",
+  "expectFail": true
+}
