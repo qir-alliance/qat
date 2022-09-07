@@ -395,7 +395,6 @@ ms_cc_library(
         "//qir/qat:Logging",
         "//qir/qat:ValidationPass",
     ],
-
 )
 
 ms_cc_library(

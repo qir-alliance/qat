@@ -20,7 +20,7 @@ target_link_libraries(Validator PRIVATE Logging)
 
 microsoft_add_library(ModuleLoader)
 
-microsoft_add_library(FunctionReplacementPass Logging)
+
 microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass  Logging GroupingPass FunctionReplacementPass)
 
 

@@ -31,7 +31,7 @@
 namespace microsoft::quantum
 {
 
-QirAdaptorFactory::SetupFunction<LlvmPassesConfiguration> llvmSetupFunction =
+QirAdaptorFactory::SetupFunction<LlvmPassesConfiguration> llvm_setup_function =
     [](LlvmPassesConfiguration const& cfg, QirAdaptor& adaptor)
 {
     auto& mpm = adaptor.modulePassManager();
@@ -100,9 +100,9 @@ QirAdaptorFactory::SetupFunction<LlvmPassesConfiguration> llvmSetupFunction =
 };
 
 std::shared_ptr<QirAdaptor> QirAdaptorFactory::newQirAdaptor(
-    String const&            name,
-    OptimizationLevel const& optimization_level,
-    bool                     debug)
+    String const& name,
+    OptimizationLevel const& /*optimization_level*/,
+    bool debug)
 {
     debug_                         = debug;
     auto qubit_allocation_manager  = BasicAllocationManager::createNew();
@@ -150,8 +150,8 @@ void QirAdaptorFactory::newAdaptorContext()
         qubit_allocation_manager_->setReuseRegisters(cfg.shouldReuseQubits());
         result_allocation_manager_->setReuseRegisters(cfg.shouldReuseResults());
     }
-    auto debug = false;   // TODO:
-    auto name  = "TODO."; // TODO:
+    auto debug = false;   // TODO(unknown):
+    auto name  = "TODO."; // TODO(unknown):
     adaptor_   = std::make_shared<QirAdaptor>(
         configuration_manager_, name, logger_, debug, nullptr, qubit_allocation_manager_, result_allocation_manager_);
 }
@@ -233,7 +233,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             ret.addPass(std::move(pass));
         });
 
-    registerAdaptorComponent<LlvmPassesConfiguration>("llvm-optimization", llvmSetupFunction);
+    registerAdaptorComponent<LlvmPassesConfiguration>("llvm-optimization", llvm_setup_function);
 
     registerAdaptorComponent<PreTransformTrimmingPassConfiguration>(
         "pre-transform-trimming",

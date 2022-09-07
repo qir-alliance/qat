@@ -39,7 +39,7 @@ class QirAdaptorFactory
     // Construction, moves and copies
     //
 
-    QirAdaptorFactory(ConfigurationManager& configuration_manager)
+    explicit QirAdaptorFactory(ConfigurationManager& configuration_manager)
       : configuration_manager_{configuration_manager}
     {
     }
@@ -122,7 +122,7 @@ class QirAdaptorFactory
     QirAdaptorPtr             adaptor_{};
 };
 
-extern QirAdaptorFactory::SetupFunction<LlvmPassesConfiguration> llvmSetupFunction;
+extern QirAdaptorFactory::SetupFunction<LlvmPassesConfiguration> llvm_setup_function;
 
 template <typename R> void QirAdaptorFactory::registerAdaptorComponent(String const& id, SetupFunction<R> setup)
 {

@@ -16,7 +16,7 @@ microsoft_add_library(ValidationPass Logging)
 microsoft_add_library(ZExtTransformPass Logging)
 microsoft_add_library_tests(ZExtTransformPass Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass StaticResourceComponent Logging GroupingPass FunctionReplacementPass) 
 
-
+microsoft_add_library(FunctionReplacementPass Logging)
 
 microsoft_add_library(PreTransformTrimming Logging)
 
