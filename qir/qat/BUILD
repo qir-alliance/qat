@@ -243,8 +243,8 @@ ms_cc_library(
 
 ms_cc_library(
     name = "FunctionReplacementPass",
-    srcs = glob(["FunctionReplacementPass/*.cpp"]),
-    hdrs = glob(["FunctionReplacementPass/*.hpp"]),
+    srcs = glob(["Passes/FunctionReplacementPass/*.cpp"]),
+    hdrs = glob(["Passes/FunctionReplacementPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",

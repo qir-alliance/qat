@@ -326,14 +326,11 @@ int main(int argc, char const** argv)
 
         // Creating the adaptor that will be used for generation and validation
         generator->newAdaptorContext();
-        generator->addComponent("weak-linking");
-        generator->addComponent("llvm-optimization");
-        generator->addComponent("pre-transform-trimming");
-        generator->addComponent("transformation-rules");
-        generator->addComponent("post-transform");
-        generator->addComponent("post-transform-validation");
-        generator->addComponent("static-resource");
-        generator->addComponent("grouping");
+
+        for (auto& pipeline_name : config.adaptorPipeline())
+        {
+            generator->addComponent(pipeline_name);
+        }
 
         // auto adaptor = generator->newQirAdaptor(config.adaptor(), optimization_level, config.isDebugMode());
         auto adaptor = generator->finalizeAdaptor();

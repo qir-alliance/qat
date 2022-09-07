@@ -7,7 +7,6 @@
 
 namespace microsoft::quantum
 {
-// void replicate(LlvmPassesConfiguration const& cfg, QirAdaptor& adaptor);
 
 void configureGenericQirAdaptor(ConfigurationManager& configuration_manager);
 void configureDefaultQirAdaptor(ConfigurationManager& configuration_manager);

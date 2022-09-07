@@ -18,6 +18,12 @@ void QatConfig::setup(ConfigurationManager& config)
         generate_, "apply", "Applies a adaptor to transform the IR in correspondence with the adaptor.");
     config.addParameter(validate_, false, "validate", "Executes the validation procedure.");
     config.addParameter(adaptor_, static_cast<String>("generic"), "adaptor", "Sets the adaptor.");
+    config.addParameter(
+        adapter_pipeline_,
+        {"weak-linking", "llvm-optimization", "pre-transform-trimming", "transformation-rules", "post-transform",
+         "post-transform-validation", "static-resource", "grouping"},
+        "adaptor-pipeline", "Overrides the adaptor pipleline.");
+
     config.addParameter(emit_llvm_, false, "S", "Emits LLVM IR to the standard output.");
     config.addParameter(opt0_, false, "O0", "Optimization level 0.");
     config.addParameter(opt1_, false, "O1", "Optimization level 1.");
@@ -155,5 +161,10 @@ String QatConfig::targetDefinition() const
 String QatConfig::saveConfigTo() const
 {
     return save_config_to_;
+}
+
+QatConfig::AdaptorPipeline QatConfig::adaptorPipeline() const
+{
+    return adapter_pipeline_;
 }
 } // namespace microsoft::quantum

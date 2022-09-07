@@ -12,6 +12,8 @@ namespace microsoft::quantum
 class QatConfig
 {
   public:
+    using AdaptorPipeline = std::vector<String>;
+
     // Functions required by configuration manager
     //
 
@@ -85,21 +87,26 @@ class QatConfig
     /// YAML filename to save the configuration to
     String saveConfigTo() const;
 
+    /// Component pipeline to be build
+    AdaptorPipeline adaptorPipeline() const;
+
   private:
     // Variables to be bound to the configuration manager
     //
-    String load_{""};
-    bool   generate_{false};
-    bool   validate_{false};
-    String adaptor_{"generic"};
-    bool   emit_llvm_{false};
-    bool   opt0_{false};
-    bool   opt1_{false};
-    bool   opt2_{false};
-    bool   opt3_{false};
-    bool   verify_module_{false};
-    bool   add_ir_debug_info_{false};
-    bool   strip_existing_debug_{false};
+    String          load_{""};
+    bool            generate_{false};
+    bool            validate_{false};
+    String          adaptor_{"generic"};
+    AdaptorPipeline adapter_pipeline_{};
+
+    bool emit_llvm_{false};
+    bool opt0_{false};
+    bool opt1_{false};
+    bool opt2_{false};
+    bool opt3_{false};
+    bool verify_module_{false};
+    bool add_ir_debug_info_{false};
+    bool strip_existing_debug_{false};
 
     String output_file_{""};
     String save_report_to_{""};

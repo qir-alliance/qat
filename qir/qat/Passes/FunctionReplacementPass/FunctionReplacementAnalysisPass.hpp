@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/FunctionReplacementPass/FunctionReplacementConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/Passes/FunctionReplacementPass/FunctionReplacementConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
