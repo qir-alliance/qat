@@ -42,18 +42,18 @@ struct DummyConfig
     void setup(ConfigurationManager&) {}
 };
 
-std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor()
+std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(ConfigurationManager& configuration_manager)
 {
-    ConfigurationManager configuration_manager;
-    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
         configuration_manager, ConfigurableQirAdaptorFactory::SetupMode::DoNothing);
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
 
     adaptor->registerAnonymousAdaptorComponent<DummyConfig>(
-        [](DummyConfig const& /*config*/, QirAdaptorFactory& generator, QirAdaptor& /*adaptor*/)
+        [](DummyConfig const& /*config*/, QirAdaptor& adaptor)
         {
-            auto& mpm = generator.modulePassManager();
+            auto& mpm = adaptor.modulePassManager();
             mpm.addPass(DivisionByZeroPass());
         });
 
@@ -73,7 +73,8 @@ TEST(DivideByZeroTests, InjectionTest)
   call void @print_i64(i64 %2)
   )script");
 
-    auto adaptor = newQirAdaptor();
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = newQirAdaptor(configuration_manager);
 
     ir_manip->applyQirAdaptor(adaptor);
 
@@ -102,7 +103,8 @@ TEST(DivideByZeroTests, ExpectDivisionByZero)
   %2 = sdiv i64 %0, %1
   )script");
 
-    auto adaptor = newQirAdaptor();
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = newQirAdaptor(configuration_manager);
 
     ir_manip->applyQirAdaptor(adaptor);
 
@@ -134,7 +136,8 @@ TEST(DivideByZeroTests, ExpectNoDivisionByZeroNoUpdate)
   %2 = sdiv i64 %0, %1
   )script");
 
-    auto adaptor = newQirAdaptor();
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = newQirAdaptor(configuration_manager);
 
     ir_manip->applyQirAdaptor(adaptor);
 
@@ -166,7 +169,8 @@ TEST(DivideByZeroTests, ExpectNoDivisionByZeroNoReport)
   %2 = sdiv i64 %0, %1
   )script");
 
-    auto adaptor = newQirAdaptor();
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = newQirAdaptor(configuration_manager);
 
     ir_manip->applyQirAdaptor(adaptor);
 

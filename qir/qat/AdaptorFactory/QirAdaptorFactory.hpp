@@ -122,8 +122,6 @@ class QirAdaptorFactory
     QirAdaptorPtr             adaptor_{};
 };
 
-extern QirAdaptorFactory::SetupFunction<LlvmPassesConfiguration> llvm_setup_function;
-
 template <typename R> void QirAdaptorFactory::registerAdaptorComponent(String const& id, SetupFunction<R> setup)
 {
     configuration_manager_.addConfig<R>(id);
