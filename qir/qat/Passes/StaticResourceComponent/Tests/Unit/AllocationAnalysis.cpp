@@ -85,11 +85,12 @@ class AnalysisReadoutPass : public llvm::PassInfoMixin<AnalysisReadoutPass>
 };
 
 std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(
+    ConfigurationManager&                       configuration_manager,
     AllocationAnalysis&                         analysis_result,
     StaticResourceComponentConfiguration const& cfg)
 {
-    ConfigurationManager configuration_manager;
-    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
+
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
@@ -111,7 +112,8 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(
 
 TEST(StaticResourceComponent, AllocationAnalysisPass)
 {
-    auto               ir_manip = newIrManip(R"script(
+    ConfigurationManager configuration_manager;
+    auto                 ir_manip = newIrManip(R"script(
     call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 9 to %Qubit*))
     call void @__quantum__qis__cnot__body(%Qubit* inttoptr (i64 9 to %Qubit*), %Qubit* inttoptr (i64 1 to %Qubit*))
     call void @__quantum__qis__cnot__body(%Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* inttoptr (i64 2 to %Qubit*))
@@ -132,9 +134,10 @@ TEST(StaticResourceComponent, AllocationAnalysisPass)
     call void @__quantum__rt__result_record_output(%Result* %zero2)
     call void @__quantum__rt__array_end_record_output()
   )script");
-    AllocationAnalysis analysis_result{0};
+    AllocationAnalysis   analysis_result{0};
 
-    auto adaptor = newQirAdaptor(analysis_result, StaticResourceComponentConfiguration::createDisabled());
+    auto adaptor =
+        newQirAdaptor(configuration_manager, analysis_result, StaticResourceComponentConfiguration::createDisabled());
     ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_EQ(analysis_result.usage_qubit_counts, 3);
@@ -145,7 +148,8 @@ TEST(StaticResourceComponent, AllocationAnalysisPass)
 
 TEST(StaticResourceComponent, RemapTest)
 {
-    auto               ir_manip = newIrManip(R"script(
+    ConfigurationManager configuration_manager;
+    auto                 ir_manip = newIrManip(R"script(
     call void @__quantum__qis__h__body(%Qubit* inttoptr (i64 9 to %Qubit*))
     call void @__quantum__qis__cnot__body(%Qubit* inttoptr (i64 9 to %Qubit*), %Qubit* inttoptr (i64 1 to %Qubit*))
     call void @__quantum__qis__cnot__body(%Qubit* inttoptr (i64 1 to %Qubit*), %Qubit* inttoptr (i64 2 to %Qubit*))
@@ -166,11 +170,11 @@ TEST(StaticResourceComponent, RemapTest)
     call void @__quantum__rt__result_record_output(%Result* %zero2)
     call void @__quantum__rt__array_end_record_output()
   )script");
-    AllocationAnalysis analysis_result{0};
+    AllocationAnalysis   analysis_result{0};
 
     auto config = StaticResourceComponentConfiguration::createDisabled();
     config.enableReindexQubits();
-    auto adaptor = newQirAdaptor(analysis_result, config);
+    auto adaptor = newQirAdaptor(configuration_manager, analysis_result, config);
     ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_EQ(analysis_result.usage_qubit_counts, 3);
@@ -181,7 +185,8 @@ TEST(StaticResourceComponent, RemapTest)
 
 TEST(StaticResourceComponent, AllocateOnMeasure)
 {
-    auto               ir_manip = newIrManip(R"script(
+    ConfigurationManager configuration_manager;
+    auto                 ir_manip = newIrManip(R"script(
   call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)
   call void @__quantum__qis__reset__body(%Qubit* null)
   call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 1 to %Result*))
@@ -197,13 +202,13 @@ TEST(StaticResourceComponent, AllocateOnMeasure)
   call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 6 to %Result*))
   call void @__quantum__qis__reset__body(%Qubit* null)
   )script");
-    AllocationAnalysis analysis_result{0};
+    AllocationAnalysis   analysis_result{0};
 
     auto config = StaticResourceComponentConfiguration::createDisabled();
 
     config.enableReplaceQubitOnReset();
 
-    auto adaptor = newQirAdaptor(analysis_result, config);
+    auto adaptor = newQirAdaptor(configuration_manager, analysis_result, config);
     ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_EQ(analysis_result.usage_qubit_counts, 7);
@@ -238,7 +243,8 @@ TEST(StaticResourceComponent, AllocateOnMeasure)
 
 TEST(StaticResourceComponent, AllocateOnMeasureWithInline)
 {
-    auto               ir_manip = newIrManip(R"script(
+    ConfigurationManager configuration_manager;
+    auto                 ir_manip = newIrManip(R"script(
   call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)
   call void @__quantum__qis__reset__body(%Qubit* null)
   call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 1 to %Result*))
@@ -254,13 +260,13 @@ TEST(StaticResourceComponent, AllocateOnMeasureWithInline)
   call void @__quantum__qis__mz__body(%Qubit* null, %Result* nonnull inttoptr (i64 6 to %Result*))
   call void @__quantum__qis__reset__body(%Qubit* null)
   )script");
-    AllocationAnalysis analysis_result{0};
+    AllocationAnalysis   analysis_result{0};
 
     auto config = StaticResourceComponentConfiguration::createDisabled();
     config.enableReplaceQubitOnReset();
     config.enableInlineAfterIdChange();
 
-    auto adaptor = newQirAdaptor(analysis_result, config);
+    auto adaptor = newQirAdaptor(configuration_manager, analysis_result, config);
     ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_EQ(analysis_result.usage_qubit_counts, 7);

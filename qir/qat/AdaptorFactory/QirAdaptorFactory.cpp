@@ -361,4 +361,14 @@ void QirAdaptorFactory::setLogger(ILoggerPtr const& logger)
     logger_ = logger;
 }
 
+ConfigurationManager& QirAdaptorFactory::configurationManager()
+{
+    return configuration_manager_;
+}
+
+ConfigurationManager const& QirAdaptorFactory::configurationManager() const
+{
+    return configuration_manager_;
+}
+
 } // namespace microsoft::quantum

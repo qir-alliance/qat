@@ -42,10 +42,10 @@ struct DummyConfig
     void setup(ConfigurationManager&) {}
 };
 
-std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor()
+std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(ConfigurationManager& configuration_manager)
 {
-    ConfigurationManager configuration_manager;
-    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
+
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
@@ -67,7 +67,8 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor()
 
 TEST(ZExtTransformPassTests, ReplacementTest)
 {
-    auto ir_manip = newIrManip(R"script(
+    ConfigurationManager configuration_manager;
+    auto                 ir_manip = newIrManip(R"script(
     %0 = call i1 @get_i1()
     %1 = zext i1 %0 to i64
     call void @print_i64(i64 %1)
@@ -76,7 +77,7 @@ TEST(ZExtTransformPassTests, ReplacementTest)
     call void @print_i64(i64 %3)  
   )script");
 
-    auto adaptor = newQirAdaptor();
+    auto adaptor = newQirAdaptor(configuration_manager);
     ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%1 = select i1 %0, i64 1, i64 0", "%3 = zext i2 %2 to i64"}));
