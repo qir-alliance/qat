@@ -2,8 +2,8 @@
 
 To make it easy to write tests for transformation rules, we have created two
 components to ease the burden of writing tests: `ConfigurableQirAdaptorFactory` and
-`IrManipulationTestHelper`. The `ConfigurableQirAdaptorFactory` is a profile that is
-dynamically defined when instatiated through a configuration lambda function.
+`IrManipulationTestHelper`. The `ConfigurableQirAdaptorFactory` is a profile that
+is dynamically defined when instatiated through a configuration lambda function.
 
 ## Creating the profile
 

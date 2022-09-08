@@ -81,13 +81,13 @@ entry:
     ConfigurationManager configuration_manager;
     configuration_manager.addConfig<FactoryConfiguration>();
 
-    configuration_manager.addConfig<GroupingPassConfiguration>("grouping");
-    configuration_manager.addConfig<StaticResourceComponentConfiguration>("static-resource");
-    configuration_manager.addConfig<PostTransformValidationPassConfiguration>("post-transform-validation");
-    configuration_manager.addConfig<PostTransformConfig>("post-transform");
-    configuration_manager.addConfig<TransformationRulesPassConfiguration>("transformation-rules");
-    configuration_manager.addConfig<PreTransformTrimmingPassConfiguration>("pre-transform-trimming");
-    configuration_manager.addConfig<LlvmPassesConfiguration>("llvm-optimization");
+    configuration_manager.addConfig<GroupingPassConfiguration>("adaptor.grouping");
+    configuration_manager.addConfig<StaticResourceComponentConfiguration>("adaptor.static-resource");
+    configuration_manager.addConfig<PostTransformValidationPassConfiguration>("adaptor.post-transform-validation");
+    configuration_manager.addConfig<PostTransformConfig>("adaptor.post-transform");
+    configuration_manager.addConfig<TransformationRulesPassConfiguration>("adaptor.transformation-rules");
+    configuration_manager.addConfig<PreTransformTrimmingPassConfiguration>("adaptor.pre-transform-trimming");
+    configuration_manager.addConfig<LlvmPassesConfiguration>("adaptor.llvm-optimization");
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());

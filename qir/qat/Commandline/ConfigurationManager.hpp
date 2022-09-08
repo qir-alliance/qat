@@ -9,6 +9,7 @@
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <cstddef>
+#include <deque>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -252,7 +253,7 @@ class ConfigurationManager
         String const&       description,
         ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
-    YAML::Node getNodeFromPath(const YAML::Node& root, String const& path)
+    YAML::Node getNodeFromPath(YAML::Node const& root, String const& path)
     {
         if (!root)
         {
@@ -281,40 +282,15 @@ class ConfigurationManager
 
     void setNodeFromPath(YAML::Node& root, String const& path, YAML::Node const& value)
     {
-        std::stack<String>      name_stack;
-        std::vector<YAML::Node> nodes;
-
-        std::size_t last_p = 0;
-        std::size_t p      = path.find('.', last_p);
-        while (p != std::string::npos)
+        std::size_t p = path.find('.');
+        if (p == std::string::npos)
         {
-            name_stack.push(path.substr(last_p, p - last_p));
-            nodes.emplace_back();
-            last_p = p + 1;
-            p      = path.find('.', last_p);
+            root[path] = value;
+            return;
         }
-        name_stack.push(path.substr(last_p, path.size() - last_p));
 
-        if (nodes.empty())
-        {
-            root[name_stack.top()] = value;
-        }
-        else
-        {
-            nodes.back()[name_stack.top()] = value;
-            name_stack.pop();
-
-            while (nodes.size() != 1)
-            {
-                auto n = nodes.back();
-                nodes.pop_back();
-                nodes.back()[name_stack.top()] = n;
-                name_stack.pop();
-            }
-            assert(nodes.size() == 1);
-
-            root[name_stack.top()] = nodes.back();
-        }
+        auto next_node = root[path.substr(0, p)];
+        setNodeFromPath(next_node, path.substr(p + 1, path.size() - p - 1), value);
     }
 
     Sections     config_sections_{}; ///< All available sections within the ConfigurationManager instance

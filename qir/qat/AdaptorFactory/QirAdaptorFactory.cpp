@@ -151,7 +151,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
     ILoggerPtr logger = logger_;
 
     registerAdaptorComponent<FunctionReplacementConfiguration>(
-        "weak-linking",
+        "adaptor.weak-linking",
         [logger](FunctionReplacementConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mam = adaptor.moduleAnalysisManager();
@@ -166,7 +166,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<LlvmPassesConfiguration>(
-        "llvm-optimization",
+        "adaptor.llvm-optimization",
         [](LlvmPassesConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mpm = adaptor.modulePassManager();
@@ -236,7 +236,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<PreTransformTrimmingPassConfiguration>(
-        "pre-transform-trimming",
+        "adaptor.pre-transform-trimming", // TODO(unknown): Rename?
         [logger](PreTransformTrimmingPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mpm = adaptor.modulePassManager();
@@ -245,7 +245,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<TransformationRulesPassConfiguration>(
-        "transformation-rules",
+        "adaptor.transformation-rules", // TODO(unknown): Rename?
         [logger](TransformationRulesPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& ret = adaptor.modulePassManager();
@@ -263,7 +263,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<PostTransformConfig>(
-        "post-transform",
+        "adaptor.post-transform", // TODO(unknown): Rename?
         [logger](PostTransformConfig const& cfg, QirAdaptor& adaptor)
         {
             auto&                     mpm = adaptor.modulePassManager();
@@ -306,7 +306,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<PostTransformValidationPassConfiguration>(
-        "post-transform-validation",
+        "adaptor.post-transform-validation",
         [logger](PostTransformValidationPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mpm = adaptor.modulePassManager();
@@ -314,7 +314,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<StaticResourceComponentConfiguration>(
-        "static-resource",
+        "adaptor.static-resources",
         [logger](StaticResourceComponentConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mpm = adaptor.modulePassManager();
@@ -340,7 +340,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<GroupingPassConfiguration>(
-        "grouping",
+        "adaptor.grouping",
         [logger](GroupingPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             if (cfg.circuitSeparation())

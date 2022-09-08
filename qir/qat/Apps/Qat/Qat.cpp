@@ -143,7 +143,7 @@ int main(int argc, char const** argv)
         //
 
         configuration_manager.addConfig<QatConfig>("qat");
-        configuration_manager.addConfig<FactoryConfiguration>("transformation-rules");
+        configuration_manager.addConfig<FactoryConfiguration>("adaptor.transformation-rules");
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
@@ -329,7 +329,7 @@ int main(int argc, char const** argv)
 
         for (auto& pipeline_name : config.adaptorPipeline())
         {
-            generator->addComponent(pipeline_name);
+            generator->addComponent("adaptor." + pipeline_name);
         }
 
         // auto adaptor = generator->newQirAdaptor(config.adaptor(), optimization_level, config.isDebugMode());

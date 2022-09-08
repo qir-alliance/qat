@@ -21,7 +21,7 @@ void QatConfig::setup(ConfigurationManager& config)
     config.addParameter(
         adapter_pipeline_,
         {"weak-linking", "llvm-optimization", "pre-transform-trimming", "transformation-rules", "post-transform",
-         "post-transform-validation", "static-resource", "grouping"},
+         "post-transform-validation", "static-resources", "grouping"},
         "adaptor-pipeline", "Overrides the adaptor pipleline.");
 
     config.addParameter(emit_llvm_, false, "S", "Emits LLVM IR to the standard output.");
