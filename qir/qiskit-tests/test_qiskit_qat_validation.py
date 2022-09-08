@@ -28,7 +28,7 @@ def validate_circuit(name, profile, circuit):
         qat_binary = os.environ.get("QAT_BINARY")
 
         p = subprocess.Popen(
-            [qat_binary, "-S", "--validate", "--apply", "--profile", profile, filename],
+            [qat_binary, "-S", "--validate", "--apply", "--adaptor", profile, filename],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         )

@@ -1,7 +1,7 @@
 all: ungrouped
 
 ungrouped: QSharpVersion/qir/Example.ll
-	${QAT_BINARY} --apply -S -O3 --always-inline --unroll-loops --disable-grouping --profile default QSharpVersion/qir/Example.ll  > ungrouped.ll
+	${QAT_BINARY} --apply -S -O3 --always-inline --unroll-loops --disable-grouping --adaptor default QSharpVersion/qir/Example.ll  > ungrouped.ll
 	
 	
 
