@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
-#include "ValidationPass/ValidationPass.hpp"
+#include "qir/qat/ValidationPass/ValidationPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -84,7 +84,7 @@ void ValidationPass::pointerChecks(Instruction& instr)
 
         uint64_t    n            = 1;
         llvm::Type* element_type = pointer_type->getElementType();
-        while (pointer_type = llvm::dyn_cast<llvm::PointerType>(element_type))
+        while (pointer_type == llvm::dyn_cast<llvm::PointerType>(element_type))
         {
             element_type = pointer_type->getElementType();
             ++n;
@@ -145,7 +145,7 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
                         current_location_ =
                             Location{static_cast<String>(dl->getFilename()), dl->getLine(), dl->getColumn(), "", ""};
                     }
-                    llvm::raw_string_ostream rso(current_location_.llvm_hint);
+                    llvm::raw_string_ostream rso(current_location_.llvmHint());
                     instr.print(rso);
 
                     String opname = static_cast<String>(instr.getOpcodeName());
@@ -235,6 +235,12 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
                         case llvm::CmpInst::Predicate::ICMP_SLE:
                             first_arg = "sle";
                             break;
+                        case llvm::CmpInst::Predicate::BAD_FCMP_PREDICATE:
+                            first_arg = "badfcmp";
+                            break;
+                        case llvm::CmpInst::Predicate::BAD_ICMP_PREDICATE:
+                            first_arg = "badicmp";
+                            break;
                         }
                     }
 
@@ -246,13 +252,13 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
                     OpcodeValue opcode1{opname};
                     OpcodeValue opcode2{opname, first_arg};
 
-                    if (allowed_ops.find(opcode1) == allowed_ops.end() &&
-                        allowed_ops.find(opcode2) == allowed_ops.end())
+                    if (allowed_ops.data().find(opcode1) == allowed_ops.data().end() &&
+                        allowed_ops.data().find(opcode2) == allowed_ops.data().end())
                     {
 
                         logger_->setLocation(
-                            {current_location_.name, current_location_.line, current_location_.column});
-                        logger_->setLlvmHint(current_location_.llvm_hint);
+                            {current_location_.name(), current_location_.line(), current_location_.column()});
+                        logger_->setLlvmHint(current_location_.llvmHint());
 
                         logger_->errorOpcodeNotAllowed(code, config_.profileName());
                         ret = false;
@@ -302,8 +308,8 @@ bool ValidationPass::satisfyingExternalCallRequirements()
                     if (!locs.empty())
                     {
                         auto const& loc = locs.front();
-                        logger_->setLocation({loc.name, loc.line, loc.column});
-                        logger_->setLlvmHint(loc.llvm_hint);
+                        logger_->setLocation({loc.name(), loc.line(), loc.column()});
+                        logger_->setLlvmHint(loc.llvmHint());
                     }
                 }
 
@@ -337,8 +343,8 @@ bool ValidationPass::satisfyingPointerRequirements()
                     if (!locs.empty())
                     {
                         auto const& loc = locs.front();
-                        logger_->setLocation({loc.name, loc.line, loc.column});
-                        logger_->setLlvmHint(loc.llvm_hint);
+                        logger_->setLocation({loc.name(), loc.line(), loc.column()});
+                        logger_->setLlvmHint(loc.llvmHint());
                     }
                 }
 
@@ -368,7 +374,7 @@ llvm::PreservedAnalyses ValidationPass::run(llvm::Module& module, llvm::ModuleAn
                     current_location_ =
                         Location{static_cast<String>(dl->getFilename()), dl->getLine(), dl->getColumn(), "", ""};
                 }
-                llvm::raw_string_ostream rso(current_location_.llvm_hint);
+                llvm::raw_string_ostream rso(current_location_.llvmHint());
                 instr.print(rso);
 
                 callChecks(instr);

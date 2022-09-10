@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.4.3)
+include(${CURRENT_SOURCE_DIR}version.cmake)
+generate_version_header()
 
 microsoft_add_library(Logging)
 
@@ -7,6 +9,8 @@ microsoft_add_library_tests(TestTools Generators Logging GroupingPass)
 
 microsoft_add_library(Commandline)
 microsoft_add_library_tests(Commandline Logging GroupingPass)
+
+microsoft_add_library(Version)
 
 microsoft_add_library(Profile)
 microsoft_add_library_tests(Profile GroupingPass)
@@ -17,8 +21,16 @@ target_link_libraries(Validator PRIVATE Logging)
 microsoft_add_library(ModuleLoader)
 
 
+microsoft_add_library(DivisionByZeroPass Logging)
+microsoft_add_library_tests(DivisionByZeroPass Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass StaticResourceComponent Logging GroupingPass) 
+
+
 microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
 microsoft_add_library(ValidationPass Logging)
+
+microsoft_add_library(DeferMeasurementPass Logging)
+microsoft_add_library_tests(DeferMeasurementPass  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
+
 microsoft_add_library(PreTransformTrimming Logging)
 
 microsoft_add_library(PostTransformValidation Logging)
@@ -26,7 +38,11 @@ microsoft_add_library(StaticResourceComponent Logging)
 microsoft_add_library_tests(StaticResourceComponent  Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass  Logging GroupingPass)
 
 
+microsoft_add_library(FunctionReplacementPass Logging)
 microsoft_add_library(GroupingPass Logging)
+microsoft_add_library(ZExtTransformPass Logging)
+microsoft_add_library_tests(ZExtTransformPass Rules TransformationRulesPass AllocationManager Commandline Generators Validator ValidationPass StaticResourceComponent Logging GroupingPass) 
+
 
 microsoft_add_library(AllocationManager)
 microsoft_add_library_tests(AllocationManager Logging GroupingPass)
@@ -42,7 +58,7 @@ microsoft_add_library_tests(Rules Rules TransformationRulesPass AllocationManage
 target_link_libraries(Rules PRIVATE AllocationManager)
 
 microsoft_add_library(Generators)
-target_link_libraries(Generators PRIVATE Rules Commandline AllocationManager TransformationRulesPass Profile Validator StaticResourceComponent ValidationPass PostTransformValidation PreTransformTrimming)
-microsoft_add_library_tests(Generators Rules TransformationRulesPass AllocationManager Commandline Generators Logging GroupingPass)
+target_link_libraries(Generators PRIVATE Rules Commandline AllocationManager TransformationRulesPass Profile Validator StaticResourceComponent ValidationPass PostTransformValidation PreTransformTrimming ZExtTransformPass FunctionReplacementPass  DeferMeasurementPass)
+microsoft_add_library_tests(Generators Rules TransformationRulesPass AllocationManager Commandline Generators Logging GroupingPass ZExtTransformPass FunctionReplacementPass)
 
 add_subdirectory(Apps)

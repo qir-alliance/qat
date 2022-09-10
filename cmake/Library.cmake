@@ -21,12 +21,13 @@ function (microsoft_add_library
   add_library(${library} 
               STATIC
               ${source})
-
+  add_dependencies(${library} llvm)
   target_include_directories(
     ${library} 
     PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
   )
+  target_link_libraries(${library} PRIVATE yaml-cpp)    
 
 
   if (WIN32)

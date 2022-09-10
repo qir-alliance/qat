@@ -22,16 +22,24 @@ linux-docker:
 	docker build -f Docker/CI.Ubuntu22.dockerfile -t qir-passes-ubuntu:latest .
 
 linux-ci: linux-docker
-	docker run -it -v ${PWD}:/src --rm -t qir-passes-ubuntu:latest ./manage runci
+	docker run -it -v ${PWD}:/src --rm -t qir-passes-ubuntu:latest /bin/bash
+
+format-in-docker: linux-docker
+	docker run -it --rm -v ${PWD}:/src/ -t qir-passes-ubuntu:latest ./manage stylecheck --fix-issues
+
+
+qat-docker:
+	docker run --rm -it --platform linux/amd64 bazel/qir/qat:qat-image /bin/sh
 
 test-examples:
 	mkdir -p Debug
 	cd Debug && cmake .. && make qat
-	cd qir/stdlib && make
 	export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat && \
-		export QIR_STLIB=${PWD}/qir/stdlib/lib/stdlib.ll && \
 		cd qir/qsharp && \
 		make
+
+add-newlines-eof:
+	git ls-files -z "*.cpp" "*.hpp" | while IFS= read -rd '' f; do tail -c1 < "$f" | read -r _ || echo >> "$f"; done	
 
 
 clean:

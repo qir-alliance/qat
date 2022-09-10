@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+
+#include "yaml-cpp/yaml.h"
+
+#include <fstream>
 
 using namespace microsoft::quantum;
 
@@ -10,8 +14,6 @@ namespace microsoft::quantum
 
 void ConfigurationManager::setupArguments(ParameterParser& parser)
 {
-    parameters_.clear();
-
     for (auto& section : config_sections_)
     {
         if (section.enabled_by_default)
@@ -41,7 +43,7 @@ void ConfigurationManager::configure(ParameterParser& parser, bool experimental_
 
     for (auto& section : config_sections_)
     {
-        if (section.enabled_by_default)
+        if (section.enabled_by_default || parser.has("disable-" + section.id))
         {
             *section.active = (parser.get("disable-" + section.id, "false") != "true");
         }
@@ -55,6 +57,14 @@ void ConfigurationManager::configure(ParameterParser& parser, bool experimental_
     {
         for (auto& c : section.settings)
         {
+            // Skipping those parameters which are not available to the
+            // commandline interface for configuration
+            if (!c->isAvailableToCli())
+            {
+                continue;
+            }
+
+            // Configuring the paramter
             if (!c->configure(parser, experimental_mode))
             {
                 throw std::runtime_error("Failed configure the section.");
@@ -102,6 +112,15 @@ void ConfigurationManager::printHelp(bool experimental_mode) const
 
         for (auto& c : section.settings)
         {
+            // Skipping those parameters which are not available to the
+            // commandline interface for configuration
+            if (!c->isAvailableToCli())
+            {
+                continue;
+            }
+
+            // Skipping experimental parameters unless if we are in experimental
+            // mode.
             if (c->isExperimental() && !experimental_mode)
             {
                 continue;
@@ -183,6 +202,34 @@ void ConfigurationManager::disableSectionByDefault()
     config_sections_.back().enabled_by_default = false;
 }
 
+void ConfigurationManager::disableSectionById(String const& id)
+{
+    for (auto& section : config_sections_)
+    {
+        if (section.id == id)
+        {
+            section.enabled_by_default = false;
+            return;
+        }
+    }
+
+    throw std::runtime_error("Section '" + id + "' not found");
+}
+
+void ConfigurationManager::enableSectionById(String const& id)
+{
+    for (auto& section : config_sections_)
+    {
+        if (section.id == id)
+        {
+            section.enabled_by_default = true;
+            return;
+        }
+    }
+
+    throw std::runtime_error("Section '" + id + "' not found");
+}
+
 DeferredValue::DeferredValuePtr ConfigurationManager::getParameter(String const& name)
 {
 
@@ -203,6 +250,47 @@ DeferredValue::DeferredValuePtr ConfigurationManager::getParameter(String const&
     }
 
     return ret;
+}
+
+void ConfigurationManager::loadConfig(String const& filename)
+{
+    YAML::Node config = YAML::LoadFile(filename);
+
+    for (auto& section : config_sections_)
+    {
+        if (config[section.id])
+        {
+            auto node = config[section.id];
+            for (auto& c : section.settings)
+            {
+                c->setValueFromYamlNode(node);
+            }
+        }
+    }
+}
+
+void ConfigurationManager::saveConfig(String const& filename)
+{
+    YAML::Node ret;
+    for (auto& section : config_sections_)
+    {
+        if (section.id.empty())
+        {
+            continue;
+        }
+
+        YAML::Node config;
+
+        for (auto& c : section.settings)
+        {
+            c->updateValueInYamlNode(config);
+        }
+
+        ret[section.id] = config;
+    }
+
+    std::ofstream fout(filename);
+    fout << ret;
 }
 
 } // namespace microsoft::quantum

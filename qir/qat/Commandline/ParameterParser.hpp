@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "QatTypes/QatTypes.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <string>
 #include <unordered_map>
@@ -51,7 +51,7 @@ class ParameterParser
 
     /// Parses the command line arguments given the argc and argv
     /// from the main function.
-    void parseArgs(int argc, char** argv);
+    void parseArgs(int argc, char const** argv);
 
     /// Returns list of arguments without flags and/or options
     /// included.

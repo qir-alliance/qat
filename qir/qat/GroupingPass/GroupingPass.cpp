@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "GroupingPass/GroupingAnalysisPass.hpp"
-#include "GroupingPass/GroupingPass.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -34,7 +34,7 @@ bool GroupingPass::isQuantumRegister(llvm::Type const* type)
 
 int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
 {
-    int64_t ret = PURE_CLASSICAL;
+    int64_t ret = PureClassical;
 
     // Checking all operations
     bool any_quantum     = false;
@@ -52,9 +52,9 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
             any_classical |= !q;
         }
 
-        if (returns_quantum || is_void && !any_classical && any_quantum)
+        if (returns_quantum || (is_void && !any_classical && any_quantum))
         {
-            ret |= DEST_QUANTUM;
+            ret |= DestQuantum;
         }
     }
     else
@@ -69,28 +69,28 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
         // Setting the destination platform
         if (returns_quantum)
         {
-            ret |= DEST_QUANTUM;
+            ret |= DestQuantum;
 
             // If no classical or quantum arguments present, then destination dictates
             // source
             if (!any_quantum && !any_classical)
             {
-                ret |= SOURCE_QUANTUM;
+                ret |= SourceQuantum;
             }
         }
     }
 
     if (any_quantum && any_classical)
     {
-        if (ret != DEST_QUANTUM)
+        if (ret != DestQuantum)
         {
-            ret = INVALID_MIXED_LOCATION;
+            ret = InvalidMixedLocation;
         }
     }
 
     else if (any_quantum)
     {
-        ret |= SOURCE_QUANTUM;
+        ret |= SourceQuantum;
     }
 
     return ret;
@@ -175,7 +175,7 @@ void GroupingPass::expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* t
         }
 
         auto instr_class = classifyInstruction(&instr);
-        if ((instr_class & SOURCE_QUANTUM) != 0)
+        if ((instr_class & SourceQuantum) != 0)
         {
             // Checking if we are starting a new quantum program
             for (auto& op : instr.operands())
@@ -204,7 +204,7 @@ void GroupingPass::expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* t
             instr.replaceAllUsesWith(new_instr);
             to_delete_.push_back(&instr);
         }
-        else if (instr_class != INVALID_MIXED_LOCATION)
+        else if (instr_class != InvalidMixedLocation)
         {
             // Check if depends on readout
             if (depends_on_qc.find(&instr) != depends_on_qc.end())
@@ -280,7 +280,7 @@ void GroupingPass::expandBasedOnDest(
         }
 
         auto instr_class     = classifyInstruction(&instr);
-        bool dest_is_quantum = (instr_class & DEST_QUANTUM) != 0;
+        bool dest_is_quantum = (instr_class & DestQuantum) != 0;
 
         if (dest_is_quantum == move_quatum)
         {
@@ -345,16 +345,16 @@ llvm::PreservedAnalyses GroupingPass::run(llvm::Module& module, llvm::ModuleAnal
 
         expandBasedOnSource(module, block);
 
-        for (auto* block : quantum_blocks_)
+        for (auto* readout_block : quantum_blocks_)
         {
-            expandBasedOnDest(module, block, true, "readout");
+            expandBasedOnDest(module, readout_block, true, "readout");
         }
 
         // Last classical block does not contain any loads
         classical_blocks_.pop_back();
-        for (auto* block : classical_blocks_)
+        for (auto* load_block : classical_blocks_)
         {
-            expandBasedOnDest(module, block, false, "load");
+            expandBasedOnDest(module, load_block, false, "load");
         }
     }
 
@@ -365,16 +365,16 @@ llvm::PreservedAnalyses GroupingPass::run(llvm::Module& module, llvm::ModuleAnal
 
         expandBasedOnSource(module, block);
 
-        for (auto* block : quantum_blocks_)
+        for (auto* readout_block : quantum_blocks_)
         {
-            expandBasedOnDest(module, block, true, "readout");
+            expandBasedOnDest(module, readout_block, true, "readout");
         }
 
         // Last classical block does not contain any loads
         classical_blocks_.pop_back();
-        for (auto* block : classical_blocks_)
+        for (auto* load_block : classical_blocks_)
         {
-            expandBasedOnDest(module, block, false, "load");
+            expandBasedOnDest(module, load_block, false, "load");
         }
     }
 

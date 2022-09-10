@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/IOperandPrototype.hpp"
-#include "Rules/Patterns/PhiPattern.hpp"
+#include "qir/qat/Rules/Patterns/PhiPattern.hpp"
+
+#include "qir/qat/Rules/IOperandPrototype.hpp"
 
 namespace microsoft::quantum
 {
@@ -24,7 +25,7 @@ PhiPattern::Child PhiPattern::copy() const
 {
     auto ret = std::make_shared<PhiPattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 } // namespace microsoft::quantum

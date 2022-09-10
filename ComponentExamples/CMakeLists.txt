@@ -1,4 +1,5 @@
 add_library(HelloWorld SHARED HelloWorld/main.cpp)
+add_dependencies(HelloWorld llvm)
 
 if (WIN32)
   # Windows specific configure
@@ -13,6 +14,7 @@ endif ()
 
 
 add_library(InlinePassComponent SHARED InlinePassComponent/main.cpp)
+add_dependencies(InlinePassComponent llvm)
 
 if (WIN32)
   # Windows specific configure
@@ -28,7 +30,7 @@ endif ()
 
 
 add_library(CArrayMap SHARED CArrayMap/main.cpp)
-
+add_dependencies(CArrayMap llvm)
 if (WIN32)
   # Windows specific configure
   # TODO(issue-7): Add Windows specific configuration  

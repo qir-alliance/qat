@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
 
 #include <cstdint>
 #include <fstream>
@@ -17,8 +17,18 @@ ILogger::~ILogger()
     location_resolver_ = nullptr;
 }
 
+void ILogger::setLocationFromFunctionName(String const& name)
+{
+    if (location_from_name_resolver_)
+    {
+        auto loc = location_from_name_resolver_(name);
+        setLocation(loc);
+    }
+}
+
 void ILogger::setLocationFromValue(llvm::Value const* value)
 {
+
     if (location_resolver_)
     {
         auto loc = location_resolver_(value);
@@ -29,6 +39,11 @@ void ILogger::setLocationFromValue(llvm::Value const* value)
 void ILogger::setLocationResolver(LocationResolver const& r)
 {
     location_resolver_ = r;
+}
+
+void ILogger::setLocationFromNameResolver(LocationFromNameResolver const& r)
+{
+    location_from_name_resolver_ = r;
 }
 
 ILogger::Messages const& ILogger::messages() const
@@ -47,7 +62,7 @@ SourceLocation ILogger::resolveLocation(llvm::Value const* value)
     {
         return location_resolver_(value);
     }
-    return SourceLocation::InvalidPosition();
+    return SourceLocation::invalidPosition();
 }
 
 bool ILogger::hadErrors() const
@@ -67,6 +82,15 @@ void ILogger::errorWithLocation(String const& message, llvm::Value* ptr)
         setLocationFromValue(ptr);
     }
     error(message);
+}
+
+void ILogger::warningWithLocation(String const& message, llvm::Value* ptr)
+{
+    if (ptr)
+    {
+        setLocationFromValue(ptr);
+    }
+    warning(message);
 }
 
 void ILogger::errorCouldNotDeleteNode(llvm::Value* ptr)
@@ -103,14 +127,14 @@ void ILogger::errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr)
     errorWithLocation("Function inlining exceeded maximum recursion depth of " + std::to_string(n), ptr);
 }
 
-void ILogger::errorNoQubitsPresent(llvm::Value* ptr)
+void ILogger::errorNoQubitsPresent(llvm::Value* ptr, String const& name)
 {
-    errorWithLocation("No qubits present in function (required by profile).", ptr);
+    errorWithLocation("No qubits present in function (required by profile '" + name + "').", ptr);
 }
 
-void ILogger::errorNoResultsPresent(llvm::Value* ptr)
+void ILogger::errorNoResultsPresent(llvm::Value* ptr, String const& name)
 {
-    errorWithLocation("No results present in function (required by profile).", ptr);
+    errorWithLocation("No results present in function (required by profile '" + name + "').", ptr);
 }
 
 void ILogger::errorOpcodeNotAllowed(String const& code, String const& profile_name, llvm::Value* ptr)
@@ -138,4 +162,45 @@ void ILogger::errorTypeNotAllowed(String const& type_name, String const& profile
 {
     errorWithLocation("Type '" + type_name + "' is not allowed for this profile (" + profile_name + ").", ptr);
 }
+
+void ILogger::errorPoisonNotAllowed(String const& profile_name, llvm::Value* ptr)
+{
+    errorWithLocation("Poison value is not allowed for this profile (" + profile_name + ").", ptr);
+}
+
+void ILogger::errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr)
+{
+    errorWithLocation("Undef value is not allowed for this profile (" + profile_name + ").", ptr);
+}
+
+void ILogger::errorExpectedStringValueForAttr(String const& function_name, String const& attr_name)
+{
+    setLocationFromFunctionName(function_name);
+    error("Expected string value for attribute '" + attr_name + "' for function " + function_name);
+}
+
+void ILogger::warningWeakLinkReplacementNotPossible(String const& function_name, String const& replacement)
+{
+    setLocationFromFunctionName(function_name);
+    warning("Could not find replacement " + replacement + " for function " + function_name);
+}
+void ILogger::errorReplacementSignatureMismatch(
+    String const& function_name,
+    String const& signature1,
+    String const& signature2)
+{
+    setLocationFromFunctionName(function_name);
+    error("Replacement signature mismatch: " + signature1 + " differs from " + signature2);
+}
+
+void ILogger::setHasErrors(bool value)
+{
+    had_errors_ = value;
+}
+
+void ILogger::setHasWarnings(bool value)
+{
+    had_warnings_ = value;
+}
+
 } // namespace microsoft::quantum

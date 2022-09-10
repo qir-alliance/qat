@@ -2,21 +2,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
-#include "QatTypes/QatTypes.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
 #include <set>
 
 namespace microsoft::quantum
 {
-struct OpcodeValue
+class OpcodeValue
 {
-    String id{""};
-    String predicate{""};
-    OpcodeValue(String const& name, String const& fi = "")
-      : id{name}
-      , predicate{fi}
+  public:
+    OpcodeValue(String const& name, String const& fi = "") // NOLINT
+      : id_{name}
+      , predicate_{fi}
     {
     }
 
@@ -27,8 +26,31 @@ struct OpcodeValue
     OpcodeValue& operator=(OpcodeValue const&) = default;
     bool         operator==(OpcodeValue const& other) const
     {
-        return id == other.id && predicate == other.predicate;
+        return id_ == other.id_ && predicate_ == other.predicate_;
     }
+
+    String& id()
+    {
+        return id_;
+    }
+    String const& id() const
+    {
+        return id_;
+    }
+
+    String& predicate()
+    {
+        return predicate_;
+    }
+
+    String const& predicate() const
+    {
+        return predicate_;
+    }
+
+  private:
+    String id_{""};
+    String predicate_{""};
 };
 } // namespace microsoft::quantum
 
@@ -39,7 +61,7 @@ template <> struct hash<microsoft::quantum::OpcodeValue>
     size_t operator()(microsoft::quantum::OpcodeValue const& x) const
     {
         hash<std::string> hasher;
-        return hasher(x.id + "." + x.predicate);
+        return hasher(x.id() + "." + x.predicate());
     }
 };
 } // namespace std
@@ -47,11 +69,112 @@ template <> struct hash<microsoft::quantum::OpcodeValue>
 namespace microsoft::quantum
 {
 
+class OpcodeSet
+{
+  public:
+    using Container = std::unordered_set<OpcodeValue>;
+    explicit OpcodeSet(Container const& data = {})
+      : data_{data}
+    {
+    }
+    explicit OpcodeSet(Container&& data)
+      : data_{std::move(data)}
+    {
+    }
+
+    Container& data()
+    {
+        return data_;
+    }
+
+    Container const& data() const
+    {
+        return data_;
+    }
+
+    void toString(String& value) const
+    {
+        std::stringstream val;
+        bool              not_first = false;
+        for (auto const& d : data_)
+        {
+            if (not_first)
+            {
+                val << ";";
+            }
+            val << d.id() << "," << d.predicate();
+            not_first = true;
+        }
+
+        value = val.str();
+    }
+
+    void insertPart(String const& part)
+    {
+        // bind_.insert(part);
+        auto p = part.find(',');
+        if (p == std::string::npos)
+        {
+            throw std::runtime_error("Execpted ',' but it is not present in opcode segment");
+        }
+
+        auto a = part.substr(0, p);
+        auto b = part.substr(p + 1, part.size() - p - 1);
+        data_.insert(OpcodeValue(a, b));
+    }
+
+    void fromString(String const& value)
+    {
+        data_.clear();
+        std::size_t last_p = 0;
+        auto        p      = value.find(';', last_p);
+        while (p != String::npos)
+        {
+            auto part = value.substr(last_p, p - last_p);
+            insertPart(part);
+
+            last_p = p + 1;
+            p      = value.find(';', last_p);
+        }
+
+        if (last_p < value.size())
+        {
+            auto part = value.substr(last_p, p - last_p);
+            insertPart(part);
+        }
+    }
+
+    void toYaml(YAML::Node& node) const
+    {
+        for (auto const& d : data_)
+        {
+            YAML::Node pair;
+            pair["id"]        = d.id();
+            pair["predicate"] = d.predicate();
+            node.push_back(pair);
+        }
+    }
+
+    void fromYaml(YAML::Node const& node)
+    {
+        for (auto& pair : node)
+        {
+            auto a = pair["id"].as<String>();
+            auto b = pair["predicate"].as<String>();
+            data_.insert(OpcodeValue(a, b));
+        }
+    }
+
+  private:
+    Container data_;
+};
+static_assert(HasQatSerializers<OpcodeSet>::VALUE, "Expected OpcodeSet to be serializable.");
+
 class ValidationPassConfiguration
 {
   public:
-    using Set       = std::unordered_set<std::string>;
-    using OpcodeSet = std::unordered_set<OpcodeValue>;
+    using Set = std::unordered_set<std::string>;
+    //    using OpcodeSet = std::unordered_set<OpcodeValue>;
 
     // Setup and construction
     //
@@ -75,6 +198,9 @@ class ValidationPassConfiguration
 
     bool requiresQubits() const;
     bool requiresResults() const;
+
+    bool allowPoison() const;
+    bool allowUndef() const;
 
     String profileName() const;
 
@@ -100,6 +226,9 @@ class ValidationPassConfiguration
 
     bool requires_qubits_{false};
     bool requires_results_{false};
+
+    bool allow_poison_{true};
+    bool allow_undef_{true};
 };
 
 } // namespace microsoft::quantum

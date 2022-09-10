@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "AllocationManager/AllocationManager.hpp"
-#include "Commandline/ConfigurationManager.hpp"
 #include "gtest/gtest.h"
+#include "qir/qat/AllocationManager/AllocationManager.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
 
 using namespace microsoft::quantum;
 
@@ -84,7 +84,7 @@ TEST(CommandlineTestSuite, Configuration)
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
-        char* args[] = {"main", "--param1", "--param2", "hello", "--param3", "1337"};
+        char const* args[] = {"main", "--param1", "--param2", "hello", "--param3", "1337"};
         parser.parseArgs(6, args);
 
         configuration_manager.configure(parser);
@@ -101,7 +101,7 @@ TEST(CommandlineTestSuite, Configuration)
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
-        char* args[] = {"main", "--no-param1", "--param2", "ms", "--param3", "17372"};
+        char const* args[] = {"main", "--no-param1", "--param2", "ms", "--param3", "17372"};
         parser.parseArgs(6, args);
 
         configuration_manager.configure(parser);
@@ -120,7 +120,7 @@ TEST(CommandlineTestSuite, Configuration)
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
-        char* args[] = {"main"};
+        char const* args[] = {"main"};
         parser.parseArgs(1, args);
 
         configuration_manager.configure(parser);
@@ -138,7 +138,7 @@ TEST(CommandlineTestSuite, Configuration)
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
-        char* args[] = {"main", "--no-param1", "--param2", "msss", "--param3", "17372"};
+        char const* args[] = {"main", "--no-param1", "--param2", "msss", "--param3", "17372"};
         parser.parseArgs(6, args);
 
         configuration_manager.configure(parser);
@@ -161,7 +161,7 @@ TEST(CommandlineTestSuite, Configuration)
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
-        char* args[] = {"main", "--no-param1", "--param2", "msss", "--param3", "17372"};
+        char const* args[] = {"main", "--no-param1", "--param2", "msss", "--param3", "17372"};
         parser.parseArgs(6, args);
 
         configuration_manager.configure(parser);

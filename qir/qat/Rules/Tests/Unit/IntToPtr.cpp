@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Generators/LlvmPassesConfiguration.hpp"
-#include "GroupingPass/GroupingPassConfiguration.hpp"
-#include "PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
-#include "Rules/Factory.hpp"
-#include "Rules/Notation/Notation.hpp"
-#include "Rules/ReplacementRule.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Rules/Notation/Notation.hpp"
+#include "qir/qat/Rules/ReplacementRule.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 

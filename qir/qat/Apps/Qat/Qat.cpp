@@ -16,54 +16,64 @@
 ///
 ///
 /// ```
-/// ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
-///            User input          │                  │      "Use" relation
-/// └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─                   ▼
-///                 │  argc, argv
-///                 ▼                                 ─ ─▶   "Produce" relation
-/// ┌──────────────────────────────┐
-/// │       ParameterParser        │◀─┐ Setup arguments
-/// └──────────────────────────────┘  │
-///    Load config  │                 │
-///                 ▼                 │
-/// ┌──────────────────────────────┐  │            ┌──────────────────────────────────┐
-/// │     ConfigurationManager     │──┘    ┌ ─ ─ ─▶│             Ruleset              │
-/// └──────────────────────────────┘               └──────────────────────────────────┘
-///  Provide config │                      │                         │   Rules for
-///                 ▼                                                ▼ transformation
-/// ┌───────────────────────────────┐─ ─ ─ ┘       ┌──────────────────────────────────┐
-/// │       ProfileGenerator        │─ ─ ─ ─ ─ ─ ─▶│      TransformationRulesPass     │
-/// └───────────────────────────────┘              └──────────────────────────────────┘
-///                                                                  │  LLVM module
-///                                                                  ▼      pass
-/// ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─                ┌──────────────────────────────────┐
-///              Output            │◀─ ─ ─ ─ ─ ─ ─ ┤  QAT / LLVM Module Pass Manager  │
-/// └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─      stdout    └──────────────────────────────────┘
+/// ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+///                          User input
+/// └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┬ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+/// ┌─────────────────────────────▼─────────────────────────────┐
+/// │            Configuration and paramater parser             │
+/// └─────────────┬───────────────────────────────┬─────────────┘
+/// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
+/// │        LLVM (Q)IRs        │   │      Profile config       │
+/// └─────────────┬─────────────┘   └─────────────┬─────────────┘
+/// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
+/// │       Module loader       │   │     Profile Generator     │
+/// └─────────────┬─────────────┘   └─────────────┬─────────────┘
+/// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
+/// │       Single module       │   │          Profile          │
+/// │      transformations      │   └──────┬──────────────┬─────┘
+/// └─────────────┬─────────────┘   ┌──────▼─────┐ ┌──────▼─────┐
+/// ┌─────────────▼─────────────┐   │            │ │            │
+/// │   Adding debug symbols    ├───▶ Generation ├─┼▶Validation ├─────┐
+/// └───────────────────────────┘   │            │ │            │     │
+///                                 └──────┬─────┘ └──────┬─────┘     │
+///                                 ┌──────▼──────────────▼─────┐     │
+///                                 │          Logger           │     │
+///                                 └───────────────────────────┘     │
+///                                               │                   │
+///                                               ▼                   ▼
+///                                      ┌ ─ ─ ─ ─ ─ ─ ─ ─ ┐┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+///                                        Standard error     Standard Output:
+///                                      │    or file:     ││   Resulting IR    │
+///                                           JSON Logs
+///                                      └ ─ ─ ─ ─ ─ ─ ─ ─ ┘└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
 /// ```
 ///
 ///
 
-#include "Apps/Qat/QatConfig.hpp"
-#include "Commandline/ConfigurationManager.hpp"
-#include "Commandline/ParameterParser.hpp"
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Generators/LlvmPassesConfiguration.hpp"
-#include "GroupingPass/GroupingAnalysisPass.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "GroupingPass/GroupingPassConfiguration.hpp"
-#include "Logging/CommentLogger.hpp"
-#include "ModuleLoader/ModuleLoader.hpp"
-#include "Profile/Profile.hpp"
-#include "Rules/Factory.hpp"
-#include "Rules/FactoryConfig.hpp"
-#include "TransformationRulesPass/TransformationRulesPass.hpp"
-#include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "ValidationPass/ValidationPassConfiguration.hpp"
-#include "Validator/Validator.hpp"
+#include "qir/qat/Apps/Qat/ProfileConfiguration.hpp"
+#include "qir/qat/Apps/Qat/QatConfig.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Commandline/ParameterParser.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/CommentLogger.hpp"
+#include "qir/qat/ModuleLoader/ModuleLoader.hpp"
+#include "qir/qat/Profile/Profile.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Validator/Validator.hpp"
+#include "qir/qat/Version/Version.hpp"
 
-#include "Llvm/Llvm.hpp"
-
+#ifndef _WIN32
 #include <dlfcn.h>
+#endif
 
 #include <fstream>
 #include <iomanip>
@@ -116,7 +126,7 @@ void init()
     initializeTypePromotionPass(registry);
 }
 
-int main(int argc, char** argv)
+int main(int argc, char const** argv)
 {
     int ret = 0;
 
@@ -130,8 +140,8 @@ int main(int argc, char** argv)
         //
 
         ConfigurationManager& configuration_manager = generator->configurationManager();
-        configuration_manager.addConfig<QatConfig>();
-        configuration_manager.addConfig<FactoryConfiguration>();
+        configuration_manager.addConfig<QatConfig>("qat");
+        configuration_manager.addConfig<FactoryConfiguration>("transformation-rules");
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
@@ -141,9 +151,11 @@ int main(int argc, char** argv)
         // Getting the main configuration
         auto config = configuration_manager.get<QatConfig>();
 
-        // Setting profile validation configuration
-        configuration_manager.addConfig<ValidationPassConfiguration>(
-            "validation-configuration", ValidationPassConfiguration::fromProfileName(config.profile()));
+        if (config.showVersion())
+        {
+            llvm::errs() << "v. " << microsoft::quantum::version::FULL << "\n\n";
+            exit(0);
+        }
 
         // Setting logger up
         std::shared_ptr<ILogger> logger{nullptr};
@@ -168,6 +180,7 @@ int main(int argc, char** argv)
 
         if (!config.load().empty())
         {
+#ifndef _WIN32
             // TODO (issue-47): Add support for multiple loads
             void* handle = dlopen(config.load().c_str(), RTLD_LAZY);
 
@@ -183,14 +196,34 @@ int main(int argc, char** argv)
 
                 load_component(generator.get());
             }
+#else
+            throw std::runtime_error("Dynamic modules not supported on the Windows platform.");
+#endif
         }
+
+        // Configuring QAT according to profile
+        configureProfile(config.profile(), configuration_manager);
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
 
         configuration_manager.setupArguments(parser);
         parser.parseArgs(argc, argv);
+
+        // Loading configuration file if needed
+        if (!config.targetDefinition().empty())
+        {
+            configuration_manager.loadConfig(config.targetDefinition());
+        }
+
+        // Configure the manager based on the commandline arguments
         configuration_manager.configure(parser, config.isExperimental());
+
+        // Saving configuration if requested to do so
+        if (!config.saveConfigTo().empty())
+        {
+            configuration_manager.saveConfig(config.saveConfigTo());
+        }
 
         // Checking that all command line parameters were used
         bool incorrect_settings = false;
@@ -220,8 +253,18 @@ int main(int argc, char** argv)
         if (parser.arguments().empty())
         {
             std::cerr << "Usage: " << argv[0] << " [options] filename" << std::endl;
-            configuration_manager.printHelp(config.isExperimental());
             std::cerr << "\n";
+        }
+
+        // Shows help if needed
+        if (config.showHelp())
+        {
+            configuration_manager.printHelp(config.isExperimental());
+        }
+
+        // Returns from program if no input files were provided
+        if (parser.arguments().empty())
+        {
             exit(-1);
         }
 
@@ -253,25 +296,27 @@ int main(int argc, char** argv)
         auto location_table = loader.locationTable();
         logger->setLocationResolver([location_table](llvm::Value const* val)
                                     { return location_table->getPosition(val); });
+        logger->setLocationFromNameResolver([location_table](String const& name)
+                                            { return location_table->getPositionFromFunctionName(name); });
 
         // Getting the optimization level
         //
-        auto optimization_level = llvm::PassBuilder::OptimizationLevel::O0;
+        auto optimization_level = llvm::OptimizationLevel::O0;
 
         // Setting the optimization level
         if (config.isOpt1Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O1;
+            optimization_level = llvm::OptimizationLevel::O1;
         }
 
         if (config.isOpt2Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O2;
+            optimization_level = llvm::OptimizationLevel::O2;
         }
 
         if (config.isOpt3Enabled())
         {
-            optimization_level = llvm::PassBuilder::OptimizationLevel::O3;
+            optimization_level = llvm::OptimizationLevel::O3;
         }
 
         // Profile manipulation
@@ -283,10 +328,10 @@ int main(int argc, char** argv)
 
         if (config.shouldGenerate())
         {
-            profile.apply(*module);
+            profile->apply(*module);
 
             //  Preventing subsequent routines to run if errors occurred.
-            if (logger && (logger->hadErrors() || logger->hadWarnings()))
+            if (logger && logger->hadErrors())
             {
                 ret = -1;
             }
@@ -330,27 +375,27 @@ int main(int argc, char** argv)
 
         if (ret == 0 && config.verifyModule())
         {
-            if (!profile.verify(*module))
+            if (!profile->verify(*module))
             {
                 std::cerr << "IR is broken." << std::endl;
-                ret = -1;
-            }
-
-            // Safety pre-caution to ensure that all errors and warnings reported
-            // results in failure.
-            if (logger && (logger->hadErrors() || logger->hadWarnings()))
-            {
                 ret = -1;
             }
         }
 
         if (ret == 0 && config.shouldValidate())
         {
-            if (!profile.validate(*module))
+            if (!profile->validate(*module))
             {
                 std::cerr << "IR did not validate to the profile constraints." << std::endl;
                 ret = -1;
             }
+        }
+
+        // Safety pre-caution to ensure that all errors and warnings reported
+        // results in failure.
+        if (logger && logger->hadErrors())
+        {
+            ret = -1;
         }
 
         // Saving output

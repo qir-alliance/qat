@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
-#include "Profile/Profile.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
-#include "StaticResourceComponent/QubitRemapPass.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/StaticResourceComponent/QubitRemapPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -56,6 +55,8 @@ llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function& function, llvm::Func
             }
 
             break;
+        case AllocationAnalysis::NotResource:
+            break;
         }
     }
 
@@ -89,7 +90,6 @@ llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function& function, llvm::Func
 
             break;
         case AllocationAnalysis::NotResource:
-        default:
             continue;
         }
 
@@ -99,9 +99,9 @@ llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function& function, llvm::Func
         auto call_instr = llvm::dyn_cast<llvm::CallInst>(value.used_by);
         if (call_instr)
         {
-            auto attrs = call_instr->getAttributes();
-            auto newlist =
-                attrs.removeParamAttribute(function.getContext(), value.operand_id, llvm::Attribute::NonNull);
+            auto attrs   = call_instr->getAttributes();
+            auto newlist = attrs.removeParamAttribute(
+                function.getContext(), static_cast<uint32_t>(value.operand_id), llvm::Attribute::NonNull);
             call_instr->setAttributes(newlist);
         }
 
@@ -115,7 +115,7 @@ llvm::PreservedAnalyses QubitRemapPass::run(llvm::Function& function, llvm::Func
         new_instr = new llvm::IntToPtrInst(new_index, pointer_type);
         builder.Insert(new_instr);
 
-        value.used_by->setOperand(value.operand_id, new_instr);
+        value.used_by->setOperand(static_cast<uint32_t>(value.operand_id), new_instr);
     }
 
     return llvm::PreservedAnalyses::none();

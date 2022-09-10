@@ -2,15 +2,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/SourceLocation.hpp"
-#include "QatTypes/QatTypes.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/SourceLocation.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <cstdint>
 #include <fstream>
 #include <memory>
 #include <string>
+#include <utility>
 
 namespace microsoft::quantum
 {
@@ -20,35 +20,63 @@ namespace microsoft::quantum
 class ILogger
 {
   public:
-    using Value            = llvm::Value;
-    using LocationResolver = std::function<SourceLocation(Value const*)>;
-    using ILoggerPtr       = std::shared_ptr<ILogger>;
+    using Value                    = llvm::Value;
+    using LocationResolver         = std::function<SourceLocation(Value const*)>;
+    using LocationFromNameResolver = std::function<SourceLocation(String const&)>;
+    using ILoggerPtr               = std::shared_ptr<ILogger>;
 
     /// Class that holds the location of where the incident happened.
     struct Location : public SourceLocation
     {
         Location() = default;
-        Location(SourceLocation const& source)
+        explicit Location(SourceLocation const& source)
           : SourceLocation(source)
         {
         }
 
-        Location(String v_name, int64_t v_line, int64_t v_column, String v_llvm_hint = "", String v_frontend_hint = "")
-          : SourceLocation(v_name, v_line, v_column)
-          , llvm_hint{v_llvm_hint}
-          , frontend_hint{v_frontend_hint}
+        Location(String v_name, int64_t v_line, int64_t v_column, String llvm_hint = "", String frontend_hint = "")
+          : SourceLocation(std::move(v_name), v_line, v_column)
+          , llvm_hint_{std::move(llvm_hint)}
+          , frontend_hint_{std::move(frontend_hint)}
         {
         }
 
-        Location(Location const& source)
-          : SourceLocation(source)
-          , llvm_hint{source.llvm_hint}
-          , frontend_hint{source.frontend_hint}
+        Location(Location const& source) = default;
+        Location& operator=(Location const& source) = default;
+
+        String& llvmHint()
         {
+            return llvm_hint_;
         }
 
-        String llvm_hint{""};
-        String frontend_hint{""};
+        String const& llvmHint() const
+        {
+            return llvm_hint_;
+        }
+
+        void setLlvmHint(String const& v)
+        {
+            llvm_hint_ = v;
+        }
+
+        String& frontendHint()
+        {
+            return frontend_hint_;
+        }
+
+        String const& frontendHint() const
+        {
+            return frontend_hint_;
+        }
+
+        void setFrontendHint(String const& v)
+        {
+            frontend_hint_ = v;
+        }
+
+      private:
+        String llvm_hint_{""};
+        String frontend_hint_{""};
     };
 
     /// Enum description what type of information we are conveying.
@@ -58,7 +86,7 @@ class ILogger
         Info,
         Warning,
         Error,
-        InternalError,
+        InternalError
     };
 
     /// Struct to hold a message together with its type and location
@@ -76,10 +104,10 @@ class ILogger
     //
 
     ILogger()               = default;
-    ILogger(ILogger const&) = default;
-    ILogger(ILogger&&)      = default;
-    ILogger& operator=(ILogger const&) = default;
-    ILogger& operator=(ILogger&&) = default;
+    ILogger(ILogger const&) = delete;
+    ILogger(ILogger&&)      = delete;
+    ILogger& operator=(ILogger const&) = delete;
+    ILogger& operator=(ILogger&&) = delete;
 
     virtual ~ILogger();
 
@@ -123,8 +151,14 @@ class ILogger
     /// Sets the logger position based on a LLVM value.
     void setLocationFromValue(llvm::Value const* value);
 
+    /// Sets the logger position based on function name
+    void setLocationFromFunctionName(String const& name);
+
     /// Sets a resolver which that translates a LLVM value into a position in the source
     void setLocationResolver(LocationResolver const& r);
+
+    /// Sets a resolver which that translates function name into a position in the source
+    void setLocationFromNameResolver(LocationFromNameResolver const& r);
 
     /// Returns a source location from the value pointer (if possible)
     SourceLocation resolveLocation(llvm::Value const* value);
@@ -136,6 +170,7 @@ class ILogger
     bool hadWarnings() const;
 
     void errorWithLocation(String const& message, llvm::Value* ptr = nullptr);
+    void warningWithLocation(String const& message, llvm::Value* ptr = nullptr);
 
     /// Standard messages
     virtual void errorCouldNotDeleteNode(llvm::Value* ptr = nullptr);
@@ -150,9 +185,9 @@ class ILogger
 
     virtual void errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr = nullptr);
 
-    virtual void errorNoQubitsPresent(llvm::Value* ptr = nullptr);
+    virtual void errorNoQubitsPresent(llvm::Value* ptr = nullptr, String const& name = "unnamed");
 
-    virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr);
+    virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr, String const& name = "unnamed");
 
     virtual void errorOpcodeNotAllowed(String const& code, String const& profile_name, llvm::Value* ptr = nullptr);
 
@@ -165,12 +200,29 @@ class ILogger
 
     virtual void errorTypeNotAllowed(String const& type_name, String const& profile_name, llvm::Value* ptr = nullptr);
 
+    virtual void errorPoisonNotAllowed(String const& profile_name, llvm::Value* ptr = nullptr);
+
+    virtual void errorUndefNotAllowed(String const& profile_name, llvm::Value* ptr = nullptr);
+
+    virtual void errorExpectedStringValueForAttr(String const& function_name, String const& attr_name);
+
+    virtual void warningWeakLinkReplacementNotPossible(String const& function_name, String const& replacement);
+
+    virtual void errorReplacementSignatureMismatch(
+        String const& function_name,
+        String const& signature1,
+        String const& signature2);
+
   protected:
+    void setHasErrors(bool value);
+    void setHasWarnings(bool value);
+
+  private:
     bool had_errors_{false};   ///< Variable to indicate whether or not errors were reported.
     bool had_warnings_{false}; ///< Variable to indicate whether or not warnings were reported.
 
-  private:
-    LocationResolver location_resolver_{nullptr};
+    LocationResolver         location_resolver_{nullptr};
+    LocationFromNameResolver location_from_name_resolver_{nullptr};
 };
 
 } // namespace microsoft::quantum

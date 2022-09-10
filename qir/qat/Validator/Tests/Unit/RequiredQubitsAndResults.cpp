@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "GroupingPass/GroupingPass.hpp"
-#include "PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
-#include "Rules/Factory.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "TestTools/IrManipulationTestHelper.hpp"
 #include "gtest/gtest.h"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
 
@@ -46,12 +45,12 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 class MockLogger : public LogCollection
 {
   public:
-    void errorNoQubitsPresent(llvm::Value*) override
+    void errorNoQubitsPresent(llvm::Value*, String const&) override
     {
         raise_no_qubits_error_ = true;
     }
 
-    void errorNoResultsPresent(llvm::Value*) override
+    void errorNoResultsPresent(llvm::Value*, String const&) override
     {
         raise_no_results_error_ = true;
     }
@@ -87,7 +86,7 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
 
     ParameterParser parser;
     configuration_manager.setupArguments(parser);
-    char* argv[] = {"exe", "--requires-results", "--requires-qubits"};
+    char const* argv[] = {"exe", "--requires-results", "--requires-qubits"};
     parser.parseArgs(3, argv);
 
     configuration_manager.configure(parser);

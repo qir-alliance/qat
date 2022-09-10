@@ -2,9 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "QatTypes/QatTypes.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
 #include <unordered_set>
@@ -19,7 +18,8 @@ class RemoveDisallowedAttributesPass : public llvm::PassInfoMixin<RemoveDisallow
     RemoveDisallowedAttributesPass()
       : allowed_attrs_{
             static_cast<String>("EntryPoint"), static_cast<String>("InteropFriendly"),
-            static_cast<String>("requiredQubits"), static_cast<String>("requiredResults")
+            static_cast<String>("requiredQubits"), static_cast<String>("requiredResults"),
+            static_cast<String>("replaceWith")
             /*
             static_cast<String>("nofree")
             static_cast<String>("nosync")

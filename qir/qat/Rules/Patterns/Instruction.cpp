@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/IOperandPrototype.hpp"
-#include "Rules/Patterns/Instruction.hpp"
+#include "qir/qat/Rules/Patterns/Instruction.hpp"
+
+#include "qir/qat/Rules/IOperandPrototype.hpp"
 
 namespace microsoft::quantum
 {
@@ -22,7 +23,7 @@ StorePattern::Child StorePattern::copy() const
 {
     auto ret = std::make_shared<StorePattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool LoadPattern::match(Value* instr, Captures& captures) const
@@ -40,7 +41,7 @@ LoadPattern::Child LoadPattern::copy() const
 {
     auto ret = std::make_shared<LoadPattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool BitCastPattern::match(Value* instr, Captures& captures) const
@@ -58,7 +59,7 @@ BitCastPattern::Child BitCastPattern::copy() const
 {
     auto ret = std::make_shared<BitCastPattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool IntToPtrPattern::match(Value* instr, Captures& captures) const
@@ -79,7 +80,7 @@ IntToPtrPattern::Child IntToPtrPattern::copy() const
 {
     auto ret = std::make_shared<IntToPtrPattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool ConstIntPattern::match(Value* instr, Captures& captures) const
@@ -97,7 +98,7 @@ ConstIntPattern::Child ConstIntPattern::copy() const
 {
     auto ret = std::make_shared<ConstIntPattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool BranchPattern::match(Value* instr, Captures& captures) const
@@ -115,7 +116,7 @@ BranchPattern::Child BranchPattern::copy() const
 {
     auto ret = std::make_shared<BranchPattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool SelectPattern::match(Value* instr, Captures& captures) const
@@ -133,7 +134,7 @@ SelectPattern::Child SelectPattern::copy() const
 {
     auto ret = std::make_shared<SelectPattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool BasicBlockPattern::match(Value* instr, Captures& captures) const
@@ -151,7 +152,7 @@ BasicBlockPattern::Child BasicBlockPattern::copy() const
 {
     auto ret = std::make_shared<BasicBlockPattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 bool SwitchPattern::match(Value* instr, Captures& captures) const
@@ -169,7 +170,25 @@ SwitchPattern::Child SwitchPattern::copy() const
 {
     auto ret = std::make_shared<SwitchPattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
+}
+
+bool ZExtPattern::match(Value* instr, Captures& captures) const
+{
+    auto* cast_instr = llvm::dyn_cast<llvm::ZExtInst>(instr);
+    if (cast_instr == nullptr)
+    {
+        return fail(instr, captures);
+    }
+
+    return success(instr, captures);
+}
+
+ZExtPattern::Child ZExtPattern::copy() const
+{
+    auto ret = std::make_shared<ZExtPattern>();
+    ret->copyPropertiesFrom(*this);
+    return ret;
 }
 
 } // namespace microsoft::quantum

@@ -2,14 +2,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
-#include "Generators/LlvmPassesConfiguration.hpp"
-#include "Generators/ProfileGenerator.hpp"
-#include "Rules/FactoryConfig.hpp"
-#include "Rules/RuleSet.hpp"
-#include "TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
+#include "qir/qat/Generators/ProfileGenerator.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/Rules/RuleSet.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 
 namespace microsoft::quantum
 {
@@ -21,11 +20,16 @@ class ConfigurableProfileGenerator : public ProfileGenerator
 {
   public:
     using ConfigureFunction = std::function<void(RuleSet&)>; ///< Function type that configures a rule set.
+    enum class SetupMode
+    {
+        DoNothing,
+        SetupPipeline
+    };
 
     /// Default constructor. This constructor adds components for rule transformation and LLVM passes.
     /// These are configurable through the corresponding configuration classes which can be access
     /// through the configuration manager.
-    ConfigurableProfileGenerator();
+    explicit ConfigurableProfileGenerator(SetupMode const& mode = SetupMode::SetupPipeline);
 
     /// The constructor takes a lambda function which configures the rule set. This
     /// function is invoked during the creation of the generation module. This constructor

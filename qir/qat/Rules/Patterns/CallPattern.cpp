@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/IOperandPrototype.hpp"
-#include "Rules/Patterns/CallPattern.hpp"
+#include "qir/qat/Rules/Patterns/CallPattern.hpp"
+
+#include "qir/qat/Rules/IOperandPrototype.hpp"
 
 namespace microsoft::quantum
 {
@@ -43,7 +44,7 @@ CallPattern::Child CallPattern::copy() const
 {
     auto ret = std::make_shared<CallPattern>(name_);
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 } // namespace microsoft::quantum

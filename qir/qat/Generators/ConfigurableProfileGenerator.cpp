@@ -1,24 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Generators/ConfigurableProfileGenerator.hpp"
-#include "Rules/Factory.hpp"
-#include "Rules/FactoryConfig.hpp"
-#include "Rules/RuleSet.hpp"
-#include "TransformationRulesPass/TransformationRulesPass.hpp"
+#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/Rules/RuleSet.hpp"
+#include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
 
 #include <iostream>
 
 namespace microsoft::quantum
 {
 
-ConfigurableProfileGenerator::ConfigurableProfileGenerator()
+ConfigurableProfileGenerator::ConfigurableProfileGenerator(SetupMode const& mode)
 {
     configurationManager().addConfig<ValidationPassConfiguration>();
 
-    setupDefaultComponentPipeline();
+    if (mode == SetupMode::SetupPipeline)
+    {
+        setupDefaultComponentPipeline();
+    }
 }
 
 ConfigurableProfileGenerator::ConfigurableProfileGenerator(
@@ -31,9 +34,9 @@ ConfigurableProfileGenerator::ConfigurableProfileGenerator(
 
     replaceProfileComponent<TransformationRulesPassConfiguration>(
         "transformation-rules",
-        [configure](TransformationRulesPassConfiguration const& config, ProfileGenerator* ptr, Profile& profile)
+        [configure](TransformationRulesPassConfiguration const& config, ProfileGenerator& generator, Profile& profile)
         {
-            auto& ret = ptr->modulePassManager();
+            auto& ret = generator.modulePassManager();
 
             // Defining the mapping
             RuleSet rule_set;

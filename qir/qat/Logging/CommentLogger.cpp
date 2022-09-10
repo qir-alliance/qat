@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/CommentLogger.hpp"
+#include "qir/qat/Logging/CommentLogger.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <vector>
 
@@ -12,36 +12,36 @@ namespace microsoft::quantum
 
 void CommentLogger::debug(String const& message)
 {
-    llvm::errs() << "debug - " << location_.name << ":" << location_.line << "," << location_.column << " - " << message
-                 << "\n";
+    llvm::errs() << "debug - " << location_.name() << ":" << location_.line() << "," << location_.column() << " - "
+                 << message << "\n";
 }
 
 void CommentLogger::info(String const& message)
 {
-    llvm::errs() << "info - " << location_.name << ":" << location_.line << "," << location_.column << " - " << message
-                 << "\n";
+    llvm::errs() << "info - " << location_.name() << ":" << location_.line() << "," << location_.column() << " - "
+                 << message << "\n";
 }
 
 void CommentLogger::warning(String const& message)
 {
-    had_warnings_ = true;
+    setHasWarnings(true);
 
-    llvm::errs() << "warning - " << location_.name << ":" << location_.line << "," << location_.column << " - "
+    llvm::errs() << "warning - " << location_.name() << ":" << location_.line() << "," << location_.column() << " - "
                  << message << "\n";
 }
 
 void CommentLogger::error(String const& message)
 {
-    had_errors_ = true;
-    llvm::errs() << "error - " << location_.name << ":" << location_.line << "," << location_.column << " - " << message
-                 << "\n";
+    setHasErrors(true);
+    llvm::errs() << "error - " << location_.name() << ":" << location_.line() << "," << location_.column() << " - "
+                 << message << "\n";
 }
 
 void CommentLogger::internalError(String const& message)
 {
-    had_errors_ = true;
-    llvm::errs() << "internal error - " << location_.name << ":" << location_.line << "," << location_.column << " - "
-                 << message << "\n";
+    setHasErrors(true);
+    llvm::errs() << "internal error - " << location_.name() << ":" << location_.line() << "," << location_.column()
+                 << " - " << message << "\n";
 }
 
 void CommentLogger::setLocation(SourceLocation const& loc)

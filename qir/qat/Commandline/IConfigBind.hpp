@@ -2,10 +2,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ParameterParser.hpp"
-#include "QatTypes/QatTypes.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/external/yaml.hpp"
+#include "qir/qat/Commandline/ParameterParser.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <iomanip>
 #include <iostream>
@@ -22,6 +22,14 @@ namespace microsoft::quantum
 class IConfigBind
 {
   public:
+    enum ParameterVisibility
+    {
+        None         = 0,
+        CliOnly      = 1,
+        ConfigOnly   = 2,
+        CliAndConfig = CliOnly | ConfigOnly,
+    };
+
     // Deleted constructors and deleted operators
     //
     // Strictly speaking the code would remain correct if we allowed copy and/or move, but
@@ -58,8 +66,17 @@ class IConfigBind
     /// Pointer to underlying data.
     virtual void* pointer() const = 0;
 
+    /// Pointer to underlying default value.
+    virtual void* pointerDefaultValue() = 0;
+
     /// Type index of contained data
     virtual std::type_index valueType() const = 0;
+
+    /// Method to load value from YAML configuratino
+    virtual void setValueFromYamlNode(YAML::Node const& node) = 0;
+
+    /// Dumps the current value to the node
+    virtual void updateValueInYamlNode(YAML::Node& node) = 0;
 
     // Properties
     //
@@ -79,10 +96,20 @@ class IConfigBind
     /// Indicates whether or not this is an experimental config
     bool isExperimental() const;
 
+    /// Indicates whether the load and save functions should serialize
+    /// this configuration.
+    bool isLoadAndSavable() const;
+
+    /// Indicates whether or not this paramter is available to the CLI
+    bool isAvailableToCli() const;
+
   protected:
     // Constructor
     //
-    IConfigBind(String const& name, String const& description);
+    IConfigBind(
+        String const&       name,
+        String const&       description,
+        ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
     // Configuration
     //
@@ -105,7 +132,8 @@ class IConfigBind
     bool   is_flag_{false};        ///< Whether or not the variable is a flag.
     String str_default_value_{""}; ///< Default value represented as a string.
 
-    bool is_experimental_{false}; ///< Whether or not this config is experimental
+    bool                is_experimental_{false};                        ///< Whether or not this config is experimental
+    ParameterVisibility visibility_{ParameterVisibility::CliAndConfig}; ///< Visibility of the parameter
 };
 
 } // namespace microsoft::quantum

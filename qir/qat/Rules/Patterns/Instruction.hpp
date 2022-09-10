@@ -2,9 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/IOperandPrototype.hpp"
-
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/IOperandPrototype.hpp"
 
 #include <unordered_map>
 #include <vector>
@@ -69,6 +68,13 @@ class BasicBlockPattern : public IOperandPrototype
 };
 
 class SwitchPattern : public IOperandPrototype
+{
+  public:
+    bool  match(Value* instr, Captures& captures) const override;
+    Child copy() const override;
+};
+
+class ZExtPattern : public IOperandPrototype
 {
   public:
     bool  match(Value* instr, Captures& captures) const override;

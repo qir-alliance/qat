@@ -2,8 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
-#include "QatTypes/QatTypes.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 namespace microsoft::quantum
 {
@@ -73,6 +73,18 @@ class QatConfig
     /// Whether or not to strip existing debug info.
     bool stripExistingDebugInfo() const;
 
+    /// Whether or not to show the version of qat
+    bool showVersion() const;
+
+    /// Whether or not to show help page.
+    bool showHelp() const;
+
+    /// YAML filename containing target definition
+    String targetDefinition() const;
+
+    /// YAML filename to save the configuration to
+    String saveConfigTo() const;
+
   private:
     // Variables to be bound to the configuration manager
     //
@@ -95,5 +107,10 @@ class QatConfig
     bool debug_{false};
     bool experimental_{false};
     bool dump_config_{false};
+    bool show_version_{false};
+    bool show_help_{false};
+
+    String target_definition_{""};
+    String save_config_to_{""};
 };
 } // namespace microsoft::quantum

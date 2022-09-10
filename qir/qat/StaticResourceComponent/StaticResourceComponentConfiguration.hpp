@@ -2,8 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
-#include "QatTypes/QatTypes.hpp"
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
 
 namespace microsoft::quantum
 {
@@ -48,7 +48,15 @@ class StaticResourceComponentConfiguration
     /// Creates a configuration where all features are disabled
     static StaticResourceComponentConfiguration createDisabled();
 
-  protected:
+    void enableAnnotateQubitUse();
+    void enableAnnotateResultUse();
+    void enableAnnotateMaxQubitIndex();
+    void enableAnnotateMaxResultIndex();
+    void enableReplaceQubitOnReset();
+    void enableReindexQubits();
+    void enableInlineAfterIdChange();
+
+  private:
     bool annotate_qubit_use_{true};
     bool annotate_result_use_{true};
 

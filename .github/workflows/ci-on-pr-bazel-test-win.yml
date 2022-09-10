@@ -1,0 +1,54 @@
+name: "windows CI Bazel"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types:
+      - created
+
+jobs:
+  test:
+    name: "Bazel Windows Test"
+    runs-on: ${{ matrix.config.os }}
+    env: ${{ matrix.config.env }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { os: "windows-2019", arch: "amd64", target: "default", env: {} }
+          - { os: "windows-2019", arch: "x86", target: "default", env: {} }
+    steps:
+      - name: Get Timestamp
+        id: timestamp
+        run: Write-Host "::set-output name=timestamp::$([DateTime]::UtcNow.ToString('o'))"
+        shell: pwsh
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.pull_request.head.ref}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Bazel cache
+        id: cache-bazel
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~/.cache/bazel/
+          key: ${{ matrix.config.os }}-${{ matrix.config.arch }}-bazel-${{ steps.timestamp.outputs.timestamp }}
+          restore-keys: |
+            ${{ matrix.config.os }}-${{ matrix.config.arch }}-bazel-
+
+      - name: "Running unit tests"
+        run: |
+          bazelisk test --test_output=all --keep_going --config msvc --disk_cache=~/.cache/bazel/ //qir/...
+        env:
+          CC: clang.exe
+          CXX: clang++

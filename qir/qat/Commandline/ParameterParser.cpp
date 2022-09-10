@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ParameterParser.hpp"
+#include "qir/qat/Commandline/ParameterParser.hpp"
 
 #include <iostream>
 #include <stdexcept>
@@ -11,7 +11,7 @@
 namespace microsoft::quantum
 {
 
-void ParameterParser::parseArgs(int argc, char** argv)
+void ParameterParser::parseArgs(int argc, char const** argv)
 {
     uint64_t                 i = 1;
     std::vector<ParsedValue> values;

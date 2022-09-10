@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/IOperandPrototype.hpp"
-#include "Rules/Patterns/UnnamedInvokePattern.hpp"
+#include "qir/qat/Rules/Patterns/UnnamedInvokePattern.hpp"
+
+#include "qir/qat/Rules/IOperandPrototype.hpp"
 
 namespace microsoft::quantum
 {
@@ -24,7 +25,7 @@ UnnamedInvokePattern::Child UnnamedInvokePattern::copy() const
 {
     auto ret = std::make_shared<UnnamedInvokePattern>();
     ret->copyPropertiesFrom(*this);
-    return std::move(ret);
+    return ret;
 }
 
 } // namespace microsoft::quantum

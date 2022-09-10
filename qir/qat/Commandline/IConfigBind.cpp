@@ -1,17 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Commandline/ConfigurationManager.hpp"
-#include "Commandline/IConfigBind.hpp"
+#include "qir/qat/Commandline/IConfigBind.hpp"
+
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
 
 using namespace microsoft::quantum;
 
 namespace microsoft::quantum
 {
 
-IConfigBind::IConfigBind(String const& name, String const& description)
+IConfigBind::IConfigBind(String const& name, String const& description, ParameterVisibility visibility)
   : name_{name}
   , description_{description}
+  , visibility_{visibility}
 {
 }
 
@@ -60,6 +62,16 @@ void IConfigBind::makeSettingExperimental()
 bool IConfigBind::isExperimental() const
 {
     return is_experimental_;
+}
+
+bool IConfigBind::isLoadAndSavable() const
+{
+    return (visibility_ & ParameterVisibility::ConfigOnly) != ParameterVisibility::None;
+}
+
+bool IConfigBind::isAvailableToCli() const
+{
+    return (visibility_ & ParameterVisibility::CliOnly) != ParameterVisibility::None;
 }
 
 } // namespace microsoft::quantum

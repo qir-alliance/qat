@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Rules/Factory.hpp"
-#include "Rules/Notation/Notation.hpp"
+#include "qir/qat/Rules/Factory.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Rules/Notation/Notation.hpp"
 
 namespace microsoft::quantum
 {
@@ -70,6 +70,11 @@ void RuleFactory::usingConfiguration(FactoryConfiguration const& config)
     if (config.optimizeResultZero())
     {
         optimizeResultZero();
+    }
+
+    if (config.optimizeResultComparison())
+    {
+        optimizeResultComparison();
     }
 
     if (config.useStaticQubitArrayAllocation())
@@ -714,6 +719,81 @@ void RuleFactory::optimizeConstantResult()
     addRule({call("__quantum__rt__result_equal", "1"_cap = get_zero, "2"_cap = get_one), replace_constant_result});
     addRule({call("__quantum__rt__result_equal", "1"_cap = get_one, "2"_cap = get_zero), replace_constant_result});
     addRule({call("__quantum__rt__result_equal", "1"_cap = get_one, "2"_cap = get_one), replace_constant_result});
+}
+
+void RuleFactory::optimizeResultComparison()
+{
+    auto replace_comparison = [](Builder& builder, Value* val, Captures& cap, Replacements& replacements)
+    {
+        auto cond = llvm::dyn_cast<llvm::Instruction>(val);
+        if (cond == nullptr)
+        {
+            return false;
+        }
+        auto m1 = cap["m1"];
+        auto m2 = cap["m2"];
+
+        if (m1 == nullptr || m2 == nullptr)
+        {
+            return false;
+        }
+
+        auto orig_instr = llvm::dyn_cast<llvm::Instruction>(val);
+        if (orig_instr == nullptr)
+        {
+            return false;
+        }
+
+        auto module = orig_instr->getModule();
+        auto fnc    = module->getFunction("__quantum__qis__read_result__body");
+
+        if (!fnc)
+        {
+            std::vector<llvm::Type*> types;
+            types.resize(1);
+            types[0] = m1->getType();
+
+            auto return_type = llvm::Type::getInt1Ty(val->getContext());
+
+            llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
+            fnc                          = llvm::Function::Create(
+                                         fnc_type, llvm::Function::ExternalLinkage, "__quantum__qis__read_result__body", module);
+        }
+
+        builder.SetInsertPoint(llvm::dyn_cast<llvm::Instruction>(val));
+        auto c1       = builder.CreateCall(fnc, {m1});
+        auto c2       = builder.CreateCall(fnc, {m2});
+        auto new_cond = builder.CreateICmpEQ(c1, c2);
+
+        new_cond->takeName(cond);
+
+        for (auto& use : cond->uses())
+        {
+            llvm::User* user = use.getUser();
+            user->setOperand(use.getOperandNo(), new_cond);
+        }
+
+        cond->replaceAllUsesWith(new_cond);
+
+        // Deleting the previous condition and function to fetch one
+
+        replacements.push_back({cond, nullptr});
+
+        return true;
+    };
+
+    /*
+      Here is an example IR for which we want to make a match:
+
+        %result1 = call %Result* @__quantum__qis__m__body(%Qubit* %q0)
+        %result2 = call %Result* @__quantum__qis__m__body(%Qubit* %q1)
+        %0 = call i1 @__quantum__rt__result_equal(%Result* %result1, %Result* %result2)
+    */
+
+    auto m1 = call("__quantum__qis__m__body", "q1"_cap = _);
+    auto m2 = call("__quantum__qis__m__body", "q2"_cap = _);
+
+    addRule({call("__quantum__rt__result_equal", "m1"_cap = m1, "m2"_cap = m2), replace_comparison});
 }
 
 void RuleFactory::disableReferenceCounting()

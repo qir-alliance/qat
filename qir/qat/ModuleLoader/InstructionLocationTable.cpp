@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ModuleLoader/InstructionLocationTable.hpp"
+#include "qir/qat/ModuleLoader/InstructionLocationTable.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <memory>
 
@@ -28,7 +28,15 @@ void InstructionLocationTable::emitBasicBlockStartAnnot(BasicBlock const* block,
 
 void InstructionLocationTable::emitFunctionAnnot(Function const* function, llvm::formatted_raw_ostream& outstream)
 {
-    registerValuePosition(function, outstream);
+    outstream.flush();
+
+    Position pos;
+    pos.setName(static_cast<String>(current_filename_));
+    pos.setLine(outstream.getLine() + 1);
+    pos.setColumn(outstream.getColumn() + 1);
+
+    positions_.insert(std::make_pair(function, pos));
+    function_positions_[static_cast<String>(function->getName())] = pos;
 }
 
 InstructionLocationTable::Position InstructionLocationTable::getPosition(Value const* value) const
@@ -39,7 +47,18 @@ InstructionLocationTable::Position InstructionLocationTable::getPosition(Value c
         return it->second;
     }
 
-    return Position::InvalidPosition();
+    return Position::invalidPosition();
+}
+
+InstructionLocationTable::Position InstructionLocationTable::getPositionFromFunctionName(String const& name) const
+{
+    auto it = function_positions_.find(name);
+    if (it != function_positions_.end())
+    {
+        return it->second;
+    }
+
+    return Position::invalidPosition();
 }
 
 void InstructionLocationTable::registerModule(StringRef const& filename, Module const* module)
@@ -57,9 +76,9 @@ void InstructionLocationTable::registerValuePosition(Value const* value, llvm::f
     outstream.flush();
 
     Position pos;
-    pos.name   = static_cast<String>(current_filename_);
-    pos.line   = outstream.getLine() + 1;
-    pos.column = outstream.getColumn() + 1;
+    pos.setName(static_cast<String>(current_filename_));
+    pos.setLine(outstream.getLine() + 1);
+    pos.setColumn(outstream.getColumn() + 1);
 
     positions_.insert(std::make_pair(value, pos));
 }

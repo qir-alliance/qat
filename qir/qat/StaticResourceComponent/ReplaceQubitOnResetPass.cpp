@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/ILogger.hpp"
-#include "Profile/Profile.hpp"
-#include "QatTypes/QatTypes.hpp"
-#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
-#include "StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
-#include "StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+#include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -59,6 +58,8 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function& function, l
             }
 
             break;
+        case AllocationAnalysis::NotResource:
+            break;
         }
     }
 
@@ -97,7 +98,7 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function& function, l
 
             for (uint64_t i = 0; i < instr.getNumOperands(); ++i)
             {
-                auto op = instr.getOperand(i);
+                auto op = instr.getOperand(static_cast<uint32_t>(i));
 
                 // In case we already did the mapping, we skip to next instruction
                 if (already_replaced.find(op) != already_replaced.end())
@@ -115,7 +116,7 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function& function, l
                     uint64_t remapped_index = 0;
 
                     // Getting remapped index based on resource type
-                    if (type == Qubit)
+                    if (type == AllocationAnalysis::QubitResource)
                     {
                         if (qubits_mapping.find(n) != qubits_mapping.end())
                         {
@@ -135,7 +136,7 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function& function, l
                             continue;
                         }
                     }
-                    else if (type == Result)
+                    else if (type == AllocationAnalysis::ResultResource)
                     {
                         if (results_mapping.find(n) != results_mapping.end())
                         {
@@ -177,11 +178,11 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function& function, l
                     }
 
                     // Removing operand nonnull if present
-                    auto call_instr = llvm::dyn_cast<llvm::CallInst>(&instr);
                     if (call_instr)
                     {
                         auto attrs   = call_instr->getAttributes();
-                        auto newlist = attrs.removeParamAttribute(function.getContext(), i, llvm::Attribute::NonNull);
+                        auto newlist = attrs.removeParamAttribute(
+                            function.getContext(), static_cast<uint32_t>(i), llvm::Attribute::NonNull);
                         call_instr->setAttributes(newlist);
                     }
 
@@ -203,7 +204,7 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function& function, l
                         to_remove.push_back(op_as_instr);
                     }
 
-                    instr.setOperand(i, new_instr);
+                    instr.setOperand(static_cast<uint32_t>(i), new_instr);
                     already_replaced.insert(new_instr);
                 }
             }

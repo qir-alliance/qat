@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Logging/CommentLogger.hpp"
-#include "Logging/ILogger.hpp"
-#include "Logging/LogCollection.hpp"
-#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
-#include "ValidationPass/FunctionValidationPass.hpp"
-#include "ValidationPass/ValidationPass.hpp"
-#include "Validator/Validator.hpp"
+#include "qir/qat/Validator/Validator.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Logging/CommentLogger.hpp"
+#include "qir/qat/Logging/ILogger.hpp"
+#include "qir/qat/Logging/LogCollection.hpp"
+#include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "qir/qat/ValidationPass/FunctionValidationPass.hpp"
+#include "qir/qat/ValidationPass/ValidationPass.hpp"
 
 #include <fstream>
 
@@ -45,12 +45,13 @@ Validator::Validator(
     else
     {
         // Our default is a pass that logs errors via comments
-        auto logger = std::make_shared<CommentLogger>();
-        function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(logger); });
+        auto comment_logger = std::make_shared<CommentLogger>();
+        function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(comment_logger); });
 
-        module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger)));
+        module_pass_manager_.addPass(
+            llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, comment_logger)));
 
-        module_pass_manager_.addPass(ValidationPass(cfg, logger));
+        module_pass_manager_.addPass(ValidationPass(cfg, comment_logger));
     }
 }
 
@@ -81,6 +82,11 @@ bool Validator::validate(llvm::Module& module)
         }
 
         return false;
+    }
+
+    if (logger_)
+    {
+        return !(logger_->hadErrors() || logger_->hadWarnings());
     }
 
     return true;

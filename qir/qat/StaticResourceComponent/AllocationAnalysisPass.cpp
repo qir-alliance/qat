@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
 
-#include "Llvm/Llvm.hpp"
+#include "qir/qat/Llvm/Llvm.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -97,7 +97,7 @@ AllocationAnalysisPass::Result AllocationAnalysisPass::run(
         {
             for (uint64_t i = 0; i < instr.getNumOperands(); ++i)
             {
-                auto         op   = instr.getOperand(i);
+                auto         op   = instr.getOperand(static_cast<uint32_t>(i));
                 ResourceType type = ResourceType::NotResource;
                 uint64_t     n    = 0;
 
@@ -124,7 +124,6 @@ AllocationAnalysisPass::Result AllocationAnalysisPass::run(
                     ret.largest_result_index = ret.largest_result_index < n ? n : ret.largest_result_index;
                     break;
                 case ResourceType::NotResource:
-                default:
                     break;
                 }
             }
@@ -142,10 +141,10 @@ bool AllocationAnalysisPass::isRequired()
     return true;
 }
 
-llvm::PreservedAnalyses AllocationAnalysisPassPrinter::run(llvm::Function& module, llvm::FunctionAnalysisManager& fam)
+llvm::PreservedAnalyses AllocationAnalysisPassPrinter::run(
+    llvm::Function& /*module*/,
+    llvm::FunctionAnalysisManager& /*fam*/)
 {
-    auto& result = fam.getResult<AllocationAnalysisPass>(module);
-
     return llvm::PreservedAnalyses::all();
 }
 

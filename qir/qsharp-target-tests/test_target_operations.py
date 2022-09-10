@@ -1,13 +1,9 @@
-from TargetTestScripts import target1_tests, target3_tests, target4_tests
-
-
-import subprocess
+import logging
 import os
-import tempfile
+import subprocess
 
 import pytest
-import logging
-
+from TargetTestScripts import target1_tests, target3_tests, target4_tests
 
 logger = logging.getLogger(__name__)
 
@@ -15,12 +11,12 @@ logger = logging.getLogger(__name__)
 def validate_circuit(name, profile, filename, args=[], output_file=None):
 
     qat_binary = os.environ.get("QAT_BINARY")
-    logger.debug("TEST")
+    cmd = [qat_binary, "-S"] + args + ["--profile", profile, filename]
     p = subprocess.Popen(
-        [qat_binary, "-S"] + args + ["--profile",
-                                     profile, filename],
+        cmd,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE)
+        stderr=subprocess.PIPE,
+    )
 
     out, errs = p.communicate()
     errs = errs.decode()
@@ -39,6 +35,7 @@ def validate_circuit(name, profile, filename, args=[], output_file=None):
 
     if not ret:
         print("Processed file:", filename)
+        print("Command:", " ".join(cmd))
         if not os.path.exists(filename):
             print("File does not exists: {}".format(filename))
         else:
@@ -71,23 +68,61 @@ CHANNEL = os.environ.get("QSHARP_CHANNEL", "alpha")
 
 @pytest.mark.parametrize("test_name", target1_tests)
 def test_target1(test_name, request):
-    with request.getfixturevalue(test_name)("quantinuum.qpu", VERSION, CHANNEL) as project:
+    with request.getfixturevalue(test_name)(
+        "quantinuum.qpu", VERSION, CHANNEL
+    ) as project:
         assert project.compile()
-        assert validate_circuit(test_name, "provider_7ee0", project.qir_filename, [
-                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
+        assert validate_circuit(
+            test_name,
+            "provider_7ee0",
+            project.qir_filename,
+            [
+                "--no-requires-results",
+                "--no-requires-qubits",
+                "--disable-record-output-support",
+                "--validate",
+                "--apply",
+            ],
+        )
+
+
+# "-O3", "--unroll-loops", "--always-inline",
 
 
 @pytest.mark.parametrize("test_name", target3_tests)
 def test_target3(test_name, request):
     with request.getfixturevalue(test_name)("qci.qpu", VERSION, CHANNEL) as project:
         assert project.compile()
-        assert validate_circuit(test_name, "provider_4bf9", project.qir_filename, [
-                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--apply"])
+        assert validate_circuit(
+            test_name,
+            "provider_4bf9",
+            project.qir_filename,
+            [
+                "--no-requires-results",
+                "--no-requires-qubits",
+                "--disable-record-output-support",
+                "--validate",
+                "--apply",
+            ],
+        )
 
 
 @pytest.mark.parametrize("test_name", target4_tests)
 def test_target4(test_name, request):
     with request.getfixturevalue(test_name)("rigetti.qpu", VERSION, CHANNEL) as project:
         assert project.compile()
-        assert validate_circuit(test_name, "provider_b340", project.qir_filename, [
-                                "--validate", "-O3", "--unroll-loops", "--always-inline", "--disable-grouping", "--replace-qubit-on-reset", "--reindex-qubits",  "--apply"])
+        assert validate_circuit(
+            test_name,
+            "provider_b340",
+            project.qir_filename,
+            [
+                "--validate",
+                "--no-requires-results",
+                "--no-requires-qubits",
+                "--disable-record-output-support",
+                "--disable-grouping",
+                "--replace-qubit-on-reset",
+                "--reindex-qubits",
+                "--apply",
+            ],
+        )
