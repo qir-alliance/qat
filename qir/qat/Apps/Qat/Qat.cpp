@@ -325,7 +325,7 @@ int main(int argc, char const** argv)
         //
 
         // Creating the adaptor that will be used for generation and validation
-        generator->newAdaptorContext();
+        generator->newAdaptorContext(config.adaptor(), config.isDebugMode());
 
         for (auto& pipeline_name : config.adaptorPipeline())
         {
