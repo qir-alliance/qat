@@ -71,7 +71,7 @@ std::shared_ptr<QirAdaptor> QirAdaptorFactory::newQirAdaptor(
     return ret;
 }
 
-void QirAdaptorFactory::newAdaptorContext()
+void QirAdaptorFactory::newAdaptorContext(String const& name, bool debug)
 {
     qubit_allocation_manager_  = BasicAllocationManager::createNew();
     result_allocation_manager_ = BasicAllocationManager::createNew();
@@ -82,8 +82,6 @@ void QirAdaptorFactory::newAdaptorContext()
         qubit_allocation_manager_->setReuseRegisters(cfg.shouldReuseQubits());
         result_allocation_manager_->setReuseRegisters(cfg.shouldReuseResults());
     }
-    auto debug = false;   // TODO(unknown):
-    auto name  = "TODO."; // TODO(unknown):
 
     adaptor_ = std::make_shared<QirAdaptor>(
         configuration_manager_, name, logger_, debug, nullptr, qubit_allocation_manager_, result_allocation_manager_);

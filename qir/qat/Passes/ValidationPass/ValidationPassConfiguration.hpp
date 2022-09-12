@@ -179,10 +179,7 @@ class ValidationPassConfiguration
     // Setup and construction
     //
 
-    ValidationPassConfiguration()
-    {
-        llvm::errs() << "Creating new validation config\n";
-    }
+    ValidationPassConfiguration() = default;
 
     /// Setup function that adds the configuration flags to the ConfigurationManager. See the
     /// ConfigurationManager documentation for more details on how the setup process is implemented.

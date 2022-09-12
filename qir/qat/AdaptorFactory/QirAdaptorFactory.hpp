@@ -65,8 +65,13 @@ class QirAdaptorFactory
     /// the configurations given.
     QirAdaptorPtr newQirAdaptor(String const& name, OptimizationLevel const& optimization_level, bool debug);
 
-    void          newAdaptorContext();
-    void          addComponent(String const& name);
+    /// Prepares a new adaptor context
+    void newAdaptorContext(String const& name, bool debug = false);
+
+    /// Adds a component to the current context
+    void addComponent(String const& name);
+
+    /// Finalizes the context and returns the QIR adaptor.
     QirAdaptorPtr finalizeAdaptor();
 
     // Defining the generator

@@ -35,7 +35,7 @@ void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager
         "target.profile", ValidationPassConfiguration::fromQirAdaptorName("provider_4bf9"));
 
     // Transformation
-    configuration_manager.disableSectionById("grouping");
+    configuration_manager.disableSectionById("adaptor.grouping");
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
@@ -113,7 +113,7 @@ void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager
         "target.profile", ValidationPassConfiguration::fromQirAdaptorName("provider_7ee0"));
 
     // Transform
-    configuration_manager.disableSectionById("grouping");
+    configuration_manager.disableSectionById("adaptor.grouping");
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
@@ -191,7 +191,7 @@ void configureProviderb340QirAdaptor(ConfigurationManager& configuration_manager
         "target.profile", ValidationPassConfiguration::fromQirAdaptorName("provider_b340"));
 
     // Transformation
-    configuration_manager.disableSectionById("grouping");
+    configuration_manager.disableSectionById("adaptor.grouping");
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
