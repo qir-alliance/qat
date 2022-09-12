@@ -38,7 +38,7 @@ ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
     setupDefaultComponentPipeline();
 
     replaceAdaptorComponent<TransformationRulesPassConfiguration>(
-        "transformation-rules",
+        "adaptor.transformation-rules",
         [configure](TransformationRulesPassConfiguration const& config, QirAdaptor& adaptor)
         {
             auto& ret = adaptor.modulePassManager();
