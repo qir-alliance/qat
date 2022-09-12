@@ -84,7 +84,8 @@ void QirAdaptorFactory::newAdaptorContext()
     }
     auto debug = false;   // TODO(unknown):
     auto name  = "TODO."; // TODO(unknown):
-    adaptor_   = std::make_shared<QirAdaptor>(
+
+    adaptor_ = std::make_shared<QirAdaptor>(
         configuration_manager_, name, logger_, debug, nullptr, qubit_allocation_manager_, result_allocation_manager_);
 }
 

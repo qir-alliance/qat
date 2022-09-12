@@ -285,6 +285,7 @@ ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(Stri
         throw std::runtime_error("Invalid adaptor " + name);
     }
 
+    llvm::errs() << "Setting adaptor name: " << name << "\n";
     adaptor.adaptor_name_ = name;
 
     return adaptor;
