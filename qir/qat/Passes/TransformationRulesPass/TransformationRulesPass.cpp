@@ -14,13 +14,9 @@
 namespace microsoft::quantum
 {
 
-TransformationRulesPass::TransformationRulesPass(
-    RuleSet&&                                   rule_set,
-    TransformationRulesPassConfiguration const& config,
-    QirAdaptor*                                 adaptor)
+TransformationRulesPass::TransformationRulesPass(RuleSet&& rule_set, TransformationRulesPassConfiguration const& config)
   : rule_set_{std::move(rule_set)}
   , config_{config}
-  , adaptor_{adaptor}
 {
 }
 

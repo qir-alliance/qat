@@ -254,7 +254,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             factory.usingConfiguration(adaptor.configurationManager().get<FactoryConfiguration>());
 
             // Creating adaptor pass
-            auto pass = TransformationRulesPass(std::move(rule_set), cfg, &adaptor);
+            auto pass = TransformationRulesPass(std::move(rule_set), cfg);
             pass.setLogger(logger);
             ret.addPass(std::move(pass));
         });

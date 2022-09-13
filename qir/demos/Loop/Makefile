@@ -1,2 +1,2 @@
 all:
-		${QAT_BINARY} --apply -S -O3  --unroll-loops --disable-grouping --adaptor default  input.ll
+		${QAT_BINARY} --apply -S  --unroll-loops --disable-grouping --adaptor default  input.ll

@@ -50,7 +50,7 @@ ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
             configure(rule_set);
 
             // Creating adaptor pass
-            ret.addPass(TransformationRulesPass(std::move(rule_set), config, &adaptor));
+            ret.addPass(TransformationRulesPass(std::move(rule_set), config));
         });
 
     configurationManager().setConfig(adaptor_pass_config);

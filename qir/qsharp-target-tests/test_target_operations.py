@@ -86,9 +86,6 @@ def test_target1(test_name, request):
         )
 
 
-# "-O3", "--unroll-loops", "--always-inline",
-
-
 @pytest.mark.parametrize("test_name", target3_tests)
 def test_target3(test_name, request):
     with request.getfixturevalue(test_name)("qci.qpu", VERSION, CHANNEL) as project:

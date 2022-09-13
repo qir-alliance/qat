@@ -214,7 +214,7 @@ extern "C" void loadComponent(QirAdaptorFactory* adaptor_generator)
                 RuleSet rule_set;
                 removeArrayCopies(rule_set);
                 auto config = TransformationRulesPassConfiguration::createDisabled();
-                ret.addPass(TransformationRulesPass(std::move(rule_set), config, &adaptor));
+                ret.addPass(TransformationRulesPass(std::move(rule_set), config));
             }
 
             if (cfg.replaceAccess())
@@ -222,7 +222,7 @@ extern "C" void loadComponent(QirAdaptorFactory* adaptor_generator)
                 RuleSet rule_set;
                 replaceAccess(rule_set);
                 auto config = TransformationRulesPassConfiguration::createDisabled();
-                ret.addPass(TransformationRulesPass(std::move(rule_set), config, &adaptor));
+                ret.addPass(TransformationRulesPass(std::move(rule_set), config));
             }
 
             if (cfg.replaceAllocators())
@@ -230,7 +230,7 @@ extern "C" void loadComponent(QirAdaptorFactory* adaptor_generator)
                 RuleSet rule_set;
                 activateAllocatorReplacement(rule_set);
                 auto config = TransformationRulesPassConfiguration::createDisabled();
-                ret.addPass(TransformationRulesPass(std::move(rule_set), config, &adaptor));
+                ret.addPass(TransformationRulesPass(std::move(rule_set), config));
             }
         });
 }

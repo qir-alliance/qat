@@ -179,7 +179,7 @@ entry:
         factory.usingConfiguration(configuration_manager.get<FactoryConfiguration>());
 
         // Creating adaptor pass
-        auto pass = TransformationRulesPass(std::move(rule_set), cfg, nullptr);
+        auto pass = TransformationRulesPass(std::move(rule_set), cfg);
         pass.setLogger(logger);
         mpm.addPass(std::move(pass));
         mpm.addPass(FunctionToModule(std::move(fpm)));

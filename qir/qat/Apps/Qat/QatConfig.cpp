@@ -43,10 +43,13 @@ void QatConfig::setup(ConfigurationManager& config)
     config.addParameter(strip_existing_debug_, "strip-existing-dbg", "Strips existing debug symbols.");
 
     config.addParameter(output_file_, "output", "Output file. If empty, the output is sent to stdout.");
+    config.addShorthandNotation("output", "o");
 
     config.addParameter(save_report_to_, "save-logs", "Saves the logs report to specified filename in JSON format.");
     config.addParameter(show_version_, "version", "Shows the version of QAT.");
+    config.addShorthandNotation("version", "v");
     config.addParameter(show_help_, "help", "Show help page.");
+    config.addShorthandNotation("help", "h");
 }
 
 bool QatConfig::shouldGenerate() const

@@ -74,10 +74,7 @@ class TransformationRulesPass : public llvm::PassInfoMixin<TransformationRulesPa
     //
 
     /// Custom default constructor
-    TransformationRulesPass(
-        RuleSet&&                                   rule_set,
-        TransformationRulesPassConfiguration const& config,
-        QirAdaptor*                                 adaptor);
+    TransformationRulesPass(RuleSet&& rule_set, TransformationRulesPassConfiguration const& config);
 
     /// Copy construction is banned.
     TransformationRulesPass(TransformationRulesPass const&) = delete;
