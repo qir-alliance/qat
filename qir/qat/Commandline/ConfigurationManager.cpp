@@ -133,11 +133,17 @@ void ConfigurationManager::printHelp(bool experimental_mode) const
                 continue;
             }
 
+            String sn{""};
+            if (!c->shorthandNotation().empty())
+            {
+                sn = static_cast<String>(", -") + c->shorthandNotation();
+            }
+
             if (c->isFlag())
             {
                 if (c->defaultValue() == "false")
                 {
-                    std::cout << std::setw(50) << std::left << ("--" + c->name());
+                    std::cout << std::setw(50) << std::left << ("--" + c->name() + sn);
                 }
                 else
                 {
@@ -146,7 +152,7 @@ void ConfigurationManager::printHelp(bool experimental_mode) const
             }
             else
             {
-                std::cout << std::setw(50) << std::left << ("--" + c->name());
+                std::cout << std::setw(50) << std::left << ("--" + c->name() + sn);
             }
 
             if (c->isExperimental())
