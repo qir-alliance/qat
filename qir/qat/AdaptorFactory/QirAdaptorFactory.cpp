@@ -230,8 +230,6 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
                 mpm.addPass(llvm::GlobalDCEPass());
             }
             mpm.addPass(FunctionToModule(std::move(fpm)));
-
-            llvm::errs() << "Testing if the issue is last line.\n";
         });
 
     registerAdaptorComponent<PreTransformTrimmingPassConfiguration>(

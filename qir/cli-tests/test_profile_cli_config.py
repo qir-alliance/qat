@@ -6,7 +6,7 @@ TESTS = {
         "--apply",
         "--verify-module",
         "--validate",
-        "--disable-grouping",
+        "--disable-adaptor.grouping",
         "--always-inline",
         "--reindex-qubits",
         "--requires-qubits",
@@ -27,7 +27,7 @@ TESTS = {
         "--apply",
         "--verify-module",
         "--validate",
-        "--disable-grouping",
+        "--disable-adaptor.grouping",
         "--always-inline",
         "--reindex-qubits",
         "--requires-qubits",
@@ -49,7 +49,7 @@ TESTS = {
         "--apply",
         "--verify-module",
         "--validate",
-        "--disable-grouping",
+        "--disable-adaptor.grouping",
         "--always-inline",
         "--reindex-qubits",
         "--requires-qubits",
@@ -74,11 +74,8 @@ TESTS = {
 QAT_BINARY = sys.argv[1]
 fail = False
 if __name__ == "__main__":
+    # Testing profile against itself with update flags
     for profile, args in TESTS.items():
-        cmd1 = "{} {}  --adaptor generic --dump-config".format(
-            QAT_BINARY, " ".join(args)
-        )
-
         p = subprocess.Popen(
             [QAT_BINARY, "--adaptor", profile, "--dump-config"] + args,
             stdout=subprocess.PIPE,
