@@ -24,11 +24,8 @@ void QatConfig::setup(ConfigurationManager& config)
          "post-transform-validation", "static-resources", "grouping"},
         "adaptor-pipeline", "Overrides the adaptor pipleline.");
 
-    config.addParameter(emit_llvm_, false, "S", "Emits LLVM IR to the standard output.");
-    config.addParameter(opt0_, false, "O0", "Optimization level 0.");
-    config.addParameter(opt1_, false, "O1", "Optimization level 1.");
-    config.addParameter(opt2_, false, "O2", "Optimization level 2.");
-    config.addParameter(opt3_, false, "O3", "Optimization level 3.");
+    config.addParameter(emit_llvm_, false, "emit-llvm", "Emits LLVM IR to the standard output.");
+    config.addShorthandNotation("emit-llvm", "S");
 
     config.addParameter(
         target_definition_, static_cast<std::string>(""), "target-def",

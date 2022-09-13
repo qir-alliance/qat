@@ -103,6 +103,12 @@ class IConfigBind
     /// Indicates whether or not this paramter is available to the CLI
     bool isAvailableToCli() const;
 
+    /// Set shorthand notation
+    void setShorthandNotation(String const& name);
+
+    /// Gets shorthand notation
+    String shorthandNotation() const;
+
   protected:
     // Constructor
     //
@@ -127,8 +133,9 @@ class IConfigBind
     void makeSettingExperimental();
 
   private:
-    String name_;                  ///< Name that which sets the value.
-    String description_;           ///< Description of the option or flag.
+    String name_{""};              ///< Name that which sets the value.
+    String shorhand_notation_{""}; ///< Shorthand notation
+    String description_{""};       ///< Description of the option or flag.
     bool   is_flag_{false};        ///< Whether or not the variable is a flag.
     String str_default_value_{""}; ///< Default value represented as a string.
 

@@ -74,4 +74,14 @@ bool IConfigBind::isAvailableToCli() const
     return (visibility_ & ParameterVisibility::CliOnly) != ParameterVisibility::None;
 }
 
+void IConfigBind::setShorthandNotation(String const& name)
+{
+    shorhand_notation_ = name;
+}
+
+String IConfigBind::shorthandNotation() const
+{
+    return shorhand_notation_;
+}
+
 } // namespace microsoft::quantum

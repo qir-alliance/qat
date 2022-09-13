@@ -186,6 +186,8 @@ class ConfigurationManager
         String const&       description,
         ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
+    void addShorthandNotation(String const& parameter, String const& shorthand);
+
     /// Adds a new parameter to the configuration section. This method uses the bound variable value
     /// as default value. This function should be used by the configuration class.
     template <typename T>

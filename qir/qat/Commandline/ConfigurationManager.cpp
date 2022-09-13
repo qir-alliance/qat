@@ -16,13 +16,20 @@ void ConfigurationManager::setupArguments(ParameterParser& parser)
 {
     for (auto& section : config_sections_)
     {
+        String id = section.id;
+        auto   p  = id.find('.');
+        if (p != String::npos)
+        {
+            id = id.substr(p + 1, id.size() - p - 1);
+        }
+
         if (section.enabled_by_default)
         {
-            parser.addFlag("disable-" + section.id);
+            parser.addFlag("disable-" + id);
         }
         else
         {
-            parser.addFlag("enable-" + section.id);
+            parser.addFlag("enable-" + id);
         }
     }
 
@@ -180,6 +187,17 @@ void ConfigurationManager::printConfiguration() const
         }
         std::cout << "; \n";
     }
+}
+
+void ConfigurationManager::addShorthandNotation(String const& parameter, String const& shorthand)
+{
+    auto it = parameters_.find(parameter);
+    if (it == parameters_.end())
+    {
+        throw std::runtime_error("Parameter '" + parameter + "' not found.");
+    }
+
+    it->second->setShorthandNotation(shorthand);
 }
 
 void ConfigurationManager::setSectionName(String const& name, String const& description)
