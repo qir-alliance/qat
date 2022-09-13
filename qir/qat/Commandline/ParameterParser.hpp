@@ -17,10 +17,11 @@ namespace microsoft::quantum
 class ParameterParser
 {
   public:
-    using Arguments      = std::vector<String>;
-    using Flags          = std::unordered_set<String>;
-    using SettingsMap    = std::unordered_map<String, String>;
-    using UnusedSettings = std::unordered_set<String>;
+    using Arguments         = std::vector<String>;
+    using Flags             = std::unordered_set<String>;
+    using SettingsMap       = std::unordered_map<String, String>;
+    using UnusedSettings    = std::unordered_set<String>;
+    using ShorthandNotation = std::unordered_map<String, String>;
 
     // Construction and deconstrution configuration
     //
@@ -78,6 +79,9 @@ class ParameterParser
     /// Lists unknown settings
     UnusedSettings const& unusedSettings() const;
 
+    /// Adds short hand notation to paramters
+    void addShorthandNotation(String const& parameter, String const& shorthand);
+
   private:
     /// Struct that contains parsed and interpreted values of command line arguments.
     struct ParsedValue
@@ -99,10 +103,11 @@ class ParameterParser
 
     // Storage of parsed data
     //
-    Flags          flags_{};             ///< Set of flags
-    Arguments      arguments_{};         ///< List of remaining arguments
-    SettingsMap    settings_;            ///< Settings map that keeps all specified settings.
-    UnusedSettings unused_properties_{}; ///< List of properties or flags which was not used.
+    Flags             flags_{};              ///< Set of flags
+    Arguments         arguments_{};          ///< List of remaining arguments
+    SettingsMap       settings_;             ///< Settings map that keeps all specified settings.
+    UnusedSettings    unused_properties_{};  ///< List of properties or flags which was not used.
+    ShorthandNotation shorthand_notation_{}; ///< Map of shorthand notations
 };
 
 } // namespace microsoft::quantum

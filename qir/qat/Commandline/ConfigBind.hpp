@@ -273,6 +273,12 @@ template <typename T> void ConfigBind<T>::nonSerializableTypeAlterName(StringLis
 
 template <typename T> bool ConfigBind<T>::setupArguments(ParameterParser& parser)
 {
+    auto sn = shorthandNotation();
+    if (!sn.empty())
+    {
+        parser.addShorthandNotation(name(), sn);
+    }
+
     return setupArguments(parser, default_value_);
 }
 
@@ -284,7 +290,6 @@ template <typename T> template <typename R> bool ConfigBind<T>::setupArguments(P
 template <typename T> bool ConfigBind<T>::setupArguments(ParameterParser& parser, bool const&)
 {
     parser.addFlag(name());
-    // TODO(tfr): Add shorthand notation.
     return true;
 }
 
