@@ -39,11 +39,7 @@ void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
-    configuration_manager.updateParameter("S", false);
-    configuration_manager.updateParameter("O0", false);
-    configuration_manager.updateParameter("O1", false);
-    configuration_manager.updateParameter("O2", false);
-    configuration_manager.updateParameter("O3", false);
+    configuration_manager.updateParameter("emit-llvm", false);
     configuration_manager.updateParameter("verify-module", true);
     configuration_manager.updateParameter("experimental", false);
     configuration_manager.updateParameter("dump-config", true);
@@ -117,11 +113,7 @@ void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
-    configuration_manager.updateParameter("S", false);
-    configuration_manager.updateParameter("O0", false);
-    configuration_manager.updateParameter("O1", false);
-    configuration_manager.updateParameter("O2", false);
-    configuration_manager.updateParameter("O3", false);
+    configuration_manager.updateParameter("emit-llvm", false);
     configuration_manager.updateParameter("verify-module", true);
     configuration_manager.updateParameter("experimental", false);
     configuration_manager.updateParameter("dump-config", true);
@@ -195,11 +187,7 @@ void configureProviderb340QirAdaptor(ConfigurationManager& configuration_manager
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
-    configuration_manager.updateParameter("S", false);
-    configuration_manager.updateParameter("O0", false);
-    configuration_manager.updateParameter("O1", false);
-    configuration_manager.updateParameter("O2", false);
-    configuration_manager.updateParameter("O3", false);
+    configuration_manager.updateParameter("emit-llvm", false);
     configuration_manager.updateParameter("verify-module", true);
     configuration_manager.updateParameter("experimental", false);
     configuration_manager.updateParameter("dump-config", true);
