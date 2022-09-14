@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Passes/ValidationPass/ValidationPassConfiguration.hpp"
-
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 namespace microsoft::quantum
 {
 
-void ValidationPassConfiguration::setup(ConfigurationManager& config)
+void TargetProfileConfiguration::setup(ConfigurationManager& config)
 {
     config.setSectionName("Validation configuration", "");
     /// CLI and config accessible
@@ -52,15 +51,15 @@ void ValidationPassConfiguration::setup(ConfigurationManager& config)
         ConfigurationManager::ParameterVisibility::ConfigOnly);
 }
 
-String ValidationPassConfiguration::adaptorName() const
+String TargetProfileConfiguration::adaptorName() const
 {
     return adaptor_name_;
 }
 
-ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(String const& name)
+TargetProfileConfiguration TargetProfileConfiguration::fromQirAdaptorName(String const& name)
 {
 
-    auto adaptor = ValidationPassConfiguration();
+    auto adaptor = TargetProfileConfiguration();
     if (name == "generic")
     {
         adaptor.opcodes_               = OpcodeSet{};
@@ -290,72 +289,72 @@ ValidationPassConfiguration ValidationPassConfiguration::fromQirAdaptorName(Stri
     return adaptor;
 }
 
-OpcodeSet const& ValidationPassConfiguration::allowedOpcodes() const
+OpcodeSet const& TargetProfileConfiguration::allowedOpcodes() const
 {
     return opcodes_;
 }
 
-ValidationPassConfiguration::Set const& ValidationPassConfiguration::allowedExternalCallNames() const
+TargetProfileConfiguration::Set const& TargetProfileConfiguration::allowedExternalCallNames() const
 {
     return external_calls_;
 }
 
-bool ValidationPassConfiguration::allowInternalCalls() const
+bool TargetProfileConfiguration::allowInternalCalls() const
 {
     return allow_internal_calls_;
 }
 
-bool ValidationPassConfiguration::allowlistOpcodes() const
+bool TargetProfileConfiguration::allowlistOpcodes() const
 {
     return allowlist_opcodes_;
 }
 
-bool ValidationPassConfiguration::allowlistExternalCalls() const
+bool TargetProfileConfiguration::allowlistExternalCalls() const
 {
     return allowlist_external_calls_;
 }
 
-bool ValidationPassConfiguration::allowlistPointerTypes() const
+bool TargetProfileConfiguration::allowlistPointerTypes() const
 {
     return allowlist_pointer_types_;
 }
 
-ValidationPassConfiguration::Set const& ValidationPassConfiguration::allowedPointerTypes() const
+TargetProfileConfiguration::Set const& TargetProfileConfiguration::allowedPointerTypes() const
 {
     return allowed_pointer_types_;
 }
 
-void ValidationPassConfiguration::addAllowedExternalCall(String const& name)
+void TargetProfileConfiguration::addAllowedExternalCall(String const& name)
 {
     external_calls_.insert(name);
 }
 
-void ValidationPassConfiguration::addAllowedOpcode(String const& name)
+void TargetProfileConfiguration::addAllowedOpcode(String const& name)
 {
     opcodes_.data().insert(name);
 }
 
-void ValidationPassConfiguration::addAllowedPointerType(String const& name)
+void TargetProfileConfiguration::addAllowedPointerType(String const& name)
 {
     allowed_pointer_types_.insert(name);
 }
 
-bool ValidationPassConfiguration::requiresQubits() const
+bool TargetProfileConfiguration::requiresQubits() const
 {
     return requires_qubits_;
 }
 
-bool ValidationPassConfiguration::requiresResults() const
+bool TargetProfileConfiguration::requiresResults() const
 {
     return requires_results_;
 }
 
-bool ValidationPassConfiguration::allowPoison() const
+bool TargetProfileConfiguration::allowPoison() const
 {
     return allow_poison_;
 }
 
-bool ValidationPassConfiguration::allowUndef() const
+bool TargetProfileConfiguration::allowUndef() const
 {
     return allow_undef_;
 }

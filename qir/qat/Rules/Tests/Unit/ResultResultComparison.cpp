@@ -91,7 +91,7 @@ continue__1:                                      ; preds = %then0__1, %entry
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.setConfig(ValidationPassConfiguration::fromQirAdaptorName("default"));
+    configuration_manager.setConfig(TargetProfileConfiguration::fromQirAdaptorName("default"));
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 

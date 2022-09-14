@@ -15,7 +15,7 @@
 namespace microsoft::quantum
 {
 
-FunctionValidationPass::FunctionValidationPass(ValidationPassConfiguration const& cfg, ILoggerPtr const& logger)
+FunctionValidationPass::FunctionValidationPass(TargetProfileConfiguration const& cfg, ILoggerPtr const& logger)
   : config_{cfg}
   , logger_{logger}
 {

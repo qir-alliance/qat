@@ -4,7 +4,7 @@
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
-#include "qir/qat/Passes/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
@@ -49,7 +49,7 @@ class DivisionByZeroPass : public llvm::PassInfoMixin<DivisionByZeroPass>
     void raiseError(int64_t error_code, llvm::Module& module, llvm::Instruction* instr);
 
   private:
-    ValidationPassConfiguration config_{};
+    TargetProfileConfiguration config_{};
 
     ILoggerPtr            logger_{nullptr};
     llvm::GlobalVariable* error_variable_{nullptr};

@@ -12,7 +12,7 @@
 namespace microsoft::quantum
 {
 
-ValidationPass::ValidationPass(ValidationPassConfiguration const& cfg, ILoggerPtr const& logger)
+ValidationPass::ValidationPass(TargetProfileConfiguration const& cfg, ILoggerPtr const& logger)
   : config_{cfg}
   , logger_{logger}
 {

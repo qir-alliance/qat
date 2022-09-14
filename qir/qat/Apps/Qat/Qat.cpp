@@ -63,7 +63,7 @@
 #include "qir/qat/Passes/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "qir/qat/Passes/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 #include "qir/qat/QirAdaptor/QirAdaptor.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/FactoryConfig.hpp"

@@ -17,8 +17,8 @@ namespace microsoft::quantum
 {
 
 Validator::Validator(
-    ValidationPassConfiguration const& cfg,
-    ILoggerPtr const&                  logger,
+    TargetProfileConfiguration const& cfg,
+    ILoggerPtr const&                 logger,
     bool /*debug*/,
     llvm::TargetMachine* target_machine)
   : logger_{logger}

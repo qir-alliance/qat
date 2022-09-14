@@ -19,7 +19,7 @@ ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
     SetupMode const&      mode)
   : QirAdaptorFactory(configuration_manager)
 {
-    configurationManager().addConfig<ValidationPassConfiguration>();
+    configurationManager().addConfig<TargetProfileConfiguration>();
 
     if (mode == SetupMode::SetupPipeline)
     {
@@ -34,7 +34,7 @@ ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
     LlvmPassesConfiguration const&              llvm_config)
   : QirAdaptorFactory(configuration_manager)
 {
-    configurationManager().addConfig<ValidationPassConfiguration>();
+    configurationManager().addConfig<TargetProfileConfiguration>();
     setupDefaultComponentPipeline();
 
     replaceAdaptorComponent<TransformationRulesPassConfiguration>(

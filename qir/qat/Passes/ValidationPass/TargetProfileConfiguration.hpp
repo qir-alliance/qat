@@ -170,7 +170,7 @@ class OpcodeSet
 };
 static_assert(HasQatSerializers<OpcodeSet>::VALUE, "Expected OpcodeSet to be serializable.");
 
-class ValidationPassConfiguration
+class TargetProfileConfiguration
 {
   public:
     using Set = std::unordered_set<std::string>;
@@ -179,15 +179,15 @@ class ValidationPassConfiguration
     // Setup and construction
     //
 
-    ValidationPassConfiguration() = default;
+    TargetProfileConfiguration() = default;
 
     /// Setup function that adds the configuration flags to the ConfigurationManager. See the
     /// ConfigurationManager documentation for more details on how the setup process is implemented.
     void setup(ConfigurationManager& config);
 
-    static ValidationPassConfiguration fromQirAdaptorName(String const& name);
-    OpcodeSet const&                   allowedOpcodes() const;
-    Set const&                         allowedExternalCallNames() const;
+    static TargetProfileConfiguration fromQirAdaptorName(String const& name);
+    OpcodeSet const&                  allowedOpcodes() const;
+    Set const&                        allowedExternalCallNames() const;
 
     bool allowInternalCalls() const;
     bool allowlistOpcodes() const;

@@ -141,7 +141,7 @@ bool IrManipulationTestHelper::containsValidationErrors(
 
     auto logger = std::make_shared<LogCollection>();
     auto validator =
-        std::make_unique<Validator>(configuration_manager.get<ValidationPassConfiguration>(), logger, debug);
+        std::make_unique<Validator>(configuration_manager.get<TargetProfileConfiguration>(), logger, debug);
     validator->validate(*module_);
 
     if (!logger)
@@ -199,7 +199,7 @@ bool IrManipulationTestHelper::containsExactValidationErrors(
     auto  logger                = std::make_shared<LogCollection>();
 
     auto validator =
-        std::make_unique<Validator>(configuration_manager.get<ValidationPassConfiguration>(), logger, debug);
+        std::make_unique<Validator>(configuration_manager.get<TargetProfileConfiguration>(), logger, debug);
     validator->validate(*module_);
 
     if (!logger)

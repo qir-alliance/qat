@@ -7,7 +7,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/Logging/LogCollection.hpp"
-#include "qir/qat/Passes/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 
 #include <memory>
 
@@ -27,10 +27,10 @@ class Validator
     //
 
     explicit Validator(
-        ValidationPassConfiguration const& cfg,
-        ILoggerPtr const&                  logger,
-        bool                               debug,
-        llvm::TargetMachine*               target_machine = nullptr);
+        TargetProfileConfiguration const& cfg,
+        ILoggerPtr const&                 logger,
+        bool                              debug,
+        llvm::TargetMachine*              target_machine = nullptr);
 
     // Default construction not allowed to ensure that LLVM modules and passes are set up correctly.
     // Copy construction is prohibited due to restriction on classes held by Validator.

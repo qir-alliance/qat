@@ -5,7 +5,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Passes/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
@@ -27,7 +27,7 @@ class FunctionValidationPass : public llvm::PassInfoMixin<FunctionValidationPass
     // Construction and destruction configuration.
     //
 
-    explicit FunctionValidationPass(ValidationPassConfiguration const& cfg, ILoggerPtr const& logger = nullptr);
+    explicit FunctionValidationPass(TargetProfileConfiguration const& cfg, ILoggerPtr const& logger = nullptr);
 
     /// Copy construction is banned.
     FunctionValidationPass(FunctionValidationPass const&) = delete;
@@ -44,7 +44,7 @@ class FunctionValidationPass : public llvm::PassInfoMixin<FunctionValidationPass
     static bool isRequired();
 
   private:
-    ValidationPassConfiguration config_{};
+    TargetProfileConfiguration config_{};
 
     ILoggerPtr logger_{nullptr};
 };
