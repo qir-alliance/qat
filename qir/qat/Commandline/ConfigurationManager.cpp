@@ -16,6 +16,8 @@ void ConfigurationManager::setupArguments(ParameterParser& parser)
 {
     for (auto& section : config_sections_)
     {
+        // Ensuring that we are only using the last of the section id.
+        // This means 'adaptor.grouping' becomes 'grouping'
         String id = section.id;
         auto   p  = id.find('.');
         if (p != String::npos)
@@ -23,6 +25,7 @@ void ConfigurationManager::setupArguments(ParameterParser& parser)
             id = id.substr(p + 1, id.size() - p - 1);
         }
 
+        // Adding enable or disable parameters for sections
         if (section.enabled_by_default)
         {
             parser.addFlag("disable-" + id);
@@ -33,6 +36,7 @@ void ConfigurationManager::setupArguments(ParameterParser& parser)
         }
     }
 
+    // Adding paramters foor each section
     for (auto& section : config_sections_)
     {
         for (auto& c : section.settings)
@@ -50,13 +54,23 @@ void ConfigurationManager::configure(ParameterParser& parser, bool experimental_
 
     for (auto& section : config_sections_)
     {
-        if (section.enabled_by_default || parser.has("disable-" + section.id))
+        // Ensuring that we are only using the last of the section id.
+        // This means 'adaptor.grouping' becomes 'grouping'
+        String id = section.id;
+        auto   p  = id.find('.');
+        if (p != String::npos)
         {
-            *section.active = (parser.get("disable-" + section.id, "false") != "true");
+            id = id.substr(p + 1, id.size() - p - 1);
+        }
+
+        // Teesting if the section should be enabled or disabled
+        if (section.enabled_by_default || parser.has("disable-" + id))
+        {
+            *section.active = (parser.get("disable-" + id, "false") != "true");
         }
         else
         {
-            *section.active = (parser.get("enable-" + section.id, "false") == "true");
+            *section.active = (parser.get("enable-" + id, "false") == "true");
         }
     }
 
