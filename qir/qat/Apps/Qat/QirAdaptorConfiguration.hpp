@@ -4,6 +4,7 @@
 
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 
 namespace microsoft::quantum
 {

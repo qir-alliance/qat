@@ -80,6 +80,8 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
     configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<TargetProfileConfiguration>(
         "target.profile", TargetProfileConfiguration::fromQirAdaptorName("generic"));
+    configuration_manager.addConfig<TargetQisConfiguration>(
+        "target.qis", TargetQisConfiguration::fromQirAdaptorName("generic"));
 
     generator->setLogger(logger);
     generator->setupDefaultComponentPipeline();

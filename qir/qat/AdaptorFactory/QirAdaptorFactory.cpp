@@ -23,6 +23,7 @@
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/Passes/ZExtTransformPass/ZExtTransformPass.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
@@ -63,8 +64,9 @@ std::shared_ptr<QirAdaptor> QirAdaptorFactory::newQirAdaptor(
     }
 
     // Creating validator
-    auto validator =
-        std::make_unique<Validator>(configuration_manager_.get<TargetProfileConfiguration>(), logger_, debug);
+    auto validator = std::make_unique<Validator>(
+        configuration_manager_.get<TargetProfileConfiguration>(), configuration_manager_.get<TargetQisConfiguration>(),
+        logger_, debug);
 
     ret->setValidator(std::move(validator));
 

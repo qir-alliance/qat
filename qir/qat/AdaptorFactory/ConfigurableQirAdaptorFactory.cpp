@@ -19,7 +19,8 @@ ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
     SetupMode const&      mode)
   : QirAdaptorFactory(configuration_manager)
 {
-    configurationManager().addConfig<TargetProfileConfiguration>();
+    configurationManager().addConfig<TargetProfileConfiguration>("target.profile");
+    configurationManager().addConfig<TargetQisConfiguration>("target.qis");
 
     if (mode == SetupMode::SetupPipeline)
     {
@@ -34,7 +35,9 @@ ConfigurableQirAdaptorFactory::ConfigurableQirAdaptorFactory(
     LlvmPassesConfiguration const&              llvm_config)
   : QirAdaptorFactory(configuration_manager)
 {
-    configurationManager().addConfig<TargetProfileConfiguration>();
+    configurationManager().addConfig<TargetProfileConfiguration>("target.profile");
+    configurationManager().addConfig<TargetQisConfiguration>("target.qis");
+
     setupDefaultComponentPipeline();
 
     replaceAdaptorComponent<TransformationRulesPassConfiguration>(

@@ -6,6 +6,7 @@
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>

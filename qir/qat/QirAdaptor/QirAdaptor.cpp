@@ -23,7 +23,11 @@ QirAdaptor::QirAdaptor(
   , standard_instrumentations_{std::make_unique<llvm::StandardInstrumentations>(debug)}
   , qubit_allocation_manager_{std::move(qubit_allocation_manager)}
   , result_allocation_manager_{std::move(result_allocation_manager)}
-  , validator_{std::make_unique<Validator>(configuration_manager_.get<TargetProfileConfiguration>(), logger, debug)}
+  , validator_{std::make_unique<Validator>(
+        configuration_manager_.get<TargetProfileConfiguration>(),
+        configuration_manager_.get<TargetQisConfiguration>(),
+        logger,
+        debug)}
 {
 
     standard_instrumentations_->registerCallbacks(*pass_instrumentation_callbacks_);

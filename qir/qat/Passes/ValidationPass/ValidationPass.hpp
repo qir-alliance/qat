@@ -5,6 +5,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
@@ -26,7 +27,10 @@ class ValidationPass : public llvm::PassInfoMixin<ValidationPass>
     // Construction and destruction configuration.
     //
 
-    explicit ValidationPass(TargetProfileConfiguration const& cfg, ILoggerPtr const& logger = nullptr);
+    explicit ValidationPass(
+        TargetProfileConfiguration const& profile,
+        TargetQisConfiguration const&     qis,
+        ILoggerPtr const&                 logger = nullptr);
 
     /// Copy construction is banned.
     ValidationPass(ValidationPass const&) = delete;
@@ -52,7 +56,8 @@ class ValidationPass : public llvm::PassInfoMixin<ValidationPass>
 
     using Locations = std::vector<Location>;
 
-    TargetProfileConfiguration config_{};
+    TargetProfileConfiguration profile_config_{};
+    TargetQisConfiguration     qis_config_{};
 
     Location current_location_{};
 

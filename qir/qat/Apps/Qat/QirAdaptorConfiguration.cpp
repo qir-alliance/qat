@@ -5,6 +5,7 @@
 
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 
 namespace microsoft::quantum
 {
@@ -15,6 +16,9 @@ void configureGenericQirAdaptor(ConfigurationManager& configuration_manager)
     configuration_manager.addConfig<TargetProfileConfiguration>(
         "target.profile", TargetProfileConfiguration::fromQirAdaptorName("generic"));
 
+    configuration_manager.addConfig<TargetQisConfiguration>(
+        "target.qis", TargetQisConfiguration::fromQirAdaptorName("generic"));
+
     // The generic adaptor does not alter the default settings for transformation
 }
 
@@ -23,6 +27,8 @@ void configureDefaultQirAdaptor(ConfigurationManager& configuration_manager)
     // Setting adaptor validation configuration
     configuration_manager.addConfig<TargetProfileConfiguration>(
         "target.profile", TargetProfileConfiguration::fromQirAdaptorName("default"));
+    configuration_manager.addConfig<TargetQisConfiguration>(
+        "target.qis", TargetQisConfiguration::fromQirAdaptorName("default"));
 
     // The default adaptor does not alter the default settings for transformation
 }
@@ -33,6 +39,8 @@ void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager
     // Setting adaptor validation configuration
     configuration_manager.addConfig<TargetProfileConfiguration>(
         "target.profile", TargetProfileConfiguration::fromQirAdaptorName("provider_4bf9"));
+    configuration_manager.addConfig<TargetQisConfiguration>(
+        "target.qis", TargetQisConfiguration::fromQirAdaptorName("provider_4bf9"));
 
     // Transformation
     configuration_manager.disableSectionById("adaptor.grouping");
@@ -107,6 +115,8 @@ void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager
     // Setting adaptor validation configuration
     configuration_manager.addConfig<TargetProfileConfiguration>(
         "target.profile", TargetProfileConfiguration::fromQirAdaptorName("provider_7ee0"));
+    configuration_manager.addConfig<TargetQisConfiguration>(
+        "target.qis", TargetQisConfiguration::fromQirAdaptorName("provider_7ee0"));
 
     // Transform
     configuration_manager.disableSectionById("adaptor.grouping");
@@ -181,6 +191,8 @@ void configureProviderb340QirAdaptor(ConfigurationManager& configuration_manager
     // Setting adaptor validation configuration
     configuration_manager.addConfig<TargetProfileConfiguration>(
         "target.profile", TargetProfileConfiguration::fromQirAdaptorName("provider_b340"));
+    configuration_manager.addConfig<TargetQisConfiguration>(
+        "target.qis", TargetQisConfiguration::fromQirAdaptorName("provider_b340"));
 
     // Transformation
     configuration_manager.disableSectionById("adaptor.grouping");

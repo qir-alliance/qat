@@ -8,6 +8,7 @@
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/Logging/LogCollection.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 
 #include <memory>
 
@@ -27,7 +28,8 @@ class Validator
     //
 
     explicit Validator(
-        TargetProfileConfiguration const& cfg,
+        TargetProfileConfiguration const& profile,
+        TargetQisConfiguration const&     qis,
         ILoggerPtr const&                 logger,
         bool                              debug,
         llvm::TargetMachine*              target_machine = nullptr);

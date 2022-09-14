@@ -17,7 +17,8 @@ namespace microsoft::quantum
 {
 
 Validator::Validator(
-    TargetProfileConfiguration const& cfg,
+    TargetProfileConfiguration const& profile,
+    TargetQisConfiguration const&     qis,
     ILoggerPtr const&                 logger,
     bool /*debug*/,
     llvm::TargetMachine* target_machine)
@@ -39,8 +40,8 @@ Validator::Validator(
     {
         function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(logger_); });
 
-        module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger_)));
-        module_pass_manager_.addPass(ValidationPass(cfg, logger_));
+        module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(profile, logger_)));
+        module_pass_manager_.addPass(ValidationPass(profile, qis, logger_));
     }
     else
     {
@@ -49,9 +50,9 @@ Validator::Validator(
         function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(comment_logger); });
 
         module_pass_manager_.addPass(
-            llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, comment_logger)));
+            llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(profile, comment_logger)));
 
-        module_pass_manager_.addPass(ValidationPass(cfg, comment_logger));
+        module_pass_manager_.addPass(ValidationPass(profile, qis, comment_logger));
     }
 }
 

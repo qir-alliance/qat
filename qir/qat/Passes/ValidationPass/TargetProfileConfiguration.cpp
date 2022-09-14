@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
+
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 namespace microsoft::quantum

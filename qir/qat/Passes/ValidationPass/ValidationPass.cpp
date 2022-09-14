@@ -12,8 +12,12 @@
 namespace microsoft::quantum
 {
 
-ValidationPass::ValidationPass(TargetProfileConfiguration const& cfg, ILoggerPtr const& logger)
-  : config_{cfg}
+ValidationPass::ValidationPass(
+    TargetProfileConfiguration const& profile,
+    TargetQisConfiguration const&     qis,
+    ILoggerPtr const&                 logger)
+  : profile_config_{profile}
+  , qis_config_{qis}
   , logger_{logger}
 {
 }
@@ -126,10 +130,10 @@ void ValidationPass::pointerChecks(Instruction& instr)
 bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
 {
     auto ret = true;
-    if (config_.allowlistOpcodes())
+    if (profile_config_.allowlistOpcodes())
     {
 
-        auto const& allowed_ops = config_.allowedOpcodes();
+        auto const& allowed_ops = profile_config_.allowedOpcodes();
 
         for (auto& function : module)
         {
@@ -260,7 +264,7 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
                             {current_location_.name(), current_location_.line(), current_location_.column()});
                         logger_->setLlvmHint(current_location_.llvmHint());
 
-                        logger_->errorOpcodeNotAllowed(code, config_.adaptorName());
+                        logger_->errorOpcodeNotAllowed(code, profile_config_.adaptorName());
                         ret = false;
                     }
                 }
@@ -273,7 +277,7 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
 
 bool ValidationPass::satisfyingInternalCallRequirements()
 {
-    if (!config_.allowInternalCalls() && !internal_calls_.empty())
+    if (!profile_config_.allowInternalCalls() && !internal_calls_.empty())
     {
         logger_->setLlvmHint("");
         // TODO(issue-60): Add location
@@ -291,9 +295,9 @@ bool ValidationPass::satisfyingExternalCallRequirements()
 {
     auto ret = true;
 
-    if (config_.allowlistExternalCalls())
+    if (profile_config_.allowlistExternalCalls())
     {
-        auto const& allowed_functions = config_.allowedExternalCallNames();
+        auto const& allowed_functions = profile_config_.allowedExternalCallNames();
         for (auto const& k : external_calls_)
         {
             if (allowed_functions.find(k.first) == allowed_functions.end())
@@ -314,7 +318,7 @@ bool ValidationPass::satisfyingExternalCallRequirements()
                 }
 
                 // Emitting error
-                logger_->errorExternalCallsNotAllowed(k.first, config_.adaptorName());
+                logger_->errorExternalCallsNotAllowed(k.first, profile_config_.adaptorName());
                 ret = false;
             }
         }
@@ -327,9 +331,9 @@ bool ValidationPass::satisfyingPointerRequirements()
 {
     auto ret = true;
 
-    if (config_.allowlistPointerTypes())
+    if (profile_config_.allowlistPointerTypes())
     {
-        auto const& allowed = config_.allowedPointerTypes();
+        auto const& allowed = profile_config_.allowedPointerTypes();
         for (auto const& k : pointers_)
         {
             if (allowed.find(k.first) == allowed.end())
@@ -349,7 +353,7 @@ bool ValidationPass::satisfyingPointerRequirements()
                 }
 
                 // Emitting error
-                logger_->errorTypeNotAllowed(k.first, config_.adaptorName());
+                logger_->errorTypeNotAllowed(k.first, profile_config_.adaptorName());
                 ret = false;
             }
         }

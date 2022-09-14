@@ -1,0 +1,38 @@
+#pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/QatTypes/QatTypes.hpp"
+
+#include <functional>
+#include <set>
+
+namespace microsoft::quantum
+{
+
+class TargetQisConfiguration
+{
+  public:
+    using Set = std::unordered_set<std::string>;
+    // Setup and construction
+    //
+
+    TargetQisConfiguration() = default;
+
+    /// Setup function that adds the configuration flags to the ConfigurationManager. See the
+    /// ConfigurationManager documentation for more details on how the setup process is implemented.
+    void setup(ConfigurationManager& config);
+
+    static TargetQisConfiguration fromQirAdaptorName(String const& name);
+    Set const&                    allowedQis() const;
+
+    String adaptorName() const;
+
+  private:
+    String adaptor_name_{"null"};
+    bool   allow_any_qis_{false};
+    Set    allowed_qis_{};
+};
+
+} // namespace microsoft::quantum
