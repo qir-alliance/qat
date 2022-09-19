@@ -102,29 +102,9 @@ TargetProfileConfiguration TargetProfileConfiguration::fromQirAdaptorName(String
             {"fcmp", "ole"}, {"fcmp", "one"},
             */
         });
-        adaptor.external_calls_           = Set{
-            "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__cx__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__cy__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__h__body:void (%Qubit*)",
-            "__quantum__qis__s__body:void (%Qubit*)",
-            "__quantum__qis__s__adj:void (%Qubit*)",
-            "__quantum__qis__t__body:void (%Qubit*)",
-            "__quantum__qis__t__adj:void (%Qubit*)",
-            "__quantum__qis__x__body:void (%Qubit*)",
-            "__quantum__qis__y__body:void (%Qubit*)",
-            "__quantum__qis__z__body:void (%Qubit*)",
-            "__quantum__qis__rx__body:void (double, %Qubit*)",
-            "__quantum__qis__ry__body:void (double, %Qubit*)",
-            "__quantum__qis__rz__body:void (double, %Qubit*)",
-            "__quantum__qis__reset__body:void (%Qubit*)",
-            "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
-            "__quantum__qis__read_result__body:i1 (%Result*)",
-
-        };
-        adaptor.allowlist_pointer_types_ = true;
-        adaptor.allowed_pointer_types_   = {"i8*", "i16*", "i32*", "i64*", "Qubit*", "Qubit**", "Result*", "Result**"};
+        adaptor.external_calls_           = Set{};
+        adaptor.allowlist_pointer_types_  = true;
+        adaptor.allowed_pointer_types_    = {"i8*", "i16*", "i32*", "i64*", "Qubit*", "Qubit**", "Result*", "Result**"};
     }
     else if (name == "provider_4bf9")
     {
@@ -138,31 +118,10 @@ TargetProfileConfiguration TargetProfileConfiguration::fromQirAdaptorName(String
                                       {"mul"},  {"fadd"}, {"fsub"},     {"fmul"}, {"lshr"},   {"shl"}, {"and"},
                                       {"or"},   {"xor"},  {"icmp"},     {"fcmp"}, {"select"}, {"zext"}});
         adaptor.external_calls_ = Set{
-            "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__swap__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__h__body:void (%Qubit*)",
-            "__quantum__qis__s__body:void (%Qubit*)",
-            "__quantum__qis__s__adj:void (%Qubit*)",
-            "__quantum__qis__t__body:void (%Qubit*)",
-            "__quantum__qis__t__adj:void (%Qubit*)",
-            "__quantum__qis__x__body:void (%Qubit*)",
-            "__quantum__qis__y__body:void (%Qubit*)",
-            "__quantum__qis__z__body:void (%Qubit*)",
-            "__quantum__qis__rx__body:void (double, %Qubit*)",
-            "__quantum__qis__ry__body:void (double, %Qubit*)",
-            "__quantum__qis__rz__body:void (double, %Qubit*)",
-            "__quantum__qis__reset__body:void (%Qubit*)",
-            "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
-            "__quantum__qis__read_result__body:i1 (%Result*)",
-            "__quantum__rt__result_record_output:void (%Result*)",
-            "__quantum__rt__bool_record_output:void (i1)",
-            "__quantum__rt__int_record_output:void (i64)",
-            "__quantum__rt__double_record_output:void (double)",
-            "__quantum__rt__tuple_start_record_output:void ()",
-            "__quantum__rt__tuple_end_record_output:void ()",
-            "__quantum__rt__array_start_record_output:void ()",
-            "__quantum__rt__array_end_record_output:void ()",
+            "__quantum__rt__result_record_output:void (%Result*)", "__quantum__rt__bool_record_output:void (i1)",
+            "__quantum__rt__int_record_output:void (i64)",         "__quantum__rt__double_record_output:void (double)",
+            "__quantum__rt__tuple_start_record_output:void ()",    "__quantum__rt__tuple_end_record_output:void ()",
+            "__quantum__rt__array_start_record_output:void ()",    "__quantum__rt__array_end_record_output:void ()",
 
         };
         adaptor.allowlist_pointer_types_ = true;
@@ -213,22 +172,6 @@ TargetProfileConfiguration TargetProfileConfiguration::fromQirAdaptorName(String
              {"select"},
              {"zext"}});
         adaptor.external_calls_ = Set{
-            "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__h__body:void (%Qubit*)",
-            "__quantum__qis__s__body:void (%Qubit*)",
-            "__quantum__qis__s__adj:void (%Qubit*)",
-            "__quantum__qis__t__body:void (%Qubit*)",
-            "__quantum__qis__t__adj:void (%Qubit*)",
-            "__quantum__qis__x__body:void (%Qubit*)",
-            "__quantum__qis__y__body:void (%Qubit*)",
-            "__quantum__qis__z__body:void (%Qubit*)",
-            "__quantum__qis__rx__body:void (double, %Qubit*)",
-            "__quantum__qis__ry__body:void (double, %Qubit*)",
-            "__quantum__qis__rz__body:void (double, %Qubit*)",
-            "__quantum__qis__reset__body:void (%Qubit*)",
-            "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
-            "__quantum__qis__read_result__body:i1 (%Result*)",
             "__quantum__rt__result_record_output:void (%Result*)",
             "__quantum__rt__bool_record_output:void (i1)",
             "__quantum__rt__int_record_output:void (i64)",
@@ -255,26 +198,8 @@ TargetProfileConfiguration TargetProfileConfiguration::fromQirAdaptorName(String
             {"inttoptr"},
         });
         adaptor.external_calls_           = Set{
-            "__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__cz__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__swap__body:void (%Qubit*, %Qubit*)",
-            "__quantum__qis__h__body:void (%Qubit*)",
-            "__quantum__qis__s__body:void (%Qubit*)",
-            "__quantum__qis__s__adj:void (%Qubit*)",
-            "__quantum__qis__t__body:void (%Qubit*)",
-            "__quantum__qis__t__adj:void (%Qubit*)",
-            "__quantum__qis__x__body:void (%Qubit*)",
-            "__quantum__qis__y__body:void (%Qubit*)",
-            "__quantum__qis__z__body:void (%Qubit*)",
-            "__quantum__qis__rx__body:void (double, %Qubit*)",
-            "__quantum__qis__ry__body:void (double, %Qubit*)",
-            "__quantum__qis__rz__body:void (double, %Qubit*)",
-            "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
-            "__quantum__qis__read_result__body:i1 (%Result*)",
-            "__quantum__rt__result_record_output:void (%Result*)",
-            "__quantum__rt__tuple_start_record_output:void ()",
-            "__quantum__rt__tuple_end_record_output:void ()",
-            "__quantum__rt__array_start_record_output:void ()",
+            "__quantum__rt__result_record_output:void (%Result*)", "__quantum__rt__tuple_start_record_output:void ()",
+            "__quantum__rt__tuple_end_record_output:void ()",      "__quantum__rt__array_start_record_output:void ()",
             "__quantum__rt__array_end_record_output:void ()",
 
         };

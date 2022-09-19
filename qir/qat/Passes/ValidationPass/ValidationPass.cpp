@@ -298,9 +298,12 @@ bool ValidationPass::satisfyingExternalCallRequirements()
     if (profile_config_.allowlistExternalCalls())
     {
         auto const& allowed_functions = profile_config_.allowedExternalCallNames();
+        auto const& allowed_qis       = qis_config_.allowedQis();
+
         for (auto const& k : external_calls_)
         {
-            if (allowed_functions.find(k.first) == allowed_functions.end())
+            if (allowed_functions.find(k.first) == allowed_functions.end() &&
+                allowed_qis.find(k.first) == allowed_qis.end())
             {
                 logger_->setLlvmHint("");
 

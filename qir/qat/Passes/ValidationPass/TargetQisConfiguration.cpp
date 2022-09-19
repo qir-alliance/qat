@@ -79,14 +79,6 @@ TargetQisConfiguration TargetQisConfiguration::fromQirAdaptorName(String const& 
             "__quantum__qis__reset__body:void (%Qubit*)",
             "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
             "__quantum__qis__read_result__body:i1 (%Result*)",
-            "__quantum__rt__result_record_output:void (%Result*)",
-            "__quantum__rt__bool_record_output:void (i1)",
-            "__quantum__rt__int_record_output:void (i64)",
-            "__quantum__rt__double_record_output:void (double)",
-            "__quantum__rt__tuple_start_record_output:void ()",
-            "__quantum__rt__tuple_end_record_output:void ()",
-            "__quantum__rt__array_start_record_output:void ()",
-            "__quantum__rt__array_end_record_output:void ()",
 
         };
     }
@@ -110,16 +102,6 @@ TargetQisConfiguration TargetQisConfiguration::fromQirAdaptorName(String const& 
             "__quantum__qis__reset__body:void (%Qubit*)",
             "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
             "__quantum__qis__read_result__body:i1 (%Result*)",
-            "__quantum__rt__result_record_output:void (%Result*)",
-            "__quantum__rt__bool_record_output:void (i1)",
-            "__quantum__rt__int_record_output:void (i64)",
-            "__quantum__rt__tuple_start_record_output:void ()",
-            "__quantum__rt__tuple_end_record_output:void ()",
-            "__quantum__rt__array_start_record_output:void ()",
-            "__quantum__rt__array_end_record_output:void ()",
-            "__quantum__rt__result_record_output:void (%Result*, i8*)",
-            "__quantum__rt__bool_record_output:void (i1, i8*)",
-            "__quantum__rt__int_record_output:void (i64, i8*)",
 
         };
     }
@@ -143,12 +125,6 @@ TargetQisConfiguration TargetQisConfiguration::fromQirAdaptorName(String const& 
             "__quantum__qis__rz__body:void (double, %Qubit*)",
             "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
             "__quantum__qis__read_result__body:i1 (%Result*)",
-            "__quantum__rt__result_record_output:void (%Result*)",
-            "__quantum__rt__tuple_start_record_output:void ()",
-            "__quantum__rt__tuple_end_record_output:void ()",
-            "__quantum__rt__array_start_record_output:void ()",
-            "__quantum__rt__array_end_record_output:void ()",
-
         };
     }
     else
