@@ -27,7 +27,6 @@ String TargetQisConfiguration::adaptorName() const
 
 TargetQisConfiguration TargetQisConfiguration::fromQirAdaptorName(String const& name)
 {
-
     auto target_config = TargetQisConfiguration();
     if (name == "generic")
     {
@@ -140,6 +139,11 @@ TargetQisConfiguration TargetQisConfiguration::fromQirAdaptorName(String const& 
 TargetQisConfiguration::Set const& TargetQisConfiguration::allowedQis() const
 {
     return allowed_qis_;
+}
+
+TargetQisConfiguration::Set const& TargetQisConfiguration::irreversibleOperations() const
+{
+    return irreversible_operations_;
 }
 
 } // namespace microsoft::quantum

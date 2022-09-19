@@ -26,6 +26,7 @@ class TargetQisConfiguration
 
     static TargetQisConfiguration fromQirAdaptorName(String const& name);
     Set const&                    allowedQis() const;
+    Set const&                    irreversibleOperations() const;
 
     String adaptorName() const;
 
@@ -33,6 +34,7 @@ class TargetQisConfiguration
     String adaptor_name_{"null"};
     bool   allow_any_qis_{false};
     Set    allowed_qis_{};
+    Set    irreversible_operations_{};
 };
 
 } // namespace microsoft::quantum

@@ -56,6 +56,7 @@ void expectSuccess(String const& adaptor_name, String const& script)
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(TargetProfileConfiguration::fromQirAdaptorName(adaptor_name));
+    configuration_manager.setConfig(TargetQisConfiguration::fromQirAdaptorName(adaptor_name));
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
