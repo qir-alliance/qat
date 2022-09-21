@@ -36,7 +36,7 @@ void ConfigurationManager::setupArguments(ParameterParser& parser)
         }
     }
 
-    // Adding paramters foor each section
+    // Adding parameters for each section
     for (auto& section : config_sections_)
     {
         for (auto& c : section.settings)
