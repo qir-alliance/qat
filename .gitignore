@@ -365,3 +365,5 @@ bazel-*/
 
 .bazelrc.user
 .bazelrc.configure.orig
+qat.sublime-project
+qat.sublime-workspace
