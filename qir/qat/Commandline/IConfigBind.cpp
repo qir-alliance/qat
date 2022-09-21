@@ -76,12 +76,12 @@ bool IConfigBind::isAvailableToCli() const
 
 void IConfigBind::setShorthandNotation(String const& name)
 {
-    shorhand_notation_ = name;
+    shorthand_notation_ = name;
 }
 
 String IConfigBind::shorthandNotation() const
 {
-    return shorhand_notation_;
+    return shorthand_notation_;
 }
 
 } // namespace microsoft::quantum

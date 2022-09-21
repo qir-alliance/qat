@@ -77,7 +77,7 @@ template <typename T> class ConfigBind : public IConfigBind
     /// Type index of contained data
     std::type_index valueType() const override;
 
-    /// Method to load value from YAML configuratino
+    /// Method to load value from YAML configuration
     void setValueFromYamlNode(YAML::Node const& node) override;
 
     /// Dumps the current value to the node
@@ -118,7 +118,7 @@ template <typename T> class ConfigBind : public IConfigBind
     /// Generic function that changes the parameter name based on the value type and default value.
     template <typename R> EnableIfNotSerializable<R, void> alterNameBasedOnType(R const& default_value);
 
-    /// Specialisation for serializatble types
+    /// Specialisation for serializable types
     template <typename R> EnableIfSerializable<R, void> alterNameBasedOnType(R const& default_value);
 
     /// Fallback method for non-serializable types

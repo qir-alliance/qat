@@ -72,7 +72,7 @@ class IConfigBind
     /// Type index of contained data
     virtual std::type_index valueType() const = 0;
 
-    /// Method to load value from YAML configuratino
+    /// Method to load value from YAML configuration
     virtual void setValueFromYamlNode(YAML::Node const& node) = 0;
 
     /// Dumps the current value to the node
@@ -133,11 +133,11 @@ class IConfigBind
     void makeSettingExperimental();
 
   private:
-    String name_{""};              ///< Name that sets the value.
-    String shorthand_notation_{""};///< Shorthand notation.
-    String description_{""};       ///< Description of the option or flag.
-    bool   is_flag_{false};        ///< Whether or not the variable is a flag.
-    String str_default_value_{""}; ///< Default value represented as a string.
+    String name_{""};               ///< Name that sets the value.
+    String shorthand_notation_{""}; ///< Shorthand notation.
+    String description_{""};        ///< Description of the option or flag.
+    bool   is_flag_{false};         ///< Whether or not the variable is a flag.
+    String str_default_value_{""};  ///< Default value represented as a string.
 
     bool                is_experimental_{false};                        ///< Whether or not this config is experimental
     ParameterVisibility visibility_{ParameterVisibility::CliAndConfig}; ///< Visibility of the parameter
