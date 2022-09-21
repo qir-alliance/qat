@@ -12,7 +12,7 @@ namespace microsoft::quantum
 void TargetQisConfiguration::setup(ConfigurationManager& config)
 {
     config.setSectionName("Validation configuration", "");
-    /// CLI and config accessible
+    // CLI and config accessible
 
     config.addParameter(
         allowed_qis_, "allowed-qis", "Allowed quantum instruction set.",
