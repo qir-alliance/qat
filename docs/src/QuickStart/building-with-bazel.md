@@ -5,8 +5,8 @@
 (TODO: Read and revise) It is necessary for you to have the following tools before you get started on
 making a new build from this project:
 
--   C++ compiler
--   Bazelisk
+- C++ compiler
+- Bazelisk
 
 A prerequisite to building with Bazel is [installing Bazelisk](https://www.npmjs.com/package/@bazel/bazelisk). Bazelisk is a wrapper for [Bazel] that ensures that the correct version of Bazel is used to build the repository. You can also use Bazel without the wrapper, but this is not covered by our build instructions.
 
