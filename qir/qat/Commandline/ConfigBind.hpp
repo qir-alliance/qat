@@ -316,7 +316,7 @@ typename ConfigBind<T>::template EnableIfSerializable<R, void> ConfigBind<T>::al
 
 template <typename T> void ConfigBind<T>::reset()
 {
-    // TODO: Add support for expreimental value
+    // TODO(unknown): Add support for expreimental value
     bind_ = default_value_;
 }
 
@@ -448,7 +448,7 @@ template <typename T>
 template <typename A>
 typename ConfigBind<T>::template EnableIfNotSerializable<A, void> ConfigBind<T>::loadValue(
     ParameterParser& parser,
-    A const&         default_value)
+    A const& /*default_value*/)
 {
     static_assert(!std::is_same<A, bool>::value, "Expected bool to be specialised");
     static_assert(!std::is_same<A, StringSet>::value, "Expected StringSet to be specialised");
@@ -464,7 +464,7 @@ typename ConfigBind<T>::template EnableIfNotSerializable<A, void> ConfigBind<T>:
 
 template <typename T>
 template <typename A>
-void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, bool, A> const& default_value)
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, bool, A> const& /*default_value*/)
 {
     if (parser.has(name()))
     {
@@ -480,7 +480,7 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, bool, A> cons
 
 template <typename T>
 template <typename A>
-void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, String, A> const& default_value)
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, String, A> const& /*default_value*/)
 {
 
     if (parser.has(name()))
@@ -511,7 +511,7 @@ template <typename T> void ConfigBind<T>::insertKeyValueInStringMap(StringMap& m
 
 template <typename T>
 template <typename A>
-void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringSet, A> const& default_value)
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringSet, A> const& /*default_value*/)
 {
     if (!parser.has(name()))
     {
@@ -541,7 +541,7 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringSet, A>
 
 template <typename T>
 template <typename A>
-void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringList, A> const& default_value)
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringList, A> const& /*default_value*/)
 {
     if (!parser.has(name()))
     {
@@ -571,7 +571,7 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringList, A
 
 template <typename T>
 template <typename A>
-void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringMap, A> const& default_value)
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringMap, A> const& /*default_value*/)
 {
     if (!parser.has(name()))
     {
@@ -603,7 +603,7 @@ template <typename T>
 template <typename A>
 typename ConfigBind<T>::template EnableIfSerializable<A, void> ConfigBind<T>::loadValue(
     ParameterParser& parser,
-    A const&         default_value)
+    A const& /*default_value*/)
 {
     if (!parser.has(name()))
     {
