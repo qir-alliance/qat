@@ -45,7 +45,7 @@ nav:
       - Quick start: "QuickStart/index.md"
       - Building with Bazel: "QuickStart/building-with-bazel.md"
       - Building with CMake: "QuickStart/building-with-cmake.md"
-      - Running QAT: "QuickStart/index.md#running-qat"
+      - Running QAT: "QuickStart/running-qat.md"
 
   - Developer guide:
       - Architecture Overview: "DeveloperGuide/ArchitectureOverview.md"

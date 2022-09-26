@@ -11,12 +11,12 @@ declare void @__quantum__qis__cnot__body(%Qubit*, %Qubit*)
 
 define void @example() #0 {
 entry:
-	%q = call %Qubit* @__quantum__rt__qubit_allocate()
-	%c = call %Qubit* @__quantum__rt__qubit_allocate()
-	call void @__quantum__qis__z__body(%Qubit* %q)
-	call void @__quantum__qis__cnot__body(%Qubit* %q, %Qubit* %c)
-	call void @__quantum__rt__qubit_release(%Qubit* %c)	
-	call void @__quantum__rt__qubit_release(%Qubit* %q)
+	%a = call %Qubit* @__quantum__rt__qubit_allocate()
+	%b = call %Qubit* @__quantum__rt__qubit_allocate()
+	call void @__quantum__qis__z__body(%Qubit* %a)
+	call void @__quantum__qis__cnot__body(%Qubit* %a, %Qubit* %b)
+	call void @__quantum__rt__qubit_release(%Qubit* %b)
+	call void @__quantum__rt__qubit_release(%Qubit* %a)
 	ret void
 }
 

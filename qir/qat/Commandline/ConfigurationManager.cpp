@@ -211,6 +211,7 @@ void ConfigurationManager::printConfiguration() const
         }
         std::cout << "; \n";
     }
+    std::cout << std::flush;
 }
 
 void ConfigurationManager::addShorthandNotation(String const& parameter, String const& shorthand)
