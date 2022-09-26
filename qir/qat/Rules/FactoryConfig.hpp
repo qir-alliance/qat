@@ -15,15 +15,15 @@ class FactoryConfiguration
         config.setSectionName("Transformation rules", "Rules used to transform instruction sequences in the QIR.");
         config.addParameter(
             optimize_result_one_, true, "optimize-result-one",
-            "Maps branching based on quantum measurements compared to one to base profile "
+            "Maps branching based on quantum measurements compared to one to base adaptor "
             "type measurement.");
         config.addParameter(
             optimize_result_zero_, true, "optimize-result-zero",
-            "Maps branching based on quantum measurements compared to zero to base profile "
+            "Maps branching based on quantum measurements compared to zero to base adaptor "
             "type measurement.");
         config.addParameter(
             optimize_result_comparison_, true, "optimize-result-comparison",
-            "Maps branching based on quantum measurements compared to each other to base profile "
+            "Maps branching based on quantum measurements compared to each other to base adaptor "
             "type measurement.");
         config.addParameter(
             use_static_qubit_array_allocation_, "use-static-qubit-array-allocation",

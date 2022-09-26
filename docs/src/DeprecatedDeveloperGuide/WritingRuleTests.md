@@ -1,15 +1,15 @@
 # Writing rule tests
 
 To make it easy to write tests for transformation rules, we have created two
-components to ease the burden of writing tests: `DefaultProfileGenerator` and
-`IrManipulationTestHelper`. The `DefaultProfileGenerator` is a profile that is
-dynamically defined when instatiated through a configuration lambda function.
+components to ease the burden of writing tests: `ConfigurableQirAdaptorFactory` and
+`IrManipulationTestHelper`. The `ConfigurableQirAdaptorFactory` is a profile that
+is dynamically defined when instatiated through a configuration lambda function.
 
 ## Creating the profile
 
-Creating the profile using the `DefaultProfileGenerator` is done by first
+Creating the profile using the `ConfigurableQirAdaptorFactory` is done by first
 defining the lambda function and then instantiating the
-`DefaultProfileGenerator` with the lambda function to define the profile. Using
+`ConfigurableQirAdaptorFactory` with the lambda function to define the profile. Using
 the `RuleFactory`, a profile for transforming the single qubit allocations is
 created as follows:
 
@@ -20,7 +20,7 @@ created as follows:
     factory.useStaticQubitAllocation();
   }
 
-  auto profile = std::make_shared<DefaultProfileGenerator>(std::move(configure_profile));
+  auto profile = std::make_shared<ConfigurableQirAdaptorFactory>(std::move(configure_profile));
 ```
 
 This profile is intended to transform

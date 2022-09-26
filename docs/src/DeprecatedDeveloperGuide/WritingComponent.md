@@ -99,11 +99,11 @@ setup function should just print a message given a `HelloWorldConfig` instance.
 The corresponding component registration reads:
 
 ```c++
-extern "C" void loadComponent(IProfileGenerator *generator)
+extern "C" void loadComponent(IQirAdaptorFactory *generator)
 {
   generator->registerProfileComponent<HelloWorldConfig>(
       "hello-world",
-      [](HelloWorldConfig const &cfg, IProfileGenerator * /*generator*/, Profile & /*profile*/) {
+      [](HelloWorldConfig const &cfg, IQirAdaptorFactory * /*generator*/, Profile & /*profile*/) {
         std::cout << "Message: " << cfg.message() << std::endl;
       });
 }
@@ -185,10 +185,10 @@ private:
 The implementation itself is
 
 ```c++
-extern "C" void loadComponent(IProfileGenerator *generator)
+extern "C" void loadComponent(IQirAdaptorFactory *generator)
 {
   generator->registerProfileComponent<InlinerConfig>(
-      "inliner", [](InlinerConfig const &cfg, IProfileGenerator *ptr, Profile & /*profile*/) {
+      "inliner", [](InlinerConfig const &cfg, IQirAdaptorFactory *ptr, Profile & /*profile*/) {
         if (cfg.shouldInline())
         {
           auto &module_pass_manager = ptr->modulePassManager();

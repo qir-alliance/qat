@@ -1,8 +1,8 @@
 all: qat-qsharp
 
 qat-qsharp: QSharpVersion/qir/Example.ll
-	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --no-reuse-qubits --profile default QSharpVersion/qir/Example.ll  || echo "failed!"
-	${QAT_BINARY} --apply -S -O3 --verify-module --validate --always-inline --unroll-loops --reuse-qubits --profile default QSharpVersion/qir/Example.ll  || echo "failed!"
+	${QAT_BINARY} --apply -S --verify-module --validate --always-inline --unroll-loops --no-reuse-qubits --adaptor default QSharpVersion/qir/Example.ll  || echo "failed!"
+	${QAT_BINARY} --apply -S --verify-module --validate --always-inline --unroll-loops --reuse-qubits --adaptor default QSharpVersion/qir/Example.ll  || echo "failed!"
 	
 	
 

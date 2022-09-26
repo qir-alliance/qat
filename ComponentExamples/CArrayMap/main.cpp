@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
-#include "qir/qat/Generators/ProfileGenerator.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
-#include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
 
 using namespace microsoft::quantum;
 
-extern "C" void loadComponent(ProfileGenerator* profile_generator);
+extern "C" void loadComponent(QirAdaptorFactory* adaptor_generator);
 void            activateAllocatorReplacement(RuleSet& ruleset);
 void            removeArrayCopies(RuleSet& ruleset);
 void            replaceAccess(RuleSet& ruleset);
@@ -201,20 +201,20 @@ void removeArrayCopies(RuleSet& ruleset)
     ruleset.addRule({call("__quantum__rt__array_copy", "array"_cap = _, _), replacer});
 }
 
-extern "C" void loadComponent(ProfileGenerator* profile_generator)
+extern "C" void loadComponent(QirAdaptorFactory* adaptor_generator)
 {
-    profile_generator->registerProfileComponent<CArrayMapConfig>(
+    adaptor_generator->registerAdaptorComponent<CArrayMapConfig>(
         "c-array-map",
-        [](CArrayMapConfig const& cfg, ProfileGenerator& generator, Profile& profile)
+        [](CArrayMapConfig const& cfg, QirAdaptor& adaptor)
         {
-            auto& ret = generator.modulePassManager();
+            auto& ret = adaptor.modulePassManager();
 
             if (cfg.removeArrayCopies())
             {
                 RuleSet rule_set;
                 removeArrayCopies(rule_set);
                 auto config = TransformationRulesPassConfiguration::createDisabled();
-                ret.addPass(TransformationRulesPass(std::move(rule_set), config, &profile));
+                ret.addPass(TransformationRulesPass(std::move(rule_set), config));
             }
 
             if (cfg.replaceAccess())
@@ -222,7 +222,7 @@ extern "C" void loadComponent(ProfileGenerator* profile_generator)
                 RuleSet rule_set;
                 replaceAccess(rule_set);
                 auto config = TransformationRulesPassConfiguration::createDisabled();
-                ret.addPass(TransformationRulesPass(std::move(rule_set), config, &profile));
+                ret.addPass(TransformationRulesPass(std::move(rule_set), config));
             }
 
             if (cfg.replaceAllocators())
@@ -230,7 +230,7 @@ extern "C" void loadComponent(ProfileGenerator* profile_generator)
                 RuleSet rule_set;
                 activateAllocatorReplacement(rule_set);
                 auto config = TransformationRulesPassConfiguration::createDisabled();
-                ret.addPass(TransformationRulesPass(std::move(rule_set), config, &profile));
+                ret.addPass(TransformationRulesPass(std::move(rule_set), config));
             }
         });
 }

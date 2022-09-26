@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
-#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
-#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
@@ -61,7 +61,7 @@ continue__1:
   ret i8 0
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -71,16 +71,16 @@ continue__1:
         factory.optimizeResultZero();
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"call void @send_message()", "call void @bye_message()"}));
 
@@ -109,7 +109,7 @@ continue__1:
   ret i8 0
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -119,16 +119,16 @@ continue__1:
         factory.optimizeResultZero();
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"call void @bye_message()"}));
 
@@ -158,7 +158,7 @@ continue__1:
   ret i8 0
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -167,17 +167,16 @@ continue__1:
 
         factory.optimizeResultZero();
     };
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
-
-    ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"call void @bye_message()"}));
 
@@ -207,7 +206,7 @@ continue__1:
   ret i8 0
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
@@ -216,17 +215,16 @@ continue__1:
 
         factory.optimizeResultZero();
     };
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
-
-    ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"call void @send_message()", "call void @bye_message()"}));
 

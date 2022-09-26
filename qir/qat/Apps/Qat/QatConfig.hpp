@@ -12,6 +12,8 @@ namespace microsoft::quantum
 class QatConfig
 {
   public:
+    using AdaptorPipeline = std::vector<String>;
+
     // Functions required by configuration manager
     //
 
@@ -25,17 +27,17 @@ class QatConfig
     /// List of dynamic libraries to load.
     String load() const;
 
-    /// Flag that indicates whether or not we are generating a new QIR by applying a profile.
+    /// Flag that indicates whether or not we are generating a new QIR by applying a adaptor.
     bool shouldGenerate() const;
 
     /// Flag to indicate whether or not to verify that the (Q)IR is a valid LLVM IR.
     bool verifyModule() const;
 
-    /// Flag to indicate whether or not to validate the compliance with the QIR profile.
+    /// Flag to indicate whether or not to validate the compliance with the QIR adaptor.
     bool shouldValidate() const;
 
-    /// String to request a specific profile name. Default is base.
-    String profile() const;
+    /// String to request a specific adaptor name. Default is base.
+    String adaptor() const;
 
     /// Indicates whether or not the QIR adaptor tool should emit LLVM IR to the standard output.
     bool shouldEmitLlvm() const;
@@ -85,21 +87,26 @@ class QatConfig
     /// YAML filename to save the configuration to
     String saveConfigTo() const;
 
+    /// Component pipeline to be build
+    AdaptorPipeline adaptorPipeline() const;
+
   private:
     // Variables to be bound to the configuration manager
     //
-    String load_{""};
-    bool   generate_{false};
-    bool   validate_{false};
-    String profile_{"generic"};
-    bool   emit_llvm_{false};
-    bool   opt0_{false};
-    bool   opt1_{false};
-    bool   opt2_{false};
-    bool   opt3_{false};
-    bool   verify_module_{false};
-    bool   add_ir_debug_info_{false};
-    bool   strip_existing_debug_{false};
+    String          load_{""};
+    bool            generate_{false};
+    bool            validate_{false};
+    String          adaptor_{"generic"};
+    AdaptorPipeline adapter_pipeline_{};
+
+    bool emit_llvm_{false};
+    bool opt0_{false};
+    bool opt1_{false};
+    bool opt2_{false};
+    bool opt3_{false};
+    bool verify_module_{false};
+    bool add_ir_debug_info_{false};
+    bool strip_existing_debug_{false};
 
     String output_file_{""};
     String save_report_to_{""};

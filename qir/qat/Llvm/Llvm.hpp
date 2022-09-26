@@ -73,7 +73,7 @@
 #include "llvm/Support/SourceMgr.h"
 #include "llvm/Support/ToolOutputFile.h"
 
-// Profiles
+// QirAdaptors
 #include "llvm/LinkAllPasses.h"
 #include "llvm/Transforms/Scalar/ADCE.h"
 #include "llvm/Transforms/Scalar/DCE.h"

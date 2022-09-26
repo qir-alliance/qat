@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
-#include "qir/qat/Generators/ProfileGenerator.hpp"
 using namespace microsoft::quantum;
 
-extern "C" void loadComponent(ProfileGenerator* profile_generator);
+extern "C" void loadComponent(QirAdaptorFactory* profile_generator);
 
 class InlinerConfig
 {
@@ -27,20 +27,20 @@ class InlinerConfig
     bool inline_{false}; ///< Default behaviour is that we do not add the inliner pass
 };
 
-extern "C" void loadComponent(ProfileGenerator* profile_generator)
+extern "C" void loadComponent(QirAdaptorFactory* profile_generator)
 {
-    profile_generator->registerProfileComponent<InlinerConfig>(
+    profile_generator->registerAdaptorComponent<InlinerConfig>(
         "inliner",
-        [](InlinerConfig const& cfg, ProfileGenerator& generator, Profile& /*profile*/)
+        [](InlinerConfig const& cfg, QirAdaptor& adaptor)
         {
             if (cfg.shouldInline())
             {
-                auto& module_pass_manager = generator.modulePassManager();
+                auto& module_pass_manager = adaptor.modulePassManager();
 
                 // Adds the inline pipeline
-                auto& pass_builder = generator.passBuilder();
+                auto& pass_builder = adaptor.passBuilder();
                 auto  inliner_pass =
-                    pass_builder.buildInlinerPipeline(generator.optimizationLevel(), llvm::ThinOrFullLTOPhase::None);
+                    pass_builder.buildInlinerPipeline(llvm::OptimizationLevel::O0, llvm::ThinOrFullLTOPhase::None);
 
                 module_pass_manager.addPass(std::move(inliner_pass));
             }

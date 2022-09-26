@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
-#include "qir/qat/Generators/ProfileGenerator.hpp"
 using namespace microsoft::quantum;
 
-extern "C" void loadComponent(ProfileGenerator* generator);
+extern "C" void loadComponent(QirAdaptorFactory* generator);
 
 class HelloWorldConfig
 {
@@ -28,9 +28,9 @@ class HelloWorldConfig
     String message_{"Hello world"};
 };
 
-extern "C" void loadComponent(ProfileGenerator* generator)
+extern "C" void loadComponent(QirAdaptorFactory* generator)
 {
-    generator->registerProfileComponent<HelloWorldConfig>(
-        "hello-world", [](HelloWorldConfig const& cfg, ProfileGenerator& /*ptr*/, Profile& /*profile*/)
+    generator->registerAdaptorComponent<HelloWorldConfig>(
+        "hello-world", [](HelloWorldConfig const& cfg, QirAdaptor& /*profile*/)
         { std::cout << "Message: " << cfg.message() << std::endl; });
 }

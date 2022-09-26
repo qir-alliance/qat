@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
-#include "qir/qat/Generators/PostTransformConfig.hpp"
-#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
+#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
@@ -48,22 +48,22 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
   %result5 = call %Result* @__quantum__qis__m__body(%Qubit* null)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
         factory.useStaticResultAllocation();
     };
 
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(
-        std::move(configure_profile), TransformationRulesPassConfiguration::createDisabled(),
+    ConfigurationManager configuration_manager;
+    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
+        configuration_manager, std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    ConfigurationManager& configuration_manager = profile->configurationManager();
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
         {"%result1 = inttoptr i64 0 to %Result*",
