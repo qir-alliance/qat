@@ -59,6 +59,9 @@ class IConfigBind
     /// return true if configure operation was successful.
     virtual bool configure(ParameterParser& parser, bool experimental_mode) = 0;
 
+    /// Resets the value to the default value
+    virtual void reset() = 0;
+
     /// Interface function to return a string representation of the current value of the
     /// bound variable.
     virtual String value() = 0;

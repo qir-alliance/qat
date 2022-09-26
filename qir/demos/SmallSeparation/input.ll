@@ -41,5 +41,5 @@ declare void @__quantum__rt__string_update_reference_count(%String*, i32)
 
 declare void @__quantum__qis__mz__body(%Qubit*, %Result*)
 
-attributes #0 = { "InteropFriendly" }
+attributes #0 = { "EntryPoint" }
 

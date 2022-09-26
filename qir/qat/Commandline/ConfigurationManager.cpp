@@ -41,6 +41,10 @@ void ConfigurationManager::setupArguments(ParameterParser& parser)
     {
         for (auto& c : section.settings)
         {
+            // Resets the value to the default value
+            c->reset();
+
+            // Setting arguments up
             if (!c->setupArguments(parser))
             {
                 throw std::runtime_error("Failed to set parser arguments up.");

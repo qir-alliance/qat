@@ -65,6 +65,9 @@ template <typename T> class ConfigBind : public IConfigBind
     /// and use updates the bound value accordingly.
     bool configure(ParameterParser& parser, bool experimental_mode) override;
 
+    /// Resets the current value to the default value
+    void reset() override;
+
     /// String representation of the bound value.
     String value() override;
 
@@ -311,6 +314,12 @@ typename ConfigBind<T>::template EnableIfSerializable<R, void> ConfigBind<T>::al
     setDefault(static_cast<String>(ret));
 }
 
+template <typename T> void ConfigBind<T>::reset()
+{
+    // TODO: Add support for expreimental value
+    bind_ = default_value_;
+}
+
 template <typename T> bool ConfigBind<T>::configure(ParameterParser& parser, bool experimental_mode)
 {
     if (!isAvailableToCli())
@@ -446,8 +455,6 @@ typename ConfigBind<T>::template EnableIfNotSerializable<A, void> ConfigBind<T>:
     static_assert(!std::is_same<A, StringList>::value, "Expected StringList to be specialised");
     static_assert(!std::is_same<A, String>::value, "Expected String to be specialised");
 
-    bind_ = default_value;
-
     if (parser.has(name()))
     {
         std::stringstream ss{parser.get(name())};
@@ -459,7 +466,6 @@ template <typename T>
 template <typename A>
 void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, bool, A> const& default_value)
 {
-    bind_ = default_value;
     if (parser.has(name()))
     {
         parser.markAsUsed(name());
@@ -476,7 +482,6 @@ template <typename T>
 template <typename A>
 void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, String, A> const& default_value)
 {
-    bind_ = default_value;
 
     if (parser.has(name()))
     {
@@ -510,7 +515,6 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringSet, A>
 {
     if (!parser.has(name()))
     {
-        bind_ = default_value;
         return;
     }
 
@@ -541,7 +545,6 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringList, A
 {
     if (!parser.has(name()))
     {
-        bind_ = default_value;
         return;
     }
 
@@ -572,7 +575,6 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringMap, A>
 {
     if (!parser.has(name()))
     {
-        bind_ = default_value;
         return;
     }
 
@@ -605,7 +607,6 @@ typename ConfigBind<T>::template EnableIfSerializable<A, void> ConfigBind<T>::lo
 {
     if (!parser.has(name()))
     {
-        bind_ = default_value;
         return;
     }
 
