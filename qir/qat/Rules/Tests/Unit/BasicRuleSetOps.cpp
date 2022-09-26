@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
@@ -65,7 +65,7 @@ TEST(RuleSetTestSuite, SetReplacerAndPattern)
   call void @__quantum__rt__qubit_release(%Qubit* %qubit)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         ReplacementRule rule{nullptr, nullptr};
         auto            ret = std::make_shared<ReplacementRule>(rule);
@@ -73,13 +73,13 @@ TEST(RuleSetTestSuite, SetReplacerAndPattern)
         ret->setPattern(callByNameOnly("__quantum__rt__qubit_release"));
         rule_set.addRule(ret);
     };
-
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* null)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
@@ -94,19 +94,19 @@ TEST(RuleSetTestSuite, NullPattern)
   call void @__quantum__rt__qubit_release(%Qubit* %qubit)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         ReplacementRule rule{nullptr, deleteInstruction()};
         auto            ret = std::make_shared<ReplacementRule>(rule);
         rule_set.addRule(ret);
     };
-
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* null)"}) ||
@@ -122,19 +122,19 @@ TEST(RuleSetTestSuite, NullReplacer)
   call void @__quantum__rt__qubit_release(%Qubit* %qubit)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         ReplacementRule rule{callByNameOnly("__quantum__rt__qubit_release"), nullptr};
         auto            ret = std::make_shared<ReplacementRule>(rule);
         rule_set.addRule(ret);
     };
-
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}) ||
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* %qubit)"}));
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(
         ir_manip->hasInstructionSequence({"call void @__quantum__rt__qubit_release(%Qubit* null)"}) ||

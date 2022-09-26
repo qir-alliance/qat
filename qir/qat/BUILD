@@ -135,9 +135,9 @@ ms_cc_library(
 )
 
 ms_cc_library(
-    name = "Profile",
-    srcs = glob(["Profile/*.cpp"]),
-    hdrs = glob(["Profile/*.hpp"]),
+    name = "QirAdaptor",
+    srcs = glob(["QirAdaptor/*.cpp"]),
+    hdrs = glob(["QirAdaptor/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:AllocationManager",
@@ -149,8 +149,8 @@ ms_cc_library(
 
 ms_cc_library(
     name = "DivisionByZero",
-    srcs = glob(["DivisionByZeroPass/*.cpp"]),
-    hdrs = glob(["DivisionByZeroPass/*.hpp"]),
+    srcs = glob(["Passes/DivisionByZeroPass/*.cpp"]),
+    hdrs = glob(["Passes/DivisionByZeroPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Llvm",
@@ -177,8 +177,8 @@ ms_cc_library(
 
 ms_cc_library(
     name = "ValidationPass",
-    srcs = glob(["ValidationPass/*.cpp"]),
-    hdrs = glob(["ValidationPass/*.hpp"]),
+    srcs = glob(["Passes/ValidationPass/*.cpp"]),
+    hdrs = glob(["Passes/ValidationPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -191,8 +191,8 @@ ms_cc_library(
 
 ms_cc_library(
     name = "PreTransformTrimming",
-    srcs = glob(["PreTransformTrimming/*.cpp"]),
-    hdrs = glob(["PreTransformTrimming/*.hpp"]),
+    srcs = glob(["Passes/PreTransformTrimming/*.cpp"]),
+    hdrs = glob(["Passes/PreTransformTrimming/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -204,8 +204,8 @@ ms_cc_library(
 
 ms_cc_library(
     name = "PostTransformValidation",
-    srcs = glob(["PostTransformValidation/*.cpp"]),
-    hdrs = glob(["PostTransformValidation/*.hpp"]),
+    srcs = glob(["Passes/PostTransformValidation/*.cpp"]),
+    hdrs = glob(["Passes/PostTransformValidation/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -217,8 +217,8 @@ ms_cc_library(
 
 ms_cc_library(
     name = "StaticResourceComponent",
-    srcs = glob(["StaticResourceComponent/*.cpp"]),
-    hdrs = glob(["StaticResourceComponent/*.hpp"]),
+    srcs = glob(["Passes/StaticResourceComponent/*.cpp"]),
+    hdrs = glob(["Passes/StaticResourceComponent/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -230,8 +230,8 @@ ms_cc_library(
 
 ms_cc_library(
     name = "GroupingPass",
-    srcs = glob(["GroupingPass/*.cpp"]),
-    hdrs = glob(["GroupingPass/*.hpp"]),
+    srcs = glob(["Passes/GroupingPass/*.cpp"]),
+    hdrs = glob(["Passes/GroupingPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -243,8 +243,8 @@ ms_cc_library(
 
 ms_cc_library(
     name = "FunctionReplacementPass",
-    srcs = glob(["FunctionReplacementPass/*.cpp"]),
-    hdrs = glob(["FunctionReplacementPass/*.hpp"]),
+    srcs = glob(["Passes/FunctionReplacementPass/*.cpp"]),
+    hdrs = glob(["Passes/FunctionReplacementPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -256,8 +256,8 @@ ms_cc_library(
 
 ms_cc_library(
     name = "RemoveDisallowedAttributesPass",
-    srcs = glob(["RemoveDisallowedAttributesPass/*.cpp"]),
-    hdrs = glob(["RemoveDisallowedAttributesPass/*.hpp"]),
+    srcs = glob(["Passes/RemoveDisallowedAttributesPass/*.cpp"]),
+    hdrs = glob(["Passes/RemoveDisallowedAttributesPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Llvm",
@@ -268,8 +268,8 @@ ms_cc_library(
 
 ms_cc_library(
     name = "ZExtTransformPass",
-    srcs = glob(["ZExtTransformPass/*.cpp"]),
-    hdrs = glob(["ZExtTransformPass/*.hpp"]),
+    srcs = glob(["Passes/ZExtTransformPass/*.cpp"]),
+    hdrs = glob(["Passes/ZExtTransformPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Llvm",
@@ -326,23 +326,23 @@ ms_cc_library(
 
 ms_cc_library(
     name = "TransformationRulesPass",
-    srcs = glob(["TransformationRulesPass/*.cpp"]),
-    hdrs = glob(["TransformationRulesPass/*.hpp"]),
+    srcs = glob(["Passes/TransformationRulesPass/*.cpp"]),
+    hdrs = glob(["Passes/TransformationRulesPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
-        "//qir/qat:Profile",
         "//qir/qat:QatTypes",
+        "//qir/qat:QirAdaptor",
         "//qir/qat:Rules",
     ],
 )
 
 cc_library(
     name = "DeferMeasurementPass",
-    srcs = glob(["DeferMeasurementPass/*.cpp"]),
-    hdrs = glob(["DeferMeasurementPass/*.hpp"]),
+    srcs = glob(["Passes/DeferMeasurementPass/*.cpp"]),
+    hdrs = glob(["Passes/DeferMeasurementPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -353,9 +353,9 @@ cc_library(
 )
 
 ms_cc_library(
-    name = "Generators",
-    srcs = glob(["Generators/*.cpp"]),
-    hdrs = glob(["Generators/*.hpp"]),
+    name = "AdaptorFactory",
+    srcs = glob(["AdaptorFactory/*.cpp"]),
+    hdrs = glob(["AdaptorFactory/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:AllocationManager",
@@ -367,8 +367,8 @@ ms_cc_library(
         "//qir/qat:Logging",
         "//qir/qat:PostTransformValidation",
         "//qir/qat:PreTransformTrimming",
-        "//qir/qat:Profile",
         "//qir/qat:QatTypes",
+        "//qir/qat:QirAdaptor",
         "//qir/qat:Rules",
         "//qir/qat:StaticResourceComponent",
         "//qir/qat:TransformationRulesPass",
@@ -381,12 +381,12 @@ ms_cc_library(
 ms_cc_library(
     name = "QatConfig",
     srcs = [
-        "Apps/Qat/ProfileConfiguration.cpp",
         "Apps/Qat/QatConfig.cpp",
+        "Apps/Qat/QirAdaptorConfiguration.cpp",
     ],
     hdrs = [
-        "Apps/Qat/ProfileConfiguration.hpp",
         "Apps/Qat/QatConfig.hpp",
+        "Apps/Qat/QirAdaptorConfiguration.hpp",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -403,19 +403,19 @@ ms_cc_library(
     hdrs = glob(["TestTools/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
+        "//qir/qat:AdaptorFactory",
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
         "//qir/qat:FunctionReplacementPass",
-        "//qir/qat:Generators",
         "//qir/qat:GroupingPass",
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
         "//qir/qat:ModuleLoader",
         "//qir/qat:PostTransformValidation",
         "//qir/qat:PreTransformTrimming",
-        "//qir/qat:Profile",
         "//qir/qat:QatConfig",
         "//qir/qat:QatTypes",
+        "//qir/qat:QirAdaptor",
         "//qir/qat:Rules",
         "//qir/qat:StaticResourceComponent",
         "//qir/qat:TransformationRulesPass",
@@ -427,27 +427,27 @@ ms_cc_library(
 ms_cc_binary(
     name = "qat",
     srcs = [
-        "Apps/Qat/ProfileConfiguration.hpp",
         "Apps/Qat/Qat.cpp",
+        "Apps/Qat/QirAdaptorConfiguration.hpp",
     ],
     visibility = [
         "//visibility:public",
     ],
     deps = [
+        "//qir/qat:AdaptorFactory",
         "//qir/qat:AllocationManager",
         "//qir/qat:Commandline",
         "//qir/qat:DeferMeasurementPass",
         "//qir/qat:FunctionReplacementPass",
-        "//qir/qat:Generators",
         "//qir/qat:GroupingPass",
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
         "//qir/qat:ModuleLoader",
         "//qir/qat:PostTransformValidation",
         "//qir/qat:PreTransformTrimming",
-        "//qir/qat:Profile",
         "//qir/qat:QatConfig",
         "//qir/qat:QatTypes",
+        "//qir/qat:QirAdaptor",
         "//qir/qat:Rules",
         "//qir/qat:StaticResourceComponent",
         "//qir/qat:TransformationRulesPass",

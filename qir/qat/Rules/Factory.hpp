@@ -127,7 +127,7 @@ class RuleFactory
     //
 
     /// Replaces branching of quantum results compared to one. This is a relatively advanced pattern,
-    /// intended for base profile-like constructs where
+    /// intended for base adaptor-like constructs where
     ///
     /// ```
     /// %1 = tail call %Result* @__quantum__rt__result_get_one()

@@ -16,20 +16,35 @@ void ConfigurationManager::setupArguments(ParameterParser& parser)
 {
     for (auto& section : config_sections_)
     {
+        // Ensuring that we are only using the last of the section id.
+        // This means 'adaptor.grouping' becomes 'grouping'
+        String id = section.id;
+        auto   p  = id.find('.');
+        if (p != String::npos)
+        {
+            id = id.substr(p + 1, id.size() - p - 1);
+        }
+
+        // Adding enable or disable parameters for sections
         if (section.enabled_by_default)
         {
-            parser.addFlag("disable-" + section.id);
+            parser.addFlag("disable-" + id);
         }
         else
         {
-            parser.addFlag("enable-" + section.id);
+            parser.addFlag("enable-" + id);
         }
     }
 
+    // Adding parameters for each section
     for (auto& section : config_sections_)
     {
         for (auto& c : section.settings)
         {
+            // Resets the value to the default value
+            c->reset();
+
+            // Setting arguments up
             if (!c->setupArguments(parser))
             {
                 throw std::runtime_error("Failed to set parser arguments up.");
@@ -43,13 +58,23 @@ void ConfigurationManager::configure(ParameterParser& parser, bool experimental_
 
     for (auto& section : config_sections_)
     {
-        if (section.enabled_by_default || parser.has("disable-" + section.id))
+        // Ensuring that we are only using the last of the section id.
+        // This means 'adaptor.grouping' becomes 'grouping'
+        String id = section.id;
+        auto   p  = id.find('.');
+        if (p != String::npos)
         {
-            *section.active = (parser.get("disable-" + section.id, "false") != "true");
+            id = id.substr(p + 1, id.size() - p - 1);
+        }
+
+        // Teesting if the section should be enabled or disabled
+        if (section.enabled_by_default || parser.has("disable-" + id))
+        {
+            *section.active = (parser.get("disable-" + id, "false") != "true");
         }
         else
         {
-            *section.active = (parser.get("enable-" + section.id, "false") == "true");
+            *section.active = (parser.get("enable-" + id, "false") == "true");
         }
     }
 
@@ -126,11 +151,17 @@ void ConfigurationManager::printHelp(bool experimental_mode) const
                 continue;
             }
 
+            String sn{""};
+            if (!c->shorthandNotation().empty())
+            {
+                sn = static_cast<String>(", -") + c->shorthandNotation();
+            }
+
             if (c->isFlag())
             {
                 if (c->defaultValue() == "false")
                 {
-                    std::cout << std::setw(50) << std::left << ("--" + c->name());
+                    std::cout << std::setw(50) << std::left << ("--" + c->name() + sn);
                 }
                 else
                 {
@@ -139,7 +170,7 @@ void ConfigurationManager::printHelp(bool experimental_mode) const
             }
             else
             {
-                std::cout << std::setw(50) << std::left << ("--" + c->name());
+                std::cout << std::setw(50) << std::left << ("--" + c->name() + sn);
             }
 
             if (c->isExperimental())
@@ -180,6 +211,17 @@ void ConfigurationManager::printConfiguration() const
         }
         std::cout << "; \n";
     }
+}
+
+void ConfigurationManager::addShorthandNotation(String const& parameter, String const& shorthand)
+{
+    auto it = parameters_.find(parameter);
+    if (it == parameters_.end())
+    {
+        throw std::runtime_error("Parameter '" + parameter + "' not found.");
+    }
+
+    it->second->setShorthandNotation(shorthand);
 }
 
 void ConfigurationManager::setSectionName(String const& name, String const& description)
@@ -258,9 +300,9 @@ void ConfigurationManager::loadConfig(String const& filename)
 
     for (auto& section : config_sections_)
     {
-        if (config[section.id])
+        auto node = getNodeFromPath(config, section.id);
+        if (node)
         {
-            auto node = config[section.id];
             for (auto& c : section.settings)
             {
                 c->setValueFromYamlNode(node);
@@ -286,7 +328,7 @@ void ConfigurationManager::saveConfig(String const& filename)
             c->updateValueInYamlNode(config);
         }
 
-        ret[section.id] = config;
+        setNodeFromPath(ret, section.id, config);
     }
 
     std::ofstream fout(filename);

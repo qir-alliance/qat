@@ -1,2 +1,2 @@
 all:
-		${QAT_BINARY} --apply -S --profile default  input.ll
+		${QAT_BINARY} --experimental --separate-circuits  --apply -S --adaptor default  input.ll

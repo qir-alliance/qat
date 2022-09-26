@@ -3,9 +3,9 @@
 
 /// QIR Adaptor Tool (QAT)
 ///
-/// QAT is a tool that helps the enduser to easily build and use new profiles. The tool provides a
+/// QAT is a tool that helps the enduser to easily build and use new adaptors. The tool provides a
 /// commandline interface which is configurable through YAML files to validate a specific QIR
-/// profile and generate a QIR profile compatible IR from a generic IR.
+/// adaptor and generate a QIR adaptor compatible IR from a generic IR.
 ///
 /// The tool itself make use of LLVM passes to perform analysis and transformations of the supplied
 /// IR. These transfornations are described through high-level tasks such as
@@ -23,13 +23,13 @@
 /// │            Configuration and paramater parser             │
 /// └─────────────┬───────────────────────────────┬─────────────┘
 /// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
-/// │        LLVM (Q)IRs        │   │      Profile config       │
+/// │        LLVM (Q)IRs        │   │      QirAdaptor config    │
 /// └─────────────┬─────────────┘   └─────────────┬─────────────┘
 /// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
-/// │       Module loader       │   │     Profile Generator     │
+/// │       Module loader       │   │     QirAdaptor Generator  │
 /// └─────────────┬─────────────┘   └─────────────┬─────────────┘
 /// ┌─────────────▼─────────────┐   ┌─────────────▼─────────────┐
-/// │       Single module       │   │          Profile          │
+/// │       Single module       │   │          QirAdaptor       │
 /// │      transformations      │   └──────┬──────────────┬─────┘
 /// └─────────────┬─────────────┘   ┌──────▼─────┐ ┌──────▼─────┐
 /// ┌─────────────▼─────────────┐   │            │ │            │
@@ -50,24 +50,25 @@
 ///
 ///
 
-#include "qir/qat/Apps/Qat/ProfileConfiguration.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Apps/Qat/QatConfig.hpp"
+#include "qir/qat/Apps/Qat/QirAdaptorConfiguration.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Commandline/ParameterParser.hpp"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
-#include "qir/qat/Generators/LlvmPassesConfiguration.hpp"
-#include "qir/qat/GroupingPass/GroupingAnalysisPass.hpp"
-#include "qir/qat/GroupingPass/GroupingPass.hpp"
-#include "qir/qat/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/CommentLogger.hpp"
 #include "qir/qat/ModuleLoader/ModuleLoader.hpp"
-#include "qir/qat/Profile/Profile.hpp"
+#include "qir/qat/Passes/GroupingPass/GroupingAnalysisPass.hpp"
+#include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Passes/GroupingPass/GroupingPassConfiguration.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
+#include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
+#include "qir/qat/QirAdaptor/QirAdaptor.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/FactoryConfig.hpp"
-#include "qir/qat/TransformationRulesPass/TransformationRulesPass.hpp"
-#include "qir/qat/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "qir/qat/ValidationPass/ValidationPassConfiguration.hpp"
+#include "qir/qat/Utils/FunctionToModule.hpp"
 #include "qir/qat/Validator/Validator.hpp"
 #include "qir/qat/Version/Version.hpp"
 
@@ -82,6 +83,7 @@
 
 using namespace llvm;
 using namespace microsoft::quantum;
+
 void init();
 void init()
 {
@@ -132,16 +134,17 @@ int main(int argc, char const** argv)
 
     try
     {
+        ConfigurationManager configuration_manager;
+
         // Default generator. A future version of QAT may allow the generator to be selected
         // through the command line, but it is hard coded for now.
-        auto generator = std::make_shared<ProfileGenerator>();
+        auto generator = std::make_unique<QirAdaptorFactory>(configuration_manager);
 
         // Configuration and command line parsing
         //
 
-        ConfigurationManager& configuration_manager = generator->configurationManager();
         configuration_manager.addConfig<QatConfig>("qat");
-        configuration_manager.addConfig<FactoryConfiguration>("transformation-rules");
+        configuration_manager.addConfig<FactoryConfiguration>("adaptor.transformation-rules");
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
@@ -190,7 +193,7 @@ int main(int argc, char const** argv)
             }
             else
             {
-                using LoadFunctionPtr = void (*)(ProfileGenerator*);
+                using LoadFunctionPtr = void (*)(QirAdaptorFactory*);
                 LoadFunctionPtr load_component;
                 load_component = reinterpret_cast<LoadFunctionPtr>(dlsym(handle, "loadComponent"));
 
@@ -201,8 +204,8 @@ int main(int argc, char const** argv)
 #endif
         }
 
-        // Configuring QAT according to profile
-        configureProfile(config.profile(), configuration_manager);
+        // Configuring QAT according to adaptor
+        configureQirAdaptor(config.adaptor(), configuration_manager);
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
@@ -319,16 +322,23 @@ int main(int argc, char const** argv)
             optimization_level = llvm::OptimizationLevel::O3;
         }
 
-        // Profile manipulation
+        // QirAdaptor manipulation
         //
 
-        // Creating the profile that will be used for generation and validation
+        // Creating the adaptor that will be used for generation and validation
+        generator->newAdaptorContext(config.adaptor(), config.isDebugMode());
 
-        auto profile = generator->newProfile(config.profile(), optimization_level, config.isDebugMode());
+        for (auto& pipeline_name : config.adaptorPipeline())
+        {
+            generator->addComponent("adaptor." + pipeline_name);
+        }
+
+        // auto adaptor = generator->newQirAdaptor(config.adaptor(), optimization_level, config.isDebugMode());
+        auto adaptor = generator->finalizeAdaptor();
 
         if (config.shouldGenerate())
         {
-            profile->apply(*module);
+            adaptor->apply(*module);
 
             //  Preventing subsequent routines to run if errors occurred.
             if (logger && logger->hadErrors())
@@ -375,7 +385,7 @@ int main(int argc, char const** argv)
 
         if (ret == 0 && config.verifyModule())
         {
-            if (!profile->verify(*module))
+            if (!adaptor->verify(*module))
             {
                 std::cerr << "IR is broken." << std::endl;
                 ret = -1;
@@ -384,9 +394,9 @@ int main(int argc, char const** argv)
 
         if (ret == 0 && config.shouldValidate())
         {
-            if (!profile->validate(*module))
+            if (!adaptor->validate(*module))
             {
-                std::cerr << "IR did not validate to the profile constraints." << std::endl;
+                std::cerr << "IR did not validate to the adaptor constraints." << std::endl;
                 ret = -1;
             }
         }

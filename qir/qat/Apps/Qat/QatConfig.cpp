@@ -15,14 +15,17 @@ void QatConfig::setup(ConfigurationManager& config)
         "Base configuration", "Configuration of the quantum adoption tool to execute a specific behaviour.");
     config.addExperimentalParameter(load_, static_cast<String>(""), "load", "Load component.");
     config.addParameter(
-        generate_, "apply", "Applies a profile to transform the IR in correspondence with the profile.");
+        generate_, "apply", "Applies a adaptor to transform the IR in correspondence with the adaptor.");
     config.addParameter(validate_, false, "validate", "Executes the validation procedure.");
-    config.addParameter(profile_, static_cast<String>("generic"), "profile", "Sets the profile.");
-    config.addParameter(emit_llvm_, false, "S", "Emits LLVM IR to the standard output.");
-    config.addParameter(opt0_, false, "O0", "Optimization level 0.");
-    config.addParameter(opt1_, false, "O1", "Optimization level 1.");
-    config.addParameter(opt2_, false, "O2", "Optimization level 2.");
-    config.addParameter(opt3_, false, "O3", "Optimization level 3.");
+    config.addParameter(adaptor_, static_cast<String>("generic"), "adaptor", "Sets the adaptor.");
+    config.addParameter(
+        adapter_pipeline_,
+        {"weak-linking", "llvm-optimization", "pre-transform-trimming", "transformation-rules", "post-transform",
+         "post-transform-validation", "static-resources", "grouping"},
+        "adaptor-pipeline", "Overrides the adaptor pipleline.");
+
+    config.addParameter(emit_llvm_, false, "emit-llvm", "Emits LLVM IR to the standard output.");
+    config.addShorthandNotation("emit-llvm", "S");
 
     config.addParameter(
         target_definition_, static_cast<std::string>(""), "target-def",
@@ -40,10 +43,13 @@ void QatConfig::setup(ConfigurationManager& config)
     config.addParameter(strip_existing_debug_, "strip-existing-dbg", "Strips existing debug symbols.");
 
     config.addParameter(output_file_, "output", "Output file. If empty, the output is sent to stdout.");
+    config.addShorthandNotation("output", "o");
 
     config.addParameter(save_report_to_, "save-logs", "Saves the logs report to specified filename in JSON format.");
     config.addParameter(show_version_, "version", "Shows the version of QAT.");
+    config.addShorthandNotation("version", "v");
     config.addParameter(show_help_, "help", "Show help page.");
+    config.addShorthandNotation("help", "h");
 }
 
 bool QatConfig::shouldGenerate() const
@@ -56,15 +62,15 @@ bool QatConfig::shouldValidate() const
     return validate_;
 }
 
-String QatConfig::profile() const
+String QatConfig::adaptor() const
 {
-    if (profile_ == "base")
+    if (adaptor_ == "base")
     {
         // TODO(tfr): Remove warning upon final release.
-        llvm::errs() << "; WARNING: 'base' profile renamed to 'default'. Please update your scripts.\n";
+        llvm::errs() << "; WARNING: 'base' adaptor renamed to 'default'. Please update your scripts.\n";
         return "default";
     }
-    return profile_;
+    return adaptor_;
 }
 
 bool QatConfig::shouldEmitLlvm() const
@@ -155,5 +161,10 @@ String QatConfig::targetDefinition() const
 String QatConfig::saveConfigTo() const
 {
     return save_config_to_;
+}
+
+QatConfig::AdaptorPipeline QatConfig::adaptorPipeline() const
+{
+    return adapter_pipeline_;
 }
 } // namespace microsoft::quantum

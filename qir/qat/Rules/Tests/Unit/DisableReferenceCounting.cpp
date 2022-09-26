@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
@@ -50,15 +50,15 @@ TEST(RuleSetTestSuite, DisablingArrayhReferenceCounting)
     call void @__quantum__rt__array_update_reference_count(%Array* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableReferenceCounting();
     };
-
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
@@ -72,7 +72,7 @@ TEST(RuleSetTestSuite, DisablingArrayhReferenceCounting)
         ir_manip->hasInstructionSequence(
             {"call void @__quantum__rt__array_update_reference_count(%Array* %0, i32 -1)"}));
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %Array* @__quantum__rt__array_create_1d(i32 8, i64 2)"}));
 
@@ -97,15 +97,15 @@ TEST(RuleSetTestSuite, DisablingStringReferenceCounting)
     call void @__quantum__rt__string_update_reference_count(%String* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableReferenceCounting();
     };
-
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
@@ -119,7 +119,7 @@ TEST(RuleSetTestSuite, DisablingStringReferenceCounting)
         ir_manip->hasInstructionSequence(
             {"call void @__quantum__rt__string_update_reference_count(%String* %0, i32 -1)"}));
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %String* @__quantum__rt__string_create(i8* null)"}));
 
@@ -144,15 +144,15 @@ TEST(RuleSetTestSuite, DisablingResultReferenceCounting)
     call void @__quantum__rt__result_update_reference_count(%Result* %0, i32 -1)    
   )script");
 
-    auto configure_profile = [](RuleSet& rule_set)
+    auto configure_adaptor = [](RuleSet& rule_set)
     {
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
         factory.disableReferenceCounting();
     };
-
-    auto profile = std::make_shared<ConfigurableProfileGenerator>(std::move(configure_profile));
+    ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
     // We expect that the calls are there initially
     EXPECT_TRUE(
@@ -166,7 +166,7 @@ TEST(RuleSetTestSuite, DisablingResultReferenceCounting)
         ir_manip->hasInstructionSequence(
             {"call void @__quantum__rt__result_update_reference_count(%Result* %0, i32 -1)"}));
 
-    ir_manip->applyProfile(profile);
+    ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({"%0 = call %Result* @__quantum__qis__m__body(%Qubit* null)"}));
 

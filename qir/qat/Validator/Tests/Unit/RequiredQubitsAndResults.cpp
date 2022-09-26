@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Generators/ConfigurableProfileGenerator.hpp"
-#include "qir/qat/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
-#include "qir/qat/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
+#include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
+#include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "qir/qat/Rules/Factory.hpp"
-#include "qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -74,12 +74,14 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
 {
     auto ir_manip = newIrManip(script);
 
-    auto generator = std::make_shared<ProfileGenerator>();
+    ConfigurationManager configuration_manager;
+    auto                 generator = std::make_shared<QirAdaptorFactory>(configuration_manager);
 
-    ConfigurationManager& configuration_manager = generator->configurationManager();
     configuration_manager.addConfig<FactoryConfiguration>();
-    configuration_manager.addConfig<ValidationPassConfiguration>(
-        "validation-configuration", ValidationPassConfiguration::fromProfileName("generic"));
+    configuration_manager.addConfig<TargetProfileConfiguration>(
+        "target.profile", TargetProfileConfiguration::fromQirAdaptorName("generic"));
+    configuration_manager.addConfig<TargetQisConfiguration>(
+        "target.profile", TargetQisConfiguration::fromQirAdaptorName("generic"));
 
     generator->setLogger(logger);
     generator->setupDefaultComponentPipeline();
@@ -97,7 +99,7 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
                         "\n";
     }
 
-    ir_manip->validateProfile(generator, "generic", false);
+    ir_manip->validateQirAdaptor(generator, "generic", false);
 }
 
 } // namespace

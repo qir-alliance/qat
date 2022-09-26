@@ -74,13 +74,10 @@ TESTS = {
 QAT_BINARY = sys.argv[1]
 fail = False
 if __name__ == "__main__":
+    # Testing profile against itself with update flags
     for profile, args in TESTS.items():
-        cmd1 = "{} {}  --profile generic --dump-config".format(
-            QAT_BINARY, " ".join(args)
-        )
-
         p = subprocess.Popen(
-            [QAT_BINARY, "--profile", profile, "--dump-config"] + args,
+            [QAT_BINARY, "--adaptor", profile, "--dump-config"] + args,
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,
         )
@@ -88,7 +85,7 @@ if __name__ == "__main__":
         out1 = out1.replace(": generic", ": {}".format(profile))
 
         p = subprocess.Popen(
-            [QAT_BINARY, "--profile", profile, "--dump-config"],
+            [QAT_BINARY, "--adaptor", profile, "--dump-config"],
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,
         )

@@ -12,7 +12,6 @@ _CLANG_ADDITIONAL_COPTS = [
     "-Wconversion",
     "-Wpedantic",
     "-Werror",
-    "-XXXXXXX",
 
     # ... and then selectively disable those we do not need
     "-Wno-pre-c++17-compat",

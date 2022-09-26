@@ -7,9 +7,9 @@
 #include "qir/qat/Logging/CommentLogger.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
 #include "qir/qat/Logging/LogCollection.hpp"
-#include "qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp"
-#include "qir/qat/ValidationPass/FunctionValidationPass.hpp"
-#include "qir/qat/ValidationPass/ValidationPass.hpp"
+#include "qir/qat/Passes/StaticResourceComponent/AllocationAnalysisPass.hpp"
+#include "qir/qat/Passes/ValidationPass/FunctionValidationPass.hpp"
+#include "qir/qat/Passes/ValidationPass/ValidationPass.hpp"
 
 #include <fstream>
 
@@ -17,8 +17,9 @@ namespace microsoft::quantum
 {
 
 Validator::Validator(
-    ValidationPassConfiguration const& cfg,
-    ILoggerPtr const&                  logger,
+    TargetProfileConfiguration const& profile,
+    TargetQisConfiguration const&     qis,
+    ILoggerPtr const&                 logger,
     bool /*debug*/,
     llvm::TargetMachine* target_machine)
   : logger_{logger}
@@ -39,8 +40,8 @@ Validator::Validator(
     {
         function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(logger_); });
 
-        module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, logger_)));
-        module_pass_manager_.addPass(ValidationPass(cfg, logger_));
+        module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(profile, logger_)));
+        module_pass_manager_.addPass(ValidationPass(profile, qis, logger_));
     }
     else
     {
@@ -49,9 +50,9 @@ Validator::Validator(
         function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(comment_logger); });
 
         module_pass_manager_.addPass(
-            llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(cfg, comment_logger)));
+            llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(profile, comment_logger)));
 
-        module_pass_manager_.addPass(ValidationPass(cfg, comment_logger));
+        module_pass_manager_.addPass(ValidationPass(profile, qis, comment_logger));
     }
 }
 

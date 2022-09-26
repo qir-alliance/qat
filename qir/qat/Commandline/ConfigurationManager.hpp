@@ -9,6 +9,7 @@
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <cstddef>
+#include <deque>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -185,6 +186,8 @@ class ConfigurationManager
         String const&       description,
         ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
 
+    void addShorthandNotation(String const& parameter, String const& shorthand);
+
     /// Adds a new parameter to the configuration section. This method uses the bound variable value
     /// as default value. This function should be used by the configuration class.
     template <typename T>
@@ -251,6 +254,46 @@ class ConfigurationManager
         String const&       name,
         String const&       description,
         ParameterVisibility visibility = ParameterVisibility::CliAndConfig);
+
+    YAML::Node getNodeFromPath(YAML::Node const& root, String const& path)
+    {
+        if (!root)
+        {
+            return YAML::Node();
+        }
+
+        YAML::Node  ret    = root;
+        std::size_t last_p = 0;
+        std::size_t p      = path.find('.', last_p);
+        while (p != std::string::npos)
+        {
+            auto key = path.substr(last_p, p - last_p);
+            last_p   = p + 1;
+            ret.reset(ret[key]);
+            if (!ret)
+            {
+                return YAML::Node();
+            }
+            p = path.find('.', last_p);
+        }
+
+        auto key = path.substr(last_p, path.size() - last_p);
+        ret.reset(ret[key]);
+        return ret;
+    }
+
+    void setNodeFromPath(YAML::Node& root, String const& path, YAML::Node const& value)
+    {
+        std::size_t p = path.find('.');
+        if (p == std::string::npos)
+        {
+            root[path] = value;
+            return;
+        }
+
+        auto next_node = root[path.substr(0, p)];
+        setNodeFromPath(next_node, path.substr(p + 1, path.size() - p - 1), value);
+    }
 
     Sections     config_sections_{}; ///< All available sections within the ConfigurationManager instance
     Parameters   parameters_{};      ///< Map with all available parameters.

@@ -10,8 +10,10 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <stack>
 #include <type_traits>
 #include <typeindex>
+#include <vector>
 
 namespace microsoft::quantum
 {
@@ -23,8 +25,9 @@ class OpcodeSet;
 template <typename T> class ConfigBind : public IConfigBind
 {
   public:
-    using Type      = typename std::decay<T>::type;
-    using StringSet = std::unordered_set<std::string>;
+    using Type       = typename std::decay<T>::type;
+    using StringSet  = std::unordered_set<std::string>;
+    using StringList = std::vector<std::string>;
 
     /// Helper template to conditionally disable implementation unless a specific type is used.
     template <typename A, typename B, typename R>
@@ -62,6 +65,9 @@ template <typename T> class ConfigBind : public IConfigBind
     /// and use updates the bound value accordingly.
     bool configure(ParameterParser& parser, bool experimental_mode) override;
 
+    /// Resets the current value to the default value
+    void reset() override;
+
     /// String representation of the bound value.
     String value() override;
 
@@ -74,7 +80,7 @@ template <typename T> class ConfigBind : public IConfigBind
     /// Type index of contained data
     std::type_index valueType() const override;
 
-    /// Method to load value from YAML configuratino
+    /// Method to load value from YAML configuration
     void setValueFromYamlNode(YAML::Node const& node) override;
 
     /// Dumps the current value to the node
@@ -98,6 +104,10 @@ template <typename T> class ConfigBind : public IConfigBind
     void loadYaml(YAML::Node const& node, StringSet& value);
     void saveYaml(YAML::Node& node, StringSet const& value);
 
+    // Yaml serialization for string lists
+    void loadYaml(YAML::Node const& node, StringList& value);
+    void saveYaml(YAML::Node& node, StringList const& value);
+
     // Yaml serialization for string maps
     void loadYaml(YAML::Node const& node, StringMap& value);
     void saveYaml(YAML::Node& node, StringMap const& value);
@@ -111,7 +121,7 @@ template <typename T> class ConfigBind : public IConfigBind
     /// Generic function that changes the parameter name based on the value type and default value.
     template <typename R> EnableIfNotSerializable<R, void> alterNameBasedOnType(R const& default_value);
 
-    /// Specialisation for serializatble types
+    /// Specialization for serializable types
     template <typename R> EnableIfSerializable<R, void> alterNameBasedOnType(R const& default_value);
 
     /// Fallback method for non-serializable types
@@ -122,6 +132,9 @@ template <typename T> class ConfigBind : public IConfigBind
 
     /// Specialized function that changes the parameter name based on default value for string sets.
     void nonSerializableTypeAlterName(StringSet const& default_value);
+
+    /// Specialized function that changes the parameter name based on default value for string lists.
+    void nonSerializableTypeAlterName(StringList const& default_value);
 
     /// Generic string serialization for types with no serialization defined.
     template <typename A> EnableIfNotSerializable<A, String> valueAsString(A const& val);
@@ -140,6 +153,9 @@ template <typename T> class ConfigBind : public IConfigBind
 
     /// Specialized serialization for string sets.
     template <typename A> String nonSerializableValueAsString(EnableIf<A, StringSet, A> const&);
+
+    /// Specialized serialization for string lists.
+    template <typename A> String nonSerializableValueAsString(EnableIf<A, StringList, A> const&);
 
     /// Specialized serialization for string map.
     template <typename A> String valueAsString(EnableIf<A, StringMap, A> const&);
@@ -164,6 +180,9 @@ template <typename T> class ConfigBind : public IConfigBind
 
     /// Specialized deserialization of string values from parser for string sets.
     template <typename A> void loadValue(ParameterParser& parser, EnableIf<A, StringSet, A> const& default_value);
+
+    /// Specialized deserialization of string values from parser for string lists.
+    template <typename A> void loadValue(ParameterParser& parser, EnableIf<A, StringList, A> const& default_value);
 
     Type& bind_;                   ///< Bound variable to be updated.
     Type  default_value_;          ///< Default value.
@@ -238,8 +257,31 @@ template <typename T> void ConfigBind<T>::nonSerializableTypeAlterName(StringSet
     setDefault(static_cast<String>(ss.str()));
 }
 
+template <typename T> void ConfigBind<T>::nonSerializableTypeAlterName(StringList const& /*default_value*/)
+{
+    std::stringstream ss{""};
+    bool              not_first = false;
+    for (auto const& p : bind_)
+    {
+        if (not_first)
+        {
+            ss << ",";
+        }
+        ss << p;
+        not_first = true;
+    }
+
+    setDefault(static_cast<String>(ss.str()));
+}
+
 template <typename T> bool ConfigBind<T>::setupArguments(ParameterParser& parser)
 {
+    auto sn = shorthandNotation();
+    if (!sn.empty())
+    {
+        parser.addShorthandNotation(name(), sn);
+    }
+
     return setupArguments(parser, default_value_);
 }
 
@@ -270,6 +312,12 @@ typename ConfigBind<T>::template EnableIfSerializable<R, void> ConfigBind<T>::al
     String ret;
     bind_.toString(ret);
     setDefault(static_cast<String>(ret));
+}
+
+template <typename T> void ConfigBind<T>::reset()
+{
+    // TODO(unknown): Add support for expreimental value
+    bind_ = default_value_;
 }
 
 template <typename T> bool ConfigBind<T>::configure(ParameterParser& parser, bool experimental_mode)
@@ -380,15 +428,32 @@ String ConfigBind<T>::nonSerializableValueAsString(EnableIf<A, StringSet, A> con
 
 template <typename T>
 template <typename A>
+String ConfigBind<T>::nonSerializableValueAsString(EnableIf<A, StringList, A> const&)
+{
+    std::stringstream ss{""};
+    bool              not_first = false;
+    for (auto const& p : bind_)
+    {
+        if (not_first)
+        {
+            ss << ",";
+        }
+        ss << p;
+        not_first = true;
+    }
+    return static_cast<String>(ss.str());
+}
+
+template <typename T>
+template <typename A>
 typename ConfigBind<T>::template EnableIfNotSerializable<A, void> ConfigBind<T>::loadValue(
     ParameterParser& parser,
-    A const&         default_value)
+    A const& /*default_value*/)
 {
     static_assert(!std::is_same<A, bool>::value, "Expected bool to be specialised");
     static_assert(!std::is_same<A, StringSet>::value, "Expected StringSet to be specialised");
+    static_assert(!std::is_same<A, StringList>::value, "Expected StringList to be specialised");
     static_assert(!std::is_same<A, String>::value, "Expected String to be specialised");
-
-    bind_ = default_value;
 
     if (parser.has(name()))
     {
@@ -399,9 +464,8 @@ typename ConfigBind<T>::template EnableIfNotSerializable<A, void> ConfigBind<T>:
 
 template <typename T>
 template <typename A>
-void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, bool, A> const& default_value)
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, bool, A> const& /*default_value*/)
 {
-    bind_ = default_value;
     if (parser.has(name()))
     {
         parser.markAsUsed(name());
@@ -416,9 +480,8 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, bool, A> cons
 
 template <typename T>
 template <typename A>
-void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, String, A> const& default_value)
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, String, A> const& /*default_value*/)
 {
-    bind_ = default_value;
 
     if (parser.has(name()))
     {
@@ -448,11 +511,10 @@ template <typename T> void ConfigBind<T>::insertKeyValueInStringMap(StringMap& m
 
 template <typename T>
 template <typename A>
-void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringSet, A> const& default_value)
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringSet, A> const& /*default_value*/)
 {
     if (!parser.has(name()))
     {
-        bind_ = default_value;
         return;
     }
 
@@ -479,11 +541,40 @@ void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringSet, A>
 
 template <typename T>
 template <typename A>
-void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringMap, A> const& default_value)
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringList, A> const& /*default_value*/)
 {
     if (!parser.has(name()))
     {
-        bind_ = default_value;
+        return;
+    }
+
+    auto value = parser.get(name());
+
+    bind_.clear();
+    std::size_t last_p = 0;
+    auto        p      = value.find(',', last_p);
+    while (p != String::npos)
+    {
+        auto part = value.substr(last_p, p - last_p);
+        bind_.push_back(part);
+
+        last_p = p + 1;
+        p      = value.find(',', last_p);
+    }
+
+    if (last_p < value.size())
+    {
+        auto part = value.substr(last_p, p - last_p);
+        bind_.push_back(part);
+    }
+}
+
+template <typename T>
+template <typename A>
+void ConfigBind<T>::loadValue(ParameterParser& parser, EnableIf<A, StringMap, A> const& /*default_value*/)
+{
+    if (!parser.has(name()))
+    {
         return;
     }
 
@@ -512,11 +603,10 @@ template <typename T>
 template <typename A>
 typename ConfigBind<T>::template EnableIfSerializable<A, void> ConfigBind<T>::loadValue(
     ParameterParser& parser,
-    A const&         default_value)
+    A const& /*default_value*/)
 {
     if (!parser.has(name()))
     {
-        bind_ = default_value;
         return;
     }
 
@@ -542,7 +632,7 @@ template <typename T> std::type_index ConfigBind<T>::valueType() const
 
 template <typename T> void ConfigBind<T>::setValueFromYamlNode(YAML::Node const& node)
 {
-    if (isLoadAndSavable() && node[name()])
+    if (isLoadAndSavable() && node && node[name()])
     {
         loadYaml(node, bind_);
     }
@@ -582,7 +672,27 @@ template <typename T> void ConfigBind<T>::loadYaml(YAML::Node const& node, Strin
     }
 }
 
+template <typename T> void ConfigBind<T>::loadYaml(YAML::Node const& node, StringList& value)
+{
+    for (auto& v : node[name()])
+    {
+        value.push_back(v.template as<String>());
+    }
+}
+
 template <typename T> void ConfigBind<T>::saveYaml(YAML::Node& node, StringSet const& value)
+{
+    YAML::Node list;
+
+    for (auto& v : value)
+    {
+        list.push_back(v);
+    }
+
+    node[name()] = list;
+}
+
+template <typename T> void ConfigBind<T>::saveYaml(YAML::Node& node, StringList const& value)
 {
     YAML::Node list;
 
