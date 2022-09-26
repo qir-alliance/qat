@@ -121,7 +121,7 @@ template <typename T> class ConfigBind : public IConfigBind
     /// Generic function that changes the parameter name based on the value type and default value.
     template <typename R> EnableIfNotSerializable<R, void> alterNameBasedOnType(R const& default_value);
 
-    /// Specialisation for serializable types
+    /// Specialization for serializable types
     template <typename R> EnableIfSerializable<R, void> alterNameBasedOnType(R const& default_value);
 
     /// Fallback method for non-serializable types
