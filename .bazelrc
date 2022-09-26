@@ -14,14 +14,14 @@ build --incompatible_enable_cc_toolchain_resolution
 build --features=external_include_paths
 
 # Set the default compiler to the `clang` binary on the `PATH`.
-build:generic_clang --repo_env=CC=clang
+build:clang --repo_env=CC=clang
 
 # C++17 standard version is required.
-build:generic_clang --cxxopt=-std=c++17
-build:generic_clang --host_cxxopt=-std=c++17
+build:clang --cxxopt=-std=c++17
+build:clang --host_cxxopt=-std=c++17
 
 # Use `-Wall` and `-Werror` for Clang.
-# build:generic_clang --copt=-Wall --copt=-Werror --host_copt=-Wall --host_copt=-Werror
+# build:clang --copt=-Wall --copt=-Werror --host_copt=-Wall --host_copt=-Werror
 
 # C++ 17
 build:msvc --cxxopt=/std:c++17

@@ -13,10 +13,10 @@
 
 ## Table of Contents
 
-- [Purpose](#purpose-and-terminology)
-- [Building](#building)
-- [Getting started](#getting-started)
-- [Documentation](#documentation)
+-   [Purpose](#purpose-and-terminology)
+-   [Building](#building)
+-   [Getting started](#getting-started)
+-   [Documentation](#documentation)
 
 ## Purpose and terminology
 
@@ -36,7 +36,7 @@ is designed to work with all of them.
 
 For full instructions on dependencies and how to build, follow
 [these instructions](./docs/src/UserGuide/BuildingLibrary.md). In summary, the
-executable is built using `baslisk`:
+executable is built using `bazelisk`:
 
 ```sh
 bazelisk run //qir/qat:qat --config generic_clang --config release

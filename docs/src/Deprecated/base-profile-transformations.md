@@ -1,8 +1,8 @@
-# Proposal: QIR Adaptor Tool Specification
+# QIR Adaptor Tool Specification
 
 ## Considerations
 
-This document discusses a tool that transforms QIR into a restricted version of
+This document discusses a tool that transforms QIR into a targeted version of
 the QIR (known as a profile). We aim to make a specification for a generic tool
 that allows the user to:
 
@@ -51,7 +51,7 @@ using a profile which is compatible with the target platform:
            ▼
 ┌──────────────────────┐
 │                      │
-│    Restricted QIR    │
+│     Targeted QIR     │
 │                      │
 └──────────────────────┘
 ```

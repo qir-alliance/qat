@@ -41,10 +41,11 @@ theme:
     search: 83 # s
 
 nav:
-  - User guide:
-      - Quick start: "UserGuide/QuickStart.md"
-      - Building the library: "UserGuide/BuildingLibrary.md"
-      - Introduction to profiles: "UserGuide/IntroductionToProfiles.md"
+  - Quick start:
+      - Quick start: "QuickStart/index.md"
+      - Building with Bazel: "QuickStart/building-with-bazel.md"
+      - Building with CMake: "QuickStart/building-with-cmake.md"
+      - Running QAT: "QuickStart/index.md#running-qat"
 
   - Developer guide:
       - Architecture Overview: "DeveloperGuide/ArchitectureOverview.md"
