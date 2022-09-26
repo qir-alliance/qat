@@ -560,13 +560,13 @@
   </div>
   <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="writing-rule-tests">Writing rule tests</h1>
 <p>To make it easy to write tests for transformation rules, we have created two
-components to ease the burden of writing tests: <code>DefaultProfileGenerator</code> and
-<code>IrManipulationTestHelper</code>. The <code>DefaultProfileGenerator</code> is a profile that is
-dynamically defined when instatiated through a configuration lambda function.</p>
+components to ease the burden of writing tests: <code>ConfigurableQirAdaptorFactory</code> and
+<code>IrManipulationTestHelper</code>. The <code>ConfigurableQirAdaptorFactory</code> is a profile that
+is dynamically defined when instatiated through a configuration lambda function.</p>
 <h2 id="creating-the-profile">Creating the profile</h2>
-<p>Creating the profile using the <code>DefaultProfileGenerator</code> is done by first
+<p>Creating the profile using the <code>ConfigurableQirAdaptorFactory</code> is done by first
 defining the lambda function and then instantiating the
-<code>DefaultProfileGenerator</code> with the lambda function to define the profile. Using
+<code>ConfigurableQirAdaptorFactory</code> with the lambda function to define the profile. Using
 the <code>RuleFactory</code>, a profile for transforming the single qubit allocations is
 created as follows:</p>
 <pre><code class="language-c++">  auto configure_profile = [](RuleSet &amp;rule_set) {
@@ -575,7 +575,7 @@ created as follows:</p>
     factory.useStaticQubitAllocation();
   }
 
-  auto profile = std::make_shared&lt;DefaultProfileGenerator&gt;(std::move(configure_profile));
+  auto profile = std::make_shared&lt;ConfigurableQirAdaptorFactory&gt;(std::move(configure_profile));
 </code></pre>
 <p>This profile is intended to transform</p>
 <pre><code class="language-llvm">  %qubit = call %Qubit* @__quantum__rt__qubit_allocate()

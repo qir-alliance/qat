@@ -595,7 +595,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;qir/qat/Generators/ProfileGenerator.hpp&quot;
+#include &quot;qir/qat/AdaptorFactory/QirAdaptorFactory.hpp&quot;
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 #include &quot;qir/qat/TestTools/TestVm.hpp&quot;
 
@@ -616,7 +616,7 @@ class IrManipulationTestHelper
     using ContextPtr        = std::unique_ptr&lt;LLVMContext&gt;;
     using ModulePtr         = std::unique_ptr&lt;Module&gt;;
     using OptimizationLevel = llvm::OptimizationLevel;
-    using GeneratorPtr      = std::shared_ptr&lt;ProfileGenerator&gt;;
+    using GeneratorPtr      = std::shared_ptr&lt;QirAdaptorFactory&gt;;
 
     // IrManipulationTestHelper is default constructible with no ability to move
     // or copy.
@@ -642,22 +642,22 @@ class IrManipulationTestHelper
 
     bool hasInstructionSequence(Strings const&amp; instructions);
 
-    void applyProfile(
+    void applyQirAdaptor(
         GeneratorPtr const&amp;      generator,
         OptimizationLevel const&amp; optimization_level = OptimizationLevel::O0,
         bool                     debug              = false);
 
-    bool validateProfile(GeneratorPtr const&amp; generator, String const&amp; profile_name = &quot;generic&quot;, bool debug = false);
+    bool validateQirAdaptor(GeneratorPtr const&amp; generator, String const&amp; adaptor_name = &quot;generic&quot;, bool debug = false);
 
     bool containsValidationErrors(
         GeneratorPtr const&amp; generator,
-        String const&amp;       profile_name,
+        String const&amp;       adaptor_name,
         Strings const&amp;      errors,
         bool                debug = false) const;
 
     bool containsExactValidationErrors(
         GeneratorPtr const&amp; generator,
-        String const&amp;       profile_name,
+        String const&amp;       adaptor_name,
         Strings const&amp;      errors,
         bool                debug = false) const;
 
@@ -706,7 +706,7 @@ class IrManipulationTestHelper
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

@@ -702,7 +702,16 @@ ParameterParser::ParsedValue ParameterParser::parseSingleArg(String key)
     else if (key.size() &gt; 1 &amp;&amp; key.substr(0, 1) == &quot;-&quot;)
     {
         is_key = true;
-        key    = key.substr(1);
+
+        // Mapping shorthand notation
+        key     = key.substr(1);
+        auto it = shorthand_notation_.find(key);
+        if (it == shorthand_notation_.end())
+        {
+            throw std::runtime_error(&quot;Unknown short hand notation &quot; + key);
+        }
+
+        key = it-&gt;second;
     }
     return {is_key, key};
 }
@@ -722,12 +731,18 @@ void ParameterParser::reset()
     arguments_.clear();
     settings_.clear();
     flags_.clear();
+    shorthand_notation_.clear();
+}
+
+void ParameterParser::addShorthandNotation(String const&amp; parameter, String const&amp; shorthand)
+{
+    shorthand_notation_[shorthand] = parameter;
 }
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

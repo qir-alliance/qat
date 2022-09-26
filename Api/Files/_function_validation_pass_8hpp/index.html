@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      ValidationPass/FunctionValidationPass.hpp - QAT Documentation
+      Passes/ValidationPass/FunctionValidationPass.hpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,12 +553,12 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> ValidationPass/FunctionValidationPass.hpp </span>
+        <span class="text-center"> Passes/ValidationPass/FunctionValidationPass.hpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="validationpassfunctionvalidationpasshpp">ValidationPass/FunctionValidationPass.hpp</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="passesvalidationpassfunctionvalidationpasshpp">Passes/ValidationPass/FunctionValidationPass.hpp</h1>
 <h2 id="namespaces">Namespaces</h2>
 <table>
 <thead>
@@ -597,9 +597,10 @@
 
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 #include &quot;qir/qat/Logging/ILogger.hpp&quot;
+#include &quot;qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
+#include &quot;qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp&quot;
+#include &quot;qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp&quot;
 #include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
-#include &quot;qir/qat/StaticResourceComponent/StaticResourceComponentConfiguration.hpp&quot;
-#include &quot;qir/qat/ValidationPass/ValidationPassConfiguration.hpp&quot;
 
 #include &lt;functional&gt;
 #include &lt;unordered_map&gt;
@@ -620,7 +621,7 @@ class FunctionValidationPass : public llvm::PassInfoMixin&lt;FunctionValidationP
     // Construction and destruction configuration.
     //
 
-    explicit FunctionValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr);
+    explicit FunctionValidationPass(TargetProfileConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr);
 
     FunctionValidationPass(FunctionValidationPass const&amp;) = delete;
 
@@ -633,7 +634,7 @@ class FunctionValidationPass : public llvm::PassInfoMixin&lt;FunctionValidationP
     static bool isRequired();
 
   private:
-    ValidationPassConfiguration config_{};
+    TargetProfileConfiguration config_{};
 
     ILoggerPtr logger_{nullptr};
 };
@@ -641,7 +642,7 @@ class FunctionValidationPass : public llvm::PassInfoMixin&lt;FunctionValidationP
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

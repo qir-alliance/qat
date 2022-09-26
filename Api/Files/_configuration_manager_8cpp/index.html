@@ -594,20 +594,35 @@ void ConfigurationManager::setupArguments(ParameterParser&amp; parser)
 {
     for (auto&amp; section : config_sections_)
     {
+        // Ensuring that we are only using the last of the section id.
+        // This means 'adaptor.grouping' becomes 'grouping'
+        String id = section.id;
+        auto   p  = id.find('.');
+        if (p != String::npos)
+        {
+            id = id.substr(p + 1, id.size() - p - 1);
+        }
+
+        // Adding enable or disable parameters for sections
         if (section.enabled_by_default)
         {
-            parser.addFlag(&quot;disable-&quot; + section.id);
+            parser.addFlag(&quot;disable-&quot; + id);
         }
         else
         {
-            parser.addFlag(&quot;enable-&quot; + section.id);
+            parser.addFlag(&quot;enable-&quot; + id);
         }
     }
 
+    // Adding parameters for each section
     for (auto&amp; section : config_sections_)
     {
         for (auto&amp; c : section.settings)
         {
+            // Resets the value to the default value
+            c-&gt;reset();
+
+            // Setting arguments up
             if (!c-&gt;setupArguments(parser))
             {
                 throw std::runtime_error(&quot;Failed to set parser arguments up.&quot;);
@@ -621,13 +636,23 @@ void ConfigurationManager::configure(ParameterParser&amp; parser, bool experimen
 
     for (auto&amp; section : config_sections_)
     {
-        if (section.enabled_by_default || parser.has(&quot;disable-&quot; + section.id))
+        // Ensuring that we are only using the last of the section id.
+        // This means 'adaptor.grouping' becomes 'grouping'
+        String id = section.id;
+        auto   p  = id.find('.');
+        if (p != String::npos)
         {
-            *section.active = (parser.get(&quot;disable-&quot; + section.id, &quot;false&quot;) != &quot;true&quot;);
+            id = id.substr(p + 1, id.size() - p - 1);
+        }
+
+        // Teesting if the section should be enabled or disabled
+        if (section.enabled_by_default || parser.has(&quot;disable-&quot; + id))
+        {
+            *section.active = (parser.get(&quot;disable-&quot; + id, &quot;false&quot;) != &quot;true&quot;);
         }
         else
         {
-            *section.active = (parser.get(&quot;enable-&quot; + section.id, &quot;false&quot;) == &quot;true&quot;);
+            *section.active = (parser.get(&quot;enable-&quot; + id, &quot;false&quot;) == &quot;true&quot;);
         }
     }
 
@@ -704,11 +729,17 @@ void ConfigurationManager::printHelp(bool experimental_mode) const
                 continue;
             }
 
+            String sn{&quot;&quot;};
+            if (!c-&gt;shorthandNotation().empty())
+            {
+                sn = static_cast&lt;String&gt;(&quot;, -&quot;) + c-&gt;shorthandNotation();
+            }
+
             if (c-&gt;isFlag())
             {
                 if (c-&gt;defaultValue() == &quot;false&quot;)
                 {
-                    std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name());
+                    std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name() + sn);
                 }
                 else
                 {
@@ -717,7 +748,7 @@ void ConfigurationManager::printHelp(bool experimental_mode) const
             }
             else
             {
-                std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name());
+                std::cout &lt;&lt; std::setw(50) &lt;&lt; std::left &lt;&lt; (&quot;--&quot; + c-&gt;name() + sn);
             }
 
             if (c-&gt;isExperimental())
@@ -758,6 +789,17 @@ void ConfigurationManager::printConfiguration() const
         }
         std::cout &lt;&lt; &quot;; \n&quot;;
     }
+}
+
+void ConfigurationManager::addShorthandNotation(String const&amp; parameter, String const&amp; shorthand)
+{
+    auto it = parameters_.find(parameter);
+    if (it == parameters_.end())
+    {
+        throw std::runtime_error(&quot;Parameter '&quot; + parameter + &quot;' not found.&quot;);
+    }
+
+    it-&gt;second-&gt;setShorthandNotation(shorthand);
 }
 
 void ConfigurationManager::setSectionName(String const&amp; name, String const&amp; description)
@@ -836,9 +878,9 @@ void ConfigurationManager::loadConfig(String const&amp; filename)
 
     for (auto&amp; section : config_sections_)
     {
-        if (config[section.id])
+        auto node = getNodeFromPath(config, section.id);
+        if (node)
         {
-            auto node = config[section.id];
             for (auto&amp; c : section.settings)
             {
                 c-&gt;setValueFromYamlNode(node);
@@ -864,7 +906,7 @@ void ConfigurationManager::saveConfig(String const&amp; filename)
             c-&gt;updateValueInYamlNode(config);
         }
 
-        ret[section.id] = config;
+        setNodeFromPath(ret, section.id, config);
     }
 
     std::ofstream fout(filename);
@@ -874,7 +916,7 @@ void ConfigurationManager::saveConfig(String const&amp; filename)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

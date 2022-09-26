@@ -586,6 +586,10 @@
 <td>using std::unordered_set&lt; String &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#using-unusedsettings">UnusedSettings</a></strong></td>
 </tr>
+<tr>
+<td>using std::unordered_map&lt; String, String &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#using-shorthandnotation">ShorthandNotation</a></strong></td>
+</tr>
 </tbody>
 </table>
 <h2 id="public-functions">Public Functions</h2>
@@ -653,6 +657,10 @@
 <td>UnusedSettings const  &amp;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#function-unusedsettings">unusedSettings</a></strong>() const<br>Lists unknown settings.</td>
 </tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/#function-addshorthandnotation">addShorthandNotation</a></strong>(String const &amp; parameter, String const &amp; shorthand)<br>Adds short hand notation to paramters.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="detailed-description">Detailed Description</h2>
@@ -671,6 +679,9 @@
 </code></pre>
 <h3 id="using-unusedsettings">using UnusedSettings</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ParameterParser::UnusedSettings =  std::unordered_set&lt;String&gt;;
+</code></pre>
+<h3 id="using-shorthandnotation">using ShorthandNotation</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ParameterParser::ShorthandNotation =  std::unordered_map&lt;String, String&gt;;
 </code></pre>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-parameterparser">function ParameterParser</h3>
@@ -745,8 +756,15 @@
 <pre><code class="language-cpp">UnusedSettings const  &amp; unusedSettings() const
 </code></pre>
 <p>Lists unknown settings. </p>
+<h3 id="function-addshorthandnotation">function addShorthandNotation</h3>
+<pre><code class="language-cpp">void addShorthandNotation(
+    String const &amp; parameter,
+    String const &amp; shorthand
+)
+</code></pre>
+<p>Adds short hand notation to paramters. </p>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

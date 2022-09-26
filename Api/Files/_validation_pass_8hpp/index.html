@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      ValidationPass/ValidationPass.hpp - QAT Documentation
+      Passes/ValidationPass/ValidationPass.hpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,12 +553,12 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> ValidationPass/ValidationPass.hpp </span>
+        <span class="text-center"> Passes/ValidationPass/ValidationPass.hpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="validationpassvalidationpasshpp">ValidationPass/ValidationPass.hpp</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="passesvalidationpassvalidationpasshpp">Passes/ValidationPass/ValidationPass.hpp</h1>
 <h2 id="namespaces">Namespaces</h2>
 <table>
 <thead>
@@ -597,8 +597,9 @@
 
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 #include &quot;qir/qat/Logging/ILogger.hpp&quot;
+#include &quot;qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp&quot;
+#include &quot;qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp&quot;
 #include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
-#include &quot;qir/qat/ValidationPass/ValidationPassConfiguration.hpp&quot;
 
 #include &lt;functional&gt;
 #include &lt;unordered_map&gt;
@@ -619,7 +620,10 @@ class ValidationPass : public llvm::PassInfoMixin&lt;ValidationPass&gt;
     // Construction and destruction configuration.
     //
 
-    explicit ValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger = nullptr);
+    explicit ValidationPass(
+        TargetProfileConfiguration const&amp; profile,
+        TargetQisConfiguration const&amp;     qis,
+        ILoggerPtr const&amp;                 logger = nullptr);
 
     ValidationPass(ValidationPass const&amp;) = delete;
 
@@ -641,7 +645,8 @@ class ValidationPass : public llvm::PassInfoMixin&lt;ValidationPass&gt;
 
     using Locations = std::vector&lt;Location&gt;;
 
-    ValidationPassConfiguration config_{};
+    TargetProfileConfiguration profile_config_{};
+    TargetQisConfiguration     qis_config_{};
 
     Location current_location_{};
 
@@ -663,7 +668,7 @@ class ValidationPass : public llvm::PassInfoMixin&lt;ValidationPass&gt;
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

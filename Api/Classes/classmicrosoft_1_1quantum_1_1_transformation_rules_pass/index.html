@@ -560,7 +560,7 @@
   </div>
   <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumtransformationrulespass">microsoft::quantum::TransformationRulesPass</h1>
 <p><a href="#detailed-description">More...</a></p>
-<p><code>#include &lt;TransformationRulesPass/TransformationRulesPass.hpp&gt;</code></p>
+<p><code>#include &lt;Passes/TransformationRulesPass/TransformationRulesPass.hpp&gt;</code></p>
 <p>Inherits from llvm::PassInfoMixin&lt; TransformationRulesPass &gt;</p>
 <h2 id="public-types">Public Types</h2>
 <table>
@@ -628,7 +628,7 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass/#function-transformationrulespass">TransformationRulesPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/">RuleSet</a> &amp;&amp; rule_set, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/">TransformationRulesPassConfiguration</a> const &amp; config, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a> * profile)<br>Custom default constructor.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass/#function-transformationrulespass">TransformationRulesPass</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/">RuleSet</a> &amp;&amp; rule_set, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/">TransformationRulesPassConfiguration</a> const &amp; config)<br>Custom default constructor.</td>
 </tr>
 <tr>
 <td></td>
@@ -742,7 +742,7 @@
 <p>This class applies a set of transformation rules to the IR to transform it into a new IR. The rules are added using the <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/">RuleSet</a> class which allows the developer to create one or more rules on how to transform the IR.</p>
 <p>The module executes the following steps: </p>
 <pre><code class="language-cpp">┌─────────────────┐
-│  Apply profile  │
+│  Apply adaptor  │
 └─────────────────┘
          │                ┌───────────────────────────────┐
          ├───────────────▶│   Copy and expand functions   │──┐
@@ -807,8 +807,7 @@
 <h3 id="function-transformationrulespass">function TransformationRulesPass</h3>
 <pre><code class="language-cpp">TransformationRulesPass(
     RuleSet &amp;&amp; rule_set,
-    TransformationRulesPassConfiguration const &amp; config,
-    Profile * profile
+    TransformationRulesPassConfiguration const &amp; config
 )
 </code></pre>
 <p>Custom default constructor. </p>
@@ -964,7 +963,7 @@
 </code></pre>
 <p>Whether or not this pass is required to run. </p>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

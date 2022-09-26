@@ -600,7 +600,8 @@
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 #include &quot;qir/qat/Logging/ILogger.hpp&quot;
 #include &quot;qir/qat/Logging/LogCollection.hpp&quot;
-#include &quot;qir/qat/ValidationPass/ValidationPassConfiguration.hpp&quot;
+#include &quot;qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp&quot;
+#include &quot;qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp&quot;
 
 #include &lt;memory&gt;
 
@@ -617,10 +618,11 @@ class Validator
     //
 
     explicit Validator(
-        ValidationPassConfiguration const&amp; cfg,
-        ILoggerPtr const&amp;                  logger,
-        bool                               debug,
-        llvm::TargetMachine*               target_machine = nullptr);
+        TargetProfileConfiguration const&amp; profile,
+        TargetQisConfiguration const&amp;     qis,
+        ILoggerPtr const&amp;                 logger,
+        bool                              debug,
+        llvm::TargetMachine*              target_machine = nullptr);
 
     // Default construction not allowed to ensure that LLVM modules and passes are set up correctly.
     // Copy construction is prohibited due to restriction on classes held by Validator.
@@ -671,7 +673,7 @@ class Validator
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

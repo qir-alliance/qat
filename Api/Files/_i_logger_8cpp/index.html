@@ -707,22 +707,22 @@ void ILogger::errorFunctionInliningMaxRecursion(uint64_t n, llvm::Value* ptr)
 
 void ILogger::errorNoQubitsPresent(llvm::Value* ptr, String const&amp; name)
 {
-    errorWithLocation(&quot;No qubits present in function (required by profile '&quot; + name + &quot;').&quot;, ptr);
+    errorWithLocation(&quot;No qubits present in function (required by adaptor '&quot; + name + &quot;').&quot;, ptr);
 }
 
 void ILogger::errorNoResultsPresent(llvm::Value* ptr, String const&amp; name)
 {
-    errorWithLocation(&quot;No results present in function (required by profile '&quot; + name + &quot;').&quot;, ptr);
+    errorWithLocation(&quot;No results present in function (required by adaptor '&quot; + name + &quot;').&quot;, ptr);
 }
 
-void ILogger::errorOpcodeNotAllowed(String const&amp; code, String const&amp; profile_name, llvm::Value* ptr)
+void ILogger::errorOpcodeNotAllowed(String const&amp; code, String const&amp; adaptor_name, llvm::Value* ptr)
 {
     if (ptr)
     {
         setLocationFromValue(ptr);
     }
 
-    error(&quot;Opcode '&quot; + code + &quot;' is not allowed for this profile (&quot; + profile_name + &quot;).&quot;);
+    error(&quot;Opcode '&quot; + code + &quot;' is not allowed for this adaptor (&quot; + adaptor_name + &quot;).&quot;);
 }
 
 void ILogger::errorCustomFunctionsNotAllowed(llvm::Value* ptr)
@@ -730,25 +730,25 @@ void ILogger::errorCustomFunctionsNotAllowed(llvm::Value* ptr)
     errorWithLocation(&quot;Calls to custom defined functions not allowed.&quot;, ptr);
 }
 
-void ILogger::errorExternalCallsNotAllowed(String const&amp; function_name, String const&amp; profile_name, llvm::Value* ptr)
+void ILogger::errorExternalCallsNotAllowed(String const&amp; function_name, String const&amp; adaptor_name, llvm::Value* ptr)
 {
     errorWithLocation(
-        &quot;External call '&quot; + function_name + &quot;' is not allowed for this profile (&quot; + profile_name + &quot;).&quot;, ptr);
+        &quot;External call '&quot; + function_name + &quot;' is not allowed for this adaptor (&quot; + adaptor_name + &quot;).&quot;, ptr);
 }
 
-void ILogger::errorTypeNotAllowed(String const&amp; type_name, String const&amp; profile_name, llvm::Value* ptr)
+void ILogger::errorTypeNotAllowed(String const&amp; type_name, String const&amp; adaptor_name, llvm::Value* ptr)
 {
-    errorWithLocation(&quot;Type '&quot; + type_name + &quot;' is not allowed for this profile (&quot; + profile_name + &quot;).&quot;, ptr);
+    errorWithLocation(&quot;Type '&quot; + type_name + &quot;' is not allowed for this adaptor (&quot; + adaptor_name + &quot;).&quot;, ptr);
 }
 
-void ILogger::errorPoisonNotAllowed(String const&amp; profile_name, llvm::Value* ptr)
+void ILogger::errorPoisonNotAllowed(String const&amp; adaptor_name, llvm::Value* ptr)
 {
-    errorWithLocation(&quot;Poison value is not allowed for this profile (&quot; + profile_name + &quot;).&quot;, ptr);
+    errorWithLocation(&quot;Poison value is not allowed for this adaptor (&quot; + adaptor_name + &quot;).&quot;, ptr);
 }
 
-void ILogger::errorUndefNotAllowed(String const&amp; profile_name, llvm::Value* ptr)
+void ILogger::errorUndefNotAllowed(String const&amp; adaptor_name, llvm::Value* ptr)
 {
-    errorWithLocation(&quot;Undef value is not allowed for this profile (&quot; + profile_name + &quot;).&quot;, ptr);
+    errorWithLocation(&quot;Undef value is not allowed for this adaptor (&quot; + adaptor_name + &quot;).&quot;, ptr);
 }
 
 void ILogger::errorExpectedStringValueForAttr(String const&amp; function_name, String const&amp; attr_name)
@@ -784,7 +784,7 @@ void ILogger::setHasWarnings(bool value)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

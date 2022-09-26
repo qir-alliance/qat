@@ -765,20 +765,20 @@ class ILogger
 
     virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr, String const&amp; name = &quot;unnamed&quot;);
 
-    virtual void errorOpcodeNotAllowed(String const&amp; code, String const&amp; profile_name, llvm::Value* ptr = nullptr);
+    virtual void errorOpcodeNotAllowed(String const&amp; code, String const&amp; adaptor_name, llvm::Value* ptr = nullptr);
 
     virtual void errorCustomFunctionsNotAllowed(llvm::Value* ptr = nullptr);
 
     virtual void errorExternalCallsNotAllowed(
         String const&amp; function_name,
-        String const&amp; profile_name,
+        String const&amp; adaptor_name,
         llvm::Value*  ptr = nullptr);
 
-    virtual void errorTypeNotAllowed(String const&amp; type_name, String const&amp; profile_name, llvm::Value* ptr = nullptr);
+    virtual void errorTypeNotAllowed(String const&amp; type_name, String const&amp; adaptor_name, llvm::Value* ptr = nullptr);
 
-    virtual void errorPoisonNotAllowed(String const&amp; profile_name, llvm::Value* ptr = nullptr);
+    virtual void errorPoisonNotAllowed(String const&amp; adaptor_name, llvm::Value* ptr = nullptr);
 
-    virtual void errorUndefNotAllowed(String const&amp; profile_name, llvm::Value* ptr = nullptr);
+    virtual void errorUndefNotAllowed(String const&amp; adaptor_name, llvm::Value* ptr = nullptr);
 
     virtual void errorExpectedStringValueForAttr(String const&amp; function_name, String const&amp; attr_name);
 
@@ -804,7 +804,7 @@ class ILogger
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

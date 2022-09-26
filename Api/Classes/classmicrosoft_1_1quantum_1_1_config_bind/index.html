@@ -580,6 +580,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#using-stringset">StringSet</a></strong></td>
 </tr>
 <tr>
+<td>using std::vector&lt; std::string &gt;</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#using-stringlist">StringList</a></strong></td>
+</tr>
+<tr>
 <td>template &lt;typename A ,typename B ,typename R > <br>using typename std::enable_if&lt; std::is_same&lt; A, B &gt;::<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-value">value</a>, R &gt;::type</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#using-enableif">EnableIf</a></strong> <br>Helper template to conditionally disable implementation unless a specific type is used.</td>
 </tr>
@@ -635,6 +639,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-configure">configure</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, bool experimental_mode) override</td>
 </tr>
 <tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-reset">reset</a></strong>() override<br>Resets the current value to the default value.</td>
+</tr>
+<tr>
 <td>virtual String</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-value">value</a></strong>() override<br>String representation of the bound value.</td>
 </tr>
@@ -652,7 +660,7 @@
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-setvaluefromyamlnode">setValueFromYamlNode</a></strong>(YAML::Node const &amp; node) override<br>Method to load value from YAML configuratino.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-setvaluefromyamlnode">setValueFromYamlNode</a></strong>(YAML::Node const &amp; node) override<br>Method to load value from YAML configuration.</td>
 </tr>
 <tr>
 <td>virtual void</td>
@@ -676,11 +684,11 @@
 </tr>
 <tr>
 <td>template &lt;typename A > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfNotSerializable&lt; A, void &gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-loadvalue">loadValue</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, A const &amp; default_value)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-loadvalue">loadValue</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, A const &amp; )</td>
 </tr>
 <tr>
 <td>template &lt;typename A > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfSerializable&lt; A, void &gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-loadvalue">loadValue</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, A const &amp; default_value)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-loadvalue">loadValue</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, A const &amp; )</td>
 </tr>
 <tr>
 <td>template &lt;typename R > <br><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a>&lt; T &gt;::template EnableIfNotSerializable&lt; R, void &gt;</td>
@@ -765,6 +773,14 @@
 <td>bool</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-isavailabletocli">isAvailableToCli</a></strong>() const<br>Indicates whether or not this paramter is available to the CLI.</td>
 </tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-setshorthandnotation">setShorthandNotation</a></strong>(String const &amp; name)<br>Set shorthand notation.</td>
+</tr>
+<tr>
+<td>String</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-shorthandnotation">shorthandNotation</a></strong>() const<br>Gets shorthand notation.</td>
+</tr>
 </tbody>
 </table>
 <p><strong>Protected Functions inherited from <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/">microsoft::quantum::IConfigBind</a></strong></p>
@@ -809,6 +825,9 @@ class microsoft::quantum::ConfigBind;
 </code></pre>
 <h3 id="using-stringset">using StringSet</h3>
 <pre><code class="language-cpp">using microsoft::quantum::ConfigBind&lt; T &gt;::StringSet =  std::unordered_set&lt;std::string&gt;;
+</code></pre>
+<h3 id="using-stringlist">using StringList</h3>
+<pre><code class="language-cpp">using microsoft::quantum::ConfigBind&lt; T &gt;::StringList =  std::vector&lt;std::string&gt;;
 </code></pre>
 <h3 id="using-enableif">using EnableIf</h3>
 <pre><code class="language-cpp">template &lt;typename A ,
@@ -874,6 +893,11 @@ using microsoft::quantum::ConfigBind&lt; T &gt;::EnableIf =  typename std::enabl
 </code></pre>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-configure">microsoft::quantum::IConfigBind::configure</a></p>
 <p>Configures the bound value. This method examines the parsed input and use updates the bound value accordingly. </p>
+<h3 id="function-reset">function reset</h3>
+<pre><code class="language-cpp">virtual void reset() override
+</code></pre>
+<p>Resets the current value to the default value. </p>
+<p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-reset">microsoft::quantum::IConfigBind::reset</a></p>
 <h3 id="function-value">function value</h3>
 <pre><code class="language-cpp">virtual String value() override
 </code></pre>
@@ -899,7 +923,7 @@ using microsoft::quantum::ConfigBind&lt; T &gt;::EnableIf =  typename std::enabl
     YAML::Node const &amp; node
 ) override
 </code></pre>
-<p>Method to load value from YAML configuratino. </p>
+<p>Method to load value from YAML configuration. </p>
 <p><strong>Reimplements</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-setvaluefromyamlnode">microsoft::quantum::IConfigBind::setValueFromYamlNode</a></p>
 <h3 id="function-updatevalueinyamlnode">function updateValueInYamlNode</h3>
 <pre><code class="language-cpp">virtual void updateValueInYamlNode(
@@ -936,14 +960,14 @@ ConfigBind&lt; T &gt;::template EnableIfSerializable&lt; A, String &gt; valueAsS
 <pre><code class="language-cpp">template &lt;typename A &gt;
 ConfigBind&lt; T &gt;::template EnableIfNotSerializable&lt; A, void &gt; loadValue(
     ParameterParser &amp; parser,
-    A const &amp; default_value
+    A const &amp; 
 )
 </code></pre>
 <h3 id="function-loadvalue_1">function loadValue</h3>
 <pre><code class="language-cpp">template &lt;typename A &gt;
 ConfigBind&lt; T &gt;::template EnableIfSerializable&lt; A, void &gt; loadValue(
     ParameterParser &amp; parser,
-    A const &amp; default_value
+    A const &amp; 
 )
 </code></pre>
 <h3 id="function-loadyaml">function loadYaml</h3>
@@ -975,7 +999,7 @@ ConfigBind&lt; T &gt;::template EnableIfSerializable&lt; R, void &gt; saveYaml(
 )
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

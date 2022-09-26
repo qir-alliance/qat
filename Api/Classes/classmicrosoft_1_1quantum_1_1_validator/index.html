@@ -606,7 +606,7 @@
 <tbody>
 <tr>
 <td></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#function-validator">Validator</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">ValidationPassConfiguration</a> const &amp; cfg, ILoggerPtr const &amp; logger, bool debug, llvm::TargetMachine * target_machine =nullptr)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/#function-validator">Validator</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_target_profile_configuration/">TargetProfileConfiguration</a> const &amp; profile, <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_target_qis_configuration/">TargetQisConfiguration</a> const &amp; qis, ILoggerPtr const &amp; logger, bool debug, llvm::TargetMachine * target_machine =nullptr)</td>
 </tr>
 <tr>
 <td></td>
@@ -676,7 +676,7 @@
 <h2 id="detailed-description">Detailed Description</h2>
 <pre><code class="language-cpp">class microsoft::quantum::Validator;
 </code></pre>
-<p><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/">Validator</a> class that defines a set of rules which constitutes the profile definition. Each of the rules can be used to transform a generic QIR and/or validate that the QIR is compliant with said rule. </p>
+<p><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/">Validator</a> class that defines a set of rules which constitutes the adaptor definition. Each of the rules can be used to transform a generic QIR and/or validate that the QIR is compliant with said rule. </p>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
 <h3 id="using-validatorptr">using ValidatorPtr</h3>
 <pre><code class="language-cpp">using microsoft::quantum::Validator::ValidatorPtr =  std::unique_ptr&lt;Validator&gt;;
@@ -691,7 +691,8 @@
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-validator">function Validator</h3>
 <pre><code class="language-cpp">explicit Validator(
-    ValidationPassConfiguration const &amp; cfg,
+    TargetProfileConfiguration const &amp; profile,
+    TargetQisConfiguration const &amp; qis,
     ILoggerPtr const &amp; logger,
     bool debug,
     llvm::TargetMachine * target_machine =nullptr
@@ -728,7 +729,7 @@
     llvm::Module &amp; module
 )
 </code></pre>
-<p>Validates that a module complies with the specified QIR profile. Returns true if the module is valid and false otherwise. </p>
+<p>Validates that a module complies with the specified QIR adaptor. Returns true if the module is valid and false otherwise. </p>
 <h3 id="function-logger">function logger</h3>
 <pre><code class="language-cpp">ILoggerPtr logger() const
 </code></pre>
@@ -755,7 +756,7 @@
 </code></pre>
 <p>Returns a reference to the module analysis manager. </p>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

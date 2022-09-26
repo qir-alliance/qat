@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      TransformationRulesPass/TransformationRulesPass.cpp - QAT Documentation
+      Passes/TransformationRulesPass/TransformationRulesPass.cpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,12 +553,12 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> TransformationRulesPass/TransformationRulesPass.cpp </span>
+        <span class="text-center"> Passes/TransformationRulesPass/TransformationRulesPass.cpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="transformationrulespasstransformationrulespasscpp">TransformationRulesPass/TransformationRulesPass.cpp</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="passestransformationrulespasstransformationrulespasscpp">Passes/TransformationRulesPass/TransformationRulesPass.cpp</h1>
 <h2 id="namespaces">Namespaces</h2>
 <table>
 <thead>
@@ -579,7 +579,7 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;qir/qat/TransformationRulesPass/TransformationRulesPass.hpp&quot;
+#include &quot;qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp&quot;
 
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 #include &quot;qir/qat/Rules/Factory.hpp&quot;
@@ -592,13 +592,9 @@
 namespace microsoft::quantum
 {
 
-TransformationRulesPass::TransformationRulesPass(
-    RuleSet&amp;&amp;                                   rule_set,
-    TransformationRulesPassConfiguration const&amp; config,
-    Profile*                                    profile)
+TransformationRulesPass::TransformationRulesPass(RuleSet&amp;&amp; rule_set, TransformationRulesPassConfiguration const&amp; config)
   : rule_set_{std::move(rule_set)}
   , config_{config}
-  , profile_{profile}
 {
 }
 
@@ -1466,7 +1462,7 @@ void TransformationRulesPass::requireLogger()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

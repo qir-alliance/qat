@@ -794,7 +794,7 @@
 <h3 id="function-optimizeresultone">function optimizeResultOne</h3>
 <pre><code class="language-cpp">void optimizeResultOne()
 </code></pre>
-<p>Replaces branching of quantum results compared to one. This is a relatively advanced pattern, intended for base profile-like constructs where</p>
+<p>Replaces branching of quantum results compared to one. This is a relatively advanced pattern, intended for base adaptor-like constructs where</p>
 <pre><code class="language-cpp">%1 = tail call %Result* @__quantum__rt__result_get_one()
 %2 = tail call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
 br i1 %2, label %then0__1, label %continue__1
@@ -843,7 +843,7 @@ br i1 %1, label %then0__1, label %continue__1
 </code></pre>
 <p>Sets the integer width used when it cannot be deducted from the context of the transformation. </p>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

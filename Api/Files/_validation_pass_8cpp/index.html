@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      ValidationPass/ValidationPass.cpp - QAT Documentation
+      Passes/ValidationPass/ValidationPass.cpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -553,12 +553,12 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> ValidationPass/ValidationPass.cpp </span>
+        <span class="text-center"> Passes/ValidationPass/ValidationPass.cpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="validationpassvalidationpasscpp">ValidationPass/ValidationPass.cpp</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="passesvalidationpassvalidationpasscpp">Passes/ValidationPass/ValidationPass.cpp</h1>
 <h2 id="namespaces">Namespaces</h2>
 <table>
 <thead>
@@ -579,10 +579,10 @@
 <pre><code class="language-cpp">// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include &quot;qir/qat/ValidationPass/ValidationPass.hpp&quot;
+#include &quot;qir/qat/Passes/ValidationPass/ValidationPass.hpp&quot;
 
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
-#include &quot;qir/qat/StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
+#include &quot;qir/qat/Passes/StaticResourceComponent/AllocationAnalysisPass.hpp&quot;
 
 #include &lt;fstream&gt;
 #include &lt;iostream&gt;
@@ -590,8 +590,12 @@
 namespace microsoft::quantum
 {
 
-ValidationPass::ValidationPass(ValidationPassConfiguration const&amp; cfg, ILoggerPtr const&amp; logger)
-  : config_{cfg}
+ValidationPass::ValidationPass(
+    TargetProfileConfiguration const&amp; profile,
+    TargetQisConfiguration const&amp;     qis,
+    ILoggerPtr const&amp;                 logger)
+  : profile_config_{profile}
+  , qis_config_{qis}
   , logger_{logger}
 {
 }
@@ -704,10 +708,10 @@ void ValidationPass::pointerChecks(Instruction&amp; instr)
 bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module&amp; module)
 {
     auto ret = true;
-    if (config_.allowlistOpcodes())
+    if (profile_config_.allowlistOpcodes())
     {
 
-        auto const&amp; allowed_ops = config_.allowedOpcodes();
+        auto const&amp; allowed_ops = profile_config_.allowedOpcodes();
 
         for (auto&amp; function : module)
         {
@@ -838,7 +842,7 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module&amp; module)
                             {current_location_.name(), current_location_.line(), current_location_.column()});
                         logger_-&gt;setLlvmHint(current_location_.llvmHint());
 
-                        logger_-&gt;errorOpcodeNotAllowed(code, config_.profileName());
+                        logger_-&gt;errorOpcodeNotAllowed(code, profile_config_.adaptorName());
                         ret = false;
                     }
                 }
@@ -851,7 +855,7 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module&amp; module)
 
 bool ValidationPass::satisfyingInternalCallRequirements()
 {
-    if (!config_.allowInternalCalls() &amp;&amp; !internal_calls_.empty())
+    if (!profile_config_.allowInternalCalls() &amp;&amp; !internal_calls_.empty())
     {
         logger_-&gt;setLlvmHint(&quot;&quot;);
         // TODO(issue-60): Add location
@@ -869,12 +873,15 @@ bool ValidationPass::satisfyingExternalCallRequirements()
 {
     auto ret = true;
 
-    if (config_.allowlistExternalCalls())
+    if (profile_config_.allowlistExternalCalls())
     {
-        auto const&amp; allowed_functions = config_.allowedExternalCallNames();
+        auto const&amp; allowed_functions = profile_config_.allowedExternalCallNames();
+        auto const&amp; allowed_qis       = qis_config_.allowedQis();
+
         for (auto const&amp; k : external_calls_)
         {
-            if (allowed_functions.find(k.first) == allowed_functions.end())
+            if (allowed_functions.find(k.first) == allowed_functions.end() &amp;&amp;
+                allowed_qis.find(k.first) == allowed_qis.end())
             {
                 logger_-&gt;setLlvmHint(&quot;&quot;);
 
@@ -892,7 +899,7 @@ bool ValidationPass::satisfyingExternalCallRequirements()
                 }
 
                 // Emitting error
-                logger_-&gt;errorExternalCallsNotAllowed(k.first, config_.profileName());
+                logger_-&gt;errorExternalCallsNotAllowed(k.first, profile_config_.adaptorName());
                 ret = false;
             }
         }
@@ -905,9 +912,9 @@ bool ValidationPass::satisfyingPointerRequirements()
 {
     auto ret = true;
 
-    if (config_.allowlistPointerTypes())
+    if (profile_config_.allowlistPointerTypes())
     {
-        auto const&amp; allowed = config_.allowedPointerTypes();
+        auto const&amp; allowed = profile_config_.allowedPointerTypes();
         for (auto const&amp; k : pointers_)
         {
             if (allowed.find(k.first) == allowed.end())
@@ -927,7 +934,7 @@ bool ValidationPass::satisfyingPointerRequirements()
                 }
 
                 // Emitting error
-                logger_-&gt;errorTypeNotAllowed(k.first, config_.profileName());
+                logger_-&gt;errorTypeNotAllowed(k.first, profile_config_.adaptorName());
                 ret = false;
             }
         }
@@ -970,7 +977,7 @@ llvm::PreservedAnalyses ValidationPass::run(llvm::Module&amp; module, llvm::Modu
 
     if (raise_exception)
     {
-        throw std::runtime_error(&quot;QIR is not valid within the defined profile&quot;);
+        throw std::runtime_error(&quot;QIR is not valid within the defined adaptor&quot;);
     }
 
     return llvm::PreservedAnalyses::all();
@@ -984,7 +991,7 @@ bool ValidationPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

@@ -579,7 +579,7 @@
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_call_pattern/">CallPattern</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/">CommentLogger</a></strong> <br>Concrete <a href="">ILogger</a> implementation that prints all messages as IR comments to llvm::errs(). </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/">ConfigBind</a></strong> </li>
-<li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configurable_profile_generator/">ConfigurableProfileGenerator</a></strong> </li>
+<li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configurable_qir_adaptor_factory/">ConfigurableQirAdaptorFactory</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a></strong> <ul>
 <li><strong>struct <a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section/">Section</a></strong> </li>
 </ul>
@@ -634,8 +634,8 @@
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass_configuration/">PostTransformValidationPassConfiguration</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_pre_transform_trimming_pass/">PreTransformTrimmingPass</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_pre_transform_trimming_pass_configuration/">PreTransformTrimmingPassConfiguration</a></strong> </li>
-<li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile/">Profile</a></strong> </li>
-<li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a></strong> </li>
+<li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qir_adaptor/">QirAdaptor</a></strong> </li>
+<li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qir_adaptor_factory/">QirAdaptorFactory</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/">QubitRemapPass</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_remove_disallowed_attributes_pass/">RemoveDisallowedAttributesPass</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/">ReplaceQubitOnResetPass</a></strong> </li>
@@ -648,13 +648,14 @@
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_component_configuration/">StaticResourceComponentConfiguration</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_store_pattern/">StorePattern</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_switch_pattern/">SwitchPattern</a></strong> </li>
+<li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_target_profile_configuration/">TargetProfileConfiguration</a></strong> </li>
+<li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_target_qis_configuration/">TargetQisConfiguration</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_test_program/">TestProgram</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_test_v_m/">TestVM</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass/">TransformationRulesPass</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_transformation_rules_pass_configuration/">TransformationRulesPassConfiguration</a></strong> <br>Configuration class for the RuleTransformation pass. </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern/">UnnamedInvokePattern</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass/">ValidationPass</a></strong> </li>
-<li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass_configuration/">ValidationPassConfiguration</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/">Validator</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_z_ext_pattern/">ZExtPattern</a></strong> </li>
 <li><strong>class <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_z_ext_transform_pass/">ZExtTransformPass</a></strong> </li>
@@ -668,7 +669,7 @@
 </li>
 </ul>
 </li>
-<li><strong>namespace <a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d57/">microsoft::quantum::@57</a></strong> </li>
+<li><strong>namespace <a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d81/">microsoft::quantum::@81</a></strong> </li>
 <li><strong>namespace <a href="/qat/Api/Namespaces/namespacestd/">std</a></strong> <ul>
 <li><strong>struct <a href="/qat/Api/Classes/structstd_1_1hash_3_01microsoft_1_1quantum_1_1_opcode_value_01_4/">hash&lt; microsoft::quantum::OpcodeValue &gt;</a></strong> </li>
 </ul>
@@ -676,7 +677,7 @@
 <li><strong>namespace <a href="/qat/Api/Namespaces/namespaceversion__builder/">version_builder</a></strong> </li>
 </ul>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

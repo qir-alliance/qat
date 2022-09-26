@@ -601,7 +601,7 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-optimizationlevel">OptimizationLevel</a></strong></td>
 </tr>
 <tr>
-<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_profile_generator/">ProfileGenerator</a> &gt;</td>
+<td>using std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qir_adaptor_factory/">QirAdaptorFactory</a> &gt;</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#using-generatorptr">GeneratorPtr</a></strong></td>
 </tr>
 </tbody>
@@ -653,19 +653,19 @@
 </tr>
 <tr>
 <td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-applyprofile">applyProfile</a></strong>(GeneratorPtr const &amp; generator, OptimizationLevel const &amp; optimization_level =OptimizationLevel::O0, bool debug =false)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-applyqiradaptor">applyQirAdaptor</a></strong>(GeneratorPtr const &amp; generator, OptimizationLevel const &amp; optimization_level =OptimizationLevel::O0, bool debug =false)</td>
 </tr>
 <tr>
 <td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-validateprofile">validateProfile</a></strong>(GeneratorPtr const &amp; generator, String const &amp; profile_name ="generic", bool debug =false)</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-validateqiradaptor">validateQirAdaptor</a></strong>(GeneratorPtr const &amp; generator, String const &amp; adaptor_name ="generic", bool debug =false)</td>
 </tr>
 <tr>
 <td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-containsvalidationerrors">containsValidationErrors</a></strong>(GeneratorPtr const &amp; generator, String const &amp; profile_name, Strings const &amp; errors, bool debug =false) const</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-containsvalidationerrors">containsValidationErrors</a></strong>(GeneratorPtr const &amp; generator, String const &amp; adaptor_name, Strings const &amp; errors, bool debug =false) const</td>
 </tr>
 <tr>
 <td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-containsexactvalidationerrors">containsExactValidationErrors</a></strong>(GeneratorPtr const &amp; generator, String const &amp; profile_name, Strings const &amp; errors, bool debug =false) const</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/#function-containsexactvalidationerrors">containsExactValidationErrors</a></strong>(GeneratorPtr const &amp; generator, String const &amp; adaptor_name, Strings const &amp; errors, bool debug =false) const</td>
 </tr>
 <tr>
 <td>void</td>
@@ -727,7 +727,7 @@
 <pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::OptimizationLevel =  llvm::OptimizationLevel;
 </code></pre>
 <h3 id="using-generatorptr">using GeneratorPtr</h3>
-<pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::GeneratorPtr =  std::shared_ptr&lt;ProfileGenerator&gt;;
+<pre><code class="language-cpp">using microsoft::quantum::IrManipulationTestHelper::GeneratorPtr =  std::shared_ptr&lt;QirAdaptorFactory&gt;;
 </code></pre>
 <h2 id="public-functions-documentation">Public Functions Documentation</h2>
 <h3 id="function-irmanipulationtesthelper">function IrManipulationTestHelper</h3>
@@ -770,40 +770,40 @@
 )
 </code></pre>
 <p>Tests whether the main body contains a sequence of instructions. This function ignores instructions in-between the instruction set given. </p>
-<h3 id="function-applyprofile">function applyProfile</h3>
-<pre><code class="language-cpp">void applyProfile(
+<h3 id="function-applyqiradaptor">function applyQirAdaptor</h3>
+<pre><code class="language-cpp">void applyQirAdaptor(
     GeneratorPtr const &amp; generator,
     OptimizationLevel const &amp; optimization_level =OptimizationLevel::O0,
     bool debug =false
 )
 </code></pre>
-<p>Applies a profile to the module to allow which transforms the IR. This allow us to write small profiles to test a single piece of transformation. </p>
-<h3 id="function-validateprofile">function validateProfile</h3>
-<pre><code class="language-cpp">bool validateProfile(
+<p>Applies a adaptor to the module to allow which transforms the IR. This allow us to write small adaptors to test a single piece of transformation. </p>
+<h3 id="function-validateqiradaptor">function validateQirAdaptor</h3>
+<pre><code class="language-cpp">bool validateQirAdaptor(
     GeneratorPtr const &amp; generator,
-    String const &amp; profile_name =&quot;generic&quot;,
+    String const &amp; adaptor_name =&quot;generic&quot;,
     bool debug =false
 )
 </code></pre>
-<p>Validates a profile to the module to allow which transforms the IR. This allow us to write small profiles to test a single piece of transformation. </p>
+<p>Validates a adaptor to the module to allow which transforms the IR. This allow us to write small adaptors to test a single piece of transformation. </p>
 <h3 id="function-containsvalidationerrors">function containsValidationErrors</h3>
 <pre><code class="language-cpp">bool containsValidationErrors(
     GeneratorPtr const &amp; generator,
-    String const &amp; profile_name,
+    String const &amp; adaptor_name,
     Strings const &amp; errors,
     bool debug =false
 ) const
 </code></pre>
-<p>Tests whether a given set of errors (LLVM hints) are present in the validation errors for a specific profile. This method only checks if errors are present but does not fail if there are more errors than requested through the API. </p>
+<p>Tests whether a given set of errors (LLVM hints) are present in the validation errors for a specific adaptor. This method only checks if errors are present but does not fail if there are more errors than requested through the API. </p>
 <h3 id="function-containsexactvalidationerrors">function containsExactValidationErrors</h3>
 <pre><code class="language-cpp">bool containsExactValidationErrors(
     GeneratorPtr const &amp; generator,
-    String const &amp; profile_name,
+    String const &amp; adaptor_name,
     Strings const &amp; errors,
     bool debug =false
 ) const
 </code></pre>
-<p>Tests whether a given set of errors (LLVM hints) are present in the validation errors for a specific profile. In contrast to containsValidationErrors, this function expect an exact match in the actual and expected errors. </p>
+<p>Tests whether a given set of errors (LLVM hints) are present in the validation errors for a specific adaptor. In contrast to containsValidationErrors, this function expect an exact match in the actual and expected errors. </p>
 <h3 id="function-declareopaque">function declareOpaque</h3>
 <pre><code class="language-cpp">void declareOpaque(
     String const &amp; name
@@ -860,7 +860,7 @@ call void @__quantum__qis__h__body(%Qubit* %leftMessage)
 </code></pre>
 <p>Returns a reference to the module. </p>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

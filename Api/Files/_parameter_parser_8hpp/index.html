@@ -608,10 +608,11 @@ namespace microsoft::quantum
 class ParameterParser
 {
   public:
-    using Arguments      = std::vector&lt;String&gt;;
-    using Flags          = std::unordered_set&lt;String&gt;;
-    using SettingsMap    = std::unordered_map&lt;String, String&gt;;
-    using UnusedSettings = std::unordered_set&lt;String&gt;;
+    using Arguments         = std::vector&lt;String&gt;;
+    using Flags             = std::unordered_set&lt;String&gt;;
+    using SettingsMap       = std::unordered_map&lt;String, String&gt;;
+    using UnusedSettings    = std::unordered_set&lt;String&gt;;
+    using ShorthandNotation = std::unordered_map&lt;String, String&gt;;
 
     // Construction and deconstrution configuration
     //
@@ -653,6 +654,8 @@ class ParameterParser
 
     UnusedSettings const&amp; unusedSettings() const;
 
+    void addShorthandNotation(String const&amp; parameter, String const&amp; shorthand);
+
   private:
     struct ParsedValue
     {
@@ -671,16 +674,17 @@ class ParameterParser
 
     // Storage of parsed data
     //
-    Flags          flags_{};             
-    Arguments      arguments_{};         
-    SettingsMap    settings_;            
-    UnusedSettings unused_properties_{}; 
+    Flags             flags_{};              
+    Arguments         arguments_{};          
+    SettingsMap       settings_;             
+    UnusedSettings    unused_properties_{};  
+    ShorthandNotation shorthand_notation_{}; 
 };
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

@@ -684,14 +684,14 @@ bool IrManipulationTestHelper::hasInstructionSequence(Strings const&amp; instruc
     return true;
 }
 
-void IrManipulationTestHelper::applyProfile(
+void IrManipulationTestHelper::applyQirAdaptor(
     GeneratorPtr const&amp;      generator,
     OptimizationLevel const&amp; optimization_level,
     bool                     debug)
 {
 
-    auto profile = generator-&gt;newProfile(&quot;generic&quot;, optimization_level, debug);
-    profile-&gt;apply(*module_);
+    auto adaptor = generator-&gt;newQirAdaptor(&quot;generic&quot;, optimization_level, debug);
+    adaptor-&gt;apply(*module_);
 
     // Verifying that the module is valid
     if (isModuleBroken())
@@ -700,25 +700,27 @@ void IrManipulationTestHelper::applyProfile(
     }
 }
 
-bool IrManipulationTestHelper::validateProfile(GeneratorPtr const&amp; generator, String const&amp; profile_name, bool debug)
+bool IrManipulationTestHelper::validateQirAdaptor(GeneratorPtr const&amp; generator, String const&amp; adaptor_name, bool debug)
 {
-    auto profile = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
+    auto adaptor = generator-&gt;newQirAdaptor(adaptor_name, OptimizationLevel::O0, debug);
 
-    return profile-&gt;validate(*module_);
+    return adaptor-&gt;validate(*module_);
 }
 
 bool IrManipulationTestHelper::containsValidationErrors(
     GeneratorPtr const&amp; generator,
-    String const&amp;       profile_name,
+    String const&amp;       adaptor_name,
     Strings const&amp;      errors,
     bool                debug) const
 {
 
-    auto  profile               = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
+    auto  adaptor               = generator-&gt;newQirAdaptor(adaptor_name, OptimizationLevel::O0, debug);
     auto&amp; configuration_manager = generator-&gt;configurationManager();
-    auto  logger                = std::make_shared&lt;LogCollection&gt;();
-    auto  validator =
-        std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), logger, debug);
+
+    auto logger    = std::make_shared&lt;LogCollection&gt;();
+    auto validator = std::make_unique&lt;Validator&gt;(
+        configuration_manager.get&lt;TargetProfileConfiguration&gt;(), configuration_manager.get&lt;TargetQisConfiguration&gt;(),
+        logger, debug);
     validator-&gt;validate(*module_);
 
     if (!logger)
@@ -767,16 +769,17 @@ bool IrManipulationTestHelper::containsValidationErrors(
 
 bool IrManipulationTestHelper::containsExactValidationErrors(
     GeneratorPtr const&amp; generator,
-    String const&amp;       profile_name,
+    String const&amp;       adaptor_name,
     Strings const&amp;      errors,
     bool                debug) const
 {
-    auto  profile               = generator-&gt;newProfile(profile_name, OptimizationLevel::O0, debug);
+    auto  adaptor               = generator-&gt;newQirAdaptor(adaptor_name, OptimizationLevel::O0, debug);
     auto&amp; configuration_manager = generator-&gt;configurationManager();
     auto  logger                = std::make_shared&lt;LogCollection&gt;();
 
-    auto validator =
-        std::make_unique&lt;Validator&gt;(configuration_manager.get&lt;ValidationPassConfiguration&gt;(), logger, debug);
+    auto validator = std::make_unique&lt;Validator&gt;(
+        configuration_manager.get&lt;TargetProfileConfiguration&gt;(), configuration_manager.get&lt;TargetQisConfiguration&gt;(),
+        logger, debug);
     validator-&gt;validate(*module_);
 
     if (!logger)
@@ -939,7 +942,7 @@ bool IrManipulationTestHelper::isModuleBroken()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

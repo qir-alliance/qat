@@ -641,11 +641,11 @@ loading the component. This is the functionality that registers the
 configuration together with an ID and a profile setup function. In our case, the
 setup function should just print a message given a <code>HelloWorldConfig</code> instance.
 The corresponding component registration reads:</p>
-<pre><code class="language-c++">extern &quot;C&quot; void loadComponent(IProfileGenerator *generator)
+<pre><code class="language-c++">extern &quot;C&quot; void loadComponent(IQirAdaptorFactory *generator)
 {
   generator-&gt;registerProfileComponent&lt;HelloWorldConfig&gt;(
       &quot;hello-world&quot;,
-      [](HelloWorldConfig const &amp;cfg, IProfileGenerator * /*generator*/, Profile &amp; /*profile*/) {
+      [](HelloWorldConfig const &amp;cfg, IQirAdaptorFactory * /*generator*/, Profile &amp; /*profile*/) {
         std::cout &lt;&lt; &quot;Message: &quot; &lt;&lt; cfg.message() &lt;&lt; std::endl;
       });
 }
@@ -708,10 +708,10 @@ private:
 };
 </code></pre>
 <p>The implementation itself is</p>
-<pre><code class="language-c++">extern &quot;C&quot; void loadComponent(IProfileGenerator *generator)
+<pre><code class="language-c++">extern &quot;C&quot; void loadComponent(IQirAdaptorFactory *generator)
 {
   generator-&gt;registerProfileComponent&lt;InlinerConfig&gt;(
-      &quot;inliner&quot;, [](InlinerConfig const &amp;cfg, IProfileGenerator *ptr, Profile &amp; /*profile*/) {
+      &quot;inliner&quot;, [](InlinerConfig const &amp;cfg, IQirAdaptorFactory *ptr, Profile &amp; /*profile*/) {
         if (cfg.shouldInline())
         {
           auto &amp;module_pass_manager = ptr-&gt;modulePassManager();

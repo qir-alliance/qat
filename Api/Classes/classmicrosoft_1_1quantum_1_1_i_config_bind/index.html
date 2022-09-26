@@ -615,6 +615,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-configure">configure</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/">ParameterParser</a> &amp; parser, bool experimental_mode) =0</td>
 </tr>
 <tr>
+<td>virtual void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-reset">reset</a></strong>() =0<br>Resets the value to the default value.</td>
+</tr>
+<tr>
 <td>virtual String</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-value">value</a></strong>() =0</td>
 </tr>
@@ -632,7 +636,7 @@
 </tr>
 <tr>
 <td>virtual void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-setvaluefromyamlnode">setValueFromYamlNode</a></strong>(YAML::Node const &amp; node) =0<br>Method to load value from YAML configuratino.</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-setvaluefromyamlnode">setValueFromYamlNode</a></strong>(YAML::Node const &amp; node) =0<br>Method to load value from YAML configuration.</td>
 </tr>
 <tr>
 <td>virtual void</td>
@@ -665,6 +669,14 @@
 <tr>
 <td>bool</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-isavailabletocli">isAvailableToCli</a></strong>() const<br>Indicates whether or not this paramter is available to the CLI.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-setshorthandnotation">setShorthandNotation</a></strong>(String const &amp; name)<br>Set shorthand notation.</td>
+</tr>
+<tr>
+<td>String</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/#function-shorthandnotation">shorthandNotation</a></strong>() const<br>Gets shorthand notation.</td>
 </tr>
 </tbody>
 </table>
@@ -775,6 +787,11 @@
 </code></pre>
 <p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-configure">microsoft::quantum::ConfigBind::configure</a></p>
 <p>Interface function to extract configuration from the command line arguments. Given an instance of the command line parameter parser, this function is meant to read the command line arguments, interpret it and set the bound variable value (if present). This method should return true if configure operation was successful. </p>
+<h3 id="function-reset">function reset</h3>
+<pre><code class="language-cpp">virtual void reset() =0
+</code></pre>
+<p>Resets the value to the default value. </p>
+<p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-reset">microsoft::quantum::ConfigBind::reset</a></p>
 <h3 id="function-value">function value</h3>
 <pre><code class="language-cpp">virtual String value() =0
 </code></pre>
@@ -800,7 +817,7 @@
     YAML::Node const &amp; node
 ) =0
 </code></pre>
-<p>Method to load value from YAML configuratino. </p>
+<p>Method to load value from YAML configuration. </p>
 <p><strong>Reimplemented by</strong>: <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/#function-setvaluefromyamlnode">microsoft::quantum::ConfigBind::setValueFromYamlNode</a></p>
 <h3 id="function-updatevalueinyamlnode">function updateValueInYamlNode</h3>
 <pre><code class="language-cpp">virtual void updateValueInYamlNode(
@@ -837,6 +854,16 @@
 <pre><code class="language-cpp">bool isAvailableToCli() const
 </code></pre>
 <p>Indicates whether or not this paramter is available to the CLI. </p>
+<h3 id="function-setshorthandnotation">function setShorthandNotation</h3>
+<pre><code class="language-cpp">void setShorthandNotation(
+    String const &amp; name
+)
+</code></pre>
+<p>Set shorthand notation. </p>
+<h3 id="function-shorthandnotation">function shorthandNotation</h3>
+<pre><code class="language-cpp">String shorthandNotation() const
+</code></pre>
+<p>Gets shorthand notation. </p>
 <h2 id="protected-functions-documentation">Protected Functions Documentation</h2>
 <h3 id="function-iconfigbind_3">function IConfigBind</h3>
 <pre><code class="language-cpp">IConfigBind(
@@ -866,7 +893,7 @@
 </code></pre>
 <p>Marks the config as experimental. </p>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>

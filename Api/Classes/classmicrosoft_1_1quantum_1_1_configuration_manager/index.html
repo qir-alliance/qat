@@ -717,6 +717,10 @@
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addparameter">addParameter</a></strong>(T &amp; bind, T default_value, String const &amp; name, String const &amp; description, ParameterVisibility visibility =ParameterVisibility::CliAndConfig)</td>
 </tr>
 <tr>
+<td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addshorthandnotation">addShorthandNotation</a></strong>(String const &amp; parameter, String const &amp; shorthand)</td>
+</tr>
+<tr>
 <td>template &lt;typename T > <br>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/#function-addparameter">addParameter</a></strong>(T &amp; bind, String const &amp; name, String const &amp; description, ParameterVisibility visibility =ParameterVisibility::CliAndConfig)</td>
 </tr>
@@ -909,6 +913,12 @@ inline void addParameter(
 )
 </code></pre>
 <p>Adds a new parameter with a default value to the configuration section. This function should be used by the configuration class. </p>
+<h3 id="function-addshorthandnotation">function addShorthandNotation</h3>
+<pre><code class="language-cpp">void addShorthandNotation(
+    String const &amp; parameter,
+    String const &amp; shorthand
+)
+</code></pre>
 <h3 id="function-addparameter_1">function addParameter</h3>
 <pre><code class="language-cpp">template &lt;typename T &gt;
 inline void addParameter(
@@ -982,7 +992,7 @@ inline void updateParameter(
 </code></pre>
 <p>Saves the configuration to the specified file. </p>
 <hr />
-<p>Updated on 21 September 2022 at 13:08:25 UTC</p></div>
+<p>Updated on 26 September 2022 at 07:46:05 UTC</p></div>
 </div>
           </div>
         </main>
