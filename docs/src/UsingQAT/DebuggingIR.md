@@ -29,7 +29,7 @@ lldb bin/segfault
 Running the program in `lldb` should now create a stack trace that refers to the
 `segfault.ll` file rather than the original `segfault.cpp` file:
 
-```lldb
+```text
 (lldb) target create "bin/segfault"
 Current executable set to '/path/to/test/bin/segfault' (x86_64).
 (lldb) r
@@ -106,7 +106,7 @@ clang++ -g -O1 bin/segfault.o -o bin/segfault
 Running this program in `lldb`, we will now get stack traces that refer to the
 `.ll` file rather than than `.cpp` file:
 
-```lldb
+```text
 % lldb bin/segfault
 (lldb) target create "bin/segfault"
 Current executable set to '/path/to/test/bin/segfault' (x86_64).
@@ -192,7 +192,7 @@ QAT before creating the object file and linking:
 Running the debugger, we can now execute the program and produce a stack trace
 as in the previous examples:
 
-```lldb
+```text
 Current executable set to '/path/to/test/bin/qir_program' (x86_64).
 (lldb) r
 Process 54371 launched: '/path/to/test/bin/qir_program' (x86_64)
@@ -266,7 +266,7 @@ qat -S --strip-existing-dbg  --add-ir-debug combined.ll > combined.dbg.ll
 However, this approach looses the information about the location of the original
 files `foo.ll` and `bar.ll`:
 
-```lldb
+```text
   * thread #1, queue = 'com.apple.main-thread', stop reason = EXC_BAD_ACCESS (code=1, address=0x6d1a00c)
   * frame #0: 0x0000000100003ec9 combined_example`_Z3foov at combined.ll:11:34
     frame #1: 0x0000000100003f2e combined_example`_Z16standard_recursei at combined.ll:57:37
@@ -302,8 +302,8 @@ the individual files:
 ```sh
   clang++ -c -S -emit-llvm foo.cpp
   clang++ -c -S -emit-llvm bar.cpp
-  ${QAT_BINARY} -S --add-ir-debug  foo.ll  > foo.dbg.ll
-  ${QAT_BINARY} -S --add-ir-debug  bar.ll  > bar.dbg.ll
+  qat -S --add-ir-debug  foo.ll  > foo.dbg.ll
+  qat -S --add-ir-debug  bar.ll  > bar.dbg.ll
   mkdir -p bin
   llc -filetype=obj -o bin/foo.dbg.o foo.dbg.ll
   llc -filetype=obj -o bin/bar.dbg.o bar.dbg.ll

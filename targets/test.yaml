@@ -4,7 +4,7 @@ qat:
   validate: true
   adaptor: provider_4bf9
   adaptor-pipeline:
-    - weak-linking
+    - replacement-linking
     - llvm-optimization
     - pre-transform-trimming
     - transformation-rules

@@ -130,10 +130,38 @@ void ConfigurationManager::printHelp(bool experimental_mode) const
     // Component configuration
     for (auto& section : config_sections_)
     {
+        bool ignore = true;
+
+        // Checking if this section has any CLI available configurations
+        for (auto& c : section.settings)
+        {
+            if (!c->isAvailableToCli())
+            {
+                continue;
+            }
+
+            if (c->isExperimental() && !experimental_mode)
+            {
+                continue;
+            }
+
+            ignore = false;
+            break;
+        }
+
+        // Skipping to next section if there is nothing to show
+        if (ignore)
+        {
+            continue;
+        }
+
         std::cout << std::endl;
-        std::cout << section.name << " - ";
-        std::cout << section.description << std::endl;
-        std::cout << std::endl;
+        std::cout << section.name;
+        if (!section.description.empty())
+        {
+            std::cout << " - " << section.description;
+        }
+        std::cout << std::endl << std::endl;
 
         for (auto& c : section.settings)
         {

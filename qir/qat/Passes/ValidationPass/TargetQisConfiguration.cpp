@@ -11,7 +11,7 @@ namespace microsoft::quantum
 
 void TargetQisConfiguration::setup(ConfigurationManager& config)
 {
-    config.setSectionName("Validation configuration", "");
+    config.setSectionName("Target QIS validation", "Configuration for QIS validation");
     // CLI and config accessible
 
     config.addParameter(

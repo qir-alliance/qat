@@ -1,6 +1,6 @@
 # Running QAT
 
-TODO: Yet to be written.
+In this section, we will take the reader through the basic usage of QAT, its configuration and how to use selected adaptors.
 
 ## Basic usage
 
@@ -40,11 +40,128 @@ In many of the sections below, we will refer to demos. From the repository root,
 
 ### Inlining
 
-One of the first important examples of QAT is replication of some of the LLVM functionality.
+One of the first important examples of QAT is replication of some of the LLVM functionality. In this and the next section, we will demonstrate some aspects of this as we discuss the LLVM adaptor. This adaptor provides capabilities for function inlining, loop unrolling, dead code elimination. In this first example, we dicuss inlining and its relevance in construction of quantum programs.
+
+Consider a Q# program that has a `MiniCircuit` which we want to use at two distinct places, such as
+
+```text
+operation MiniCircuit(q1: Qubit,q2: Qubit): Unit {
+    H(q1);
+    H(q2);
+    CNOT(q1, q2);
+}
+
+operation Main(): Unit {
+       use q1 = Qubit();
+       use q2 = Qubit();
+       MiniCircuit(q1, q2);
+       MiniCircuit(q1, q2);
+}
+```
+
+This program produces IR similar to
+
+```llvm
+define internal void @InlineExample__Main__body() {
+entry:
+  call void @InlineExample__MiniCircuit__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  call void @InlineExample__MiniCircuit__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  ret void
+}
+
+define internal void @InlineExample__MiniCircuit__body(%Qubit* %q1, %Qubit* %q2) {
+entry:
+  call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %q1)
+  call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %q2)
+  call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* %q1, %Qubit* %q2)
+  ret void
+}
+```
+
+Any backend without support for function calls would not be able to run this program. However, if we would inline the functions to the place where they are called, we would not need function call as a requirement for the backend. Function inlining is used classically and LLVM provides a ready made inliner pass that we can use. This integrated into QAT and can be ran as follows:
+
+```sh
+qat --always-inline -S --apply -o output.ll input.ll
+```
+
+The resulting IR becomes:
+
+```llvm
+define void @ InlineExample__Main() #0 {
+entry:
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  ret void
+}
+```
+
+The LLVM optimisation adaptor exposes the inlining configuration thereby providing some control over the behaviour. A similar example can be found in `qir/demos/Inlining`. The key benefit is that we can write programs where subcircuits are separated in to functions without having to rely on the backend supporting function calls. This is one important aspect of writing parameterised quantum programs. The other aspect is loop unrolling which we will touch upon in the next section.
 
 ### Loop unrolling
 
-TODO:
+Another important LLVM pass is the loop unrolling pass. Loop unrolling in combination with inlining allows to fully parameterize subcircuits. In our example from before, we could imagine a scenario where the function `MiniCircuit` would take an extra integer `N` parameter and apply an H-gate `N` times. With loop unrolling this would become a series of H gates with no additional control or need for branching, and using inlining, subcircuits would be placed directly in the main program.
+
+```text
+OPENQASM 3;
+int n_iterations = 5;
+int iteration = 0;
+qubit q;
+
+while (iteration < n_iterations) {
+    h q;
+    iteration += 1;
+}
+```
+
+The above OpenQASM program can be translated into a QIR similar to:
+
+```llvm
+define internal void @loop_unrolling() {
+entry:
+  br label %header__1
+
+header__1:
+  %0 = phi i64 [ 1, %entry ], [ %2, %body__1 ]
+  %1 = icmp slt i64 %0, 6
+  br i1 %1, label %body__1, label %exit__1
+
+body__1:
+  call void @__quantum__qis__h__body(%Qubit* null)
+  %2 = add i64 %0, 1
+  br label %header__1
+
+exit__1:
+  ret void
+}
+```
+
+The control logic associated with the loop gives rise to a `phi` node which most of todays hardware backends would not be able to handle. However, since hte loop is constant in length, we can unroll the loop by using the `unroll-loop` parameter:
+
+```sh
+qat --apply -S  --unroll-loops input.ll
+```
+
+This simplifies the code to a series of H gates applied to the zero'th qubit:
+
+```llvm
+define internal void @loop_unrolling() {
+entry:
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* null)
+
+  ret void
+}
+
+```
+
+The inlining and loop unrolling passes are the most significant passes used from the LLVM framework. The LLVM adaptor also have a few other passes. The details of these are described briefly in the commandline help page which can be found by running `qat -h`.
 
 ### Static resource allocation
 
@@ -156,7 +273,7 @@ Each backend can now provide a library that makes software implementations of th
 
 ### Circuit separation
 
-TODO:
+Circuit separation is an experimental feature that allows separation of the classical operations and pure quantum circuits. In this section we will concentrate on showing how to use this feature. If you are interested in the
 
 ## Target validation
 

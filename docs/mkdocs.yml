@@ -47,11 +47,16 @@ nav:
       - Building with CMake: "QuickStart/building-with-cmake.md"
       - Running QAT: "QuickStart/running-qat.md"
 
+  - Using QAT:
+      - Targeting a QIR: "UsingQAT/TargetingQIR.md"
+      - Debugging a QIR: "UsingQAT/DebuggingIR.md"
+      - Assumptions and restrictions: "UsingQAT/GoalsAndAssumptions.md"
+
   - Developer guide:
       - Architecture Overview: "DeveloperGuide/ArchitectureOverview.md"
-      - Writing a Component: "DeveloperGuide/WritingComponent.md"
-      - Configuration Library: "DeveloperGuide/ConfigurationLibrary.md"
+      - Writing an adaptor: "DeveloperGuide/WritingAdaptor.md"
       - Rule based extensions: "DeveloperGuide/WritingRuleTests.md"
+      - Circuit separation: "DeveloperGuide/LogicSeparation.md"
 
   - Api:
       - Classes: "Api/Classes/"

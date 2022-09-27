@@ -40,7 +40,7 @@ class QatConfig
     String adaptor() const;
 
     /// Indicates whether or not the QIR adaptor tool should emit LLVM IR to the standard output.
-    bool shouldEmitLlvm() const;
+    bool shouldEmitHumanReadibleLlvm() const;
 
     /// Tells if the optimization level 0 is enabled. Note higher OX override lower ones.
     bool isOpt0Enabled() const;
@@ -99,7 +99,7 @@ class QatConfig
     String          adaptor_{"generic"};
     AdaptorPipeline adapter_pipeline_{};
 
-    bool emit_llvm_{false};
+    bool emit_human_readible_llvm_{false};
     bool opt0_{false};
     bool opt1_{false};
     bool opt2_{false};

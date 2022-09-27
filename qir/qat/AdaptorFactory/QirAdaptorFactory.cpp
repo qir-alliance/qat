@@ -152,7 +152,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
     ILoggerPtr logger = logger_;
 
     registerAdaptorComponent<FunctionReplacementConfiguration>(
-        "adaptor.weak-linking",
+        "adaptor.replacement-linking",
         [logger](FunctionReplacementConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mam = adaptor.moduleAnalysisManager();

@@ -11,8 +11,7 @@ namespace microsoft::quantum
 void QatConfig::setup(ConfigurationManager& config)
 {
 
-    config.setSectionName(
-        "Base configuration", "Configuration of the quantum adoption tool to execute a specific behaviour.");
+    config.setSectionName("QAT base configuration", "Configuration of QAT defining the high-level behaviour.");
     config.addExperimentalParameter(load_, static_cast<String>(""), "load", "Load component.");
     config.addParameter(
         generate_, "apply", "Applies a adaptor to transform the IR in correspondence with the adaptor.");
@@ -20,12 +19,13 @@ void QatConfig::setup(ConfigurationManager& config)
     config.addParameter(adaptor_, static_cast<String>("generic"), "adaptor", "Sets the adaptor.");
     config.addParameter(
         adapter_pipeline_,
-        {"weak-linking", "llvm-optimization", "pre-transform-trimming", "transformation-rules", "post-transform",
+        {"replacement-linking", "llvm-optimization", "pre-transform-trimming", "transformation-rules", "post-transform",
          "post-transform-validation", "static-resources", "grouping"},
         "adaptor-pipeline", "Overrides the adaptor pipleline.");
 
-    config.addParameter(emit_llvm_, false, "emit-llvm", "Emits LLVM IR to the standard output.");
-    config.addShorthandNotation("emit-llvm", "S");
+    config.addParameter(
+        emit_human_readible_llvm_, false, "emit-human-readible-llvm", "Emits LLVM IR to the standard output.");
+    config.addShorthandNotation("emit-human-readible-llvm", "S");
 
     config.addParameter(
         target_definition_, static_cast<std::string>(""), "target-def",
@@ -73,9 +73,9 @@ String QatConfig::adaptor() const
     return adaptor_;
 }
 
-bool QatConfig::shouldEmitLlvm() const
+bool QatConfig::shouldEmitHumanReadibleLlvm() const
 {
-    return emit_llvm_;
+    return emit_human_readible_llvm_;
 }
 
 bool QatConfig::isOpt0Enabled() const

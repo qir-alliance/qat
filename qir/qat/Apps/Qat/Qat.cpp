@@ -353,7 +353,7 @@ int main(int argc, char const** argv)
         {
             if (config.outputFile().empty())
             {
-                if (config.shouldEmitLlvm())
+                if (config.shouldEmitHumanReadibleLlvm())
                 {
                     llvm::outs() << *module << "\n";
                 }
@@ -367,7 +367,7 @@ int main(int argc, char const** argv)
                 std::error_code      ec;
                 llvm::raw_fd_ostream fout(config.outputFile(), ec);
 
-                if (config.shouldEmitLlvm())
+                if (config.shouldEmitHumanReadibleLlvm())
                 {
                     fout << *module << "\n";
                 }

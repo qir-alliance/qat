@@ -12,7 +12,7 @@ struct PostTransformConfig
   public:
     void setup(ConfigurationManager& config)
     {
-        config.setSectionName("Post-transform optimisation", "");
+        config.setSectionName("Post-transform optimisation", "Optimisations performed after ");
         config.addParameter(lower_switch_, "lower-switch", "Lower switch statements.");
         config.addParameter(
             should_eleminate_zext_i1_, "should-eleminate-zext-i1", "Replace zext instruction for i1 with select.");

@@ -8,15 +8,17 @@ Outline:
 
 - ( ) [Quick start](QuickStart/index.md)
 
-  - (x) Supported systems
-  - ( ) Building with Bazel
-  - ( ) Building with CMake
-  - ( ) Running QAT
-
-- ( ) QIR and target QIRs
-
   - ( ) Motivation
-  - ( ) Examples
+  - (x) Supported systems
+  - (x) Building with Bazel
+  - (x) Building with CMake
+  - (-) Running QAT
+
+- ( ) Using QAT
+
+  - ( ) [Targeting a QIR](TargetingQIR.md)
+  - (x) [Debugging a QIR](UsingQAT/DebuggingIR.md)
+  - (x) [QAT: Assumptions and Restrictions](UsingQAT/GoalsAndAssumptions.md)
 
 - ( ) QIR adaptor tool
 
@@ -25,19 +27,14 @@ Outline:
   - ( ) Adaptors
   - ( ) Configuration
 
-- ( ) Using QAT
-
-  - ( ) [Targeting a QIR](base-profile-transfomrations.md)
-  - ( ) [Debugging a QIR](UserGuide/DebuggingIR.md)
-  - ( ) [QAT: Assumptions and Restrictions](UserGuide/GoalsAndAssumptions.md)
-
 - ( ) Developer guide
 
-  - ( ) [Architecture Overview](DeveloperGuide/ArchitectureOverview.md)
-  - ( ) [Writing an adaptor](DeveloperGuide/WritingComponent.md)
-  - ( ) [Rule based adaptors](DeveloperGuide/WritingRuleTests.md)
+  - (x) [Architecture Overview](DeveloperGuide/ArchitectureOverview.md)
+  - (x) [Writing an adaptor](DeveloperGuide/WritingComponent.md)
+  - (x) [Rule based adaptors](DeveloperGuide/WritingRuleTests.md)
+  - (x) [Circuit separation](DeveloperGuide/LogicSeparation.md)
 
 - ( ) Additional developer info:
-  - ( ) [Contributing](../../CONTRIBUTING.md)
-  - ( ) [Code quality](DeveloperGuide/CodeQuality.md)
-  - ( ) [Developer FAQ](DeveloperGuide/DeveloperFAQ.md)
+  - (x) [Contributing](../../CONTRIBUTING.md)
+  - (x) [Code quality](DeveloperGuide/CodeQuality.md)
+  - (x) [Developer FAQ](DeveloperGuide/DeveloperFAQ.md)

@@ -4,7 +4,7 @@ qat:
   validate: false
   adaptor: default
   adaptor-pipeline:
-    - weak-linking
+    - replacement-linking
     - llvm-optimization
     - pre-transform-trimming
     - transformation-rules
@@ -12,7 +12,7 @@ qat:
     - post-transform-validation
     - static-resources
     - grouping
-  emit-llvm: true
+  emit-human-readible-llvm: true
   verify-module: false
   experimental: false
   dump-config: false
@@ -32,7 +32,7 @@ adaptor:
     reuse-qubits: false
     reuse-results: false
     entry-point-attr: EntryPoint
-  weak-linking:
+  replacement-linking:
     replace-functions: ~
     remove-call-attributes: false
   llvm-optimization:

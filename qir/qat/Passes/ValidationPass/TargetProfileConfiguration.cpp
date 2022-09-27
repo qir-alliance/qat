@@ -12,7 +12,8 @@ namespace microsoft::quantum
 
 void TargetProfileConfiguration::setup(ConfigurationManager& config)
 {
-    config.setSectionName("Validation configuration", "");
+    config.setSectionName("Target profile validation", "Configuration for profile validation");
+
     /// CLI and config accessible
     config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
     config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
