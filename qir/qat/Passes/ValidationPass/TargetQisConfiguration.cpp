@@ -17,7 +17,7 @@ void TargetQisConfiguration::setup(ConfigurationManager& config)
     config.addParameter(
         allowed_qis_, "allowed-qis", "Allowed quantum instruction set.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
-    config.addParameter(allow_any_qis_, "allowed-any-qis", "Whether or not to allow any quantum instruction.");
+    config.addParameter(allow_any_qis_, "allow-any-qis", "Whether or not to allow any quantum instruction.");
 }
 
 String TargetQisConfiguration::adaptorName() const

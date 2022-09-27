@@ -124,4 +124,4 @@ target:
       - __quantum__qis__cnot__body:void (%Qubit*, %Qubit*)
       - __quantum__qis__h__body:void (%Qubit*)
       - __quantum__qis__x__body:void (%Qubit*)
-    allowed-any-qis: false
+    allow-any-qis: false
