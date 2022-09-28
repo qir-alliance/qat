@@ -12,11 +12,7 @@ qat:
     - post-transform-validation
     - static-resources
     - grouping
-  S: false
-  O0: false
-  O1: false
-  O2: false
-  O3: false
+  emit-human-readible-llvm: false
   verify-module: true
   experimental: false
   dump-config: true
@@ -36,6 +32,9 @@ adaptor:
     reuse-qubits: true
     reuse-results: false
     entry-point-attr: EntryPoint
+  replacement-linking:
+    replace-functions: ~
+    remove-call-attributes: false
   llvm-optimization:
     unroll-loops: false
     allow-partial: true
@@ -56,9 +55,9 @@ adaptor:
   post-transform:
     lower-switch: true
     should-eleminate-zext-i1: true
-    pull-records-back: false
+    defer-measurements: false
   post-transform-validation: ~
-  static-resource:
+  static-resources:
     annotate-qubit-use: true
     annotate-result-use: true
     annotate-max-qubit-index: true
@@ -76,19 +75,23 @@ target:
     allow-poison: false
     allow-undef: false
     opcodes:
-      - id: call
+      - id: select
         predicate: ""
-      - id: br
+      - id: icmp
         predicate: ""
-      - id: add
+      - id: xor
         predicate: ""
-      - id: sub
+      - id: or
         predicate: ""
-      - id: mul
+      - id: and
         predicate: ""
-      - id: phi
+      - id: lshr
         predicate: ""
-      - id: inttoptr
+      - id: fcmp
+        predicate: ""
+      - id: zext
+        predicate: ""
+      - id: fsub
         predicate: ""
       - id: fadd
         predicate: ""
@@ -98,23 +101,19 @@ target:
         predicate: ""
       - id: shl
         predicate: ""
-      - id: fsub
+      - id: mul
         predicate: ""
-      - id: lshr
+      - id: phi
         predicate: ""
-      - id: fcmp
+      - id: inttoptr
         predicate: ""
-      - id: zext
+      - id: sub
         predicate: ""
-      - id: and
+      - id: add
         predicate: ""
-      - id: or
+      - id: br
         predicate: ""
-      - id: xor
-        predicate: ""
-      - id: icmp
-        predicate: ""
-      - id: select
+      - id: call
         predicate: ""
     allowlist-opcodes: true
     allowlist-external-calls: true
@@ -123,31 +122,34 @@ target:
     allow-struct-return: true
     allow-pointer-return: true
     external-calls:
-      - __quantum__qis__cnot__body:void (%Qubit*, %Qubit*)
-      - __quantum__rt__bool_record_output:void (i1)
-      - __quantum__qis__read_result__body:i1 (%Result*)
-      - __quantum__qis__cz__body:void (%Qubit*, %Qubit*)
-      - __quantum__qis__y__body:void (%Qubit*)
-      - __quantum__qis__t__adj:void (%Qubit*)
-      - __quantum__qis__rz__body:void (double, %Qubit*)
-      - __quantum__qis__mz__body:void (%Qubit*, %Result*)
-      - __quantum__qis__z__body:void (%Qubit*)
-      - __quantum__rt__array_end_record_output:void ()
-      - __quantum__qis__t__body:void (%Qubit*)
-      - __quantum__qis__x__body:void (%Qubit*)
-      - __quantum__qis__s__adj:void (%Qubit*)
-      - __quantum__qis__rx__body:void (double, %Qubit*)
-      - __quantum__rt__tuple_end_record_output:void ()
-      - __quantum__qis__ry__body:void (double, %Qubit*)
-      - __quantum__qis__reset__body:void (%Qubit*)
-      - __quantum__rt__result_record_output:void (%Result*)
-      - __quantum__qis__h__body:void (%Qubit*)
-      - __quantum__rt__double_record_output:void (double)
-      - __quantum__qis__s__body:void (%Qubit*)
-      - __quantum__rt__int_record_output:void (i64)
-      - __quantum__rt__tuple_start_record_output:void ()
-      - __quantum__qis__swap__body:void (%Qubit*, %Qubit*)
       - __quantum__rt__array_start_record_output:void ()
+      - __quantum__rt__tuple_end_record_output:void ()
+      - __quantum__rt__tuple_start_record_output:void ()
+      - __quantum__rt__result_record_output:void (%Result*)
+      - __quantum__rt__double_record_output:void (double)
+      - __quantum__rt__int_record_output:void (i64)
+      - __quantum__rt__bool_record_output:void (i1)
+      - __quantum__rt__array_end_record_output:void ()
     allowed-pointer-types:
       - Qubit*
       - Result*
+  qis:
+    allowed-qis:
+      - __quantum__qis__reset__body:void (%Qubit*)
+      - __quantum__qis__ry__body:void (double, %Qubit*)
+      - __quantum__qis__rx__body:void (double, %Qubit*)
+      - __quantum__qis__x__body:void (%Qubit*)
+      - __quantum__qis__s__adj:void (%Qubit*)
+      - __quantum__qis__t__body:void (%Qubit*)
+      - __quantum__qis__s__body:void (%Qubit*)
+      - __quantum__qis__mz__body:void (%Qubit*, %Result*)
+      - __quantum__qis__y__body:void (%Qubit*)
+      - __quantum__qis__rz__body:void (double, %Qubit*)
+      - __quantum__qis__cz__body:void (%Qubit*, %Qubit*)
+      - __quantum__qis__h__body:void (%Qubit*)
+      - __quantum__qis__read_result__body:i1 (%Result*)
+      - __quantum__qis__swap__body:void (%Qubit*, %Qubit*)
+      - __quantum__qis__z__body:void (%Qubit*)
+      - __quantum__qis__t__adj:void (%Qubit*)
+      - __quantum__qis__cnot__body:void (%Qubit*, %Qubit*)
+    allow-any-qis: false
