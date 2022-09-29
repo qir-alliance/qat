@@ -74,7 +74,7 @@ target_defs = sys.argv[2:]
 # Mapping profile to target definition file
 targets = {}
 for profile, _ in TESTS.items():
-    _, target_id = profile.rsplit("_",1)
+    _, target_id = profile.rsplit("_", 1)
     targets[profile] = list(filter(lambda x: target_id in x, target_defs))[0]
 
 fail = False
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         out1 = out1.replace(": generic", ": {}".format(profile))
 
         p = subprocess.Popen(
-            [QAT_BINARY, "--target-def",  targets[profile], "--dump-config"],
+            [QAT_BINARY, "--target-def", targets[profile], "--dump-config"],
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,
         )
