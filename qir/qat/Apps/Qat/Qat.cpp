@@ -206,16 +206,14 @@ int main(int argc, char const** argv)
 
         // TODO: Deprecated
         // Configuring QAT according to adaptor
-        configureQirAdaptor(config.adaptor(), configuration_manager);
+        // configureQirAdaptor(config.adaptor(), configuration_manager);
 
-        /*
         // Setting adaptor validation configuration
         // TODO: AdaptorName is deprecated
         configuration_manager.addConfig<TargetProfileConfiguration>(
             "target.profile", TargetProfileConfiguration::fromQirAdaptorName("generic"));
         configuration_manager.addConfig<TargetQisConfiguration>(
             "target.qis", TargetQisConfiguration::fromQirAdaptorName("generic"));
-        */
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
@@ -336,14 +334,13 @@ int main(int argc, char const** argv)
         //
 
         // Creating the adaptor that will be used for generation and validation
-        generator->newAdaptorContext(config.adaptor(), config.isDebugMode());
+        generator->newAdaptorContext("TODO:", config.isDebugMode());
 
         for (auto& pipeline_name : config.adaptorPipeline())
         {
             generator->addComponent("adaptor." + pipeline_name);
         }
 
-        // auto adaptor = generator->newQirAdaptor(config.adaptor(), optimization_level, config.isDebugMode());
         auto adaptor = generator->finalizeAdaptor();
 
         if (config.shouldGenerate())

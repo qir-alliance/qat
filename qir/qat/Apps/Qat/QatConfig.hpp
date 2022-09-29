@@ -38,7 +38,7 @@ class QatConfig
 
     /// String to request a specific adaptor name. Default is base.
     // TODO:
-    String adaptor() const;
+    // String adaptor() const;
 
     /// Indicates whether or not the QIR adaptor tool should emit LLVM IR to the standard output.
     bool shouldEmitHumanReadibleLlvm() const;

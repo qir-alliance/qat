@@ -62,6 +62,7 @@ bool QatConfig::shouldValidate() const
     return validate_;
 }
 
+/*
 String QatConfig::adaptor() const
 {
     if (adaptor_ == "base")
@@ -72,6 +73,7 @@ String QatConfig::adaptor() const
     }
     return adaptor_;
 }
+*/
 
 bool QatConfig::shouldEmitHumanReadibleLlvm() const
 {
