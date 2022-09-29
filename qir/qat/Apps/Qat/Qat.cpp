@@ -144,7 +144,7 @@ int main(int argc, char const** argv)
         //
 
         configuration_manager.addConfig<QatConfig>("qat");
-        configuration_manager.addConfig<FactoryConfiguration>("adaptor.transformation-rules");
+        configuration_manager.addConfig<FactoryConfiguration>("rules");
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
@@ -204,8 +204,18 @@ int main(int argc, char const** argv)
 #endif
         }
 
+        // TODO: Deprecated
         // Configuring QAT according to adaptor
         configureQirAdaptor(config.adaptor(), configuration_manager);
+
+        /*
+        // Setting adaptor validation configuration
+        // TODO: AdaptorName is deprecated
+        configuration_manager.addConfig<TargetProfileConfiguration>(
+            "target.profile", TargetProfileConfiguration::fromQirAdaptorName("generic"));
+        configuration_manager.addConfig<TargetQisConfiguration>(
+            "target.qis", TargetQisConfiguration::fromQirAdaptorName("generic"));
+        */
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();

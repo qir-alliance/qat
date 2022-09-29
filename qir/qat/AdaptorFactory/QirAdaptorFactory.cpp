@@ -244,7 +244,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<TransformationRulesPassConfiguration>(
-        "adaptor.transformation-rules", // TODO(unknown): Rename?
+        "adaptor.rule-based-simplification", // TODO(unknown): Rename?
         [logger](TransformationRulesPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& ret = adaptor.modulePassManager();

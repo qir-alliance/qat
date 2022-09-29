@@ -22,16 +22,18 @@ qat:
   save-logs: ""
   version: false
   help: false
+rules:
+  optimize-result-one: true
+  optimize-result-zero: true
+  optimize-result-comparison: true
+  use-static-qubit-array-allocation: true
+  use-static-qubit-allocation: true
+  use-static-result-allocation: true
+  disable-reference-counting: true
+  disable-alias-counting: true
+  disable-string-support: true
+  disable-record-output-support: false
 adaptor:
-  transformation-rules:
-    delete-dead-code: false
-    clone-functions: false
-    transform-execution-path-only: false
-    max-recursion: 1
-    assume-no-except: false
-    reuse-qubits: true
-    reuse-results: false
-    entry-point-attr: EntryPoint
   replacement-linking:
     replace-functions: ~
     remove-call-attributes: false
@@ -52,6 +54,15 @@ adaptor:
     eliminate-dead-code: true
     eliminate-memory: true
   pre-transform-trimming: ~
+  rule-based-simplification:
+    delete-dead-code: false
+    clone-functions: false
+    transform-execution-path-only: false
+    max-recursion: 1
+    assume-no-except: false
+    reuse-qubits: true
+    reuse-results: false
+    entry-point-attr: EntryPoint
   post-transform:
     lower-switch: true
     should-eleminate-zext-i1: true

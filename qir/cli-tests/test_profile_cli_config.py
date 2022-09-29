@@ -6,7 +6,6 @@ TESTS = {
         "--apply",
         "--verify-module",
         "--validate",
-        "--disable-grouping",
         "--always-inline",
         "--reindex-qubits",
         "--requires-qubits",
@@ -27,7 +26,6 @@ TESTS = {
         "--apply",
         "--verify-module",
         "--validate",
-        "--disable-grouping",
         "--always-inline",
         "--reindex-qubits",
         "--requires-qubits",
@@ -49,7 +47,6 @@ TESTS = {
         "--apply",
         "--verify-module",
         "--validate",
-        "--disable-grouping",
         "--always-inline",
         "--reindex-qubits",
         "--requires-qubits",
@@ -72,12 +69,20 @@ TESTS = {
 
 
 QAT_BINARY = sys.argv[1]
+target_defs = sys.argv[2:]
+
+# Mapping profile to target definition file
+targets = {}
+for profile, _ in TESTS.items():
+    _, target_id = profile.rsplit("_",1)
+    targets[profile] = list(filter(lambda x: target_id in x, target_defs))[0]
+
 fail = False
 if __name__ == "__main__":
     # Testing profile against itself with update flags
     for profile, args in TESTS.items():
         p = subprocess.Popen(
-            [QAT_BINARY, "--adaptor", profile, "--dump-config"] + args,
+            [QAT_BINARY, "--target-def", targets[profile], "--dump-config"] + args,
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,
         )
@@ -85,7 +90,7 @@ if __name__ == "__main__":
         out1 = out1.replace(": generic", ": {}".format(profile))
 
         p = subprocess.Popen(
-            [QAT_BINARY, "--adaptor", profile, "--dump-config"],
+            [QAT_BINARY, "--target-def",  targets[profile], "--dump-config"],
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,
         )
