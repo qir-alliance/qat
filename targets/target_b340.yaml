@@ -22,17 +22,6 @@ qat:
   save-logs: ""
   version: false
   help: false
-rules:
-  optimize-result-one: true
-  optimize-result-zero: true
-  optimize-result-comparison: true
-  use-static-qubit-array-allocation: true
-  use-static-qubit-allocation: true
-  use-static-result-allocation: true
-  disable-reference-counting: true
-  disable-alias-counting: true
-  disable-string-support: true
-  disable-record-output-support: false
 adaptor:
   replacement-linking:
     replace-functions: ~
@@ -62,6 +51,16 @@ adaptor:
     assume-no-except: false
     reuse-qubits: false
     reuse-results: false
+    optimize-result-one: true
+    optimize-result-zero: true
+    optimize-result-comparison: true
+    use-static-qubit-array-allocation: true
+    use-static-qubit-allocation: true
+    use-static-result-allocation: true
+    disable-reference-counting: true
+    disable-alias-counting: true
+    disable-string-support: true
+    disable-record-output-support: false        
     entry-point-attr: EntryPoint
   post-transform:
     lower-switch: true
@@ -80,8 +79,6 @@ adaptor:
     separate-circuits: false
 target:
   profile:
-    requires-qubits: true
-    requires-results: true
     allow-internal-calls: false
     allow-poison: false
     allow-undef: false
@@ -108,6 +105,8 @@ target:
       - Qubit*
       - Result*
   qis:
+    requires-qubits: true
+    requires-results: true    
     allowed-qis:
       - __quantum__qis__ry__body:void (double, %Qubit*)
       - __quantum__qis__rx__body:void (double, %Qubit*)
