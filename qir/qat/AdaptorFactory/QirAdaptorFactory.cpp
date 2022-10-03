@@ -20,12 +20,12 @@
 #include "qir/qat/Passes/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/ResourceAnnotationPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/Passes/ZExtTransformPass/ZExtTransformPass.hpp"
-#include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 #include "qir/qat/Utils/FunctionToModule.hpp"
 

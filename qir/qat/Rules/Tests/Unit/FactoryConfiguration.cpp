@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/FactoryConfig.hpp"
 
 #include "gtest/gtest.h"
 

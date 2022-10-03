@@ -4,8 +4,8 @@
 #include "gtest/gtest.h"
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/FactoryConfig.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "qir/qat/Rules/FactoryConfig.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 using namespace microsoft::quantum;

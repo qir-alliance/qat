@@ -69,7 +69,7 @@ The indiidual adaptors that can be disabled are listed here:
 | disable-static-resources                | Disables Static resource manipulation.    | false         |
 | disable-grouping                        | Disables Circuit separation.              | false         |
 
-Note that some of these adaptors are "hidden" in the sense that they do not have a configuration and that their behaviour is derived from other adaptors configuration. One such example is the `remove-non-entrypoint-functions` (TODO.) adaptor which is intended to run before `transform-rules`
+Note that some of these adaptors are "hidden" in the sense that they do not have a configuration and that their behaviour is derived from other adaptors configuration. One such example is the `remove-non-entrypoint-functions` adaptor which is intended to run before `transform-rules`
 disable-adaptor.transformation-rules -- Disables Transformation rules. -- false
 
 ### Transformation rules - Rules used to transform instruction sequences in the QIR.
@@ -89,17 +89,28 @@ disable-adaptor.transformation-rules -- Disables Transformation rules. -- false
 
 ### Pass configuration - Configuration of the pass and its corresponding optimizations.
 
-TODO: Pass Configuration is a poor choice of name. Move these up to the transformation rules and make this dereferenced values
+TODO:
 
-| Name             | Description                                         | Default value |
-| ---------------- | --------------------------------------------------- | ------------- |
-| reuse-qubits     | Use to define whether or not to reuse qubits.       | false         |
-| reuse-results    | Use to define whether or not to reuse results.      | false         |
-| entry-point-attr | Specifies the attribute indicating the entry point. | EntryPoint    |
+1. Move factory -> TransformationRules/
+2. Merge settings
+3. FactoryConfiguration + TransformationRulesPassConfiguration -> RuleBasedSimplificationPass
+   TODO: Pass Configuration is a poor choice of name. Move these up to the transformation rules and make this dereferenced values
+
+| Name          | Description                                    | Default value |
+| ------------- | ---------------------------------------------- | ------------- |
+| reuse-qubits  | Use to define whether or not to reuse qubits.  | false         |
+| reuse-results | Use to define whether or not to reuse results. | false         |
+
+TODO: Merge with rules?
 
 TODO: Move `entry-point-attr` to a top level `spec` section
+| Name | Description | Default value |
+| ---------------- | --------------------------------------------------- | ------------- |
+| entry-point-attr | Specifies the attribute indicating the entry point. | EntryPoint |
 
 ### Post-transform optimisation - Optimisations performed after
+
+TODO: Rename PostTransformPass to BehaviourTransformationPass
 
 TODO: It feels like this adaptor should be called something else and possibly be split into two adaptors
 

@@ -6,8 +6,8 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
 #include "qir/qat/Passes/ZExtTransformPass/ZExtTransformPass.hpp"
-#include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 #include "qir/qat/Utils/FunctionToModule.hpp"
 

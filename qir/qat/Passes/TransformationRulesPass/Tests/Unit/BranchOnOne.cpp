@@ -6,7 +6,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
-#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
@@ -26,9 +26,9 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 
     ir_manip->declareFunction("%Result* @__quantum__qis__m__body(%Qubit*)");
     ir_manip->declareFunction("void @__quantum__qis__reset__body(%Qubit*)");
-    ir_manip->declareFunction("%Result* @__quantum__rt__result_get_zero()");
+    ir_manip->declareFunction("%Result* @__quantum__rt__result_get_one()");
     ir_manip->declareFunction("void @__quantum__rt__result_update_reference_count(%Result*, i32)");
-    ir_manip->declareFunction("%Result* @__quantum__rt__result_get_zero()");
+    ir_manip->declareFunction("%Result* @__quantum__rt__result_get_one()");
     ir_manip->declareFunction("i1 @__quantum__rt__result_equal(%Result*, %Result*)");
     ir_manip->declareFunction("void @send_message()");
     ir_manip->declareFunction("void @bye_message()");
@@ -45,13 +45,13 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 } // namespace
 
 // Single allocation with action and then release
-TEST(RuleSetTestSuite, BranchOnZero)
+TEST(RuleSetTestSuite, BranchOnOne)
 {
     auto ir_manip = newIrManip(R"script(
   %0 = inttoptr i64 0 to %Result*
   call void @__quantum__qis__mz__body(%Qubit* null, %Result* %0)
   call void @__quantum__qis__reset__body(%Qubit* null)
-  %1 = call %Result* @__quantum__rt__result_get_zero()
+  %1 = call %Result* @__quantum__rt__result_get_one()
   %2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
   call void @__quantum__rt__result_update_reference_count(%Result* %0, i32 -1)
   br i1 %2, label %then0__1, label %continue__1
@@ -70,7 +70,7 @@ continue__1:
         auto factory =
             RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
 
-        factory.optimizeResultZero();
+        factory.optimizeResultOne();
     };
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
@@ -86,26 +86,20 @@ continue__1:
     // This optimistation is specific to the the __quantum__qis__read_result__body which
     // returns 1 or 0 depending on the result. We expect that
     //
-    // %1 = call %Result* @__quantum__rt__result_get_zero()
+    // %1 = call %Result* @__quantum__rt__result_get_one()
     // %2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)
     // br i1 %2, label %then0__1, label %continue__1
     //
-    // will be mapped to using this pattern.
-
-    EXPECT_TRUE(
-        ir_manip->hasInstructionSequence(
-            {"%0 = call i1 @__quantum__qis__read_result__body(%Result* null)",
-             "br i1 %0, label %continue__1, label %then0__1"}) ||
-
-        ir_manip->hasInstructionSequence(
-            {"%0 = call i1 @__quantum__qis__read_result__body(%Result* null)", "%1 = xor i1 %0, true",
-             "br i1 %1, label %then0__1, label %continue__1"}));
+    // will be mapped to using this instruction.
+    EXPECT_TRUE(ir_manip->hasInstructionSequence(
+        {"%0 = call i1 @__quantum__qis__read_result__body(%Result* null)",
+         "br i1 %0, label %then0__1, label %continue__1"}));
 
     EXPECT_FALSE(
         ir_manip->hasInstructionSequence({"%2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)"}) ||
         ir_manip->hasInstructionSequence({"%2 = call i1 @__quantum__rt__result_equal(%Result* %0, %Result* %1)"}));
 
     EXPECT_FALSE(
-        ir_manip->hasInstructionSequence({"%2 = call i1 @__quantum__rt__result_get_zero()"}) ||
-        ir_manip->hasInstructionSequence({"%2 = call i1 @__quantum__rt__result_get_zero()"}));
+        ir_manip->hasInstructionSequence({"%2 = call i1 @__quantum__rt__result_get_one()"}) ||
+        ir_manip->hasInstructionSequence({"%2 = call i1 @__quantum__rt__result_get_one()"}));
 }

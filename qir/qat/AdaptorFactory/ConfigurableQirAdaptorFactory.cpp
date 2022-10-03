@@ -4,9 +4,9 @@
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/FactoryConfig.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
-#include "qir/qat/Rules/Factory.hpp"
-#include "qir/qat/Rules/FactoryConfig.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 
 #include <iostream>

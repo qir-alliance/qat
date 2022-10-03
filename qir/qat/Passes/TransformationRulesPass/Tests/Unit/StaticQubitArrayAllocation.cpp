@@ -6,7 +6,7 @@
 #include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
-#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>

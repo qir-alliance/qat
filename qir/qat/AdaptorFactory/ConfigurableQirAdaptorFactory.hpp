@@ -6,8 +6,8 @@
 #include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/FactoryConfig.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "qir/qat/Rules/FactoryConfig.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 
 namespace microsoft::quantum

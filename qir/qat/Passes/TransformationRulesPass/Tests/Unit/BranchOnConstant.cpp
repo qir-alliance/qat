@@ -6,7 +6,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
-#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
