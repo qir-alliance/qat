@@ -60,7 +60,7 @@ adaptor:
     disable-reference-counting: true
     disable-alias-counting: true
     disable-string-support: true
-    disable-record-output-support: false        
+    disable-record-output-support: false
     entry-point-attr: EntryPoint
   post-transform:
     lower-switch: true
@@ -106,7 +106,7 @@ target:
       - Result*
   qis:
     requires-qubits: true
-    requires-results: true    
+    requires-results: true
     allowed-qis:
       - __quantum__qis__ry__body:void (double, %Qubit*)
       - __quantum__qis__rx__body:void (double, %Qubit*)
