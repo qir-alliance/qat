@@ -253,7 +253,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             RuleSet rule_set;
             auto    factory = RuleFactory(
                    rule_set, adaptor.getQubitAllocationManager(), adaptor.getResultAllocationManager(), logger);
-            factory.usingConfiguration(adaptor.configurationManager().get<FactoryConfiguration>());
+            factory.usingConfiguration(adaptor.configurationManager().get<TransformationRulesPassConfiguration>());
 
             // Creating adaptor pass
             auto pass = TransformationRulesPass(std::move(rule_set), cfg);

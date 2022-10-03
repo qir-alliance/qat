@@ -1,20 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Passes/TransformationRulesPass/FactoryConfig.hpp"
-
 #include "gtest/gtest.h"
+#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 
 #include <functional>
 
 using namespace microsoft::quantum;
 
 // Single allocation with action and then release
-TEST(RuleSetTestSuite, FactoryConfiguration)
+TEST(RuleSetTestSuite, TransformationRulesPassConfiguration)
 {
-    FactoryConfiguration c1 = FactoryConfiguration::createDisabled();
+    TransformationRulesPassConfiguration c1 = TransformationRulesPassConfiguration::createDisabled();
     EXPECT_TRUE(c1.isDisabled());
 
-    FactoryConfiguration c2{};
+    TransformationRulesPassConfiguration c2{};
     EXPECT_TRUE(c2.isDefault());
 }

@@ -65,8 +65,7 @@ void expectFail(String const& adaptor_name, String const& script, std::vector<St
     ConfigurationManager configuration_manager;
     auto                 adaptor_generator = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    configuration_manager.addConfig<FactoryConfiguration>();
-
+    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
     configuration_manager.setConfig(TargetProfileConfiguration::fromQirAdaptorName(adaptor_name));
     configuration_manager.setConfig(TargetQisConfiguration::fromQirAdaptorName(adaptor_name));
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());

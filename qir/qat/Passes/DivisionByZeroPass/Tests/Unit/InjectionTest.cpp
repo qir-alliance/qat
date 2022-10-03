@@ -47,7 +47,6 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(ConfigurationManage
 
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
         configuration_manager, ConfigurableQirAdaptorFactory::SetupMode::DoNothing);
-    configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
 
     adaptor->registerAnonymousAdaptorComponent<DummyConfig>(

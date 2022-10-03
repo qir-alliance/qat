@@ -76,10 +76,10 @@ exit__1:                                          ; preds = %header__1
   call void @__quantum__rt__qubit_release(%Qubit* %q)
   )script");
     ConfigurationManager configuration_manager;
-    auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    configuration_manager.addConfig<FactoryConfiguration>();
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
+    configuration_manager.setConfig(TransformationRulesPassConfiguration());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());

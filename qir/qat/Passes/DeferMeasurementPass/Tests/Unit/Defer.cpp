@@ -78,8 +78,6 @@ TEST(DeferMeasurements, ReorderTest)
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.addConfig<FactoryConfiguration>();
-
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());

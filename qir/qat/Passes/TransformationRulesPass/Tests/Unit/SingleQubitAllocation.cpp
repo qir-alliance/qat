@@ -61,7 +61,7 @@ TEST(RuleSetTestSuite, AllocationActionRelease)
         configuration_manager, std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
@@ -94,7 +94,7 @@ TEST(RuleSetTestSuite, MultipleAllocationsNoRelease)
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
@@ -158,8 +158,7 @@ TEST(RuleSetTestSuite, AllocateReleaseMultipleTimes)
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    configuration_manager.addConfig<FactoryConfiguration>();
-
+    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
@@ -240,7 +239,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByNameWithNoName)
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
@@ -271,7 +270,7 @@ TEST(RuleSetTestSuite, ErrorReleaseWithTypeErasedAllocation)
         },
         TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 

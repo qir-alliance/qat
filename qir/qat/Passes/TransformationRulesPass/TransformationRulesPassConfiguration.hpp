@@ -28,6 +28,9 @@ class TransformationRulesPassConfiguration
     /// Tests whether all functionality is disabled for this component.
     bool isDisabled() const;
 
+    /// Tests whether this is an instance of default configuration
+    bool isDefault() const;
+
     /// Testing equality of two configurations
     bool operator==(TransformationRulesPassConfiguration const& ref) const;
 
@@ -75,6 +78,32 @@ class TransformationRulesPassConfiguration
     /// Attribute which indicate that a function is the entry point.
     std::string entryPointAttr() const;
 
+    bool disableReferenceCounting() const;
+
+    bool disableAliasCounting() const;
+
+    bool disableStringSupport() const;
+
+    bool disableRecordOutputSupport() const;
+
+    bool optimizeResultOne() const;
+
+    bool optimizeResultZero() const;
+
+    bool optimizeQuantumConstants() const;
+
+    bool optimizeResultComparison() const;
+
+    bool removeGetZeroOrOne() const;
+
+    bool useStaticQubitArrayAllocation() const;
+
+    bool useStaticQubitAllocation() const;
+
+    bool useStaticResultAllocation() const;
+
+    uint32_t defaultIntegerWidth() const;
+
   private:
     // Code expansion and trimming
     //
@@ -92,6 +121,25 @@ class TransformationRulesPassConfiguration
     //
     bool reuse_qubits_{true};
     bool reuse_results_{true};
+
+    // Rules Configuration
+    bool disable_reference_counting_{true};
+    bool disable_alias_counting_{true};
+    bool disable_string_support_{true};
+    bool disable_record_output_support_{true};
+
+    // Optimizations
+    bool optimize_result_one_{true};
+    bool optimize_result_zero_{true};
+    bool optimize_result_comparison_{true};
+    bool optimize_qauntum_constants_{true};
+    bool remove_get_one_or_zero_{true};
+
+    bool use_static_qubit_array_allocation_{true};
+    bool use_static_qubit_allocation_{true};
+    bool use_static_result_allocation_{true};
+
+    uint32_t default_integer_width_{64};
 };
 
 } // namespace microsoft::quantum

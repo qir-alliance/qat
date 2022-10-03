@@ -62,7 +62,6 @@
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/FactoryConfig.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
 #include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
@@ -144,7 +143,6 @@ int main(int argc, char const** argv)
         //
 
         configuration_manager.addConfig<QatConfig>("qat");
-        configuration_manager.addConfig<FactoryConfiguration>("rules");
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);

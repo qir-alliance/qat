@@ -74,8 +74,7 @@ continue__1:
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.addConfig<FactoryConfiguration>();
-
+    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
@@ -122,8 +121,7 @@ continue__1:
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.addConfig<FactoryConfiguration>();
-
+    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
@@ -170,8 +168,7 @@ continue__1:
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.addConfig<FactoryConfiguration>();
-
+    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
@@ -218,8 +215,7 @@ continue__1:
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.addConfig<FactoryConfiguration>();
-
+    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());

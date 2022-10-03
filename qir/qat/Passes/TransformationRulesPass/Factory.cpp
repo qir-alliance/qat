@@ -33,7 +33,7 @@ RuleFactory::RuleFactory(
 {
 }
 
-void RuleFactory::usingConfiguration(FactoryConfiguration const& config)
+void RuleFactory::usingConfiguration(TransformationRulesPassConfiguration const& config)
 {
     default_integer_width_ = config.defaultIntegerWidth();
 
