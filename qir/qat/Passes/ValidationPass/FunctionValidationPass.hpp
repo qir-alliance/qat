@@ -28,7 +28,10 @@ class FunctionValidationPass : public llvm::PassInfoMixin<FunctionValidationPass
     // Construction and destruction configuration.
     //
 
-    explicit FunctionValidationPass(TargetProfileConfiguration const& cfg, ILoggerPtr const& logger = nullptr);
+    explicit FunctionValidationPass(
+        TargetProfileConfiguration const& profile_config,
+        TargetQisConfiguration const&     qis_config,
+        ILoggerPtr const&                 logger = nullptr);
 
     /// Copy construction is banned.
     FunctionValidationPass(FunctionValidationPass const&) = delete;
@@ -45,7 +48,8 @@ class FunctionValidationPass : public llvm::PassInfoMixin<FunctionValidationPass
     static bool isRequired();
 
   private:
-    TargetProfileConfiguration config_{};
+    TargetProfileConfiguration profile_config_{};
+    TargetQisConfiguration     qis_config_{};
 
     ILoggerPtr logger_{nullptr};
 };

@@ -13,7 +13,7 @@ cc_test(
         "//qir/qat:Logging",
         "//qir/qat:ModuleLoader",
         "//qir/qat:PostTransformValidation",
-        "//qir/qat:PreTransformTrimming",
+        "//qir/qat:RemoveNonEntrypointFunctions",
         "//qir/qat:QatConfig",
         "//qir/qat:QatTypes",
         "//qir/qat:QirAdaptor",

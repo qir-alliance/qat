@@ -40,7 +40,8 @@ Validator::Validator(
     {
         function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(logger_); });
 
-        module_pass_manager_.addPass(llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(profile, logger_)));
+        module_pass_manager_.addPass(
+            llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(profile, qis, logger_)));
         module_pass_manager_.addPass(ValidationPass(profile, qis, logger_));
     }
     else
@@ -50,7 +51,7 @@ Validator::Validator(
         function_analysis_manager_.registerPass([&] { return AllocationAnalysisPass(comment_logger); });
 
         module_pass_manager_.addPass(
-            llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(profile, comment_logger)));
+            llvm::createModuleToFunctionPassAdaptor(FunctionValidationPass(profile, qis, comment_logger)));
 
         module_pass_manager_.addPass(ValidationPass(profile, qis, comment_logger));
     }

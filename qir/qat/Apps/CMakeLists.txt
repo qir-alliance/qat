@@ -15,7 +15,7 @@ target_link_libraries(qat
     GroupingPass 
     ModuleLoader 
     PostTransformValidation 
-    PreTransformTrimming 
+    RemoveNonEntrypointFunctions 
     ZExtTransformPass 
     DeferMeasurementPass
     FunctionReplacementPass

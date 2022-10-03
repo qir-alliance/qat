@@ -15,8 +15,6 @@ void TargetProfileConfiguration::setup(ConfigurationManager& config)
     config.setSectionName("Target profile validation", "Configuration for profile validation");
 
     /// CLI and config accessible
-    config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
-    config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
 
     config.addParameter(allow_internal_calls_, "allow-internal-calls", "Whether or not internal calls are allowed.");
     config.addParameter(allow_poison_, "allow-poison", "Whether or not poison values are allowed.");
@@ -265,16 +263,6 @@ void TargetProfileConfiguration::addAllowedOpcode(String const& name)
 void TargetProfileConfiguration::addAllowedPointerType(String const& name)
 {
     allowed_pointer_types_.insert(name);
-}
-
-bool TargetProfileConfiguration::requiresQubits() const
-{
-    return requires_qubits_;
-}
-
-bool TargetProfileConfiguration::requiresResults() const
-{
-    return requires_results_;
 }
 
 bool TargetProfileConfiguration::allowPoison() const

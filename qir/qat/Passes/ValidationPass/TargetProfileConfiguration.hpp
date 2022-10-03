@@ -196,9 +196,6 @@ class TargetProfileConfiguration
     bool       allowlistPointerTypes() const;
     Set const& allowedPointerTypes() const;
 
-    bool requiresQubits() const;
-    bool requiresResults() const;
-
     bool allowPoison() const;
     bool allowUndef() const;
 
@@ -223,9 +220,6 @@ class TargetProfileConfiguration
     bool allow_primitive_return_{true};
     bool allow_struct_return_{true};
     bool allow_pointer_return_{true};
-
-    bool requires_qubits_{false};
-    bool requires_results_{false};
 
     bool allow_poison_{true};
     bool allow_undef_{true};

@@ -190,9 +190,9 @@ ms_cc_library(
 )
 
 ms_cc_library(
-    name = "PreTransformTrimming",
-    srcs = glob(["Passes/PreTransformTrimming/*.cpp"]),
-    hdrs = glob(["Passes/PreTransformTrimming/*.hpp"]),
+    name = "RemoveNonEntrypointFunctions",
+    srcs = glob(["Passes/RemoveNonEntrypointFunctions/*.cpp"]),
+    hdrs = glob(["Passes/RemoveNonEntrypointFunctions/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -366,7 +366,7 @@ ms_cc_library(
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
         "//qir/qat:PostTransformValidation",
-        "//qir/qat:PreTransformTrimming",
+        "//qir/qat:RemoveNonEntrypointFunctions",
         "//qir/qat:QatTypes",
         "//qir/qat:QirAdaptor",
         "//qir/qat:Rules",
@@ -412,7 +412,7 @@ ms_cc_library(
         "//qir/qat:Logging",
         "//qir/qat:ModuleLoader",
         "//qir/qat:PostTransformValidation",
-        "//qir/qat:PreTransformTrimming",
+        "//qir/qat:RemoveNonEntrypointFunctions",
         "//qir/qat:QatConfig",
         "//qir/qat:QatTypes",
         "//qir/qat:QirAdaptor",
@@ -444,7 +444,7 @@ ms_cc_binary(
         "//qir/qat:Logging",
         "//qir/qat:ModuleLoader",
         "//qir/qat:PostTransformValidation",
-        "//qir/qat:PreTransformTrimming",
+        "//qir/qat:RemoveNonEntrypointFunctions",
         "//qir/qat:QatConfig",
         "//qir/qat:QatTypes",
         "//qir/qat:QirAdaptor",

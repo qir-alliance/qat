@@ -36,9 +36,9 @@ class QatConfig
     /// Flag to indicate whether or not to validate the compliance with the QIR adaptor.
     bool shouldValidate() const;
 
-    /// String to request a specific adaptor name. Default is base.
-    // TODO:
-    // String adaptor() const;
+    /// String to request a specific adaptor name. Default is 'default'.
+    // TODO: Refactor adaptorName -> targetName()
+    String adaptorName() const;
 
     /// Indicates whether or not the QIR adaptor tool should emit LLVM IR to the standard output.
     bool shouldEmitHumanReadibleLlvm() const;
@@ -97,7 +97,7 @@ class QatConfig
     String          load_{""};
     bool            generate_{false};
     bool            validate_{false};
-    String          adaptor_{"generic"};
+    String          adaptor_name_{"default"};
     AdaptorPipeline adapter_pipeline_{};
 
     bool emit_human_readible_llvm_{false};

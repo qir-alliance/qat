@@ -16,11 +16,11 @@ void QatConfig::setup(ConfigurationManager& config)
     config.addParameter(
         generate_, "apply", "Applies a adaptor to transform the IR in correspondence with the adaptor.");
     config.addParameter(validate_, false, "validate", "Executes the validation procedure.");
-    config.addParameter(adaptor_, static_cast<String>("generic"), "adaptor", "Sets the adaptor.");
+    config.addParameter(adaptor_name_, static_cast<String>("default"), "adaptor", "Sets the adaptor.");
     config.addParameter(
         adapter_pipeline_,
-        {"replacement-linking", "llvm-optimization", "pre-transform-trimming", "transformation-rules", "post-transform",
-         "post-transform-validation", "static-resources", "grouping"},
+        {"replacement-linking", "llvm-optimization", "remove-non-entrypoint-functions", "transformation-rules",
+         "post-transform", "post-transform-validation", "static-resources", "grouping"},
         "adaptor-pipeline", "Overrides the adaptor pipleline.");
 
     config.addParameter(
@@ -62,18 +62,10 @@ bool QatConfig::shouldValidate() const
     return validate_;
 }
 
-/*
-String QatConfig::adaptor() const
+String QatConfig::adaptorName() const
 {
-    if (adaptor_ == "base")
-    {
-        // TODO(tfr): Remove warning upon final release.
-        llvm::errs() << "; WARNING: 'base' adaptor renamed to 'default'. Please update your scripts.\n";
-        return "default";
-    }
-    return adaptor_;
+    return adaptor_name_;
 }
-*/
 
 bool QatConfig::shouldEmitHumanReadibleLlvm() const
 {

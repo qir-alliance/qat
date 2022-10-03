@@ -18,11 +18,24 @@ void TargetQisConfiguration::setup(ConfigurationManager& config)
         allowed_qis_, "allowed-qis", "Allowed quantum instruction set.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
     config.addParameter(allow_any_qis_, "allow-any-qis", "Whether or not to allow any quantum instruction.");
+
+    config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
+    config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
 }
 
 String TargetQisConfiguration::adaptorName() const
 {
     return adaptor_name_;
+}
+
+bool TargetQisConfiguration::requiresQubits() const
+{
+    return requires_qubits_;
+}
+
+bool TargetQisConfiguration::requiresResults() const
+{
+    return requires_results_;
 }
 
 TargetQisConfiguration TargetQisConfiguration::fromQirAdaptorName(String const& name)

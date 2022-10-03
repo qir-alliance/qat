@@ -28,6 +28,9 @@ class TargetQisConfiguration
     Set const&                    allowedQis() const;
     Set const&                    irreversibleOperations() const;
 
+    bool requiresQubits() const;
+    bool requiresResults() const;
+
     String adaptorName() const;
 
   private:
@@ -35,6 +38,9 @@ class TargetQisConfiguration
     bool   allow_any_qis_{false};
     Set    allowed_qis_{};
     Set    irreversible_operations_{};
+
+    bool requires_qubits_{false};
+    bool requires_results_{false};
 };
 
 } // namespace microsoft::quantum

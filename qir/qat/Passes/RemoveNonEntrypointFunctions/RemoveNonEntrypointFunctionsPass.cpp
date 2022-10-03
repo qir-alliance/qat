@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Passes/PreTransformTrimming/PreTransformTrimmingPass.hpp"
+#include "qir/qat/Passes/RemoveNonEntrypointFunctions/RemoveNonEntrypointFunctionsPass.hpp"
 
 #include "qir/qat/Llvm/Llvm.hpp"
 
@@ -11,15 +11,17 @@
 namespace microsoft::quantum
 {
 
-PreTransformTrimmingPass::PreTransformTrimmingPass(
-    PreTransformTrimmingPassConfiguration const& cfg,
-    ILoggerPtr const&                            logger)
+RemoveNonEntrypointFunctionsPass::RemoveNonEntrypointFunctionsPass(
+    RemoveNonEntrypointFunctionsPassConfiguration const& cfg,
+    ILoggerPtr const&                                    logger)
   : config_{cfg}
   , logger_{logger}
 {
 }
 
-llvm::PreservedAnalyses PreTransformTrimmingPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
+llvm::PreservedAnalyses RemoveNonEntrypointFunctionsPass::run(
+    llvm::Module& module,
+    llvm::ModuleAnalysisManager& /*mam*/)
 {
 
     std::vector<llvm::Function*> deletables;
@@ -51,7 +53,7 @@ llvm::PreservedAnalyses PreTransformTrimmingPass::run(llvm::Module& module, llvm
     return llvm::PreservedAnalyses::none();
 }
 
-bool PreTransformTrimmingPass::isRequired()
+bool RemoveNonEntrypointFunctionsPass::isRequired()
 {
     return true;
 }

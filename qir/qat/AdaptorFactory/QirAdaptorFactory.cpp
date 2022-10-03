@@ -14,7 +14,7 @@
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPass.hpp"
-#include "qir/qat/Passes/PreTransformTrimming/PreTransformTrimmingPass.hpp"
+#include "qir/qat/Passes/RemoveNonEntrypointFunctions/RemoveNonEntrypointFunctionsPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/AllocationAnalysisPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/QubitRemapPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
@@ -234,13 +234,13 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             mpm.addPass(FunctionToModule(std::move(fpm)));
         });
 
-    registerAdaptorComponent<PreTransformTrimmingPassConfiguration>(
-        "adaptor.pre-transform-trimming", // TODO(unknown): Rename?
-        [logger](PreTransformTrimmingPassConfiguration const& cfg, QirAdaptor& adaptor)
+    registerAdaptorComponent<RemoveNonEntrypointFunctionsPassConfiguration>(
+        "adaptor.remove-non-entrypoint-functions", // TODO(unknown): Rename?
+        [logger](RemoveNonEntrypointFunctionsPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mpm = adaptor.modulePassManager();
 
-            mpm.addPass(PreTransformTrimmingPass(cfg, logger));
+            mpm.addPass(RemoveNonEntrypointFunctionsPass(cfg, logger));
         });
 
     registerAdaptorComponent<TransformationRulesPassConfiguration>(

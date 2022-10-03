@@ -16,7 +16,7 @@ class PostTransformValidationPassConfiguration
 
     void setup(ConfigurationManager& config)
     {
-        config.setSectionName("Pre-transform validation", "");
+        config.setSectionName("Post transform validation", "");
         replace_qubits_on_reset_ = config.getParameter("replace-qubit-on-reset");
         defer_measurements_      = config.getParameter("defer-measurements");
     }

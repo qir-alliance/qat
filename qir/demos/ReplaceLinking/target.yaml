@@ -6,7 +6,7 @@ qat:
   adaptor-pipeline:
     - replacement-linking
     - llvm-optimization
-    - pre-transform-trimming
+    - remove-non-entrypoint-functions
     - transformation-rules
     - post-transform
     - post-transform-validation
@@ -51,7 +51,7 @@ adaptor:
     eliminate-constants: true
     eliminate-dead-code: true
     eliminate-memory: true
-  pre-transform-trimming: ~
+  remove-non-entrypoint-functions: ~
   post-transform:
     lower-switch: true
     should-eleminate-zext-i1: true

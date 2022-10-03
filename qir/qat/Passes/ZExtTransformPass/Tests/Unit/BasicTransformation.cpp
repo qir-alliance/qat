@@ -10,7 +10,7 @@
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPass.hpp"
-#include "qir/qat/Passes/PreTransformTrimming/PreTransformTrimmingPass.hpp"
+#include "qir/qat/Passes/RemoveNonEntrypointFunctions/RemoveNonEntrypointFunctionsPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/AllocationAnalysisPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/QubitRemapPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
@@ -86,8 +86,9 @@ entry:
     configuration_manager.addConfig<StaticResourceComponentConfiguration>("adaptor.static-resource");
     configuration_manager.addConfig<PostTransformValidationPassConfiguration>("adaptor.post-transform-validation");
     configuration_manager.addConfig<PostTransformConfig>("adaptor.post-transform");
-    configuration_manager.addConfig<TransformationRulesPassConfiguration>("adaptor.transformation-rules");
-    configuration_manager.addConfig<PreTransformTrimmingPassConfiguration>("adaptor.pre-transform-trimming");
+    configuration_manager.addConfig<TransformationRulesPassConfiguration>("adaptor.rule-based-simplification");
+    configuration_manager.addConfig<RemoveNonEntrypointFunctionsPassConfiguration>(
+        "adaptor.remove-non-entrypoint-functions");
     configuration_manager.addConfig<LlvmPassesConfiguration>("adaptor.llvm-optimization");
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
@@ -165,8 +166,8 @@ entry:
 
     {
         llvm::FunctionPassManager fpm{};
-        auto&                     cfg = configuration_manager.get<PreTransformTrimmingPassConfiguration>();
-        mpm.addPass(PreTransformTrimmingPass(cfg, logger));
+        auto&                     cfg = configuration_manager.get<RemoveNonEntrypointFunctionsPassConfiguration>();
+        mpm.addPass(RemoveNonEntrypointFunctionsPass(cfg, logger));
         mpm.addPass(FunctionToModule(std::move(fpm)));
     }
 

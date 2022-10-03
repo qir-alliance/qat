@@ -18,7 +18,7 @@ microsoft_add_library_tests(ZExtTransformPass Rules TransformationRulesPass Allo
 
 microsoft_add_library(FunctionReplacementPass Logging)
 
-microsoft_add_library(PreTransformTrimming Logging)
+microsoft_add_library(RemoveNonEntrypointFunctions Logging)
 
 microsoft_add_library(PostTransformValidation Logging)
 microsoft_add_library(StaticResourceComponent Logging)

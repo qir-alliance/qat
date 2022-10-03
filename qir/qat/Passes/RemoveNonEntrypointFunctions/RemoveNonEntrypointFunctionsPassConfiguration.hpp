@@ -9,20 +9,20 @@
 namespace microsoft::quantum
 {
 
-class PreTransformTrimmingPassConfiguration
+class RemoveNonEntrypointFunctionsPassConfiguration
 {
   public:
     using DeferredValuePtr = DeferredValue::DeferredValuePtr;
 
     void setup(ConfigurationManager& config)
     {
-        config.setSectionName("Pre-transform trimming", "");
+        config.setSectionName("Remove Non-Entrypoint Functions", "");
         entry_point_attr_ = config.getParameter("entry-point-attr");
     }
 
-    static PreTransformTrimmingPassConfiguration createDisabled()
+    static RemoveNonEntrypointFunctionsPassConfiguration createDisabled()
     {
-        PreTransformTrimmingPassConfiguration ret;
+        RemoveNonEntrypointFunctionsPassConfiguration ret;
         return ret;
     }
 

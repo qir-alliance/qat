@@ -16,6 +16,12 @@ void ConfigurationManager::setupArguments(ParameterParser& parser)
 {
     for (auto& section : config_sections_)
     {
+        // Skipping sections that are not meant to be disablable
+        if (!section.can_disable)
+        {
+            continue;
+        }
+
         // Ensuring that we are only using the last of the section id.
         // This means 'adaptor.grouping' becomes 'grouping'
         String id = section.id;
@@ -58,6 +64,13 @@ void ConfigurationManager::configure(ParameterParser& parser, bool experimental_
 
     for (auto& section : config_sections_)
     {
+        // Skipping sections that are not meant to be disabled
+        if (!section.can_disable)
+        {
+            *section.active = true;
+            continue;
+        }
+
         // Ensuring that we are only using the last of the section id.
         // This means 'adaptor.grouping' becomes 'grouping'
         String id = section.id;
@@ -110,18 +123,33 @@ void ConfigurationManager::printHelp(bool experimental_mode) const
     std::cout << std::endl;
     for (auto& section : config_sections_)
     {
-        if (!section.id.empty())
+        // Skipping sections that are not meant to be disabled
+        if (!section.can_disable)
+        {
+            *section.active = true;
+            continue;
+        }
+
+        // Ensuring that we are only using the last of the section id.
+        // This means 'adaptor.grouping' becomes 'grouping'
+        String id = section.id;
+        auto   p  = id.find('.');
+        if (p != String::npos)
+        {
+            id = id.substr(p + 1, id.size() - p - 1);
+        }
+
+        // Creating sections for non-empty section ids
+        if (!id.empty())
         {
             if (section.enabled_by_default)
             {
-                std::cout << std::setw(50) << std::left << ("--disable-" + section.id) << "Disables " << section.name
-                          << ". ";
+                std::cout << std::setw(50) << std::left << ("--disable-" + id) << "Disables " << section.name << ". ";
                 std::cout << "Default: false" << std::endl;
             }
             else
             {
-                std::cout << std::setw(50) << std::left << ("--enable-" + section.id) << "Enables " << section.name
-                          << ". ";
+                std::cout << std::setw(50) << std::left << ("--enable-" + id) << "Enables " << section.name << ". ";
                 std::cout << "Default: false" << std::endl;
             }
         }
@@ -294,6 +322,20 @@ void ConfigurationManager::enableSectionById(String const& id)
         if (section.id == id)
         {
             section.enabled_by_default = true;
+            return;
+        }
+    }
+
+    throw std::runtime_error("Section '" + id + "' not found");
+}
+
+void ConfigurationManager::allowDisableSectionById(String const& id)
+{
+    for (auto& section : config_sections_)
+    {
+        if (section.id == id)
+        {
+            section.can_disable = true;
             return;
         }
     }

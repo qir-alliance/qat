@@ -12,7 +12,6 @@ Below we list all settings that are used to configure how QAT is running:
 | ------------------------ | ------------------------------------------------------------------------- | ------------- |
 | apply                    | Applies a adaptor to transform the IR in correspondence with the adaptor. | false         |
 | validate                 | Executes the validation procedure.                                        | false         |
-| adaptor                  | Sets the adaptor.                                                         | generic       |
 | adaptor-pipeline         | Overrides the adaptor pipleline.                                          |               |
 | emit-human-readible-llvm | Emits LLVM IR to the standard output.                                     | false         |
 | target-def               | YAML file containing the definition for the target.                       |               |
@@ -27,8 +26,6 @@ Below we list all settings that are used to configure how QAT is running:
 | version                  | Shows the version of QAT.                                                 | false         |
 | help                     | Show help page.                                                           | false         |
 
-TODO: replace --adaptor with --target, or deprecate?
-
 ## Validating a QIR
 
 Validating the QIR consists of two separate tasks: Validating that the QIR is compliant with the profile specification and validating that the QIR only uses
@@ -41,20 +38,15 @@ Validating the QIR consists of two separate tasks: Validating that the QIR is co
 | allow-poison         | Whether or not poison values are allowed.  | true          |
 | allow-undef          | Whether or not undef values are allowed.   | true          |
 
-TODO: Move to QIS validation
-
-| Name             | Description                                    | Default value |
-| ---------------- | ---------------------------------------------- | ------------- |
-| requires-qubits  | Whether or not qubits are required in the IR.  | false         |
-| requires-results | Whether or not results are required in the IR. | false         |
-
 ### Target QIS validation - Configuration for QIS validation
 
 This configuration deals with the validation of the quantum instruction set (QIS). Specifically,
 
-| Name            | Description                                      | Default value |
-| --------------- | ------------------------------------------------ | ------------- |
-| allowed-any-qis | Whether or not to allow any quantum instruction. | true          |
+| Name             | Description                                      | Default value |
+| ---------------- | ------------------------------------------------ | ------------- |
+| allowed-any-qis  | Whether or not to allow any quantum instruction. | true          |
+| requires-qubits  | Whether or not qubits are required in the IR.    | false         |
+| requires-results | Whether or not results are required in the IR.   | false         |
 
 ## Adaptors
 
@@ -66,29 +58,19 @@ This configuration section allows the user to disable one or more adaptors. By d
 
 The indiidual adaptors that can be disabled are listed here:
 
-| Name                                      | Description                            | Default value |
-| ----------------------------------------- | -------------------------------------- | ------------- |
-| disable-adaptor.transformation-rules      | Disables Transformation rules.         | false         |
-| disable-adaptor.replacement-linking       | Disables Replacement linking.          | false         |
-| disable-adaptor.llvm-optimization         | Disables LLVM optimizations.           | false         |
-| disable-adaptor.pre-transform-trimming    | Disables Pre-transform trimming.       | false         |
-| disable-adaptor.transformation-rules      | Disables Pass configuration.           | false         |
-| disable-adaptor.post-transform            | Disables Post-transform optimisation.  | false         |
-| disable-adaptor.post-transform-validation | Disables Pre-transform validation.     | false         |
-| disable-adaptor.static-resources          | Disables Static resource manipulation. | false         |
-| disable-adaptor.grouping                  | Disables Circuit separation.           | false         |
+| Name                                    | Description                               | Default value |
+| --------------------------------------- | ----------------------------------------- | ------------- |
+| disable-replacement-linking             | Disables Replacement linking.             | false         |
+| disable-llvm-optimization               | Disables LLVM optimizations.              | false         |
+| disable-remove-non-entrypoint-functions | Disables Remove Non-Entrypoint Functions. | false         |
+| disable-transformation-rules            | Disables Pass configuration.              | false         |
+| disable-post-transform                  | Disables Post-transform optimisation.     | false         |
+| disable-post-transform-validation       | Disables Pre-transform validation.        | false         |
+| disable-static-resources                | Disables Static resource manipulation.    | false         |
+| disable-grouping                        | Disables Circuit separation.              | false         |
 
-Note that some of these adaptors are "hidden" in the sense that they do not have a configuration and that their behaviour is derived from other adaptors configuration. One such example is the `pre-transform-trimming` (TODO.) adaptor which is intended to run before `transform-rules`
-
-TODO: Fix disable to not containg section.flag but just flag.
-TODO: `disable-qat` does not make sense as there is no corresponding setup function. The same counts for `disable-target.*`
-TODO: Rename PreTransformTrimmingPass -> RemoveNonEntrypointFunctions
-
-| Name                   | Description                         | Default value |
-| ---------------------- | ----------------------------------- | ------------- |
-| disable-target.profile | Disables Target profile validation. | false         |
-| disable-target.qis     | Disables Target QIS validation.     | false         |
-| disable-qat            | Disables QAT base configuration.    | false         |
+Note that some of these adaptors are "hidden" in the sense that they do not have a configuration and that their behaviour is derived from other adaptors configuration. One such example is the `remove-non-entrypoint-functions` (TODO.) adaptor which is intended to run before `transform-rules`
+disable-adaptor.transformation-rules -- Disables Transformation rules. -- false
 
 ### Transformation rules - Rules used to transform instruction sequences in the QIR.
 

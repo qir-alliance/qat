@@ -4,8 +4,8 @@
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
-#include "qir/qat/Passes/PreTransformTrimming/PreTransformTrimmingPass.hpp"
-#include "qir/qat/Passes/PreTransformTrimming/PreTransformTrimmingPassConfiguration.hpp"
+#include "qir/qat/Passes/RemoveNonEntrypointFunctions/RemoveNonEntrypointFunctionsPass.hpp"
+#include "qir/qat/Passes/RemoveNonEntrypointFunctions/RemoveNonEntrypointFunctionsPassConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
@@ -15,7 +15,7 @@
 namespace microsoft::quantum
 {
 
-class PreTransformTrimmingPass : public llvm::PassInfoMixin<PreTransformTrimmingPass>
+class RemoveNonEntrypointFunctionsPass : public llvm::PassInfoMixin<RemoveNonEntrypointFunctionsPass>
 {
   public:
     using Instruction = llvm::Instruction;
@@ -27,18 +27,18 @@ class PreTransformTrimmingPass : public llvm::PassInfoMixin<PreTransformTrimming
     // Construction and destruction configuration.
     //
 
-    explicit PreTransformTrimmingPass(
-        PreTransformTrimmingPassConfiguration const& cfg,
-        ILoggerPtr const&                            logger = nullptr);
+    explicit RemoveNonEntrypointFunctionsPass(
+        RemoveNonEntrypointFunctionsPassConfiguration const& cfg,
+        ILoggerPtr const&                                    logger = nullptr);
 
     /// Copy construction is banned.
-    PreTransformTrimmingPass(PreTransformTrimmingPass const&) = delete;
+    RemoveNonEntrypointFunctionsPass(RemoveNonEntrypointFunctionsPass const&) = delete;
 
     /// We allow move semantics.
-    PreTransformTrimmingPass(PreTransformTrimmingPass&&) = default;
+    RemoveNonEntrypointFunctionsPass(RemoveNonEntrypointFunctionsPass&&) = default;
 
     /// Default destruction.
-    ~PreTransformTrimmingPass() = default;
+    ~RemoveNonEntrypointFunctionsPass() = default;
 
     llvm::PreservedAnalyses run(llvm::Module& module, llvm::ModuleAnalysisManager& mam);
     /// Whether or not this pass is required to run.
@@ -47,8 +47,8 @@ class PreTransformTrimmingPass : public llvm::PassInfoMixin<PreTransformTrimming
   private:
     using Locations = std::vector<Location>;
 
-    PreTransformTrimmingPassConfiguration config_{};
-    ILoggerPtr                            logger_{nullptr};
+    RemoveNonEntrypointFunctionsPassConfiguration config_{};
+    ILoggerPtr                                    logger_{nullptr};
 };
 
 } // namespace microsoft::quantum
