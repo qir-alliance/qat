@@ -6,25 +6,18 @@ Outline:
 
 - ( ) [Introduction](../../README.md)
 
-- ( ) [Quick start](QuickStart/index.md)
+- (v) [Quick start](QuickStart/index.md)
 
-  - (x) Supported systems
-  - (x) Building with Bazel
-  - (x) Building with CMake
-  - (-) Running QAT
+  - (v) Supported systems
+  - (v) Building with Bazel
+  - (v) Building with CMake
+  - (v) Running QAT
 
-- ( ) Using QAT
+- (x) Using QAT
 
-  - ( ) [Targeting a QIR](TargetingQIR.md)
+  - (x) [Targeting a QIR](UsingQAT/TargetingQIR.md)
   - (x) [Debugging a QIR](UsingQAT/DebuggingIR.md)
   - (x) [QAT: Assumptions and Restrictions](UsingQAT/GoalsAndAssumptions.md)
-
-- ( ) QIR adaptor tool
-
-  - ( ) Based on the LLVM infrastructure
-  - ( ) Adapting and validating QIR
-  - ( ) Adaptors
-  - ( ) Configuration
 
 - (x) Developer guide
 

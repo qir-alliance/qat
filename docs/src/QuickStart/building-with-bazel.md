@@ -2,13 +2,12 @@
 
 ## Prerequisites
 
-(TODO: Read and revise) It is necessary for you to have the following tools before you get started on
-making a new build from this project:
+Building with Bazel is mostly self-contained meaning that Bazel will download most of the dependencies and arrange them in you workspace such that you do not need to checkout submodules or install extra packages. However, following depencies in order to build from source:
 
-- C++ compiler
-- Bazelisk
+-   C++ compiler (Clang or MSVC)
+-   Bazelisk (or Bazel 5.0)
 
-A prerequisite to building with Bazel is [installing Bazelisk](https://www.npmjs.com/package/@bazel/bazelisk). Bazelisk is a wrapper for [Bazel] that ensures that the correct version of Bazel is used to build the repository. You can also use Bazel without the wrapper, but this is not covered by our build instructions.
+We recommend the usage of Bazelisk as it is a wrapper that automatically downloads the correct version of Bazel for your project. The details of installing Bazelisk can be [found here](https://www.npmjs.com/package/@bazel/bazelisk). You can also use Bazel without the wrapper. To do this, you need to install Bazel with the exact version specified in the `.bazelversion` file and in the subsequent sections replace `bazelisk` with `bazel`.
 
 To install on macOS use `brew`:
 
@@ -36,7 +35,7 @@ bazelisk --help
 
 If you experience any trouble with this step, please refer to the [official documentation](https://www.npmjs.com/package/@bazel/bazelisk).
 
-## Building
+## Building QAT using Bazel
 
 Before building, decide whether you are building with `clang` or `msvc` as well as whether you wish to make a `release` build or a `debug` build. On all operating systems, Bazelisk follows the pattern
 

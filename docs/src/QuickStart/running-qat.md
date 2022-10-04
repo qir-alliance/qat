@@ -1,6 +1,6 @@
 # Running QAT
 
-In this section, we will take the reader through the basic usage of QAT, its configuration and how to use selected adaptors.
+In the [next section](../UsingQAT/TargetingQIR.md) we will discuss the individual validators and adaptors. However, for the sake of getting started quickly, in this section, we will take the reader through the basic usage of QAT, its configuration and how to use selected adaptors using examples.
 
 ## Basic usage
 
@@ -14,23 +14,23 @@ The file `target-def.yaml` sets the behaviour of QAT, whereas `-S` tells QAT to 
 
 To get a full list of the commandline arguments and flags, run `qat -h` or `qat --help`.
 
-## Configuration
+## Target configuration
 
-QAT transforms a generic QIR into a target QIR. The target QIR is defined through the target definition provided as a YAML configuration file. Note that it is possible to configure QAT entirely through the commandline, we recommend the use of YAML configurations as the overall number configurable settings is pretty large.
+The target QIR is defined through the target definition provided as a YAML configuration file. Note that it is possible to configure QAT entirely through the commandline, we recommend the use of YAML configurations as the overall number configurable settings is pretty large.
 
 On a high level, the configuration is divided into three sections: `qat`, `adaptor` and `target`. The first section `qat` is highlevel configuration of QAT and defines things such as whether the target requires adaption, validation and what the adaptor pipeline looks like. The second section `adaptor` defines the configuration for each of the adaptor components. The third section `target` defines requirements for the target which QAT will use to validate that the final result really is compliant with the desired target.
 
 ## QAT configuration
 
-Before explaining how adaptors and target validation is used, we will briefly examine a few useful settings in the `qat` section. First and foremost, `dump-config` is a useful setting that allows the user to dump the current configuration. To provide compatibility with the human readible IR, the config is dumped as comments. This feature is in particular useful as a commandline flag
+Before demonstrating how adaptors and target validation can be used, we will briefly examine a few useful settings in the `qat` section. First and foremost, `dump-config` is a useful setting that allows the user to dump the current configuration. To provide compatibility with the human readible IR, the config is dumped as comments. This feature is in particular useful as a commandline flag
 
 ```sh
 qat --target-def path/to/target-def.yaml -S --dump-config input.ll > output.ll
 ```
 
-Note that rather than using the `-o` option, we pipe the output into the output file. This is capture the configuration together with the resulting output of QAT. This ensures that the two are kept together for reproducibility.
+Note that rather than using the `-o` option, we redirect the output into the output file. This is capture the configuration together with the resulting output of QAT and ensure that the two are kept together for reproducibility.
 
-Another couple of useful features are `strip-exisiting-dbg` and `add-ir-debug`. These two can be set from the command line using `--strip-exisiting-dbg` and `--add-ir-debug`, respectively. The first, `strip-exisiting-dbg`, removes all existing debug information from the loaded modules. The other `add-ir-debug` adds debug symbols referring to the LL file itself. This is discussed in [detail here](../UsingQAT/DebuggingIR.md)
+Another couple of useful features are `strip-exisiting-dbg` and `add-ir-debug`. These two can be set from the command line using `--strip-exisiting-dbg` and `--add-ir-debug`, respectively. The first, `strip-exisiting-dbg`, removes all existing debug information from the loaded modules. The other `add-ir-debug` adds debug symbols referring to the LL file itself. This is discussed in [detail here](../UsingQAT/DebuggingIR.md).
 
 ## Adaptor examples
 
@@ -165,7 +165,49 @@ The inlining and loop unrolling passes are the most significant passes used from
 
 ### Static resource allocation
 
-TODO:
+The generic QIR allows for dynamic qubit allocation as the default way to allocate qubits.
+One of the core differences between simulators and hardware backends is how qubits are allocated: While simulators, in theory, can allocate as many qubits as need dynamically, hardware backends has a hard limit on the number of qubits and futher more, does not implement the necessary logic to perform dynamic management. For this reason, it is necessary to transform dynamic qubit management into static allocation in order to make certain QIRs compatible with backends that does not implement qubit management.
+
+In this example, we demonstrate the "Target QIS mapping" adaptor and how it can be used to transform dynamic qubit management into static allocations. Consider the program
+
+```text
+OPENQASM 3;
+
+qubit q;
+h q;
+```
+
+The equivalent generic QIR is
+
+```llvm
+define void @example() #0 {
+entry:
+  %q = call %Qubit* @__quantum__rt__qubit_allocate()
+  call void @__quantum__qis__h__body(%Qubit* %q)
+  call void @__quantum__rt__qubit_release(%Qubit* %q)
+  ret void
+}
+```
+
+We note that the use of `__quantum__rt__qubit_allocate` and `__quantum__rt__qubit_release` which are the functions that can be problematic for hardware backends. Running
+
+```sh
+qat --use-static-qubit-allocation --apply -S  input.ll
+```
+
+will transform the input to
+
+```llvm
+define void @example() #0 {
+entry:
+  call void @__quantum__qis__h__body(%Qubit* null)
+  ret void
+}
+```
+
+This demo is found in `qir/demo/QubitAllocation`. Note that static qubit allocation is not a straight forward task and there are many corner cases for which it simply will not work. For instance, recusively allocating qubit where recursion stops on a runtime parameter is one case that cannot be mapped. QAT does a best effort, but at this point there is no garantuee of correctness.
+
+Advanced experimental features are available by adding the flag `--experimental` to the command line arguments. Run `qat --experimental -h` to see these parameters and their description.
 
 ### Replacement linking
 
@@ -186,13 +228,13 @@ After compiling to QIR we get (`main.ll`),
 ```llvm
 define void @example() #0 {
 entry:
-	%a = call %Qubit* @__quantum__rt__qubit_allocate()
-	%b = call %Qubit* @__quantum__rt__qubit_allocate()
-	call void @__quantum__qis__z__body(%Qubit* %a)
-	call void @__quantum__qis__cnot__body(%Qubit* %a, %Qubit* %b)
-	call void @__quantum__rt__qubit_release(%Qubit* %b)
-	call void @__quantum__rt__qubit_release(%Qubit* %a)
-	ret void
+  %a = call %Qubit* @__quantum__rt__qubit_allocate()
+  %b = call %Qubit* @__quantum__rt__qubit_allocate()
+  call void @__quantum__qis__z__body(%Qubit* %a)
+  call void @__quantum__qis__cnot__body(%Qubit* %a, %Qubit* %b)
+  call void @__quantum__rt__qubit_release(%Qubit* %b)
+  call void @__quantum__rt__qubit_release(%Qubit* %a)
+  ret void
 }
 ```
 
@@ -275,6 +317,4 @@ Each backend can now provide a library that makes software implementations of th
 
 Circuit separation is an experimental feature that allows separation of the classical operations and pure quantum circuits. In this section we will concentrate on showing how to use this feature. If you are interested in the
 
-## Target validation
-
-TODO:
+TODO(tfr): Write this section once the cicruit separation has been revised.
