@@ -4,8 +4,8 @@
 
 Building with Bazel is mostly self-contained meaning that Bazel will download most of the dependencies and arrange them in you workspace such that you do not need to checkout submodules or install extra packages. However, following depencies in order to build from source:
 
--   C++ compiler (Clang or MSVC)
--   Bazelisk (or Bazel 5.0)
+- C++ compiler (Clang or MSVC)
+- Bazelisk (or Bazel 5.0)
 
 We recommend the usage of Bazelisk as it is a wrapper that automatically downloads the correct version of Bazel for your project. The details of installing Bazelisk can be [found here](https://www.npmjs.com/package/@bazel/bazelisk). You can also use Bazel without the wrapper. To do this, you need to install Bazel with the exact version specified in the `.bazelversion` file and in the subsequent sections replace `bazelisk` with `bazel`.
 

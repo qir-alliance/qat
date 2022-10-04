@@ -7,9 +7,9 @@ TODO: Streamline these scetions with the CI scripts.
 It is necessary for you to have the following tools before you get started on
 making a new build from this project:
 
--   C++ compiler
--   CMake
--   LLVM 13
+- C++ compiler
+- CMake
+- LLVM 13
 
 If you are compiling and using the command-line tool, these are necessary tools
 regardless of whether you plan to develop the library itself. The build
