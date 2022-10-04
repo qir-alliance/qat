@@ -64,8 +64,8 @@ The indiidual adaptors that can be disabled are listed here:
 | disable-llvm-optimization               | Disables LLVM optimizations.              | false         |
 | disable-remove-non-entrypoint-functions | Disables Remove Non-Entrypoint Functions. | false         |
 | disable-transformation-rules            | Disables Pass configuration.              | false         |
-| disable-post-transform                  | Disables Post-transform optimisation.     | false         |
-| disable-post-transform-validation       | Disables Pre-transform validation.        | false         |
+| disable-target-profile-mapping          | Disables Post-transform optimisation.     | false         |
+| disable-straightline-code-requirement   | Disables Pre-transform validation.        | false         |
 | disable-static-resources                | Disables Static resource manipulation.    | false         |
 | disable-grouping                        | Disables Circuit separation.              | false         |
 
@@ -73,8 +73,6 @@ Note that some of these adaptors are "hidden" in the sense that they do not have
 disable-adaptor.transformation-rules -- Disables Transformation rules. -- false
 
 ### Target QIS Mapping - Rules used to transform instruction sequences in the QIR.
-
-TODO: Rename to TargetQisMapping
 
 | Name                              | Description                                                                                           | Default value |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------- |
@@ -97,10 +95,7 @@ TODO: Move `entry-point-attr` to a top level `spec` section
 | ---------------- | --------------------------------------------------- | ------------- |
 | entry-point-attr | Specifies the attribute indicating the entry point. | EntryPoint    |
 
-### Post-transform optimisation - Optimisations performed after
-
-TODO: Rename to TargetQiProfileMapping
-TODO: It feels like this adaptor should be called something else and possibly be split into two adaptors
+### Target profile mapping - Optimisations performed after
 
 | Name                     | Description                                  | Default value |
 | ------------------------ | -------------------------------------------- | ------------- |

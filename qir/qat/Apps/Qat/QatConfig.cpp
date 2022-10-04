@@ -20,7 +20,7 @@ void QatConfig::setup(ConfigurationManager& config)
     config.addParameter(
         adapter_pipeline_,
         {"replacement-linking", "llvm-optimization", "remove-non-entrypoint-functions", "transformation-rules",
-         "post-transform", "post-transform-validation", "static-resources", "grouping"},
+         "target-profile-mapping", "straightline-code-requirement", "static-resources", "grouping"},
         "adaptor-pipeline", "Overrides the adaptor pipleline.");
 
     config.addParameter(

@@ -8,8 +8,8 @@ qat:
     - llvm-optimization
     - pre-transform-trimming
     - transformation-rules
-    - post-transform
-    - post-transform-validation
+    - target-profile-mapping
+    - straightline-code-requirement
     - static-resources
     - grouping
   emit-human-readible-llvm: false
@@ -62,11 +62,11 @@ adaptor:
     disable-string-support: true
     disable-record-output-support: false
     entry-point-attr: EntryPoint
-  post-transform:
+  target-profile-mapping:
     lower-switch: true
     should-eleminate-zext-i1: true
     defer-measurements: true
-  post-transform-validation: ~
+  straightline-code-requirement: ~
   static-resources:
     annotate-qubit-use: true
     annotate-result-use: true

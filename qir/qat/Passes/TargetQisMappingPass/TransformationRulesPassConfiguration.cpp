@@ -9,7 +9,7 @@ namespace microsoft::quantum
 
 void TargetQisMappingPassConfiguration::setup(ConfigurationManager& config)
 {
-    config.setSectionName("Logic simplici", "Configuration of the pass and its corresponding optimizations.");
+    config.setSectionName("Target QIS mapping", "Modification of the IR to adapt a specific QIS.");
 
     // Experimental settings
     config.addExperimentalParameter(delete_dead_code_, true, false, "delete-dead-code", "Deleted dead code.");

@@ -4,7 +4,7 @@
 #include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 
 #include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
-#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
+#include "qir/qat/AdaptorFactory/TargetProfileMappingConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/DeferMeasurementPass/DeferMeasurementPass.hpp"
 #include "qir/qat/Passes/FunctionReplacementPass/FunctionAnnotatorPass.hpp"
@@ -261,9 +261,9 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             ret.addPass(std::move(pass));
         });
 
-    registerAdaptorComponent<PostTransformConfig>(
-        "adaptor.post-transform", // TODO(unknown): Rename?
-        [logger](PostTransformConfig const& cfg, QirAdaptor& adaptor)
+    registerAdaptorComponent<TargetProfileMappingConfiguration>(
+        "adaptor.target-profile-mapping", // TODO(unknown): Rename?
+        [logger](TargetProfileMappingConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto&                     mpm = adaptor.modulePassManager();
             llvm::FunctionPassManager fpm;
@@ -305,7 +305,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<PostTransformValidationPassConfiguration>(
-        "adaptor.post-transform-validation",
+        "adaptor.straightline-code-requirement",
         [logger](PostTransformValidationPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mpm = adaptor.modulePassManager();

@@ -3,7 +3,7 @@
 
 #include "gtest/gtest.h"
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
-#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
+#include "qir/qat/AdaptorFactory/TargetProfileMappingConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
@@ -70,7 +70,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationOffsets)
         LlvmPassesConfiguration::createDisabled());
 
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(PostTransformConfig::createDisabled());
+    configuration_manager.setConfig(TargetProfileMappingConfiguration::createDisabled());
 
     ir_manip->applyQirAdaptor(adaptor);
 
@@ -116,7 +116,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationGetPtr)
         LlvmPassesConfiguration::createDisabled());
 
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(PostTransformConfig::createDisabled());
+    configuration_manager.setConfig(TargetProfileMappingConfiguration::createDisabled());
 
     ir_manip->applyQirAdaptor(adaptor);
 
@@ -169,7 +169,7 @@ TEST(RuleSetTestSuite, StaticQubitArrayAllocationAdvanced)
         LlvmPassesConfiguration::createDisabled());
 
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(PostTransformConfig::createDisabled());
+    configuration_manager.setConfig(TargetProfileMappingConfiguration::createDisabled());
 
     ir_manip->applyQirAdaptor(adaptor);
 

@@ -3,7 +3,7 @@
 
 #include "qir/external/gtest.hpp"
 #include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
-#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
+#include "qir/qat/AdaptorFactory/TargetProfileMappingConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/CommentLogger.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingAnalysisPass.hpp"
@@ -83,8 +83,8 @@ entry:
 
     configuration_manager.addConfig<GroupingPassConfiguration>("adaptor.grouping");
     configuration_manager.addConfig<StaticResourceComponentConfiguration>("adaptor.static-resource");
-    configuration_manager.addConfig<PostTransformValidationPassConfiguration>("adaptor.post-transform-validation");
-    configuration_manager.addConfig<PostTransformConfig>("adaptor.post-transform");
+    configuration_manager.addConfig<PostTransformValidationPassConfiguration>("adaptor.straightline-code-requirement");
+    configuration_manager.addConfig<TargetProfileMappingConfiguration>("adaptor.target-profile-mapping");
     configuration_manager.addConfig<TargetQisMappingPassConfiguration>("adaptor.target-qis-mapping");
     configuration_manager.addConfig<RemoveNonEntrypointFunctionsPassConfiguration>(
         "adaptor.remove-non-entrypoint-functions");
@@ -188,7 +188,7 @@ entry:
 
     {
         llvm::FunctionPassManager fpm;
-        auto&                     cfg = configuration_manager.get<PostTransformConfig>();
+        auto&                     cfg = configuration_manager.get<TargetProfileMappingConfiguration>();
 
         if (cfg.shouldAddInstCombinePass())
         {

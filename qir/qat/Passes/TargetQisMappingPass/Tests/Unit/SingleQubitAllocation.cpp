@@ -3,7 +3,7 @@
 
 #include "gtest/gtest.h"
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
-#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
+#include "qir/qat/AdaptorFactory/TargetProfileMappingConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/CommentLogger.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
@@ -63,7 +63,7 @@ TEST(RuleSetTestSuite, AllocationActionRelease)
 
     configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(PostTransformConfig::createDisabled());
+    configuration_manager.setConfig(TargetProfileMappingConfiguration::createDisabled());
 
     ir_manip->applyQirAdaptor(adaptor);
 
@@ -96,7 +96,7 @@ TEST(RuleSetTestSuite, MultipleAllocationsNoRelease)
 
     configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(PostTransformConfig::createDisabled());
+    configuration_manager.setConfig(TargetProfileMappingConfiguration::createDisabled());
 
     ir_manip->applyQirAdaptor(adaptor);
 
@@ -160,7 +160,7 @@ TEST(RuleSetTestSuite, AllocateReleaseMultipleTimes)
 
     configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(PostTransformConfig::createDisabled());
+    configuration_manager.setConfig(TargetProfileMappingConfiguration::createDisabled());
 
     ir_manip->applyQirAdaptor(adaptor);
 
@@ -211,7 +211,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByName)
         TargetQisMappingPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(PostTransformConfig::createDisabled());
+    configuration_manager.setConfig(TargetProfileMappingConfiguration::createDisabled());
 
     ir_manip->applyQirAdaptor(adaptor);
 
@@ -240,7 +240,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByNameWithNoName)
         TargetQisMappingPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
     configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(PostTransformConfig::createDisabled());
+    configuration_manager.setConfig(TargetProfileMappingConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyQirAdaptor(adaptor);
@@ -271,7 +271,7 @@ TEST(RuleSetTestSuite, ErrorReleaseWithTypeErasedAllocation)
         TargetQisMappingPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
     configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(PostTransformConfig::createDisabled());
+    configuration_manager.setConfig(TargetProfileMappingConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
     ir_manip->applyQirAdaptor(adaptor);

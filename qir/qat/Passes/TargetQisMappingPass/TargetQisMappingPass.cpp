@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPass.hpp"
+
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
-#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPass.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
 

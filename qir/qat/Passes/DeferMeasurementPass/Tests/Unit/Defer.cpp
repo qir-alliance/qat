@@ -3,7 +3,7 @@
 
 #include "gtest/gtest.h"
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
-#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
+#include "qir/qat/AdaptorFactory/TargetProfileMappingConfiguration.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
@@ -81,7 +81,7 @@ TEST(DeferMeasurements, ReorderTest)
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
-    auto cfg = PostTransformConfig::createDisabled();
+    auto cfg = TargetProfileMappingConfiguration::createDisabled();
     cfg.setUseDeferMeasurements(true);
     configuration_manager.setConfig(cfg);
 

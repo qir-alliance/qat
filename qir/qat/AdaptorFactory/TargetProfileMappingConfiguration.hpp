@@ -7,12 +7,12 @@
 namespace microsoft::quantum
 {
 
-struct PostTransformConfig
+struct TargetProfileMappingConfiguration
 {
   public:
     void setup(ConfigurationManager& config)
     {
-        config.setSectionName("Post-transform optimisation", "Optimisations performed after ");
+        config.setSectionName("Target profile mapping", "Changes the IR to comply with profile requirements.");
         config.addParameter(lower_switch_, "lower-switch", "Lower switch statements.");
         config.addParameter(
             should_eleminate_zext_i1_, "should-eleminate-zext-i1", "Replace zext instruction for i1 with select.");
@@ -21,9 +21,9 @@ struct PostTransformConfig
             "Wether or not measurement and recording functions should be moved to the end of the program.");
     }
 
-    static PostTransformConfig createDisabled()
+    static TargetProfileMappingConfiguration createDisabled()
     {
-        PostTransformConfig ret;
+        TargetProfileMappingConfiguration ret;
 
         ret.inst_combine_pass_            = false;
         ret.aggressive_inst_combine_pass_ = false;
