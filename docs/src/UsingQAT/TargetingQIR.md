@@ -26,27 +26,49 @@ Below we list all settings that are used to configure how QAT is running:
 | version                  | Shows the version of QAT.                                                 | false         |
 | help                     | Show help page.                                                           | false         |
 
+The flags `apply` and `validate` are used to specify whether QAT should apply adaptors and validate the resulting QIR, respectively. These flags can be applied independently of one and another. Hence, it is possible to validate a QIR without first transforming it as well as transforming it without the need of validating it.
+
+The QIR transformation process is dictated by the `adapator-pipeline` which determines which adaptors QAT will use and in which order. The default pipeline is `replacement-linking, llvm-optimization, remove-non-entrypoint-functions, target-qis-mapping, target-profile-mapping, straightline-code-requirement, static-resources, grouping`. Each of these adaptors are discussed in detail below.
+
+The parameter `target-def` is used to load configuration of QAT including all adaptors and validations settings. This parameter is usful to create definitions that can be used to target specific hardware without the need of providing an exhaustive list of commandline arguments.
+
 ## Validating a QIR
 
-Validating the QIR consists of two separate tasks: Validating that the QIR is compliant with the profile specification and validating that the QIR only uses
+Validating the QIR consists of two separate tasks: Validating that the QIR is compliant with the profile specification and validating that the QIR only uses the specified quantum instruction set.
 
 ### Target profile validation - Configuration for profile validation
 
-| Name                 | Description                                | Default value |
-| -------------------- | ------------------------------------------ | ------------- |
-| allow-internal-calls | Whether or not internal calls are allowed. | true          |
-| allow-poison         | Whether or not poison values are allowed.  | true          |
-| allow-undef          | Whether or not undef values are allowed.   | true          |
+Profile validation consists of confirming the compliance with required classical behaviour. This includes options to define specific behaviours such as which types are allowed, externally callable functions and use of poison and undef:
+
+| Name                     | Description                                        | Default value | CLI |
+| ------------------------ | -------------------------------------------------- | ------------- | --- |
+| allow-internal-calls     | Whether or not internal calls are allowed.         | true          | Yes |
+| allow-poison             | Whether or not poison values are allowed.          | true          | Yes |
+| allow-undef              | Whether or not undef values are allowed.           | true          | Yes |
+| opcodes                  | List of allowed opcodes                            |               | No  |
+| allowlist-opcodes        | Whether or not to use allow list for op-codes.     |               | No  |
+| allowlist-external-calls | Whether or not to use allow list external calls.   |               | No  |
+| allowlist-pointer-types  | Whether or not to use allow list pointer types.    |               | No  |
+| allow-primitive-return   | Whether or not primitive return types are allowed. |               | No  |
+| allow-struct-return      | Whether or not struct return types are allowed.    |               | No  |
+| allow-pointer-return     | Whether or not pointer return types are allowed.   |               | No  |
+| external-calls           | Allowed external calls.                            |               | No  |
+| allowed-pointer-types    | Allowed pointer types.                             |               | No  |
+
+Not all of these are available through the CLI since they require a lot of data. For instance, `opcodes` is only allowed to be specified through the config file, since this is a list of objects.
 
 ### Target QIS validation - Configuration for QIS validation
 
-This configuration deals with the validation of the quantum instruction set (QIS). Specifically,
+Similar to the target profile validation, the target QIS validation deals with the validation of the quantum instruction set (QIS). Specifically, these settings are used to specify whether or not we require qubits and/or results to be present in the IR and whether we allow all QIS, or only those which were allowed listed:
 
-| Name             | Description                                      | Default value |
-| ---------------- | ------------------------------------------------ | ------------- |
-| allowed-any-qis  | Whether or not to allow any quantum instruction. | true          |
-| requires-qubits  | Whether or not qubits are required in the IR.    | false         |
-| requires-results | Whether or not results are required in the IR.   | false         |
+| Name             | Description                                      | Default value | CLI |
+| ---------------- | ------------------------------------------------ | ------------- | --- |
+| allowed-any-qis  | Whether or not to allow any quantum instruction. | true          | Yes |
+| requires-qubits  | Whether or not qubits are required in the IR.    | false         | Yes |
+| requires-results | Whether or not results are required in the IR.   | false         | Yes |
+| allowed-qis      | List of allowed QIS signatures                   |               | No  |
+
+Like the target profile validator, the `allowed-qis` is only available through the configuration file.
 
 ## Adaptors
 
@@ -63,59 +85,13 @@ The indiidual adaptors that can be disabled are listed here:
 | disable-replacement-linking             | Disables Replacement linking.             | false         |
 | disable-llvm-optimization               | Disables LLVM optimizations.              | false         |
 | disable-remove-non-entrypoint-functions | Disables Remove Non-Entrypoint Functions. | false         |
-| disable-transformation-rules            | Disables Pass configuration.              | false         |
+| disable-target-qis-mapping              | Disables Pass configuration.              | false         |
 | disable-target-profile-mapping          | Disables Post-transform optimisation.     | false         |
 | disable-straightline-code-requirement   | Disables Pre-transform validation.        | false         |
 | disable-static-resources                | Disables Static resource manipulation.    | false         |
 | disable-grouping                        | Disables Circuit separation.              | false         |
 
-Note that some of these adaptors are "hidden" in the sense that they do not have a configuration and that their behaviour is derived from other adaptors configuration. One such example is the `remove-non-entrypoint-functions` adaptor which is intended to run before `transform-rules`
-disable-adaptor.transformation-rules -- Disables Transformation rules. -- false
-
-### Target QIS Mapping - Rules used to transform instruction sequences in the QIR.
-
-| Name                              | Description                                                                                           | Default value |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------- |
-| optimize-result-one               | Maps branching based on quantum measurements compared to one to base adaptor type measurement.        | true          |
-| optimize-result-zero              | Maps branching based on quantum measurements compared to zero to base adaptor type measurement.       | true          |
-| optimize-result-comparison        | Maps branching based on quantum measurements compared to each other to base adaptor type measurement. | true          |
-| use-static-qubit-array-allocation | Maps allocation of qubit arrays to static array allocation.                                           | true          |
-| use-static-qubit-allocation       | Maps qubit allocation to static allocation.                                                           | true          |
-| use-static-result-allocation      | Maps result allocation to static allocation.                                                          | true          |
-| disable-reference-counting        | Disables reference counting by instruction removal.                                                   | true          |
-| disable-alias-counting            | Disables alias counting by instruction removal.                                                       | true          |
-| disable-string-support            | Disables string support by instruction removal.                                                       | true          |
-| disable-record-output-support     | Disables record output support by instruction removal.                                                | true          |
-| reuse-qubits                      | Use to define whether or not to reuse qubits.                                                         | false         |
-| reuse-results                     | Use to define whether or not to reuse results.                                                        | false         |
-
-TODO: Move `entry-point-attr` to a top level `spec` section
-
-| Name             | Description                                         | Default value |
-| ---------------- | --------------------------------------------------- | ------------- |
-| entry-point-attr | Specifies the attribute indicating the entry point. | EntryPoint    |
-
-### Target profile mapping - Optimisations performed after
-
-| Name                     | Description                                  | Default value |
-| ------------------------ | -------------------------------------------- | ------------- |
-| lower-switch             | Lower switch statements.                     | true          |
-| should-eleminate-zext-i1 | Replace zext instruction for i1 with select. | true          |
-
-TODO: In the long run, `defer-measurement` should be removed and covered by the grouping pass.
-
-| Name               | Description                                                                                  | Default value |
-| ------------------ | -------------------------------------------------------------------------------------------- | ------------- |
-| defer-measurements | Wether or not measurement and recording functions should be moved to the end of the program. | false         |
-
-### Replacement linking - Replaces function calls if the given function is present in the IR
-
-Replacement linking is an adaptor that enables replacement of functions subject to the replacing function being present in the IR. As an example, imagine a backend that implements an X gate but not a Z gate. A QIR that makes use of Z gates would not run on said hardware unless we would map Z into the sequence HXH where H is the Hadamard gate. The replacement linking adaptor allows us to define a software implemention of Z in a separate library and use annotattions on the Z gate function to replace the gate if a software implementation is provided.
-
-| Name                   | Description                 | Default value |
-| ---------------------- | --------------------------- | ------------- |
-| replace-functions      | Functions to be replaced.   |               |
-| remove-call-attributes | Discard all call attributes | false         |
+Note that some of these adaptors are not configurable. One such example is the `remove-non-entrypoint-functions` which either is there or not. This particular adaptor works is just a traditional LLVM pass, but is delivered as an adaptor since QAT does not allow single passes to be added to the pipeline without an adaptor to manage its configuration. Moreover, since the pass does not require any configuration, its configuration section is empty.
 
 ### LLVM optimizations - Enables specific LLVM optimizations before and after transformation.
 
@@ -138,6 +114,53 @@ The LLVM optimization adaptor runs provides selected LLVM passes to perform tran
 | eliminate-constants         | Uses LLVM pass to eliminate constants.                                                                     | true          |
 | eliminate-dead-code         | Uses LLVMs aggressive dead code elimination.                                                               | true          |
 | eliminate-memory            | Maps memory into registers where feasible.                                                                 | true          |
+
+The purpose of this adaptor is to simplify the IR as much as possible prior to targeting the IR. While we have taken great care to ensure that these passes act predictably, note that there may be occassions where they produce a different IR than that desired. One such example is promoting if-else statements to switch statements where applicable. This is not always desirable since not all backends has support for this.
+
+### Target QIS mapping - Rules used to transform instruction sequences in the QIR.
+
+This adaptor transforms the QIR into a QIR that is targeted with respect to the quantum instruction set. The adaptor provides a number of different transformations including mapping dynamic qubit/result allocation into static qubit/result allocation and optimize comparisons against constant quantum results `Zero` and `One`:
+
+| Name                              | Description                                                                                           | Default value |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------- |
+| optimize-result-one               | Maps branching based on quantum measurements compared to one to base adaptor type measurement.        | true          |
+| optimize-result-zero              | Maps branching based on quantum measurements compared to zero to base adaptor type measurement.       | true          |
+| optimize-result-comparison        | Maps branching based on quantum measurements compared to each other to base adaptor type measurement. | true          |
+| use-static-qubit-array-allocation | Maps allocation of qubit arrays to static array allocation.                                           | true          |
+| use-static-qubit-allocation       | Maps qubit allocation to static allocation.                                                           | true          |
+| use-static-result-allocation      | Maps result allocation to static allocation.                                                          | true          |
+| disable-reference-counting        | Disables reference counting by instruction removal.                                                   | true          |
+| disable-alias-counting            | Disables alias counting by instruction removal.                                                       | true          |
+| disable-string-support            | Disables string support by instruction removal.                                                       | true          |
+| disable-record-output-support     | Disables record output support by instruction removal.                                                | true          |
+| reuse-qubits                      | Use to define whether or not to reuse qubits.                                                         | false         |
+| reuse-results                     | Use to define whether or not to reuse results.                                                        | false         |
+| entry-point-attr                  | Specifies the attribute indicating the entry point.                                                   | EntryPoint    |
+
+It is worth noting that the mapping of dynamic qubits to static qubits is limited in scope and done as a best-effort. The reason for this limitation is that there exists scenarios in which this mapping simply is not possible. One such example is a recursive function that allocates one qubit for every recursion and terminates at runtime given depth `N`.
+
+There are a number of experimental features in this adaptor. To list these use `qat -h --experimental`.
+
+### Target profile mapping - Optimisations performed after
+
+Like target QIS mapping, the target profile mapping maps known IR patterns into other patterns. This adaptor only uses LLVM passes at the moment, but could be extended using our pattern matching pass to accomodate special requirements. Options as the moment are:
+
+| Name                     | Description                                                                                  | Default value |
+| ------------------------ | -------------------------------------------------------------------------------------------- | ------------- |
+| lower-switch             | Lower switch statements.                                                                     | true          |
+| should-eleminate-zext-i1 | Replace zext instruction for i1 with select.                                                 | true          |
+| defer-measurements       | Wether or not measurement and recording functions should be moved to the end of the program. | false         |
+
+We note that deferred measurements should be moved to the circuit separation pass.
+
+### Replacement linking - Replaces function calls if the given function is present in the IR
+
+Replacement linking is an adaptor that enables replacement of functions subject to the replacing function being present in the IR. As an example, imagine a backend that implements an X gate but not a Z gate. A QIR that makes use of Z gates would not run on said hardware unless we would map Z into the sequence HXH where H is the Hadamard gate. The replacement linking adaptor allows us to define a software implemention of Z in a separate library and use annotattions on the Z gate function to replace the gate if a software implementation is provided.
+
+| Name                   | Description                 | Default value |
+| ---------------------- | --------------------------- | ------------- |
+| replace-functions      | Functions to be replaced.   |               |
+| remove-call-attributes | Discard all call attributes | false         |
 
 ### Static resource adaptor - Manipulates statically allocated qubits and results
 

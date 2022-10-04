@@ -8,7 +8,6 @@ Outline:
 
 - ( ) [Quick start](QuickStart/index.md)
 
-  - ( ) Motivation
   - (x) Supported systems
   - (x) Building with Bazel
   - (x) Building with CMake
@@ -27,14 +26,14 @@ Outline:
   - ( ) Adaptors
   - ( ) Configuration
 
-- ( ) Developer guide
+- (x) Developer guide
 
   - (x) [Architecture Overview](DeveloperGuide/ArchitectureOverview.md)
   - (x) [Writing an adaptor](DeveloperGuide/WritingComponent.md)
   - (x) [Rule based adaptors](DeveloperGuide/WritingRuleTests.md)
   - (x) [Circuit separation](DeveloperGuide/LogicSeparation.md)
 
-- ( ) Additional developer info:
+- (x) Additional developer info:
   - (x) [Contributing](../../CONTRIBUTING.md)
   - (x) [Code quality](DeveloperGuide/CodeQuality.md)
   - (x) [Developer FAQ](DeveloperGuide/DeveloperFAQ.md)

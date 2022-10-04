@@ -7,7 +7,7 @@ qat:
     - replacement-linking
     - llvm-optimization
     - remove-non-entrypoint-functions
-    - transformation-rules
+    - target-qis-mapping
     - target-profile-mapping
     - straightline-code-requirement
     - static-resources
@@ -23,7 +23,7 @@ qat:
   version: false
   help: false
 adaptor:
-  transformation-rules:
+  target-qis-mapping:
     delete-dead-code: false
     clone-functions: false
     transform-execution-path-only: false
@@ -69,8 +69,6 @@ adaptor:
     separate-circuits: false
 target:
   profile:
-    requires-qubits: false
-    requires-results: false
     allow-internal-calls: false
     allow-poison: true
     allow-undef: true
@@ -120,6 +118,8 @@ target:
       - Qubit**
       - Result*
   qis:
+    requires-qubits: false
+    requires-results: false
     allowed-qis:
       - __quantum__qis__cnot__body:void (%Qubit*, %Qubit*)
       - __quantum__qis__h__body:void (%Qubit*)

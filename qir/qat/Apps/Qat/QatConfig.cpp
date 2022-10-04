@@ -19,7 +19,7 @@ void QatConfig::setup(ConfigurationManager& config)
     config.addParameter(adaptor_name_, static_cast<String>("default"), "adaptor", "Sets the adaptor.");
     config.addParameter(
         adapter_pipeline_,
-        {"replacement-linking", "llvm-optimization", "remove-non-entrypoint-functions", "transformation-rules",
+        {"replacement-linking", "llvm-optimization", "remove-non-entrypoint-functions", "target-qis-mapping",
          "target-profile-mapping", "straightline-code-requirement", "static-resources", "grouping"},
         "adaptor-pipeline", "Overrides the adaptor pipleline.");
 
