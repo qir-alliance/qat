@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
@@ -33,7 +33,7 @@ RuleFactory::RuleFactory(
 {
 }
 
-void RuleFactory::usingConfiguration(TransformationRulesPassConfiguration const& config)
+void RuleFactory::usingConfiguration(TargetQisMappingPassConfiguration const& config)
 {
     default_integer_width_ = config.defaultIntegerWidth();
 

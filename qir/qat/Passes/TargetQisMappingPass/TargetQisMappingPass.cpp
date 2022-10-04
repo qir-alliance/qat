@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
-
 #include "qir/qat/Llvm/Llvm.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPass.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
 
@@ -14,13 +13,13 @@
 namespace microsoft::quantum
 {
 
-TransformationRulesPass::TransformationRulesPass(RuleSet&& rule_set, TransformationRulesPassConfiguration const& config)
+TargetQisMappingPass::TargetQisMappingPass(RuleSet&& rule_set, TargetQisMappingPassConfiguration const& config)
   : rule_set_{std::move(rule_set)}
   , config_{config}
 {
 }
 
-void TransformationRulesPass::setupCopyAndExpand()
+void TargetQisMappingPass::setupCopyAndExpand()
 {
     using namespace microsoft::quantum::notation;
     addConstExprRule(
@@ -101,14 +100,14 @@ void TransformationRulesPass::setupCopyAndExpand()
     }
 }
 
-void TransformationRulesPass::addConstExprRule(ReplacementRule&& rule)
+void TargetQisMappingPass::addConstExprRule(ReplacementRule&& rule)
 {
     auto ret = std::make_shared<ReplacementRule>(std::move(rule));
 
     const_expr_replacements_.addRule(ret);
 }
 
-void TransformationRulesPass::constantFoldFunction(llvm::Function& fnc)
+void TargetQisMappingPass::constantFoldFunction(llvm::Function& fnc)
 {
     std::vector<llvm::Instruction*> to_delete;
 
@@ -167,7 +166,7 @@ void TransformationRulesPass::constantFoldFunction(llvm::Function& fnc)
     }
 }
 
-llvm::Value* TransformationRulesPass::copyAndExpand(
+llvm::Value* TargetQisMappingPass::copyAndExpand(
     llvm::Value*           input,
     DeletableInstructions& schedule_instruction_deletion)
 {
@@ -267,13 +266,13 @@ llvm::Value* TransformationRulesPass::copyAndExpand(
     return ret;
 }
 
-llvm::Value* TransformationRulesPass::detectActiveCode(llvm::Value* input, DeletableInstructions&)
+llvm::Value* TargetQisMappingPass::detectActiveCode(llvm::Value* input, DeletableInstructions&)
 {
     active_pieces_.insert(input);
     return input;
 }
 
-bool TransformationRulesPass::runOnFunction(llvm::Function& function, InstructionModifier const& modifier)
+bool TargetQisMappingPass::runOnFunction(llvm::Function& function, InstructionModifier const& modifier)
 {
     if (function.isDeclaration())
     {
@@ -408,12 +407,12 @@ bool TransformationRulesPass::runOnFunction(llvm::Function& function, Instructio
     return true;
 }
 
-bool TransformationRulesPass::isActive(llvm::Value* value) const
+bool TargetQisMappingPass::isActive(llvm::Value* value) const
 {
     return active_pieces_.find(value) != active_pieces_.end();
 }
 
-void TransformationRulesPass::runCopyAndExpand(llvm::Module& module, llvm::ModuleAnalysisManager&)
+void TargetQisMappingPass::runCopyAndExpand(llvm::Module& module, llvm::ModuleAnalysisManager&)
 {
     replacements_.clear();
     // For every instruction in every block, we attempt a match
@@ -468,7 +467,7 @@ void TransformationRulesPass::runCopyAndExpand(llvm::Module& module, llvm::Modul
     processReplacements();
 }
 
-void TransformationRulesPass::processReplacements()
+void TargetQisMappingPass::processReplacements()
 {
     // Applying all replacements
 
@@ -533,7 +532,7 @@ void TransformationRulesPass::processReplacements()
     replacements_.clear();
 }
 
-void TransformationRulesPass::runDetectActiveCode(llvm::Module& module, llvm::ModuleAnalysisManager&)
+void TargetQisMappingPass::runDetectActiveCode(llvm::Module& module, llvm::ModuleAnalysisManager&)
 {
     blocks_to_delete_.clear();
     functions_to_delete_.clear();
@@ -557,7 +556,7 @@ void TransformationRulesPass::runDetectActiveCode(llvm::Module& module, llvm::Mo
     }
 }
 
-void TransformationRulesPass::runDeleteDeadCode(llvm::Module&, llvm::ModuleAnalysisManager&)
+void TargetQisMappingPass::runDeleteDeadCode(llvm::Module&, llvm::ModuleAnalysisManager&)
 {
 
     // Removing all function references and scheduling blocks for deletion
@@ -628,7 +627,7 @@ void TransformationRulesPass::runDeleteDeadCode(llvm::Module&, llvm::ModuleAnaly
     }
 }
 
-void TransformationRulesPass::runReplacePhi(llvm::Module& module, llvm::ModuleAnalysisManager&)
+void TargetQisMappingPass::runReplacePhi(llvm::Module& module, llvm::ModuleAnalysisManager&)
 {
     using namespace microsoft::quantum::notation;
     auto                            rule = phi("b1"_cap = _, "b2"_cap = _);
@@ -693,7 +692,7 @@ void TransformationRulesPass::runReplacePhi(llvm::Module& module, llvm::ModuleAn
     }
 }
 
-void TransformationRulesPass::runApplyRules(llvm::Module& module, llvm::ModuleAnalysisManager&)
+void TargetQisMappingPass::runApplyRules(llvm::Module& module, llvm::ModuleAnalysisManager&)
 {
 
     replacements_.clear();
@@ -733,7 +732,7 @@ void TransformationRulesPass::runApplyRules(llvm::Module& module, llvm::ModuleAn
     processReplacements();
 }
 
-llvm::PreservedAnalyses TransformationRulesPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& mam)
+llvm::PreservedAnalyses TargetQisMappingPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& mam)
 {
     // In case the module is instructed to clone functions,
     if (config_.shouldCloneFunctions())
@@ -804,7 +803,7 @@ llvm::PreservedAnalyses TransformationRulesPass::run(llvm::Module& module, llvm:
     return llvm::PreservedAnalyses::none();
 }
 
-llvm::Function* TransformationRulesPass::expandFunctionCall(llvm::Function& callee, ConstantArguments const& const_args)
+llvm::Function* TargetQisMappingPass::expandFunctionCall(llvm::Function& callee, ConstantArguments const& const_args)
 {
     auto              module  = callee.getParent();
     auto&             context = module->getContext();
@@ -863,21 +862,21 @@ llvm::Function* TransformationRulesPass::expandFunctionCall(llvm::Function& call
     return function;
 }
 
-void TransformationRulesPass::setLogger(ILoggerPtr logger)
+void TargetQisMappingPass::setLogger(ILoggerPtr logger)
 {
     logger_ = std::move(logger);
 }
 
-bool TransformationRulesPass::isRequired()
+bool TargetQisMappingPass::isRequired()
 {
     return true;
 }
 
-void TransformationRulesPass::requireLogger()
+void TargetQisMappingPass::requireLogger()
 {
     if (logger_ == nullptr)
     {
-        throw std::runtime_error("TransformationRulesPass does not have a logger, but need it to emit messages.");
+        throw std::runtime_error("TargetQisMappingPass does not have a logger, but need it to emit messages.");
     }
 }
 

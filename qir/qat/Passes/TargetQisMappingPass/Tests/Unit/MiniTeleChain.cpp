@@ -6,7 +6,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -60,7 +60,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 } // namespace
 
 // Single allocation with action and then release
-TEST(TransformationRulesPass, TeleportChain)
+TEST(TargetQisMappingPass, TeleportChain)
 {
     auto                 ir_manip = newIrManip(R"script(
   %leftMessage.i = call %Qubit* @__quantum__rt__qubit_allocate()
@@ -176,7 +176,7 @@ TeleportChain__DemonstrateTeleportationUsingPresharedEntanglement__body.1.exit: 
     ConfigurationManager configuration_manager;
     auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());

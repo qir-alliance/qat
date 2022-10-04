@@ -43,7 +43,7 @@ adaptor:
     eliminate-dead-code: true
     eliminate-memory: true
   pre-transform-trimming: ~
-  rule-based-simplification:
+  target-qis-mapping:
     delete-dead-code: false
     clone-functions: false
     transform-execution-path-only: false

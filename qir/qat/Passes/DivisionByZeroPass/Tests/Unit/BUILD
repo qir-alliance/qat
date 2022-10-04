@@ -21,7 +21,7 @@ cc_test(
         "//qir/qat:Rules",
         "//qir/qat:StaticResourceComponent",
         "//qir/qat:TestTools",
-        "//qir/qat:TransformationRulesPass",
+        "//qir/qat:TargetQisMappingPass",
         "//qir/qat:ValidationPass",
         "//qir/qat:Validator",
     ],

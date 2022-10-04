@@ -2,18 +2,18 @@
 // Licensed under the MIT License.
 
 #include "gtest/gtest.h"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPassConfiguration.hpp"
 
 #include <functional>
 
 using namespace microsoft::quantum;
 
 // Single allocation with action and then release
-TEST(RuleSetTestSuite, TransformationRulesPassConfiguration)
+TEST(RuleSetTestSuite, TargetQisMappingPassConfiguration)
 {
-    TransformationRulesPassConfiguration c1 = TransformationRulesPassConfiguration::createDisabled();
+    TargetQisMappingPassConfiguration c1 = TargetQisMappingPassConfiguration::createDisabled();
     EXPECT_TRUE(c1.isDisabled());
 
-    TransformationRulesPassConfiguration c2{};
+    TargetQisMappingPassConfiguration c2{};
     EXPECT_TRUE(c2.isDefault());
 }

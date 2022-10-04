@@ -7,7 +7,7 @@
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -32,6 +32,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
     ir_manip->declareFunction("%Qubit* @__quantum__rt__qubit_allocate()");
     ir_manip->declareFunction("void @__quantum__rt__qubit_release(%Qubit*)");
     ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
+    ir_manip->declareFunction("i8* @__quantum__rt__array_get_element_ptr_1d(%Array*, i64)");
 
     ir_manip->declareFunction("i64 @TeleportChain__Calculate__body(i64, %Qubit*)");
 
@@ -41,45 +42,39 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
         llvm::outs() << ir_manip->getErrorMessage() << "\n";
         exit(-1);
     }
+
     return ir_manip;
 }
 
 } // namespace
 
 // Single allocation with action and then release
-TEST(TransformationRulesPass, LoopUnroll)
+TEST(TargetQisMappingPass, ArrayIndexReplacement1)
 {
-    auto                 ir_manip = newIrManip(R"script(
-  %q = call %Qubit* @__quantum__rt__qubit_allocate()
-  %ret = alloca i64, align 8
-  store i64 1, i64* %ret, align 4
-  br label %header__1
+    auto ir_manip = newIrManip(R"script(
+  %0 = tail call i8* @__quantum__rt__array_get_element_ptr_1d(%Array* nonnull inttoptr (i64 2 to %Array*), i64 0)
+  %1 = bitcast i8* %0 to %Qubit**
+  br label %load
 
-header__1:                                        ; preds = %exiting__1, %entry
-  %i = phi i64 [ 0, %entry ], [ %4, %exiting__1 ]
-  %0 = icmp sle i64 %i, 5
-  br i1 %0, label %body__1, label %exit__1
+load:                                             ; preds = %entry
+  %2 = load %Qubit*, %Qubit** %1, align 8
+  br label %quantum
 
-body__1:                                          ; preds = %header__1
-  %1 = load i64, i64* %ret, align 4
-  %2 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* %q)
-  %3 = add i64 %1, %2
-  store i64 %3, i64* %ret, align 4
-  br label %exiting__1
-
-exiting__1:                                       ; preds = %body__1
-  %4 = add i64 %i, 1
-  br label %header__1
-
-exit__1:                                          ; preds = %header__1
-  %5 = load i64, i64* %ret, align 4
-  call void @__quantum__rt__qubit_release(%Qubit* %q)
+quantum:                                          ; preds = %load
+  tail call void @__quantum__qis__h__body(%Qubit* %2)
   )script");
+
+    auto configure_adaptor = [](RuleSet& rule_set)
+    {
+        auto factory =
+            RuleFactory(rule_set, BasicAllocationManager::createNew(), BasicAllocationManager::createNew(), nullptr);
+
+        factory.useStaticQubitArrayAllocation();
+    };
     ConfigurationManager configuration_manager;
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
-
-    configuration_manager.setConfig(TransformationRulesPassConfiguration());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
@@ -87,12 +82,6 @@ exit__1:                                          ; preds = %header__1
 
     ir_manip->applyQirAdaptor(adaptor);
 
-    EXPECT_TRUE(ir_manip->hasInstructionSequence({
-        "%0 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-        "%1 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-        "%2 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-        "%3 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-        "%4 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-        "%5 = call i64 @TeleportChain__Calculate__body(i64 4, %Qubit* null)",
-    }));
+    EXPECT_TRUE(ir_manip->hasInstructionSequence(
+        {"tail call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))"}));
 }

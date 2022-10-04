@@ -6,7 +6,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
@@ -74,7 +74,7 @@ continue__1:
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
@@ -121,7 +121,7 @@ continue__1:
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
@@ -168,7 +168,7 @@ continue__1:
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
@@ -215,7 +215,7 @@ continue__1:
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());

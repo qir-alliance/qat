@@ -3,7 +3,7 @@ add_executable(qat Qat/Qat.cpp Qat/QatConfig.cpp Qat/QirAdaptorConfiguration.cpp
 target_link_libraries(qat ${llvm_libs})
 target_link_libraries(qat 
     Logging 
-    TransformationRulesPass 
+    TargetQisMappingPass 
     Rules 
     AllocationManager 
     Commandline 

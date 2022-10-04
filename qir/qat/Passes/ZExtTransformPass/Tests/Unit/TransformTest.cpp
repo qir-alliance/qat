@@ -6,7 +6,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/Passes/ZExtTransformPass/ZExtTransformPass.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 #include "qir/qat/Utils/FunctionToModule.hpp"
@@ -57,7 +57,7 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(ConfigurationManage
             adaptor.modulePassManager().addPass(FunctionToModule(std::move(fpm)));
         });
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration());
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());

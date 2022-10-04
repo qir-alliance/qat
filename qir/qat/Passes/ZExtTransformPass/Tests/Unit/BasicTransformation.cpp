@@ -16,9 +16,9 @@
 #include "qir/qat/Passes/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/ResourceAnnotationPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPass.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPassConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/Passes/ZExtTransformPass/ZExtTransformPass.hpp"
@@ -85,7 +85,7 @@ entry:
     configuration_manager.addConfig<StaticResourceComponentConfiguration>("adaptor.static-resource");
     configuration_manager.addConfig<PostTransformValidationPassConfiguration>("adaptor.post-transform-validation");
     configuration_manager.addConfig<PostTransformConfig>("adaptor.post-transform");
-    configuration_manager.addConfig<TransformationRulesPassConfiguration>("adaptor.rule-based-simplification");
+    configuration_manager.addConfig<TargetQisMappingPassConfiguration>("adaptor.target-qis-mapping");
     configuration_manager.addConfig<RemoveNonEntrypointFunctionsPassConfiguration>(
         "adaptor.remove-non-entrypoint-functions");
     configuration_manager.addConfig<LlvmPassesConfiguration>("adaptor.llvm-optimization");
@@ -172,15 +172,15 @@ entry:
 
     {
         llvm::FunctionPassManager fpm{};
-        auto&                     cfg = configuration_manager.get<TransformationRulesPassConfiguration>();
+        auto&                     cfg = configuration_manager.get<TargetQisMappingPassConfiguration>();
         // Defining the mapping
 
         RuleSet rule_set;
         auto    factory = RuleFactory(rule_set, qubit_allocation_manager, result_allocation_manager, logger);
-        factory.usingConfiguration(configuration_manager.get<TransformationRulesPassConfiguration>());
+        factory.usingConfiguration(configuration_manager.get<TargetQisMappingPassConfiguration>());
 
         // Creating adaptor pass
-        auto pass = TransformationRulesPass(std::move(rule_set), cfg);
+        auto pass = TargetQisMappingPass(std::move(rule_set), cfg);
         pass.setLogger(logger);
         mpm.addPass(std::move(pass));
         mpm.addPass(FunctionToModule(std::move(fpm)));

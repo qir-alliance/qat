@@ -7,7 +7,7 @@
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -68,7 +68,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 } // namespace
 
 // Single allocation with action and then release
-TEST(TransformationRulesPass, PhiEliminationBranch1)
+TEST(TargetQisMappingPass, PhiEliminationBranch1)
 {
     auto                 ir_manip = newIrManip(R"script(
   %c = inttoptr i64 0 to %Qubit*
@@ -95,7 +95,7 @@ continue__1:                                      ; preds = %then0__1, %entry
     ConfigurationManager configuration_manager;
     auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
@@ -110,7 +110,7 @@ continue__1:                                      ; preds = %then0__1, %entry
     }));
 }
 
-TEST(TransformationRulesPass, PhiEliminationBranch0)
+TEST(TargetQisMappingPass, PhiEliminationBranch0)
 {
     auto                 ir_manip = newIrManip(R"script(
   %c = inttoptr i64 0 to %Qubit*    
@@ -137,7 +137,7 @@ continue__1:                                      ; preds = %then0__1, %entry
     ConfigurationManager configuration_manager;
     auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration());
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());

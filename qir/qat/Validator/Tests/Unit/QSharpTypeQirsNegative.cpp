@@ -5,7 +5,7 @@
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -65,7 +65,7 @@ void expectFail(String const& adaptor_name, String const& script, std::vector<St
     ConfigurationManager configuration_manager;
     auto                 adaptor_generator = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(TargetProfileConfiguration::fromQirAdaptorName(adaptor_name));
     configuration_manager.setConfig(TargetQisConfiguration::fromQirAdaptorName(adaptor_name));
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());

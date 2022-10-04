@@ -325,9 +325,9 @@ ms_cc_library(
 )
 
 ms_cc_library(
-    name = "TransformationRulesPass",
-    srcs = glob(["Passes/TransformationRulesPass/*.cpp"]),
-    hdrs = glob(["Passes/TransformationRulesPass/*.hpp"]),
+    name = "TargetQisMappingPass",
+    srcs = glob(["Passes/TargetQisMappingPass/*.cpp"]),
+    hdrs = glob(["Passes/TargetQisMappingPass/*.hpp"]),
     visibility = ["//visibility:public"],
     deps = [
         "//qir/qat:Commandline",
@@ -371,7 +371,7 @@ ms_cc_library(
         "//qir/qat:RemoveNonEntrypointFunctions",
         "//qir/qat:Rules",
         "//qir/qat:StaticResourceComponent",
-        "//qir/qat:TransformationRulesPass",
+        "//qir/qat:TargetQisMappingPass",
         "//qir/qat:ValidationPass",
         "//qir/qat:Validator",
         "//qir/qat:ZExtTransformPass",
@@ -418,7 +418,7 @@ ms_cc_library(
         "//qir/qat:RemoveNonEntrypointFunctions",
         "//qir/qat:Rules",
         "//qir/qat:StaticResourceComponent",
-        "//qir/qat:TransformationRulesPass",
+        "//qir/qat:TargetQisMappingPass",
         "//qir/qat:ValidationPass",
         "//qir/qat:Validator",
     ],
@@ -450,7 +450,7 @@ ms_cc_binary(
         "//qir/qat:RemoveNonEntrypointFunctions",
         "//qir/qat:Rules",
         "//qir/qat:StaticResourceComponent",
-        "//qir/qat:TransformationRulesPass",
+        "//qir/qat:TargetQisMappingPass",
         "//qir/qat:ValidationPass",
         "//qir/qat:Validator",
         "//qir/qat:Version",

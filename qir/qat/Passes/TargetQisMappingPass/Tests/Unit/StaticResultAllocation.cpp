@@ -6,7 +6,7 @@
 #include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -57,7 +57,7 @@ TEST(RuleSetTestSuite, ResultTranslatedTo)
 
     ConfigurationManager configuration_manager;
     auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
-        configuration_manager, std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
+        configuration_manager, std::move(configure_adaptor), TargetQisMappingPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());

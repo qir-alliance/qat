@@ -7,7 +7,7 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/CommentLogger.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -58,10 +58,10 @@ TEST(RuleSetTestSuite, AllocationActionRelease)
 
     ConfigurationManager configuration_manager;
     auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
-        configuration_manager, std::move(configure_adaptor), TransformationRulesPassConfiguration::createDisabled(),
+        configuration_manager, std::move(configure_adaptor), TargetQisMappingPassConfiguration::createDisabled(),
         LlvmPassesConfiguration::createDisabled());
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
@@ -92,9 +92,9 @@ TEST(RuleSetTestSuite, MultipleAllocationsNoRelease)
 
             factory.useStaticQubitAllocation();
         },
-        TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
+        TargetQisMappingPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
@@ -156,9 +156,9 @@ TEST(RuleSetTestSuite, AllocateReleaseMultipleTimes)
 
             factory.useStaticQubitAllocation();
         },
-        TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
+        TargetQisMappingPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
 
@@ -208,7 +208,7 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByName)
 
             factory.useStaticQubitAllocation();
         },
-        TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
+        TargetQisMappingPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
@@ -237,9 +237,9 @@ TEST(RuleSetTestSuite, ErrorAllocateReleaseByNameWithNoName)
 
             factory.useStaticQubitAllocation();
         },
-        TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
+        TargetQisMappingPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
@@ -268,9 +268,9 @@ TEST(RuleSetTestSuite, ErrorReleaseWithTypeErasedAllocation)
 
             factory.useStaticQubitAllocation();
         },
-        TransformationRulesPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
+        TargetQisMappingPassConfiguration::createDisabled(), LlvmPassesConfiguration::createDisabled());
 
-    configuration_manager.setConfig(TransformationRulesPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformConfig::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 

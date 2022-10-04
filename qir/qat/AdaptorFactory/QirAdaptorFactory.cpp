@@ -20,9 +20,9 @@
 #include "qir/qat/Passes/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/ResourceAnnotationPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/Factory.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPass.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPassConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/Passes/ZExtTransformPass/ZExtTransformPass.hpp"
@@ -41,9 +41,9 @@ std::shared_ptr<QirAdaptor> QirAdaptorFactory::newQirAdaptor(
     auto qubit_allocation_manager  = BasicAllocationManager::createNew();
     auto result_allocation_manager = BasicAllocationManager::createNew();
 
-    if (configuration_manager_.has<TransformationRulesPassConfiguration>())
+    if (configuration_manager_.has<TargetQisMappingPassConfiguration>())
     {
-        auto cfg = configuration_manager_.get<TransformationRulesPassConfiguration>();
+        auto cfg = configuration_manager_.get<TargetQisMappingPassConfiguration>();
         qubit_allocation_manager->setReuseRegisters(cfg.shouldReuseQubits());
         result_allocation_manager->setReuseRegisters(cfg.shouldReuseResults());
     }
@@ -78,9 +78,9 @@ void QirAdaptorFactory::newAdaptorContext(String const& name, bool debug)
     qubit_allocation_manager_  = BasicAllocationManager::createNew();
     result_allocation_manager_ = BasicAllocationManager::createNew();
 
-    if (configuration_manager_.has<TransformationRulesPassConfiguration>())
+    if (configuration_manager_.has<TargetQisMappingPassConfiguration>())
     {
-        auto cfg = configuration_manager_.get<TransformationRulesPassConfiguration>();
+        auto cfg = configuration_manager_.get<TargetQisMappingPassConfiguration>();
         qubit_allocation_manager_->setReuseRegisters(cfg.shouldReuseQubits());
         result_allocation_manager_->setReuseRegisters(cfg.shouldReuseResults());
     }
@@ -243,9 +243,9 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             mpm.addPass(RemoveNonEntrypointFunctionsPass(cfg, logger));
         });
 
-    registerAdaptorComponent<TransformationRulesPassConfiguration>(
-        "adaptor.rule-based-simplification", // TODO(unknown): Rename?
-        [logger](TransformationRulesPassConfiguration const& cfg, QirAdaptor& adaptor)
+    registerAdaptorComponent<TargetQisMappingPassConfiguration>(
+        "adaptor.target-qis-mapping", // TODO(unknown): Rename?
+        [logger](TargetQisMappingPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& ret = adaptor.modulePassManager();
 
@@ -253,10 +253,10 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             RuleSet rule_set;
             auto    factory = RuleFactory(
                    rule_set, adaptor.getQubitAllocationManager(), adaptor.getResultAllocationManager(), logger);
-            factory.usingConfiguration(adaptor.configurationManager().get<TransformationRulesPassConfiguration>());
+            factory.usingConfiguration(adaptor.configurationManager().get<TargetQisMappingPassConfiguration>());
 
             // Creating adaptor pass
-            auto pass = TransformationRulesPass(std::move(rule_set), cfg);
+            auto pass = TargetQisMappingPass(std::move(rule_set), cfg);
             pass.setLogger(logger);
             ret.addPass(std::move(pass));
         });

@@ -4,7 +4,7 @@
 
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPassConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 #include "qir/qat/QirAdaptor/QirAdaptor.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
@@ -57,7 +57,7 @@ namespace microsoft::quantum
 /// `f(x, 9)` is identified, it is replaced with `f.1(x)` where `f.1` is a copy of `f` with second
 /// argument written into the function.
 ///
-class TransformationRulesPass : public llvm::PassInfoMixin<TransformationRulesPass>
+class TargetQisMappingPass : public llvm::PassInfoMixin<TargetQisMappingPass>
 {
   public:
     using Replacements         = ReplacementRule::Replacements;
@@ -74,25 +74,25 @@ class TransformationRulesPass : public llvm::PassInfoMixin<TransformationRulesPa
     //
 
     /// Custom default constructor
-    TransformationRulesPass(RuleSet&& rule_set, TransformationRulesPassConfiguration const& config);
+    TargetQisMappingPass(RuleSet&& rule_set, TargetQisMappingPassConfiguration const& config);
 
     /// Copy construction is banned.
-    TransformationRulesPass(TransformationRulesPass const&) = delete;
+    TargetQisMappingPass(TargetQisMappingPass const&) = delete;
 
     /// We allow move semantics.
-    TransformationRulesPass(TransformationRulesPass&&) = default;
+    TargetQisMappingPass(TargetQisMappingPass&&) = default;
 
     /// Default destruction.
-    ~TransformationRulesPass() = default;
+    ~TargetQisMappingPass() = default;
 
     // Operators
     //
 
     /// Copy assignment is banned.
-    TransformationRulesPass& operator=(TransformationRulesPass const&) = delete;
+    TargetQisMappingPass& operator=(TargetQisMappingPass const&) = delete;
 
     /// Move assignment is permitted.
-    TransformationRulesPass& operator=(TransformationRulesPass&&) = default;
+    TargetQisMappingPass& operator=(TargetQisMappingPass&&) = default;
 
     /// Implements the transformation analysis which uses the supplied ruleset to make substitutions
     /// in each function.
@@ -182,7 +182,7 @@ class TransformationRulesPass : public llvm::PassInfoMixin<TransformationRulesPa
     RuleSet rule_set_{};
 
     /// Configuration with enabled or disabled features, recursion limits etc.
-    TransformationRulesPassConfiguration config_{};
+    TargetQisMappingPassConfiguration config_{};
 
     // Logging and data collection
     //

@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPassConfiguration.hpp"
 
 namespace microsoft::quantum
 {
 
-void TransformationRulesPassConfiguration::setup(ConfigurationManager& config)
+void TargetQisMappingPassConfiguration::setup(ConfigurationManager& config)
 {
-    config.setSectionName("Pass configuration", "Configuration of the pass and its corresponding optimizations.");
+    config.setSectionName("Logic simplici", "Configuration of the pass and its corresponding optimizations.");
 
     // Experimental settings
     config.addExperimentalParameter(delete_dead_code_, true, false, "delete-dead-code", "Deleted dead code.");
@@ -68,9 +67,9 @@ void TransformationRulesPassConfiguration::setup(ConfigurationManager& config)
     config.addParameter(entry_point_attr_, "entry-point-attr", "Specifies the attribute indicating the entry point.");
 }
 
-TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createDisabled()
+TargetQisMappingPassConfiguration TargetQisMappingPassConfiguration::createDisabled()
 {
-    TransformationRulesPassConfiguration ret;
+    TargetQisMappingPassConfiguration ret;
     ret.delete_dead_code_              = false;
     ret.clone_functions_               = false;
     ret.transform_execution_path_only_ = false;
@@ -93,9 +92,9 @@ TransformationRulesPassConfiguration TransformationRulesPassConfiguration::creat
     return ret;
 }
 
-TransformationRulesPassConfiguration TransformationRulesPassConfiguration::createReuseQubitsOnly()
+TargetQisMappingPassConfiguration TargetQisMappingPassConfiguration::createReuseQubitsOnly()
 {
-    TransformationRulesPassConfiguration ret;
+    TargetQisMappingPassConfiguration ret;
     ret.delete_dead_code_              = false;
     ret.clone_functions_               = false;
     ret.transform_execution_path_only_ = false;
@@ -118,112 +117,112 @@ TransformationRulesPassConfiguration TransformationRulesPassConfiguration::creat
     return ret;
 }
 
-bool TransformationRulesPassConfiguration::shouldDeleteDeadCode() const
+bool TargetQisMappingPassConfiguration::shouldDeleteDeadCode() const
 {
     return delete_dead_code_;
 }
 
-bool TransformationRulesPassConfiguration::shouldCloneFunctions() const
+bool TargetQisMappingPassConfiguration::shouldCloneFunctions() const
 {
     return clone_functions_;
 }
 
-bool TransformationRulesPassConfiguration::shouldTransformExecutionPathOnly() const
+bool TargetQisMappingPassConfiguration::shouldTransformExecutionPathOnly() const
 {
     return transform_execution_path_only_;
 }
 
-uint64_t TransformationRulesPassConfiguration::maxRecursion() const
+uint64_t TargetQisMappingPassConfiguration::maxRecursion() const
 {
     return max_recursion_;
 }
 
-bool TransformationRulesPassConfiguration::shouldReuseQubits() const
+bool TargetQisMappingPassConfiguration::shouldReuseQubits() const
 {
     return reuse_qubits_;
 }
 
-bool TransformationRulesPassConfiguration::shouldReuseResults() const
+bool TargetQisMappingPassConfiguration::shouldReuseResults() const
 {
     return reuse_results_;
 }
 
-std::string TransformationRulesPassConfiguration::entryPointAttr() const
+std::string TargetQisMappingPassConfiguration::entryPointAttr() const
 {
     return entry_point_attr_;
 }
 
-bool TransformationRulesPassConfiguration::assumeNoExceptions() const
+bool TargetQisMappingPassConfiguration::assumeNoExceptions() const
 {
     return assume_no_exceptions_;
 }
 
-bool TransformationRulesPassConfiguration::disableReferenceCounting() const
+bool TargetQisMappingPassConfiguration::disableReferenceCounting() const
 {
     return disable_reference_counting_;
 }
 
-bool TransformationRulesPassConfiguration::disableAliasCounting() const
+bool TargetQisMappingPassConfiguration::disableAliasCounting() const
 {
     return disable_alias_counting_;
 }
 
-bool TransformationRulesPassConfiguration::disableStringSupport() const
+bool TargetQisMappingPassConfiguration::disableStringSupport() const
 {
     return disable_string_support_;
 }
 
-bool TransformationRulesPassConfiguration::disableRecordOutputSupport() const
+bool TargetQisMappingPassConfiguration::disableRecordOutputSupport() const
 {
     return disable_record_output_support_;
 }
 
-bool TransformationRulesPassConfiguration::optimizeResultOne() const
+bool TargetQisMappingPassConfiguration::optimizeResultOne() const
 {
     return optimize_result_one_;
 }
 
-bool TransformationRulesPassConfiguration::optimizeResultZero() const
+bool TargetQisMappingPassConfiguration::optimizeResultZero() const
 {
     return optimize_result_zero_;
 }
 
-bool TransformationRulesPassConfiguration::optimizeQuantumConstants() const
+bool TargetQisMappingPassConfiguration::optimizeQuantumConstants() const
 {
     return optimize_qauntum_constants_;
 }
 
-bool TransformationRulesPassConfiguration::optimizeResultComparison() const
+bool TargetQisMappingPassConfiguration::optimizeResultComparison() const
 {
     return optimize_result_comparison_;
 }
 
-bool TransformationRulesPassConfiguration::removeGetZeroOrOne() const
+bool TargetQisMappingPassConfiguration::removeGetZeroOrOne() const
 {
     return remove_get_one_or_zero_;
 }
 
-bool TransformationRulesPassConfiguration::useStaticQubitArrayAllocation() const
+bool TargetQisMappingPassConfiguration::useStaticQubitArrayAllocation() const
 {
     return use_static_qubit_array_allocation_;
 }
 
-bool TransformationRulesPassConfiguration::useStaticQubitAllocation() const
+bool TargetQisMappingPassConfiguration::useStaticQubitAllocation() const
 {
     return use_static_qubit_allocation_;
 }
 
-bool TransformationRulesPassConfiguration::useStaticResultAllocation() const
+bool TargetQisMappingPassConfiguration::useStaticResultAllocation() const
 {
     return use_static_result_allocation_;
 }
 
-uint32_t TransformationRulesPassConfiguration::defaultIntegerWidth() const
+uint32_t TargetQisMappingPassConfiguration::defaultIntegerWidth() const
 {
     return default_integer_width_;
 }
 
-bool TransformationRulesPassConfiguration::isDisabled() const
+bool TargetQisMappingPassConfiguration::isDisabled() const
 {
     return (
         delete_dead_code_ == false && clone_functions_ == false && transform_execution_path_only_ == false &&
@@ -235,9 +234,9 @@ bool TransformationRulesPassConfiguration::isDisabled() const
         use_static_result_allocation_ == false);
 }
 
-bool TransformationRulesPassConfiguration::isDefault() const
+bool TargetQisMappingPassConfiguration::isDefault() const
 {
-    TransformationRulesPassConfiguration ref{};
+    TargetQisMappingPassConfiguration ref{};
 
     return (
         delete_dead_code_ == ref.delete_dead_code_ && clone_functions_ == ref.clone_functions_ &&
@@ -257,7 +256,7 @@ bool TransformationRulesPassConfiguration::isDefault() const
         use_static_result_allocation_ == ref.use_static_result_allocation_);
 }
 
-bool TransformationRulesPassConfiguration::operator==(TransformationRulesPassConfiguration const& ref) const
+bool TargetQisMappingPassConfiguration::operator==(TargetQisMappingPassConfiguration const& ref) const
 {
 
     return (

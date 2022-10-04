@@ -7,7 +7,7 @@
 namespace microsoft::quantum
 {
 /// Configuration class for the RuleTransformation pass.
-class TransformationRulesPassConfiguration
+class TargetQisMappingPassConfiguration
 {
   public:
     // Setup and construction
@@ -17,10 +17,10 @@ class TransformationRulesPassConfiguration
     void setup(ConfigurationManager& config);
 
     /// Creates a configuration where all functionality is disabled.
-    static TransformationRulesPassConfiguration createDisabled();
+    static TargetQisMappingPassConfiguration createDisabled();
 
     /// Creates a configuration where only reuse qubits is enabled.
-    static TransformationRulesPassConfiguration createReuseQubitsOnly();
+    static TargetQisMappingPassConfiguration createReuseQubitsOnly();
 
     // Configuration classes
     //
@@ -32,7 +32,7 @@ class TransformationRulesPassConfiguration
     bool isDefault() const;
 
     /// Testing equality of two configurations
-    bool operator==(TransformationRulesPassConfiguration const& ref) const;
+    bool operator==(TargetQisMappingPassConfiguration const& ref) const;
 
     // Properties
     //

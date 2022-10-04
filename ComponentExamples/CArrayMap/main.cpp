@@ -4,7 +4,7 @@
 #include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPass.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 
@@ -213,24 +213,24 @@ extern "C" void loadComponent(QirAdaptorFactory* adaptor_generator)
             {
                 RuleSet rule_set;
                 removeArrayCopies(rule_set);
-                auto config = TransformationRulesPassConfiguration::createDisabled();
-                ret.addPass(TransformationRulesPass(std::move(rule_set), config));
+                auto config = TargetQisMappingPassConfiguration::createDisabled();
+                ret.addPass(TargetQisMappingPass(std::move(rule_set), config));
             }
 
             if (cfg.replaceAccess())
             {
                 RuleSet rule_set;
                 replaceAccess(rule_set);
-                auto config = TransformationRulesPassConfiguration::createDisabled();
-                ret.addPass(TransformationRulesPass(std::move(rule_set), config));
+                auto config = TargetQisMappingPassConfiguration::createDisabled();
+                ret.addPass(TargetQisMappingPass(std::move(rule_set), config));
             }
 
             if (cfg.replaceAllocators())
             {
                 RuleSet rule_set;
                 activateAllocatorReplacement(rule_set);
-                auto config = TransformationRulesPassConfiguration::createDisabled();
-                ret.addPass(TransformationRulesPass(std::move(rule_set), config));
+                auto config = TargetQisMappingPassConfiguration::createDisabled();
+                ret.addPass(TargetQisMappingPass(std::move(rule_set), config));
             }
         });
 }
