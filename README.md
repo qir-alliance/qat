@@ -13,10 +13,10 @@
 
 ## Table of Contents
 
--   [Purpose](#purpose-and-terminology)
--   [Building](#building)
--   [Getting started](#getting-started)
--   [Documentation](#documentation)
+- [Purpose](#purpose-and-terminology)
+- [Building](#building)
+- [Getting started](#getting-started)
+- [Documentation](#documentation)
 
 ## Purpose and terminology
 
