@@ -13,10 +13,10 @@
 
 ## Table of Contents
 
-- [Purpose](#purpose-and-terminology)
-- [Building](#building)
-- [Getting started](#getting-started)
-- [Documentation](#documentation)
+-   [Purpose](#purpose-and-terminology)
+-   [Building](#building)
+-   [Getting started](#getting-started)
+-   [Documentation](#documentation)
 
 ## Purpose and terminology
 
@@ -39,13 +39,13 @@ For full instructions on dependencies and how to build, follow
 executable is built using `bazelisk`:
 
 ```sh
-bazelisk run //qir/qat:qat --config generic_clang --config release
+bazelisk run //qir/qat:qat --config clang --config release
 ```
 
 and the Ubuntu based Doker image can be built:
 
 ```sh
-bazelisk run //qir/qat:qat-image --config generic_clang --config release  --platforms=@//:linux-x86
+bazelisk run //qir/qat:qat-image --config clang --config release  --platforms=@//:linux-x86
 ```
 
 This command will cross compile the `qat` executable for `linux-x86` and add
