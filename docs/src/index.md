@@ -25,7 +25,7 @@ Outline:
 - (x) Developer guide
 
   - (x) [Architecture Overview](DeveloperGuide/ArchitectureOverview.md)
-  - (x) [Writing an adaptor](DeveloperGuide/WritingComponent.md)
+  - (x) [Writing an adaptor](DeveloperGuide/WritingAdaptor.md)
   - (x) [Rule based adaptors](DeveloperGuide/WritingRuleTests.md)
   - (x) [Circuit separation](DeveloperGuide/LogicSeparation.md)
 
