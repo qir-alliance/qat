@@ -1,6 +1,9 @@
 # QIR Adaptor Tool
 
-Welcome to the QIR Adaptor Tool (QAT), a tool to transform a generic QIR into a QIR targeted to specific set of requirements. The goal of this framework is to create tools that allow quantum hardware vendors to adapt a generic QIR to their specific hardware requirements and restrictions.
+Welcome to the QIR Adaptor Tool (QAT), a tool to transform a generic QIR into a
+QIR targeted to specific set of requirements. The goal of this framework is to
+create tools that allow quantum hardware vendors to adapt a generic QIR to their
+specific hardware requirements and restrictions.
 
 Outline:
 
