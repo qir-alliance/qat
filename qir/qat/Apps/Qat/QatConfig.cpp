@@ -16,7 +16,7 @@ void QatConfig::setup(ConfigurationManager& config)
     config.addParameter(
         generate_, "apply", "Applies a adaptor to transform the IR in correspondence with the adaptor.");
     config.addParameter(validate_, false, "validate", "Executes the validation procedure.");
-    config.addParameter(adaptor_name_, static_cast<String>("default"), "adaptor", "Sets the adaptor.");
+    config.addParameter(target_name_, static_cast<String>("default"), "adaptor", "Sets the adaptor.");
     config.addParameter(
         adapter_pipeline_,
         {"replacement-linking", "llvm-optimization", "remove-non-entrypoint-functions", "target-qis-mapping",
@@ -62,9 +62,9 @@ bool QatConfig::shouldValidate() const
     return validate_;
 }
 
-String QatConfig::adaptorName() const
+String QatConfig::targetName() const
 {
-    return adaptor_name_;
+    return target_name_;
 }
 
 bool QatConfig::shouldEmitHumanReadibleLlvm() const

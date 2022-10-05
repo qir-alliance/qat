@@ -58,7 +58,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
     return ir_manip;
 }
 
-void expectFail(String const& adaptor_name, String const& script, std::vector<String> const& errors)
+void expectFail(String const& target_name, String const& script, std::vector<String> const& errors)
 {
     auto ir_manip = newIrManip(script);
 
@@ -66,12 +66,12 @@ void expectFail(String const& adaptor_name, String const& script, std::vector<St
     auto                 adaptor_generator = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
     configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(TargetProfileConfiguration::fromQirAdaptorName(adaptor_name));
-    configuration_manager.setConfig(TargetQisConfiguration::fromQirAdaptorName(adaptor_name));
+    configuration_manager.setConfig(TargetProfileConfiguration::fromQirTargetName(target_name));
+    configuration_manager.setConfig(TargetQisConfiguration::fromQirTargetName(target_name));
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
-    EXPECT_TRUE(ir_manip->containsExactValidationErrors(adaptor_generator, adaptor_name, errors, true));
+    EXPECT_TRUE(ir_manip->containsExactValidationErrors(adaptor_generator, target_name, errors, true));
 }
 
 } // namespace

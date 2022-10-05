@@ -207,11 +207,11 @@ int main(int argc, char const** argv)
         // configureQirAdaptor(config.adaptor(), configuration_manager);
 
         // Setting adaptor validation configuration
-        // TODO: AdaptorName is deprecated
+        // TODO: TargetName is deprecated
         configuration_manager.addConfig<TargetProfileConfiguration>(
-            "target.profile", TargetProfileConfiguration::fromQirAdaptorName("generic"));
+            "target.profile", TargetProfileConfiguration::fromQirTargetName("generic"));
         configuration_manager.addConfig<TargetQisConfiguration>(
-            "target.qis", TargetQisConfiguration::fromQirAdaptorName("generic"));
+            "target.qis", TargetQisConfiguration::fromQirTargetName("generic"));
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();

@@ -189,20 +189,20 @@ class ILogger
 
     virtual void errorNoResultsPresent(llvm::Value* ptr = nullptr, String const& name = "unnamed");
 
-    virtual void errorOpcodeNotAllowed(String const& code, String const& adaptor_name, llvm::Value* ptr = nullptr);
+    virtual void errorOpcodeNotAllowed(String const& code, String const& target_name, llvm::Value* ptr = nullptr);
 
     virtual void errorCustomFunctionsNotAllowed(llvm::Value* ptr = nullptr);
 
     virtual void errorExternalCallsNotAllowed(
         String const& function_name,
-        String const& adaptor_name,
+        String const& target_name,
         llvm::Value*  ptr = nullptr);
 
-    virtual void errorTypeNotAllowed(String const& type_name, String const& adaptor_name, llvm::Value* ptr = nullptr);
+    virtual void errorTypeNotAllowed(String const& type_name, String const& target_name, llvm::Value* ptr = nullptr);
 
-    virtual void errorPoisonNotAllowed(String const& adaptor_name, llvm::Value* ptr = nullptr);
+    virtual void errorPoisonNotAllowed(String const& target_name, llvm::Value* ptr = nullptr);
 
-    virtual void errorUndefNotAllowed(String const& adaptor_name, llvm::Value* ptr = nullptr);
+    virtual void errorUndefNotAllowed(String const& target_name, llvm::Value* ptr = nullptr);
 
     virtual void errorExpectedStringValueForAttr(String const& function_name, String const& attr_name);
 

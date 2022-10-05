@@ -62,14 +62,14 @@ class IrManipulationTestHelper
 
     /// Validates a adaptor to the module to allow which transforms the IR. This
     /// allow us to write small adaptors to test a single piece of transformation.
-    bool validateQirAdaptor(GeneratorPtr const& generator, String const& adaptor_name = "generic", bool debug = false);
+    bool validateQirAdaptor(GeneratorPtr const& generator, String const& target_name = "generic", bool debug = false);
 
     /// Tests whether a given set of errors (LLVM hints) are present in the validation errors
     /// for a specific adaptor. This method only checks if errors are present but does not fail if
     /// there are more errors than requested through the API.
     bool containsValidationErrors(
         GeneratorPtr const& generator,
-        String const&       adaptor_name,
+        String const&       target_name,
         Strings const&      errors,
         bool                debug = false) const;
 
@@ -78,7 +78,7 @@ class IrManipulationTestHelper
     /// match in the actual and expected errors.
     bool containsExactValidationErrors(
         GeneratorPtr const& generator,
-        String const&       adaptor_name,
+        String const&       target_name,
         Strings const&      errors,
         bool                debug = false) const;
 

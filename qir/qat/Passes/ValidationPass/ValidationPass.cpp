@@ -264,7 +264,7 @@ bool ValidationPass::satisfyingOpcodeRequirements(llvm::Module& module)
                             {current_location_.name(), current_location_.line(), current_location_.column()});
                         logger_->setLlvmHint(current_location_.llvmHint());
 
-                        logger_->errorOpcodeNotAllowed(code, profile_config_.adaptorName());
+                        logger_->errorOpcodeNotAllowed(code, profile_config_.targetName());
                         ret = false;
                     }
                 }
@@ -321,7 +321,7 @@ bool ValidationPass::satisfyingExternalCallRequirements()
                 }
 
                 // Emitting error
-                logger_->errorExternalCallsNotAllowed(k.first, profile_config_.adaptorName());
+                logger_->errorExternalCallsNotAllowed(k.first, profile_config_.targetName());
                 ret = false;
             }
         }
@@ -356,7 +356,7 @@ bool ValidationPass::satisfyingPointerRequirements()
                 }
 
                 // Emitting error
-                logger_->errorTypeNotAllowed(k.first, profile_config_.adaptorName());
+                logger_->errorTypeNotAllowed(k.first, profile_config_.targetName());
                 ret = false;
             }
         }

@@ -52,12 +52,12 @@ void TargetProfileConfiguration::setup(ConfigurationManager& config)
         ConfigurationManager::ParameterVisibility::ConfigOnly);
 }
 
-String TargetProfileConfiguration::adaptorName() const
+String TargetProfileConfiguration::targetName() const
 {
-    return adaptor_name_;
+    return target_name_;
 }
 
-TargetProfileConfiguration TargetProfileConfiguration::fromQirAdaptorName(String const& name)
+TargetProfileConfiguration TargetProfileConfiguration::fromQirTargetName(String const& name)
 {
 
     auto adaptor = TargetProfileConfiguration();
@@ -210,7 +210,7 @@ TargetProfileConfiguration TargetProfileConfiguration::fromQirAdaptorName(String
         throw std::runtime_error("Invalid adaptor " + name);
     }
 
-    adaptor.adaptor_name_ = name;
+    adaptor.target_name_ = name;
 
     return adaptor;
 }

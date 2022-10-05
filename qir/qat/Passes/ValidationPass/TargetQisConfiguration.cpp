@@ -23,9 +23,9 @@ void TargetQisConfiguration::setup(ConfigurationManager& config)
     config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
 }
 
-String TargetQisConfiguration::adaptorName() const
+String TargetQisConfiguration::targetName() const
 {
-    return adaptor_name_;
+    return target_name_;
 }
 
 bool TargetQisConfiguration::requiresQubits() const
@@ -38,7 +38,7 @@ bool TargetQisConfiguration::requiresResults() const
     return requires_results_;
 }
 
-TargetQisConfiguration TargetQisConfiguration::fromQirAdaptorName(String const& name)
+TargetQisConfiguration TargetQisConfiguration::fromQirTargetName(String const& name)
 {
     auto target_config = TargetQisConfiguration();
     if (name == "generic")
@@ -144,7 +144,7 @@ TargetQisConfiguration TargetQisConfiguration::fromQirAdaptorName(String const& 
         throw std::runtime_error("Invalid adaptor " + name);
     }
 
-    target_config.adaptor_name_ = name;
+    target_config.target_name_ = name;
 
     return target_config;
 }

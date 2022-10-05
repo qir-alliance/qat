@@ -31,12 +31,12 @@ llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function& function, ll
 
     if (qis_config_.requiresQubits() && function_details.usage_qubit_counts == 0)
     {
-        logger_->errorNoQubitsPresent(&function, profile_config_.adaptorName());
+        logger_->errorNoQubitsPresent(&function, profile_config_.targetName());
     }
 
     if (qis_config_.requiresResults() && function_details.usage_result_counts == 0)
     {
-        logger_->errorNoResultsPresent(&function, profile_config_.adaptorName());
+        logger_->errorNoResultsPresent(&function, profile_config_.targetName());
     }
 
     for (auto& block : function)
@@ -50,11 +50,11 @@ llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function& function, ll
 
                 if (poison && !profile_config_.allowPoison())
                 {
-                    logger_->errorPoisonNotAllowed(profile_config_.adaptorName(), &instr);
+                    logger_->errorPoisonNotAllowed(profile_config_.targetName(), &instr);
                 }
                 else if (undef && !profile_config_.allowUndef())
                 {
-                    logger_->errorUndefNotAllowed(profile_config_.adaptorName(), &instr);
+                    logger_->errorUndefNotAllowed(profile_config_.targetName(), &instr);
                 }
             }
         }

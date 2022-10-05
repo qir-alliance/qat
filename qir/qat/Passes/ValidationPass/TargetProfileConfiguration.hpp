@@ -185,7 +185,7 @@ class TargetProfileConfiguration
     /// ConfigurationManager documentation for more details on how the setup process is implemented.
     void setup(ConfigurationManager& config);
 
-    static TargetProfileConfiguration fromQirAdaptorName(String const& name);
+    static TargetProfileConfiguration fromQirTargetName(String const& name);
     OpcodeSet const&                  allowedOpcodes() const;
     Set const&                        allowedExternalCallNames() const;
 
@@ -199,14 +199,14 @@ class TargetProfileConfiguration
     bool allowPoison() const;
     bool allowUndef() const;
 
-    String adaptorName() const;
+    String targetName() const;
 
   private:
     void addAllowedExternalCall(String const& name);
     void addAllowedOpcode(String const& name);
     void addAllowedPointerType(String const& name);
 
-    String adaptor_name_{"null"};
+    String target_name_{"null"};
 
     OpcodeSet opcodes_{};
     Set       external_calls_{};

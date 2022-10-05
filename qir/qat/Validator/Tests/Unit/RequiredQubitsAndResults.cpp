@@ -78,9 +78,9 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
     auto                 generator = std::make_shared<QirAdaptorFactory>(configuration_manager);
 
     configuration_manager.addConfig<TargetProfileConfiguration>(
-        "target.profile", TargetProfileConfiguration::fromQirAdaptorName("generic"));
+        "target.profile", TargetProfileConfiguration::fromQirTargetName("generic"));
     configuration_manager.addConfig<TargetQisConfiguration>(
-        "target.profile", TargetQisConfiguration::fromQirAdaptorName("generic"));
+        "target.profile", TargetQisConfiguration::fromQirTargetName("generic"));
 
     generator->setLogger(logger);
     generator->setupDefaultComponentPipeline();

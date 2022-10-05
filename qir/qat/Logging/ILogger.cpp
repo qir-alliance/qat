@@ -137,14 +137,14 @@ void ILogger::errorNoResultsPresent(llvm::Value* ptr, String const& name)
     errorWithLocation("No results present in function (required by adaptor '" + name + "').", ptr);
 }
 
-void ILogger::errorOpcodeNotAllowed(String const& code, String const& adaptor_name, llvm::Value* ptr)
+void ILogger::errorOpcodeNotAllowed(String const& code, String const& target_name, llvm::Value* ptr)
 {
     if (ptr)
     {
         setLocationFromValue(ptr);
     }
 
-    error("Opcode '" + code + "' is not allowed for this adaptor (" + adaptor_name + ").");
+    error("Opcode '" + code + "' is not allowed for this adaptor (" + target_name + ").");
 }
 
 void ILogger::errorCustomFunctionsNotAllowed(llvm::Value* ptr)
@@ -152,25 +152,25 @@ void ILogger::errorCustomFunctionsNotAllowed(llvm::Value* ptr)
     errorWithLocation("Calls to custom defined functions not allowed.", ptr);
 }
 
-void ILogger::errorExternalCallsNotAllowed(String const& function_name, String const& adaptor_name, llvm::Value* ptr)
+void ILogger::errorExternalCallsNotAllowed(String const& function_name, String const& target_name, llvm::Value* ptr)
 {
     errorWithLocation(
-        "External call '" + function_name + "' is not allowed for this adaptor (" + adaptor_name + ").", ptr);
+        "External call '" + function_name + "' is not allowed for this adaptor (" + target_name + ").", ptr);
 }
 
-void ILogger::errorTypeNotAllowed(String const& type_name, String const& adaptor_name, llvm::Value* ptr)
+void ILogger::errorTypeNotAllowed(String const& type_name, String const& target_name, llvm::Value* ptr)
 {
-    errorWithLocation("Type '" + type_name + "' is not allowed for this adaptor (" + adaptor_name + ").", ptr);
+    errorWithLocation("Type '" + type_name + "' is not allowed for this adaptor (" + target_name + ").", ptr);
 }
 
-void ILogger::errorPoisonNotAllowed(String const& adaptor_name, llvm::Value* ptr)
+void ILogger::errorPoisonNotAllowed(String const& target_name, llvm::Value* ptr)
 {
-    errorWithLocation("Poison value is not allowed for this adaptor (" + adaptor_name + ").", ptr);
+    errorWithLocation("Poison value is not allowed for this adaptor (" + target_name + ").", ptr);
 }
 
-void ILogger::errorUndefNotAllowed(String const& adaptor_name, llvm::Value* ptr)
+void ILogger::errorUndefNotAllowed(String const& target_name, llvm::Value* ptr)
 {
-    errorWithLocation("Undef value is not allowed for this adaptor (" + adaptor_name + ").", ptr);
+    errorWithLocation("Undef value is not allowed for this adaptor (" + target_name + ").", ptr);
 }
 
 void ILogger::errorExpectedStringValueForAttr(String const& function_name, String const& attr_name)
