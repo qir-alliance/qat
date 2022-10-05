@@ -37,7 +37,6 @@ class QatConfig
     bool shouldValidate() const;
 
     /// String to request a specific adaptor name. Default is 'default'.
-    // TODO: Refactor targetName -> targetName()
     String targetName() const;
 
     /// Indicates whether or not the QIR adaptor tool should emit LLVM IR to the standard output.

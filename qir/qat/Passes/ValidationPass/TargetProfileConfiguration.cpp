@@ -67,10 +67,10 @@ TargetProfileConfiguration TargetProfileConfiguration::fromQirTargetName(String 
         adaptor.external_calls_        = Set{};
         adaptor.allowed_pointer_types_ = Set{};
 
-        adaptor.allowlist_opcodes_        = true;
+        adaptor.allowlist_opcodes_        = false;
         adaptor.allowlist_external_calls_ = false;
-        adaptor.allow_internal_calls_     = true;
         adaptor.allowlist_pointer_types_  = false;
+        adaptor.allow_internal_calls_     = true;
         adaptor.allow_primitive_return_   = true;
         adaptor.allow_struct_return_      = true;
         adaptor.allow_pointer_return_     = true;
