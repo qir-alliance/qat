@@ -5,7 +5,7 @@
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 using namespace microsoft::quantum;
 
-extern "C" void loadComponent(QirAdaptorFactory* generator);
+extern "C" void loadAdaptor(QirAdaptorFactory* generator);
 
 class HelloWorldConfig
 {
@@ -28,9 +28,9 @@ class HelloWorldConfig
     String message_{"Hello world"};
 };
 
-extern "C" void loadComponent(QirAdaptorFactory* generator)
+extern "C" void loadAdaptor(QirAdaptorFactory* generator)
 {
     generator->registerAdaptorComponent<HelloWorldConfig>(
-        "hello-world", [](HelloWorldConfig const& cfg, QirAdaptor& /*profile*/)
+        "adaptor.hello-world", [](HelloWorldConfig const& cfg, QirAdaptor& /*adaptor*/)
         { std::cout << "Message: " << cfg.message() << std::endl; });
 }

@@ -10,9 +10,10 @@ namespace microsoft::quantum
 
 void QatConfig::setup(ConfigurationManager& config)
 {
+    // Note that the QAT configuration cannot have experimental values as the experimental flag is not set yet.
 
     config.setSectionName("QAT base configuration", "Configuration of QAT defining the high-level behaviour.");
-    config.addExperimentalParameter(load_, static_cast<String>(""), "load", "Load component.");
+    config.addParameter(load_, static_cast<String>(""), "load", "Load component.");
     config.addParameter(
         generate_, "apply", "Applies a adaptor to transform the IR in correspondence with the adaptor.");
     config.addParameter(validate_, false, "validate", "Executes the validation procedure.");
@@ -24,8 +25,8 @@ void QatConfig::setup(ConfigurationManager& config)
         "adaptor-pipeline", "Overrides the adaptor pipleline.");
 
     config.addParameter(
-        emit_human_readible_llvm_, false, "emit-human-readible-llvm", "Emits LLVM IR to the standard output.");
-    config.addShorthandNotation("emit-human-readible-llvm", "S");
+        emit_human_readable_llvm_, false, "emit-human-readable-llvm", "Emits LLVM IR to the standard output.");
+    config.addShorthandNotation("emit-human-readable-llvm", "S");
 
     config.addParameter(
         target_definition_, static_cast<std::string>(""), "target-def",
@@ -69,7 +70,7 @@ String QatConfig::targetName() const
 
 bool QatConfig::shouldEmitHumanReadibleLlvm() const
 {
-    return emit_human_readible_llvm_;
+    return emit_human_readable_llvm_;
 }
 
 bool QatConfig::isOpt0Enabled() const

@@ -47,7 +47,7 @@ void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
-    configuration_manager.updateParameter("emit-human-readible-llvm", false);
+    configuration_manager.updateParameter("emit-human-readable-llvm", false);
     configuration_manager.updateParameter("verify-module", true);
     configuration_manager.updateParameter("experimental", false);
     configuration_manager.updateParameter("dump-config", true);
@@ -123,7 +123,7 @@ void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
-    configuration_manager.updateParameter("emit-human-readible-llvm", false);
+    configuration_manager.updateParameter("emit-human-readable-llvm", false);
     configuration_manager.updateParameter("verify-module", true);
     configuration_manager.updateParameter("experimental", false);
     configuration_manager.updateParameter("dump-config", true);
@@ -199,7 +199,7 @@ void configureProviderb340QirAdaptor(ConfigurationManager& configuration_manager
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
-    configuration_manager.updateParameter("emit-human-readible-llvm", false);
+    configuration_manager.updateParameter("emit-human-readable-llvm", false);
     configuration_manager.updateParameter("verify-module", true);
     configuration_manager.updateParameter("experimental", false);
     configuration_manager.updateParameter("dump-config", true);

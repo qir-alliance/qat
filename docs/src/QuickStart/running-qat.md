@@ -14,7 +14,7 @@ qat --target-def path/to/target-def.yaml -S -o output.ll input.ll
 ```
 
 The file `target-def.yaml` sets the behaviour of QAT, whereas `-S` tells QAT to
-emit human readible LLVM code (as opposed to the binary format). The output file
+emit human readable LLVM code (as opposed to the binary format). The output file
 is specified by `-o` and finally, a list of one or more input files is given for
 QAT to process. Providing more than a single input file, QAT will link these
 into a single intermediate representation.
@@ -42,7 +42,7 @@ final result really is compliant with the desired target.
 Before demonstrating how adaptors and target validation can be used, we will
 briefly examine a few useful settings in the `qat` section. First and foremost,
 `dump-config` is a useful setting that allows the user to dump the current
-configuration. To provide compatibility with the human readible IR, the config
+configuration. To provide compatibility with the human readable IR, the config
 is dumped as comments. This feature is in particular useful as a commandline
 flag
 

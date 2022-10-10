@@ -13,17 +13,17 @@ else ()
 endif ()
 
 
-add_library(InlinePassComponent SHARED InlinePassComponent/main.cpp)
-add_dependencies(InlinePassComponent llvm)
+add_library(InlinePassAdaptor SHARED InlinePassAdaptor/main.cpp)
+add_dependencies(InlinePassAdaptor llvm)
 
 if (WIN32)
   # Windows specific configure
   # TODO(issue-7): Add Windows specific configuration  
 elseif (APPLE)
-  target_link_libraries(InlinePassComponent
+  target_link_libraries(InlinePassAdaptor
     PUBLIC "$<$<PLATFORM_ID:Darwin>:-undefined dynamic_lookup>")
 else () 
-  target_compile_options(InlinePassComponent
+  target_compile_options(InlinePassAdaptor
     PUBLIC "-fPIC")
 endif ()
 

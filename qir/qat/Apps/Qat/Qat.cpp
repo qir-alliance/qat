@@ -193,7 +193,7 @@ int main(int argc, char const** argv)
             {
                 using LoadFunctionPtr = void (*)(QirAdaptorFactory*);
                 LoadFunctionPtr load_component;
-                load_component = reinterpret_cast<LoadFunctionPtr>(dlsym(handle, "loadComponent"));
+                load_component = reinterpret_cast<LoadFunctionPtr>(dlsym(handle, "loadAdaptor"));
 
                 load_component(generator.get());
             }

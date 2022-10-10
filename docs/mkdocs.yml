@@ -62,8 +62,6 @@ nav:
       - Classes: "Api/Classes/"
       - Namespaces: "Api/Namespaces/"
       - Modules: "Api/Modules/"
-      - Files: "Api/Files/"
-      - Pages: "Api/Pages/"
 
   - Contributing:
       - Code quality: "DeveloperGuide/CodeQuality.md"

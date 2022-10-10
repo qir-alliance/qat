@@ -5,7 +5,7 @@
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 using namespace microsoft::quantum;
 
-extern "C" void loadComponent(QirAdaptorFactory* profile_generator);
+extern "C" void loadAdaptor(QirAdaptorFactory* profile_generator);
 
 class InlinerConfig
 {
@@ -27,10 +27,10 @@ class InlinerConfig
     bool inline_{false}; ///< Default behaviour is that we do not add the inliner pass
 };
 
-extern "C" void loadComponent(QirAdaptorFactory* profile_generator)
+extern "C" void loadAdaptor(QirAdaptorFactory* profile_generator)
 {
     profile_generator->registerAdaptorComponent<InlinerConfig>(
-        "inliner",
+        "adaptor.inliner",
         [](InlinerConfig const& cfg, QirAdaptor& adaptor)
         {
             if (cfg.shouldInline())

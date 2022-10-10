@@ -12,7 +12,7 @@ qat:
     - straightline-code-requirement
     - static-resources
     - grouping
-  emit-human-readible-llvm: true
+  emit-human-readable-llvm: true
   verify-module: false
   experimental: false
   dump-config: false

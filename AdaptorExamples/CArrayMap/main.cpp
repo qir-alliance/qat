@@ -10,7 +10,7 @@
 
 using namespace microsoft::quantum;
 
-extern "C" void loadComponent(QirAdaptorFactory* adaptor_generator);
+extern "C" void loadAdaptor(QirAdaptorFactory* adaptor_generator);
 void            activateAllocatorReplacement(RuleSet& ruleset);
 void            removeArrayCopies(RuleSet& ruleset);
 void            replaceAccess(RuleSet& ruleset);
@@ -201,7 +201,7 @@ void removeArrayCopies(RuleSet& ruleset)
     ruleset.addRule({call("__quantum__rt__array_copy", "array"_cap = _, _), replacer});
 }
 
-extern "C" void loadComponent(QirAdaptorFactory* adaptor_generator)
+extern "C" void loadAdaptor(QirAdaptorFactory* adaptor_generator)
 {
     adaptor_generator->registerAdaptorComponent<CArrayMapConfig>(
         "c-array-map",

@@ -99,7 +99,7 @@ class QatConfig
     String          target_name_{"default"};
     AdaptorPipeline adapter_pipeline_{};
 
-    bool emit_human_readible_llvm_{false};
+    bool emit_human_readable_llvm_{false};
     bool opt0_{false};
     bool opt1_{false};
     bool opt2_{false};
