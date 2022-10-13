@@ -33,7 +33,7 @@ TestProgram IrManipulationTestHelper::toProgram()
     return ret;
 }
 
-IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
+IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions(String const& block_name)
 {
     if (isModuleBroken())
     {
@@ -51,7 +51,15 @@ IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
     }
 
     // Skipping entry
-    pos = data.find("entry:", pos);
+    if (block_name.empty())
+    {
+        pos = data.find("entry:", pos);
+    }
+    else
+    {
+        pos = data.find(block_name + ":", pos);
+    }
+
     if (pos == String::npos)
     {
         return {};
@@ -66,10 +74,24 @@ IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
     while ((next_pos != String::npos) && (next_pos < terminator))
     {
         auto val = data.substr(last_pos, next_pos - last_pos);
+
+        // Removing comments
+        auto comment_p = val.find(';');
+        if (comment_p != String::npos)
+        {
+            val = val.substr(0, comment_p);
+        }
+
         trim(val);
 
         if (val != "")
         {
+            // Breaking at the next block if we are only extracting a specified block
+            if (!block_name.empty() && val[val.size() - 1] == ':')
+            {
+                break;
+            }
+
             ret.emplace_back(std::move(val));
         }
 
@@ -80,11 +102,12 @@ IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
     return ret;
 }
 
-bool IrManipulationTestHelper::hasInstructionSequence(Strings const& instructions)
+bool IrManipulationTestHelper::hasInstructionSequence(Strings const& instructions, String const& block_name)
 {
-    auto     body_instructions = toBodyInstructions();
-    uint64_t i                 = 0;
-    uint64_t j                 = 0;
+    auto body_instructions = toBodyInstructions(block_name);
+
+    uint64_t i = 0;
+    uint64_t j = 0;
 
     while (i < instructions.size() && j < body_instructions.size())
     {

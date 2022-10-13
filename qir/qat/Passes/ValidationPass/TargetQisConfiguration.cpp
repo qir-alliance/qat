@@ -18,6 +18,7 @@ void TargetQisConfiguration::setup(ConfigurationManager& config)
         allowed_qis_, "allowed-qis", "Allowed quantum instruction set.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
     config.addParameter(allow_any_qis_, "allow-any-qis", "Whether or not to allow any quantum instruction.");
+    config.addParameter(irreversible_operations_, "irreversible-operations", "Set of irreversal operation names.");
 
     config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
     config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");

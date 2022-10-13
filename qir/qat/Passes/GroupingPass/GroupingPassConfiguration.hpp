@@ -11,7 +11,9 @@ namespace microsoft::quantum
 class GroupingPassConfiguration // TODO(unknown): Rename GroupingPass -> CircuitSeparation
 {
   public:
-    using Set = std::unordered_set<std::string>;
+    using Set              = std::unordered_set<std::string>;
+    using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+
     // Setup and construction
     //
 
@@ -23,6 +25,7 @@ class GroupingPassConfiguration // TODO(unknown): Rename GroupingPass -> Circuit
         config.addExperimentalParameter(
             circuit_separation_, true, false, "separate-circuits",
             "Whether or not to separate quantum and classical circuits");
+        irreversible_operations_ = config.getParameter("irreversible-operations");
     }
 
     static GroupingPassConfiguration createDisabled()
@@ -39,8 +42,14 @@ class GroupingPassConfiguration // TODO(unknown): Rename GroupingPass -> Circuit
         return circuit_separation_;
     }
 
+    Set irreversibleOperations() const
+    {
+        return irreversible_operations_->value<Set>();
+    }
+
   private:
-    bool circuit_separation_{true};
+    bool             circuit_separation_{true};
+    DeferredValuePtr irreversible_operations_{};
 };
 
 } // namespace microsoft::quantum
