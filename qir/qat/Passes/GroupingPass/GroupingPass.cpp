@@ -37,14 +37,27 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
     int64_t ret = PureClassical;
 
     // Checking all operations
-    bool any_quantum     = false;
-    bool any_classical   = false;
-    bool is_void         = instr->getType()->isVoidTy();
-    bool returns_quantum = isQuantumRegister(instr->getType());
+    bool any_quantum         = false;
+    bool any_classical       = false;
+    bool is_void             = instr->getType()->isVoidTy();
+    bool returns_quantum     = isQuantumRegister(instr->getType());
+    bool destructive_quantum = false;
 
     auto call = llvm::dyn_cast<llvm::CallBase>(instr);
     if (call != nullptr)
     {
+        auto f = call->getCalledFunction();
+        if (f == nullptr)
+        {
+            throw std::runtime_error("Function pointer was null during logic separation analysis.");
+        }
+
+        // TODO(unknown): Use attributes
+        if (f->getName() == "__quantum__qis__mz__body" || f->getName() == "__quantum__qis__reset__body")
+        {
+            destructive_quantum = true;
+        }
+
         for (auto& arg : call->args())
         {
             auto q = isQuantumRegister(arg->getType());
@@ -78,6 +91,11 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
                 ret |= SourceQuantum;
             }
         }
+    }
+
+    if (destructive_quantum)
+    {
+        return TransferQuantumToClassical;
     }
 
     if (any_quantum && any_classical)
@@ -162,6 +180,8 @@ void GroupingPass::expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* t
     // Variables used for the modifications
     to_delete_.clear();
     std::unordered_set<llvm::Value*> depends_on_qc;
+    bool                             destruction_sequence_begun = false;
+    std::unordered_set<llvm::Value*> destroyed_quantum_resources;
     std::unordered_set<llvm::Value*> post_classical_instructions;
 
     for (auto& instr : *tail_classical)
@@ -185,7 +205,25 @@ void GroupingPass::expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* t
                     nextQuantumCycle(module, tail_classical);
                     depends_on_qc.clear();
                     post_classical_instructions.clear();
+                    destruction_sequence_begun = false;
                     break;
+                }
+            }
+
+            // Checking if the instruction is destructive
+            // TODO(unknown): Make dependency analysis instead.
+            if (instr_class == TransferQuantumToClassical)
+            {
+                destruction_sequence_begun = true;
+            }
+            else
+            {
+                if (destruction_sequence_begun)
+                {
+                    nextQuantumCycle(module, tail_classical);
+                    depends_on_qc.clear();
+                    post_classical_instructions.clear();
+                    destruction_sequence_begun = false;
                 }
             }
 
@@ -207,7 +245,30 @@ void GroupingPass::expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* t
         else if (instr_class != InvalidMixedLocation)
         {
             // Check if depends on readout
-            if (depends_on_qc.find(&instr) != depends_on_qc.end())
+            bool is_post_quantum_instruction = depends_on_qc.find(&instr) != depends_on_qc.end();
+
+            // Calls which starts with __quantum__rt__ cannot be moved to
+            // the pre-calculation section becuase they might have side effects
+            // such as recording output helper functions.
+            auto call_instr = llvm::dyn_cast<llvm::CallBase>(&instr);
+            if (call_instr != nullptr)
+            {
+                auto f = call_instr->getCalledFunction();
+                if (f == nullptr)
+                {
+                    continue;
+                }
+
+                // TODO(unknown): Only if qir_ .. in name
+                auto         name         = static_cast<std::string>(f->getName());
+                String const QIR_RT_START = "__quantum__rt__";
+                is_post_quantum_instruction |=
+                    (name.size() >= QIR_RT_START.size() && name.substr(0, QIR_RT_START.size()) == QIR_RT_START);
+            }
+
+            // Checking if we are inserting the instruction before or after
+            // the quantum block
+            if (is_post_quantum_instruction)
             {
                 for (auto user : instr.users())
                 {
@@ -343,8 +404,10 @@ llvm::PreservedAnalyses GroupingPass::run(llvm::Module& module, llvm::ModuleAnal
         quantum_blocks_.clear();
         classical_blocks_.clear();
 
+        // First split
         expandBasedOnSource(module, block);
 
+        // Second splits
         for (auto* readout_block : quantum_blocks_)
         {
             expandBasedOnDest(module, readout_block, true, "readout");
@@ -363,8 +426,10 @@ llvm::PreservedAnalyses GroupingPass::run(llvm::Module& module, llvm::ModuleAnal
         quantum_blocks_.clear();
         classical_blocks_.clear();
 
+        // First split
         expandBasedOnSource(module, block);
 
+        // Second splits
         for (auto* readout_block : quantum_blocks_)
         {
             expandBasedOnDest(module, readout_block, true, "readout");
