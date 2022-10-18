@@ -41,6 +41,7 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
     ir_manip->declareFunction("void @__quantum__rt__qubit_release(%Qubit*)");
     ir_manip->declareFunction("void @__quantum__qis__h__body(%Qubit*)");
     ir_manip->declareFunction("void @__quantum__qis__z__body(%Qubit*)");
+    ir_manip->declareFunction("void @__quantum__qis__y__body(%Qubit*)");
     ir_manip->declareFunction("void @__quantum__qis__x__body(%Qubit*)");
     ir_manip->declareFunction("i8* @__quantum__rt__array_get_element_ptr_1d(%Array*, i64)");
 
@@ -326,7 +327,6 @@ TEST(GroupingComponent, ReuseTest)
 
     auto adaptor = newQirAdaptor(configuration_manager);
     ir_manip->applyQirAdaptor(adaptor);
-    // llvm::errs() << *ir_manip->module() << "\n";
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence(
         {
@@ -396,6 +396,120 @@ TEST(GroupingComponent, ReuseTest)
         {
             "%9 = select i1 %8, i64 -7, i64 %6",
             "call void @no_opt(i64 %9)",
+            "br label %exit_quantum_grouping",
+        },
+        "post-classical1"));
+}
+
+TEST(GroupingComponent, DeferredMeasurementSplit)
+{
+    ConfigurationManager configuration_manager;
+    auto                 ir_manip = newIrManip(R"script(
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  %r1 = call i1 @__quantum__qis__read_result__body(%Result* null)
+  call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* nonnull inttoptr (i64 1 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  %r2 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))
+  call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))
+  call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* nonnull inttoptr (i64 2 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))
+  %r3 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to %Result*))
+
+  call void @__quantum__qis__x__body(%Qubit* null)
+  call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)
+  call void @__quantum__qis__reset__body(%Qubit* null)
+  %x1 = call i1 @__quantum__qis__read_result__body(%Result* null)
+  call void @__quantum__qis__y__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* nonnull inttoptr (i64 1 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  %x2 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))
+  call void @__quantum__qis__z__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))
+  call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* nonnull inttoptr (i64 2 to %Result*))
+  call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))
+  %x3 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to %Result*))
+
+  call void @__quantum__rt__array_start_record_output()
+  call void @__quantum__rt__bool_record_output(i1 %x1)
+  call void @__quantum__rt__bool_record_output(i1 %x2)
+  call void @__quantum__rt__bool_record_output(i1 %x3)
+  call void @__quantum__rt__array_end_record_output()
+  call void @__quantum__rt__array_start_record_output()
+  call void @__quantum__rt__bool_record_output(i1 %r1)
+  call void @__quantum__rt__bool_record_output(i1 %r2)
+  call void @__quantum__rt__bool_record_output(i1 %r3)
+  call void @__quantum__rt__array_end_record_output()
+  )script");
+
+    auto adaptor = newQirAdaptor(configuration_manager);
+    ir_manip->applyQirAdaptor(adaptor);
+
+    EXPECT_TRUE(ir_manip->hasInstructionSequence(
+        {
+            "call void @__quantum__qis__h__body(%Qubit* null)",
+            "call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))",
+            "call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))",
+            "br label %readout",
+        },
+        "quantum"));
+
+    EXPECT_TRUE(ir_manip->hasInstructionSequence(
+        {
+            "call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)",
+            "call void @__quantum__qis__reset__body(%Qubit* null)",
+            "%0 = call i1 @__quantum__qis__read_result__body(%Result* null)",
+            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* nonnull "
+            "inttoptr (i64 1 to %Result*))",
+            "call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))",
+            "%1 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))",
+            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* nonnull "
+            "inttoptr (i64 2 to %Result*))",
+            "call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))",
+            "%2 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to %Result*))",
+            "br label %post-classical",
+        },
+        "readout"));
+
+    EXPECT_TRUE(ir_manip->hasInstructionSequence(
+        {
+            "call void @__quantum__qis__x__body(%Qubit* null)",
+            "call void @__quantum__qis__y__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))",
+            "call void @__quantum__qis__z__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))",
+            "br label %readout3",
+        },
+        "quantum2"));
+
+    EXPECT_TRUE(ir_manip->hasInstructionSequence(
+        {
+            "call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)",
+            "call void @__quantum__qis__reset__body(%Qubit* null)",
+            "%3 = call i1 @__quantum__qis__read_result__body(%Result* null)",
+            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* nonnull "
+            "inttoptr (i64 1 to %Result*))",
+            "call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))",
+            "%4 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))",
+            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* nonnull "
+            "inttoptr (i64 2 to %Result*))",
+            "call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))",
+            "%5 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to %Result*))",
+            "br label %post-classical1",
+        },
+        "readout3"));
+
+    EXPECT_TRUE(ir_manip->hasInstructionSequence(
+        {
+            "call void @__quantum__rt__array_start_record_output()",
+            "call void @__quantum__rt__bool_record_output(i1 %3)",
+            "call void @__quantum__rt__bool_record_output(i1 %4)",
+            "call void @__quantum__rt__bool_record_output(i1 %5)",
+            "call void @__quantum__rt__array_end_record_output()",
+            "call void @__quantum__rt__array_start_record_output()",
+            "call void @__quantum__rt__bool_record_output(i1 %0)",
+            "call void @__quantum__rt__bool_record_output(i1 %1)",
+            "call void @__quantum__rt__bool_record_output(i1 %2)",
+            "call void @__quantum__rt__array_end_record_output()",
             "br label %exit_quantum_grouping",
         },
         "post-classical1"));
