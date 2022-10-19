@@ -15,7 +15,7 @@ namespace quantum
       public:
         void setup(ConfigurationManager& config)
         {
-            // TODO: Add to configuration
+            // TODO(unknown): Add to configuration
             config.setSectionName("Specification", "Convention for a given specification");
             config.addParameter(version_, "spec-version", "Specification version.");
             config.addParameter(entry_point_attr_, "new-entry-point-attr", "");

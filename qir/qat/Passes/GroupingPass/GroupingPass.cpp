@@ -237,7 +237,7 @@ void GroupingPass::expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* t
 {
     prepareSourceSeparation(module, tail_classical);
 
-    auto QIR_RT_START = config_.qirRuntimePrefix();
+    auto qir_rt_start = config_.qirRuntimePrefix();
 
     // Variables used for the modifications
     to_delete_.clear();
@@ -413,7 +413,7 @@ void GroupingPass::expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* t
 
                 auto name = static_cast<std::string>(f->getName());
                 is_post_quantum_instruction |=
-                    (name.size() >= QIR_RT_START.size() && name.substr(0, QIR_RT_START.size()) == QIR_RT_START);
+                    (name.size() >= qir_rt_start.size() && name.substr(0, qir_rt_start.size()) == qir_rt_start);
             }
 
             // Checking if we are inserting the instruction before or after
