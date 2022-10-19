@@ -36,6 +36,8 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
 {
     int64_t ret = PureClassical;
 
+    auto irreversible_operations = config_.irreversibleOperations();
+
     // Checking all operations
     bool any_quantum         = false;
     bool any_classical       = false;
@@ -52,8 +54,9 @@ int64_t GroupingPass::classifyInstruction(llvm::Instruction const* instr)
             throw std::runtime_error("Function pointer was null during logic separation analysis.");
         }
 
-        // TODO(unknown): Use attributes
-        if (f->getName() == "__quantum__qis__mz__body" || f->getName() == "__quantum__qis__reset__body")
+        // Checking if it is an irreversabile operation
+        auto name = static_cast<std::string>(f->getName());
+        if (irreversible_operations.find(name) != irreversible_operations.end())
         {
             destructive_quantum = true;
         }

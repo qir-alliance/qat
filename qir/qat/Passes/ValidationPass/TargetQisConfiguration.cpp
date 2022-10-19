@@ -17,7 +17,10 @@ void TargetQisConfiguration::setup(ConfigurationManager& config)
     config.addParameter(
         allowed_qis_, "allowed-qis", "Allowed quantum instruction set.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
+
     config.addParameter(allow_any_qis_, "allow-any-qis", "Whether or not to allow any quantum instruction.");
+
+    // TODO(unknown): Update YAML configs
     config.addParameter(irreversible_operations_, "irreversible-operations", "Set of irreversal operation names.");
 
     config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
@@ -68,8 +71,8 @@ TargetQisConfiguration TargetQisConfiguration::fromQirTargetName(String const& n
             "__quantum__qis__reset__body:void (%Qubit*)",
             "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
             "__quantum__qis__read_result__body:i1 (%Result*)",
-
         };
+        target_config.irreversible_operations_ = Set{"__quantum__qis__mz__body", "__quantum__qis__reset__body"};
     }
     else if (name == "provider_4bf9")
     {
@@ -92,8 +95,8 @@ TargetQisConfiguration TargetQisConfiguration::fromQirTargetName(String const& n
             "__quantum__qis__reset__body:void (%Qubit*)",
             "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
             "__quantum__qis__read_result__body:i1 (%Result*)",
-
         };
+        target_config.irreversible_operations_ = Set{"__quantum__qis__mz__body", "__quantum__qis__reset__body"};
     }
     else if (name == "provider_7ee0")
     {
@@ -115,8 +118,8 @@ TargetQisConfiguration TargetQisConfiguration::fromQirTargetName(String const& n
             "__quantum__qis__reset__body:void (%Qubit*)",
             "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
             "__quantum__qis__read_result__body:i1 (%Result*)",
-
         };
+        target_config.irreversible_operations_ = Set{"__quantum__qis__mz__body", "__quantum__qis__reset__body"};
     }
     else if (name == "provider_b340")
     {
@@ -138,6 +141,9 @@ TargetQisConfiguration TargetQisConfiguration::fromQirTargetName(String const& n
             "__quantum__qis__rz__body:void (double, %Qubit*)",
             "__quantum__qis__mz__body:void (%Qubit*, %Result*)",
             "__quantum__qis__read_result__body:i1 (%Result*)",
+        };
+        target_config.irreversible_operations_ = Set{
+            "__quantum__qis__mz__body",
         };
     }
     else

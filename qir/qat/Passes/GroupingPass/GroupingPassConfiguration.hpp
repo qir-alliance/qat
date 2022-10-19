@@ -25,13 +25,13 @@ class GroupingPassConfiguration // TODO(unknown): Rename GroupingPass -> Circuit
         config.addExperimentalParameter(
             circuit_separation_, true, false, "separate-circuits",
             "Whether or not to separate quantum and classical circuits");
+
         irreversible_operations_ = config.getParameter("irreversible-operations");
     }
 
     static GroupingPassConfiguration createDisabled()
     {
         GroupingPassConfiguration ret;
-
         ret.circuit_separation_ = false;
 
         return ret;
@@ -44,6 +44,17 @@ class GroupingPassConfiguration // TODO(unknown): Rename GroupingPass -> Circuit
 
     Set irreversibleOperations() const
     {
+        assert(irreversible_operations_ != nullptr);
+        if (irreversible_operations_ == nullptr)
+        {
+            throw std::runtime_error("Configuration 'GroupingPassConfiguration' was not initialized.");
+        }
+
+        if (!irreversible_operations_->isDereferenceable())
+        {
+            throw std::runtime_error("Target QIS configuration was not loaded.");
+        }
+
         return irreversible_operations_->value<Set>();
     }
 
