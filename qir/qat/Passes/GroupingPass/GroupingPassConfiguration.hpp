@@ -27,6 +27,7 @@ class GroupingPassConfiguration // TODO(unknown): Rename GroupingPass -> Circuit
             "Whether or not to separate quantum and classical circuits");
 
         irreversible_operations_ = config.getParameter("irreversible-operations");
+        qir_runtime_prefix_      = config.getParameter("qir-runtime-prefix");
     }
 
     static GroupingPassConfiguration createDisabled()
@@ -58,9 +59,15 @@ class GroupingPassConfiguration // TODO(unknown): Rename GroupingPass -> Circuit
         return irreversible_operations_->value<Set>();
     }
 
+    String qirRuntimePrefix() const
+    {
+        return qir_runtime_prefix_->value<String>();
+    }
+
   private:
     bool             circuit_separation_{true};
     DeferredValuePtr irreversible_operations_{};
+    DeferredValuePtr qir_runtime_prefix_{};
 };
 
 } // namespace microsoft::quantum

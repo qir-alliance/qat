@@ -84,16 +84,6 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(ConfigurationManage
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
     configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
 
-    /*
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
-
-    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
-    configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
-
-    configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());
-    configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
-    //    configuration_manager.setConfig(GroupingPassConfiguration());
-    */
     return adaptor;
 }
 

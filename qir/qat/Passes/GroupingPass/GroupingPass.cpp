@@ -237,6 +237,8 @@ void GroupingPass::expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* t
 {
     prepareSourceSeparation(module, tail_classical);
 
+    auto QIR_RT_START = config_.qirRuntimePrefix();
+
     // Variables used for the modifications
     to_delete_.clear();
     std::unordered_set<llvm::Value*> depends_on_qc;
@@ -409,9 +411,7 @@ void GroupingPass::expandBasedOnSource(llvm::Module& module, llvm::BasicBlock* t
                     continue;
                 }
 
-                // TODO(unknown): Only if qir_ .. in name
-                auto         name         = static_cast<std::string>(f->getName());
-                String const QIR_RT_START = "__quantum__rt__";
+                auto name = static_cast<std::string>(f->getName());
                 is_post_quantum_instruction |=
                     (name.size() >= QIR_RT_START.size() && name.substr(0, QIR_RT_START.size()) == QIR_RT_START);
             }
