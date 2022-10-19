@@ -273,14 +273,17 @@ TEST(GroupingComponent, DeferredMeasurement)
             "call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)",
             "call void @__quantum__qis__reset__body(%Qubit* null)",
             "%0 = call i1 @__quantum__qis__read_result__body(%Result* null)",
-            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* nonnull "
-            "inttoptr (i64 1 to %Result*))",
+            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* " // NOLINT
+            "nonnull inttoptr (i64 1 to %Result*))",
             "call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))",
-            "%1 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))",
-            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* nonnull "
+            "%1 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to "
+            "%Result*))",
+            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* "
+            "nonnull "
             "inttoptr (i64 2 to %Result*))",
             "call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))",
-            "%2 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to %Result*))",
+            "%2 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to "
+            "%Result*))",
             "br label %post-classical",
         },
         "readout"));
@@ -460,14 +463,17 @@ TEST(GroupingComponent, DeferredMeasurementSplit)
             "call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)",
             "call void @__quantum__qis__reset__body(%Qubit* null)",
             "%0 = call i1 @__quantum__qis__read_result__body(%Result* null)",
-            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* nonnull "
-            "inttoptr (i64 1 to %Result*))",
+            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* " // NOLINT
+            "nonnull inttoptr (i64 1 to %Result*))",
             "call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))",
-            "%1 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))",
-            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* nonnull "
+            "%1 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to "
+            "%Result*))",
+            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* "
+            "nonnull "
             "inttoptr (i64 2 to %Result*))",
             "call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))",
-            "%2 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to %Result*))",
+            "%2 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to "
+            "%Result*))",
             "br label %post-classical",
         },
         "readout"));
@@ -486,14 +492,17 @@ TEST(GroupingComponent, DeferredMeasurementSplit)
             "call void @__quantum__qis__mz__body(%Qubit* null, %Result* null)",
             "call void @__quantum__qis__reset__body(%Qubit* null)",
             "%3 = call i1 @__quantum__qis__read_result__body(%Result* null)",
-            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* nonnull "
-            "inttoptr (i64 1 to %Result*))",
+            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*), %Result* " // NOLINT
+            "nonnull inttoptr (i64 1 to %Result*))",
             "call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))",
-            "%4 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to %Result*))",
-            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* nonnull "
+            "%4 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 1 to "
+            "%Result*))",
+            "call void @__quantum__qis__mz__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*), %Result* "
+            "nonnull "
             "inttoptr (i64 2 to %Result*))",
             "call void @__quantum__qis__reset__body(%Qubit* nonnull inttoptr (i64 2 to %Qubit*))",
-            "%5 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to %Result*))",
+            "%5 = call i1 @__quantum__qis__read_result__body(%Result* nonnull inttoptr (i64 2 to "
+            "%Result*))",
             "br label %post-classical1",
         },
         "readout3"));
