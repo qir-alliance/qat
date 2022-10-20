@@ -20,11 +20,8 @@ namespace quantum
                 version_, "spec-version", "Specification version.",
                 ConfigurationManager::ParameterVisibility::ConfigOnly);
             config.addParameter(
-                entry_point_attr_, "entry-point-attr", "Specifies the attribute indicating the entry point.",
-                ConfigurationManager::ParameterVisibility::ConfigOnly);
-            config.addParameter(
-                qir_runtime_prefix_, "qir-runtime-prefix", "QIR runtime prefix.",
-                ConfigurationManager::ParameterVisibility::ConfigOnly);
+                entry_point_attr_, "entry-point-attr", "Specifies the attribute indicating the entry point.");
+            config.addParameter(qir_runtime_prefix_, "qir-runtime-prefix", "QIR runtime prefix.");
         }
 
       private:
