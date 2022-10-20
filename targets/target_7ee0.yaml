@@ -166,6 +166,8 @@ target:
       - __quantum__qis__ry__body:void (double, %Qubit*)
       - __quantum__qis__t__body:void (%Qubit*)
     allow-any-qis: false
-    irreversible-operations: ~
+    irreversible-operations:
+      - __quantum__qis__reset__body
+      - __quantum__qis__mz__body
     requires-qubits: true
     requires-results: true
