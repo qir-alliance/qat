@@ -15,7 +15,6 @@ namespace quantum
       public:
         void setup(ConfigurationManager& config)
         {
-            // TODO(unknown): Add to configuration
             config.setSectionName("Specification", "Convention for a given specification");
             config.addParameter(
                 version_, "spec-version", "Specification version.",
