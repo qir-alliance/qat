@@ -10,6 +10,8 @@ namespace microsoft::quantum
 class TargetQisMappingPassConfiguration
 {
   public:
+    using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+
     // Setup and construction
     //
 
@@ -108,11 +110,11 @@ class TargetQisMappingPassConfiguration
     // Code expansion and trimming
     //
 
-    bool        delete_dead_code_{true};
-    bool        clone_functions_{true};
-    bool        transform_execution_path_only_{true};
-    uint64_t    max_recursion_{512};
-    std::string entry_point_attr_{"EntryPoint"};
+    bool             delete_dead_code_{true};
+    bool             clone_functions_{true};
+    bool             transform_execution_path_only_{true};
+    uint64_t         max_recursion_{512};
+    DeferredValuePtr entry_point_attr_{nullptr};
 
     // Branching
     bool assume_no_exceptions_{false};

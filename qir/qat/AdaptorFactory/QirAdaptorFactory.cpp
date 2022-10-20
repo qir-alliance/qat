@@ -235,7 +235,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<RemoveNonEntrypointFunctionsPassConfiguration>(
-        "adaptor.remove-non-entrypoint-functions", // TODO(unknown): Rename?
+        "adaptor.remove-non-entrypoint-functions",
         [logger](RemoveNonEntrypointFunctionsPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mpm = adaptor.modulePassManager();
@@ -244,7 +244,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<TargetQisMappingPassConfiguration>(
-        "adaptor.target-qis-mapping", // TODO(unknown): Rename?
+        "adaptor.target-qis-mapping",
         [logger](TargetQisMappingPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& ret = adaptor.modulePassManager();
@@ -262,7 +262,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<TargetProfileMappingConfiguration>(
-        "adaptor.target-profile-mapping", // TODO(unknown): Rename?
+        "adaptor.target-profile-mapping",
         [logger](TargetProfileMappingConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto&                     mpm = adaptor.modulePassManager();
