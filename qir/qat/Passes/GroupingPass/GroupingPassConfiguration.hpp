@@ -8,7 +8,7 @@
 namespace microsoft::quantum
 {
 
-class GroupingPassConfiguration // TODO(unknown): Rename GroupingPass -> CircuitSeparation
+class GroupingPassConfiguration
 {
   public:
     using Set = std::unordered_set<std::string>;
@@ -19,28 +19,27 @@ class GroupingPassConfiguration // TODO(unknown): Rename GroupingPass -> Circuit
     /// ConfigurationManager documentation for more details on how the setup process is implemented.
     void setup(ConfigurationManager& config)
     {
-        config.setSectionName("Circuit separation", "Separation of quantum and classical circuits");
+        config.setSectionName("Grouping quantum instructions", "Separation of quantum and classical operations");
         config.addExperimentalParameter(
-            circuit_separation_, true, false, "separate-circuits",
-            "Whether or not to separate quantum and classical circuits");
+            group_qis_, true, false, "group-qis", "Whether or not to separate quantum and classical circuits");
     }
 
     static GroupingPassConfiguration createDisabled()
     {
         GroupingPassConfiguration ret;
 
-        ret.circuit_separation_ = false;
+        ret.group_qis_ = false;
 
         return ret;
     }
 
-    bool circuitSeparation() const
+    bool groupQis() const
     {
-        return circuit_separation_;
+        return group_qis_;
     }
 
   private:
-    bool circuit_separation_{true};
+    bool group_qis_{true};
 };
 
 } // namespace microsoft::quantum

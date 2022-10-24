@@ -254,7 +254,7 @@ entry:
     {
         llvm::FunctionPassManager fpm;
         auto&                     cfg = configuration_manager.get<GroupingPassConfiguration>();
-        if (cfg.circuitSeparation())
+        if (cfg.groupQis())
         {
             mam.registerPass([&] { return GroupingAnalysisPass(cfg, logger); });
 

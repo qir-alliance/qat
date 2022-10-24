@@ -1,9 +1,5 @@
 # Targeting QIR
 
-An important aspect is that the default values of each configuration option
-change when a specific target configuration is loaded. The defaults listed in
-this section are those for the `generic` target configuration.
-
 ## QAT Configuration
 
 QAT has some high level configuration that dictates what tasks QAT should do and
@@ -121,7 +117,7 @@ The indiidual adaptors that can be disabled are listed here:
 | disable-target-profile-mapping          | Disables Post-transform optimisation.     | false         |
 | disable-straightline-code-requirement   | Disables Pre-transform validation.        | false         |
 | disable-static-resources                | Disables Static resource manipulation.    | false         |
-| disable-grouping                        | Disables Circuit separation.              | false         |
+| disable-grouping                        | Disables QIS Grouping.                    | false         |
 
 Note that some of these adaptors are not configurable. One such example is the
 `remove-non-entrypoint-functions` which either is there or not. This particular

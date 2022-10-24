@@ -27,7 +27,7 @@ Outline:
   - [Architecture Overview](DeveloperGuide/ArchitectureOverview.md)
   - [Writing an adaptor](DeveloperGuide/WritingAdaptor.md)
   - [Rule based adaptors](DeveloperGuide/WritingRuleTests.md)
-  - [Circuit separation](DeveloperGuide/LogicSeparation.md)
+  - [Grouping QIS](DeveloperGuide/LogicSeparation.md)
 
 - Additional developer info:
 
