@@ -200,7 +200,7 @@ There are a number of experimental features in this adaptor. To list these use
 
 Like target QIS mapping, the target profile mapping maps known IR patterns into
 other patterns. This adaptor only uses LLVM passes at the moment, but could be
-extended using our pattern matching pass to accomodate special requirements.
+extended using our pattern matching pass to accommodate special requirements.
 Options as the moment are:
 
 | Name                     | Description                                                                                  | Default value |
@@ -232,7 +232,7 @@ provided.
 
 In case of a QIR that uses statically allocated qubits and/or results, the
 static resource adaptor allows manipulation to archieve certain properties. One
-such property is enforcing sequential indexing starting 0 and another is the
+such property is enforcing consecutive indexing starting 0 and another is the
 ability to ensure that a new qubit is used whenever a reset occurs. The latter
 garantuees that qubits are not reused within the lifetime of the program and is
 a prerequisite for measurement at the end of the program execution.
