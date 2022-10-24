@@ -200,7 +200,7 @@ There are a number of experimental features in this adaptor. To list these use
 
 Like target QIS mapping, the target profile mapping maps known IR patterns into
 other patterns. This adaptor only uses LLVM passes at the moment, but could be
-extended using our pattern matching pass to accomodate special requirements.
+extended using our pattern matching pass to accommodate special requirements.
 Options as the moment are:
 
 | Name                     | Description                                                                                  | Default value |
