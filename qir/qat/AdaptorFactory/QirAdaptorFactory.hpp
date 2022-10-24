@@ -130,6 +130,8 @@ class QirAdaptorFactory
 template <typename R> void QirAdaptorFactory::registerAdaptorComponent(String const& id, SetupFunction<R> setup)
 {
     configuration_manager_.addConfig<R>(id);
+
+    // Ensuring that the adaptor configuration section can be disabled from the commandline
     configuration_manager_.allowDisableSectionById(id);
 
     auto setup_wrapper = [setup](QirAdaptorFactory& generator, QirAdaptor& adaptor)

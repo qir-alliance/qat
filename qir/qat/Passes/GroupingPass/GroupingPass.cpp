@@ -535,7 +535,7 @@ void GroupingPass::deleteInstructions()
 
 llvm::PreservedAnalyses GroupingPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& mam)
 {
-    if (!config_.circuitSeparation())
+    if (!config_.groupQis())
     {
         return llvm::PreservedAnalyses::all();
     }

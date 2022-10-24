@@ -56,7 +56,7 @@ nav:
       - Architecture Overview: "DeveloperGuide/ArchitectureOverview.md"
       - Writing an adaptor: "DeveloperGuide/WritingAdaptor.md"
       - Rule based extensions: "DeveloperGuide/WritingRuleTests.md"
-      - Circuit separation: "DeveloperGuide/LogicSeparation.md"
+      - Grouping QIS: "DeveloperGuide/LogicSeparation.md"
 
   - Api:
       - Classes: "Api/Classes/"

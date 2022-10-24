@@ -1,13 +1,13 @@
 # Running QAT
 
-In the [next section](../UsingQAT/TargetingQIR.md) we will discuss the
-individual validators and adaptors. However, for the sake of getting started
+In the [section on targeting QIR](../UsingQAT/TargetingQIR.md) we will discuss
+the individual validators and adaptors. However, for the sake of getting started
 quickly, in this section, we will take the reader through the basic usage of
 QAT, its configuration and how to use selected adaptors using examples.
 
 ## Basic usage
 
-The easiest way to use QAT is by running it with a target definition:
+The easiest way to use QAT is by running it with a target configuration:
 
 ```sh
 qat --target-def path/to/target-def.yaml -S -o output.ll input.ll
@@ -24,7 +24,7 @@ To get a full list of the commandline arguments and flags, run `qat -h` or
 
 ## Target configuration
 
-The target QIR is defined through the target definition provided as a YAML
+The target QIR is defined through the target configuration provided as a YAML
 configuration file. Note that it is possible to configure QAT entirely through
 the commandline, we recommend the use of YAML configurations as the overall
 number configurable settings is pretty large.
@@ -63,8 +63,8 @@ adds debug symbols referring to the LL file itself. This is discussed in
 
 ## Adaptor examples
 
-In this section we will demonstrate some of the adaptor examples that helps the
-user manipulate the IR to conform to target specification.
+In this section we will demonstrate some of the adaptor examples which
+manipulate the IR to conform to target specification.
 
 In many of the sections below, we will refer to demos. From the repository root,
 these can be found in the folder `qir/demos`. A prerequisite to running the
@@ -405,10 +405,10 @@ function `soft_z`.
 Each backend can now provide a library that makes software implementations of
 the gates that are not supported natively by the system.
 
-### Circuit separation
+### Grouping QIS
 
-Circuit separation is an experimental feature that allows separation of the
-classical operations and pure quantum circuits. In this section we will
-concentrate on showing how to use this feature. If you are interested in the
+Grouping QIS is an experimental adaptor that allows separation of the classical
+operations and pure quantum circuits. In this section we will concentrate on
+showing how to use this feature. If you are interested in the
 
 TODO(tfr): Write this section once the cicruit separation has been revised.

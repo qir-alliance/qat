@@ -101,7 +101,7 @@ void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager
     configuration_manager.updateParameter("replace-qubit-on-reset", false);
     configuration_manager.updateParameter("inline-after-id-change", true);
 
-    configuration_manager.updateParameter("separate-circuits", true);
+    configuration_manager.updateParameter("group-qis", true);
 
     configuration_manager.updateParameter("allow-internal-calls", false);
     configuration_manager.updateParameter("requires-qubits", true);
@@ -177,7 +177,7 @@ void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager
     configuration_manager.updateParameter("replace-qubit-on-reset", false);
     configuration_manager.updateParameter("inline-after-id-change", true);
 
-    configuration_manager.updateParameter("separate-circuits", false);
+    configuration_manager.updateParameter("group-qis", false);
 
     configuration_manager.updateParameter("allow-internal-calls", false);
     configuration_manager.updateParameter("requires-qubits", true);
@@ -253,7 +253,7 @@ void configureProviderb340QirAdaptor(ConfigurationManager& configuration_manager
     configuration_manager.updateParameter("replace-qubit-on-reset", true);
     configuration_manager.updateParameter("inline-after-id-change", true);
 
-    configuration_manager.updateParameter("separate-circuits", false);
+    configuration_manager.updateParameter("group-qis", false);
 
     configuration_manager.updateParameter("allow-internal-calls", false);
     configuration_manager.updateParameter("requires-qubits", true);

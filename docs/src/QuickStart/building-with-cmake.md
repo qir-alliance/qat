@@ -5,7 +5,7 @@
 It is necessary for you to have the following tools before you get started on
 making a new build from this project:
 
-- C++ compiler
+- C++ compiler (Clang 13 or MSVC)
 - CMake
 - LLVM 13
 
@@ -23,9 +23,10 @@ git submodule update --init --recursive
 
 ### Prerequisites on Windows
 
-Currently CMake builds are not supported on Windows using PowerShell. It is
-possible to build QAT on Windows Linux Subsystem. Please refer to the Linux
-build instructions.
+Currently CMake builds are not supported on Windows using PowerShell. Building
+with CMake on Windows Subsystem for Linux follows the steps outlined for Ubuntu.
+It is possible to build QAT on Windows Linux Subsystem. Please refer to the
+Linux build instructions.
 
 ### Prerequisites on macOS
 

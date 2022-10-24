@@ -342,7 +342,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         "adaptor.grouping",
         [logger](GroupingPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
-            if (cfg.circuitSeparation())
+            if (cfg.groupQis())
             {
                 auto& mam = adaptor.moduleAnalysisManager();
                 mam.registerPass([&] { return GroupingAnalysisPass(cfg, logger); });

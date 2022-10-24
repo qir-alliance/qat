@@ -1,9 +1,5 @@
 # Targeting QIR
 
-An important aspect is that the default values change with the target
-configuration. The defaults listed in this section are those for the `generic`
-target configuration.
-
 ## QAT Configuration
 
 QAT has some high level configuration that dictates what tasks QAT should do and
@@ -121,7 +117,7 @@ The indiidual adaptors that can be disabled are listed here:
 | disable-target-profile-mapping          | Disables Post-transform optimisation.     | false         |
 | disable-straightline-code-requirement   | Disables Pre-transform validation.        | false         |
 | disable-static-resources                | Disables Static resource manipulation.    | false         |
-| disable-grouping                        | Disables Circuit separation.              | false         |
+| disable-grouping                        | Disables QIS Grouping.                    | false         |
 
 Note that some of these adaptors are not configurable. One such example is the
 `remove-non-entrypoint-functions` which either is there or not. This particular
@@ -200,7 +196,7 @@ There are a number of experimental features in this adaptor. To list these use
 
 Like target QIS mapping, the target profile mapping maps known IR patterns into
 other patterns. This adaptor only uses LLVM passes at the moment, but could be
-extended using our pattern matching pass to accomodate special requirements.
+extended using our pattern matching pass to accommodate special requirements.
 Options as the moment are:
 
 | Name                     | Description                                                                                  | Default value |
@@ -232,7 +228,7 @@ provided.
 
 In case of a QIR that uses statically allocated qubits and/or results, the
 static resource adaptor allows manipulation to archieve certain properties. One
-such property is enforcing sequential indexing starting 0 and another is the
+such property is enforcing consecutive indexing starting 0 and another is the
 ability to ensure that a new qubit is used whenever a reset occurs. The latter
 garantuees that qubits are not reused within the lifetime of the program and is
 a prerequisite for measurement at the end of the program execution.

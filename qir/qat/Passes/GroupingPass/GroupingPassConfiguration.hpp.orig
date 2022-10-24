@@ -23,17 +23,26 @@ class GroupingPassConfiguration
     {
         config.setSectionName("Grouping quantum instructions", "Separation of quantum and classical operations");
         config.addExperimentalParameter(
-            group_qis_, true, false, "group-qis", "Whether or not to separate quantum and classical circuits");
+<<<<<<< HEAD
+            circuit_separation_, true, false, "separate-circuits",
+            "Whether or not to separate quantum and classical circuits");
 
         irreversible_operations_ = config.getParameter("irreversible-operations");
         qir_runtime_prefix_      = config.getParameter("qir-runtime-prefix");
+=======
+            group_qis_, true, false, "group-qis", "Whether or not to separate quantum and classical circuits");
+>>>>>>> feature/documentation-update
     }
 
     static GroupingPassConfiguration createDisabled()
     {
         GroupingPassConfiguration ret;
+<<<<<<< HEAD
+        ret.circuit_separation_ = false;
+=======
 
         ret.group_qis_ = false;
+>>>>>>> feature/documentation-update
 
         return ret;
     }
@@ -65,9 +74,13 @@ class GroupingPassConfiguration
     }
 
   private:
-    bool             group_qis_{true};
+<<<<<<< HEAD
+    bool             circuit_separation_{true};
     DeferredValuePtr irreversible_operations_{};
     DeferredValuePtr qir_runtime_prefix_{};
+=======
+    bool group_qis_{true};
+>>>>>>> feature/documentation-update
 };
 
 } // namespace microsoft::quantum

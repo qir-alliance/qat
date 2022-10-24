@@ -2,7 +2,12 @@
 
 In this tutorial we will develop a new QAT profile adaptor. We will make the
 adaptor a separate library which is dynamically loaded through the command line
-interface. All examples in this tutorial can be found in `AdaptorExamples`.
+interface. All examples in this tutorial can be found in `AdaptorExamples`. This
+tutorial is outlined as follows:
+
+1. Write an adaptor that just loads a configuration file
+2. Write an adaptor that adds passes to the adaptor
+3. Integrating the new adaptor into the QAT core
 
 Our first "adaptor" will be a "hello world" boilerplate which serves the purpose
 of giving the reader an understanding of how to define configurations for our
@@ -12,8 +17,7 @@ For our second adaptor, we will use a standard LLVM pass to demonstrate how to
 load these. We will show how the registered configuration can be used to enable
 or disable the pass. To show that the effect of the pass, we use the inliner
 pipeline. We will see how enabling the pass results in inlining all the function
-calls. As QAT ships with a built-in inliner pass, it is important to remember to
-disable this to see the effect of our custom pass.
+calls.
 
 ## Hello world
 
@@ -96,20 +100,21 @@ function should just print a message given a `HelloWorldConfig` instance. The
 corresponding adaptor registration reads:
 
 ```c++
-extern "C" void loadAdaptor(IQirAdaptorFactory *generator)
+extern "C" void loadAdaptor(IQirAdaptorFactory *factory)
 {
-  generator->registerAdaptorComponent<HelloWorldConfig>(
+  factory->registerAdaptorComponent<HelloWorldConfig>(
       "adaptor.hello-world",
-      [](HelloWorldConfig const &cfg, IQirAdaptorFactory * /*generator*/, Profile & /*profile*/) {
+      [](HelloWorldConfig const &cfg, IQirAdaptorFactory * /*factory*/, Profile & /*profile*/) {
         std::cout << "Message: " << cfg.message() << std::endl;
       });
 }
 ```
 
 In this example, we will only concern ourselves with how to use the
-configuration and we will ignore `generator` and `profile` for now. The full
-source code to this example can be found in `AdaptorExamples/HelloWorld` and it
-can be compiled through following steps (startig from the Passes root folder):
+configuration and we will ignore `factory` and `profile` for now. These will be
+covered in the later sections. The full source code to this example can be found
+in `AdaptorExamples/HelloWorld` and it can be compiled through following steps
+(startig from the Passes root folder):
 
 ```sh
 mkdir Debug
@@ -150,7 +155,8 @@ Message: Hello world
 ```
 
 We note that in order for our new component to be loaded we need to add it to
-the adaptor pipeline.
+the adaptor pipeline by using adding `--adaptor-pipeline hello-world` to the
+commandline arguments.
 
 ## Creating a Pass Component
 
@@ -184,18 +190,18 @@ private:
 The implementation itself is
 
 ```c++
-extern "C" void loadAdaptor(IQirAdaptorFactory *generator)
+extern "C" void loadAdaptor(IQirAdaptorFactory *factory)
 {
-  generator->registerAdaptorComponent<InlinerConfig>(
-      "adaptor.inliner", [](InlinerConfig const &cfg, IQirAdaptorFactory *ptr, Profile & /*profile*/) {
+  factory->registerAdaptorComponent<InlinerConfig>(
+      "adaptor.inliner", [](InlinerConfig const &cfg, IQirAdaptorFactory *factory, Profile & /*profile*/) {
         if (cfg.shouldInline())
         {
-          auto &module_pass_manager = ptr->modulePassManager();
+          auto &module_pass_manager = factory->modulePassManager();
 
           // Adds the inline pipeline
-          auto &pass_builder = ptr->passBuilder();
+          auto &pass_builder = factory->passBuilder();
           auto  inliner_pass = pass_builder.buildInlinerPipeline(
-              ptr->optimizationLevel(), llvm::PassBuilder::ThinLTOPhase::None, ptr->debug());
+              factory->optimizationLevel(), llvm::PassBuilder::ThinLTOPhase::None, ptr->debug());
           module_pass_manager.addPass(std::move(inliner_pass));
         }
       });
