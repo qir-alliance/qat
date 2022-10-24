@@ -132,7 +132,7 @@ class TargetQisMappingPassConfiguration
     bool optimize_result_one_{true};
     bool optimize_result_zero_{true};
     bool optimize_result_comparison_{true};
-    bool optimize_qauntum_constants_{true};
+    bool optimize_quantum_constants_{true};
     bool remove_get_one_or_zero_{true};
 
     bool use_static_qubit_array_allocation_{true};

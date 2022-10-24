@@ -21,12 +21,12 @@ macOS, and `msvc` on Windows. If you prefer CMake, please
 
 In the table below, we summarize the systems currently supported.
 
-| Operating system | Architecture | Version | Bazel | CMake | Notes                                                               |
-| ---------------- | ------------ | ------- | ----- | ----- | ------------------------------------------------------------------- |
-| Windows          | x86_64, Arm  | 2019    | Yes   | No    | Docker images through Bazel are not supported                       |
-| Ubuntu           | x86_64, Arm  | 22.04   | Yes   | Yes   |                                                                     |
-|                  | x86_64, Arm  | 24.04   | Yes   | Yes   |                                                                     |
-| macOS            | x86_64, Arm  |         | Yes   | Yes   | Some tests fail on Arm due to issues in Bazel configuration of LLVM |
+| Operating system | Architecture | Version | Bazel | CMake | Notes                                                                                                                 |
+| ---------------- | ------------ | ------- | ----- | ----- | --------------------------------------------------------------------------------------------------------------------- |
+| Windows          | x86_64, Arm  | 2019    | Yes   | No    | Docker images through Bazel are not supported                                                                         |
+| Ubuntu           | x86_64, Arm  | 22.04   | Yes   | Yes   |                                                                                                                       |
+|                  | x86_64, Arm  | 24.04   | Yes   | Yes   |                                                                                                                       |
+| macOS            | x86_64, Arm  |         | Yes   | Yes   | Some [tests fail](https://github.com/qir-alliance/qat/issues/144) on Arm due to issues in Bazel configuration of LLVM |
 
 At the moment, we support `clang` and `msvc` to compile QAT. While `gcc` might
 work, it is untested and not supported at the moment.

@@ -84,7 +84,7 @@ TargetQisMappingPassConfiguration TargetQisMappingPassConfiguration::createDisab
     ret.optimize_result_one_               = false;
     ret.optimize_result_zero_              = false;
     ret.optimize_result_comparison_        = false;
-    ret.optimize_qauntum_constants_        = false;
+    ret.optimize_quantum_constants_        = false;
     ret.remove_get_one_or_zero_            = false;
     ret.use_static_qubit_array_allocation_ = false;
     ret.use_static_qubit_allocation_       = false;
@@ -109,7 +109,7 @@ TargetQisMappingPassConfiguration TargetQisMappingPassConfiguration::createReuse
     ret.optimize_result_one_               = false;
     ret.optimize_result_zero_              = false;
     ret.optimize_result_comparison_        = false;
-    ret.optimize_qauntum_constants_        = false;
+    ret.optimize_quantum_constants_        = false;
     ret.remove_get_one_or_zero_            = false;
     ret.use_static_qubit_array_allocation_ = false;
     ret.use_static_qubit_allocation_       = false;
@@ -189,7 +189,7 @@ bool TargetQisMappingPassConfiguration::optimizeResultZero() const
 
 bool TargetQisMappingPassConfiguration::optimizeQuantumConstants() const
 {
-    return optimize_qauntum_constants_;
+    return optimize_quantum_constants_;
 }
 
 bool TargetQisMappingPassConfiguration::optimizeResultComparison() const
@@ -228,7 +228,7 @@ bool TargetQisMappingPassConfiguration::isDisabled() const
         delete_dead_code_ == false && clone_functions_ == false && transform_execution_path_only_ == false &&
         reuse_qubits_ == false && disable_reference_counting_ == false && disable_alias_counting_ == false &&
         disable_string_support_ == false && disable_record_output_support_ == false && optimize_result_one_ == false &&
-        optimize_result_zero_ == false && optimize_qauntum_constants_ == false &&
+        optimize_result_zero_ == false && optimize_quantum_constants_ == false &&
         optimize_result_comparison_ == false && remove_get_one_or_zero_ == false &&
         use_static_qubit_array_allocation_ == false && use_static_qubit_allocation_ == false &&
         use_static_result_allocation_ == false);
@@ -250,7 +250,7 @@ bool TargetQisMappingPassConfiguration::isDefault() const
         optimize_result_one_ == ref.optimize_result_one_ && optimize_result_zero_ == ref.optimize_result_zero_ &&
         optimize_result_comparison_ == ref.optimize_result_comparison_ &&
         remove_get_one_or_zero_ == ref.remove_get_one_or_zero_ &&
-        optimize_qauntum_constants_ == ref.optimize_qauntum_constants_ &&
+        optimize_quantum_constants_ == ref.optimize_quantum_constants_ &&
         use_static_qubit_array_allocation_ == ref.use_static_qubit_array_allocation_ &&
         use_static_qubit_allocation_ == ref.use_static_qubit_allocation_ &&
         use_static_result_allocation_ == ref.use_static_result_allocation_);

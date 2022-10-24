@@ -1,8 +1,8 @@
 # Targeting QIR
 
-An important aspect is that the default values change with the target
-configuration. The defaults listed in this section are those for the `generic`
-target configuration.
+An important aspect is that the default values of each configuration option
+change when a specific target configuration is loaded. The defaults listed in
+this section are those for the `generic` target configuration.
 
 ## QAT Configuration
 

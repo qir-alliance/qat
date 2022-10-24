@@ -63,8 +63,8 @@ adds debug symbols referring to the LL file itself. This is discussed in
 
 ## Adaptor examples
 
-In this section we will demonstrate some of the adaptor examples that helps the
-user manipulate the IR to conform to target specification.
+In this section we will demonstrate some of the adaptor examples which
+manipulate the IR to conform to target specification.
 
 In many of the sections below, we will refer to demos. From the repository root,
 these can be found in the folder `qir/demos`. A prerequisite to running the
