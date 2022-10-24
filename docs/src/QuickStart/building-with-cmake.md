@@ -5,7 +5,7 @@
 It is necessary for you to have the following tools before you get started on
 making a new build from this project:
 
-- C++ compiler
+- C++ compiler (Clang or MSVC)
 - CMake
 - LLVM 13
 
