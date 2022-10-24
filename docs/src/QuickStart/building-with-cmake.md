@@ -5,9 +5,9 @@
 It is necessary for you to have the following tools before you get started on
 making a new build from this project:
 
--   C++ compiler (Clang 13 or MSVC)
--   CMake
--   LLVM 13
+- C++ compiler (Clang 13 or MSVC)
+- CMake
+- LLVM 13
 
 If you are compiling and using the command-line tool, these are necessary tools
 regardless of whether you plan to develop the library itself. The build
