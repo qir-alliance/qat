@@ -57,6 +57,7 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(ConfigurationManage
             adaptor.modulePassManager().addPass(FunctionToModule(std::move(fpm)));
         });
 
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration());
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());

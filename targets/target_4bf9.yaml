@@ -16,14 +16,6 @@ qat:
     - straightline-code-requirement
     - static-resources
     - grouping
-    - replacement-linking
-    - llvm-optimization
-    - remove-non-entrypoint-functions
-    - target-qis-mapping
-    - target-profile-mapping
-    - straightline-code-requirement
-    - static-resources
-    - grouping
   emit-human-readable-llvm: false
   verify-module: true
   experimental: false
