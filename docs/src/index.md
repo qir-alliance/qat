@@ -49,8 +49,8 @@ instructions available. With this in mind, the vendor or user of said backend
 would define a profile that only contains a specified subset. A target consists
 of a set of classical capabililties refered to as a profile and a quantum
 instruction set (QIS). One example of such a target is the base profile with any
-QIS, which only allows function calls and branching, but no arithmetic,
-classical memory, or classical registers.
+QIS, which only allows function calls and jumps, but no arithmetic, classical
+memory, or classical data types.
 
 The generation of the generic QIR according to the spec with no constraints
 would typically be performed by the frontend. A couple of examples are Q# or
