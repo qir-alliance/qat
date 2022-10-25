@@ -4,15 +4,15 @@ qat:
   validate: false
   adaptor: default
   adaptor-pipeline:
-    - weak-linking
+    - replacement-linking
     - llvm-optimization
-    - pre-transform-trimming
-    - transformation-rules
-    - post-transform
-    - post-transform-validation
+    - remove-non-entrypoint-functions
+    - target-qis-mapping
+    - target-profile-mapping
+    - straightline-code-requirement
     - static-resources
     - grouping
-  emit-llvm: true
+  emit-human-readable-llvm: true
   verify-module: false
   experimental: false
   dump-config: false
@@ -23,7 +23,7 @@ qat:
   version: false
   help: false
 adaptor:
-  transformation-rules:
+  target-qis-mapping:
     delete-dead-code: false
     clone-functions: false
     transform-execution-path-only: false
@@ -32,7 +32,7 @@ adaptor:
     reuse-qubits: false
     reuse-results: false
     entry-point-attr: EntryPoint
-  weak-linking:
+  replacement-linking:
     replace-functions: ~
     remove-call-attributes: false
   llvm-optimization:
@@ -51,12 +51,12 @@ adaptor:
     eliminate-constants: true
     eliminate-dead-code: true
     eliminate-memory: true
-  pre-transform-trimming: ~
-  post-transform:
+  remove-non-entrypoint-functions: ~
+  target-profile-mapping:
     lower-switch: true
     should-eleminate-zext-i1: true
     defer-measurements: false
-  post-transform-validation: ~
+  straightline-code-requirement: ~
   static-resources:
     annotate-qubit-use: true
     annotate-result-use: true
@@ -66,11 +66,9 @@ adaptor:
     replace-qubit-on-reset: false
     inline-after-id-change: true
   grouping:
-    separate-circuits: false
+    group-qis: false
 target:
   profile:
-    requires-qubits: false
-    requires-results: false
     allow-internal-calls: false
     allow-poison: true
     allow-undef: true
@@ -120,8 +118,10 @@ target:
       - Qubit**
       - Result*
   qis:
+    requires-qubits: false
+    requires-results: false
     allowed-qis:
       - __quantum__qis__cnot__body:void (%Qubit*, %Qubit*)
       - __quantum__qis__h__body:void (%Qubit*)
       - __quantum__qis__x__body:void (%Qubit*)
-    allowed-any-qis: false
+    allow-any-qis: false

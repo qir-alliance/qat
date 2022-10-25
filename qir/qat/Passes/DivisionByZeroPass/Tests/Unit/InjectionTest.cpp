@@ -7,7 +7,7 @@
 #include "qir/qat/Passes/DivisionByZeroPass/DivisionByZeroPass.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -47,7 +47,6 @@ std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(ConfigurationManage
 
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
         configuration_manager, ConfigurableQirAdaptorFactory::SetupMode::DoNothing);
-    configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<DummyConfig>();
 
     adaptor->registerAnonymousAdaptorComponent<DummyConfig>(

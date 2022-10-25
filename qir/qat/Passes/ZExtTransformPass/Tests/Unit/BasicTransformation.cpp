@@ -3,25 +3,25 @@
 
 #include "qir/external/gtest.hpp"
 #include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
-#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
+#include "qir/qat/AdaptorFactory/TargetProfileMappingConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/CommentLogger.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPass.hpp"
-#include "qir/qat/Passes/PreTransformTrimming/PreTransformTrimmingPass.hpp"
+#include "qir/qat/Passes/RemoveNonEntrypointFunctions/RemoveNonEntrypointFunctionsPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/AllocationAnalysisPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/QubitRemapPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/ResourceAnnotationPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPass.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPassConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/Passes/ZExtTransformPass/ZExtTransformPass.hpp"
-#include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 #include "qir/qat/Utils/FunctionToModule.hpp"
@@ -80,14 +80,14 @@ entry:
     auto                    result_allocation_manager = BasicAllocationManager::createNew();
 
     ConfigurationManager configuration_manager;
-    configuration_manager.addConfig<FactoryConfiguration>();
 
     configuration_manager.addConfig<GroupingPassConfiguration>("adaptor.grouping");
     configuration_manager.addConfig<StaticResourceComponentConfiguration>("adaptor.static-resource");
-    configuration_manager.addConfig<PostTransformValidationPassConfiguration>("adaptor.post-transform-validation");
-    configuration_manager.addConfig<PostTransformConfig>("adaptor.post-transform");
-    configuration_manager.addConfig<TransformationRulesPassConfiguration>("adaptor.transformation-rules");
-    configuration_manager.addConfig<PreTransformTrimmingPassConfiguration>("adaptor.pre-transform-trimming");
+    configuration_manager.addConfig<PostTransformValidationPassConfiguration>("adaptor.straightline-code-requirement");
+    configuration_manager.addConfig<TargetProfileMappingConfiguration>("adaptor.target-profile-mapping");
+    configuration_manager.addConfig<TargetQisMappingPassConfiguration>("adaptor.target-qis-mapping");
+    configuration_manager.addConfig<RemoveNonEntrypointFunctionsPassConfiguration>(
+        "adaptor.remove-non-entrypoint-functions");
     configuration_manager.addConfig<LlvmPassesConfiguration>("adaptor.llvm-optimization");
 
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
@@ -165,22 +165,22 @@ entry:
 
     {
         llvm::FunctionPassManager fpm{};
-        auto&                     cfg = configuration_manager.get<PreTransformTrimmingPassConfiguration>();
-        mpm.addPass(PreTransformTrimmingPass(cfg, logger));
+        auto&                     cfg = configuration_manager.get<RemoveNonEntrypointFunctionsPassConfiguration>();
+        mpm.addPass(RemoveNonEntrypointFunctionsPass(cfg, logger));
         mpm.addPass(FunctionToModule(std::move(fpm)));
     }
 
     {
         llvm::FunctionPassManager fpm{};
-        auto&                     cfg = configuration_manager.get<TransformationRulesPassConfiguration>();
+        auto&                     cfg = configuration_manager.get<TargetQisMappingPassConfiguration>();
         // Defining the mapping
 
         RuleSet rule_set;
         auto    factory = RuleFactory(rule_set, qubit_allocation_manager, result_allocation_manager, logger);
-        factory.usingConfiguration(configuration_manager.get<FactoryConfiguration>());
+        factory.usingConfiguration(configuration_manager.get<TargetQisMappingPassConfiguration>());
 
         // Creating adaptor pass
-        auto pass = TransformationRulesPass(std::move(rule_set), cfg);
+        auto pass = TargetQisMappingPass(std::move(rule_set), cfg);
         pass.setLogger(logger);
         mpm.addPass(std::move(pass));
         mpm.addPass(FunctionToModule(std::move(fpm)));
@@ -188,7 +188,7 @@ entry:
 
     {
         llvm::FunctionPassManager fpm;
-        auto&                     cfg = configuration_manager.get<PostTransformConfig>();
+        auto&                     cfg = configuration_manager.get<TargetProfileMappingConfiguration>();
 
         if (cfg.shouldAddInstCombinePass())
         {
@@ -254,7 +254,7 @@ entry:
     {
         llvm::FunctionPassManager fpm;
         auto&                     cfg = configuration_manager.get<GroupingPassConfiguration>();
-        if (cfg.circuitSeparation())
+        if (cfg.groupQis())
         {
             mam.registerPass([&] { return GroupingAnalysisPass(cfg, logger); });
 

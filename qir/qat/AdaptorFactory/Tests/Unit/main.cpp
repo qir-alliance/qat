@@ -4,8 +4,7 @@
 #include "gtest/gtest.h"
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPassConfiguration.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 using namespace microsoft::quantum;
@@ -96,13 +95,12 @@ TEST(AdaptorFactoryTestSuite, ConfigurationManager)
 {
     ConfigurationManager configuration_manager;
     auto                 generator = std::make_shared<ExposedConfigurableQirAdaptorFactory>(configuration_manager);
-    configuration_manager.addConfig<FactoryConfiguration>();
 
     TestAnalysis test;
 
     generator->newQirAdaptor("test", llvm::OptimizationLevel::O0, false);
 
-    EXPECT_EQ(generator->ruleTransformationConfig(), TransformationRulesPassConfiguration());
+    EXPECT_EQ(generator->ruleTransformationConfig(), TargetQisMappingPassConfiguration());
     EXPECT_EQ(generator->llvmPassesConfig(), LlvmPassesConfiguration());
     EXPECT_FALSE(generator->ruleTransformationConfig().isDisabled());
 }

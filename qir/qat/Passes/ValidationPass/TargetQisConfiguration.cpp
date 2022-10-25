@@ -11,21 +11,34 @@ namespace microsoft::quantum
 
 void TargetQisConfiguration::setup(ConfigurationManager& config)
 {
-    config.setSectionName("Validation configuration", "");
+    config.setSectionName("Target QIS validation", "Configuration for QIS validation");
     // CLI and config accessible
 
     config.addParameter(
         allowed_qis_, "allowed-qis", "Allowed quantum instruction set.",
         ConfigurationManager::ParameterVisibility::ConfigOnly);
-    config.addParameter(allow_any_qis_, "allowed-any-qis", "Whether or not to allow any quantum instruction.");
+    config.addParameter(allow_any_qis_, "allow-any-qis", "Whether or not to allow any quantum instruction.");
+
+    config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
+    config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
 }
 
-String TargetQisConfiguration::adaptorName() const
+String TargetQisConfiguration::targetName() const
 {
-    return adaptor_name_;
+    return target_name_;
 }
 
-TargetQisConfiguration TargetQisConfiguration::fromQirAdaptorName(String const& name)
+bool TargetQisConfiguration::requiresQubits() const
+{
+    return requires_qubits_;
+}
+
+bool TargetQisConfiguration::requiresResults() const
+{
+    return requires_results_;
+}
+
+TargetQisConfiguration TargetQisConfiguration::fromQirTargetName(String const& name)
 {
     auto target_config = TargetQisConfiguration();
     if (name == "generic")
@@ -131,7 +144,7 @@ TargetQisConfiguration TargetQisConfiguration::fromQirAdaptorName(String const& 
         throw std::runtime_error("Invalid adaptor " + name);
     }
 
-    target_config.adaptor_name_ = name;
+    target_config.target_name_ = name;
 
     return target_config;
 }

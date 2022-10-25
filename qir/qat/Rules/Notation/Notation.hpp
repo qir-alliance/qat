@@ -18,7 +18,7 @@
 
 namespace microsoft::quantum
 {
-/// Shorthand notations to make it easy and readible to create patterns.
+/// Shorthand notations to make it easy and readable to create patterns.
 ///
 ///
 namespace notation

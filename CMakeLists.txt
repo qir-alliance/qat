@@ -118,4 +118,4 @@ add_custom_target(llvm)
 # Adding the libraries
 add_subdirectory(qir/qat)
 
-add_subdirectory(ComponentExamples)
+add_subdirectory(AdaptorExamples)

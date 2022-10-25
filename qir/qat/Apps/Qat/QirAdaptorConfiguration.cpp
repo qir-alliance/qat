@@ -14,10 +14,10 @@ void configureGenericQirAdaptor(ConfigurationManager& configuration_manager)
 {
     // Setting adaptor validation configuration
     configuration_manager.addConfig<TargetProfileConfiguration>(
-        "target.profile", TargetProfileConfiguration::fromQirAdaptorName("generic"));
+        "target.profile", TargetProfileConfiguration::fromQirTargetName("generic"));
 
     configuration_manager.addConfig<TargetQisConfiguration>(
-        "target.qis", TargetQisConfiguration::fromQirAdaptorName("generic"));
+        "target.qis", TargetQisConfiguration::fromQirTargetName("generic"));
 
     // The generic adaptor does not alter the default settings for transformation
 }
@@ -26,9 +26,9 @@ void configureDefaultQirAdaptor(ConfigurationManager& configuration_manager)
 {
     // Setting adaptor validation configuration
     configuration_manager.addConfig<TargetProfileConfiguration>(
-        "target.profile", TargetProfileConfiguration::fromQirAdaptorName("default"));
+        "target.profile", TargetProfileConfiguration::fromQirTargetName("default"));
     configuration_manager.addConfig<TargetQisConfiguration>(
-        "target.qis", TargetQisConfiguration::fromQirAdaptorName("default"));
+        "target.qis", TargetQisConfiguration::fromQirTargetName("default"));
 
     // The default adaptor does not alter the default settings for transformation
 }
@@ -38,16 +38,16 @@ void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager
 
     // Setting adaptor validation configuration
     configuration_manager.addConfig<TargetProfileConfiguration>(
-        "target.profile", TargetProfileConfiguration::fromQirAdaptorName("provider_4bf9"));
+        "target.profile", TargetProfileConfiguration::fromQirTargetName("provider_4bf9"));
     configuration_manager.addConfig<TargetQisConfiguration>(
-        "target.qis", TargetQisConfiguration::fromQirAdaptorName("provider_4bf9"));
+        "target.qis", TargetQisConfiguration::fromQirTargetName("provider_4bf9"));
 
     // Transformation
     configuration_manager.disableSectionById("adaptor.grouping");
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
-    configuration_manager.updateParameter("emit-llvm", false);
+    configuration_manager.updateParameter("emit-human-readable-llvm", false);
     configuration_manager.updateParameter("verify-module", true);
     configuration_manager.updateParameter("experimental", false);
     configuration_manager.updateParameter("dump-config", true);
@@ -101,7 +101,7 @@ void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager
     configuration_manager.updateParameter("replace-qubit-on-reset", false);
     configuration_manager.updateParameter("inline-after-id-change", true);
 
-    configuration_manager.updateParameter("separate-circuits", true);
+    configuration_manager.updateParameter("group-qis", true);
 
     configuration_manager.updateParameter("allow-internal-calls", false);
     configuration_manager.updateParameter("requires-qubits", true);
@@ -114,16 +114,16 @@ void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager
 {
     // Setting adaptor validation configuration
     configuration_manager.addConfig<TargetProfileConfiguration>(
-        "target.profile", TargetProfileConfiguration::fromQirAdaptorName("provider_7ee0"));
+        "target.profile", TargetProfileConfiguration::fromQirTargetName("provider_7ee0"));
     configuration_manager.addConfig<TargetQisConfiguration>(
-        "target.qis", TargetQisConfiguration::fromQirAdaptorName("provider_7ee0"));
+        "target.qis", TargetQisConfiguration::fromQirTargetName("provider_7ee0"));
 
     // Transform
     configuration_manager.disableSectionById("adaptor.grouping");
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
-    configuration_manager.updateParameter("emit-llvm", false);
+    configuration_manager.updateParameter("emit-human-readable-llvm", false);
     configuration_manager.updateParameter("verify-module", true);
     configuration_manager.updateParameter("experimental", false);
     configuration_manager.updateParameter("dump-config", true);
@@ -177,7 +177,7 @@ void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager
     configuration_manager.updateParameter("replace-qubit-on-reset", false);
     configuration_manager.updateParameter("inline-after-id-change", true);
 
-    configuration_manager.updateParameter("separate-circuits", false);
+    configuration_manager.updateParameter("group-qis", false);
 
     configuration_manager.updateParameter("allow-internal-calls", false);
     configuration_manager.updateParameter("requires-qubits", true);
@@ -190,16 +190,16 @@ void configureProviderb340QirAdaptor(ConfigurationManager& configuration_manager
 {
     // Setting adaptor validation configuration
     configuration_manager.addConfig<TargetProfileConfiguration>(
-        "target.profile", TargetProfileConfiguration::fromQirAdaptorName("provider_b340"));
+        "target.profile", TargetProfileConfiguration::fromQirTargetName("provider_b340"));
     configuration_manager.addConfig<TargetQisConfiguration>(
-        "target.qis", TargetQisConfiguration::fromQirAdaptorName("provider_b340"));
+        "target.qis", TargetQisConfiguration::fromQirTargetName("provider_b340"));
 
     // Transformation
     configuration_manager.disableSectionById("adaptor.grouping");
 
     configuration_manager.updateParameter("apply", true);
     configuration_manager.updateParameter("validate", true);
-    configuration_manager.updateParameter("emit-llvm", false);
+    configuration_manager.updateParameter("emit-human-readable-llvm", false);
     configuration_manager.updateParameter("verify-module", true);
     configuration_manager.updateParameter("experimental", false);
     configuration_manager.updateParameter("dump-config", true);
@@ -253,7 +253,7 @@ void configureProviderb340QirAdaptor(ConfigurationManager& configuration_manager
     configuration_manager.updateParameter("replace-qubit-on-reset", true);
     configuration_manager.updateParameter("inline-after-id-change", true);
 
-    configuration_manager.updateParameter("separate-circuits", false);
+    configuration_manager.updateParameter("group-qis", false);
 
     configuration_manager.updateParameter("allow-internal-calls", false);
     configuration_manager.updateParameter("requires-qubits", true);

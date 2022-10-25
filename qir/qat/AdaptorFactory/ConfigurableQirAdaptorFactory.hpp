@@ -6,8 +6,7 @@
 #include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
-#include "qir/qat/Rules/FactoryConfig.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPassConfiguration.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 
 namespace microsoft::quantum
@@ -37,17 +36,17 @@ class ConfigurableQirAdaptorFactory : public QirAdaptorFactory
     /// function is invoked during the creation of the generation module. This constructor
     /// further overrides the default configuration
     explicit ConfigurableQirAdaptorFactory(
-        ConfigurationManager&                       configuration_manager,
-        ConfigureFunction const&                    configure,
-        TransformationRulesPassConfiguration const& adaptor_pass_config =
-            TransformationRulesPassConfiguration::createDisabled(),
+        ConfigurationManager&                    configuration_manager,
+        ConfigureFunction const&                 configure,
+        TargetQisMappingPassConfiguration const& adaptor_pass_config =
+            TargetQisMappingPassConfiguration::createDisabled(),
         LlvmPassesConfiguration const& llvm_config = LlvmPassesConfiguration::createDisabled());
 
     // Shorthand notation to access configurations
     //
 
     /// Returns a constant reference to the rule transformation configuration.
-    TransformationRulesPassConfiguration const& ruleTransformationConfig() const;
+    TargetQisMappingPassConfiguration const& ruleTransformationConfig() const;
 
     /// Returns a constant reference to the LLVM passes configuration.
     LlvmPassesConfiguration const& llvmPassesConfig() const;

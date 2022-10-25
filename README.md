@@ -34,22 +34,21 @@ is designed to work with all of them.
 
 ## Building
 
-For full instructions on dependencies and how to build, follow
-[these instructions](./docs/src/UserGuide/BuildingLibrary.md). In summary, the
-executable is built using `baslisk`:
+QAT can be built either using Bazel or CMake. In the following two sections, we
+discuss how to build QAT using either of these tools. Building on Windows is
+currently only supported
+[using Bazel](./docs/src/QuickStart/building-with-bazel.md). The
+[detailed decription of building with Bazel](./docs/src/QuickStart/building-with-bazel.md)
+outlines how to install `bazelisk` and discusses configuration flags. If you
+already have `bazelisk` installed, simply run
 
 ```sh
-bazelisk run //qir/qat:qat --config generic_clang --config release
+bazelisk build //qir/qat:qat --config [compiler] --config release
 ```
 
-and the Ubuntu based Doker image can be built:
-
-```sh
-bazelisk run //qir/qat:qat-image --config generic_clang --config release  --platforms=@//:linux-x86
-```
-
-This command will cross compile the `qat` executable for `linux-x86` and add
-it to a docker image named `bazel/qir/qat:qat-image`.
+to build `qat` where compiler should be substituted with `clang` on Linux and
+macOS, and `msvc` on Windows. If you prefer CMake, please
+[see the detailed instructions here](./docs/src/QuickStart/building-with-cmake.md).
 
 ## Getting started
 
@@ -57,14 +56,14 @@ Once the project is built (see next sections), you can transform a QIR according
 to a profile as follows:
 
 ```sh
-./qir/qat/Apps/qat --apply --profile base -S path/to/example.ll
+qat --apply --target-def target.yaml -S path/to/example.ll
 ```
 
 Likewise, you can validate that a QIR follows a specification by running (Note,
 not implemented yet):
 
 ```sh
-./qir/qat/Apps/qat --validate --profile base -S path/to/example.ll
+qat --validate --target-def target.yaml -S path/to/example.ll
 ```
 
 ## Documentation

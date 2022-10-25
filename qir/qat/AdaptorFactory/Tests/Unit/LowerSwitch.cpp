@@ -7,7 +7,7 @@
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/AllocationAnalysisPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -79,7 +79,6 @@ continue__3:                                      ; preds = %entry, %then1__2, %
     ConfigurationManager configuration_manager;
     auto                 adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 

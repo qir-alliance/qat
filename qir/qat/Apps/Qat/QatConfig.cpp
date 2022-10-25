@@ -10,22 +10,23 @@ namespace microsoft::quantum
 
 void QatConfig::setup(ConfigurationManager& config)
 {
+    // Note that the QAT configuration cannot have experimental values as the experimental flag is not set yet.
 
-    config.setSectionName(
-        "Base configuration", "Configuration of the quantum adoption tool to execute a specific behaviour.");
-    config.addExperimentalParameter(load_, static_cast<String>(""), "load", "Load component.");
+    config.setSectionName("QAT base configuration", "Configuration of QAT defining the high-level behaviour.");
+    config.addParameter(load_, static_cast<String>(""), "load", "Load component.");
     config.addParameter(
         generate_, "apply", "Applies a adaptor to transform the IR in correspondence with the adaptor.");
     config.addParameter(validate_, false, "validate", "Executes the validation procedure.");
-    config.addParameter(adaptor_, static_cast<String>("generic"), "adaptor", "Sets the adaptor.");
+    config.addParameter(target_name_, static_cast<String>("default"), "adaptor", "Sets the adaptor.");
     config.addParameter(
         adapter_pipeline_,
-        {"weak-linking", "llvm-optimization", "pre-transform-trimming", "transformation-rules", "post-transform",
-         "post-transform-validation", "static-resources", "grouping"},
+        {"replacement-linking", "llvm-optimization", "remove-non-entrypoint-functions", "target-qis-mapping",
+         "target-profile-mapping", "straightline-code-requirement", "static-resources", "grouping"},
         "adaptor-pipeline", "Overrides the adaptor pipleline.");
 
-    config.addParameter(emit_llvm_, false, "emit-llvm", "Emits LLVM IR to the standard output.");
-    config.addShorthandNotation("emit-llvm", "S");
+    config.addParameter(
+        emit_human_readable_llvm_, false, "emit-human-readable-llvm", "Emits LLVM IR to the standard output.");
+    config.addShorthandNotation("emit-human-readable-llvm", "S");
 
     config.addParameter(
         target_definition_, static_cast<std::string>(""), "target-def",
@@ -62,20 +63,14 @@ bool QatConfig::shouldValidate() const
     return validate_;
 }
 
-String QatConfig::adaptor() const
+String QatConfig::targetName() const
 {
-    if (adaptor_ == "base")
-    {
-        // TODO(tfr): Remove warning upon final release.
-        llvm::errs() << "; WARNING: 'base' adaptor renamed to 'default'. Please update your scripts.\n";
-        return "default";
-    }
-    return adaptor_;
+    return target_name_;
 }
 
-bool QatConfig::shouldEmitLlvm() const
+bool QatConfig::shouldEmitHumanReadibleLlvm() const
 {
-    return emit_llvm_;
+    return emit_human_readable_llvm_;
 }
 
 bool QatConfig::isOpt0Enabled() const

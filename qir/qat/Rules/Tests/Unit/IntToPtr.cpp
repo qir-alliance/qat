@@ -8,7 +8,7 @@
 #include "qir/qat/Passes/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/Rules/Notation/Notation.hpp"
 #include "qir/qat/Rules/ReplacementRule.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
@@ -73,7 +73,7 @@ TEST(RuleSetTestSuite, IntToPtr)
     ConfigurationManager configuration_manager;
     auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    configuration_manager.addConfig<FactoryConfiguration>();
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
     configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
     configuration_manager.setConfig(StaticResourceComponentConfiguration::createDisabled());

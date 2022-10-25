@@ -5,7 +5,7 @@
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
-#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -58,21 +58,20 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
     return ir_manip;
 }
 
-void expectFail(String const& adaptor_name, String const& script, std::vector<String> const& errors)
+void expectFail(String const& target_name, String const& script, std::vector<String> const& errors)
 {
     auto ir_manip = newIrManip(script);
 
     ConfigurationManager configuration_manager;
     auto                 adaptor_generator = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager);
 
-    configuration_manager.addConfig<FactoryConfiguration>();
-
-    configuration_manager.setConfig(TargetProfileConfiguration::fromQirAdaptorName(adaptor_name));
-    configuration_manager.setConfig(TargetQisConfiguration::fromQirAdaptorName(adaptor_name));
+    configuration_manager.setConfig(TargetQisMappingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(TargetProfileConfiguration::fromQirTargetName(target_name));
+    configuration_manager.setConfig(TargetQisConfiguration::fromQirTargetName(target_name));
     configuration_manager.setConfig(LlvmPassesConfiguration::createUnrollInline());
     configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
 
-    EXPECT_TRUE(ir_manip->containsExactValidationErrors(adaptor_generator, adaptor_name, errors, true));
+    EXPECT_TRUE(ir_manip->containsExactValidationErrors(adaptor_generator, target_name, errors, true));
 }
 
 } // namespace

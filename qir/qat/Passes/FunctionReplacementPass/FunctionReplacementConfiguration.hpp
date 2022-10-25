@@ -19,7 +19,8 @@ class FunctionReplacementConfiguration
     /// ConfigurationManager documentation for more details on how the setup process is implemented.
     void setup(ConfigurationManager& config)
     {
-        config.setSectionName("Replacement linking", "");
+        config.setSectionName(
+            "Replacement linking", "Replaces function calls if the given function is present in the IR");
 
         config.addParameter(injected_annotations_, "replace-functions", "Functions to be replaced.");
         config.addParameter(should_remove_call_attributes_, "remove-call-attributes", "Discard all call attributes");

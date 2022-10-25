@@ -316,8 +316,14 @@ typename ConfigBind<T>::template EnableIfSerializable<R, void> ConfigBind<T>::al
 
 template <typename T> void ConfigBind<T>::reset()
 {
-    // TODO(unknown): Add support for expreimental value
-    bind_ = default_value_;
+    if (isExperimental())
+    {
+        bind_ = experimental_off_value_;
+    }
+    else
+    {
+        bind_ = default_value_;
+    }
 }
 
 template <typename T> bool ConfigBind<T>::configure(ParameterParser& parser, bool experimental_mode)

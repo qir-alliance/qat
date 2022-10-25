@@ -41,23 +41,27 @@ theme:
     search: 83 # s
 
 nav:
-  - User guide:
-      - Quick start: "UserGuide/QuickStart.md"
-      - Building the library: "UserGuide/BuildingLibrary.md"
-      - Introduction to profiles: "UserGuide/IntroductionToProfiles.md"
+  - Quick start:
+      - Quick start: "QuickStart/index.md"
+      - Building with Bazel: "QuickStart/building-with-bazel.md"
+      - Building with CMake: "QuickStart/building-with-cmake.md"
+      - Running QAT: "QuickStart/running-qat.md"
+
+  - Using QAT:
+      - Targeting a QIR: "UsingQAT/TargetingQIR.md"
+      - Debugging a QIR: "UsingQAT/DebuggingIR.md"
+      - Assumptions and restrictions: "UsingQAT/GoalsAndAssumptions.md"
 
   - Developer guide:
       - Architecture Overview: "DeveloperGuide/ArchitectureOverview.md"
-      - Writing a Component: "DeveloperGuide/WritingComponent.md"
-      - Configuration Library: "DeveloperGuide/ConfigurationLibrary.md"
+      - Writing an adaptor: "DeveloperGuide/WritingAdaptor.md"
       - Rule based extensions: "DeveloperGuide/WritingRuleTests.md"
+      - Grouping QIS: "DeveloperGuide/LogicSeparation.md"
 
   - Api:
       - Classes: "Api/Classes/"
       - Namespaces: "Api/Namespaces/"
       - Modules: "Api/Modules/"
-      - Files: "Api/Files/"
-      - Pages: "Api/Pages/"
 
   - Contributing:
       - Code quality: "DeveloperGuide/CodeQuality.md"

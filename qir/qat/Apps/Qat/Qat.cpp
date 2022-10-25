@@ -61,13 +61,12 @@
 #include "qir/qat/Passes/GroupingPass/GroupingAnalysisPass.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPassConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPass.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPassConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/QirAdaptor/QirAdaptor.hpp"
-#include "qir/qat/Rules/Factory.hpp"
-#include "qir/qat/Rules/FactoryConfig.hpp"
 #include "qir/qat/Utils/FunctionToModule.hpp"
 #include "qir/qat/Validator/Validator.hpp"
 #include "qir/qat/Version/Version.hpp"
@@ -144,7 +143,6 @@ int main(int argc, char const** argv)
         //
 
         configuration_manager.addConfig<QatConfig>("qat");
-        configuration_manager.addConfig<FactoryConfiguration>("adaptor.transformation-rules");
 
         ParameterParser parser;
         configuration_manager.setupArguments(parser);
@@ -195,7 +193,7 @@ int main(int argc, char const** argv)
             {
                 using LoadFunctionPtr = void (*)(QirAdaptorFactory*);
                 LoadFunctionPtr load_component;
-                load_component = reinterpret_cast<LoadFunctionPtr>(dlsym(handle, "loadComponent"));
+                load_component = reinterpret_cast<LoadFunctionPtr>(dlsym(handle, "loadAdaptor"));
 
                 load_component(generator.get());
             }
@@ -204,8 +202,11 @@ int main(int argc, char const** argv)
 #endif
         }
 
-        // Configuring QAT according to adaptor
-        configureQirAdaptor(config.adaptor(), configuration_manager);
+        // Setting adaptor validation configuration
+        configuration_manager.addConfig<TargetProfileConfiguration>(
+            "target.profile", TargetProfileConfiguration::fromQirTargetName("generic"));
+        configuration_manager.addConfig<TargetQisConfiguration>(
+            "target.qis", TargetQisConfiguration::fromQirTargetName("generic"));
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();
@@ -326,14 +327,13 @@ int main(int argc, char const** argv)
         //
 
         // Creating the adaptor that will be used for generation and validation
-        generator->newAdaptorContext(config.adaptor(), config.isDebugMode());
+        generator->newAdaptorContext(config.targetName(), config.isDebugMode());
 
         for (auto& pipeline_name : config.adaptorPipeline())
         {
             generator->addComponent("adaptor." + pipeline_name);
         }
 
-        // auto adaptor = generator->newQirAdaptor(config.adaptor(), optimization_level, config.isDebugMode());
         auto adaptor = generator->finalizeAdaptor();
 
         if (config.shouldGenerate())
@@ -353,7 +353,7 @@ int main(int argc, char const** argv)
         {
             if (config.outputFile().empty())
             {
-                if (config.shouldEmitLlvm())
+                if (config.shouldEmitHumanReadibleLlvm())
                 {
                     llvm::outs() << *module << "\n";
                 }
@@ -367,7 +367,7 @@ int main(int argc, char const** argv)
                 std::error_code      ec;
                 llvm::raw_fd_ostream fout(config.outputFile(), ec);
 
-                if (config.shouldEmitLlvm())
+                if (config.shouldEmitHumanReadibleLlvm())
                 {
                     fout << *module << "\n";
                 }

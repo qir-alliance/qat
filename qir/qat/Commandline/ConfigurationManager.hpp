@@ -96,6 +96,7 @@ class ConfigurationManager
         TypeId     type{TypeId(typeid(std::nullptr_t))}; ///< Type of the configuration.
         String     name{};                               ///< Name of the section.
         String     description{};                        ///< Description of the section.
+        bool       can_disable{false};                   ///< Whether or not this section can be disabled.
         bool       enabled_by_default{true};             ///< Whether or not this section is enabled by default
         VoidPtr    configuration{};                      ///< Configuration class instance.
         ConfigList settings{};                           ///< List of parameter bindings.
@@ -175,6 +176,9 @@ class ConfigurationManager
 
     /// Enables a named section
     void enableSectionById(String const& id);
+
+    /// Allow disabling the full section
+    void allowDisableSectionById(String const& id);
 
     /// Adds a new parameter with a default value to the configuration section. This function should
     /// be used by the configuration class.

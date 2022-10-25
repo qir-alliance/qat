@@ -15,8 +15,12 @@
 namespace microsoft::quantum
 {
 
-FunctionValidationPass::FunctionValidationPass(TargetProfileConfiguration const& cfg, ILoggerPtr const& logger)
-  : config_{cfg}
+FunctionValidationPass::FunctionValidationPass(
+    TargetProfileConfiguration const& profile_config,
+    TargetQisConfiguration const&     qis_config,
+    ILoggerPtr const&                 logger)
+  : profile_config_{profile_config}
+  , qis_config_{qis_config}
   , logger_{logger}
 {
 }
@@ -25,14 +29,14 @@ llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function& function, ll
 {
     auto& function_details = fam.getResult<AllocationAnalysisPass>(function);
 
-    if (config_.requiresQubits() && function_details.usage_qubit_counts == 0)
+    if (qis_config_.requiresQubits() && function_details.usage_qubit_counts == 0)
     {
-        logger_->errorNoQubitsPresent(&function, config_.adaptorName());
+        logger_->errorNoQubitsPresent(&function, profile_config_.targetName());
     }
 
-    if (config_.requiresResults() && function_details.usage_result_counts == 0)
+    if (qis_config_.requiresResults() && function_details.usage_result_counts == 0)
     {
-        logger_->errorNoResultsPresent(&function, config_.adaptorName());
+        logger_->errorNoResultsPresent(&function, profile_config_.targetName());
     }
 
     for (auto& block : function)
@@ -44,13 +48,13 @@ llvm::PreservedAnalyses FunctionValidationPass::run(llvm::Function& function, ll
                 auto poison = llvm::dyn_cast<llvm::PoisonValue>(op);
                 auto undef  = llvm::dyn_cast<llvm::UndefValue>(op);
 
-                if (poison && !config_.allowPoison())
+                if (poison && !profile_config_.allowPoison())
                 {
-                    logger_->errorPoisonNotAllowed(config_.adaptorName(), &instr);
+                    logger_->errorPoisonNotAllowed(profile_config_.targetName(), &instr);
                 }
-                else if (undef && !config_.allowUndef())
+                else if (undef && !profile_config_.allowUndef())
                 {
-                    logger_->errorUndefNotAllowed(config_.adaptorName(), &instr);
+                    logger_->errorUndefNotAllowed(profile_config_.targetName(), &instr);
                 }
             }
         }

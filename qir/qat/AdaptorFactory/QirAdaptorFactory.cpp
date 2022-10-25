@@ -4,7 +4,7 @@
 #include "qir/qat/AdaptorFactory/QirAdaptorFactory.hpp"
 
 #include "qir/qat/AdaptorFactory/LlvmPassesConfiguration.hpp"
-#include "qir/qat/AdaptorFactory/PostTransformConfig.hpp"
+#include "qir/qat/AdaptorFactory/TargetProfileMappingConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/DeferMeasurementPass/DeferMeasurementPass.hpp"
 #include "qir/qat/Passes/FunctionReplacementPass/FunctionAnnotatorPass.hpp"
@@ -14,18 +14,18 @@
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPassConfiguration.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPass.hpp"
-#include "qir/qat/Passes/PreTransformTrimming/PreTransformTrimmingPass.hpp"
+#include "qir/qat/Passes/RemoveNonEntrypointFunctions/RemoveNonEntrypointFunctionsPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/AllocationAnalysisPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/QubitRemapPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/ReplaceQubitOnResetPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/ResourceAnnotationPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPass.hpp"
-#include "qir/qat/Passes/TransformationRulesPass/TransformationRulesPassConfiguration.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPass.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/TargetQisMappingPassConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
 #include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/Passes/ZExtTransformPass/ZExtTransformPass.hpp"
-#include "qir/qat/Rules/Factory.hpp"
 #include "qir/qat/Rules/RuleSet.hpp"
 #include "qir/qat/Utils/FunctionToModule.hpp"
 
@@ -41,9 +41,9 @@ std::shared_ptr<QirAdaptor> QirAdaptorFactory::newQirAdaptor(
     auto qubit_allocation_manager  = BasicAllocationManager::createNew();
     auto result_allocation_manager = BasicAllocationManager::createNew();
 
-    if (configuration_manager_.has<TransformationRulesPassConfiguration>())
+    if (configuration_manager_.has<TargetQisMappingPassConfiguration>())
     {
-        auto cfg = configuration_manager_.get<TransformationRulesPassConfiguration>();
+        auto cfg = configuration_manager_.get<TargetQisMappingPassConfiguration>();
         qubit_allocation_manager->setReuseRegisters(cfg.shouldReuseQubits());
         result_allocation_manager->setReuseRegisters(cfg.shouldReuseResults());
     }
@@ -78,9 +78,9 @@ void QirAdaptorFactory::newAdaptorContext(String const& name, bool debug)
     qubit_allocation_manager_  = BasicAllocationManager::createNew();
     result_allocation_manager_ = BasicAllocationManager::createNew();
 
-    if (configuration_manager_.has<TransformationRulesPassConfiguration>())
+    if (configuration_manager_.has<TargetQisMappingPassConfiguration>())
     {
-        auto cfg = configuration_manager_.get<TransformationRulesPassConfiguration>();
+        auto cfg = configuration_manager_.get<TargetQisMappingPassConfiguration>();
         qubit_allocation_manager_->setReuseRegisters(cfg.shouldReuseQubits());
         result_allocation_manager_->setReuseRegisters(cfg.shouldReuseResults());
     }
@@ -152,7 +152,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
     ILoggerPtr logger = logger_;
 
     registerAdaptorComponent<FunctionReplacementConfiguration>(
-        "adaptor.weak-linking",
+        "adaptor.replacement-linking",
         [logger](FunctionReplacementConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mam = adaptor.moduleAnalysisManager();
@@ -234,18 +234,18 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             mpm.addPass(FunctionToModule(std::move(fpm)));
         });
 
-    registerAdaptorComponent<PreTransformTrimmingPassConfiguration>(
-        "adaptor.pre-transform-trimming", // TODO(unknown): Rename?
-        [logger](PreTransformTrimmingPassConfiguration const& cfg, QirAdaptor& adaptor)
+    registerAdaptorComponent<RemoveNonEntrypointFunctionsPassConfiguration>(
+        "adaptor.remove-non-entrypoint-functions", // TODO(unknown): Rename?
+        [logger](RemoveNonEntrypointFunctionsPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mpm = adaptor.modulePassManager();
 
-            mpm.addPass(PreTransformTrimmingPass(cfg, logger));
+            mpm.addPass(RemoveNonEntrypointFunctionsPass(cfg, logger));
         });
 
-    registerAdaptorComponent<TransformationRulesPassConfiguration>(
-        "adaptor.transformation-rules", // TODO(unknown): Rename?
-        [logger](TransformationRulesPassConfiguration const& cfg, QirAdaptor& adaptor)
+    registerAdaptorComponent<TargetQisMappingPassConfiguration>(
+        "adaptor.target-qis-mapping", // TODO(unknown): Rename?
+        [logger](TargetQisMappingPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& ret = adaptor.modulePassManager();
 
@@ -253,17 +253,17 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             RuleSet rule_set;
             auto    factory = RuleFactory(
                    rule_set, adaptor.getQubitAllocationManager(), adaptor.getResultAllocationManager(), logger);
-            factory.usingConfiguration(adaptor.configurationManager().get<FactoryConfiguration>());
+            factory.usingConfiguration(adaptor.configurationManager().get<TargetQisMappingPassConfiguration>());
 
             // Creating adaptor pass
-            auto pass = TransformationRulesPass(std::move(rule_set), cfg);
+            auto pass = TargetQisMappingPass(std::move(rule_set), cfg);
             pass.setLogger(logger);
             ret.addPass(std::move(pass));
         });
 
-    registerAdaptorComponent<PostTransformConfig>(
-        "adaptor.post-transform", // TODO(unknown): Rename?
-        [logger](PostTransformConfig const& cfg, QirAdaptor& adaptor)
+    registerAdaptorComponent<TargetProfileMappingConfiguration>(
+        "adaptor.target-profile-mapping", // TODO(unknown): Rename?
+        [logger](TargetProfileMappingConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto&                     mpm = adaptor.modulePassManager();
             llvm::FunctionPassManager fpm;
@@ -305,7 +305,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent<PostTransformValidationPassConfiguration>(
-        "adaptor.post-transform-validation",
+        "adaptor.straightline-code-requirement",
         [logger](PostTransformValidationPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mpm = adaptor.modulePassManager();
@@ -342,7 +342,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         "adaptor.grouping",
         [logger](GroupingPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
-            if (cfg.circuitSeparation())
+            if (cfg.groupQis())
             {
                 auto& mam = adaptor.moduleAnalysisManager();
                 mam.registerPass([&] { return GroupingAnalysisPass(cfg, logger); });

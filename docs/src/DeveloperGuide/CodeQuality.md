@@ -161,8 +161,8 @@ Use -header-filter=.* to display errors from all non-system headers. Use -system
 # ISSUES FIXED MANUALLY
 ./manage runci
 
--- Found LLVM 11.1.0
--- Using LLVMConfig.cmake in: /usr/local/opt/llvm@11/lib/cmake/llvm
+-- Found LLVM 13.0.0
+-- Using LLVMConfig.cmake in: /usr/local/opt/llvm@13/lib/cmake/llvm
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /Users/tfr/Documents/Projects/qsharp-compiler/src/QsPasses/Debug
@@ -171,8 +171,8 @@ Consolidate compiler generated dependencies of target QSharpPasses
 [100%] Linking CXX shared library libQSharpPasses.dylib
 ld: warning: directory not found for option '-L/usr/local/opt/llvm/lib'
 [100%] Built target QSharpPasses
--- Found LLVM 11.1.0
--- Using LLVMConfig.cmake in: /usr/local/opt/llvm@11/lib/cmake/llvm
+-- Found LLVM 13.0.0
+-- Using LLVMConfig.cmake in: /usr/local/opt/llvm@13/lib/cmake/llvm
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /Users/tfr/Documents/Projects/qsharp-compiler/src/QsPasses/Debug

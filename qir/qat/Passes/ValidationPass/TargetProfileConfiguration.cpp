@@ -12,10 +12,9 @@ namespace microsoft::quantum
 
 void TargetProfileConfiguration::setup(ConfigurationManager& config)
 {
-    config.setSectionName("Validation configuration", "");
+    config.setSectionName("Target profile validation", "Configuration for profile validation");
+
     /// CLI and config accessible
-    config.addParameter(requires_qubits_, "requires-qubits", "Whether or not qubits are required in the IR.");
-    config.addParameter(requires_results_, "requires-results", "Whether or not results are required in the IR.");
 
     config.addParameter(allow_internal_calls_, "allow-internal-calls", "Whether or not internal calls are allowed.");
     config.addParameter(allow_poison_, "allow-poison", "Whether or not poison values are allowed.");
@@ -53,12 +52,12 @@ void TargetProfileConfiguration::setup(ConfigurationManager& config)
         ConfigurationManager::ParameterVisibility::ConfigOnly);
 }
 
-String TargetProfileConfiguration::adaptorName() const
+String TargetProfileConfiguration::targetName() const
 {
-    return adaptor_name_;
+    return target_name_;
 }
 
-TargetProfileConfiguration TargetProfileConfiguration::fromQirAdaptorName(String const& name)
+TargetProfileConfiguration TargetProfileConfiguration::fromQirTargetName(String const& name)
 {
 
     auto adaptor = TargetProfileConfiguration();
@@ -68,10 +67,10 @@ TargetProfileConfiguration TargetProfileConfiguration::fromQirAdaptorName(String
         adaptor.external_calls_        = Set{};
         adaptor.allowed_pointer_types_ = Set{};
 
-        adaptor.allowlist_opcodes_        = true;
+        adaptor.allowlist_opcodes_        = false;
         adaptor.allowlist_external_calls_ = false;
-        adaptor.allow_internal_calls_     = true;
         adaptor.allowlist_pointer_types_  = false;
+        adaptor.allow_internal_calls_     = true;
         adaptor.allow_primitive_return_   = true;
         adaptor.allow_struct_return_      = true;
         adaptor.allow_pointer_return_     = true;
@@ -211,7 +210,7 @@ TargetProfileConfiguration TargetProfileConfiguration::fromQirAdaptorName(String
         throw std::runtime_error("Invalid adaptor " + name);
     }
 
-    adaptor.adaptor_name_ = name;
+    adaptor.target_name_ = name;
 
     return adaptor;
 }
@@ -264,16 +263,6 @@ void TargetProfileConfiguration::addAllowedOpcode(String const& name)
 void TargetProfileConfiguration::addAllowedPointerType(String const& name)
 {
     allowed_pointer_types_.insert(name);
-}
-
-bool TargetProfileConfiguration::requiresQubits() const
-{
-    return requires_qubits_;
-}
-
-bool TargetProfileConfiguration::requiresResults() const
-{
-    return requires_results_;
 }
 
 bool TargetProfileConfiguration::allowPoison() const

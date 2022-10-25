@@ -7,7 +7,7 @@
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/PostTransformValidation/PostTransformValidationPassConfiguration.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
-#include "qir/qat/Rules/Factory.hpp"
+#include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -77,11 +77,10 @@ void testSkeleton(String const& script, std::shared_ptr<MockLogger> const& logge
     ConfigurationManager configuration_manager;
     auto                 generator = std::make_shared<QirAdaptorFactory>(configuration_manager);
 
-    configuration_manager.addConfig<FactoryConfiguration>();
     configuration_manager.addConfig<TargetProfileConfiguration>(
-        "target.profile", TargetProfileConfiguration::fromQirAdaptorName("generic"));
+        "target.profile", TargetProfileConfiguration::fromQirTargetName("generic"));
     configuration_manager.addConfig<TargetQisConfiguration>(
-        "target.profile", TargetQisConfiguration::fromQirAdaptorName("generic"));
+        "target.profile", TargetQisConfiguration::fromQirTargetName("generic"));
 
     generator->setLogger(logger);
     generator->setupDefaultComponentPipeline();

@@ -18,7 +18,7 @@ RUN npm install -g @bazel/bazelisk@1.12.0
 
 COPY ./ /src/
 WORKDIR /src/
-RUN bazelisk build --config generic_clang --config release //qir/qat:qat && \
+RUN bazelisk build --config clang --config release //qir/qat:qat && \
     cp bazel-bin/qir/qat/qat ./ 
 
 

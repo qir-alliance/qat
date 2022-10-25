@@ -11,7 +11,7 @@ namespace microsoft::quantum
 
 void StaticResourceComponentConfiguration::setup(ConfigurationManager& config)
 {
-    config.setSectionName("Static resource manipulation", "");
+    config.setSectionName("Static resource manipulation", "Manipulates statically allocated qubits and results");
     config.addParameter(annotate_qubit_use_, "annotate-qubit-use", "Annotate the number of qubits used");
 
     config.addParameter(annotate_result_use_, "annotate-result-use", "Annotate the number of results used");

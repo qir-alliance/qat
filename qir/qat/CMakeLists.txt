@@ -21,7 +21,7 @@ target_link_libraries(Validator PRIVATE Logging)
 microsoft_add_library(ModuleLoader)
 
 
-microsoft_add_library_tests(Validator  Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Validator ValidationPass  Logging GroupingPass FunctionReplacementPass)
+microsoft_add_library_tests(Validator  Rules TargetQisMappingPass AllocationManager Commandline AdaptorFactory Validator ValidationPass  Logging GroupingPass FunctionReplacementPass)
 
 
 microsoft_add_library(AllocationManager)
@@ -29,13 +29,13 @@ microsoft_add_library_tests(AllocationManager Logging GroupingPass)
 
 
 microsoft_add_library(Rules)
-microsoft_add_library_tests(Rules Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Logging GroupingPass FunctionReplacementPass)
+microsoft_add_library_tests(Rules Rules TargetQisMappingPass AllocationManager Commandline AdaptorFactory Logging GroupingPass FunctionReplacementPass)
 
 target_link_libraries(Rules PRIVATE AllocationManager)
 
 microsoft_add_library(AdaptorFactory)
-target_link_libraries(AdaptorFactory PRIVATE Rules Commandline AllocationManager TransformationRulesPass QirAdaptor Validator StaticResourceComponent ValidationPass PostTransformValidation PreTransformTrimming ZExtTransformPass DeferMeasurementPass)
-microsoft_add_library_tests(AdaptorFactory Rules TransformationRulesPass AllocationManager Commandline AdaptorFactory Logging GroupingPass ZExtTransformPass FunctionReplacementPass)
+target_link_libraries(AdaptorFactory PRIVATE Rules Commandline AllocationManager TargetQisMappingPass QirAdaptor Validator StaticResourceComponent ValidationPass PostTransformValidation RemoveNonEntrypointFunctions ZExtTransformPass DeferMeasurementPass)
+microsoft_add_library_tests(AdaptorFactory Rules TargetQisMappingPass AllocationManager Commandline AdaptorFactory Logging GroupingPass ZExtTransformPass FunctionReplacementPass)
 
 
 add_subdirectory(Passes)
