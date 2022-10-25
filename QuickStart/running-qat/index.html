@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     
+    <meta name="author" content="troels" />
+     
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/QuickStart/running-qat/" />
+     
+    <link rel="shortcut icon" href="../../img/favicon.ico" />
+    
+    <title>
+      Running QAT - QAT Documentation
+    </title>
+    <link href="../../css/styles.css" rel="stylesheet" />
+    <link href="../../css/font-awesome.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/monokai-sublime.min.css"
+    />
+    <link href="../../css/quantum-colors.css" rel="stylesheet" />
+
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/llvm.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script> 
+  </head>
+
+  <body>
+    <div class="h-screen flex overflow-hidden bg-white">
+      <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+      <div class="lg:hidden hidden" id="sidebar">
+        <div class="fixed inset-0 flex z-40">
+          <!--
+        Off-canvas menu overlay, show/hide based on off-canvas menu state.
+
+        Entering: "transition-opacity ease-linear duration-300"
+          From: "opacity-0"
+          To: "opacity-100"
+        Leaving: "transition-opacity ease-linear duration-300"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+          <div class="fixed inset-0" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
+          </div>
+          <!--
+        Off-canvas menu, show/hide based on off-canvas menu state.
+
+        Entering: "transition ease-in-out duration-300 transform"
+          From: "-translate-x-full"
+          To: "translate-x-0"
+        Leaving: "transition ease-in-out duration-300 transform"
+          From: "translate-x-0"
+          To: "-translate-x-full"
+      -->
+          <div
+            class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800"
+          >
+            <div class="absolute top-0 right-0 -mr-12 pt-2">
+              <button
+                class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                id="sidebarClose"
+              >
+                <span class="sr-only">Close sidebar</span>
+                <!-- Heroicon name: x -->
+                <svg
+                  class="h-6 w-6 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="flex flex-col justify-center items-center flex-shrink-0 px-4">
+  <svg
+    class="h-16 w-16"
+    id="outputsvg"
+    width="302.20001"
+    height="292.73355"
+    viewBox="0 0 3022.0001 2927.3355"
+    version="1.1"
+    sodipodi:docname="93013746.svg"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:svg="http://www.w3.org/2000/svg"
+  >
+    <defs id="defs40" />
+    <sodipodi:namedview
+      id="namedview38"
+      pagecolor="#ffffff"
+      bordercolor="#666666"
+      borderopacity="1.0"
+      showgrid="false"
+      fit-margin-top="0"
+      fit-margin-left="0"
+      fit-margin-right="0"
+      fit-margin-bottom="0"
+    />
+    <g
+      id="l3qWAVepmhNjXiGFCK8Ygm8"
+      fill="#ffffff"
+      transform="translate(-510,-500.49862)"
+    >
+      <g id="g26">
+        <path
+          id="powjCKlys"
+          d="M 890,2694 C 709,2646 609,2553 549,2375 l -24,-70 V 1605 905 l 27,-72 c 30,-83 86,-171 130,-208 16,-14 68,-44 114,-66 109,-53 228,-69 391,-52 92,9 120,16 186,49 103,49 166,107 204,186 58,119 65,152 71,326 4,133 7,162 18,158 10,-4 14,2 14,19 0,21 -13,30 -85,65 l -85,41 v 263 264 l 28,7 c 15,4 52,19 82,33 44,22 56,33 58,55 3,21 0,26 -12,21 -14,-5 -16,10 -16,127 0,211 -28,301 -115,378 -20,18 -36,34 -34,36 2,2 45,9 94,17 l 90,13 3,73 3,72 -373,-1 c -295,0 -385,-3 -428,-15 z m 327,-275 c 46,-26 87,-82 106,-144 9,-30 12,-201 12,-665 0,-592 -1,-628 -19,-684 -35,-105 -112,-158 -230,-157 -118,0 -203,62 -237,171 -19,63 -19,92 -17,690 l 3,625 26,56 c 28,59 76,105 131,126 54,21 175,11 225,-18 z"
+        />
+        <path
+          id="pXDrvybHy"
+          d="m 2410,2340 c 0,-333 -2,-369 -16,-363 -12,4 -15,0 -12,-18 3,-24 15,-32 101,-69 l 47,-21 v -259 -259 l -75,-35 c -64,-30 -75,-38 -75,-60 0,-18 4,-24 15,-20 13,5 15,-36 15,-340 V 550 h 378 c 427,0 466,5 559,67 70,46 125,130 150,227 15,58 18,111 18,296 0,252 -9,305 -65,376 -36,45 -132,112 -172,121 -34,7 -37,23 -5,23 12,1 47,13 77,29 63,31 122,101 140,165 7,25 15,180 20,400 5,197 11,380 15,407 l 7,49 h -155 -155 l -6,-32 c -3,-18 -8,-190 -11,-383 -8,-429 -12,-446 -120,-496 -34,-16 -66,-19 -207,-19 h -168 v 465 465 h -150 -150 z m 695,-864 c 28,-8 48,-24 70,-55 l 30,-43 v -201 c 0,-349 -25,-377 -337,-377 h -158 v 345 345 l 178,-1 c 106,0 193,-5 217,-13 z"
+        />
+      </g>
+    </g>
+    <g
+      id="l6geLyeKy0gshdvsOIcFawK"
+      fill="#14775d"
+      transform="translate(-510,-500.49862)"
+    >
+      <g id="g30">
+        <path
+          id="pFwHav8Wh"
+          d="m 1830,2411 v -299 l -46,-38 c -78,-65 -217,-144 -281,-160 l -23,-6 v -293 -293 l 103,-52 c 57,-28 134,-75 173,-104 l 69,-53 3,-281 2,-282 h 38 c 20,0 61,-3 90,-6 48,-6 52,-5 52,15 0,12 -6,21 -15,21 -13,0 -15,38 -15,278 0,261 1,279 20,312 11,19 28,52 38,72 9,20 25,39 35,42 12,3 17,14 17,36 0,29 -2,31 -17,19 -10,-7 -25,-22 -34,-33 -17,-19 -18,-19 -73,31 -61,56 -126,102 -187,134 l -40,20 3,122 3,122 45,24 c 25,14 78,50 119,80 41,31 82,62 93,70 16,12 21,11 41,-8 31,-28 37,-27 37,9 0,17 9,48 20,70 19,37 20,59 20,385 v 345 h -145 -145 z"
+        />
+      </g>
+    </g>
+    <g
+      id="ls88IYZfP5b5b8x7RYseij"
+      fill="#1cb78e"
+      transform="translate(-510,-500.49862)"
+    >
+      <g id="g34">
+        <path
+          id="pCM7FVo6B"
+          d="m 2090,2378 v -333 l -31,-55 c -25,-46 -28,-58 -18,-76 14,-27 124,-110 197,-149 l 52,-28 v -122 -122 l -76,-48 c -98,-62 -176,-134 -222,-204 l -37,-56 -3,-317 c -3,-300 -2,-318 15,-319 17,-1 190,-1 226,0 16,1 17,21 17,271 0,235 2,274 17,296 23,36 123,104 236,159 l 97,48 -2,289 -3,289 -60,27 c -102,46 -195,102 -241,146 l -44,43 v 296 297 h -60 -60 z"
+        />
+      </g>
+    </g>
+  </svg>
+
+  <span class="text-white">Adaptor Tool</span>
+</div>
+            <div class="mt-5 flex-1 h-0 overflow-y-auto">
+              <nav class="px-2">
+                <h3
+                  class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                  id="teams-headline"
+                >
+                  Quick start
+                </h3>
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../"
+                  >Quick start</a
+                >
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../building-with-bazel/"
+                  >Building with Bazel</a
+                >
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../building-with-cmake/"
+                  >Building with CMake</a
+                >
+                <a
+                  class="bg-gray-900 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="./"
+                  >Running QAT</a
+                > 
+                <h3
+                  class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                  id="teams-headline"
+                >
+                  Using QAT
+                </h3>
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../UsingQAT/TargetingQIR/"
+                  >Targeting a QIR</a
+                >
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../UsingQAT/DebuggingIR/"
+                  >Debugging a QIR</a
+                >
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../UsingQAT/GoalsAndAssumptions/"
+                  >Assumptions and restrictions</a
+                > 
+                <h3
+                  class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                  id="teams-headline"
+                >
+                  Developer guide
+                </h3>
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../DeveloperGuide/ArchitectureOverview/"
+                  >Architecture Overview</a
+                >
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../DeveloperGuide/WritingAdaptor/"
+                  >Writing an adaptor</a
+                >
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../DeveloperGuide/WritingRuleTests/"
+                  >Rule based extensions</a
+                >
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../DeveloperGuide/LogicSeparation/"
+                  >Grouping QIS</a
+                > 
+                <h3
+                  class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                  id="teams-headline"
+                >
+                  Api
+                </h3>
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../Api/Classes/"
+                  >Classes</a
+                >
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../Api/Namespaces/"
+                  >Namespaces</a
+                >
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../Api/Modules/"
+                  >Modules</a
+                > 
+                <h3
+                  class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                  id="teams-headline"
+                >
+                  Contributing
+                </h3>
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../DeveloperGuide/CodeQuality/"
+                  >Code quality</a
+                >
+                <a
+                  class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                  href="../../DeveloperGuide/DeveloperFAQ/"
+                  >Developer FAQ</a
+                > 
+              </nav>
+            </div>
+          </div>
+          <div class="flex-shrink-0 w-14" aria-hidden="true">
+            <!-- Dummy element to force sidebar to shrink to fit close icon -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Static sidebar for desktop -->
+      <div class="hidden lg:flex lg:flex-shrink-0">
+        <div
+          class="flex flex-col w-64 border-r border-gray-200 pt-5 pb-4 bg-gray-800"
+        >
+          <div class="flex flex-col justify-center items-center flex-shrink-0 px-4">
+  <svg
+    class="h-16 w-16"
+    id="outputsvg"
+    width="302.20001"
+    height="292.73355"
+    viewBox="0 0 3022.0001 2927.3355"
+    version="1.1"
+    sodipodi:docname="93013746.svg"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:svg="http://www.w3.org/2000/svg"
+  >
+    <defs id="defs40" />
+    <sodipodi:namedview
+      id="namedview38"
+      pagecolor="#ffffff"
+      bordercolor="#666666"
+      borderopacity="1.0"
+      showgrid="false"
+      fit-margin-top="0"
+      fit-margin-left="0"
+      fit-margin-right="0"
+      fit-margin-bottom="0"
+    />
+    <g
+      id="l3qWAVepmhNjXiGFCK8Ygm8"
+      fill="#ffffff"
+      transform="translate(-510,-500.49862)"
+    >
+      <g id="g26">
+        <path
+          id="powjCKlys"
+          d="M 890,2694 C 709,2646 609,2553 549,2375 l -24,-70 V 1605 905 l 27,-72 c 30,-83 86,-171 130,-208 16,-14 68,-44 114,-66 109,-53 228,-69 391,-52 92,9 120,16 186,49 103,49 166,107 204,186 58,119 65,152 71,326 4,133 7,162 18,158 10,-4 14,2 14,19 0,21 -13,30 -85,65 l -85,41 v 263 264 l 28,7 c 15,4 52,19 82,33 44,22 56,33 58,55 3,21 0,26 -12,21 -14,-5 -16,10 -16,127 0,211 -28,301 -115,378 -20,18 -36,34 -34,36 2,2 45,9 94,17 l 90,13 3,73 3,72 -373,-1 c -295,0 -385,-3 -428,-15 z m 327,-275 c 46,-26 87,-82 106,-144 9,-30 12,-201 12,-665 0,-592 -1,-628 -19,-684 -35,-105 -112,-158 -230,-157 -118,0 -203,62 -237,171 -19,63 -19,92 -17,690 l 3,625 26,56 c 28,59 76,105 131,126 54,21 175,11 225,-18 z"
+        />
+        <path
+          id="pXDrvybHy"
+          d="m 2410,2340 c 0,-333 -2,-369 -16,-363 -12,4 -15,0 -12,-18 3,-24 15,-32 101,-69 l 47,-21 v -259 -259 l -75,-35 c -64,-30 -75,-38 -75,-60 0,-18 4,-24 15,-20 13,5 15,-36 15,-340 V 550 h 378 c 427,0 466,5 559,67 70,46 125,130 150,227 15,58 18,111 18,296 0,252 -9,305 -65,376 -36,45 -132,112 -172,121 -34,7 -37,23 -5,23 12,1 47,13 77,29 63,31 122,101 140,165 7,25 15,180 20,400 5,197 11,380 15,407 l 7,49 h -155 -155 l -6,-32 c -3,-18 -8,-190 -11,-383 -8,-429 -12,-446 -120,-496 -34,-16 -66,-19 -207,-19 h -168 v 465 465 h -150 -150 z m 695,-864 c 28,-8 48,-24 70,-55 l 30,-43 v -201 c 0,-349 -25,-377 -337,-377 h -158 v 345 345 l 178,-1 c 106,0 193,-5 217,-13 z"
+        />
+      </g>
+    </g>
+    <g
+      id="l6geLyeKy0gshdvsOIcFawK"
+      fill="#14775d"
+      transform="translate(-510,-500.49862)"
+    >
+      <g id="g30">
+        <path
+          id="pFwHav8Wh"
+          d="m 1830,2411 v -299 l -46,-38 c -78,-65 -217,-144 -281,-160 l -23,-6 v -293 -293 l 103,-52 c 57,-28 134,-75 173,-104 l 69,-53 3,-281 2,-282 h 38 c 20,0 61,-3 90,-6 48,-6 52,-5 52,15 0,12 -6,21 -15,21 -13,0 -15,38 -15,278 0,261 1,279 20,312 11,19 28,52 38,72 9,20 25,39 35,42 12,3 17,14 17,36 0,29 -2,31 -17,19 -10,-7 -25,-22 -34,-33 -17,-19 -18,-19 -73,31 -61,56 -126,102 -187,134 l -40,20 3,122 3,122 45,24 c 25,14 78,50 119,80 41,31 82,62 93,70 16,12 21,11 41,-8 31,-28 37,-27 37,9 0,17 9,48 20,70 19,37 20,59 20,385 v 345 h -145 -145 z"
+        />
+      </g>
+    </g>
+    <g
+      id="ls88IYZfP5b5b8x7RYseij"
+      fill="#1cb78e"
+      transform="translate(-510,-500.49862)"
+    >
+      <g id="g34">
+        <path
+          id="pCM7FVo6B"
+          d="m 2090,2378 v -333 l -31,-55 c -25,-46 -28,-58 -18,-76 14,-27 124,-110 197,-149 l 52,-28 v -122 -122 l -76,-48 c -98,-62 -176,-134 -222,-204 l -37,-56 -3,-317 c -3,-300 -2,-318 15,-319 17,-1 190,-1 226,0 16,1 17,21 17,271 0,235 2,274 17,296 23,36 123,104 236,159 l 97,48 -2,289 -3,289 -60,27 c -102,46 -195,102 -241,146 l -44,43 v 296 297 h -60 -60 z"
+        />
+      </g>
+    </g>
+  </svg>
+
+  <span class="text-white">Adaptor Tool</span>
+</div>
+
+          <!-- Sidebar component, swap this element with another sidebar if you like -->
+          <div class="h-0 flex-1 flex flex-col overflow-y-auto">
+            <!-- Navigation -->
+            <nav class="mt-2 flex-1 px-2 bg-gray-800">
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Quick start
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../"
+                >Quick start</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../building-with-bazel/"
+                >Building with Bazel</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../building-with-cmake/"
+                >Building with CMake</a
+              >
+              <a
+                class="bg-gray-900 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="./"
+                >Running QAT</a
+              > 
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Using QAT
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../UsingQAT/TargetingQIR/"
+                >Targeting a QIR</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../UsingQAT/DebuggingIR/"
+                >Debugging a QIR</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../UsingQAT/GoalsAndAssumptions/"
+                >Assumptions and restrictions</a
+              > 
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Developer guide
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../DeveloperGuide/ArchitectureOverview/"
+                >Architecture Overview</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../DeveloperGuide/WritingAdaptor/"
+                >Writing an adaptor</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../DeveloperGuide/WritingRuleTests/"
+                >Rule based extensions</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../DeveloperGuide/LogicSeparation/"
+                >Grouping QIS</a
+              > 
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Api
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Api/Classes/"
+                >Classes</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Api/Namespaces/"
+                >Namespaces</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../Api/Modules/"
+                >Modules</a
+              > 
+              <h3
+                class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-1"
+                id="teams-headline"
+              >
+                Contributing
+              </h3>
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../DeveloperGuide/CodeQuality/"
+                >Code quality</a
+              >
+              <a
+                class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
+                href="../../DeveloperGuide/DeveloperFAQ/"
+                >Developer FAQ</a
+              > 
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main column -->
+      <div class="flex flex-col w-0 flex-1 overflow-hidden">
+        <!-- Top bar -->
+        <div
+          class="relative z-20 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 focus:outline-none"
+        >
+          <button
+            class="px-4 border-r border-gray-200 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden"
+            id="sidebarOpen"
+          >
+            <span class="sr-only">Open sidebar</span>
+            <!-- Heroicon name: menu-alt-1 -->
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </button>
+
+          <div
+            class="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8"
+          >
+            <div class="flex-1 flex">
+              <form class="w-full flex md:ml-0" action="#" method="GET">
+                <label for="mkdocs-search-query" class="sr-only">Search</label>
+                <div
+                  class="relative w-full text-gray-400 focus-within:text-gray-600"
+                >
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
+                    aria-hidden="true"
+                  >
+                    <!-- Heroicon name: search -->
+                    <svg
+                      class="h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    id="mkdocs-search-query"
+                    name="mkdocs-search-query"
+                    class="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
+                    placeholder="Search documentation"
+                    type="search"
+                  />
+                </div>
+              </form>
+              <div
+                id="searchResults"
+                class="fixed sm:absolute mt-16 z-10 inset-0 overflow-y-auto min-h-screen min-w-screen flex flex-col justify-start sm:pb-16 lg:pb-96 lg:max-w-6xl lg:mx-auto hidden"
+              >
+                <div class="bg-gray-100 text-gray-400 p-2">Results</div>
+                <div
+                  class="bg-white min-h-96 z-100 p-4 sm:p-8 rounded-b space-y-4 flex flex-col overflow-y-auto w-full max-h-full"
+                >
+                  <div class="prose" id="mkdocs-search-results"></div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+        <main
+          class="relative flex flex-col flex-grow h-0 min-h-full justify-between bg-white focus:outline-none overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+          tabindex="0"
+        >
+          <div
+            class="fixed inset-0 transition-opacity hidden searchOverlayElement"
+            aria-hidden="true"
+            id="searchOverlay"
+          >
+            <div
+              class="absolute inset-0 bg-gray-500 opacity-75 searchOverlayElement"
+            ></div>
+          </div>
+
+          <div
+            class="lg:px-8 flex flex-col space-y-4 p-4 md:px-6 sm:px-8 w-full mb-96"
+          >  
+
+<div class="lg:max-w-6xl w-full lg:mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="text-lg max-w-prose mx-auto py-10">
+    <h1>
+      <span
+        class="block text-base text-center text-qauntum-600 font-semibold tracking-wide uppercase"
+      >
+        Quick start
+      </span>
+      <span
+        class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
+      >
+        <span class="text-center"> Running QAT </span>
+      </span>
+    </h1>
+    
+  </div>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="running-qat">Running QAT</h1>
+<p>In the <a href="../../UsingQAT/TargetingQIR/">section on targeting QIR</a> we will discuss
+the individual validators and adaptors. However, for the sake of getting started
+quickly, in this section, we will take the reader through the basic usage of
+QAT, its configuration and how to use selected adaptors using examples.</p>
+<h2 id="basic-usage">Basic usage</h2>
+<p>The easiest way to use QAT is by running it with a target configuration:</p>
+<pre><code class="language-sh">qat --target-def path/to/target-def.yaml -S -o output.ll input.ll
+</code></pre>
+<p>The file <code>target-def.yaml</code> sets the behaviour of QAT, whereas <code>-S</code> tells QAT to
+emit human readable LLVM code (as opposed to the binary format). The output file
+is specified by <code>-o</code> and finally, a list of one or more input files is given for
+QAT to process. Providing more than a single input file, QAT will link these
+into a single intermediate representation.</p>
+<p>To get a full list of the commandline arguments and flags, run <code>qat -h</code> or
+<code>qat --help</code>.</p>
+<h2 id="target-configuration">Target configuration</h2>
+<p>The target QIR is defined through the target configuration provided as a YAML
+configuration file. Note that it is possible to configure QAT entirely through
+the commandline, we recommend the use of YAML configurations as the overall
+number configurable settings is pretty large.</p>
+<p>On a high level, the configuration is divided into three sections: <code>qat</code>,
+<code>adaptor</code> and <code>target</code>. The first section <code>qat</code> is highlevel configuration of
+QAT and defines things such as whether the target requires adaption, validation
+and what the adaptor pipeline looks like. The second section <code>adaptor</code> defines
+the configuration for each of the adaptor components. The third section <code>target</code>
+defines requirements for the target which QAT will use to validate that the
+final result really is compliant with the desired target.</p>
+<h2 id="qat-configuration">QAT configuration</h2>
+<p>Before demonstrating how adaptors and target validation can be used, we will
+briefly examine a few useful settings in the <code>qat</code> section. First and foremost,
+<code>dump-config</code> is a useful setting that allows the user to dump the current
+configuration. To provide compatibility with the human readable IR, the config
+is dumped as comments. This feature is in particular useful as a commandline
+flag</p>
+<pre><code class="language-sh">qat --target-def path/to/target-def.yaml -S --dump-config input.ll &gt; output.ll
+</code></pre>
+<p>Note that rather than using the <code>-o</code> option, we redirect the output into the
+output file. This is capture the configuration together with the resulting
+output of QAT and ensure that the two are kept together for reproducibility.</p>
+<p>Another couple of useful features are <code>strip-exisiting-dbg</code> and <code>add-ir-debug</code>.
+These two can be set from the command line using <code>--strip-exisiting-dbg</code> and
+<code>--add-ir-debug</code>, respectively. The first, <code>strip-exisiting-dbg</code>, removes all
+existing debug information from the loaded modules. The other <code>add-ir-debug</code>
+adds debug symbols referring to the LL file itself. This is discussed in
+<a href="../../UsingQAT/DebuggingIR/">detail here</a>.</p>
+<h2 id="adaptor-examples">Adaptor examples</h2>
+<p>In this section we will demonstrate some of the adaptor examples which
+manipulate the IR to conform to target specification.</p>
+<p>In many of the sections below, we will refer to demos. From the repository root,
+these can be found in the folder <code>qir/demos</code>. A prerequisite to running the
+demos is to have an environment variable <code>QAT_BINARY</code> containing the path to the
+QAT binary. In each demo directory there is a <code>Makefile</code> with suggested commands
+to run.</p>
+<h3 id="inlining">Inlining</h3>
+<p>One of the first important examples of QAT is replication of some of the LLVM
+functionality. In this and the next section, we will demonstrate some aspects of
+this as we discuss the LLVM adaptor. This adaptor provides capabilities for
+function inlining, loop unrolling, dead code elimination. In this first example,
+we dicuss inlining and its relevance in construction of quantum programs.</p>
+<p>Consider a Q# program that has a <code>MiniCircuit</code> which we want to use at two
+distinct places, such as</p>
+<pre><code class="language-text">operation MiniCircuit(q1: Qubit,q2: Qubit): Unit {
+    H(q1);
+    H(q2);
+    CNOT(q1, q2);
+}
+
+operation Main(): Unit {
+       use q1 = Qubit();
+       use q2 = Qubit();
+       MiniCircuit(q1, q2);
+       MiniCircuit(q1, q2);
+}
+</code></pre>
+<p>This program produces IR similar to</p>
+<pre><code class="language-llvm">define internal void @InlineExample__Main__body() {
+entry:
+  call void @InlineExample__MiniCircuit__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  call void @InlineExample__MiniCircuit__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  ret void
+}
+
+define internal void @InlineExample__MiniCircuit__body(%Qubit* %q1, %Qubit* %q2) {
+entry:
+  call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %q1)
+  call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %q2)
+  call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* %q1, %Qubit* %q2)
+  ret void
+}
+</code></pre>
+<p>Any backend without support for function calls would not be able to run this
+program. However, if we would inline the functions to the place where they are
+called, we would not need function call as a requirement for the backend.
+Function inlining is used classically and LLVM provides a ready made inliner
+pass that we can use. This integrated into QAT and can be ran as follows:</p>
+<pre><code class="language-sh">qat --always-inline -S --apply -o output.ll input.ll
+</code></pre>
+<p>The resulting IR becomes:</p>
+<pre><code class="language-llvm">define void @ InlineExample__Main() #0 {
+entry:
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  ret void
+}
+</code></pre>
+<p>The LLVM optimisation adaptor exposes the inlining configuration thereby
+providing some control over the behaviour. A similar example can be found in
+<code>qir/demos/Inlining</code>. The key benefit is that we can write programs where
+subcircuits are separated in to functions without having to rely on the backend
+supporting function calls. This is one important aspect of writing parameterised
+quantum programs. The other aspect is loop unrolling which we will touch upon in
+the next section.</p>
+<h3 id="loop-unrolling">Loop unrolling</h3>
+<p>Another important LLVM pass is the loop unrolling pass. Loop unrolling in
+combination with inlining allows to fully parameterize subcircuits. In our
+example from before, we could imagine a scenario where the function
+<code>MiniCircuit</code> would take an extra integer <code>N</code> parameter and apply an H-gate <code>N</code>
+times. With loop unrolling this would become a series of H gates with no
+additional control or need for branching, and using inlining, subcircuits would
+be placed directly in the main program.</p>
+<pre><code class="language-text">OPENQASM 3;
+int n_iterations = 5;
+int iteration = 0;
+qubit q;
+
+while (iteration &lt; n_iterations) {
+    h q;
+    iteration += 1;
+}
+</code></pre>
+<p>The above OpenQASM program can be translated into a QIR similar to:</p>
+<pre><code class="language-llvm">define internal void @loop_unrolling() {
+entry:
+  br label %header__1
+
+header__1:
+  %0 = phi i64 [ 1, %entry ], [ %2, %body__1 ]
+  %1 = icmp slt i64 %0, 6
+  br i1 %1, label %body__1, label %exit__1
+
+body__1:
+  call void @__quantum__qis__h__body(%Qubit* null)
+  %2 = add i64 %0, 1
+  br label %header__1
+
+exit__1:
+  ret void
+}
+</code></pre>
+<p>The control logic associated with the loop gives rise to a <code>phi</code> node which most
+of todays hardware backends would not be able to handle. However, since hte loop
+is constant in length, we can unroll the loop by using the <code>unroll-loop</code>
+parameter:</p>
+<pre><code class="language-sh">qat --apply -S  --unroll-loops input.ll
+</code></pre>
+<p>This simplifies the code to a series of H gates applied to the zero'th qubit:</p>
+<pre><code class="language-llvm">define internal void @loop_unrolling() {
+entry:
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* null)
+  call void @__quantum__qis__h__body(%Qubit* null)
+
+  ret void
+}
+
+</code></pre>
+<p>The inlining and loop unrolling passes are the most significant passes used from
+the LLVM framework. The LLVM adaptor also have a few other passes. The details
+of these are described briefly in the commandline help page which can be found
+by running <code>qat -h</code>.</p>
+<h3 id="static-resource-allocation">Static resource allocation</h3>
+<p>The generic QIR allows for dynamic qubit allocation as the default way to
+allocate qubits. One of the core differences between simulators and hardware
+backends is how qubits are allocated: While simulators, in theory, can allocate
+as many qubits as need dynamically, hardware backends has a hard limit on the
+number of qubits and futher more, does not implement the necessary logic to
+perform dynamic management. For this reason, it is necessary to transform
+dynamic qubit management into static allocation in order to make certain QIRs
+compatible with backends that does not implement qubit management.</p>
+<p>In this example, we demonstrate the "Target QIS mapping" adaptor and how it can
+be used to transform dynamic qubit management into static allocations. Consider
+the program</p>
+<pre><code class="language-text">OPENQASM 3;
+
+qubit q;
+h q;
+</code></pre>
+<p>The equivalent generic QIR is</p>
+<pre><code class="language-llvm">define void @example() #0 {
+entry:
+  %q = call %Qubit* @__quantum__rt__qubit_allocate()
+  call void @__quantum__qis__h__body(%Qubit* %q)
+  call void @__quantum__rt__qubit_release(%Qubit* %q)
+  ret void
+}
+</code></pre>
+<p>We note that the use of <code>__quantum__rt__qubit_allocate</code> and
+<code>__quantum__rt__qubit_release</code> which are the functions that can be problematic
+for hardware backends. Running</p>
+<pre><code class="language-sh">qat --use-static-qubit-allocation --apply -S  input.ll
+</code></pre>
+<p>will transform the input to</p>
+<pre><code class="language-llvm">define void @example() #0 {
+entry:
+  call void @__quantum__qis__h__body(%Qubit* null)
+  ret void
+}
+</code></pre>
+<p>This demo is found in <code>qir/demo/QubitAllocation</code>. Note that static qubit
+allocation is not a straight forward task and there are many corner cases for
+which it simply will not work. For instance, recusively allocating qubit where
+recursion stops on a runtime parameter is one case that cannot be mapped. QAT
+does a best effort, but at this point there is no garantuee of correctness.</p>
+<p>Advanced experimental features are available by adding the flag <code>--experimental</code>
+to the command line arguments. Run <code>qat --experimental -h</code> to see these
+parameters and their description.</p>
+<h3 id="replacement-linking">Replacement linking</h3>
+<p>In this example we consider two quantum computers. The first computer implements
+<code>z</code>and <code>cnot</code>. The second computer implements <code>x</code>, <code>h</code> and <code>cnot</code>.</p>
+<pre><code class="language-text">OPENQASM 3;
+
+qubit a;
+qubit b;
+
+z a;
+cnot a b;
+</code></pre>
+<p>After compiling to QIR we get (<code>main.ll</code>),</p>
+<pre><code class="language-llvm">define void @example() #0 {
+entry:
+  %a = call %Qubit* @__quantum__rt__qubit_allocate()
+  %b = call %Qubit* @__quantum__rt__qubit_allocate()
+  call void @__quantum__qis__z__body(%Qubit* %a)
+  call void @__quantum__qis__cnot__body(%Qubit* %a, %Qubit* %b)
+  call void @__quantum__rt__qubit_release(%Qubit* %b)
+  call void @__quantum__rt__qubit_release(%Qubit* %a)
+  ret void
+}
+</code></pre>
+<p>Obviously, this code will not run on the second computer since that machine does
+it makes use of a <code>z</code> gate. While we could rewrite the frontend code, the beauti
+of an intermediate represenation is that such tasks can be performed at this
+level and hence, the user does not need to worry about hardware compatibility of
+the frontend code.</p>
+<p>QAT allows to address this issue by using a concept known as replacement
+linking. Replacement linking is linking process by which one function call is
+replaced by another if the and only if the other function is present in the IR.
+To facilitate this, we annotate the function <code>__quantum__qis__z__body</code> as
+follows:</p>
+<pre><code class="language-llvm">declare void @__quantum__qis__z__body(%Qubit*) #1
+
+attributes #1 = { &quot;replaceWith&quot;=&quot;soft_z&quot; }
+</code></pre>
+<p>This states taht if the function <code>soft_z</code> is available, replace all calls to
+<code>__quantum__qis__z__body</code> with <code>soft_z</code>. Passing the <code>main.ll</code> through QAT does
+not result in any changes. However, adding a <code>lib.ll</code> with following code:</p>
+<pre><code class="language-llvm">define void @soft_z(%Qubit* %q) {
+entry:
+  call void @__quantum__qis__h__body(%Qubit* %q)
+  call void @__quantum__qis__x__body(%Qubit* %q)
+  call void @__quantum__qis__h__body(%Qubit* %q)
+  ret void
+}
+</code></pre>
+<p>will replace the calls <code>__quantum__qis__z__body</code> in <code>main.ll</code>. This is done by
+invoking QAT as follows:</p>
+<pre><code class="language-sh">qat --apply -S --target-def target.yaml --validate main.ll lib.ll
+</code></pre>
+<p>From the repository root, the code for this example can be found in
+<code>qat/demos/ReplaceLinking</code>. In this concrete demo, calling</p>
+<pre><code class="language-sh">qat --apply -S --target-def target.yaml --no-always-inline --validate main.ll lib.ll
+</code></pre>
+<p>produces</p>
+<pre><code class="language-llvm">; ModuleID = 'qat-link'
+source_filename = &quot;qat-link&quot;
+
+%Qubit = type opaque
+
+define void @example() #0 {
+entry:
+  call void @soft_z(%Qubit* null)
+  call void @__quantum__qis__cnot__body(%Qubit* null, %Qubit* nonnull inttoptr (i64 1 to %Qubit*))
+  ret void
+}
+
+declare %Qubit* @__quantum__rt__qubit_allocate()
+
+declare void @__quantum__qis__cnot__body(%Qubit*, %Qubit*)
+
+declare void @__quantum__rt__qubit_release(%Qubit*)
+
+define void @soft_z(%Qubit* %q) #1 {
+entry:
+  call void @__quantum__qis__h__body(%Qubit* %q)
+  call void @__quantum__qis__x__body(%Qubit* %q)
+  call void @__quantum__qis__h__body(%Qubit* %q)
+  ret void
+}
+
+declare void @__quantum__qis__h__body(%Qubit*)
+
+declare void @__quantum__qis__x__body(%Qubit*)
+
+attributes #0 = { &quot;EntryPoint&quot; &quot;maxQubitIndex&quot;=&quot;1&quot; &quot;maxResultIndex&quot;=&quot;0&quot; &quot;requiredQubits&quot;=&quot;2&quot; &quot;requiredResults&quot;=&quot;0&quot; }
+attributes #1 = { &quot;maxQubitIndex&quot;=&quot;0&quot; &quot;maxResultIndex&quot;=&quot;0&quot; &quot;requiredQubits&quot;=&quot;0&quot; &quot;requiredResults&quot;=&quot;0&quot; }
+</code></pre>
+<p>as would be expected. We note that we have disabled inlining as to maintain the
+function <code>soft_z</code>.</p>
+<p>Each backend can now provide a library that makes software implementations of
+the gates that are not supported natively by the system.</p>
+<h3 id="grouping-qis">Grouping QIS</h3>
+<p>Grouping QIS is an experimental adaptor that allows separation of the classical
+operations and pure quantum circuits. In this section we will concentrate on
+showing how to use this feature. If you are interested in the</p>
+<p>TODO(tfr): Write this section once the cicruit separation has been revised.</p></div>
+</div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script>
+      var base_url = "../..",
+          shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+    </script>
+    <script src="../../js/base.js" defer></script>
+    <script src="../../search/main.js" defer></script>  
+  </body>
+</html>
