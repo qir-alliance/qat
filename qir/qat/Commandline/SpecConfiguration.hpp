@@ -93,7 +93,7 @@ namespace quantum
 
         // Attribute names
         //
-        String entry_point_attr_{"entry_point"};
+        String entry_point_attr_{"EntryPoint"};
         String qir_profiles_attr_{"qir_profiles"};
         String output_labeling_schema_attr_{"output_labeling_schema"};
         String required_num_qubits_attr_{"required_num_qubits"};
