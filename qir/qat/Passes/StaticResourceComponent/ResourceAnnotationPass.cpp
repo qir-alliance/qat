@@ -33,6 +33,7 @@ llvm::PreservedAnalyses ResourceAnnotationPass::run(llvm::Function& function, ll
     {
         std::stringstream ss{""};
         ss << stats.usage_qubit_counts;
+        // TODO(issue UNTRACKED): get from spec.
         function.addFnAttr("requiredQubits", ss.str());
     }
 

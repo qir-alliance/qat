@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Commandline/SpecConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
@@ -15,19 +16,24 @@ namespace microsoft::quantum
 class RemoveDisallowedAttributesPass : public llvm::PassInfoMixin<RemoveDisallowedAttributesPass>
 {
   public:
-    RemoveDisallowedAttributesPass()
+    explicit RemoveDisallowedAttributesPass(SpecConfiguration const& /*spec*/)
       : allowed_attrs_{
-            static_cast<String>("EntryPoint"), static_cast<String>("InteropFriendly"),
-            static_cast<String>("requiredQubits"), static_cast<String>("requiredResults"),
-            static_cast<String>("replaceWith")
-            /*
-            static_cast<String>("nofree")
-            static_cast<String>("nosync")
-            static_cast<String>("nounwind")
-            static_cast<String>("readnone")
-            static_cast<String>("speculatable")
-            static_cast<String>("willreturn")
-            */
+            // TODO(issue UNTRACKED): These attributes are deprecated and should be removed once Q# is upgraded
+            static_cast<String>("EntryPoint"),
+            static_cast<String>("InteropFriendly"),
+            static_cast<String>("requiredQubits"),
+            static_cast<String>("requiredResults"),
+            static_cast<String>("replaceWith"),
+
+            // New attributes
+            // TODO(issue UNTRACKED): get these from the specification
+            static_cast<String>("entry_point"),
+            static_cast<String>("qir_profiles"),
+            static_cast<String>("output_labeling_schema"),
+            static_cast<String>("required_num_qubits"),
+            static_cast<String>("required_num_results"),
+            static_cast<String>("replace_with"),
+            static_cast<String>("irreversible"),
         }
     {
     }

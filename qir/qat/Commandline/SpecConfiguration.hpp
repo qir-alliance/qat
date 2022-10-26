@@ -20,13 +20,92 @@ namespace quantum
                 version_, "spec-version", "Specification version.",
                 ConfigurationManager::ParameterVisibility::ConfigOnly);
             config.addParameter(
-                entry_point_attr_, "entry-point-attr", "Specifies the attribute indicating the entry point.");
+                entry_point_attr_, "entry-point-attr", "Specifies the attribute name indicating the entry point.");
+
+            config.addParameter(
+                qir_profiles_attr_, "qir-profiles-attr",
+                "Specifies the attribute name indicating the profile compliance.");
+            config.addParameter(
+                output_labeling_schema_attr_, "output-labeling-schema-attr",
+                "Specifies the attribute name indicating the output labaling scheme.");
+            config.addParameter(
+                required_num_qubits_attr_, "required-num-qubits-attr",
+                "Specifies the attribute name indicating the required number of qubits.");
+            config.addParameter(
+                required_num_results_attr_, "required-num-results-attr",
+                "Specifies the attribute name indicating the required number of results.");
+            config.addParameter(
+                replace_with_attr_, "replace-with-attr",
+                "Specifies the attribute name indicating replacement linking.");
+            config.addParameter(
+                irreversible_attr_, "irreversible-attr", "Specifies the attribute name indicating irrevesibility.");
+
             config.addParameter(qir_runtime_prefix_, "qir-runtime-prefix", "QIR runtime prefix.");
+        }
+
+        String version() const
+        {
+            return version_;
+        }
+
+        String entryPointAttr() const
+        {
+            return entry_point_attr_;
+        }
+
+        String qirProfilesAttr() const
+        {
+            return qir_profiles_attr_;
+        }
+
+        String outputLabelingSchemaAttr() const
+        {
+            return output_labeling_schema_attr_;
+        }
+
+        String requiredNumQubitsAttr() const
+        {
+            return required_num_qubits_attr_;
+        }
+
+        String requiredNumResultsAttr() const
+        {
+            return required_num_results_attr_;
+        }
+
+        String replaceWithAttr() const
+        {
+            return replace_with_attr_;
+        }
+
+        String irreversibleAttr() const
+        {
+            return irreversible_attr_;
+        }
+
+        String qirRuntimePrefix() const
+        {
+            return qir_runtime_prefix_;
         }
 
       private:
         String version_{"0.9"};
-        String entry_point_attr_{"EntryPoint"};
+
+        // Attribute names
+        //
+        String entry_point_attr_{"entry_point"};
+        String qir_profiles_attr_{"qir_profiles"};
+        String output_labeling_schema_attr_{"output_labeling_schema"};
+        String required_num_qubits_attr_{"required_num_qubits"};
+        String required_num_results_attr_{"required_num_results"};
+        String replace_with_attr_{"replace_with"};
+        String irreversible_attr_{"irreversible"};
+
+        // maxQubitIndex
+        // maxResultIndex
+
+        // Naming convention
+        //
         String qir_runtime_prefix_{"__quantum__rt__"};
     };
 

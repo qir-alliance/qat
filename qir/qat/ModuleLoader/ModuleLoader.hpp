@@ -18,8 +18,13 @@ class ModuleLoader
     using Linker       = llvm::Linker;
     using SMDiagnostic = llvm::SMDiagnostic;
 
-    explicit ModuleLoader(Module* final_module, bool strip_existing_debug = false, bool add_ir_debug_info = false)
-      : final_module_{final_module}
+    explicit ModuleLoader(
+        SpecConfiguration const& spec,
+        Module*                  final_module,
+        bool                     strip_existing_debug = false,
+        bool                     add_ir_debug_info    = false)
+      : spec_{spec}
+      , final_module_{final_module}
       , linker_{*final_module}
       , instruction_location_table_{InstructionLocationTable::create()}
       , strip_existing_debug_{strip_existing_debug}
@@ -90,7 +95,7 @@ class ModuleLoader
         }
 
         // Transforming module
-        SingleModuleTransformation transformation;
+        SingleModuleTransformation transformation(spec_);
         if (!transformation.apply(module.get()))
         {
             llvm::errs() << "Failed to prepare " << input_file << " using single module transformations.\n";
@@ -107,6 +112,7 @@ class ModuleLoader
     }
 
   private:
+    SpecConfiguration           spec_{};
     Module*                     final_module_;
     Linker                      linker_;
     InstructionLocationTablePtr instruction_location_table_{nullptr};
@@ -124,6 +130,7 @@ class ModuleLoader
         using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
 
         explicit SingleModuleTransformation(
+            SpecConfiguration const& spec,
             OptimizationLevel const& optimization_level = OptimizationLevel::O0,
             bool                     debug              = false)
           : optimization_level_{optimization_level}
@@ -138,7 +145,7 @@ class ModuleLoader
             pass_builder_.crossRegisterProxies(
                 loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
 
-            module_pass_manager_.addPass(RemoveDisallowedAttributesPass());
+            module_pass_manager_.addPass(RemoveDisallowedAttributesPass(spec));
         }
 
         bool apply(llvm::Module* module)
