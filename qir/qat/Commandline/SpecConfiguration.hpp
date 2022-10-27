@@ -93,12 +93,12 @@ namespace quantum
 
         // Attribute names
         //
-        String entry_point_attr_{"EntryPoint"};
+        String entry_point_attr_{"EntryPoint"}; // TODO(issue UNTRACKED): Update to comply with spec once Q# is updated
         String qir_profiles_attr_{"qir_profiles"};
         String output_labeling_schema_attr_{"output_labeling_schema"};
         String required_num_qubits_attr_{"required_num_qubits"};
         String required_num_results_attr_{"required_num_results"};
-        String replace_with_attr_{"replace_with"};
+        String replace_with_attr_{"replaceWith"}; // TODO(issue UNTRACKED): Update to comply with spec
         String irreversible_attr_{"irreversible"};
 
         // maxQubitIndex
