@@ -16,24 +16,12 @@ namespace microsoft::quantum
 class RemoveDisallowedAttributesPass : public llvm::PassInfoMixin<RemoveDisallowedAttributesPass>
 {
   public:
-    explicit RemoveDisallowedAttributesPass(SpecConfiguration const& /*spec*/)
+    explicit RemoveDisallowedAttributesPass(SpecConfiguration const& spec)
       : allowed_attrs_{
-            // TODO(issue UNTRACKED): These attributes are deprecated and should be removed once Q# is upgraded
-            static_cast<String>("EntryPoint"),
-            static_cast<String>("InteropFriendly"),
-            static_cast<String>("requiredQubits"),
-            static_cast<String>("requiredResults"),
-            static_cast<String>("replaceWith"),
-
-            // New attributes
-            // TODO(issue UNTRACKED): get these from the specification
-            static_cast<String>("entry_point"),
-            static_cast<String>("qir_profiles"),
-            static_cast<String>("output_labeling_schema"),
-            static_cast<String>("required_num_qubits"),
-            static_cast<String>("required_num_results"),
-            static_cast<String>("replace_with"),
-            static_cast<String>("irreversible"),
+            static_cast<String>(spec.entryPointAttr()),           static_cast<String>(spec.qirProfilesAttr()),
+            static_cast<String>(spec.outputLabelingSchemaAttr()), static_cast<String>(spec.requiredNumQubitsAttr()),
+            static_cast<String>(spec.requiredNumResultsAttr()),   static_cast<String>(spec.replaceWithAttr()),
+            static_cast<String>(spec.irreversibleAttr()),
         }
     {
     }
