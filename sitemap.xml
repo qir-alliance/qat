@@ -2,1347 +2,1347 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://qir-alliance.github.io/qat/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_allocation_analysis_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_allocation_analysis_pass_printer/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_any_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_allocation_manager/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_basic_block_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_bit_cast_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_branch_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_call_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_comment_logger/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_config_bind/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configurable_qir_adaptor_factory/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_const_int_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_debug_info_updater/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_defer_measurement_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_deferred_value/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_division_by_zero_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_annotator_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_replacement_analysis_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_replacement_analysis_pass_printer/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_replacement_configuration/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_replacement_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_to_module/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_function_validation_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_analysis_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_analysis_pass_printer/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_allocation_manager/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_config_bind/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_logger/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_i_operand_prototype/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_instruction_location_table/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_int_to_ptr_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_ir_manipulation_test_helper/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_llvm_passes_configuration/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_load_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_log_collection/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_module_loader/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_module_loader_1_1_single_module_transformation/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_opcode_set/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_opcode_value/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_parameter_parser/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_phi_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_post_transform_validation_pass_configuration/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qir_adaptor/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qir_adaptor_factory/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_qubit_remap_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_remove_disallowed_attributes_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_remove_non_entrypoint_functions_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_remove_non_entrypoint_functions_pass_configuration/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replace_qubit_on_reset_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_replacement_rule/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_resource_annotation_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_set/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_select_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_source_location/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_static_resource_component_configuration/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_store_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_switch_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_target_profile_configuration/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_target_qis_configuration/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_target_qis_mapping_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_target_qis_mapping_pass_configuration/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_test_program/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_test_v_m/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_unnamed_invoke_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validation_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_validator/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_z_ext_pattern/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_z_ext_transform_pass/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1notation_1_1_capture/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_allocation_analysis_1_1_resource_access_location/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_basic_allocation_manager_1_1_allocated_memory_block/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_configuration_manager_1_1_section/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_function_register/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_group_analysis/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_has_qat_serializers/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_location/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_i_logger_1_1_message/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_parameter_parser_1_1_parsed_value/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_target_profile_mapping_configuration/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/structstd_1_1hash_3_01microsoft_1_1quantum_1_1_opcode_value_01_4/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Examples/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_allocation_analysis_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_allocation_analysis_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_allocation_manager_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_allocation_manager_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_any_pattern_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_any_pattern_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_basic_block_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_bit_cast_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_branch_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_call_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_call_8ipp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_call_by_name_only_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_call_pattern_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_call_pattern_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_capture_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_comment_logger_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_comment_logger_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_config_bind_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_configurable_qir_adaptor_factory_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_configurable_qir_adaptor_factory_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_configuration_manager_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_configuration_manager_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_const_int_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_debug_info_updater_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_debug_info_updater_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_defer_measurement_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_defer_measurement_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_division_by_zero_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_division_by_zero_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_factory_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_factory_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_function_annotator_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_function_annotator_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_function_replacement_analysis_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_function_replacement_analysis_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_function_replacement_configuration_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_function_replacement_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_function_replacement_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_function_to_module_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_function_validation_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_function_validation_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_grouping_analysis_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_grouping_analysis_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_grouping_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_grouping_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_grouping_pass_configuration_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_i_allocation_manager_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_i_allocation_manager_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_i_config_bind_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_i_config_bind_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_i_logger_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_i_logger_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_i_operand_prototype_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_i_operand_prototype_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_instruction_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_instruction_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_instruction_location_table_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_instruction_location_table_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_int_to_ptr_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_ir_manipulation_test_helper_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_ir_manipulation_test_helper_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_llvm_passes_configuration_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_llvm_passes_configuration_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_load_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_log_collection_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_log_collection_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_module_loader_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_notation_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_notation_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_parameter_parser_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_parameter_parser_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_phi_8ipp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_phi_pattern_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_phi_pattern_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_post_transform_validation_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_post_transform_validation_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_post_transform_validation_pass_configuration_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_qat_types_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_qir_adaptor_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_qir_adaptor_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_qir_adaptor_factory_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_qir_adaptor_factory_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_qubit_remap_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_qubit_remap_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_remove_disallowed_attributes_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_remove_non_entrypoint_functions_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_remove_non_entrypoint_functions_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_remove_non_entrypoint_functions_pass_configuration_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_replace_qubit_on_reset_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_replace_qubit_on_reset_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_replacement_rule_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_replacement_rule_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_resource_annotation_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_resource_annotation_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_rule_set_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_rule_set_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_select_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_serialization_traits_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_source_location_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_static_resource_component_configuration_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_static_resource_component_configuration_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_store_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_switch_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_target_profile_configuration_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_target_profile_configuration_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_target_profile_mapping_configuration_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_target_qis_configuration_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_target_qis_configuration_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_target_qis_mapping_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_target_qis_mapping_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_target_qis_mapping_pass_configuration_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_test_vm_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_transformation_rules_pass_configuration_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_trim_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_unnamed_invoke_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_unnamed_invoke_pattern_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_unnamed_invoke_pattern_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_validation_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_validation_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_validator_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_validator_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_version_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_version_8tpl_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_z_ext_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_z_ext_transform_pass_8cpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_z_ext_transform_pass_8hpp/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_057849f2a92a904b8f008cf0365e4758/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_06707ac4992ac72be902822087de860f/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_0a824aa1f70ce3b829ef378253b085da/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_0c7569bb855645e4ebd09c6100c8b750/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_10c15797e36d9f6023729f20017a6c03/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_13002e6e9a3be65aeac8e1b6c1ea9008/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_1f6822dce43bfa076b3c0c3c2ab875f3/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_2d85567291775b265725bb7c4e64cdd8/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_46e4ac26363cdfa62d85590f6bd5db50/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_4b03aed240e916356291e962f5734b39/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_4cfa8840d1bdb58ac4dfb9f9b8f9e0c7/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_4ecff2ba04018cbc639e787b47aa4826/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_5e2e6bb3767fb61e254fda27d10d8563/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_6abb076d4d0fb3ef7ab0d1b2c7c28557/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_76e799bfaed323ed7497703f1980580e/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_796b3cf875c53f008e9fa858f7830e6b/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_a1c5909b11c5c8bda254c1d4e660dcd9/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_a4492bc8c549baa5763ec9eeb7ca21d1/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_b392e36b8bc0ffd1fb6a4bd773438243/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_c088d9039decfcf39c85aae8d9153291/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_cb624db7cb615d447013f4d45a07ea78/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_d31ef966b0cb1225b2b298e923bbc249/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_d9949a2e036493f8647151a4ab6ee0ce/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_ed349e2d4b607ef61e27eb2c0c0c4b3d/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_f11d3c47e762e38fcdfbd4cfb049caab/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_f32fa1f684a45b73f347439bab6df68d/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/version__builder_8py/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Modules/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Modules/group__shorthand_notation/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Namespaces/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d64/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1details/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1notation/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1version/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacestd/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespaceversion__builder/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/Api/Pages/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/DeveloperGuide/ArchitectureOverview/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/DeveloperGuide/CodeQuality/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/DeveloperGuide/DeveloperFAQ/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/DeveloperGuide/LogicSeparation/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/DeveloperGuide/WritingAdaptor/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/DeveloperGuide/WritingRuleTests/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/QuickStart/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/QuickStart/building-with-bazel/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/QuickStart/building-with-cmake/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/QuickStart/running-qat/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/UsingQAT/DebuggingIR/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/UsingQAT/GoalsAndAssumptions/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://qir-alliance.github.io/qat/UsingQAT/TargetingQIR/</loc>
-         <lastmod>2022-10-26</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
