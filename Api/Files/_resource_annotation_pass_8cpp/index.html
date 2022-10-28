@@ -643,28 +643,29 @@ llvm::PreservedAnalyses ResourceAnnotationPass::run(llvm::Function&amp; function
     {
         std::stringstream ss{&quot;&quot;};
         ss &lt;&lt; stats.usage_qubit_counts;
-        function.addFnAttr(&quot;requiredQubits&quot;, ss.str());
+
+        function.addFnAttr(config_.requiredNumQubitsAttr(), ss.str());
     }
 
     if (config_.shouldAnnotateMaxQubitIndex())
     {
         std::stringstream ss{&quot;&quot;};
         ss &lt;&lt; stats.largest_qubit_index;
-        function.addFnAttr(&quot;maxQubitIndex&quot;, ss.str());
+        function.addFnAttr(config_.maxIndexQubitsAttr(), ss.str());
     }
 
     if (config_.shouldAnnotateResultUse())
     {
         std::stringstream ss{&quot;&quot;};
         ss &lt;&lt; stats.usage_result_counts;
-        function.addFnAttr(&quot;requiredResults&quot;, ss.str());
+        function.addFnAttr(config_.requiredNumResultsAttr(), ss.str());
     }
 
     if (config_.shouldAnnotateMaxResultIndex())
     {
         std::stringstream ss{&quot;&quot;};
         ss &lt;&lt; stats.largest_result_index;
-        function.addFnAttr(&quot;maxResultIndex&quot;, ss.str());
+        function.addFnAttr(config_.maxIndexResultsAttr(), ss.str());
     }
 
     return llvm::PreservedAnalyses::none();
@@ -678,7 +679,7 @@ bool ResourceAnnotationPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

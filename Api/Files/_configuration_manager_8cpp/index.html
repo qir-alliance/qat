@@ -613,6 +613,7 @@
 
 #include &quot;qir/qat/Commandline/ConfigurationManager.hpp&quot;
 
+#include &quot;qir/qat/Commandline/SpecConfiguration.hpp&quot;
 #include &quot;yaml-cpp/yaml.h&quot;
 
 #include &lt;fstream&gt;
@@ -621,6 +622,10 @@ using namespace microsoft::quantum;
 
 namespace microsoft::quantum
 {
+ConfigurationManager::ConfigurationManager()
+{
+    addConfig&lt;SpecConfiguration&gt;(&quot;spec&quot;);
+}
 
 void ConfigurationManager::setupArguments(ParameterParser&amp; parser)
 {
@@ -1019,7 +1024,7 @@ void ConfigurationManager::saveConfig(String const&amp; filename)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

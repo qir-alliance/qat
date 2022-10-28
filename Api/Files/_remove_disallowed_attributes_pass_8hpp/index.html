@@ -627,6 +627,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include &quot;qir/qat/Commandline/SpecConfiguration.hpp&quot;
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 #include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
 
@@ -640,19 +641,12 @@ namespace microsoft::quantum
 class RemoveDisallowedAttributesPass : public llvm::PassInfoMixin&lt;RemoveDisallowedAttributesPass&gt;
 {
   public:
-    RemoveDisallowedAttributesPass()
+    explicit RemoveDisallowedAttributesPass(SpecConfiguration const&amp; spec)
       : allowed_attrs_{
-            static_cast&lt;String&gt;(&quot;EntryPoint&quot;), static_cast&lt;String&gt;(&quot;InteropFriendly&quot;),
-            static_cast&lt;String&gt;(&quot;requiredQubits&quot;), static_cast&lt;String&gt;(&quot;requiredResults&quot;),
-            static_cast&lt;String&gt;(&quot;replaceWith&quot;)
-            /*
-            static_cast&lt;String&gt;(&quot;nofree&quot;)
-            static_cast&lt;String&gt;(&quot;nosync&quot;)
-            static_cast&lt;String&gt;(&quot;nounwind&quot;)
-            static_cast&lt;String&gt;(&quot;readnone&quot;)
-            static_cast&lt;String&gt;(&quot;speculatable&quot;)
-            static_cast&lt;String&gt;(&quot;willreturn&quot;)
-            */
+            static_cast&lt;String&gt;(spec.entryPointAttr()),           static_cast&lt;String&gt;(spec.qirProfilesAttr()),
+            static_cast&lt;String&gt;(spec.outputLabelingSchemaAttr()), static_cast&lt;String&gt;(spec.requiredNumQubitsAttr()),
+            static_cast&lt;String&gt;(spec.requiredNumResultsAttr()),   static_cast&lt;String&gt;(spec.replaceWithAttr()),
+            static_cast&lt;String&gt;(spec.irreversibleAttr()),
         }
     {
     }
@@ -739,7 +733,7 @@ class RemoveDisallowedAttributesPass : public llvm::PassInfoMixin&lt;RemoveDisal
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

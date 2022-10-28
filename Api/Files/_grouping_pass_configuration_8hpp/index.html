@@ -636,7 +636,9 @@ namespace microsoft::quantum
 class GroupingPassConfiguration
 {
   public:
-    using Set = std::unordered_set&lt;std::string&gt;;
+    using Set              = std::unordered_set&lt;std::string&gt;;
+    using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+
     // Setup and construction
     //
 
@@ -645,6 +647,9 @@ class GroupingPassConfiguration
         config.setSectionName(&quot;Grouping quantum instructions&quot;, &quot;Separation of quantum and classical operations&quot;);
         config.addExperimentalParameter(
             group_qis_, true, false, &quot;group-qis&quot;, &quot;Whether or not to separate quantum and classical circuits&quot;);
+
+        irreversible_operations_ = config.getParameter(&quot;irreversible-operations&quot;);
+        qir_runtime_prefix_      = config.getParameter(&quot;qir-runtime-prefix&quot;);
     }
 
     static GroupingPassConfiguration createDisabled()
@@ -661,14 +666,37 @@ class GroupingPassConfiguration
         return group_qis_;
     }
 
+    Set irreversibleOperations() const
+    {
+        assert(irreversible_operations_ != nullptr);
+        if (irreversible_operations_ == nullptr)
+        {
+            throw std::runtime_error(&quot;Configuration 'GroupingPassConfiguration' was not initialized.&quot;);
+        }
+
+        if (!irreversible_operations_-&gt;isDereferenceable())
+        {
+            throw std::runtime_error(&quot;Target QIS configuration was not loaded.&quot;);
+        }
+
+        return irreversible_operations_-&gt;value&lt;Set&gt;();
+    }
+
+    String qirRuntimePrefix() const
+    {
+        return qir_runtime_prefix_-&gt;value&lt;String&gt;();
+    }
+
   private:
-    bool group_qis_{true};
+    bool             group_qis_{true};
+    DeferredValuePtr irreversible_operations_{};
+    DeferredValuePtr qir_runtime_prefix_{};
 };
 
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

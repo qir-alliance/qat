@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d64/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Files/_spec_configuration_8hpp/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      microsoft::quantum::@64 - QAT Documentation
+      Commandline/SpecConfiguration.hpp - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -246,7 +246,7 @@
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../"
+                  href="../../Namespaces/"
                   >Namespaces</a
                 >
                 <a
@@ -445,7 +445,7 @@
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../"
+                href="../../Namespaces/"
                 >Namespaces</a
               >
               <a
@@ -585,14 +585,170 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> microsoft::quantum::@64 </span>
+        <span class="text-center"> Commandline/SpecConfiguration.hpp </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantum64">microsoft::quantum::@64</h1>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="commandlinespecconfigurationhpp">Commandline/SpecConfiguration.hpp</h1>
+<h2 id="namespaces">Namespaces</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft/">microsoft</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="/qat/Api/Namespaces/namespacemicrosoft_1_1quantum/">microsoft::quantum</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="classes">Classes</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_spec_configuration/">microsoft::quantum::SpecConfiguration</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="source-code">Source code</h2>
+<pre><code class="language-cpp">#pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include &quot;qir/qat/Commandline/ConfigurationManager.hpp&quot;
+#include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
+
+namespace microsoft
+{
+namespace quantum
+{
+
+    class SpecConfiguration
+    {
+      public:
+        void setup(ConfigurationManager&amp; config)
+        {
+            config.setSectionName(&quot;Specification&quot;, &quot;Convention for a given specification&quot;);
+            config.addParameter(
+                version_, &quot;spec-version&quot;, &quot;Specification version.&quot;,
+                ConfigurationManager::ParameterVisibility::ConfigOnly);
+            config.addParameter(
+                entry_point_attr_, &quot;entry-point-attr&quot;, &quot;Specifies the attribute name indicating the entry point.&quot;);
+
+            config.addParameter(
+                qir_profiles_attr_, &quot;qir-profiles-attr&quot;,
+                &quot;Specifies the attribute name indicating the profile compliance.&quot;);
+            config.addParameter(
+                output_labeling_schema_attr_, &quot;output-labeling-schema-attr&quot;,
+                &quot;Specifies the attribute name indicating the output labaling scheme.&quot;);
+            config.addParameter(
+                required_num_qubits_attr_, &quot;required-num-qubits-attr&quot;,
+                &quot;Specifies the attribute name indicating the required number of qubits.&quot;);
+            config.addParameter(
+                required_num_results_attr_, &quot;required-num-results-attr&quot;,
+                &quot;Specifies the attribute name indicating the required number of results.&quot;);
+
+            config.addParameter(
+                max_index_qubits_attr_, &quot;max-index-qubits-attr&quot;,
+                &quot;Specifies the attribute name indicating the maxiumum index of qubits used.&quot;);
+            config.addParameter(
+                max_index_results_attr_, &quot;max-index-results-attr&quot;,
+                &quot;Specifies the attribute name indicating the maxiumum index of results used.&quot;);
+
+            config.addParameter(
+                replace_with_attr_, &quot;replace-with-attr&quot;,
+                &quot;Specifies the attribute name indicating replacement linking.&quot;);
+            config.addParameter(
+                irreversible_attr_, &quot;irreversible-attr&quot;, &quot;Specifies the attribute name indicating irrevesibility.&quot;);
+
+            config.addParameter(qir_runtime_prefix_, &quot;qir-runtime-prefix&quot;, &quot;QIR runtime prefix.&quot;);
+        }
+
+        String version() const
+        {
+            return version_;
+        }
+
+        String entryPointAttr() const
+        {
+            return entry_point_attr_;
+        }
+
+        String qirProfilesAttr() const
+        {
+            return qir_profiles_attr_;
+        }
+
+        String outputLabelingSchemaAttr() const
+        {
+            return output_labeling_schema_attr_;
+        }
+
+        String requiredNumQubitsAttr() const
+        {
+            return required_num_qubits_attr_;
+        }
+
+        String requiredNumResultsAttr() const
+        {
+            return required_num_results_attr_;
+        }
+
+        String replaceWithAttr() const
+        {
+            return replace_with_attr_;
+        }
+
+        String irreversibleAttr() const
+        {
+            return irreversible_attr_;
+        }
+
+        String qirRuntimePrefix() const
+        {
+            return qir_runtime_prefix_;
+        }
+
+      private:
+        String version_{&quot;0.9&quot;};
+
+        // Attribute names
+        //
+        // TODO(issue-150): Update to comply with spec once Q# is updated
+
+        String entry_point_attr_{&quot;EntryPoint&quot;};
+        String qir_profiles_attr_{&quot;qir_profiles&quot;};
+        String output_labeling_schema_attr_{&quot;output_labeling_schema&quot;};
+        String required_num_qubits_attr_{&quot;requiredQubits&quot;};
+        String required_num_results_attr_{&quot;requiredResults&quot;};
+        String max_index_qubits_attr_{&quot;maxQubitIndex&quot;};
+        String max_index_results_attr_{&quot;maxResultIndex&quot;};
+
+        String replace_with_attr_{&quot;replaceWith&quot;};
+        String irreversible_attr_{&quot;irreversible&quot;};
+
+        // Naming convention
+        //
+        String qir_runtime_prefix_{&quot;__quantum__rt__&quot;};
+    };
+
+} // namespace quantum
+} // namespace microsoft
+</code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

@@ -665,14 +665,14 @@ class IrManipulationTestHelper
 
     String toString() const;
 
-    Strings toBodyInstructions();
+    Strings toBodyInstructions(String const&amp; block_name = &quot;&quot;);
 
     TestProgram toProgram();
 
     // Test functions
     //
 
-    bool hasInstructionSequence(Strings const&amp; instructions);
+    bool hasInstructionSequence(Strings const&amp; instructions, String const&amp; block_name = &quot;&quot;);
 
     void applyQirAdaptor(
         GeneratorPtr const&amp;      generator,
@@ -738,7 +738,7 @@ class IrManipulationTestHelper
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

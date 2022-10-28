@@ -841,7 +841,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent&lt;RemoveNonEntrypointFunctionsPassConfiguration&gt;(
-        &quot;adaptor.remove-non-entrypoint-functions&quot;, // TODO(unknown): Rename?
+        &quot;adaptor.remove-non-entrypoint-functions&quot;,
         [logger](RemoveNonEntrypointFunctionsPassConfiguration const&amp; cfg, QirAdaptor&amp; adaptor)
         {
             auto&amp; mpm = adaptor.modulePassManager();
@@ -850,7 +850,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent&lt;TargetQisMappingPassConfiguration&gt;(
-        &quot;adaptor.target-qis-mapping&quot;, // TODO(unknown): Rename?
+        &quot;adaptor.target-qis-mapping&quot;,
         [logger](TargetQisMappingPassConfiguration const&amp; cfg, QirAdaptor&amp; adaptor)
         {
             auto&amp; ret = adaptor.modulePassManager();
@@ -868,7 +868,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         });
 
     registerAdaptorComponent&lt;TargetProfileMappingConfiguration&gt;(
-        &quot;adaptor.target-profile-mapping&quot;, // TODO(unknown): Rename?
+        &quot;adaptor.target-profile-mapping&quot;,
         [logger](TargetProfileMappingConfiguration const&amp; cfg, QirAdaptor&amp; adaptor)
         {
             auto&amp;                     mpm = adaptor.modulePassManager();
@@ -979,7 +979,7 @@ ConfigurationManager const&amp; QirAdaptorFactory::configurationManager() const
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

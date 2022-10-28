@@ -639,6 +639,51 @@ void StaticResourceComponentConfiguration::setup(ConfigurationManager&amp; confi
         replace_qubit_on_reset_, &quot;replace-qubit-on-reset&quot;, &quot;Replaces a qubit with new qubit if the qubit is reset&quot;);
 
     config.addParameter(inline_after_id_change_, &quot;inline-after-id-change&quot;, &quot;Inlines instructions after id was changed&quot;);
+
+    required_num_qubits_attr_  = config.getParameter(&quot;required-num-qubits-attr&quot;);
+    required_num_results_attr_ = config.getParameter(&quot;required-num-results-attr&quot;);
+    max_index_qubits_attr_     = config.getParameter(&quot;max-index-qubits-attr&quot;);
+    max_index_results_attr_    = config.getParameter(&quot;max-index-results-attr&quot;);
+}
+
+String StaticResourceComponentConfiguration::requiredNumQubitsAttr() const
+{
+    if (required_num_qubits_attr_ == nullptr)
+    {
+        return &quot;requiredQubits&quot;;
+    }
+
+    return required_num_qubits_attr_-&gt;value&lt;String&gt;();
+}
+
+String StaticResourceComponentConfiguration::maxIndexQubitsAttr() const
+{
+    if (max_index_qubits_attr_ == nullptr)
+    {
+        return &quot;maxQubitIndex&quot;;
+    }
+
+    return max_index_qubits_attr_-&gt;value&lt;String&gt;();
+}
+
+String StaticResourceComponentConfiguration::requiredNumResultsAttr() const
+{
+    if (required_num_results_attr_ == nullptr)
+    {
+        return &quot;requiredResults&quot;;
+    }
+
+    return required_num_results_attr_-&gt;value&lt;String&gt;();
+}
+
+String StaticResourceComponentConfiguration::maxIndexResultsAttr() const
+{
+    if (max_index_results_attr_ == nullptr)
+    {
+        return &quot;maxResultIndex&quot;;
+    }
+
+    return max_index_results_attr_-&gt;value&lt;String&gt;();
 }
 
 bool StaticResourceComponentConfiguration::shouldAnnotateQubitUse() const
@@ -735,7 +780,7 @@ void StaticResourceComponentConfiguration::enableInlineAfterIdChange()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

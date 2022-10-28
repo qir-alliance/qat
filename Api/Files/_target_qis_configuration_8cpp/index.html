@@ -627,7 +627,10 @@ void TargetQisConfiguration::setup(ConfigurationManager&amp; config)
     config.addParameter(
         allowed_qis_, &quot;allowed-qis&quot;, &quot;Allowed quantum instruction set.&quot;,
         ConfigurationManager::ParameterVisibility::ConfigOnly);
+
     config.addParameter(allow_any_qis_, &quot;allow-any-qis&quot;, &quot;Whether or not to allow any quantum instruction.&quot;);
+
+    config.addParameter(irreversible_operations_, &quot;irreversible-operations&quot;, &quot;Set of irreversal operation names.&quot;);
 
     config.addParameter(requires_qubits_, &quot;requires-qubits&quot;, &quot;Whether or not qubits are required in the IR.&quot;);
     config.addParameter(requires_results_, &quot;requires-results&quot;, &quot;Whether or not results are required in the IR.&quot;);
@@ -677,77 +680,8 @@ TargetQisConfiguration TargetQisConfiguration::fromQirTargetName(String const&am
             &quot;__quantum__qis__reset__body:void (%Qubit*)&quot;,
             &quot;__quantum__qis__mz__body:void (%Qubit*, %Result*)&quot;,
             &quot;__quantum__qis__read_result__body:i1 (%Result*)&quot;,
-
         };
-    }
-    else if (name == &quot;provider_4bf9&quot;)
-    {
-        target_config.allow_any_qis_ = false;
-        target_config.allowed_qis_   = Set{
-            &quot;__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)&quot;,
-            &quot;__quantum__qis__cz__body:void (%Qubit*, %Qubit*)&quot;,
-            &quot;__quantum__qis__swap__body:void (%Qubit*, %Qubit*)&quot;,
-            &quot;__quantum__qis__h__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__s__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__s__adj:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__t__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__t__adj:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__x__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__y__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__z__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__rx__body:void (double, %Qubit*)&quot;,
-            &quot;__quantum__qis__ry__body:void (double, %Qubit*)&quot;,
-            &quot;__quantum__qis__rz__body:void (double, %Qubit*)&quot;,
-            &quot;__quantum__qis__reset__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__mz__body:void (%Qubit*, %Result*)&quot;,
-            &quot;__quantum__qis__read_result__body:i1 (%Result*)&quot;,
-
-        };
-    }
-    else if (name == &quot;provider_7ee0&quot;)
-    {
-        target_config.allow_any_qis_ = false;
-        target_config.allowed_qis_   = Set{
-            &quot;__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)&quot;,
-            &quot;__quantum__qis__cz__body:void (%Qubit*, %Qubit*)&quot;,
-            &quot;__quantum__qis__h__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__s__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__s__adj:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__t__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__t__adj:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__x__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__y__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__z__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__rx__body:void (double, %Qubit*)&quot;,
-            &quot;__quantum__qis__ry__body:void (double, %Qubit*)&quot;,
-            &quot;__quantum__qis__rz__body:void (double, %Qubit*)&quot;,
-            &quot;__quantum__qis__reset__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__mz__body:void (%Qubit*, %Result*)&quot;,
-            &quot;__quantum__qis__read_result__body:i1 (%Result*)&quot;,
-
-        };
-    }
-    else if (name == &quot;provider_b340&quot;)
-    {
-        target_config.allow_any_qis_ = false;
-        target_config.allowed_qis_   = Set{
-            &quot;__quantum__qis__cnot__body:void (%Qubit*, %Qubit*)&quot;,
-            &quot;__quantum__qis__cz__body:void (%Qubit*, %Qubit*)&quot;,
-            &quot;__quantum__qis__swap__body:void (%Qubit*, %Qubit*)&quot;,
-            &quot;__quantum__qis__h__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__s__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__s__adj:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__t__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__t__adj:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__x__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__y__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__z__body:void (%Qubit*)&quot;,
-            &quot;__quantum__qis__rx__body:void (double, %Qubit*)&quot;,
-            &quot;__quantum__qis__ry__body:void (double, %Qubit*)&quot;,
-            &quot;__quantum__qis__rz__body:void (double, %Qubit*)&quot;,
-            &quot;__quantum__qis__mz__body:void (%Qubit*, %Result*)&quot;,
-            &quot;__quantum__qis__read_result__body:i1 (%Result*)&quot;,
-        };
+        target_config.irreversible_operations_ = Set{&quot;__quantum__qis__mz__body&quot;, &quot;__quantum__qis__reset__body&quot;};
     }
     else
     {
@@ -772,7 +706,7 @@ TargetQisConfiguration::Set const&amp; TargetQisConfiguration::irreversibleOpera
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

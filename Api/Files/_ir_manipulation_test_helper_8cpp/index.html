@@ -643,7 +643,7 @@ TestProgram IrManipulationTestHelper::toProgram()
     return ret;
 }
 
-IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
+IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions(String const&amp; block_name)
 {
     if (isModuleBroken())
     {
@@ -661,7 +661,15 @@ IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
     }
 
     // Skipping entry
-    pos = data.find(&quot;entry:&quot;, pos);
+    if (block_name.empty())
+    {
+        pos = data.find(&quot;entry:&quot;, pos);
+    }
+    else
+    {
+        pos = data.find(block_name + &quot;:&quot;, pos);
+    }
+
     if (pos == String::npos)
     {
         return {};
@@ -676,10 +684,24 @@ IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
     while ((next_pos != String::npos) &amp;&amp; (next_pos &lt; terminator))
     {
         auto val = data.substr(last_pos, next_pos - last_pos);
+
+        // Removing comments
+        auto comment_p = val.find(';');
+        if (comment_p != String::npos)
+        {
+            val = val.substr(0, comment_p);
+        }
+
         trim(val);
 
         if (val != &quot;&quot;)
         {
+            // Breaking at the next block if we are only extracting a specified block
+            if (!block_name.empty() &amp;&amp; val[val.size() - 1] == ':')
+            {
+                break;
+            }
+
             ret.emplace_back(std::move(val));
         }
 
@@ -690,11 +712,12 @@ IrManipulationTestHelper::Strings IrManipulationTestHelper::toBodyInstructions()
     return ret;
 }
 
-bool IrManipulationTestHelper::hasInstructionSequence(Strings const&amp; instructions)
+bool IrManipulationTestHelper::hasInstructionSequence(Strings const&amp; instructions, String const&amp; block_name)
 {
-    auto     body_instructions = toBodyInstructions();
-    uint64_t i                 = 0;
-    uint64_t j                 = 0;
+    auto body_instructions = toBodyInstructions(block_name);
+
+    uint64_t i = 0;
+    uint64_t j = 0;
 
     while (i &lt; instructions.size() &amp;&amp; j &lt; body_instructions.size())
     {
@@ -974,7 +997,7 @@ bool IrManipulationTestHelper::isModuleBroken()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

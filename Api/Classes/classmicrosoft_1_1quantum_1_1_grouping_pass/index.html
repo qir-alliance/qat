@@ -594,6 +594,21 @@
 <p><a href="#detailed-description">More...</a></p>
 <p><code>#include &lt;Passes/GroupingPass/GroupingPass.hpp&gt;</code></p>
 <p>Inherits from llvm::PassInfoMixin&lt; GroupingPass &gt;</p>
+<h2 id="public-classes">Public Classes</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>struct</td>
+<td><strong><a href="/qat/Api/Classes/structmicrosoft_1_1quantum_1_1_grouping_pass_1_1_resource_analysis/">ResourceAnalysis</a></strong></td>
+</tr>
+</tbody>
+</table>
 <h2 id="public-types">Public Types</h2>
 <table>
 <thead>
@@ -603,6 +618,10 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>enum class</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#enum-resourcetype">ResourceType</a></strong> { UNDEFINED, QUBIT, RESULT}</td>
+</tr>
 <tr>
 <td>enum</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass/#enum-@1">@1</a></strong> { PureClassical = 0, SourceQuantum = 1, DestQuantum = 2, PureQuantum = SourceQuantum</td>
@@ -727,6 +746,33 @@
                                    │
 </code></pre>
 <h2 id="public-types-documentation">Public Types Documentation</h2>
+<h3 id="enum-resourcetype">enum ResourceType</h3>
+<table>
+<thead>
+<tr>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UNDEFINED</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>QUBIT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>RESULT</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h3 id="enum-1">enum @1</h3>
 <table>
 <thead>
@@ -869,7 +915,7 @@
 </code></pre>
 <p>Whether or not this pass is required to run. </p>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:07 UTC</p></div>
 </div>
           </div>
         </main>

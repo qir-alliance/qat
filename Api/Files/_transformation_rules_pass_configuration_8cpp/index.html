@@ -673,8 +673,7 @@ void TargetQisMappingPassConfiguration::setup(ConfigurationManager&amp; config)
         &quot;Disables record output support by instruction removal.&quot;);
 
     // Ready settings
-
-    config.addParameter(entry_point_attr_, &quot;entry-point-attr&quot;, &quot;Specifies the attribute indicating the entry point.&quot;);
+    entry_point_attr_ = config.getParameter(&quot;entry-point-attr&quot;);
 }
 
 TargetQisMappingPassConfiguration TargetQisMappingPassConfiguration::createDisabled()
@@ -759,7 +758,12 @@ bool TargetQisMappingPassConfiguration::shouldReuseResults() const
 
 std::string TargetQisMappingPassConfiguration::entryPointAttr() const
 {
-    return entry_point_attr_;
+    if (entry_point_attr_ == nullptr)
+    {
+        throw std::runtime_error(&quot;Specification entryPoint not found.&quot;);
+    }
+
+    return entry_point_attr_-&gt;value&lt;std::string&gt;();
 }
 
 bool TargetQisMappingPassConfiguration::assumeNoExceptions() const
@@ -851,9 +855,8 @@ bool TargetQisMappingPassConfiguration::isDefault() const
     return (
         delete_dead_code_ == ref.delete_dead_code_ &amp;&amp; clone_functions_ == ref.clone_functions_ &amp;&amp;
         transform_execution_path_only_ == ref.transform_execution_path_only_ &amp;&amp; max_recursion_ == ref.max_recursion_ &amp;&amp;
-        entry_point_attr_ == ref.entry_point_attr_ &amp;&amp; assume_no_exceptions_ == ref.assume_no_exceptions_ &amp;&amp;
-        reuse_qubits_ == ref.reuse_qubits_ &amp;&amp; reuse_results_ == ref.reuse_results_ &amp;&amp;
-        disable_reference_counting_ == ref.disable_reference_counting_ &amp;&amp;
+        assume_no_exceptions_ == ref.assume_no_exceptions_ &amp;&amp; reuse_qubits_ == ref.reuse_qubits_ &amp;&amp;
+        reuse_results_ == ref.reuse_results_ &amp;&amp; disable_reference_counting_ == ref.disable_reference_counting_ &amp;&amp;
         disable_alias_counting_ == ref.disable_alias_counting_ &amp;&amp;
         disable_string_support_ == ref.disable_string_support_ &amp;&amp;
         disable_record_output_support_ == ref.disable_record_output_support_ &amp;&amp;
@@ -877,7 +880,7 @@ bool TargetQisMappingPassConfiguration::operator==(TargetQisMappingPassConfigura
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>

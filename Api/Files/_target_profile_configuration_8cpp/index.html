@@ -713,106 +713,6 @@ TargetProfileConfiguration TargetProfileConfiguration::fromQirTargetName(String 
         adaptor.allowlist_pointer_types_  = true;
         adaptor.allowed_pointer_types_    = {&quot;i8*&quot;, &quot;i16*&quot;, &quot;i32*&quot;, &quot;i64*&quot;, &quot;Qubit*&quot;, &quot;Qubit**&quot;, &quot;Result*&quot;, &quot;Result**&quot;};
     }
-    else if (name == &quot;provider_4bf9&quot;)
-    {
-        // Supported LLVM instructions: ret, br, phi, add, sub, mul, fadd, fsub, fmul, lshr, and, or,
-        // xor, icmp eq, icmp ne, icmp ugt, icmp uge, icmp ult, icmp ule, fcmp oeq, fcmp ogt, fcmp oge,
-        // fcmp olt, fcmp ole, fcmp one
-        adaptor.allow_internal_calls_     = false;
-        adaptor.allowlist_external_calls_ = true;
-        adaptor.allowlist_opcodes_        = true;
-        adaptor.opcodes_        = OpcodeSet({{&quot;call&quot;}, {&quot;ret&quot;},  {&quot;inttoptr&quot;}, {&quot;br&quot;},   {&quot;phi&quot;},    {&quot;add&quot;}, {&quot;sub&quot;},
-                                      {&quot;mul&quot;},  {&quot;fadd&quot;}, {&quot;fsub&quot;},     {&quot;fmul&quot;}, {&quot;lshr&quot;},   {&quot;shl&quot;}, {&quot;and&quot;},
-                                      {&quot;or&quot;},   {&quot;xor&quot;},  {&quot;icmp&quot;},     {&quot;fcmp&quot;}, {&quot;select&quot;}, {&quot;zext&quot;}});
-        adaptor.external_calls_ = Set{
-            &quot;__quantum__rt__result_record_output:void (%Result*)&quot;, &quot;__quantum__rt__bool_record_output:void (i1)&quot;,
-            &quot;__quantum__rt__int_record_output:void (i64)&quot;,         &quot;__quantum__rt__double_record_output:void (double)&quot;,
-            &quot;__quantum__rt__tuple_start_record_output:void ()&quot;,    &quot;__quantum__rt__tuple_end_record_output:void ()&quot;,
-            &quot;__quantum__rt__array_start_record_output:void ()&quot;,    &quot;__quantum__rt__array_end_record_output:void ()&quot;,
-
-        };
-        adaptor.allowlist_pointer_types_ = true;
-        adaptor.allowed_pointer_types_   = {&quot;Qubit*&quot;, &quot;Result*&quot;};
-    }
-    else if (name == &quot;provider_7ee0&quot;)
-    {
-        // Supported LLVM types: i64 (integer), double, i1 (bool), %Qubit*, %Result*.
-        // Supported LLVM instructions: ret, br, phi, add, sub, mul, and, or, xor, lshr, shl, icmp eq, icmp
-        // ne, icmp ule, icmp ult, icmp uge, icmp ugt. Restrictions: rotation convention using radians,
-        // ret should appear only once (no conditional early return). Supported quantum intrinsic
-        // functions:
-        // __quantum__qis__cnot__body(%Qubit*, %Qubit*),
-        // __quantum__qis__cz__body(%Qubit*, %Qubit*),
-        // __quantum__qis__h__body(%Qubit*),
-        // __quantum__qis__s__body(%Qubit*),
-        // __quantum__qis__s__adj(%Qubit*),
-        // __quantum__qis__t__body(%Qubit*),
-        // __quantum__qis__t__adj(%Qubit*),
-        // __quantum__qis__x__body(%Qubit*),
-        // __quantum__qis__y__body(%Qubit*),
-        // __quantum__qis__z__body(%Qubit*),
-        // __quantum__qis__rx__body(double, %Qubit*),
-        // __quantum__qis__ry__body(double, %Qubit*),
-        // __quantum__qis__rz__body(double, %Qubit*),
-        // __quantum__qis__reset__body(%Qubit*),
-        // __quantum__qis__mz__body(%Qubit*, %Result*),
-        // %i1 __quantum__qis__read_result__body(%Result*)
-
-        adaptor.allow_internal_calls_     = false;
-        adaptor.allowlist_external_calls_ = true;
-        adaptor.allowlist_opcodes_        = true;
-        adaptor.opcodes_                  = OpcodeSet(
-                             {{&quot;call&quot;},
-             {&quot;ret&quot;},
-             {&quot;inttoptr&quot;},
-             {&quot;br&quot;},
-             {&quot;phi&quot;},
-             {&quot;add&quot;},
-             {&quot;sub&quot;},
-             {&quot;mul&quot;},
-             {&quot;and&quot;},
-             {&quot;or&quot;},
-             {&quot;xor&quot;},
-             {&quot;lshr&quot;},
-             {&quot;shl&quot;},
-             {&quot;icmp&quot;},
-             {&quot;select&quot;},
-             {&quot;zext&quot;}});
-        adaptor.external_calls_ = Set{
-            &quot;__quantum__rt__result_record_output:void (%Result*)&quot;,
-            &quot;__quantum__rt__bool_record_output:void (i1)&quot;,
-            &quot;__quantum__rt__int_record_output:void (i64)&quot;,
-            &quot;__quantum__rt__tuple_start_record_output:void ()&quot;,
-            &quot;__quantum__rt__tuple_end_record_output:void ()&quot;,
-            &quot;__quantum__rt__array_start_record_output:void ()&quot;,
-            &quot;__quantum__rt__array_end_record_output:void ()&quot;,
-            &quot;__quantum__rt__result_record_output:void (%Result*, i8*)&quot;,
-            &quot;__quantum__rt__bool_record_output:void (i1, i8*)&quot;,
-            &quot;__quantum__rt__int_record_output:void (i64, i8*)&quot;,
-
-        };
-        adaptor.allowlist_pointer_types_ = true;
-        adaptor.allowed_pointer_types_   = {&quot;Qubit*&quot;, &quot;Result*&quot;, &quot;i8*&quot;};
-    }
-    else if (name == &quot;provider_b340&quot;)
-    {
-        adaptor.allow_internal_calls_     = false;
-        adaptor.allowlist_external_calls_ = true;
-        adaptor.allowlist_opcodes_        = true;
-        adaptor.opcodes_                  = OpcodeSet({
-            {&quot;call&quot;},
-            {&quot;ret&quot;},
-            {&quot;inttoptr&quot;},
-        });
-        adaptor.external_calls_           = Set{
-            &quot;__quantum__rt__result_record_output:void (%Result*)&quot;, &quot;__quantum__rt__tuple_start_record_output:void ()&quot;,
-            &quot;__quantum__rt__tuple_end_record_output:void ()&quot;,      &quot;__quantum__rt__array_start_record_output:void ()&quot;,
-            &quot;__quantum__rt__array_end_record_output:void ()&quot;,
-
-        };
-        adaptor.allowlist_pointer_types_ = true;
-        adaptor.allowed_pointer_types_   = {&quot;Qubit*&quot;, &quot;Result*&quot;};
-    }
     else
     {
         throw std::runtime_error(&quot;Invalid adaptor &quot; + name);
@@ -886,7 +786,7 @@ bool TargetProfileConfiguration::allowUndef() const
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 27 October 2022 at 21:52:16 UTC</p></div>
+<p>Updated on 28 October 2022 at 18:01:08 UTC</p></div>
 </div>
           </div>
         </main>
