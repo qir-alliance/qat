@@ -36,10 +36,10 @@ namespace quantum
                 "Specifies the attribute name indicating the required number of results.");
 
             config.addParameter(
-                required_num_qubits_attr_, "max-index-qubits-attr",
+                max_index_qubits_attr_, "max-index-qubits-attr",
                 "Specifies the attribute name indicating the maxiumum index of qubits used.");
             config.addParameter(
-                required_num_results_attr_, "max-index-results-attr",
+                max_index_results_attr_, "max-index-results-attr",
                 "Specifies the attribute name indicating the maxiumum index of results used.");
 
             config.addParameter(
