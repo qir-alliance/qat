@@ -146,6 +146,7 @@ target:
       - Qubit*
   qis:
     allowed-qis:
+      - __quantum__qis__barrier__body:void ()
       - __quantum__qis__cnot__body:void (%Qubit*, %Qubit*)
       - __quantum__qis__t__adj:void (%Qubit*)
       - __quantum__qis__z__body:void (%Qubit*)
