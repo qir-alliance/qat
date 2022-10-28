@@ -114,9 +114,6 @@ namespace quantum
         String replace_with_attr_{"replaceWith"};
         String irreversible_attr_{"irreversible"};
 
-        // maxQubitIndex
-        // maxResultIndex
-
         // Naming convention
         //
         String qir_runtime_prefix_{"__quantum__rt__"};
