@@ -2,6 +2,12 @@
   "ignorePatterns": [
     {
       "pattern": "^https://opensource.org/licenses/MIT"
+    },
+    {
+      "pattern": "^https://docs.github.com/en/actions/security-guides/encrypted-secrets"
+    },
+    {
+      "pattern": "^./utils/cla_bot_setup.md"
     }
   ],
   "replacementPatterns": [],

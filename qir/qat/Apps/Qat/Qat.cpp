@@ -223,6 +223,9 @@ int main(int argc, char const** argv)
         // Configure the manager based on the commandline arguments
         configuration_manager.configure(parser, config.isExperimental());
 
+        // Reloading config to ensure that target QAT section is correctly loaded
+        config = configuration_manager.get<QatConfig>();
+
         // Saving configuration if requested to do so
         if (!config.saveConfigTo().empty())
         {
@@ -278,8 +281,9 @@ int main(int argc, char const** argv)
         LLVMContext context;
         init();
 
+        auto         spec   = configuration_manager.get<SpecConfiguration>();
         auto         module = std::make_unique<Module>("qat-link", context);
-        ModuleLoader loader(module.get(), config.stripExistingDebugInfo(), config.addIrDebugInfo());
+        ModuleLoader loader(spec, module.get(), config.stripExistingDebugInfo(), config.addIrDebugInfo());
 
         for (auto const& arg : parser.arguments())
         {

@@ -3,6 +3,7 @@
 
 #include "qir/qat/Commandline/ConfigurationManager.hpp"
 
+#include "qir/qat/Commandline/SpecConfiguration.hpp"
 #include "yaml-cpp/yaml.h"
 
 #include <fstream>
@@ -11,6 +12,10 @@ using namespace microsoft::quantum;
 
 namespace microsoft::quantum
 {
+ConfigurationManager::ConfigurationManager()
+{
+    addConfig<SpecConfiguration>("spec");
+}
 
 void ConfigurationManager::setupArguments(ParameterParser& parser)
 {

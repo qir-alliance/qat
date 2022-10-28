@@ -40,7 +40,7 @@ Checks: "-*,bugprone-*,\
   performance-*"
 
 WarningsAsErrors: "*"
-HeaderFilterRegex: \./qir/.+
+HeaderFilterRegex: \./qir/qat/.+
 
 CheckOptions:
   # Configuration documentation: https://clang.llvm.org/extra/clang-tidy/checks/readability-identifier-naming.html

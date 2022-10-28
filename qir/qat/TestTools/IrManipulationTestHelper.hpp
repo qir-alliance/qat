@@ -42,7 +42,7 @@ class IrManipulationTestHelper
     String toString() const;
 
     /// Generates a list of instructions for the main function in the module.
-    Strings toBodyInstructions();
+    Strings toBodyInstructions(String const& block_name = "");
 
     TestProgram toProgram();
 
@@ -50,8 +50,9 @@ class IrManipulationTestHelper
     //
 
     /// Tests whether the main body contains a sequence of instructions. This function
-    /// ignores instructions in-between the instruction set given.
-    bool hasInstructionSequence(Strings const& instructions);
+    /// ignores instructions in-between the instruction set given. If block name is specified
+    /// then only instructions within this block are extracted
+    bool hasInstructionSequence(Strings const& instructions, String const& block_name = "");
 
     /// Applies a adaptor to the module to allow which transforms the IR. This
     /// allow us to write small adaptors to test a single piece of transformation.

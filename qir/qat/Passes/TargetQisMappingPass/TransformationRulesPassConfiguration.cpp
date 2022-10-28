@@ -63,8 +63,7 @@ void TargetQisMappingPassConfiguration::setup(ConfigurationManager& config)
         "Disables record output support by instruction removal.");
 
     // Ready settings
-
-    config.addParameter(entry_point_attr_, "entry-point-attr", "Specifies the attribute indicating the entry point.");
+    entry_point_attr_ = config.getParameter("entry-point-attr");
 }
 
 TargetQisMappingPassConfiguration TargetQisMappingPassConfiguration::createDisabled()
@@ -149,7 +148,12 @@ bool TargetQisMappingPassConfiguration::shouldReuseResults() const
 
 std::string TargetQisMappingPassConfiguration::entryPointAttr() const
 {
-    return entry_point_attr_;
+    if (entry_point_attr_ == nullptr)
+    {
+        throw std::runtime_error("Specification entryPoint not found.");
+    }
+
+    return entry_point_attr_->value<std::string>();
 }
 
 bool TargetQisMappingPassConfiguration::assumeNoExceptions() const
@@ -241,9 +245,8 @@ bool TargetQisMappingPassConfiguration::isDefault() const
     return (
         delete_dead_code_ == ref.delete_dead_code_ && clone_functions_ == ref.clone_functions_ &&
         transform_execution_path_only_ == ref.transform_execution_path_only_ && max_recursion_ == ref.max_recursion_ &&
-        entry_point_attr_ == ref.entry_point_attr_ && assume_no_exceptions_ == ref.assume_no_exceptions_ &&
-        reuse_qubits_ == ref.reuse_qubits_ && reuse_results_ == ref.reuse_results_ &&
-        disable_reference_counting_ == ref.disable_reference_counting_ &&
+        assume_no_exceptions_ == ref.assume_no_exceptions_ && reuse_qubits_ == ref.reuse_qubits_ &&
+        reuse_results_ == ref.reuse_results_ && disable_reference_counting_ == ref.disable_reference_counting_ &&
         disable_alias_counting_ == ref.disable_alias_counting_ &&
         disable_string_support_ == ref.disable_string_support_ &&
         disable_record_output_support_ == ref.disable_record_output_support_ &&

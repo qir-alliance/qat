@@ -11,7 +11,9 @@ namespace microsoft::quantum
 class GroupingPassConfiguration
 {
   public:
-    using Set = std::unordered_set<std::string>;
+    using Set              = std::unordered_set<std::string>;
+    using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+
     // Setup and construction
     //
 
@@ -22,6 +24,9 @@ class GroupingPassConfiguration
         config.setSectionName("Grouping quantum instructions", "Separation of quantum and classical operations");
         config.addExperimentalParameter(
             group_qis_, true, false, "group-qis", "Whether or not to separate quantum and classical circuits");
+
+        irreversible_operations_ = config.getParameter("irreversible-operations");
+        qir_runtime_prefix_      = config.getParameter("qir-runtime-prefix");
     }
 
     static GroupingPassConfiguration createDisabled()
@@ -38,8 +43,31 @@ class GroupingPassConfiguration
         return group_qis_;
     }
 
+    Set irreversibleOperations() const
+    {
+        assert(irreversible_operations_ != nullptr);
+        if (irreversible_operations_ == nullptr)
+        {
+            throw std::runtime_error("Configuration 'GroupingPassConfiguration' was not initialized.");
+        }
+
+        if (!irreversible_operations_->isDereferenceable())
+        {
+            throw std::runtime_error("Target QIS configuration was not loaded.");
+        }
+
+        return irreversible_operations_->value<Set>();
+    }
+
+    String qirRuntimePrefix() const
+    {
+        return qir_runtime_prefix_->value<String>();
+    }
+
   private:
-    bool group_qis_{true};
+    bool             group_qis_{true};
+    DeferredValuePtr irreversible_operations_{};
+    DeferredValuePtr qir_runtime_prefix_{};
 };
 
 } // namespace microsoft::quantum

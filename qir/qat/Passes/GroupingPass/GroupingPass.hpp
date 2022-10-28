@@ -57,6 +57,20 @@ class GroupingPass : public llvm::PassInfoMixin<GroupingPass>
     // Construction and destruction configuration.
     //
 
+    enum class ResourceType
+    {
+        UNDEFINED,
+        QUBIT,
+        RESULT
+    };
+
+    struct ResourceAnalysis
+    {
+        bool         is_const{false};
+        uint64_t     id{0};
+        ResourceType type{ResourceType::UNDEFINED};
+    };
+
     enum
     {
         PureClassical              = 0,
@@ -106,6 +120,8 @@ class GroupingPass : public llvm::PassInfoMixin<GroupingPass>
 
   private:
     void deleteInstructions();
+
+    ResourceAnalysis operandAnalysis(llvm::Value* val) const;
 
     GroupingPassConfiguration config_{};
 

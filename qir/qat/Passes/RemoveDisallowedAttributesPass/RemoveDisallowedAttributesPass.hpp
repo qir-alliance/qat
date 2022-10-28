@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Commandline/SpecConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
@@ -15,19 +16,12 @@ namespace microsoft::quantum
 class RemoveDisallowedAttributesPass : public llvm::PassInfoMixin<RemoveDisallowedAttributesPass>
 {
   public:
-    RemoveDisallowedAttributesPass()
+    explicit RemoveDisallowedAttributesPass(SpecConfiguration const& spec)
       : allowed_attrs_{
-            static_cast<String>("EntryPoint"), static_cast<String>("InteropFriendly"),
-            static_cast<String>("requiredQubits"), static_cast<String>("requiredResults"),
-            static_cast<String>("replaceWith")
-            /*
-            static_cast<String>("nofree")
-            static_cast<String>("nosync")
-            static_cast<String>("nounwind")
-            static_cast<String>("readnone")
-            static_cast<String>("speculatable")
-            static_cast<String>("willreturn")
-            */
+            static_cast<String>(spec.entryPointAttr()),           static_cast<String>(spec.qirProfilesAttr()),
+            static_cast<String>(spec.outputLabelingSchemaAttr()), static_cast<String>(spec.requiredNumQubitsAttr()),
+            static_cast<String>(spec.requiredNumResultsAttr()),   static_cast<String>(spec.replaceWithAttr()),
+            static_cast<String>(spec.irreversibleAttr()),
         }
     {
     }
