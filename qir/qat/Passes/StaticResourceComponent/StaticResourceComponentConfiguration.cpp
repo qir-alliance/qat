@@ -29,6 +29,51 @@ void StaticResourceComponentConfiguration::setup(ConfigurationManager& config)
         replace_qubit_on_reset_, "replace-qubit-on-reset", "Replaces a qubit with new qubit if the qubit is reset");
 
     config.addParameter(inline_after_id_change_, "inline-after-id-change", "Inlines instructions after id was changed");
+
+    required_num_qubits_attr_  = config.getParameter("required-num-qubits-attr");
+    required_num_results_attr_ = config.getParameter("required-num-results-attr");
+    max_index_qubits_attr_     = config.getParameter("max-index-qubits-attr");
+    max_index_results_attr_    = config.getParameter("max-index-results-attr");
+}
+
+String StaticResourceComponentConfiguration::requiredNumQubitsAttr() const
+{
+    if (required_num_qubits_attr_ == nullptr)
+    {
+        return "requiredQubits";
+    }
+
+    return required_num_qubits_attr_->value<String>();
+}
+
+String StaticResourceComponentConfiguration::maxIndexQubitsAttr() const
+{
+    if (max_index_qubits_attr_ == nullptr)
+    {
+        return "maxQubitIndex";
+    }
+
+    return max_index_qubits_attr_->value<String>();
+}
+
+String StaticResourceComponentConfiguration::requiredNumResultsAttr() const
+{
+    if (required_num_results_attr_ == nullptr)
+    {
+        return "requiredResults";
+    }
+
+    return required_num_results_attr_->value<String>();
+}
+
+String StaticResourceComponentConfiguration::maxIndexResultsAttr() const
+{
+    if (max_index_results_attr_ == nullptr)
+    {
+        return "maxResultIndex";
+    }
+
+    return max_index_results_attr_->value<String>();
 }
 
 bool StaticResourceComponentConfiguration::shouldAnnotateQubitUse() const

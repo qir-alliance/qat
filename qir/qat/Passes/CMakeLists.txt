@@ -4,8 +4,10 @@ microsoft_add_library(DeferMeasurementPass Logging)
 microsoft_add_library_tests(DeferMeasurementPass  Rules TargetQisMappingPass AllocationManager Commandline AdaptorFactory Validator ValidationPass  Logging GroupingPass FunctionReplacementPass)
 
 microsoft_add_library(DivisionByZeroPass Logging)
-microsoft_add_library(GroupingPass Logging)
 microsoft_add_library_tests(DivisionByZeroPass Rules TargetQisMappingPass AllocationManager Commandline AdaptorFactory Validator ValidationPass StaticResourceComponent Logging GroupingPass FunctionReplacementPass) 
+
+microsoft_add_library(GroupingPass Logging)
+microsoft_add_library_tests(GroupingPass Rules TargetQisMappingPass AllocationManager Commandline AdaptorFactory Validator ValidationPass StaticResourceComponent Logging GroupingPass FunctionReplacementPass)
 
 microsoft_add_library(TargetQisMappingPass)
 target_link_libraries(TargetQisMappingPass PRIVATE Rules Commandline AllocationManager)
@@ -23,4 +25,3 @@ microsoft_add_library(RemoveNonEntrypointFunctions Logging)
 microsoft_add_library(PostTransformValidation Logging)
 microsoft_add_library(StaticResourceComponent Logging)
 microsoft_add_library_tests(StaticResourceComponent  Rules TargetQisMappingPass AllocationManager Commandline AdaptorFactory Validator ValidationPass  Logging GroupingPass FunctionReplacementPass)
-
