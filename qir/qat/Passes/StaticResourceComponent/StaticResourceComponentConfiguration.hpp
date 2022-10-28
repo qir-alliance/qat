@@ -11,7 +11,9 @@ namespace microsoft::quantum
 class StaticResourceComponentConfiguration
 {
   public:
-    using Set = std::unordered_set<std::string>;
+    using Set              = std::unordered_set<std::string>;
+    using DeferredValuePtr = DeferredValue::DeferredValuePtr;
+
     // Setup and construction
     //
 
@@ -56,6 +58,14 @@ class StaticResourceComponentConfiguration
     void enableReindexQubits();
     void enableInlineAfterIdChange();
 
+    // Attribute names used for annotation
+    //
+
+    String requiredNumQubitsAttr() const;
+    String requiredNumResultsAttr() const;
+    String maxIndexQubitsAttr() const;
+    String maxIndexResultsAttr() const;
+
   private:
     bool annotate_qubit_use_{true};
     bool annotate_result_use_{true};
@@ -67,6 +77,11 @@ class StaticResourceComponentConfiguration
     bool reindex_qubits_{false};
 
     bool inline_after_id_change_{true};
+
+    DeferredValuePtr required_num_qubits_attr_{nullptr};
+    DeferredValuePtr required_num_results_attr_{nullptr};
+    DeferredValuePtr max_index_qubits_attr_{nullptr};
+    DeferredValuePtr max_index_results_attr_{nullptr};
 };
 
 } // namespace microsoft::quantum

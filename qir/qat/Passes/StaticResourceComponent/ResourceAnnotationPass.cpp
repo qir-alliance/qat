@@ -33,29 +33,29 @@ llvm::PreservedAnalyses ResourceAnnotationPass::run(llvm::Function& function, ll
     {
         std::stringstream ss{""};
         ss << stats.usage_qubit_counts;
-        // TODO(issue UNTRACKED): get from spec.
-        function.addFnAttr("requiredQubits", ss.str());
+
+        function.addFnAttr(config_.requiredNumQubitsAttr(), ss.str());
     }
 
     if (config_.shouldAnnotateMaxQubitIndex())
     {
         std::stringstream ss{""};
         ss << stats.largest_qubit_index;
-        function.addFnAttr("maxQubitIndex", ss.str());
+        function.addFnAttr(config_.maxIndexQubitsAttr(), ss.str());
     }
 
     if (config_.shouldAnnotateResultUse())
     {
         std::stringstream ss{""};
         ss << stats.usage_result_counts;
-        function.addFnAttr("requiredResults", ss.str());
+        function.addFnAttr(config_.requiredNumResultsAttr(), ss.str());
     }
 
     if (config_.shouldAnnotateMaxResultIndex())
     {
         std::stringstream ss{""};
         ss << stats.largest_result_index;
-        function.addFnAttr("maxResultIndex", ss.str());
+        function.addFnAttr(config_.maxIndexResultsAttr(), ss.str());
     }
 
     return llvm::PreservedAnalyses::none();

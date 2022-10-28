@@ -34,6 +34,14 @@ namespace quantum
             config.addParameter(
                 required_num_results_attr_, "required-num-results-attr",
                 "Specifies the attribute name indicating the required number of results.");
+
+            config.addParameter(
+                required_num_qubits_attr_, "max-index-qubits-attr",
+                "Specifies the attribute name indicating the maxiumum index of qubits used.");
+            config.addParameter(
+                required_num_results_attr_, "max-index-results-attr",
+                "Specifies the attribute name indicating the maxiumum index of results used.");
+
             config.addParameter(
                 replace_with_attr_, "replace-with-attr",
                 "Specifies the attribute name indicating replacement linking.");
@@ -93,12 +101,17 @@ namespace quantum
 
         // Attribute names
         //
-        String entry_point_attr_{"EntryPoint"}; // TODO(issue UNTRACKED): Update to comply with spec once Q# is updated
+        // TODO(issue-150): Update to comply with spec once Q# is updated
+
+        String entry_point_attr_{"EntryPoint"};
         String qir_profiles_attr_{"qir_profiles"};
         String output_labeling_schema_attr_{"output_labeling_schema"};
-        String required_num_qubits_attr_{"required_num_qubits"};
-        String required_num_results_attr_{"required_num_results"};
-        String replace_with_attr_{"replaceWith"}; // TODO(issue UNTRACKED): Update to comply with spec
+        String required_num_qubits_attr_{"requiredQubits"};
+        String required_num_results_attr_{"requiredResults"};
+        String max_index_qubits_attr_{"maxQubitIndex"};
+        String max_index_results_attr_{"maxResultIndex"};
+
+        String replace_with_attr_{"replaceWith"};
         String irreversible_attr_{"irreversible"};
 
         // maxQubitIndex
