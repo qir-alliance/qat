@@ -27,6 +27,7 @@ struct TargetProfileMappingConfiguration
 
         ret.inst_combine_pass_            = false;
         ret.aggressive_inst_combine_pass_ = false;
+        ret.sroa_pass_                    = false;
         ret.sccp_pass_                    = false;
         ret.simplify_cfg_pass_            = false;
         ret.lower_switch_                 = false;
@@ -44,6 +45,11 @@ struct TargetProfileMappingConfiguration
     bool shouldAddAggressiveInstCombinePass() const
     {
         return aggressive_inst_combine_pass_;
+    }
+
+    bool shouldAddSroaPass() const
+    {
+        return sroa_pass_;
     }
 
     bool shouldAddSccpPass() const
@@ -79,6 +85,7 @@ struct TargetProfileMappingConfiguration
   private:
     bool inst_combine_pass_{true};
     bool aggressive_inst_combine_pass_{true};
+    bool sroa_pass_{true};
     bool sccp_pass_{true};
     bool simplify_cfg_pass_{true};
     bool lower_switch_{true};
