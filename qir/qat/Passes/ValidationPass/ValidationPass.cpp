@@ -303,7 +303,7 @@ bool ValidationPass::satisfyingExternalCallRequirements()
         for (auto const& k : external_calls_)
         {
             if (allowed_functions.find(k.first) == allowed_functions.end() &&
-                allowed_qis.find(k.first) == allowed_qis.end() && 
+                allowed_qis.find(k.first) == allowed_qis.end() &&
                 !(k.first.rfind("__quantum__qis__", 0) == 0 && qis_config_.allowAnyQis()))
             {
                 logger_->setLlvmHint("");
