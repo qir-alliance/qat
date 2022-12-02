@@ -28,6 +28,7 @@ class TargetQisConfiguration
     Set const&                    allowedQis() const;
     Set const&                    irreversibleOperations() const;
 
+    bool allowAnyQis() const;
     bool requiresQubits() const;
     bool requiresResults() const;
 

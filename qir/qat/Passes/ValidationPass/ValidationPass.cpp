@@ -295,7 +295,7 @@ bool ValidationPass::satisfyingExternalCallRequirements()
 {
     auto ret = true;
 
-    if (profile_config_.allowlistExternalCalls())
+    if (profile_config_.allowlistExternalCalls() && !qis_config_.allowAnyQis())
     {
         auto const& allowed_functions = profile_config_.allowedExternalCallNames();
         auto const& allowed_qis       = qis_config_.allowedQis();
