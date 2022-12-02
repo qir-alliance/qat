@@ -223,6 +223,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
 
             if (cfg.eliminateConstants())
             {
+                fpm.addPass(llvm::SROA());
                 fpm.addPass(llvm::SCCPPass());
             }
 
@@ -277,6 +278,11 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
                 fpm.addPass(llvm::AggressiveInstCombinePass());
             }
 
+            if (cfg.shouldAddSroaPass())
+            {
+                fpm.addPass(llvm::SROA());
+            }
+
             if (cfg.shouldAddSccpPass())
             {
                 fpm.addPass(llvm::SCCPPass());
@@ -328,6 +334,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             {
                 fpm.addPass(llvm::InstCombinePass(1000));
                 fpm.addPass(llvm::AggressiveInstCombinePass());
+                fpm.addPass(llvm::SROA());
                 fpm.addPass(llvm::SCCPPass());
                 fpm.addPass(llvm::SimplifyCFGPass());
                 fpm.addPass(llvm::LowerSwitchPass());
