@@ -1,5 +1,6 @@
 FROM ubuntu:focal
 ADD https://apt.llvm.org/llvm-snapshot.gpg.key /llvm-snapshot.gpg.key
+USER codespace
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y git gnupg2 software-properties-common cmake python3-pip && \

@@ -16,10 +16,11 @@
         "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
     },
     "workspaceMount": "source=${localWorkspaceFolder},target=/home/qat,type=bind,consistency=cached",
+    "remoteUser": "codespace",
     "workspaceFolder": "/home/qat",
     "extensions": [
         "ms-vscode.cpptools",
         "ms-python.python"
     ],
-    "postCreateCommand": "git config --global --add safe.directory /home/qat && git config --global --add safe.directory /home/qat/vendors/googletest && git config --global --add safe.directory /home/qat/vendors/yaml-cpp && git submodule update --init --recursive && pip install -r /home/qat/requirements.txt"
+    "postCreateCommand": "git submodule update --init --recursive && pip install -r /home/qat/requirements.txt"
 }
