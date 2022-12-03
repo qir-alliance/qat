@@ -41,6 +41,11 @@ bool TargetQisConfiguration::requiresResults() const
     return requires_results_;
 }
 
+bool TargetQisConfiguration::allowAnyQis() const
+{
+    return allow_any_qis_;
+}
+
 TargetQisConfiguration TargetQisConfiguration::fromQirTargetName(String const& name)
 {
     auto target_config = TargetQisConfiguration();
