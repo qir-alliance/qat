@@ -913,7 +913,8 @@ bool ValidationPass::satisfyingExternalCallRequirements()
         for (auto const&amp; k : external_calls_)
         {
             if (allowed_functions.find(k.first) == allowed_functions.end() &amp;&amp;
-                allowed_qis.find(k.first) == allowed_qis.end())
+                allowed_qis.find(k.first) == allowed_qis.end() &amp;&amp;
+                !(k.first.rfind(&quot;__quantum__qis__&quot;, 0) == 0 &amp;&amp; qis_config_.allowAnyQis()))
             {
                 logger_-&gt;setLlvmHint(&quot;&quot;);
 
@@ -1023,7 +1024,7 @@ bool ValidationPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on  2 December 2022 at 21:34:18 UTC</p></div>
+<p>Updated on  3 December 2022 at 00:41:40 UTC</p></div>
 </div>
           </div>
         </main>
