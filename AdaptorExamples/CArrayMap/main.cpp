@@ -156,7 +156,7 @@ void replaceAccess(RuleSet& ruleset)
         auto i8array_ptr = builder.CreateBitCast(array, i8typeptr);
         auto sext        = builder.CreateSExt(size_cst, index->getType());
         auto position    = builder.CreateNSWMul(index, sext);
-        auto element     = builder.CreateInBoundsGEP(i8typeptr->getElementType(), i8array_ptr, position);
+        auto element     = builder.CreateInBoundsGEP(val->getType()->getPointerElementType(), i8array_ptr, position);
 
         instr->replaceAllUsesWith(element);
 
