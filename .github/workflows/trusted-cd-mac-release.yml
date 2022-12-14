@@ -17,14 +17,14 @@ jobs:
       - name: "Installing dependencies"
         run: |
           rm '/usr/local/bin/2to3'
-          brew install llvm@13
+          brew install llvm@14
           brew install cmake
           brew install python@3.9
           brew unlink python@3.9
           brew install node@16
           brew link python@3.9
           echo "/Users/runner/Library/Python/3.9/bin" >> $GITHUB_PATH
-          echo "/usr/local/opt/llvm@13/bin" >> $GITHUB_PATH
+          echo "/usr/local/opt/llvm@14/bin" >> $GITHUB_PATH
           echo "/usr/local/opt/node@16/bin" >> $GITHUB_PATH
           echo "/Users/runner/Library/Python/3.9/lib/python/bin" >> $GITHUB_PATH
           echo "/usr/local/bin/$HOME/bin" >> $GITHUB_PATH
@@ -46,8 +46,8 @@ jobs:
           chmod +x qat
           tar cf qat-mac.zip qat
         env:
-          LDFLAGS: "-L/usr/local/opt/llvm@13/lib -Wl,-rpath,/usr/local/opt/llvm@13/lib"
-          CPPFLAGS: "-I/usr/local/opt/llvm@13/include"
+          LDFLAGS: "-L/usr/local/opt/llvm@14/lib -Wl,-rpath,/usr/local/opt/llvm@14/lib"
+          CPPFLAGS: "-I/usr/local/opt/llvm@14/include"
           CC: clang
           CXX: clang++
 
