@@ -193,7 +193,7 @@ GroupingPass::ResourceAnalysis GroupingPass::operandAnalysis(llvm::Value* val) c
         return ret;
     }
 
-    llvm::Type* element_type = pointer_type->getElementType();
+    llvm::Type* element_type = val->getType()->getPointerElementType();
 
     if (!element_type->isStructTy())
     {

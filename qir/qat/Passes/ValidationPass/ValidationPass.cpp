@@ -87,10 +87,10 @@ void ValidationPass::pointerChecks(Instruction& instr)
         }
 
         uint64_t    n            = 1;
-        llvm::Type* element_type = pointer_type->getElementType();
+        llvm::Type* element_type = op->getType()->getPointerElementType();
         while (pointer_type == llvm::dyn_cast<llvm::PointerType>(element_type))
         {
-            element_type = pointer_type->getElementType();
+            element_type = op->getType()->getPointerElementType();
             ++n;
         }
 

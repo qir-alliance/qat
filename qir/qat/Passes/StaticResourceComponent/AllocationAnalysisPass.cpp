@@ -29,7 +29,7 @@ bool AllocationAnalysisPass::extractResourceId(llvm::Value* value, uint64_t& ret
             return false;
         }
 
-        llvm::Type* element_type = pointer_type->getElementType();
+        llvm::Type* element_type = value->getType()->getPointerElementType();
 
         if (!element_type->isStructTy())
         {
