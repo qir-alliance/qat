@@ -28,7 +28,6 @@ jobs:
       - name: "Installing dependencies"
         run: |
           rm '/usr/local/bin/2to3'
-          brew uninstall llvm@13
           brew install llvm@14
           brew install cmake
           brew install python@3.9
