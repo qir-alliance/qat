@@ -23,7 +23,8 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y
           sudo apt-get install -y --no-install-recommends curl cmake pkg-config findutils wget
-          sudo apt install -y --no-install-recommends clang-14 clang-format-14 clang-tidy-14
+          sudo apt-get remove -y clang-13 llvm-13 clang-format-13 clang-tidy-13
+          sudo apt install -y --no-install-recommends clang-14 llvm-14 clang-format-14 clang-tidy-14
           git submodule update --init --recursive
         env:
           CC: clang-14
