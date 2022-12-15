@@ -187,8 +187,7 @@ GroupingPass::ResourceAnalysis GroupingPass::operandAnalysis(llvm::Value* val) c
     ret.is_const = (instruction_ptr != nullptr) || (operator_ptr != nullptr) || (nullptr_cast != nullptr);
 
     // Extracting the type and index
-    auto pointer_type = llvm::dyn_cast<llvm::PointerType>(val->getType());
-    if (!pointer_type)
+    if (!val->getType()->isPointerTy())
     {
         return ret;
     }
