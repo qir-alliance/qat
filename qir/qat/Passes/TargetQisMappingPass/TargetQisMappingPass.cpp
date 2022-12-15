@@ -79,7 +79,7 @@ void TargetQisMappingPass::setupCopyAndExpand()
 
                  // List with new call arguments
                  std::vector<llvm::Value*> new_arguments;
-                 for (unsigned i = 0; i < invoke->getNumArgOperands(); ++i)
+                 for (unsigned i = 0; i < invoke->arg_size(); ++i)
                  {
                      // Getting the i'th argument
                      llvm::Value* arg = invoke->getArgOperand(i);

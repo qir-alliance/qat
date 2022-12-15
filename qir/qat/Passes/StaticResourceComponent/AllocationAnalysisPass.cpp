@@ -23,13 +23,12 @@ bool AllocationAnalysisPass::extractResourceId(llvm::Value* value, uint64_t& ret
     if (instruction_ptr || operator_ptr || nullptr_cast)
     {
 
-        auto pointer_type = llvm::dyn_cast<llvm::PointerType>(value->getType());
-        if (!pointer_type)
+        if (!value->getType()->isPointerTy())
         {
             return false;
         }
 
-        llvm::Type* element_type = pointer_type->getElementType();
+        llvm::Type* element_type = value->getType()->getPointerElementType();
 
         if (!element_type->isStructTy())
         {

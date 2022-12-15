@@ -24,6 +24,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 drops/
+build/
 
 # Python environments
 *_env/

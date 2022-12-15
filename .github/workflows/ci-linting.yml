@@ -21,14 +21,14 @@ jobs:
       - name: "Installing dependencies"
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y 
-          sudo apt-get remove -y llvm-14 clang-format-14 clang-tidy-14 llvm-12 llvm-11 clang-11 clang-format-11 clang-tidy-11
-          sudo apt-get install -y curl pkg-config findutils  wget
-          sudo apt install -y clang-13 cmake clang-format-13 clang-tidy-13
+          sudo apt-get install -y
+          sudo apt-get install -y --no-install-recommends curl cmake pkg-config findutils wget
+          sudo apt-get remove -y clang-13 llvm-13 clang-format-13 clang-tidy-13 clang-12 llvm-12 clang-format-12 clang-tidy-12
+          sudo apt install -y --no-install-recommends clang-14 llvm-14 clang-format-14 clang-tidy-14
           git submodule update --init --recursive
         env:
-          CC: clang-13
-          CXX: clang++-13
+          CC: clang-14
+          CXX: clang++-14
 
       - name: "Generating Compile Commands"
         run: |
@@ -38,8 +38,8 @@ jobs:
           popd
           ln -s $PWD/Debug/compile_commands.json $PWD/compile_commands.json
         env:
-          CC: clang-13
-          CXX: clang++-13
+          CC: clang-14
+          CXX: clang++-14
 
       - name: Trunk cache
         id: cache-trunk

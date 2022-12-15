@@ -54,12 +54,13 @@ go_register_toolchains(version = "1.18.3")
 # ================================================================
 
 # Replace with the LLVM commit you want to use.
-LLVM_COMMIT = "81d5412439efd0860c0a8dd51b831204f118d485"
+# 14.0.6 => f28c006a5895fc0e329fe15fead81e37457cb1d1
+LLVM_COMMIT = "f28c006a5895fc0e329fe15fead81e37457cb1d1"
 
 # The easiest way to calculate this for a new commit is to set it to empty and
 # then run a bazel build and it will report the digest necessary to cache the
 # archive and make the build reproducible.
-LLVM_SHA256 = "50b3ef31b228ea0c96ae074005bfac087c56e6a4b1c147592dd33f41cad0706b"
+LLVM_SHA256 = "4ea8f7c0c04a9cd54a83ba979f1a8853c82f776e2640ce7aeb914ae6e5cbf695"
 
 http_archive(
     name = "llvm-raw",

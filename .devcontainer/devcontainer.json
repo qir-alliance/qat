@@ -1,26 +1,20 @@
 {
     "name": "qat",
     "dockerFile": "./Dockerfile",
-    "settings": {
-        "python.pythonPath": "/opt/python/latest/bin/python",
-        "python.linting.enabled": true,
-        "python.linting.pylintEnabled": true,
-        "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
-        "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
-        "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
-        "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
-        "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
-        "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
-        "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
-        "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
-        "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
-        },
-    "remoteUser": "codespace",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/home/qat,type=bind,consistency=cached",
-    "workspaceFolder": "/home/qat",
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {},
+        "ghcr.io/devcontainers/features/python:1": {},
+        "ghcr.io/devcontainers/features/node:1": {},
+        "ghcr.io/devcontainers/features/dotnet:1": {
+            "version": "6.0"
+        }
+    },
     "extensions": [
-        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.makefile-tools",
         "ms-python.python"
     ],
-    "postCreateCommand": "git submodule update --init --recursive && pip install -r /home/qat/requirements.txt"
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+    "postCreateCommand": "git submodule update --init --recursive && pip install -r /workspaces/qat/requirements.txt"
 }
