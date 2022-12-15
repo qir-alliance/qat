@@ -14,9 +14,9 @@
         "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
         "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
         "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
-        },
-    "remoteUser": "codespace",
+    },
     "workspaceMount": "source=${localWorkspaceFolder},target=/home/qat,type=bind,consistency=cached",
+    "remoteUser": "codespace",
     "workspaceFolder": "/home/qat",
     "extensions": [
         "ms-vscode.cpptools",
