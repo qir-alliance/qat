@@ -829,7 +829,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
 
             if (cfg.eliminateConstants())
             {
-                fpm.addPass(llvm::SROA());
+                fpm.addPass(llvm::SROAPass());
                 fpm.addPass(llvm::SCCPPass());
             }
 
@@ -886,7 +886,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
 
             if (cfg.shouldAddSroaPass())
             {
-                fpm.addPass(llvm::SROA());
+                fpm.addPass(llvm::SROAPass());
             }
 
             if (cfg.shouldAddSccpPass())
@@ -940,7 +940,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             {
                 fpm.addPass(llvm::InstCombinePass(1000));
                 fpm.addPass(llvm::AggressiveInstCombinePass());
-                fpm.addPass(llvm::SROA());
+                fpm.addPass(llvm::SROAPass());
                 fpm.addPass(llvm::SCCPPass());
                 fpm.addPass(llvm::SimplifyCFGPass());
                 fpm.addPass(llvm::LowerSwitchPass());
@@ -986,7 +986,7 @@ ConfigurationManager const&amp; QirAdaptorFactory::configurationManager() const
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on  3 December 2022 at 00:41:40 UTC</p></div>
+<p>Updated on 15 December 2022 at 23:00:50 UTC</p></div>
 </div>
           </div>
         </main>

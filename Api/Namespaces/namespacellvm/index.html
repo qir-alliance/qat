@@ -7,12 +7,12 @@
      
     <meta name="author" content="troels" />
      
-    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/" />
+    <link rel="canonical" href="https://qir-alliance.github.io/qat/Api/Namespaces/namespacellvm/" />
      
     <link rel="shortcut icon" href="../../../img/favicon.ico" />
     
     <title>
-      microsoft::quantum::GroupingPassConfiguration - QAT Documentation
+      llvm - QAT Documentation
     </title>
     <link href="../../../css/styles.css" rel="stylesheet" />
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
@@ -241,12 +241,12 @@
                 </h3>
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../"
+                  href="../../Classes/"
                   >Classes</a
                 >
                 <a
                   class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                  href="../../Namespaces/"
+                  href="../"
                   >Namespaces</a
                 >
                 <a
@@ -440,12 +440,12 @@
               </h3>
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../"
+                href="../../Classes/"
                 >Classes</a
               >
               <a
                 class=" hover:bg-gray-700 text-gray-300 hover:text-white group flex items-center px-2 py-4 text-sm font-medium rounded"
-                href="../../Namespaces/"
+                href="../"
                 >Namespaces</a
               >
               <a
@@ -585,88 +585,12 @@
       <span
         class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl flex flex-row justify-center"
       >
-        <span class="text-center"> microsoft::quantum::GroupingPassConfiguration </span>
+        <span class="text-center"> llvm </span>
       </span>
     </h1>
     
   </div>
-  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="microsoftquantumgroupingpassconfiguration">microsoft::quantum::GroupingPassConfiguration</h1>
-<h2 id="public-types">Public Types</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>using std::unordered_set&lt; std::string &gt;</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/#using-set">Set</a></strong></td>
-</tr>
-<tr>
-<td>using DeferredValue::DeferredValuePtr</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/#using-deferredvalueptr">DeferredValuePtr</a></strong></td>
-</tr>
-</tbody>
-</table>
-<h2 id="public-functions">Public Functions</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>void</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/#function-setup">setup</a></strong>(<a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> &amp; config)</td>
-</tr>
-<tr>
-<td>bool</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/#function-groupqis">groupQis</a></strong>() const</td>
-</tr>
-<tr>
-<td>Set</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/#function-irreversibleoperations">irreversibleOperations</a></strong>() const</td>
-</tr>
-<tr>
-<td>String</td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/#function-qirruntimeprefix">qirRuntimePrefix</a></strong>() const</td>
-</tr>
-<tr>
-<td><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/">GroupingPassConfiguration</a></td>
-<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_grouping_pass_configuration/#function-createdisabled">createDisabled</a></strong>()</td>
-</tr>
-</tbody>
-</table>
-<h2 id="public-types-documentation">Public Types Documentation</h2>
-<h3 id="using-set">using Set</h3>
-<pre><code class="language-cpp">using microsoft::quantum::GroupingPassConfiguration::Set =  std::unordered_set&lt;std::string&gt;;
-</code></pre>
-<h3 id="using-deferredvalueptr">using DeferredValuePtr</h3>
-<pre><code class="language-cpp">using microsoft::quantum::GroupingPassConfiguration::DeferredValuePtr =  DeferredValue::DeferredValuePtr;
-</code></pre>
-<h2 id="public-functions-documentation">Public Functions Documentation</h2>
-<h3 id="function-setup">function setup</h3>
-<pre><code class="language-cpp">inline void setup(
-    ConfigurationManager &amp; config
-)
-</code></pre>
-<p>Setup function that adds the configuration flags to the <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a>. See the <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_configuration_manager/">ConfigurationManager</a> documentation for more details on how the setup process is implemented. </p>
-<h3 id="function-groupqis">function groupQis</h3>
-<pre><code class="language-cpp">inline bool groupQis() const
-</code></pre>
-<h3 id="function-irreversibleoperations">function irreversibleOperations</h3>
-<pre><code class="language-cpp">inline Set irreversibleOperations() const
-</code></pre>
-<h3 id="function-qirruntimeprefix">function qirRuntimePrefix</h3>
-<pre><code class="language-cpp">inline String qirRuntimePrefix() const
-</code></pre>
-<h3 id="function-createdisabled">function createDisabled</h3>
-<pre><code class="language-cpp">static inline GroupingPassConfiguration createDisabled()
-</code></pre>
+  <div class="mt-6 text-gray-500 mx-auto blog-lg blog"><h1 id="llvm">llvm</h1>
 <hr />
 <p>Updated on 15 December 2022 at 23:00:50 UTC</p></div>
 </div>

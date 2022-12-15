@@ -697,10 +697,10 @@ void ValidationPass::pointerChecks(Instruction&amp; instr)
         }
 
         uint64_t    n            = 1;
-        llvm::Type* element_type = pointer_type-&gt;getElementType();
+        llvm::Type* element_type = op-&gt;getType()-&gt;getPointerElementType();
         while (pointer_type == llvm::dyn_cast&lt;llvm::PointerType&gt;(element_type))
         {
-            element_type = pointer_type-&gt;getElementType();
+            element_type = op-&gt;getType()-&gt;getPointerElementType();
             ++n;
         }
 
@@ -1024,7 +1024,7 @@ bool ValidationPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on  3 December 2022 at 00:41:40 UTC</p></div>
+<p>Updated on 15 December 2022 at 23:00:50 UTC</p></div>
 </div>
           </div>
         </main>

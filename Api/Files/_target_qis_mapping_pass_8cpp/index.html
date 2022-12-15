@@ -689,7 +689,7 @@ void TargetQisMappingPass::setupCopyAndExpand()
 
                  // List with new call arguments
                  std::vector&lt;llvm::Value*&gt; new_arguments;
-                 for (unsigned i = 0; i &lt; invoke-&gt;getNumArgOperands(); ++i)
+                 for (unsigned i = 0; i &lt; invoke-&gt;arg_size(); ++i)
                  {
                      // Getting the i'th argument
                      llvm::Value* arg = invoke-&gt;getArgOperand(i);
@@ -1494,7 +1494,7 @@ void TargetQisMappingPass::requireLogger()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on  3 December 2022 at 00:41:40 UTC</p></div>
+<p>Updated on 15 December 2022 at 23:00:50 UTC</p></div>
 </div>
           </div>
         </main>

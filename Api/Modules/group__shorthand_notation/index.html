@@ -689,7 +689,7 @@
 </thead>
 <tbody>
 <tr>
-<td>const std::shared_ptr&lt; AnyPattern &gt;</td>
+<td>std::shared_ptr&lt; AnyPattern &gt; const</td>
 <td><strong><a href="/qat/Api/Modules/group__shorthand_notation/#variable-_">_</a></strong></td>
 </tr>
 </tbody>
@@ -861,11 +861,11 @@ call void @foo(%Type* %2, %Type* %3)
 <p>To match this pattern, one would create the pattern <code>call("foo", call("bar", call("baz", "x"_cap = _)), _)</code>. This pattern would ensure that at the time where the replacer function is called, the value stored in <code>%0</code> is captured under the name <code>x</code>. </p>
 <h2 id="attributes-documentation">Attributes Documentation</h2>
 <h3 id="variable-_">variable _</h3>
-<pre><code class="language-cpp">static const std::shared_ptr&lt; AnyPattern &gt; _ = std::make_shared&lt;AnyPattern&gt;();
+<pre><code class="language-cpp">static std::shared_ptr&lt; AnyPattern &gt; const _ = std::make_shared&lt;AnyPattern&gt;();
 </code></pre>
 <p>Shorthand notation for a wildcard which matches anything. This value is useful when for instance capturing the arguments of a function call where the origin of the value does not matter to the pattern. </p>
 <hr />
-<p>Updated on  3 December 2022 at 00:41:40 UTC</p></div>
+<p>Updated on 15 December 2022 at 23:00:50 UTC</p></div>
 </div>
           </div>
         </main>

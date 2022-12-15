@@ -715,7 +715,7 @@
 </thead>
 <tbody>
 <tr>
-<td>const std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_any_pattern/">AnyPattern</a> &gt;</td>
+<td>std::shared_ptr&lt; <a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_any_pattern/">AnyPattern</a> &gt; const</td>
 <td><strong><a href="/qat/Api/Modules/group__shorthand_notation/#variable-_">_</a></strong></td>
 </tr>
 </tbody>
@@ -868,11 +868,11 @@ IOperandPrototypePtr phi(
 <p>where we want to match all store instructions and do not really care about how the target or value came about. In this case, we may want to capture the values to, for instance, make assignment at compile time. </p>
 <h2 id="attributes-documentation">Attributes Documentation</h2>
 <h3 id="variable-_">variable _</h3>
-<pre><code class="language-cpp">static const std::shared_ptr&lt; AnyPattern &gt; _ = std::make_shared&lt;[AnyPattern](/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_any_pattern/)&gt;();
+<pre><code class="language-cpp">static std::shared_ptr&lt; AnyPattern &gt; const _ = std::make_shared&lt;[AnyPattern](/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_any_pattern/)&gt;();
 </code></pre>
 <p>Shorthand notation for a wildcard which matches anything. This value is useful when for instance capturing the arguments of a function call where the origin of the value does not matter to the pattern. </p>
 <hr />
-<p>Updated on  3 December 2022 at 00:41:40 UTC</p></div>
+<p>Updated on 15 December 2022 at 23:00:50 UTC</p></div>
 </div>
           </div>
         </main>

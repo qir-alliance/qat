@@ -797,13 +797,12 @@ GroupingPass::ResourceAnalysis GroupingPass::operandAnalysis(llvm::Value* val) c
     ret.is_const = (instruction_ptr != nullptr) || (operator_ptr != nullptr) || (nullptr_cast != nullptr);
 
     // Extracting the type and index
-    auto pointer_type = llvm::dyn_cast&lt;llvm::PointerType&gt;(val-&gt;getType());
-    if (!pointer_type)
+    if (!val-&gt;getType()-&gt;isPointerTy())
     {
         return ret;
     }
 
-    llvm::Type* element_type = pointer_type-&gt;getElementType();
+    llvm::Type* element_type = val-&gt;getType()-&gt;getPointerElementType();
 
     if (!element_type-&gt;isStructTy())
     {
@@ -1214,7 +1213,7 @@ void GroupingPass::setLogger(ILoggerPtr logger)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on  3 December 2022 at 00:41:40 UTC</p></div>
+<p>Updated on 15 December 2022 at 23:00:50 UTC</p></div>
 </div>
           </div>
         </main>
