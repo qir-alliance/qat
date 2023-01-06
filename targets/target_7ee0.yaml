@@ -157,6 +157,7 @@ target:
       - __quantum__qis__rx__body:void (double, %Qubit*)
       - __quantum__qis__ry__body:void (double, %Qubit*)
       - __quantum__qis__t__body:void (%Qubit*)
+      - __quantum__qis__rzz__body:void (double, %Qubit*, %Qubit*)
     allow-any-qis: false
     irreversible-operations:
       - __quantum__qis__reset__body
