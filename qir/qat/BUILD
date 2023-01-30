@@ -255,18 +255,6 @@ ms_cc_library(
 )
 
 ms_cc_library(
-    name = "RemoveDisallowedAttributesPass",
-    srcs = glob(["Passes/RemoveDisallowedAttributesPass/*.cpp"]),
-    hdrs = glob(["Passes/RemoveDisallowedAttributesPass/*.hpp"]),
-    visibility = ["//visibility:public"],
-    deps = [
-        "//qir/qat:Llvm",
-        "//qir/qat:Logging",
-        "//qir/qat:QatTypes",
-    ],
-)
-
-ms_cc_library(
     name = "ZExtTransformPass",
     srcs = glob(["Passes/ZExtTransformPass/*.cpp"]),
     hdrs = glob(["Passes/ZExtTransformPass/*.hpp"]),
@@ -287,7 +275,6 @@ ms_cc_library(
         "//qir/qat:Llvm",
         "//qir/qat:Logging",
         "//qir/qat:QatTypes",
-        "//qir/qat:RemoveDisallowedAttributesPass",
     ],
 )
 

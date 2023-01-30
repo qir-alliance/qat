@@ -5,7 +5,6 @@
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/ModuleLoader/DebugInfoUpdater.hpp"
 #include "qir/qat/ModuleLoader/InstructionLocationTable.hpp"
-#include "qir/qat/Passes/RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 namespace microsoft::quantum
@@ -144,8 +143,6 @@ class ModuleLoader
 
             pass_builder_.crossRegisterProxies(
                 loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
-
-            module_pass_manager_.addPass(RemoveDisallowedAttributesPass(spec));
         }
 
         bool apply(llvm::Module* module)
