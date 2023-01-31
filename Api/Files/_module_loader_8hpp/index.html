@@ -627,10 +627,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include &quot;qir/qat/Commandline/SpecConfiguration.hpp&quot;
 #include &quot;qir/qat/Llvm/Llvm.hpp&quot;
 #include &quot;qir/qat/ModuleLoader/DebugInfoUpdater.hpp&quot;
 #include &quot;qir/qat/ModuleLoader/InstructionLocationTable.hpp&quot;
-#include &quot;qir/qat/Passes/RemoveDisallowedAttributesPass/RemoveDisallowedAttributesPass.hpp&quot;
 #include &quot;qir/qat/QatTypes/QatTypes.hpp&quot;
 
 namespace microsoft::quantum
@@ -769,8 +769,6 @@ class ModuleLoader
 
             pass_builder_.crossRegisterProxies(
                 loop_analysis_manager_, function_analysis_manager_, gscc_analysis_manager_, module_analysis_manager_);
-
-            module_pass_manager_.addPass(RemoveDisallowedAttributesPass(spec));
         }
 
         bool apply(llvm::Module* module)
@@ -806,7 +804,7 @@ class ModuleLoader
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 31 January 2023 at 18:10:15 UTC</p></div>
+<p>Updated on 31 January 2023 at 20:45:24 UTC</p></div>
 </div>
           </div>
         </main>

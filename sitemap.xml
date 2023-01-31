@@ -261,11 +261,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_remove_disallowed_attributes_pass/</loc>
-         <lastmod>2023-01-31</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_remove_non_entrypoint_functions_pass/</loc>
          <lastmod>2023-01-31</lastmod>
          <changefreq>daily</changefreq>
@@ -886,11 +881,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Files/_remove_disallowed_attributes_pass_8hpp/</loc>
-         <lastmod>2023-01-31</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/_remove_non_entrypoint_functions_pass_8cpp/</loc>
          <lastmod>2023-01-31</lastmod>
          <changefreq>daily</changefreq>
@@ -1176,11 +1166,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Files/dir_796b3cf875c53f008e9fa858f7830e6b/</loc>
-         <lastmod>2023-01-31</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://qir-alliance.github.io/qat/Api/Files/dir_a1c5909b11c5c8bda254c1d4e660dcd9/</loc>
          <lastmod>2023-01-31</lastmod>
          <changefreq>daily</changefreq>
@@ -1266,7 +1251,7 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d65/</loc>
+         <loc>https://qir-alliance.github.io/qat/Api/Namespaces/namespacemicrosoft_1_1quantum_1_1_0d64/</loc>
          <lastmod>2023-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
