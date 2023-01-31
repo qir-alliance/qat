@@ -17,6 +17,9 @@ class PostTransformValidationPassConfiguration
     void setup(ConfigurationManager& config)
     {
         config.setSectionName("Post transform validation", "");
+        config.addParameter(
+            disable_straightline_code_requirement_, "disable-straightline-code-requirement",
+            "Validate whether only one defined single-block should be present.");
         replace_qubits_on_reset_ = config.getParameter("replace-qubit-on-reset");
         defer_measurements_      = config.getParameter("defer-measurements");
     }
