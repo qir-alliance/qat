@@ -642,6 +642,9 @@ class PostTransformValidationPassConfiguration
     void setup(ConfigurationManager&amp; config)
     {
         config.setSectionName(&quot;Post transform validation&quot;, &quot;&quot;);
+        config.addParameter(
+            disable_straightline_code_requirement_, &quot;disable-straightline-code-requirement&quot;,
+            &quot;Validate whether only one defined single-block should be present.&quot;);
         replace_qubits_on_reset_ = config.getParameter(&quot;replace-qubit-on-reset&quot;);
         defer_measurements_      = config.getParameter(&quot;defer-measurements&quot;);
     }
@@ -672,7 +675,7 @@ class PostTransformValidationPassConfiguration
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on  6 January 2023 at 22:33:08 UTC</p></div>
+<p>Updated on 31 January 2023 at 18:10:15 UTC</p></div>
 </div>
           </div>
         </main>
