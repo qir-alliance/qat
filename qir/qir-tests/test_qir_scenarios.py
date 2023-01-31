@@ -91,10 +91,10 @@ def run_scenario(name, profile, directory):
             for line in compare_to.strip().split("\n"):
                 print("    | {}".format(line))
 
-        if output["stdoutContains"] not in out:
+        if not all(line in out for line in stdout_contains):
             print("\nExpected '{}' in stdout".format("', '".join(stdout_contains)))
 
-        if output["stderrContains"] not in errs:
+        if not all(line in errs for line in stderr_contains):
             print("\nExpected '{}' in stderr".format("', '".join(stderr_contains)))
 
     return ret

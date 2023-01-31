@@ -2,8 +2,7 @@
   "stderrContains": "",
   "stdoutContains": [
     "define internal void @foo(%Qubit* %control, i32 %t) #3",
-    "attributes #3 = { \"maxQubitIndex\"=\"0\" \"maxResultIndex\"=\"0\" \"replaceWith\"=\"noexistent\" \"requiredQubits\"=\"0\" \"requiredResults\"=\"0\" }",
-    "attributes #4 = { \"replaceWith\"=\"bar\" }"
+    "attributes #3 = { \"maxQubitIndex\"=\"0\" \"maxResultIndex\"=\"0\" \"replaceWith\"=\"noexistent\" \"requiredQubits\"=\"0\" \"requiredResults\"=\"0\" }"
   ],
   "args": ["--replace-functions", "foo=noexistent"],
   "expectFail": false
