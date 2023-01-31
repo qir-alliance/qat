@@ -20,7 +20,7 @@ define internal void @SimpleLoop__MiniCircuit__body(%Qubit* %q1, %Qubit* %q2) #2
 entry:
   call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %q1)
   call void @Microsoft__Quantum__Intrinsic__H__body(%Qubit* %q2)
-  call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* %q1, %Qubit* %q2) #4
+  call void @Microsoft__Quantum__Intrinsic__CNOT__body(%Qubit* %q1, %Qubit* %q2)
   ret void
 }
 
@@ -44,4 +44,3 @@ attributes #0 = { "EntryPoint" "maxQubitIndex"="0" "maxResultIndex"="0" "require
 attributes #1 = { "maxQubitIndex"="1" "maxResultIndex"="0" "requiredQubits"="2" "requiredResults"="0" }
 attributes #2 = { "maxQubitIndex"="0" "maxResultIndex"="0" "requiredQubits"="0" "requiredResults"="0" }
 attributes #3 = { "maxQubitIndex"="0" "maxResultIndex"="0" "replaceWith"="__hello_qubit" "requiredQubits"="0" "requiredResults"="0" }
-attributes #4 = { "replaceWith"="__hello_qubit" }
