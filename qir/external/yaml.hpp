@@ -25,6 +25,7 @@
 #pragma clang diagnostic ignored "-Wshadow"
 #endif
 
+#define YAML_CPP_STATIC_DEFINE
 #include "yaml-cpp/yaml.h"
 
 #if defined(__clang__)
