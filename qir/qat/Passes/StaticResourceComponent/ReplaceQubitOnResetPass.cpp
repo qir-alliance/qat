@@ -198,12 +198,6 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function& function, l
                     new_instr = new llvm::IntToPtrInst(new_index, pointer_type);
                     builder.Insert(new_instr);
 
-                    auto op_as_instr = llvm::dyn_cast<llvm::Instruction>(op);
-                    if (op_as_instr)
-                    {
-                        to_remove.push_back(op_as_instr);
-                    }
-
                     instr.setOperand(static_cast<uint32_t>(i), new_instr);
                     already_replaced.insert(new_instr);
                 }

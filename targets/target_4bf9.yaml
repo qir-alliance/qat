@@ -12,9 +12,9 @@ qat:
     - llvm-optimization
     - remove-non-entrypoint-functions
     - target-qis-mapping
+    - static-resources
     - target-profile-mapping
     - straightline-code-requirement
-    - static-resources
     - grouping
   emit-human-readable-llvm: false
   verify-module: true
