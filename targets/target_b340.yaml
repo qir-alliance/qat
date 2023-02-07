@@ -77,7 +77,7 @@ adaptor:
     annotate-max-result-index: true
     reindex-qubits: true
     replace-qubit-on-reset: true
-    inline-after-id-change: false
+    inline-after-id-change: true
   grouping:
     separate-circuits: false
 target:
