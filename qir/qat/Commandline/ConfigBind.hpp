@@ -36,12 +36,12 @@ template <typename T> class ConfigBind : public IConfigBind
     // Constructors, operators and destructor
     //
 
-    ConfigBind()                  = delete;
-    ConfigBind(ConfigBind const&) = delete;
-    ConfigBind(ConfigBind&&)      = delete;
+    ConfigBind()                             = delete;
+    ConfigBind(ConfigBind const&)            = delete;
+    ConfigBind(ConfigBind&&)                 = delete;
     ConfigBind& operator=(ConfigBind const&) = delete;
-    ConfigBind& operator=(ConfigBind&&) = delete;
-    ~ConfigBind() override              = default;
+    ConfigBind& operator=(ConfigBind&&)      = delete;
+    ~ConfigBind() override                   = default;
 
     /// Constructor to bind value to parameter. This class holds a reference to a variable together
     /// with the name it is expected to have when passed through the parameter parser.
@@ -680,6 +680,7 @@ template <typename T> void ConfigBind<T>::loadYaml(YAML::Node const& node, Strin
 
 template <typename T> void ConfigBind<T>::loadYaml(YAML::Node const& node, StringList& value)
 {
+    value.clear();
     for (auto& v : node[name()])
     {
         value.push_back(v.template as<String>());
