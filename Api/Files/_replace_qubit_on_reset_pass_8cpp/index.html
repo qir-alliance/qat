@@ -808,12 +808,6 @@ llvm::PreservedAnalyses ReplaceQubitOnResetPass::run(llvm::Function&amp; functio
                     new_instr = new llvm::IntToPtrInst(new_index, pointer_type);
                     builder.Insert(new_instr);
 
-                    auto op_as_instr = llvm::dyn_cast&lt;llvm::Instruction&gt;(op);
-                    if (op_as_instr)
-                    {
-                        to_remove.push_back(op_as_instr);
-                    }
-
                     instr.setOperand(static_cast&lt;uint32_t&gt;(i), new_instr);
                     already_replaced.insert(new_instr);
                 }
@@ -841,7 +835,7 @@ bool ReplaceQubitOnResetPass::isRequired()
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on 31 January 2023 at 20:45:24 UTC</p></div>
+<p>Updated on  8 February 2023 at 00:44:37 UTC</p></div>
 </div>
           </div>
         </main>
