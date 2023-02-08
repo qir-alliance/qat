@@ -680,6 +680,8 @@ template <typename T> void ConfigBind<T>::loadYaml(YAML::Node const& node, Strin
 
 template <typename T> void ConfigBind<T>::loadYaml(YAML::Node const& node, StringList& value)
 {
+    value.clear();
+
     for (auto& v : node[name()])
     {
         value.push_back(v.template as<String>());
