@@ -338,11 +338,13 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
                 fpm.addPass(llvm::SCCPPass());
                 fpm.addPass(llvm::SimplifyCFGPass());
                 fpm.addPass(llvm::LowerSwitchPass());
+                fpm.addPass(llvm::ADCEPass());
                 fpm.addPass(ZExtTransformPass());
             }
 
             fpm.addPass(ResourceAnnotationPass(cfg, logger));
             mpm.addPass(FunctionToModule(std::move(fpm)));
+            mpm.addPass(llvm::GlobalDCEPass());
         });
 
     registerAdaptorComponent<GroupingPassConfiguration>(
