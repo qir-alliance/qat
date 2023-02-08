@@ -253,7 +253,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             // Defining the mapping
             RuleSet rule_set;
             auto    factory = RuleFactory(
-                   rule_set, adaptor.getQubitAllocationManager(), adaptor.getResultAllocationManager(), logger);
+                rule_set, adaptor.getQubitAllocationManager(), adaptor.getResultAllocationManager(), logger);
             factory.usingConfiguration(adaptor.configurationManager().get<TargetQisMappingPassConfiguration>());
 
             // Creating adaptor pass
@@ -341,8 +341,11 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
                 fpm.addPass(ZExtTransformPass());
             }
 
+            fpm.addPass(llvm::ADCEPass());
             fpm.addPass(ResourceAnnotationPass(cfg, logger));
+
             mpm.addPass(FunctionToModule(std::move(fpm)));
+            mpm.addPass(llvm::GlobalDCEPass());
         });
 
     registerAdaptorComponent<GroupingPassConfiguration>(
