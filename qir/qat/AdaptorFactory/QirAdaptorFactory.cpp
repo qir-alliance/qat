@@ -253,7 +253,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             // Defining the mapping
             RuleSet rule_set;
             auto    factory = RuleFactory(
-                rule_set, adaptor.getQubitAllocationManager(), adaptor.getResultAllocationManager(), logger);
+                   rule_set, adaptor.getQubitAllocationManager(), adaptor.getResultAllocationManager(), logger);
             factory.usingConfiguration(adaptor.configurationManager().get<TargetQisMappingPassConfiguration>());
 
             // Creating adaptor pass
