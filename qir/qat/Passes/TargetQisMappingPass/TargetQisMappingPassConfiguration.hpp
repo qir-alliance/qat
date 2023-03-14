@@ -87,7 +87,7 @@ class TargetQisMappingPassConfiguration
     bool disableStringSupport() const;
 
     bool disableInitializeSupport() const;
-    
+
     bool disableRecordOutputSupport() const;
 
     bool optimizeResultOne() const;
