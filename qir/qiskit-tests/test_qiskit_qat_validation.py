@@ -13,13 +13,14 @@ import subprocess
 import tempfile
 
 import pytest
-from qiskit_qir import to_qir
+from qiskit_qir import to_qir_module
 
 logger = logging.getLogger(__name__)
 
 
 def validate_circuit(name, profile, circuit):
-    qir = to_qir(circuit)
+    module, _ = to_qir_module(circuit)
+    qir = str(module)
 
     with tempfile.NamedTemporaryFile() as tmp:
         filename = tmp.name
@@ -54,6 +55,7 @@ def validate_circuit(name, profile, circuit):
 @pytest.mark.parametrize("circuit_name", CIRCUITS)
 def test_qat_validation(circuit_name, request):
     circuit = request.getfixturevalue(circuit_name)
-    generated_ir = to_qir(circuit)
+    module, _ = to_qir_module(circuit)
+    generated_ir = str(module)
     logger.debug(generated_ir)
     assert validate_circuit(circuit_name, "default", circuit)
