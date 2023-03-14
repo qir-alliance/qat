@@ -174,6 +174,9 @@ class RuleFactory
     /// `__quantum__rt__message`.
     void disableStringSupport();
 
+    /// Removes runtime initialization instruction(s).
+    void disableInitializeSupport();
+
     /// Removes output recording by removing related runtime instructions.
     void disableRecordOutputSupport();
 

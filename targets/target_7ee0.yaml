@@ -64,6 +64,7 @@ adaptor:
     disable-reference-counting: true
     disable-alias-counting: true
     disable-string-support: true
+    disable-initialize-support: true
     disable-record-output-support: false
   target-profile-mapping:
     lower-switch: true

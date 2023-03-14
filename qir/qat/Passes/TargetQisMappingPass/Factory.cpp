@@ -52,6 +52,11 @@ void RuleFactory::usingConfiguration(TargetQisMappingPassConfiguration const& co
         disableStringSupport();
     }
 
+    if (config.disableInitializeSupport())
+    {
+        disableInitializeSupport();
+    }
+
     if (config.disableRecordOutputSupport())
     {
         disableRecordOutputSupport();
@@ -831,6 +836,11 @@ void RuleFactory::disableStringSupport()
     removeFunctionCall("__quantum__rt__qubit_to_string");
     removeFunctionCall("__quantum__rt__range_to_string");
     removeFunctionCall("__quantum__rt__bigint_to_string");
+}
+
+void RuleFactory::disableInitializeSupport()
+{
+    removeFunctionCall("__quantum__rt__initialize");
 }
 
 void RuleFactory::disableRecordOutputSupport()

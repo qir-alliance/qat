@@ -59,6 +59,9 @@ void TargetQisMappingPassConfiguration::setup(ConfigurationManager& config)
     config.addParameter(
         disable_string_support_, true, "disable-string-support", "Disables string support by instruction removal.");
     config.addParameter(
+        disable_initialize_support_, true, "disable-initialize-support",
+        "Disables runtime initialization by instruction removal.");
+    config.addParameter(
         disable_record_output_support_, true, "disable-record-output-support",
         "Disables record output support by instruction removal.");
 
@@ -79,6 +82,7 @@ TargetQisMappingPassConfiguration TargetQisMappingPassConfiguration::createDisab
     ret.disable_reference_counting_        = false;
     ret.disable_alias_counting_            = false;
     ret.disable_string_support_            = false;
+    ret.disable_initialize_support_        = false;
     ret.disable_record_output_support_     = false;
     ret.optimize_result_one_               = false;
     ret.optimize_result_zero_              = false;
@@ -104,6 +108,7 @@ TargetQisMappingPassConfiguration TargetQisMappingPassConfiguration::createReuse
     ret.disable_reference_counting_        = false;
     ret.disable_alias_counting_            = false;
     ret.disable_string_support_            = false;
+    ret.disable_initialize_support_        = false;
     ret.disable_record_output_support_     = false;
     ret.optimize_result_one_               = false;
     ret.optimize_result_zero_              = false;
@@ -176,6 +181,11 @@ bool TargetQisMappingPassConfiguration::disableStringSupport() const
     return disable_string_support_;
 }
 
+bool TargetQisMappingPassConfiguration::disableInitializeSupport() const
+{
+    return disable_initialize_support_;
+}
+
 bool TargetQisMappingPassConfiguration::disableRecordOutputSupport() const
 {
     return disable_record_output_support_;
@@ -235,7 +245,7 @@ bool TargetQisMappingPassConfiguration::isDisabled() const
         optimize_result_zero_ == false && optimize_quantum_constants_ == false &&
         optimize_result_comparison_ == false && remove_get_one_or_zero_ == false &&
         use_static_qubit_array_allocation_ == false && use_static_qubit_allocation_ == false &&
-        use_static_result_allocation_ == false);
+        use_static_result_allocation_ == false && disable_initialize_support_ == false);
 }
 
 bool TargetQisMappingPassConfiguration::isDefault() const
@@ -249,6 +259,7 @@ bool TargetQisMappingPassConfiguration::isDefault() const
         reuse_results_ == ref.reuse_results_ && disable_reference_counting_ == ref.disable_reference_counting_ &&
         disable_alias_counting_ == ref.disable_alias_counting_ &&
         disable_string_support_ == ref.disable_string_support_ &&
+        disable_initialize_support_ == ref.disable_initialize_support_ &&
         disable_record_output_support_ == ref.disable_record_output_support_ &&
         optimize_result_one_ == ref.optimize_result_one_ && optimize_result_zero_ == ref.optimize_result_zero_ &&
         optimize_result_comparison_ == ref.optimize_result_comparison_ &&
