@@ -707,6 +707,10 @@
 </tr>
 <tr>
 <td>void</td>
+<td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-disableinitializesupport">disableInitializeSupport</a></strong>()<br>Removes runtime initialization instruction(s).</td>
+</tr>
+<tr>
+<td>void</td>
 <td><strong><a href="/qat/Api/Classes/classmicrosoft_1_1quantum_1_1_rule_factory/#function-disablerecordoutputsupport">disableRecordOutputSupport</a></strong>()<br>Removes output recording by removing related runtime instructions.</td>
 </tr>
 <tr>
@@ -864,6 +868,10 @@ br i1 %1, label %then0__1, label %continue__1
 <pre><code class="language-cpp">void disableStringSupport()
 </code></pre>
 <p>Removes string support by removing string related instructions. At the moment these include <code>__quantum__rt__string_create</code>, <code>__quantum__rt__string_update_reference_count</code>, <code>__quantum__rt__string_update_alias_count</code> and <code>__quantum__rt__message</code>. </p>
+<h3 id="function-disableinitializesupport">function disableInitializeSupport</h3>
+<pre><code class="language-cpp">void disableInitializeSupport()
+</code></pre>
+<p>Removes runtime initialization instruction(s). </p>
 <h3 id="function-disablerecordoutputsupport">function disableRecordOutputSupport</h3>
 <pre><code class="language-cpp">void disableRecordOutputSupport()
 </code></pre>
@@ -875,7 +883,7 @@ br i1 %1, label %then0__1, label %continue__1
 </code></pre>
 <p>Sets the integer width used when it cannot be deducted from the context of the transformation. </p>
 <hr />
-<p>Updated on  8 February 2023 at 23:58:38 UTC</p></div>
+<p>Updated on 15 March 2023 at 00:30:42 UTC</p></div>
 </div>
           </div>
         </main>

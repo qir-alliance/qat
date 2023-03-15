@@ -662,6 +662,11 @@ void RuleFactory::usingConfiguration(TargetQisMappingPassConfiguration const&amp
         disableStringSupport();
     }
 
+    if (config.disableInitializeSupport())
+    {
+        disableInitializeSupport();
+    }
+
     if (config.disableRecordOutputSupport())
     {
         disableRecordOutputSupport();
@@ -1431,6 +1436,11 @@ void RuleFactory::disableStringSupport()
     removeFunctionCall(&quot;__quantum__rt__bigint_to_string&quot;);
 }
 
+void RuleFactory::disableInitializeSupport()
+{
+    removeFunctionCall(&quot;__quantum__rt__initialize&quot;);
+}
+
 void RuleFactory::disableRecordOutputSupport()
 {
     removeFunctionCall(&quot;__quantum__rt__result_record_output&quot;);
@@ -1460,7 +1470,7 @@ void RuleFactory::setDefaultIntegerWidth(uint32_t v)
 } // namespace microsoft::quantum
 </code></pre>
 <hr />
-<p>Updated on  8 February 2023 at 23:58:38 UTC</p></div>
+<p>Updated on 15 March 2023 at 00:30:43 UTC</p></div>
 </div>
           </div>
         </main>
