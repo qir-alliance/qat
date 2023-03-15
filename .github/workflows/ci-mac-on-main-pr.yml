@@ -118,7 +118,7 @@ jobs:
           popd
 
           echo "Testing installation"
-          python -c "from qiskit_qir import to_qir"
+          python -c "from qiskit_qir import to_qir_module"
           echo "Done"
 
           export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
