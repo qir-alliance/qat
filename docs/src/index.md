@@ -8,32 +8,24 @@ specific hardware requirements and restrictions.
 Outline:
 
 - [Introduction](#introduction)
-
 - [Quick start](QuickStart/index.md)
-
-  - [Supported systems](QuickStart/index.md#supported-systems)
-  - [Building with Bazel](QuickStart/building-with-bazel.md)
-  - [Building with CMake](QuickStart/building-with-cmake.md)
-  - [Running QAT](QuickStart/running-qat.md)
-
+    - [Supported systems](QuickStart/index.md#supported-systems)
+    - [Building with Bazel](QuickStart/building-with-bazel.md)
+    - [Building with CMake](QuickStart/building-with-cmake.md)
+    - [Running QAT](QuickStart/running-qat.md)
 - Using QAT
-
-  - [Targeting a QIR](UsingQAT/TargetingQIR.md)
-  - [Debugging a QIR](UsingQAT/DebuggingIR.md)
-  - [QAT: Assumptions and Restrictions](UsingQAT/GoalsAndAssumptions.md)
-
+    - [Targeting a QIR](UsingQAT/TargetingQIR.md)
+    - [Debugging a QIR](UsingQAT/DebuggingIR.md)
+    - [QAT: Assumptions and Restrictions](UsingQAT/GoalsAndAssumptions.md)
 - Developer guide
-
-  - [Architecture Overview](DeveloperGuide/ArchitectureOverview.md)
-  - [Writing an adaptor](DeveloperGuide/WritingAdaptor.md)
-  - [Rule based adaptors](DeveloperGuide/WritingRuleTests.md)
-  - [Grouping QIS](DeveloperGuide/LogicSeparation.md)
-
+    - [Architecture Overview](DeveloperGuide/ArchitectureOverview.md)
+    - [Writing an adaptor](DeveloperGuide/WritingAdaptor.md)
+    - [Rule based adaptors](DeveloperGuide/WritingRuleTests.md)
+    - [Grouping QIS](DeveloperGuide/LogicSeparation.md)
 - Additional developer info:
-
-  - [Contributing](../../CONTRIBUTING.md)
-  - [Code quality](DeveloperGuide/CodeQuality.md)
-  - [Developer FAQ](DeveloperGuide/DeveloperFAQ.md)
+    - [Contributing](../../CONTRIBUTING.md)
+    - [Code quality](DeveloperGuide/CodeQuality.md)
+    - [Developer FAQ](DeveloperGuide/DeveloperFAQ.md)
 
 ## Introduction
 
