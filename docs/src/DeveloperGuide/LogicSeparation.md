@@ -158,19 +158,19 @@ function arguments together with the return result determine where the call will
 be executed according to following rules:
 
 - Any `void` function location is purely determined by its arguments:
-  - Void functions that only have quantum register types as arguments are
-    classified as pure QPU instructions
-  - Void functions that only have classical register types as arguments are
-    classified as pure CPU instructions
-  - Void functions that takes a mixture are classified as CPU to QPU
-    setup/transport instructions
+    - Void functions that only have quantum register types as arguments are
+      classified as pure QPU instructions
+    - Void functions that only have classical register types as arguments are
+      classified as pure CPU instructions
+    - Void functions that takes a mixture are classified as CPU to QPU
+      setup/transport instructions
 - Any function that returns a quantum register is:
-  - A pure quantum instruction if all of the function arguments are quantum
-    registers
-  - A CPU to QPU setup/transport instruction in any other case
+    - A pure quantum instruction if all of the function arguments are quantum
+      registers
+    - A CPU to QPU setup/transport instruction in any other case
 - A function that returns a classical register is:
-  - A pure classical instruction if all of the arguments are classical registers
-  - A QPU to CPU result/transport instruction in any other case
+    - A pure classical instruction if all of the arguments are classical registers
+    - A QPU to CPU result/transport instruction in any other case
 
 ### Pass definition
 

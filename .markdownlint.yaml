@@ -1,6 +1,6 @@
 # For more info on markdown lint configurations, see also
 # https://github.com/DavidAnson/markdownlint/blob/main/schema/.markdownlint.yaml
-# https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md
+# https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md
 
 default: true
 line-length:
@@ -31,3 +31,12 @@ no-inline-html:
 # Allow exclamation mark and question marks in headings
 no-emphasis-as-heading:
   punctuation: ".,;:。，；：！"
+
+# MD007/ul-indent - Unordered list indentation
+MD007:
+  # Spaces for indent
+  indent: 4
+  # Whether to indent the first level of the list
+  start_indented: false
+  # Spaces for first level indent (when start_indented is set)
+  start_indent: 2
