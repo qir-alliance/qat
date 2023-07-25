@@ -54,9 +54,9 @@ Note that rather than using the `-o` option, we redirect the output into the
 output file. This is capture the configuration together with the resulting
 output of QAT and ensure that the two are kept together for reproducibility.
 
-Another couple of useful features are `strip-exisiting-dbg` and `add-ir-debug`.
-These two can be set from the command line using `--strip-exisiting-dbg` and
-`--add-ir-debug`, respectively. The first, `strip-exisiting-dbg`, removes all
+Another couple of useful features are `strip-existing-dbg` and `add-ir-debug`.
+These two can be set from the command line using `--strip-existing-dbg` and
+`--add-ir-debug`, respectively. The first, `strip-existing-dbg`, removes all
 existing debug information from the loaded modules. The other `add-ir-debug`
 adds debug symbols referring to the LL file itself. This is discussed in
 [detail here](../UsingQAT/DebuggingIR.md).
@@ -195,7 +195,7 @@ exit__1:
 ```
 
 The control logic associated with the loop gives rise to a `phi` node which most
-of todays hardware backends would not be able to handle. However, since hte loop
+of todays hardware backends would not be able to handle. However, since the loop
 is constant in length, we can unroll the loop by using the `unroll-loop`
 parameter:
 
@@ -230,7 +230,7 @@ The generic QIR allows for dynamic qubit allocation as the default way to
 allocate qubits. One of the core differences between simulators and hardware
 backends is how qubits are allocated: While simulators, in theory, can allocate
 as many qubits as need dynamically, hardware backends has a hard limit on the
-number of qubits and futher more, does not implement the necessary logic to
+number of qubits and further more, does not implement the necessary logic to
 perform dynamic management. For this reason, it is necessary to transform
 dynamic qubit management into static allocation in order to make certain QIRs
 compatible with backends that does not implement qubit management.
@@ -278,7 +278,7 @@ entry:
 
 This demo is found in `qir/demo/QubitAllocation`. Note that static qubit
 allocation is not a straight forward task and there are many corner cases for
-which it simply will not work. For instance, recusively allocating qubit where
+which it simply will not work. For instance, recursively allocating qubit where
 recursion stops on a runtime parameter is one case that cannot be mapped. QAT
 does a best effort, but at this point there is no garantuee of correctness.
 
@@ -317,8 +317,8 @@ entry:
 ```
 
 Obviously, this code will not run on the second computer since that machine does
-it makes use of a `z` gate. While we could rewrite the frontend code, the beauti
-of an intermediate represenation is that such tasks can be performed at this
+it makes use of a `z` gate. While we could rewrite the frontend code, the beauty
+of an intermediate representation is that such tasks can be performed at this
 level and hence, the user does not need to worry about hardware compatibility of
 the frontend code.
 
@@ -334,7 +334,7 @@ declare void @__quantum__qis__z__body(%Qubit*) #1
 attributes #1 = { "replaceWith"="soft_z" }
 ```
 
-This states taht if the function `soft_z` is available, replace all calls to
+This states that if the function `soft_z` is available, replace all calls to
 `__quantum__qis__z__body` with `soft_z`. Passing the `main.ll` through QAT does
 not result in any changes. However, adding a `lib.ll` with following code:
 
@@ -411,4 +411,4 @@ Grouping QIS is an experimental adaptor that allows separation of the classical
 operations and pure quantum circuits. In this section we will concentrate on
 showing how to use this feature. If you are interested in the
 
-TODO(tfr): Write this section once the cicruit separation has been revised.
+TODO(tfr): Write this section once the circuit separation has been revised.

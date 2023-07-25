@@ -267,4 +267,4 @@ registerAdaptorComponent<InlinerConfig>(
 Recompile QAT and the adaptor is now QAT native. The final step is adding the
 adaptor to the pipeline: Open `qat/qir/Apps/Qat/QatConfig.cpp` and locate the
 line starting with `config.addParameter(adapter_pipeline_,`. Add the adaptor at
-the apppropriate place. This will make the adaptor loaded by default.
+the appropriate place. This will make the adaptor loaded by default.

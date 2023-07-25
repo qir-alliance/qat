@@ -39,7 +39,7 @@ refer to such a subset with constraints as a target. For instance, it is likely
 that early versions of quantum backend will have a limited set of classical
 instructions available. With this in mind, the vendor or user of said backend
 would define a profile that only contains a specified subset. A target consists
-of a set of classical capabililties refered to as a profile and a quantum
+of a set of classical capabililties referred to as a profile and a quantum
 instruction set (QIS). One example of such a target is the base profile with any
 QIS, which only allows function calls and jumps, but no arithmetic, classical
 memory, or classical data types.

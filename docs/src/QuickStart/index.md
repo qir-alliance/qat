@@ -5,7 +5,7 @@ need to follow to build the QIR adaptor tool (QAT). QAT can be built either
 using Bazel or CMake. In the following two sections, we discuss how to build QAT
 using either of these tools. Building on Windows is currently only supported
 [using Bazel](./building-with-bazel.md). The
-[detailed decription of building with Bazel](./building-with-bazel.md) outlines
+[detailed description of building with Bazel](./building-with-bazel.md) outlines
 how to install `bazelisk` and discusses configuration flags. If you already have
 `bazelisk` installed, simply run
 
