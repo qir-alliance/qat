@@ -764,20 +764,26 @@ CPU. The classification happens on the basis of the function signature: The
 function arguments together with the return result determine where the call will
 be executed according to following rules:</p>
 <ul>
-<li>Any <code>void</code> function location is purely determined by its arguments:</li>
+<li>Any <code>void</code> function location is purely determined by its arguments:<ul>
 <li>Void functions that only have quantum register types as arguments are
-    classified as pure QPU instructions</li>
+  classified as pure QPU instructions</li>
 <li>Void functions that only have classical register types as arguments are
-    classified as pure CPU instructions</li>
+  classified as pure CPU instructions</li>
 <li>Void functions that takes a mixture are classified as CPU to QPU
-    setup/transport instructions</li>
-<li>Any function that returns a quantum register is:</li>
+  setup/transport instructions</li>
+</ul>
+</li>
+<li>Any function that returns a quantum register is:<ul>
 <li>A pure quantum instruction if all of the function arguments are quantum
-    registers</li>
+  registers</li>
 <li>A CPU to QPU setup/transport instruction in any other case</li>
-<li>A function that returns a classical register is:</li>
+</ul>
+</li>
+<li>A function that returns a classical register is:<ul>
 <li>A pure classical instruction if all of the arguments are classical registers</li>
 <li>A QPU to CPU result/transport instruction in any other case</li>
+</ul>
+</li>
 </ul>
 <h3 id="pass-definition">Pass definition</h3>
 <p>As an example we will consider following code block:</p>

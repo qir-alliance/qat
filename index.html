@@ -599,49 +599,33 @@ create tools that allow quantum hardware vendors to adapt a generic QIR to their
 specific hardware requirements and restrictions.</p>
 <p>Outline:</p>
 <ul>
-<li>
-<p><a href="#introduction">Introduction</a></p>
-</li>
-<li>
-<p><a href="QuickStart/">Quick start</a></p>
-</li>
-<li>
-<p><a href="QuickStart/#supported-systems">Supported systems</a></p>
-</li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="QuickStart/">Quick start</a><ul>
+<li><a href="QuickStart/#supported-systems">Supported systems</a></li>
 <li><a href="QuickStart/building-with-bazel/">Building with Bazel</a></li>
 <li><a href="QuickStart/building-with-cmake/">Building with CMake</a></li>
-<li>
-<p><a href="QuickStart/running-qat/">Running QAT</a></p>
+<li><a href="QuickStart/running-qat/">Running QAT</a></li>
+</ul>
 </li>
-<li>
-<p>Using QAT</p>
-</li>
-<li>
-<p><a href="UsingQAT/TargetingQIR/">Targeting a QIR</a></p>
-</li>
+<li>Using QAT<ul>
+<li><a href="UsingQAT/TargetingQIR/">Targeting a QIR</a></li>
 <li><a href="UsingQAT/DebuggingIR/">Debugging a QIR</a></li>
-<li>
-<p><a href="UsingQAT/GoalsAndAssumptions/">QAT: Assumptions and Restrictions</a></p>
+<li><a href="UsingQAT/GoalsAndAssumptions/">QAT: Assumptions and Restrictions</a></li>
+</ul>
 </li>
-<li>
-<p>Developer guide</p>
-</li>
-<li>
-<p><a href="DeveloperGuide/ArchitectureOverview/">Architecture Overview</a></p>
-</li>
+<li>Developer guide<ul>
+<li><a href="DeveloperGuide/ArchitectureOverview/">Architecture Overview</a></li>
 <li><a href="DeveloperGuide/WritingAdaptor/">Writing an adaptor</a></li>
 <li><a href="DeveloperGuide/WritingRuleTests/">Rule based adaptors</a></li>
-<li>
-<p><a href="DeveloperGuide/LogicSeparation/">Grouping QIS</a></p>
+<li><a href="DeveloperGuide/LogicSeparation/">Grouping QIS</a></li>
+</ul>
 </li>
-<li>
-<p>Additional developer info:</p>
-</li>
-<li>
-<p><a href="../../CONTRIBUTING.md">Contributing</a></p>
-</li>
+<li>Additional developer info:<ul>
+<li><a href="../../CONTRIBUTING.md">Contributing</a></li>
 <li><a href="DeveloperGuide/CodeQuality/">Code quality</a></li>
 <li><a href="DeveloperGuide/DeveloperFAQ/">Developer FAQ</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="introduction">Introduction</h2>
 <p>The QIR adapter tool (QAT) is a tool that is intended to transform a generic QIR
@@ -654,7 +638,7 @@ refer to such a subset with constraints as a target. For instance, it is likely
 that early versions of quantum backend will have a limited set of classical
 instructions available. With this in mind, the vendor or user of said backend
 would define a profile that only contains a specified subset. A target consists
-of a set of classical capabililties refered to as a profile and a quantum
+of a set of classical capabililties referred to as a profile and a quantum
 instruction set (QIS). One example of such a target is the base profile with any
 QIS, which only allows function calls and jumps, but no arithmetic, classical
 memory, or classical data types.</p>
@@ -699,5 +683,5 @@ restrictions which are absent in the generic QIR.</p></div>
 
 <!--
 MkDocs version : 1.4.3
-Build Date UTC : 2023-07-25 21:48:19.750897+00:00
+Build Date UTC : 2023-07-25 22:50:46.018989+00:00
 -->

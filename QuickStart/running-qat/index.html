@@ -630,9 +630,9 @@ flag</p>
 <p>Note that rather than using the <code>-o</code> option, we redirect the output into the
 output file. This is capture the configuration together with the resulting
 output of QAT and ensure that the two are kept together for reproducibility.</p>
-<p>Another couple of useful features are <code>strip-exisiting-dbg</code> and <code>add-ir-debug</code>.
-These two can be set from the command line using <code>--strip-exisiting-dbg</code> and
-<code>--add-ir-debug</code>, respectively. The first, <code>strip-exisiting-dbg</code>, removes all
+<p>Another couple of useful features are <code>strip-existing-dbg</code> and <code>add-ir-debug</code>.
+These two can be set from the command line using <code>--strip-existing-dbg</code> and
+<code>--add-ir-debug</code>, respectively. The first, <code>strip-existing-dbg</code>, removes all
 existing debug information from the loaded modules. The other <code>add-ir-debug</code>
 adds debug symbols referring to the LL file itself. This is discussed in
 <a href="../../UsingQAT/DebuggingIR/">detail here</a>.</p>
@@ -745,7 +745,7 @@ exit__1:
 }
 </code></pre>
 <p>The control logic associated with the loop gives rise to a <code>phi</code> node which most
-of todays hardware backends would not be able to handle. However, since hte loop
+of todays hardware backends would not be able to handle. However, since the loop
 is constant in length, we can unroll the loop by using the <code>unroll-loop</code>
 parameter:</p>
 <pre><code class="language-sh">qat --apply -S  --unroll-loops input.ll
@@ -772,7 +772,7 @@ by running <code>qat -h</code>.</p>
 allocate qubits. One of the core differences between simulators and hardware
 backends is how qubits are allocated: While simulators, in theory, can allocate
 as many qubits as need dynamically, hardware backends has a hard limit on the
-number of qubits and futher more, does not implement the necessary logic to
+number of qubits and further more, does not implement the necessary logic to
 perform dynamic management. For this reason, it is necessary to transform
 dynamic qubit management into static allocation in order to make certain QIRs
 compatible with backends that does not implement qubit management.</p>
@@ -807,7 +807,7 @@ entry:
 </code></pre>
 <p>This demo is found in <code>qir/demo/QubitAllocation</code>. Note that static qubit
 allocation is not a straight forward task and there are many corner cases for
-which it simply will not work. For instance, recusively allocating qubit where
+which it simply will not work. For instance, recursively allocating qubit where
 recursion stops on a runtime parameter is one case that cannot be mapped. QAT
 does a best effort, but at this point there is no garantuee of correctness.</p>
 <p>Advanced experimental features are available by adding the flag <code>--experimental</code>
@@ -837,8 +837,8 @@ entry:
 }
 </code></pre>
 <p>Obviously, this code will not run on the second computer since that machine does
-it makes use of a <code>z</code> gate. While we could rewrite the frontend code, the beauti
-of an intermediate represenation is that such tasks can be performed at this
+it makes use of a <code>z</code> gate. While we could rewrite the frontend code, the beauty
+of an intermediate representation is that such tasks can be performed at this
 level and hence, the user does not need to worry about hardware compatibility of
 the frontend code.</p>
 <p>QAT allows to address this issue by using a concept known as replacement
@@ -850,7 +850,7 @@ follows:</p>
 
 attributes #1 = { &quot;replaceWith&quot;=&quot;soft_z&quot; }
 </code></pre>
-<p>This states taht if the function <code>soft_z</code> is available, replace all calls to
+<p>This states that if the function <code>soft_z</code> is available, replace all calls to
 <code>__quantum__qis__z__body</code> with <code>soft_z</code>. Passing the <code>main.ll</code> through QAT does
 not result in any changes. However, adding a <code>lib.ll</code> with following code:</p>
 <pre><code class="language-llvm">define void @soft_z(%Qubit* %q) {
@@ -911,7 +911,7 @@ the gates that are not supported natively by the system.</p>
 <p>Grouping QIS is an experimental adaptor that allows separation of the classical
 operations and pure quantum circuits. In this section we will concentrate on
 showing how to use this feature. If you are interested in the</p>
-<p>TODO(tfr): Write this section once the cicruit separation has been revised.</p></div>
+<p>TODO(tfr): Write this section once the circuit separation has been revised.</p></div>
 </div>
           </div>
         </main>
