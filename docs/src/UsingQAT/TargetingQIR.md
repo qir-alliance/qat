@@ -14,7 +14,7 @@ Below we list all settings that are used to configure how QAT is running:
 | ------------------------ | ------------------------------------------------------------------------- | ------------- |
 | apply                    | Applies a adaptor to transform the IR in correspondence with the adaptor. | false         |
 | validate                 | Executes the validation procedure.                                        | false         |
-| adaptor-pipeline         | Overrides the adaptor pipleline.                                          |               |
+| adaptor-pipeline         | Overrides the adaptor pipeline.                                           |               |
 | emit-human-readable-llvm | Emits LLVM IR to the standard output.                                     | false         |
 | target-def               | YAML file containing the definition for the target.                       |               |
 | save-config              | YAML file to which the config will be save.                               |               |
@@ -129,7 +129,7 @@ any configuration, its configuration section is empty.
 ### LLVM optimizations - Enables specific LLVM optimizations before and after transformation
 
 The LLVM optimization adaptor runs provides selected LLVM passes to perform
-tranditional optimization tasks such as function inlining, loop unrolling, dead
+traditional optimization tasks such as function inlining, loop unrolling, dead
 code elimination, memory elimination and constant elimination. For each of these
 passes, we provide a number of parameters that allows tuning of the individual
 passes to the extend possible:
@@ -154,7 +154,7 @@ passes to the extend possible:
 
 The purpose of this adaptor is to simplify the IR as much as possible prior to
 targeting the IR. While we have taken great care to ensure that these passes act
-predictably, note that there may be occassions where they produce a different IR
+predictably, note that there may be occasions where they produce a different IR
 than that desired. One such example is promoting if-else statements to switch
 statements where applicable. This is not always desirable since not all backends
 has support for this.
@@ -199,11 +199,11 @@ other patterns. This adaptor only uses LLVM passes at the moment, but could be
 extended using our pattern matching pass to accommodate special requirements.
 Options as the moment are:
 
-| Name                     | Description                                                                                  | Default value |
-| ------------------------ | -------------------------------------------------------------------------------------------- | ------------- |
-| lower-switch             | Lower switch statements.                                                                     | true          |
-| should-eleminate-zext-i1 | Replace zext instruction for i1 with select.                                                 | true          |
-| defer-measurements       | Wether or not measurement and recording functions should be moved to the end of the program. | false         |
+| Name                     | Description                                                                            | Default value |
+| ------------------------ | -------------------------------------------------------------------------------------- | ------------- |
+| lower-switch             | Lower switch statements.                                                               | true          |
+| should-eliminate-zext-i1 | Replace zext instruction for i1 with select.                                           | true          |
+| defer-measurements       | Whether measurement and recording functions should be moved to the end of the program. | false         |
 
 We note that deferred measurements should be moved to the circuit separation
 pass.
@@ -215,7 +215,7 @@ to the replacing function being present in the IR. As an example, imagine a
 backend that implements an X gate but not a Z gate. A QIR that makes use of Z
 gates would not run on said hardware unless we would map Z into the sequence HXH
 where H is the Hadamard gate. The replacement linking adaptor allows us to
-define a software implemention of Z in a separate library and use annotattions
+define a software implementation of Z in a separate library and use annotattions
 on the Z gate function to replace the gate if a software implementation is
 provided.
 
@@ -227,7 +227,7 @@ provided.
 ### Static resource adaptor - Manipulates statically allocated qubits and results
 
 In case of a QIR that uses statically allocated qubits and/or results, the
-static resource adaptor allows manipulation to archieve certain properties. One
+static resource adaptor allows manipulation to achieve certain properties. One
 such property is enforcing consecutive indexing starting 0 and another is the
 ability to ensure that a new qubit is used whenever a reset occurs. The latter
 garantuees that qubits are not reused within the lifetime of the program and is

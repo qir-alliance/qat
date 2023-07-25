@@ -4,7 +4,7 @@
 
 Before making a pull request with changes to this library, please ensure that
 style checks passes, that the code compiles, unit test passes and that there are
-no erros found by the static analyser.
+no errors found by the static analyser.
 
 For code formatting and linting, we use [Trunk](https://trunk.io) to manage this
 process. To install trunk run
