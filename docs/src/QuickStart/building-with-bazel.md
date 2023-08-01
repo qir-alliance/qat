@@ -7,7 +7,7 @@ most of the dependencies and arrange them in you workspace such that you do not
 need to checkout submodules or install extra packages. However, following
 external dependencies needs installing in order to use Bazel for building:
 
-- C++ compiler (Clang 13/14 or MSVC 14.20)
+- C++ compiler (Clang 14 or MSVC 14.20)
 - Bazelisk (or Bazel 5.0)
 
 We recommend the usage of Bazelisk as it is a wrapper that automatically
