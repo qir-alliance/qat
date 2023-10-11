@@ -116,21 +116,21 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::Modu
 void DivisionByZeroPass::raiseError(int64_t error_code, llvm::Module& module, llvm::Instruction* instr)
 {
     llvm::IRBuilder<> builder(module.getContext());
-    auto const&       final_block = instr->getParent();
-    auto              if_block    = final_block->splitBasicBlock(instr, "if_ecc_not_set", true);
-    auto              start_block = if_block->splitBasicBlock(if_block->getTerminator(), "-INTERMEDIATE-", true);
-    start_block->takeName(final_block);
-    final_block->setName("ecc_set_finally");
+    auto const&       ecc_set_block = instr->getParent();
+    auto              ecc_not_set_block    = ecc_set_block->splitBasicBlock(instr, "ecc_not_set", true);
+    auto              current_block = ecc_not_set_block->splitBasicBlock(ecc_not_set_block->getTerminator(), "-INTERMEDIATE-", true);
+    current_block->takeName(ecc_set_block);
+    ecc_set_block->setName("ecc_set");
 
-    builder.SetInsertPoint(start_block->getTerminator());
+    builder.SetInsertPoint(current_block->getTerminator());
     llvm::LoadInst* load = builder.CreateLoad(builder.getInt64Ty(), error_variable_);
     auto            cmp  = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_EQ, load, builder.getInt64(0));
 
-    auto old_terminator = start_block->getTerminator();
-    llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
+    auto old_terminator = current_block->getTerminator();
+    llvm::BranchInst::Create(ecc_not_set_block, ecc_set_block, cmp, current_block);
     old_terminator->eraseFromParent();
 
-    builder.SetInsertPoint(if_block->getTerminator());
+    builder.SetInsertPoint(ecc_not_set_block->getTerminator());
     builder.CreateStore(builder.getInt64(error_code), error_variable_);
 }
 

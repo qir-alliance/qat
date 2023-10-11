@@ -203,10 +203,8 @@ int main(int argc, char const** argv)
         }
 
         // Setting adaptor validation configuration
-        configuration_manager.addConfig<TargetProfileConfiguration>(
-            "target.profile", TargetProfileConfiguration::fromQirTargetName("generic"));
-        configuration_manager.addConfig<TargetQisConfiguration>(
-            "target.qis", TargetQisConfiguration::fromQirTargetName("generic"));
+
+        configureQirAdaptor(config.targetName(), configuration_manager);
 
         // Reconfiguring to get all the arguments of the passes registered
         parser.reset();

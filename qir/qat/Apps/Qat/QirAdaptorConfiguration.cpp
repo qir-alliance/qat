@@ -33,6 +33,18 @@ void configureDefaultQirAdaptor(ConfigurationManager& configuration_manager)
     // The default adaptor does not alter the default settings for transformation
 }
 
+void configureMinimalQirAdaptor(ConfigurationManager& configuration_manager)
+{
+    // Setting adaptor validation configuration
+    configuration_manager.addConfig<TargetProfileConfiguration>(
+        "target.profile", TargetProfileConfiguration::fromQirTargetName("none"));
+    configuration_manager.addConfig<TargetQisConfiguration>(
+        "target.qis", TargetQisConfiguration::fromQirTargetName("none"));
+
+    // Disable all transformations by default
+    configuration_manager.disableAllSectionsByDefault();
+}
+
 void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager)
 {
 
@@ -271,6 +283,10 @@ void configureQirAdaptor(String const& name, ConfigurationManager& configuration
     else if (name == "default")
     {
         configureDefaultQirAdaptor(configuration_manager);
+    }
+    else if (name == "none")
+    {
+        configureMinimalQirAdaptor(configuration_manager);
     }
     else if (name == "provider_4bf9")
     {

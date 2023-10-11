@@ -61,7 +61,7 @@ TargetProfileConfiguration TargetProfileConfiguration::fromQirTargetName(String 
 {
 
     auto adaptor = TargetProfileConfiguration();
-    if (name == "generic")
+    if (name == "generic" || name == "none")
     {
         adaptor.opcodes_               = OpcodeSet{};
         adaptor.external_calls_        = Set{};

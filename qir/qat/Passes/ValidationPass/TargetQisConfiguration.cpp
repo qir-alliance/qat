@@ -49,7 +49,7 @@ bool TargetQisConfiguration::allowAnyQis() const
 TargetQisConfiguration TargetQisConfiguration::fromQirTargetName(String const& name)
 {
     auto target_config = TargetQisConfiguration();
-    if (name == "generic")
+    if (name == "generic" || name == "none")
     {
         target_config.allow_any_qis_ = true;
     }

@@ -11,6 +11,7 @@ namespace microsoft::quantum
 
 void configureGenericQirAdaptor(ConfigurationManager& configuration_manager);
 void configureDefaultQirAdaptor(ConfigurationManager& configuration_manager);
+void configureMinimalQirAdaptor(ConfigurationManager& configuration_manager);
 
 void configureProvider4bf9QirAdaptor(ConfigurationManager& configuration_manager);
 void configureProvider7ee0QirAdaptor(ConfigurationManager& configuration_manager);

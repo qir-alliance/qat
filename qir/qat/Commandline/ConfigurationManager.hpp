@@ -171,6 +171,9 @@ class ConfigurationManager
     /// Disables the last section added to the manager
     void disableSectionByDefault();
 
+    /// Disables all sections added to the manager
+    void disableAllSectionsByDefault();
+
     /// Disables a named section
     void disableSectionById(String const& id);
 

@@ -85,7 +85,7 @@ void ConfigurationManager::configure(ParameterParser& parser, bool experimental_
             id = id.substr(p + 1, id.size() - p - 1);
         }
 
-        // Teesting if the section should be enabled or disabled
+        // Testing if the section should be enabled or disabled
         if (section.enabled_by_default || parser.has("disable-" + id))
         {
             *section.active = (parser.get("disable-" + id, "false") != "true");
@@ -304,6 +304,14 @@ void ConfigurationManager::disableSectionByDefault()
     }
 
     config_sections_.back().enabled_by_default = false;
+}
+
+void ConfigurationManager::disableAllSectionsByDefault()
+{
+    for (auto& section : config_sections_)
+    {
+        section.enabled_by_default = false;
+    }
 }
 
 void ConfigurationManager::disableSectionById(String const& id)
