@@ -2,10 +2,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "qir/qat/Commandline/SpecConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Logging/ILogger.hpp"
-#include "qir/qat/Passes/ValidationPass/TargetProfileConfiguration.hpp"
-#include "qir/qat/Passes/ValidationPass/TargetQisConfiguration.hpp"
 #include "qir/qat/QatTypes/QatTypes.hpp"
 
 #include <functional>
@@ -31,7 +30,8 @@ class DivisionByZeroPass : public llvm::PassInfoMixin<DivisionByZeroPass>
     // Construction and destruction configuration.
     //
 
-    DivisionByZeroPass() = default;
+    explicit DivisionByZeroPass(
+        SpecConfiguration const& spec);
 
     /// Copy construction is banned.
     DivisionByZeroPass(DivisionByZeroPass const&) = delete;
@@ -50,7 +50,7 @@ class DivisionByZeroPass : public llvm::PassInfoMixin<DivisionByZeroPass>
     void raiseError(int64_t error_code, llvm::Module& module, llvm::Instruction* instr);
 
   private:
-    TargetProfileConfiguration config_{};
+    SpecConfiguration spec_{};
 
     ILoggerPtr            logger_{nullptr};
     llvm::GlobalVariable* error_variable_{nullptr};

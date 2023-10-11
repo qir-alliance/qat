@@ -7,5 +7,5 @@ entry:
 ret i64 0
 }
 
-attributes #0 = { "EntryPoint" }
+attributes #0 = { "entry_point" }
 

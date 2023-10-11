@@ -17,6 +17,12 @@ const char* const DivisionByZeroPass::EC_REPORT_FUNCTION      = "__qir__report_e
 const char* const DivisionByZeroPass::EC_VARIABLE_NAME        = "__qir__error_code";
 int64_t const     DivisionByZeroPass::EC_QIR_DIVISION_BY_ZERO = 1100;
 
+DivisionByZeroPass::DivisionByZeroPass(
+    SpecConfiguration const& spec)
+  : spec_{spec}
+{
+}
+
 llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::ModuleAnalysisManager& /*mam*/)
 {
     llvm::IRBuilder<> builder(module.getContext());
@@ -60,7 +66,8 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::Modu
     // Checking error codes at end
     for (auto& function : module)
     {
-        if (function.hasFnAttribute("EntryPoint")) // FIXME: INCORRECT NAME...
+        // entry-point-attr
+        if (function.hasFnAttribute(spec_.entryPointAttr()))
         {
             std::vector<llvm::BasicBlock*> exit_blocks;
             for (auto& block : function)

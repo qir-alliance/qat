@@ -267,7 +267,8 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         "adaptor.target-profile-mapping",
         [logger](TargetProfileMappingConfiguration const& cfg, QirAdaptor& adaptor)
         {
-            auto&                     mpm = adaptor.modulePassManager();
+            auto& mpm = adaptor.modulePassManager();
+            auto spec = adaptor.configurationManager().get<SpecConfiguration>();           
             llvm::FunctionPassManager fpm;
             if (cfg.shouldAddInstCombinePass())
             {
@@ -311,7 +312,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
 
             if (cfg.shouldInsertDivisionByZeroGuards())
             {
-                mpm.addPass(DivisionByZeroPass());
+                mpm.addPass(DivisionByZeroPass(spec));
             }
             mpm.addPass(FunctionToModule(std::move(fpm)));
         });
