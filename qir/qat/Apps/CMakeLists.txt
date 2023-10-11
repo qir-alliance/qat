@@ -18,6 +18,7 @@ target_link_libraries(qat
     RemoveNonEntrypointFunctions 
     ZExtTransformPass 
     DeferMeasurementPass
+    DivisionByZeroPass
     FunctionReplacementPass
     Version
     yaml-cpp)

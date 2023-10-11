@@ -19,6 +19,9 @@ struct TargetProfileMappingConfiguration
         config.addParameter(
             defer_measurements_, "defer-measurements",
             "Wether or not measurement and recording functions should be moved to the end of the program.");
+        config.addExperimentalParameter(
+            division_by_zero_guards_, false, false, "division-by-zero-guards",
+            "Guard divisions with a check to confirm the divisor is non-zero.");
     }
 
     static TargetProfileMappingConfiguration createDisabled()
@@ -33,6 +36,7 @@ struct TargetProfileMappingConfiguration
         ret.lower_switch_                 = false;
         ret.should_eleminate_zext_i1_     = false;
         ret.defer_measurements_           = false;
+        ret.division_by_zero_guards_      = false;
 
         return ret;
     }
@@ -82,6 +86,18 @@ struct TargetProfileMappingConfiguration
         defer_measurements_ = v;
     }
 
+    /// Whether or not the component should insert code into the IR before each division
+    /// to check if the divisor is zero, and if it is, exit with an error code.
+    bool shouldInsertDivisionByZeroGuards() const
+    {
+        return division_by_zero_guards_;
+    }
+
+    void setInsertDivisionByZeroGuards(bool const& v)
+    {
+        division_by_zero_guards_ = v;
+    }
+
   private:
     bool inst_combine_pass_{true};
     bool aggressive_inst_combine_pass_{true};
@@ -91,6 +107,7 @@ struct TargetProfileMappingConfiguration
     bool lower_switch_{true};
     bool should_eleminate_zext_i1_{true};
     bool defer_measurements_{false};
+    bool division_by_zero_guards_{false};
 };
 
 } // namespace microsoft::quantum

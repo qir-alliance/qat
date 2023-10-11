@@ -95,32 +95,6 @@ TargetQisMappingPassConfiguration TargetQisMappingPassConfiguration::createDisab
     return ret;
 }
 
-TargetQisMappingPassConfiguration TargetQisMappingPassConfiguration::createReuseQubitsOnly()
-{
-    TargetQisMappingPassConfiguration ret;
-    ret.delete_dead_code_              = false;
-    ret.clone_functions_               = false;
-    ret.transform_execution_path_only_ = false;
-    ret.max_recursion_                 = 512;
-    ret.reuse_qubits_                  = true;
-    ret.reuse_results_                 = false;
-
-    ret.disable_reference_counting_        = false;
-    ret.disable_alias_counting_            = false;
-    ret.disable_string_support_            = false;
-    ret.disable_initialize_support_        = false;
-    ret.disable_record_output_support_     = false;
-    ret.optimize_result_one_               = false;
-    ret.optimize_result_zero_              = false;
-    ret.optimize_result_comparison_        = false;
-    ret.optimize_quantum_constants_        = false;
-    ret.remove_get_one_or_zero_            = false;
-    ret.use_static_qubit_array_allocation_ = false;
-    ret.use_static_qubit_allocation_       = false;
-    ret.use_static_result_allocation_      = false;
-    return ret;
-}
-
 bool TargetQisMappingPassConfiguration::shouldDeleteDeadCode() const
 {
     return delete_dead_code_;

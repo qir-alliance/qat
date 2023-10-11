@@ -7,6 +7,7 @@
 #include "qir/qat/AdaptorFactory/TargetProfileMappingConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/DeferMeasurementPass/DeferMeasurementPass.hpp"
+#include "qir/qat/Passes/DivisionByZeroPass/DivisionByZeroPass.hpp"
 #include "qir/qat/Passes/FunctionReplacementPass/FunctionAnnotatorPass.hpp"
 #include "qir/qat/Passes/FunctionReplacementPass/FunctionReplacementAnalysisPass.hpp"
 #include "qir/qat/Passes/FunctionReplacementPass/FunctionReplacementPass.hpp"
@@ -306,6 +307,11 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             if (cfg.shouldDeferMeasurements())
             {
                 fpm.addPass(DeferMeasurementPass());
+            }
+
+            if (cfg.shouldInsertDivisionByZeroGuards())
+            {
+                mpm.addPass(DivisionByZeroPass());
             }
             mpm.addPass(FunctionToModule(std::move(fpm)));
         });

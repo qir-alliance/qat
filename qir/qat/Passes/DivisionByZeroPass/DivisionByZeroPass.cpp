@@ -26,50 +26,43 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::Modu
     error_variable_->setInitializer(builder.getInt64(0));
     error_variable_->setConstant(false);
 
-    std::vector<llvm::Instruction*> instructions;
     for (auto& function : module)
     {
         for (auto& block : function)
         {
             for (auto& instr : block)
             {
-                auto* udiv = llvm::dyn_cast<llvm::SDivOperator>(&instr);
-                if (udiv)
+                auto* sdiv = llvm::dyn_cast<llvm::SDivOperator>(&instr);
+                if (sdiv)
                 {
-                    instructions.push_back(&instr);
+                    // Injecting error code updates
+                    auto op2 = instr.getOperand(1);
+
+                    auto const& denom_nonzero_block = instr.getParent();
+                    auto denom_zero_block = denom_nonzero_block->splitBasicBlock(&instr, "denominator_is_zero", true);
+                    auto current_block =
+                        denom_zero_block->splitBasicBlock(denom_zero_block->getTerminator(), "-INTERMEDIATE-", true);
+                    current_block->takeName(denom_nonzero_block);
+                    denom_nonzero_block->setName("denominator_is_nonzero");
+
+                    builder.SetInsertPoint(current_block->getTerminator());
+                    auto cmp = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_EQ, op2, builder.getInt64(0));
+                    auto old_terminator = current_block->getTerminator();
+                    llvm::BranchInst::Create(denom_zero_block, denom_nonzero_block, cmp, current_block);
+                    old_terminator->eraseFromParent();
+
+                    raiseError(EC_QIR_DIVISION_BY_ZERO, module, denom_zero_block->getTerminator());
                 }
             }
         }
     }
 
-    // Injecting error code updates
-    for (auto instr : instructions)
-    {
-        auto op2 = instr->getOperand(1);
-
-        auto const& final_block = instr->getParent();
-        auto        if_block    = final_block->splitBasicBlock(instr, "if_denominator_is_zero", true);
-        auto        start_block = if_block->splitBasicBlock(if_block->getTerminator(), "-INTERMEDIATE-", true);
-        start_block->takeName(final_block);
-        final_block->setName("after_zero_check");
-
-        builder.SetInsertPoint(start_block->getTerminator());
-        auto cmp            = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_EQ, op2, builder.getInt64(0));
-        auto old_terminator = start_block->getTerminator();
-        llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
-        old_terminator->eraseFromParent();
-
-        raiseError(EC_QIR_DIVISION_BY_ZERO, module, if_block->getTerminator());
-    }
-
-    // Checking error codes at end of
-    llvm::Function*                entry = nullptr;
-    std::vector<llvm::BasicBlock*> exit_blocks;
+    // Checking error codes at end
     for (auto& function : module)
     {
-        if (function.hasFnAttribute("EntryPoint"))
+        if (function.hasFnAttribute("EntryPoint")) // FIXME: INCORRECT NAME...
         {
-            entry = &function;
+            std::vector<llvm::BasicBlock*> exit_blocks;
             for (auto& block : function)
             {
                 auto last = block.getTerminator();
@@ -78,46 +71,42 @@ llvm::PreservedAnalyses DivisionByZeroPass::run(llvm::Module& module, llvm::Modu
                     exit_blocks.push_back(&block);
                 }
             }
-            break;
-        }
-    }
-
-    if (entry)
-    {
-        for (auto start_block : exit_blocks)
-        {
-            auto if_block    = start_block->splitBasicBlock(start_block->getTerminator(), "if_error_occurred", false);
-            auto final_block = if_block->splitBasicBlock(if_block->getTerminator(), "exit_block", false);
-
-            builder.SetInsertPoint(start_block->getTerminator());
-            llvm::LoadInst* load = builder.CreateLoad(builder.getInt64Ty(), error_variable_);
-            auto            cmp  = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_NE, load, builder.getInt64(0));
-            auto            old_terminator = start_block->getTerminator();
-            llvm::BranchInst::Create(if_block, final_block, cmp, start_block);
-            old_terminator->eraseFromParent();
-
-            builder.SetInsertPoint(if_block->getTerminator());
-
-            auto                      fnc = module.getFunction(EC_REPORT_FUNCTION);
-            std::vector<llvm::Value*> arguments;
-            arguments.push_back(load);
-
-            if (!fnc)
+            for (auto block : exit_blocks)
             {
-                std::vector<llvm::Type*> types;
-                types.resize(arguments.size());
-                for (uint64_t i = 0; i < types.size(); ++i)
+                auto error_exit_block = block->splitBasicBlock(block->getTerminator(), "error_exit", false);
+                auto regular_exit_block =
+                    error_exit_block->splitBasicBlock(error_exit_block->getTerminator(), "regular_exit", false);
+
+                builder.SetInsertPoint(block->getTerminator());
+                llvm::LoadInst* load = builder.CreateLoad(builder.getInt64Ty(), error_variable_);
+                auto            cmp  = builder.CreateICmp(llvm::CmpInst::Predicate::ICMP_EQ, load, builder.getInt64(0));
+                auto            old_terminator = block->getTerminator();
+                llvm::BranchInst::Create(regular_exit_block, error_exit_block, cmp, block);
+                old_terminator->eraseFromParent();
+
+                builder.SetInsertPoint(error_exit_block->getTerminator());
+
+                auto                      fnc = module.getFunction(EC_REPORT_FUNCTION);
+                std::vector<llvm::Value*> arguments;
+                arguments.push_back(load);
+
+                if (!fnc)
                 {
-                    types[i] = arguments[i]->getType();
+                    std::vector<llvm::Type*> types;
+                    types.resize(arguments.size());
+                    for (uint64_t i = 0; i < types.size(); ++i)
+                    {
+                        types[i] = arguments[i]->getType();
+                    }
+
+                    auto return_type = llvm::Type::getVoidTy(module.getContext());
+
+                    llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
+                    fnc = llvm::Function::Create(fnc_type, llvm::Function::ExternalLinkage, EC_REPORT_FUNCTION, module);
                 }
 
-                auto return_type = llvm::Type::getVoidTy(module.getContext());
-
-                llvm::FunctionType* fnc_type = llvm::FunctionType::get(return_type, types, false);
-                fnc = llvm::Function::Create(fnc_type, llvm::Function::ExternalLinkage, EC_REPORT_FUNCTION, module);
+                builder.CreateCall(fnc, arguments);
             }
-
-            builder.CreateCall(fnc, arguments);
         }
     }
 

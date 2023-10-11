@@ -3,11 +3,15 @@
 
 #include "gtest/gtest.h"
 #include "qir/qat/AdaptorFactory/ConfigurableQirAdaptorFactory.hpp"
+#include "qir/qat/AdaptorFactory/TargetProfileMappingConfiguration.hpp"
 #include "qir/qat/Llvm/Llvm.hpp"
 #include "qir/qat/Passes/DivisionByZeroPass/DivisionByZeroPass.hpp"
 #include "qir/qat/Passes/GroupingPass/GroupingPass.hpp"
 #include "qir/qat/Passes/StaticResourceComponent/StaticResourceComponentConfiguration.hpp"
 #include "qir/qat/Passes/TargetQisMappingPass/Factory.hpp"
+#include "qir/qat/Rules/Notation/Notation.hpp"
+#include "qir/qat/Rules/ReplacementRule.hpp"
+#include "qir/qat/Rules/RuleSet.hpp"
 #include "qir/qat/TestTools/IrManipulationTestHelper.hpp"
 
 #include <functional>
@@ -37,24 +41,18 @@ IrManipulationTestHelperPtr newIrManip(std::string const& script)
 }
 } // namespace
 
-struct DummyConfig
-{
-    void setup(ConfigurationManager&) {}
-};
-
 std::shared_ptr<ConfigurableQirAdaptorFactory> newQirAdaptor(ConfigurationManager& configuration_manager)
 {
+    auto configure_adaptor = [](RuleSet&) {};
 
-    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(
-        configuration_manager, ConfigurableQirAdaptorFactory::SetupMode::DoNothing);
-    configuration_manager.addConfig<DummyConfig>();
+    auto adaptor = std::make_shared<ConfigurableQirAdaptorFactory>(configuration_manager, std::move(configure_adaptor));
 
-    adaptor->registerAnonymousAdaptorComponent<DummyConfig>(
-        [](DummyConfig const& /*config*/, QirAdaptor& adaptor)
-        {
-            auto& mpm = adaptor.modulePassManager();
-            mpm.addPass(DivisionByZeroPass());
-        });
+    configuration_manager.setConfig(LlvmPassesConfiguration::createDisabled());
+    configuration_manager.setConfig(GroupingPassConfiguration::createDisabled());
+    configuration_manager.setConfig(PostTransformValidationPassConfiguration::createDisabled());
+    auto cfg = TargetProfileMappingConfiguration::createDisabled();
+    cfg.setInsertDivisionByZeroGuards(true);
+    configuration_manager.setConfig(cfg);
 
     return adaptor;
 }
@@ -78,14 +76,14 @@ TEST(DivideByZeroTests, InjectionTest)
     ir_manip->applyQirAdaptor(adaptor);
 
     EXPECT_TRUE(ir_manip->hasInstructionSequence({
-        "br i1 %2, label %if_denominator_is_zero, label %after_zero_check",
+        "br i1 %2, label %denominator_is_zero, label %denominator_is_nonzero",
         "%3 = load i64, i64* @__qir__error_code, align 4",
         "%4 = icmp eq i64 %3, 0",
         "br i1 %4, label %if_ecc_not_set, label %ecc_set_finally",
         "store i64 " + std::to_string(DivisionByZeroPass::EC_QIR_DIVISION_BY_ZERO) +
             ", i64* @__qir__error_code, align 4",
         "br label %ecc_set_finally",
-        "br label %after_zero_check",
+        "br label %denominator_is_nonzero",
     }));
 }
 

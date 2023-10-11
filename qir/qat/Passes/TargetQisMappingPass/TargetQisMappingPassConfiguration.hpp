@@ -21,9 +21,6 @@ class TargetQisMappingPassConfiguration
     /// Creates a configuration where all functionality is disabled.
     static TargetQisMappingPassConfiguration createDisabled();
 
-    /// Creates a configuration where only reuse qubits is enabled.
-    static TargetQisMappingPassConfiguration createReuseQubitsOnly();
-
     // Configuration classes
     //
 
