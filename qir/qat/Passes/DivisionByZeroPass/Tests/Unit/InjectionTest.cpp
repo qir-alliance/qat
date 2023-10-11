@@ -79,10 +79,10 @@ TEST(DivideByZeroTests, InjectionTest)
         "br i1 %2, label %denominator_is_zero, label %denominator_is_nonzero",
         "%3 = load i64, i64* @__qir__error_code, align 4",
         "%4 = icmp eq i64 %3, 0",
-        "br i1 %4, label %if_ecc_not_set, label %ecc_set_finally",
+        "br i1 %4, label %ecc_not_set, label %ecc_set",
         "store i64 " + std::to_string(DivisionByZeroPass::EC_QIR_DIVISION_BY_ZERO) +
             ", i64* @__qir__error_code, align 4",
-        "br label %ecc_set_finally",
+        "br label %ecc_set",
         "br label %denominator_is_nonzero",
     }));
 }
