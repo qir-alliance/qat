@@ -159,11 +159,11 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             mam.registerPass([&] { return FunctionReplacementAnalysisPass(cfg, logger); });
             auto& ret = adaptor.modulePassManager();
 
-            ret.addPass(FunctionAnnotatorPass(cfg));
+            ret.addPass(FunctionAnnotatorPass(cfg)); // NO
 
             auto pass = FunctionReplacementPass(cfg);
             pass.setLogger(logger);
-            ret.addPass(std::move(pass));
+            ret.addPass(std::move(pass)); // NO
         });
 
     registerAdaptorComponent<LlvmPassesConfiguration>(
@@ -176,18 +176,18 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             if (cfg.eliminateConstants())
             {
                 llvm::FunctionPassManager early_fpm;
-                mpm.addPass(llvm::ForceFunctionAttrsPass());
-                mpm.addPass(llvm::InferFunctionAttrsPass());
+                mpm.addPass(llvm::ForceFunctionAttrsPass()); // NO
+                mpm.addPass(llvm::InferFunctionAttrsPass()); // NO
 
-                early_fpm.addPass(llvm::SimplifyCFGPass());
-                early_fpm.addPass(llvm::EarlyCSEPass(false));
+                early_fpm.addPass(llvm::SimplifyCFGPass()); // YES - OPT
+                early_fpm.addPass(llvm::EarlyCSEPass(false)); // YES - OPT
                 mpm.addPass(FunctionToModule(std::move(early_fpm)));
             }
 
             // Always inline
             if (cfg.alwaysInline())
             {
-                mpm.addPass(llvm::AlwaysInlinerPass());
+                mpm.addPass(llvm::AlwaysInlinerPass()); // YES - REQ (for linking)
                 auto                           inline_param = llvm::getInlineParams(cfg.inlineParameter());
                 llvm::ModuleInlinerWrapperPass inliner_pass = llvm::ModuleInlinerWrapperPass(inline_param);
                 mpm.addPass(std::move(inliner_pass));
@@ -213,24 +213,24 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
                     .setProfileBasedPeeling(cfg.unrollAllowProfilBasedPeeling())
                     .setFullUnrollMaxCount(static_cast<uint32_t>(cfg.unrolFullUnrollCount()));
 
-                fpm.addPass(llvm::LoopUnrollPass(loop_config));
+                fpm.addPass(llvm::LoopUnrollPass(loop_config)); // NO
             }
 
             if (cfg.eliminateMemory())
             {
-                fpm.addPass(llvm::PromotePass());
+                fpm.addPass(llvm::PromotePass()); // YES - REQ
             }
 
             if (cfg.eliminateConstants())
             {
-                fpm.addPass(llvm::SROAPass());
-                fpm.addPass(llvm::SCCPPass());
+                fpm.addPass(llvm::SROAPass()); // NO
+                fpm.addPass(llvm::SCCPPass()); // YES - OPT
             }
 
             if (cfg.eliminateDeadCode())
             {
-                fpm.addPass(llvm::ADCEPass());
-                mpm.addPass(llvm::GlobalDCEPass());
+                fpm.addPass(llvm::ADCEPass()); // YES - OPT
+                mpm.addPass(llvm::GlobalDCEPass()); // YES - OPT
             }
             mpm.addPass(FunctionToModule(std::move(fpm)));
         });
@@ -241,7 +241,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         {
             auto& mpm = adaptor.modulePassManager();
 
-            mpm.addPass(RemoveNonEntrypointFunctionsPass(cfg, logger));
+            mpm.addPass(RemoveNonEntrypointFunctionsPass(cfg, logger)); // NO
         });
 
     registerAdaptorComponent<TargetQisMappingPassConfiguration>(
@@ -259,7 +259,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             // Creating adaptor pass
             auto pass = TargetQisMappingPass(std::move(rule_set), cfg);
             pass.setLogger(logger);
-            ret.addPass(std::move(pass));
+            ret.addPass(std::move(pass)); // NO
         });
 
     registerAdaptorComponent<TargetProfileMappingConfiguration>(
@@ -270,42 +270,42 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             llvm::FunctionPassManager fpm;
             if (cfg.shouldAddInstCombinePass())
             {
-                fpm.addPass(llvm::InstCombinePass(1000));
+                fpm.addPass(llvm::InstCombinePass(1000)); // YES - OPT
             }
 
             if (cfg.shouldAddAggressiveInstCombinePass())
             {
-                fpm.addPass(llvm::AggressiveInstCombinePass());
+                fpm.addPass(llvm::AggressiveInstCombinePass()); // YES - OPT
             }
 
             if (cfg.shouldAddSroaPass())
             {
-                fpm.addPass(llvm::SROAPass());
+                fpm.addPass(llvm::SROAPass()); // DUPLICATE
             }
 
             if (cfg.shouldAddSccpPass())
             {
-                fpm.addPass(llvm::SCCPPass());
+                fpm.addPass(llvm::SCCPPass()); // DUPLICATE
             }
 
             if (cfg.shouldAddSimplifyCfgPass())
             {
-                fpm.addPass(llvm::SimplifyCFGPass());
+                fpm.addPass(llvm::SimplifyCFGPass()); // DUPLICATE
             }
 
             if (cfg.shouldLowerSwitch())
             {
-                fpm.addPass(llvm::LowerSwitchPass());
+                fpm.addPass(llvm::LowerSwitchPass()); // YES - OPT
             }
 
             if (cfg.shouldEliminateZExtI1())
             {
-                fpm.addPass(ZExtTransformPass());
+                fpm.addPass(ZExtTransformPass()); // NO
             }
 
             if (cfg.shouldDeferMeasurements())
             {
-                fpm.addPass(DeferMeasurementPass());
+                fpm.addPass(DeferMeasurementPass()); // NO (should be handled by base profile compliance)
             }
             mpm.addPass(FunctionToModule(std::move(fpm)));
         });
@@ -315,7 +315,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
         [logger](PostTransformValidationPassConfiguration const& cfg, QirAdaptor& adaptor)
         {
             auto& mpm = adaptor.modulePassManager();
-            mpm.addPass(PostTransformValidationPass(cfg, logger));
+            mpm.addPass(PostTransformValidationPass(cfg, logger)); // NO
         });
 
     registerAdaptorComponent<StaticResourceComponentConfiguration>(
@@ -327,24 +327,24 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
             fam.registerPass([&] { return AllocationAnalysisPass(logger); });
 
             llvm::FunctionPassManager fpm;
-            fpm.addPass(ReplaceQubitOnResetPass(cfg, logger));
-            fpm.addPass(QubitRemapPass(cfg, logger));
+            fpm.addPass(ReplaceQubitOnResetPass(cfg, logger)); // NO (part of base profile codegen)
+            fpm.addPass(QubitRemapPass(cfg, logger)); // NO (maybe partner?)
 
             if (cfg.shouldInlineAfterIdChange() && cfg.isChangingIds())
             {
-                fpm.addPass(llvm::InstCombinePass(1000));
-                fpm.addPass(llvm::AggressiveInstCombinePass());
-                fpm.addPass(llvm::SROAPass());
-                fpm.addPass(llvm::SCCPPass());
-                fpm.addPass(llvm::SimplifyCFGPass());
-                fpm.addPass(llvm::LowerSwitchPass());
-                fpm.addPass(llvm::ADCEPass());
-                fpm.addPass(ZExtTransformPass());
+                fpm.addPass(llvm::InstCombinePass(1000)); // DUPLICATE
+                fpm.addPass(llvm::AggressiveInstCombinePass()); // DUPLICATE
+                fpm.addPass(llvm::SROAPass()); // DUPLICATE
+                fpm.addPass(llvm::SCCPPass()); // DUPLICATE
+                fpm.addPass(llvm::SimplifyCFGPass()); // DUPLICATE
+                fpm.addPass(llvm::LowerSwitchPass()); // DUPLICSATE
+                fpm.addPass(llvm::ADCEPass()); // DUPLICATE
+                fpm.addPass(ZExtTransformPass()); // DUPLICATE
             }
 
-            fpm.addPass(ResourceAnnotationPass(cfg, logger));
+            fpm.addPass(ResourceAnnotationPass(cfg, logger)); // NO (client should do for compliance)
             mpm.addPass(FunctionToModule(std::move(fpm)));
-            mpm.addPass(llvm::GlobalDCEPass());
+            mpm.addPass(llvm::GlobalDCEPass()); // DUPLICATE
         });
 
     registerAdaptorComponent<GroupingPassConfiguration>(
@@ -359,7 +359,7 @@ void QirAdaptorFactory::setupDefaultComponentPipeline()
 
                 auto pass = GroupingPass(cfg);
                 pass.setLogger(logger);
-                ret.addPass(std::move(pass));
+                ret.addPass(std::move(pass)); // NO
             }
         });
 }
