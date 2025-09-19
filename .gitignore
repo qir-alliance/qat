@@ -368,3 +368,13 @@ bazel-*/
 .bazelrc.configure.orig
 qat.sublime-project
 qat.sublime-workspace
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml

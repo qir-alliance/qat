@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4.3)
+cmake_minimum_required(VERSION 3.10.0)
 include(${CURRENT_SOURCE_DIR}version.cmake)
 generate_version_header()
 

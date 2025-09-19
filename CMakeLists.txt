@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.4.3)
+cmake_minimum_required(VERSION 3.10.0)
 
 project(QirPasses)
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
 endif()
 
-option(MICROSOFT_ENABLE_TESTS               "Enable test targets"   ON)
+option(MICROSOFT_ENABLE_TESTS               "Enable test targets"   OFF)
 option(MICROSOFT_ENABLE_DYNAMIC_LOADING     "Use dynamic loading"   ON)
 option(MICROSOFT_GENERATE_COVERAGE          "Generate coverage"     OFF)
 
@@ -36,14 +36,14 @@ endif()
 
 # Helper variable to determine if we are using Clang compiler
 set(using_clang_compiler FALSE)
-if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if ( "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
   set(using_clang_compiler TRUE)
 endif ()
 
-# Add compiler flags if we are 
+# Add compiler flags if we are
 if (MICROSOFT_GENERATE_COVERAGE)
     message(STATUS "Generating coverage data")
-    
+
     if (using_clang_compiler)
       # Generating coverage output
       set(CMAKE_CXX_FLAGS_DEBUG "-g -fprofile-instr-generate -fcoverage-mapping -O0")
@@ -77,13 +77,17 @@ endif(MICROSOFT_ENABLE_TESTS)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Weverything -Wconversion -Wno-c++98-compat-pedantic -Wno-c++98-compat -Wno-padded -Wno-exit-time-destructors -Wno-global-constructors")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wno-documentation-unknown-command")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wconversion -Wno-padded")
+if ( "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+  # TODO: add -Weverything
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++98-compat-pedantic -Wno-c++98-compat -Wno-exit-time-destructors -Wno-global-constructors -Wno-documentation-unknown-command")
+endif ()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
 
 include(${MICROSOFT_ROOT_PASSES_DIR}/cmake/Testing.cmake)
 include(${MICROSOFT_ROOT_PASSES_DIR}/cmake/Library.cmake)
 
-# We export the compile commands which are needed by clang-tidy 
+# We export the compile commands which are needed by clang-tidy
 # to run the static analysis
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -113,7 +117,7 @@ include_directories(${CMAKE_SOURCE_DIR})
 llvm_map_components_to_libnames(llvm_libs support core irreader passes orcjit mcjit x86asmparser x86codegen x86desc x86disassembler x86info interpreter objcarcopts aarch64asmparser aarch64codegen aarch64desc aarch64disassembler aarch64info)
 
 # Future placeholder for adding LLVM from source in CMake.
-add_custom_target(llvm) 
+add_custom_target(llvm)
 
 # Adding the libraries
 add_subdirectory(qir/qat)

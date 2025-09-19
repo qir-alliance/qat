@@ -29,7 +29,7 @@ jobs:
         shell: pwsh
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: ${{github.event.pull_request.head.ref}}
           repository: ${{github.event.pull_request.head.repo.full_name}}
@@ -39,7 +39,7 @@ jobs:
 
       - name: Bazel cache
         id: cache-bazel
-        uses: actions/cache@v3.0.4
+        uses: actions/cache@v4
         with:
           path: ~/.cache/bazel/
           key: ${{ matrix.config.os }}-${{ matrix.config.arch }}-bazel-${{ steps.timestamp.outputs.timestamp }}

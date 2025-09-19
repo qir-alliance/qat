@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Check spelling, linting and links"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: |
           # we download the config files from the org repo and pick up the rules from the latest main
           wget https://github.com/qir-alliance/.github/archive/refs/heads/main.zip -O clone.zip &&

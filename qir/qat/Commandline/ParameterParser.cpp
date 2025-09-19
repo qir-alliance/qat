@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
+#include <cstdint>
 
 namespace microsoft::quantum
 {

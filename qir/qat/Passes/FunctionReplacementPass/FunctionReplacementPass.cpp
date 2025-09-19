@@ -33,9 +33,8 @@ llvm::PreservedAnalyses FunctionReplacementPass::run(llvm::Module& module, llvm:
         }
 
         std::vector<llvm::Value*> arguments;
-        for (std::size_t i = 0; i < call_instr->arg_size(); ++i)
-        {
-            arguments.emplace_back(call_instr->getArgOperand(i));
+        for (llvm::Use &arg : call_instr->args()) {
+            arguments.emplace_back(arg.get());
         }
 
         builder.SetInsertPoint(llvm::dyn_cast<llvm::Instruction>(call_instr));

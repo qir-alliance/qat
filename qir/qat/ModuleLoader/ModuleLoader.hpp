@@ -130,6 +130,7 @@ class ModuleLoader
         using FunctionAnalysisManager = llvm::FunctionAnalysisManager;
 
         explicit SingleModuleTransformation(
+            __attribute__((unused))
             SpecConfiguration const& spec,
             OptimizationLevel const& optimization_level = OptimizationLevel::O0,
             bool                     debug              = false)

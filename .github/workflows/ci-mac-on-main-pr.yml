@@ -17,7 +17,7 @@ jobs:
     name: "Mac CI"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: ${{github.event.pull_request.head.ref}}
           repository: ${{github.event.pull_request.head.repo.full_name}}
@@ -64,8 +64,8 @@ jobs:
       - name: "Running Q# tests"
         run: |
           git clone https://github.com/microsoft/Quantum.git
-          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
-          export QSHARP_SAMPLES=${PWD}/Quantum/samples    
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat
+          export QSHARP_SAMPLES=${PWD}/Quantum/samples
 
           pushd qir/qsharp-tests/
           pip3 install --user pytest
@@ -79,7 +79,7 @@ jobs:
           make -j qat
           popd
 
-          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat        
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat
           pip3 install pytest
           pip3 install -r requirements.txt
           cd qir/qir-tests/
@@ -122,7 +122,7 @@ jobs:
           echo "Done"
 
           export PYTHONPATH=$PWD/qiskit-qir/tests:$PYTHONPATH
-          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat     
+          export QAT_BINARY=${PWD}/Debug/qir/qat/Apps/qat
 
           pushd qir/qiskit-tests/
           pip3 install pytest

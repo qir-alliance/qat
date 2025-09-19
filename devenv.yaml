@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=https://devenv.sh/devenv.schema.json
+inputs:
+  nixpkgs:
+    # bazel_5 was removed in Aug 2025, but stable channel still includes it.
+    url: github:NixOS/nixpkgs/nixos-25.05
